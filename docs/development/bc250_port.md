@@ -66,10 +66,9 @@ empty. Keep MIOpen's CK integration disabled during initial validation.
 and scalar CK. The topology also enables the profiler SDK and its legacy ROCTX
 library, which PyTorch's marker bindings require even with Kineto disabled.
 AMD SMI uses a disposable writable source copy for its generated headers.
-rocFFT's ahead-of-time cache compiler uses 32 workers, independently configurable
+rocFFT's ahead-of-time cache compiler uses 16 workers, independently configurable
 with `BC250_FFT_JOBS`. Its cache in the build tree preserves completed kernels
-when resuming; it uses HIPRTC directly rather than ccache. The extra workers
-cover compiler-process startup and cache serialization on the 16-thread host.
+when resuming; it uses HIPRTC directly rather than ccache.
 
 `continue_torch_on_host.sh` waits for the math build, runs CPU-reference GEMM,
 Cholesky, prime-length FFT and RNG checks, and verifies the host-only hipBLASLt
