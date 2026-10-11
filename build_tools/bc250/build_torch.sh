@@ -23,6 +23,7 @@ eval "$(python3 "$therock_source/build_tools/setup_ccache.py" \
 
 export ROCM_PATH="$rocm_prefix"
 export HIP_PATH="$rocm_prefix"
+export HIP_CLANG_PATH="$rocm_prefix/lib/llvm/bin"
 export CMAKE_PREFIX_PATH="$rocm_prefix"
 export PATH="$rocm_prefix/bin:$rocm_prefix/lib/llvm/bin:$PATH"
 export LD_LIBRARY_PATH="$rocm_prefix/lib:$rocm_prefix/lib/llvm/lib"
@@ -39,6 +40,8 @@ export PYTORCH_ROCM_ARCH=gfx1013
 export PYTORCH_BUILD_VERSION=2.13.0a0+gfx1013
 export PYTORCH_BUILD_NUMBER=1
 export USE_ROCM=1 USE_CUDA=0
+export USE_CUDNN=0 USE_MAGMA=0
+export BLAS=OpenBLAS
 export USE_FLASH_ATTENTION=0 USE_MEM_EFF_ATTENTION=0
 export USE_ROCM_CK_GEMM=0 USE_ROCM_CK_SDPA=0 USE_MSLK=0
 export USE_NCCL=0 USE_DISTRIBUTED=0 USE_KINETO=0
