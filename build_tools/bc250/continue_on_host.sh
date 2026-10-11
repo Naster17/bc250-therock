@@ -39,7 +39,7 @@ podman run --rm --name bc250-rocm-math-build --network host \
     -e CMAKE_BUILD_PARALLEL_LEVEL="${BC250_BUILD_JOBS:-16}" \
     -e BC250_FLANG_JOBS="${BC250_FLANG_JOBS:-4}" \
     -e BC250_CK_JOBS="${BC250_CK_JOBS:-6}" \
-    -e BC250_FFT_JOBS="${BC250_FFT_JOBS:-16}" \
+    -e BC250_FFT_JOBS="${BC250_FFT_JOBS:-32}" \
     -e BC250_CCACHE_MAXSIZE="${BC250_CCACHE_MAXSIZE:-20G}" \
     "$image" bash /workspace/helpers/build_math.sh /workspace/source /workspace/build \
     > "$workspace/logs/math-build.log" 2>&1

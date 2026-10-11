@@ -57,8 +57,8 @@ for component in rocRAND hipRAND rocPRIM hipCUB rocThrust rocBLAS hipBLASLt \
     echo "Building native component: $component"
     if [[ "$component" == rocFFT ]]; then
         # rocFFT also applies OMP_NUM_THREADS to its AOT compiler subprocesses.
-        OMP_NUM_THREADS="${BC250_FFT_JOBS:-16}" \
-            ROCFFT_RTC_MAX_SUBPROCESSES="${BC250_FFT_JOBS:-16}" \
+        OMP_NUM_THREADS="${BC250_FFT_JOBS:-32}" \
+            ROCFFT_RTC_MAX_SUBPROCESSES="${BC250_FFT_JOBS:-32}" \
             cmake --build "$build_dir" --target "$component"
     else
         cmake --build "$build_dir" --target "$component"
