@@ -31,14 +31,15 @@ __global__ void add_half(__half *values, float *old_values) {
 }
 
 __global__ void add_bfloat(__hip_bfloat16 *values, float *old_values) {
-  unsafeAtomicAdd(reinterpret_cast<__hip_bfloat162 *>(values),
-                  __floats2bfloat162_rn(1.0f, 2.0f));
+  unsafeAtomicAdd(
+      reinterpret_cast<__hip_bfloat162 *>(values),
+      __halves2bfloat162(__float2bfloat16(1.0f), __float2bfloat16(2.0f)));
   unsafeAtomicAdd(values + 2, __float2bfloat16(1.0f));
   unsafeAtomicAdd(values + 3, __float2bfloat16(2.0f));
   if (threadIdx.x == 0) {
-    const auto old =
-        unsafeAtomicAdd(reinterpret_cast<__hip_bfloat162 *>(values + 6),
-                        __floats2bfloat162_rn(1.0f, 2.0f));
+    const auto old = unsafeAtomicAdd(
+        reinterpret_cast<__hip_bfloat162 *>(values + 6),
+        __halves2bfloat162(__float2bfloat16(1.0f), __float2bfloat16(2.0f)));
     old_values[2] = __bfloat162float(__low2bfloat16(old));
     old_values[3] = __bfloat162float(__high2bfloat16(old));
   }
