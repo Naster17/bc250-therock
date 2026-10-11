@@ -125,6 +125,18 @@ therock_add_amdgpu_target(gfx1012 "AMD RX 5500" FAMILY dgpu-all gfx101X-all gfx1
     rocprofiler-compute # https://github.com/ROCm/TheRock/issues/2892
 )
 
+# Cyan Skillfish is a gfx10.1 APU. Keep matrix-instruction-only projects out
+# of its bring-up profile, as for the other gfx101X targets above.
+therock_add_amdgpu_target(gfx1013 "AMD BC-250 Cyan Skillfish APU" FAMILY igpu-all gfx101X-all gfx101X-igpu
+  EXCLUDE_TARGET_PROJECTS
+    hipBLASLt # https://github.com/ROCm/TheRock/issues/1062
+    hipSPARSELt # https://github.com/ROCm/TheRock/issues/2042
+    composable_kernel # https://github.com/ROCm/TheRock/issues/1245
+    rocWMMA # https://github.com/ROCm/TheRock/issues/1944
+    hipTensor # https://github.com/ROCm/TheRock/issues/2074
+    rocprofiler-compute # https://github.com/ROCm/TheRock/issues/2892
+)
+
 # gfx103X family
 therock_add_amdgpu_target(gfx1030 "AMD RX 6800 / XT" FAMILY dgpu-all gfx103X-all gfx103X-dgpu
   EXCLUDE_TARGET_PROJECTS

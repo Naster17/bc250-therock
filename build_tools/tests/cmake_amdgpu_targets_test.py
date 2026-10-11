@@ -113,6 +113,15 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class CmakeTargetSelectionTest(unittest.TestCase):
+    def test_bc250_registration(self):
+        families = amdgpu_family_map()
+        self.assertEqual(families["gfx1013"], ["gfx1013"])
+        self.assertEqual(families["gfx101X-igpu"], ["gfx1013"])
+        self.assertIn("gfx1013", families["gfx101X-all"])
+        self.assertIn("gfx1013", families["igpu-all"])
+        self.assertNotIn("gfx1013", families["dgpu-all"])
+        self.assertNotIn("gfx1013", families["gfx101X-dgpu"])
+
     def test_registration(self):
         infos = parse_amdgpu_targets_cmake(ROOT / "cmake/therock_amdgpu_targets.cmake")
         strict = next(info for info in infos if info.gfx_target == "gfx1250-strict")
@@ -125,6 +134,13 @@ class CmakeTargetSelectionTest(unittest.TestCase):
 
     def test_cmake_selection_and_defaults(self):
         cases = [
+            ("set(THEROCK_AMDGPU_FAMILIES gfx1013)", "gfx1013", "gfx1013", "default"),
+            (
+                "set(THEROCK_AMDGPU_FAMILIES gfx1013)\nset(THEROCK_TEST_AMDGPU_FAMILIES gfx1013)",
+                "gfx1013",
+                "gfx1013",
+                "gfx1013",
+            ),
             ("set(THEROCK_AMDGPU_FAMILIES gfx1250)", "gfx1250", "gfx1250", "default"),
             (
                 "set(THEROCK_AMDGPU_FAMILIES gfx125X-all)",
