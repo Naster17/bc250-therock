@@ -1,0 +1,27 @@
+# Copyright Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: MIT
+
+# Build from an Ubuntu image digest recorded alongside each hardware run.
+# This image deliberately contains no preinstalled ROCm packages.
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    autoconf automake bison build-essential ca-certificates ccache clang curl file flex \
+    gfortran git libdrm-dev libelf-dev libnuma-dev libssl-dev libtool \
+    libunwind-dev lld m4 make ninja-build pkg-config python3-dev python3-pip \
+    python3-venv rsync texinfo unzip xxd xz-utils zlib1g-dev zstd \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY dockerfiles /tmp/therock-dockerfiles
+RUN cd /tmp && bash therock-dockerfiles/install_cmake.sh 3.31.12 \
+    && bash therock-dockerfiles/install_ninja.sh 1.12.1 \
+    && bash therock-dockerfiles/install_pinned_patchelf.sh \
+    && rm -rf /tmp/therock-dockerfiles /tmp/cmake-installer.sh /tmp/ninja*
+
+ENV PATH="/opt/build-venv/bin:/usr/local/therock-tools/bin:${PATH}"
+COPY requirements.txt /tmp/requirements.txt
+RUN python3 -m venv /opt/build-venv \
+    && pip install --no-cache-dir -r /tmp/requirements.txt
+WORKDIR /workspace
