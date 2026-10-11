@@ -811,14 +811,6 @@ disable_platforms = ["windows"]
 
 # --- Profiler Tools ---
 
-[artifacts.roctx]
-artifact_group = "profiler-core"
-type = "target-neutral"
-artifact_deps = []
-feature_group = "PROFILER_ANNOTATIONS"
-disable_platforms = ["windows"]
-source_paths = ["roctracer"]
-
 [artifacts.aqlprofile]
 artifact_group = "profiler-core"
 type = "target-neutral"

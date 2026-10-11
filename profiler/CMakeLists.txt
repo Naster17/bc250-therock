@@ -1,31 +1,6 @@
 # Copyright Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: MIT
 
-if(THEROCK_ENABLE_ROCTX)
-  if(THEROCK_ENABLE_ROCPROFV3)
-    message(FATAL_ERROR "Standalone ROCTX and rocprofiler-sdk both provide libroctx64; enable only one")
-  endif()
-  therock_cmake_subproject_declare(roctx
-    USE_DIST_AMDGPU_TARGETS
-    EXTERNAL_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/roctx"
-    BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/roctx"
-    BACKGROUND_BUILD
-    CMAKE_ARGS
-      "-DROCTRACER_SOURCE_DIR=${THEROCK_ROCM_SYSTEMS_SOURCE_DIR}/projects/roctracer"
-    INTERFACE_INCLUDE_DIRS
-      include
-    INTERFACE_LINK_DIRS
-      lib
-  )
-  therock_cmake_subproject_activate(roctx)
-  therock_provide_artifact(roctx
-    TARGET_NEUTRAL
-    DESCRIPTOR artifact-roctx.toml
-    COMPONENTS dbg dev lib
-    SUBPROJECT_DEPS roctx
-  )
-endif()
-
 set(_openmpi_optional_dep)
 if(THEROCK_ENABLE_MPI)
   set(_openmpi_optional_dep therock-openmpi)
