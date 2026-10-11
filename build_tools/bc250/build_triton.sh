@@ -19,7 +19,8 @@ export TRITON_BUILD_WITH_CCACHE=ON
 export TRITON_PARALLEL_LINK_JOBS=1
 export TRITON_BUILD_DIR="$work_dir/build"
 export MAX_JOBS="${BC250_TRITON_JOBS:-4}"
-export TRITON_APPEND_CMAKE_ARGS="-DCMAKE_JOB_POOLS=compile=$MAX_JOBS -DCMAKE_JOB_POOL_COMPILE=compile -DTRITON_BUILD_UT=OFF"
+helper_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export TRITON_APPEND_CMAKE_ARGS="-DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=$helper_dir/triton_pre_hook.cmake -DCMAKE_JOB_POOL_COMPILE=compile -DTRITON_BUILD_UT=OFF"
 export CC=gcc CXX=g++
 export CCACHE_MAXSIZE="${BC250_CCACHE_MAXSIZE:-20G}"
 cache_dir="${BC250_CCACHE_DIR:-/workspace/cache}"
