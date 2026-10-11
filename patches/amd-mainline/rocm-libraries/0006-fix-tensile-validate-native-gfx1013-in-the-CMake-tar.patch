@@ -1,0 +1,25 @@
+From f4302e457a92df7860ad06c1c033496848a49956 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sun, 11 Oct 2026 22:43:07 +0200
+Subject: [PATCH] fix(tensile): validate native gfx1013 in the CMake target
+ list
+
+---
+ .../Tensile/Source/cmake/TensileSupportedArchitectures.cmake     | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/shared/tensile/Tensile/Source/cmake/TensileSupportedArchitectures.cmake b/shared/tensile/Tensile/Source/cmake/TensileSupportedArchitectures.cmake
+index 073eaf60578..d2898f2c88f 100644
+--- a/shared/tensile/Tensile/Source/cmake/TensileSupportedArchitectures.cmake
++++ b/shared/tensile/Tensile/Source/cmake/TensileSupportedArchitectures.cmake
+@@ -41,6 +41,7 @@ if(NOT BUILD_ADDRESS_SANITIZER)
+         "gfx1010"
+         "gfx1011"
+         "gfx1012"
++        "gfx1013"
+         "gfx1030"
+         "gfx1031"
+         "gfx1032"
+-- 
+2.56.0
+
