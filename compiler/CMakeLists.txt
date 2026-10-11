@@ -47,6 +47,11 @@ if(THEROCK_ENABLE_COMPILER)
   ##############################################################################
 
   set(_extra_llvm_cmake_args)
+  option(THEROCK_BOOTSTRAP_CCACHE_MASQUERADE
+    "Bootstrap compiler uses ccache masquerade mode instead of a CMake launcher" OFF)
+  if(THEROCK_BOOTSTRAP_CCACHE_MASQUERADE)
+    list(APPEND _extra_llvm_cmake_args -DTHEROCK_BOOTSTRAP_CCACHE_MASQUERADE=ON)
+  endif()
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     list(APPEND _extra_llvm_cmake_args "-DLLVM_ENABLE_PEDANTIC=OFF")
   endif()

@@ -4,6 +4,13 @@
 # Get access to LLVM_VERSION_MAJOR
 include("${THEROCK_SOURCE_DIR}/compiler/amd-llvm/cmake/Modules/LLVMVersion.cmake")
 
+if(THEROCK_BOOTSTRAP_CCACHE_MASQUERADE)
+  # The bootstrap compiler aliases already invoke ccache. Keep its existing
+  # Ninja commands and avoid wrapping ccache twice or rebuilding completed work.
+  set(CMAKE_C_COMPILER_LAUNCHER "")
+  set(CMAKE_CXX_COMPILER_LAUNCHER "")
+endif()
+
 # Build LLVM and the comgr dependency.
 # Note that in LLVM "BUILD_SHARED_LIBS" enables an unsupported development mode.
 # The flag you want for a shared library build is LLVM_BUILD_LLVM_DYLIB.

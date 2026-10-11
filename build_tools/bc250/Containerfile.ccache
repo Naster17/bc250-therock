@@ -1,0 +1,13 @@
+# Copyright Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: MIT
+
+# Preserve bootstrap compiler command lines for an incremental build. The real
+# compiler stays untouched under /usr/lib/llvm-18; only the build image aliases
+# masquerade as Clang through ccache.
+ARG BASE_IMAGE=localhost/bc250-rocm-build:10.2
+FROM ${BASE_IMAGE}
+RUN test -x /usr/lib/llvm-18/bin/clang \
+    && test -x /usr/lib/llvm-18/bin/clang++ \
+    && ln -sf /usr/bin/ccache /usr/bin/clang \
+    && ln -sf /usr/bin/ccache /usr/bin/clang++
+ENV CCACHE_PATH=/usr/lib/llvm-18/bin
