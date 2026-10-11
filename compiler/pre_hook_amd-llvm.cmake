@@ -233,3 +233,13 @@ if(NOT THEROCK_BUILD_LLVM_TESTS AND NOT THEROCK_BUILD_LLVM_TOOLS)
     therock_set_implicit_llvm_options(CLANG "${CMAKE_CURRENT_SOURCE_DIR}/../clang/tools" "${_clang_required_tools}")
   endblock()
 endif()
+
+if(THEROCK_BOOTSTRAP_CCACHE_MASQUERADE)
+  # Runtime sub-builds use the newly built compiler, which has no masquerade
+  # aliases. Use standard launchers there while caching bootstrap Clang above.
+  list(APPEND RUNTIMES_CMAKE_ARGS
+    -DCMAKE_C_COMPILER_LAUNCHER=ccache
+    -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -DCMAKE_HIP_COMPILER_LAUNCHER=ccache
+  )
+endif()
