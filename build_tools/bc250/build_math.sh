@@ -47,6 +47,7 @@ cmake -S "$source_dir" -B "$build_dir" -G Ninja \
     -DTHEROCK_BACKGROUND_BUILD_JOBS=1 \
     -DLLVM_PARALLEL_LINK_JOBS=1 \
     -DFLANG_PARALLEL_COMPILE_JOBS="${BC250_FLANG_JOBS:-4}" \
+    -Damdsmi_CMAKE_ARGS=-DENABLE_ESMI_LIB=OFF \
     "-DrocBLAS_CMAKE_ARGS=-DBUILD_WITH_PIP=OFF;-DTensile_ROOT=$build_dir/tensile-source/Tensile;-DTensile_CPU_THREADS=4;-DTensile_KEEP_BUILD_TMP=OFF"
 
 # Build the wrappers after their backend libraries. Independent Python kernel

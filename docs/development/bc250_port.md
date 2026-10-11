@@ -66,7 +66,14 @@ empty. Keep MIOpen's CK integration disabled during initial validation.
 
 The old 7.2 runtime passed a CPU-compared 64x64 FP32 torch GEMM on the
 8-core host, with SDMA disabled. This establishes a reference only.
-No ROCm 10.2 GPU component has been validated yet.
+The fresh ROCm 10.2 core passed the native HIP hardware gate on `.104` with
+SDMA disabled: 256 allocation/dispatch cycles, LDS reduction, global atomics,
+and CPU-checked copies from 4 KiB through 16 MiB. The reported architecture is
+`gfx1013:xnack-`, with wave32. Math libraries and PyTorch remain unvalidated.
+
+The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
+configuration downloads sources into the source tree, which is intentionally
+read-only; the BC-250 CPU does not expose the EPYC management interface.
 
 The passive DRM probe on `.104` reports one graphics engine, one compute engine,
 and two SDMA engines. VCN decode, VCN encode, JPEG, UVD, and VCE counts return
