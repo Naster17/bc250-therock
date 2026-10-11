@@ -55,7 +55,14 @@ cmake -S "$source_dir" -B "$build_dir" -G Ninja \
 for component in rocRAND hipRAND rocPRIM hipCUB rocThrust rocBLAS hipBLASLt \
     rocFFT hipFFT rocSPARSE hipSPARSE rocSOLVER hipSOLVER hipBLAS MIOpen; do
     echo "Building native component: $component"
-    cmake --build "$build_dir" --target "$component"
+    if [[ "$component" == rocFFT ]]; then
+        # rocFFT also applies OMP_NUM_THREADS to its AOT compiler subprocesses.
+        OMP_NUM_THREADS="${BC250_FFT_JOBS:-16}" \
+            ROCFFT_RTC_MAX_SUBPROCESSES="${BC250_FFT_JOBS:-16}" \
+            cmake --build "$build_dir" --target "$component"
+    else
+        cmake --build "$build_dir" --target "$component"
+    fi
 done
 
 # CK's template instantiations need more RAM per compiler process.

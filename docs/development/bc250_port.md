@@ -66,6 +66,9 @@ empty. Keep MIOpen's CK integration disabled during initial validation.
 and scalar CK. The topology also enables the profiler SDK and its legacy ROCTX
 library, which PyTorch's marker bindings require even with Kineto disabled.
 AMD SMI uses a disposable writable source copy for its generated headers.
+rocFFT's ahead-of-time cache compiler uses 16 workers, independently configurable
+with `BC250_FFT_JOBS`. Its cache in the build tree preserves completed kernels
+when resuming; it uses HIPRTC directly rather than ccache.
 
 `continue_torch_on_host.sh` waits for the math build, runs CPU-reference GEMM,
 Cholesky, prime-length FFT and RNG checks, and verifies the host-only hipBLASLt
@@ -97,8 +100,9 @@ including contended packed updates, neighboring scalar lanes, untouched
 sentinels, and returned old values. LLVM's target-aware `__has_builtin` selects
 the existing CAS fallback on `gfx1013`; no atomic header patch is required.
 rocRAND passed six dispatch/configuration tests and all 44 basic tests on the
-new runtime. rocBLAS built 570 native fallback kernels and its clients; its
-numerical hardware gate remains pending.
+new runtime. rocBLAS built 570 native fallback kernels and passed the upstream
+CPU-compared 1023×1024×1025 SGEMM example. The host-only hipBLASLt descriptor,
+heuristic, extension enumeration and unsupported-execution gate passed.
 
 The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
 configuration downloads sources into the source tree, which is intentionally
