@@ -1,0 +1,126 @@
+From c815e192ca4c98c680ba88e303258d895c1b1c3e Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sun, 11 Oct 2026 23:42:13 +0200
+Subject: [PATCH] fix(amd): lower gfx1013 low precision dots through scalar
+ arithmetic
+
+gfx1013 lacks the packed dot instructions selected by the FMA lowering. Widen FP16 and BF16 operands for FP32 FMA accumulation and sign-extend INT8 operands for integer multiply-add. Preserve the packed lowering for other targets.
+
+Validation: pre-commit and Python syntax checks passed. Native compiler build and the three CPU-reference GPU tests are pending on the BC-250 build host.
+---
+ python/test/unit/language/test_core.py        | 25 +++++++++++++
+ .../TritonAMDGPUToLLVM/DotOpToLLVM/FMA.cpp    | 37 ++++++++++++++++++-
+ 2 files changed, 60 insertions(+), 2 deletions(-)
+
+diff --git a/python/test/unit/language/test_core.py b/python/test/unit/language/test_core.py
+index ed034b1..70c148c 100644
+--- a/python/test/unit/language/test_core.py
++++ b/python/test/unit/language/test_core.py
+@@ -3369,6 +3369,31 @@ def convert_fp8_to_fp32(x, device, dtype_str):
+     raise AssertionError("Unsupported float8 dtype")
+ 
+ 
++@pytest.mark.parametrize("dtype_str", ["float16", "bfloat16", "int8"])
++def test_dot_gfx1013_scalar_fallback(dtype_str, device):
++    if not is_hip() or triton.runtime.driver.active.get_current_target().arch != "gfx1013":
++        pytest.skip("requires native gfx1013")
++
++    @triton.jit
++    def kernel(A, B, C):
++        rows = tl.arange(0, 16)
++        cols = tl.arange(0, 16)
++        a = tl.load(A + rows[:, None] * 16 + cols[None, :])
++        b = tl.load(B + rows[:, None] * 16 + cols[None, :])
++        result = tl.dot(a, b, input_precision="ieee")
++        tl.store(C + rows[:, None] * 16 + cols[None, :], result)
++
++    dtype = getattr(torch, dtype_str)
++    a = torch.randint(-4, 5, (16, 16), dtype=torch.int32).to(dtype)
++    b = torch.randint(-4, 5, (16, 16), dtype=torch.int32).to(dtype)
++    output_dtype = torch.int32 if dtype == torch.int8 else torch.float32
++    reference = (a.double() @ b.double()).to(output_dtype)
++    result = torch.empty((16, 16), dtype=output_dtype, device=device)
++    compiled = kernel[(1, )](a.to(device), b.to(device), result, num_warps=4)
++    torch.testing.assert_close(result.cpu(), reference, rtol=0, atol=0)
++    assert not re.search(r"\bv_(?:dot[24]|mfma|wmma)", compiled.asm["amdgcn"])
++
++
+ # M, N, K, num_warps, col_a, col_b, epilogue, input_precision, in_dtype, out_dtype, kpack, mma_nonk_size
+ def get_test_dot_base_cases():
+     return [(*shape, 4, False, False, epilogue, input_precision, in_dtype, out_dtype, 1, None)
+diff --git a/third_party/amd/lib/TritonAMDGPUToLLVM/DotOpToLLVM/FMA.cpp b/third_party/amd/lib/TritonAMDGPUToLLVM/DotOpToLLVM/FMA.cpp
+index 0c9a991..53c0307 100644
+--- a/third_party/amd/lib/TritonAMDGPUToLLVM/DotOpToLLVM/FMA.cpp
++++ b/third_party/amd/lib/TritonAMDGPUToLLVM/DotOpToLLVM/FMA.cpp
+@@ -1,3 +1,5 @@
++#include "Dialect/TritonAMDGPU/IR/TargetFeatures.h"
++#include "third_party/amd/lib/TritonAMDGPUToLLVM/ConvertFpCastOpToLLVM.h"
+ #include "triton/Conversion/TritonGPUToLLVM/FMADotUtility.h"
+ #include "triton/Conversion/TritonGPUToLLVM/Utility.h"
+ #include "triton/Dialect/TritonGPU/Transforms/Utility.h"
+@@ -13,6 +15,7 @@ struct DotIntrinsic {
+   Type outElemTy;
+   StringRef intrinsicName;
+   SmallVector<Value> additionalArgs;
++  bool scalarInteger = false;
+ };
+ 
+ class AMDFMAVectorMultiplier : public FMAVectorMultiplier {
+@@ -30,6 +33,22 @@ class AMDFMAVectorMultiplier : public FMAVectorMultiplier {
+     DotIntrinsic chosenOp;
+ 
+     auto b = TritonLLVMOpBuilder(loc, rewriter);
++    auto target =
++        amdgpu::TargetFeatures::fromModuleOp(op->getParentOfType<ModuleOp>());
++    if (target.getArch() == "gfx1013") {
++      if ((aElemTy.isF16() || aElemTy.isBF16()) && dElemTy.isF32()) {
++        chosenOp.vectorSize = 1;
++        chosenOp.outElemTy = dElemTy;
++        chosenOp.intrinsicName = "llvm.fmuladd.f32";
++        return chosenOp;
++      }
++      if (aElemTy.isInteger(8) && dElemTy.isInteger(32)) {
++        chosenOp.vectorSize = 1;
++        chosenOp.outElemTy = dElemTy;
++        chosenOp.scalarInteger = true;
++        return chosenOp;
++      }
++    }
+     if ((aElemTy.isF16() || aElemTy.isBF16()) && dElemTy.isF32()) {
+       chosenOp.vectorSize = 2;
+       chosenOp.outElemTy = f32_ty;
+@@ -64,8 +83,18 @@ class AMDFMAVectorMultiplier : public FMAVectorMultiplier {
+ 
+   Value packOperand(ArrayRef<Value> scalarValues, int firstElemPos,
+                     unsigned vectorSize) {
+-    if (vectorSize == 1)
+-      return scalarValues[firstElemPos];
++    if (vectorSize == 1) {
++      auto scalar = scalarValues[firstElemPos];
++      auto scalarType = scalar.getType();
++      if (scalarType == intrinsic.outElemTy)
++        return scalar;
++      if (scalarType.isBF16())
++        return triton::AMD::convertBf16ToFp32(loc, rewriter, scalar);
++      if (scalarType.isF16())
++        return LLVM::FPExtOp::create(rewriter, loc, intrinsic.outElemTy,
++                                     scalar);
++      return LLVM::SExtOp::create(rewriter, loc, intrinsic.outElemTy, scalar);
++    }
+     auto elemTy = scalarValues[firstElemPos].getType();
+     auto vecTy = vec_ty(elemTy, vectorSize);
+     auto b = TritonLLVMOpBuilder(loc, rewriter);
+@@ -90,6 +119,10 @@ class AMDFMAVectorMultiplier : public FMAVectorMultiplier {
+   }
+ 
+   Value generateDotInstr(Value a, Value b, Value c) {
++    if (intrinsic.scalarInteger) {
++      auto product = LLVM::MulOp::create(rewriter, loc, a, b);
++      return LLVM::AddOp::create(rewriter, loc, product, c);
++    }
+     SmallVector<Value> args{a, b, c};
+     args.append(intrinsic.additionalArgs.begin(),
+                 intrinsic.additionalArgs.end());
+-- 
+2.56.0
+
