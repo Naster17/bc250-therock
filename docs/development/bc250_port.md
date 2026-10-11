@@ -70,6 +70,10 @@ The fresh ROCm 10.2 core passed the native HIP hardware gate on `.104` with
 SDMA disabled: 256 allocation/dispatch cycles, LDS reduction, global atomics,
 and CPU-checked copies from 4 KiB through 16 MiB. The reported architecture is
 `gfx1013:xnack-`, with wave32. Math libraries and PyTorch remain unvalidated.
+The packed FP16/BF16 atomic gate also passed with unmodified HIP headers,
+including contended packed updates, neighboring scalar lanes, untouched
+sentinels, and returned old values. LLVM's target-aware `__has_builtin` selects
+the existing CAS fallback on `gfx1013`; no atomic header patch is required.
 
 The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
 configuration downloads sources into the source tree, which is intentionally

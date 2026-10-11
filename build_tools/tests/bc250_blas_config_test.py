@@ -14,6 +14,39 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class Bc250BlasConfigTest(unittest.TestCase):
+    def test_tensile_accepts_native_target_without_claiming_asan(self):
+        supported = (
+            ROOT
+            / "rocm-libraries/shared/tensile/Tensile/Source/cmake/TensileSupportedArchitectures.cmake"
+        )
+        if not supported.is_file():
+            self.skipTest("Tensile source submodule is not initialized")
+        with tempfile.TemporaryDirectory() as directory:
+            script = Path(directory) / "probe.cmake"
+            script.write_text(
+                f'include("{supported.as_posix()}")\n'
+                'tensile_validate_gpu_targets("gfx1013")\n'
+            )
+            for asan in (False, True):
+                with self.subTest(asan=asan):
+                    result = subprocess.run(
+                        [
+                            "cmake",
+                            f"-DBUILD_ADDRESS_SANITIZER={'ON' if asan else 'OFF'}",
+                            "-P",
+                            str(script),
+                        ],
+                        capture_output=True,
+                        text=True,
+                    )
+                    if asan:
+                        self.assertNotEqual(result.returncode, 0)
+                        self.assertIn("Unsupported GPU target: gfx1013", result.stderr)
+                    else:
+                        self.assertEqual(
+                            result.returncode, 0, result.stdout + result.stderr
+                        )
+
     def _configure(self, targets: str) -> dict[str, str]:
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory)
