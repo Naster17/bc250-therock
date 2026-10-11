@@ -28,8 +28,13 @@ artifacts. Copies of those files, GRUB configuration, GRUB environment, and
 the kernel command line are retained in the new workspace's `recovery/`.
 Keep the current working kernel as the persistent default; use GRUB one-shot
 selection for any replacement kernel until SSH and hardware gates pass.
-A hard GPU hang may prevent both SSH and a software watchdog from recovering
-the machine; physical power cycling remains necessary in that case.
+The host exposes an SP5100 TCO hardware watchdog. Use
+`build_tools/bc250/configure_watchdog.sh` as root to enable Alpine's existing
+OpenRC service with 10-second keepalives and a 120-second timeout. Its prior
+configuration is backed up alongside `/etc/conf.d/watchdog`. Verify watchdog
+reset behavior separately before relying on it for unattended tests. A hard
+GPU hang may still require physical power cycling if the chipset timer cannot
+recover it.
 
 ## Build
 
