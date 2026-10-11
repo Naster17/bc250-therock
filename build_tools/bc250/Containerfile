@@ -27,4 +27,7 @@ RUN python3 -m venv /opt/build-venv \
 # zlib's coverage client needs the bootstrap Clang profiling runtime.
 RUN apt-get update && apt-get install -y --no-install-recommends libclang-rt-18-dev \
     && rm -rf /var/lib/apt/lists/*
+# ROCclr's HSA backend requires OpenGL headers even for HIP-only builds.
+RUN apt-get update && apt-get install -y --no-install-recommends libglvnd-dev \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /workspace
