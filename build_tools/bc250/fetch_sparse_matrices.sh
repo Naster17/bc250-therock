@@ -8,7 +8,7 @@ set -euo pipefail
 source_dir="${1:?usage: fetch_sparse_matrices.sh <therock-source> <build-directory>}"
 build_dir="${2:?missing build directory}"
 component_source="$source_dir/rocm-libraries/projects/rocsparse"
-matrix_dir="$build_dir/math-libs/BLAS/rocSPARSE/build/matrices"
+matrix_dir="$build_dir/math-libs/BLAS/rocSPARSE/build/clients/matrices"
 converter_dir="$build_dir/bc250-sparse-matrix-converter"
 for attempt in 1 2 3; do
     if cmake \
