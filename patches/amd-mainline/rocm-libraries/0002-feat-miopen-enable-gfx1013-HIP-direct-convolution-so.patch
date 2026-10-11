@@ -1,0 +1,146 @@
+From b6b37dcdf0d4e0e75c01956544809c6b3def2589 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sun, 11 Oct 2026 13:10:21 +0200
+Subject: [PATCH] feat(miopen): enable gfx1013 HIP-direct convolution solver
+ tests
+
+---
+ projects/miopen/src/solver/conv/conv_hip_dir2D11x11.cpp      | 2 +-
+ projects/miopen/src/solver/conv/conv_hip_dir2D_bwdWrW_53.cpp | 3 ++-
+ projects/miopen/src/solver/conv/conv_hip_dir2Dfwd.cpp        | 3 ++-
+ projects/miopen/test/gtest/gtest_common.cpp                  | 5 ++++-
+ projects/miopen/test/gtest/gtest_common.hpp                  | 3 ++-
+ .../miopen/test/gtest/unit_conv_solver_ConvHipBwdWrW53.cpp   | 3 ++-
+ .../miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd.cpp  | 3 ++-
+ .../test/gtest/unit_conv_solver_ConvHipDirectFwd11x11.cpp    | 2 +-
+ 8 files changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/projects/miopen/src/solver/conv/conv_hip_dir2D11x11.cpp b/projects/miopen/src/solver/conv/conv_hip_dir2D11x11.cpp
+index df91f2b34d4..526251d0b18 100644
+--- a/projects/miopen/src/solver/conv/conv_hip_dir2D11x11.cpp
++++ b/projects/miopen/src/solver/conv/conv_hip_dir2D11x11.cpp
+@@ -28,7 +28,7 @@ bool ConvHipDirectFwd11x11::IsApplicable(const ExecutionContext& ctx,
+     const auto& name = ctx.GetStream().GetDeviceName();
+     // gfx8 is intentionally excluded: it is end-of-life and not supported for new HIP solvers.
+     if(!(StartsWith(name, "gfx90") || StartsWith(name, "gfx94") || StartsWith(name, "gfx95") ||
+-         StartsWith(name, "gfx103") || StartsWith(name, "gfx110") || StartsWith(name, "gfx115") ||
++         name == "gfx1013" || StartsWith(name, "gfx103") || StartsWith(name, "gfx110") || StartsWith(name, "gfx115") ||
+          StartsWith(name, "gfx120")))
+         return false;
+     if(!problem.Is2d())
+diff --git a/projects/miopen/src/solver/conv/conv_hip_dir2D_bwdWrW_53.cpp b/projects/miopen/src/solver/conv/conv_hip_dir2D_bwdWrW_53.cpp
+index 2c7135b1ec8..53e24065bf6 100644
+--- a/projects/miopen/src/solver/conv/conv_hip_dir2D_bwdWrW_53.cpp
++++ b/projects/miopen/src/solver/conv/conv_hip_dir2D_bwdWrW_53.cpp
+@@ -45,7 +45,8 @@ bool ConvHipBwdWrW53::IsApplicable(const ExecutionContext& ctx,
+     if(env::disabled(MIOPEN_DEBUG_CONV_DIRECT_HIP_WRW53))
+         return false;
+     const std::string name = ctx.GetStream().GetDeviceName();
+-    if(!(StartsWith(name, "gfx8") || StartsWith(name, "gfx90") || StartsWith(name, "gfx103")))
++    if(!(StartsWith(name, "gfx8") || StartsWith(name, "gfx90") || name == "gfx1013" ||
++         StartsWith(name, "gfx103")))
+         return false;
+     if(!ctx.use_hip_kernels)
+         return false;
+diff --git a/projects/miopen/src/solver/conv/conv_hip_dir2Dfwd.cpp b/projects/miopen/src/solver/conv/conv_hip_dir2Dfwd.cpp
+index 8d1bc0342a3..683cae216e0 100644
+--- a/projects/miopen/src/solver/conv/conv_hip_dir2Dfwd.cpp
++++ b/projects/miopen/src/solver/conv/conv_hip_dir2Dfwd.cpp
+@@ -21,7 +21,8 @@ bool ConvHipDirectFwd::IsApplicable(const ExecutionContext& ctx,
+     if(env::disabled(MIOPEN_DEBUG_CONV_DIRECT_HIP_FWD))
+         return false;
+     const std::string name = ctx.GetStream().GetDeviceName();
+-    if(!(StartsWith(name, "gfx8") || StartsWith(name, "gfx90") || StartsWith(name, "gfx103")))
++    if(!(StartsWith(name, "gfx8") || StartsWith(name, "gfx90") || name == "gfx1013" ||
++         StartsWith(name, "gfx103")))
+         return false;
+     if(!ctx.use_hip_kernels)
+         return false;
+diff --git a/projects/miopen/test/gtest/gtest_common.cpp b/projects/miopen/test/gtest/gtest_common.cpp
+index bc2fdb25b53..c57df517293 100644
+--- a/projects/miopen/test/gtest/gtest_common.cpp
++++ b/projects/miopen/test/gtest/gtest_common.cpp
+@@ -88,6 +88,8 @@ Gpu GetGpuType(const std::string& dev_name)
+         return Gpu::gfx94X;
+     if(miopen::StartsWith(arch, "gfx95"))
+         return Gpu::gfx950;
++    if(arch == "gfx1013")
++        return Gpu::gfx1013;
+     if(miopen::StartsWith(arch, "gfx103"))
+         return Gpu::gfx103X;
+     if(miopen::StartsWith(arch, "gfx110"))
+@@ -109,7 +111,7 @@ Gpu GetDevGpuType()
+ 
+ const std::multimap<Gpu, DevDescription>& GetAllKnownDevices()
+ {
+-    static_assert(Gpu::gfx125X == Gpu::gfxLast);
++    static_assert(Gpu::gfx1013 == Gpu::gfxLast);
+ 
+     // https://rocm.docs.amd.com/en/latest/reference/gpu-arch-specs.html
+     static const std::multimap<Gpu, DevDescription> known_devs = {
+@@ -123,6 +125,7 @@ const std::multimap<Gpu, DevDescription>& GetAllKnownDevices()
+         {Gpu::gfx94X,  {"gfx942",  228, 64}},
+         {Gpu::gfx94X,  {"gfx942",  304, 64}},
+         {Gpu::gfx950,  {"gfx950",  256, 64}},
++        {Gpu::gfx1013, {"gfx1013", 20, 32}}, // BC-250: 40 CUs, 20 WGPs
+         {Gpu::gfx103X, {"gfx1030", 30, 32}},
+         {Gpu::gfx103X, {"gfx1030", 36, 32}},
+         {Gpu::gfx103X, {"gfx1030", 40, 32}},
+diff --git a/projects/miopen/test/gtest/gtest_common.hpp b/projects/miopen/test/gtest/gtest_common.hpp
+index f9f484cd644..db4fb0df1e6 100644
+--- a/projects/miopen/test/gtest/gtest_common.hpp
++++ b/projects/miopen/test/gtest/gtest_common.hpp
+@@ -150,7 +150,8 @@ enum class Gpu : int
+     gfx115X = 1 << 8,
+     gfx120X = 1 << 9,
+     gfx125X = 1 << 10,
+-    gfxLast = Gpu::gfx125X, // \note Change the value when adding a new device
++    gfx1013 = 1 << 11,
++    gfxLast = Gpu::gfx1013, // \note Change the value when adding a new device
+     All     = -1
+ };
+ 
+diff --git a/projects/miopen/test/gtest/unit_conv_solver_ConvHipBwdWrW53.cpp b/projects/miopen/test/gtest/unit_conv_solver_ConvHipBwdWrW53.cpp
+index a0e8f9ea18e..c016fb4225d 100644
+--- a/projects/miopen/test/gtest/unit_conv_solver_ConvHipBwdWrW53.cpp
++++ b/projects/miopen/test/gtest/unit_conv_solver_ConvHipBwdWrW53.cpp
+@@ -42,7 +42,8 @@ auto GetConvTestCases(miopenDataType_t datatype)
+ const auto& GetTestParams()
+ {
+     static const auto params = [] {
+-        Gpu supported_gpus = Gpu::gfx900 | Gpu::gfx906 | Gpu::gfx908 | Gpu::gfx90A | Gpu::gfx103X;
++        Gpu supported_gpus = Gpu::gfx900 | Gpu::gfx906 | Gpu::gfx908 | Gpu::gfx90A |
++                             Gpu::gfx1013 | Gpu::gfx103X;
+         auto p             = miopen::unit_tests::UnitTestConvSolverParams(supported_gpus);
+         return p;
+     }();
+diff --git a/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd.cpp b/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd.cpp
+index 06078e7f2f2..c3eb341fcc5 100644
+--- a/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd.cpp
++++ b/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd.cpp
+@@ -42,7 +42,8 @@ auto GetConvTestCases(miopenDataType_t datatype)
+ const auto& GetTestParams()
+ {
+     static const auto params = [] {
+-        Gpu supported_gpus = Gpu::gfx900 | Gpu::gfx906 | Gpu::gfx908 | Gpu::gfx90A | Gpu::gfx103X;
++        Gpu supported_gpus = Gpu::gfx900 | Gpu::gfx906 | Gpu::gfx908 | Gpu::gfx90A |
++                             Gpu::gfx1013 | Gpu::gfx103X;
+         auto p             = miopen::unit_tests::UnitTestConvSolverParams(supported_gpus);
+         p.Tunable(5);
+         return p;
+diff --git a/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd11x11.cpp b/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd11x11.cpp
+index 5a00164a0cd..6b20156b7cb 100644
+--- a/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd11x11.cpp
++++ b/projects/miopen/test/gtest/unit_conv_solver_ConvHipDirectFwd11x11.cpp
+@@ -23,7 +23,7 @@ const auto& GetTestParams()
+ {
+     static const auto params = [] {
+         Gpu supported_gpus = Gpu::gfx900 | Gpu::gfx906 | Gpu::gfx908 | Gpu::gfx90A | Gpu::gfx94X |
+-                             Gpu::gfx950 | Gpu::gfx103X | Gpu::gfx110X | Gpu::gfx115X |
++                             Gpu::gfx950 | Gpu::gfx1013 | Gpu::gfx103X | Gpu::gfx110X | Gpu::gfx115X |
+                              Gpu::gfx120X;
+         auto p = miopen::unit_tests::UnitTestConvSolverParams(supported_gpus);
+         p.SetTolerance(supported_gpus, miopenFloat, 3.0f);
+-- 
+2.56.0
+
