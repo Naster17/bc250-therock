@@ -1,0 +1,13 @@
+# Copyright Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: MIT
+
+FROM localhost/bc250-rocm-build:10.2-ccache
+
+# Keep PyTorch's pinned CMake and Python tools separate from the superbuild.
+COPY pytorch-requirements-build.txt /tmp/pytorch-requirements/requirements-build.txt
+COPY pytorch-requirements.txt /tmp/pytorch-requirements/requirements.txt
+RUN python3 -m venv /opt/torch-venv \
+    && /opt/torch-venv/bin/pip install --no-cache-dir \
+        -r /tmp/pytorch-requirements/requirements.txt
+ENV PATH="/opt/torch-venv/bin:${PATH}"
+WORKDIR /workspace
