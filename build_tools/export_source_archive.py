@@ -108,25 +108,24 @@ class TarArchiveWriter(ArchiveWriter):
     def add_text(self, text: str, arcname: str):
         with tempfile.NamedTemporaryFile(mode="wt") as tf:
             tf.write(text)
+            tf.flush()
             self.archive.add(Path(tf.name), arcname)
 
 
 def git_ls_files(repo_dir: Path, recurse_submodules: bool = False):
-    cl = ["git", "ls-files"]
+    cl = ["git", "-C", str(repo_dir), "ls-files", "-z"]
     if recurse_submodules:
         cl += ["--recurse-submodules"]
-    cl += [str(repo_dir)]
-    lines = subprocess.check_output(cl).decode()
-    return lines.splitlines()
+    return subprocess.check_output(cl).decode().split("\0")[:-1]
 
 
 def git_head_revision(repo_dir: Path) -> str:
-    cl = ["git", "rev-parse", "HEAD"]
+    cl = ["git", "-C", str(repo_dir), "rev-parse", "HEAD"]
     return subprocess.check_output(cl).decode().strip()
 
 
 def git_origin(repo_dir: Path) -> str:
-    cl = ["git", "remote", "get-url", "origin"]
+    cl = ["git", "-C", str(repo_dir), "remote", "get-url", "origin"]
     try:
         return subprocess.check_output(cl).decode().strip()
     except subprocess.CalledProcessError:
