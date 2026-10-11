@@ -1,0 +1,49 @@
+From 63915ab77fd24d7ebdde833a70e6aa9cfcc501fb Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 00:08:13 +0200
+Subject: [PATCH] test(amd): distinguish widened gfx1013 dot accumulation and
+ signed limits
+
+---
+ python/test/unit/language/test_core.py | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+
+diff --git a/python/test/unit/language/test_core.py b/python/test/unit/language/test_core.py
+index 70c148c..87e47fd 100644
+--- a/python/test/unit/language/test_core.py
++++ b/python/test/unit/language/test_core.py
+@@ -3384,14 +3384,24 @@ def test_dot_gfx1013_scalar_fallback(dtype_str, device):
+         tl.store(C + rows[:, None] * 16 + cols[None, :], result)
+ 
+     dtype = getattr(torch, dtype_str)
+-    a = torch.randint(-4, 5, (16, 16), dtype=torch.int32).to(dtype)
+-    b = torch.randint(-4, 5, (16, 16), dtype=torch.int32).to(dtype)
+     output_dtype = torch.int32 if dtype == torch.int8 else torch.float32
+-    reference = (a.double() @ b.double()).to(output_dtype)
+-    result = torch.empty((16, 16), dtype=output_dtype, device=device)
+-    compiled = kernel[(1, )](a.to(device), b.to(device), result, num_warps=4)
+-    torch.testing.assert_close(result.cpu(), reference, rtol=0, atol=0)
+-    assert not re.search(r"\bv_(?:dot[24]|mfma|wmma)", compiled.asm["amdgcn"])
++    for pattern in ("signed", "accumulation"):
++        if pattern == "signed":
++            a = torch.randint(-4, 5, (16, 16), dtype=torch.int32).to(dtype)
++            b = torch.randint(-4, 5, (16, 16), dtype=torch.int32).to(dtype)
++        else:
++            a = torch.ones((16, 16), dtype=dtype)
++            b = torch.ones_like(a)
++            if dtype == torch.int8:
++                a[:, ::2] = -128
++                a[:, 1::2] = 127
++            else:
++                a[:, 0] = 2048 if dtype == torch.float16 else 256
++        reference = (a.double() @ b.double()).to(output_dtype)
++        result = torch.empty((16, 16), dtype=output_dtype, device=device)
++        compiled = kernel[(1, )](a.to(device), b.to(device), result, num_warps=4)
++        torch.testing.assert_close(result.cpu(), reference, rtol=0, atol=0)
++        assert not re.search(r"\bv_(?:dot[24]|mfma|wmma)", compiled.asm["amdgcn"])
+ 
+ 
+ # M, N, K, num_warps, col_a, col_b, epilogue, input_precision, in_dtype, out_dtype, kpack, mma_nonk_size
+-- 
+2.56.0
+
