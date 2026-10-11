@@ -391,7 +391,8 @@ if(THEROCK_ENABLE_SPARSE)
   # hipSPARSELt
   ##############################################################################
 
-  if(NOT WIN32) # Remove this block once hipSPARSELt is supported on Windows
+  therock_filter_amdgpu_targets(_hipsparselt_device_targets hipSPARSELt ${THEROCK_AMDGPU_TARGETS})
+  if(NOT WIN32 AND _hipsparselt_device_targets)
     # hipSPARSELt expects amd_smi on Linux.
     set(hipSPARSELt_runtime_deps)
 

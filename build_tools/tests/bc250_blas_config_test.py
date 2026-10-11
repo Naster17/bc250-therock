@@ -5,6 +5,7 @@
 
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -23,6 +24,7 @@ include("@ROOT@/cmake/therock_amdgpu_targets.cmake")
 include("@ROOT@/cmake/therock_subproject.cmake")
 set(THEROCK_AMDGPU_TARGETS "@TARGETS@")
 set(THEROCK_BUILD_TESTING ON)
+set(THEROCK_ENABLE_SPARSE ON)
 set(THEROCK_ROCM_LIBRARIES_SOURCE_DIR "@ROOT@/rocm-libraries")
 
 function(therock_cmake_subproject_declare name)
@@ -45,6 +47,8 @@ endforeach()
 include("@ROOT@/math-libs/BLAS/CMakeLists.txt")
 get_property(roller GLOBAL PROPERTY probe_rocRoller)
 file(WRITE "${CMAKE_BINARY_DIR}/roller" "${roller}")
+get_property(sparse_lt GLOBAL PROPERTY probe_hipSPARSELt)
+file(WRITE "${CMAKE_BINARY_DIR}/sparse_lt" "${sparse_lt}")
 """
             (source / "CMakeLists.txt").write_text(
                 script.replace("@ROOT@", ROOT.as_posix()).replace("@TARGETS@", targets)
@@ -65,6 +69,7 @@ file(WRITE "${CMAKE_BINARY_DIR}/roller" "${roller}")
                     "rocBLAS.args",
                     "rocBLAS.deps",
                     "roller",
+                    "sparse_lt",
                 )
             }
 
@@ -80,6 +85,35 @@ file(WRITE "${CMAKE_BINARY_DIR}/roller" "${roller}")
         self.assertIn("-DBUILD_WITH_TENSILE=ON", config["rocBLAS.args"])
         self.assertIn("-DBUILD_WITH_HIPBLASLT=0", config["rocBLAS.args"])
         self.assertNotIn("hipBLASLt", config["rocBLAS.deps"])
+        self.assertEqual(config["sparse_lt"], "")
+
+    def test_supported_sparse_lt_is_still_declared(self):
+        config = self._configure("gfx942")
+        self.assertEqual(config["sparse_lt"], "TRUE")
+
+    def test_sparse_artifacts_allow_excluded_lt_stage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "build_tools/fileset_tool.py"),
+                    "artifact",
+                    "--root-dir",
+                    str(root),
+                    "--descriptor",
+                    str(ROOT / "math-libs/BLAS/artifact-sparse.toml"),
+                    "--artifact-name",
+                    "sparse",
+                    "lib",
+                    str(root / "lib"),
+                    "test",
+                    str(root / "test"),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_supported_and_mixed_targets_keep_device_backend(self):
         for targets in ("gfx1100", "gfx1013;gfx1100"):
