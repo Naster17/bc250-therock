@@ -24,9 +24,15 @@ sh "$workspace/helpers/validate_core_on_host.sh" "$workspace" \
 
 phase=building-math
 echo "$phase" > "$workspace/logs/continuation.phase"
+# AMD SMI generates version headers and updates its Rust bindings in-tree.
+# Give it a disposable copy without allowing writes to the source snapshot.
+mkdir -p "$workspace/build/source-copies/amdsmi"
+cp -a "$workspace/source/rocm-systems/projects/amdsmi/." \
+    "$workspace/build/source-copies/amdsmi/"
 set +e
 podman run --rm --name bc250-rocm-math-build --network host \
     -v "$workspace/source:/workspace/source:ro" \
+    -v "$workspace/build/source-copies/amdsmi:/workspace/source/rocm-systems/projects/amdsmi:rw" \
     -v "$workspace/helpers:/workspace/helpers:ro" \
     -v "$workspace/build:/workspace/build:rw" \
     -v "$workspace/cache:/workspace/cache:rw" \
