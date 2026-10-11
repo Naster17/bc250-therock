@@ -42,16 +42,34 @@ Build the image from the source root using
 `podman build -f build_tools/bc250/Containerfile -t bc250-rocm-build:10.2 .`.
 Run `build_tools/bc250/build_core.sh` inside it with the transferred source
 and a separate build directory. Do not map GPU devices into build containers.
-`CMAKE_BUILD_PARALLEL_LEVEL=4` also bounds nested builds; the compiler has a
-single linker job and a single Flang compilation job.
+Build the ccache variant with
+`podman build -f build_tools/bc250/Containerfile.ccache -t bc250-rocm-build:10.2-ccache .`.
+The host runner mounts a persistent NVMe cache and defaults to 16 compilation
+jobs, four Flang compilation jobs, and one LLVM linker job. Override these with
+`BC250_BUILD_JOBS` and `BC250_FLANG_JOBS`. The cache defaults to 20 GB, configurable
+with `BC250_CCACHE_MAXSIZE`.
+
+The bootstrap image uses ccache masquerade aliases for Ubuntu Clang while
+retaining the real compiler under `/usr/lib/llvm-18`. The opt-in
+`THEROCK_BOOTSTRAP_CCACHE_MASQUERADE` flag suppresses duplicate bootstrap
+launchers, preserving existing LLVM Ninja command lines. Subsequent runtime
+and HIP builds use standard CMake ccache launchers. Compiler fingerprints use
+TheRock's compiler and shared-library hashing script.
 
 The target belongs to `igpu-all`, `gfx101X-all`, and `gfx101X-igpu`, and is
-directly selectable as `gfx1013`. The initial excluded projects match the
-existing gfx101X profile. They remain audit targets, with hardware-compatible
-generic paths considered separately.
+directly selectable as `gfx1013`. CK's scalar DL paths are enabled with XDL and
+WMMA disabled. hipBLASLt supplies an explicit host/API-only profile while GEMM
+uses native rocBLAS. hipSPARSELt is omitted when its device-target filter is
+empty. Keep MIOpen's CK integration disabled during initial validation.
 
 ## Validation status
 
 The old 7.2 runtime passed a CPU-compared 64x64 FP32 torch GEMM on the
 8-core host, with SDMA disabled. This establishes a reference only.
 No ROCm 10.2 GPU component has been validated yet.
+
+The passive DRM probe on `.104` reports one graphics engine, one compute engine,
+and two SDMA engines. VCN decode, VCN encode, JPEG, UVD, and VCE counts return
+`-EINVAL` with zero available rings. The current kernel therefore exposes no
+hardware media decode backend; firmware file presence alone does not establish
+one.
