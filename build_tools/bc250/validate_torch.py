@@ -40,6 +40,48 @@ def main() -> None:
         print(f"PASS {name}", flush=True)
         args.output.write_text(json.dumps(report, indent=2) + "\n")
 
+    torch.cuda.nvtx.range_push("gfx1013_validation")
+    torch.cuda.nvtx.mark("native_roctx_marker")
+    torch.cuda.nvtx.range_pop()
+    passed("roctx_markers")
+
+    for dtype in (torch.float16, torch.bfloat16):
+        for length in (1, 3, 17):
+            indices = torch.arange(128) % length
+            values = torch.full((128,), 0.5, dtype=dtype)
+            for offset in (0, 1):
+                cpu_storage = torch.full((length + 2,), 7.0, dtype=dtype)
+                gpu_storage = cpu_storage.cuda()
+                cpu_view = cpu_storage[offset : offset + length]
+                gpu_view = gpu_storage[offset : offset + length]
+                cpu_view.scatter_add_(0, indices, values)
+                gpu_view.scatter_add_(0, indices.cuda(), values.cuda())
+                torch.testing.assert_close(
+                    gpu_storage.cpu(), cpu_storage, rtol=0, atol=0
+                )
+                passed(f"scatter_add_{dtype}_{length}_offset_{offset}")
+
+                cpu_storage = torch.full((length * 3 + 2,), 7.0, dtype=dtype)
+                gpu_storage = cpu_storage.cuda()
+                cpu_view = cpu_storage[offset : offset + length * 3].view(length, 3)
+                gpu_view = gpu_storage[offset : offset + length * 3].view(length, 3)
+                updates = values[:, None].expand(-1, 3).contiguous()
+                cpu_view.index_add_(0, indices, updates)
+                gpu_view.index_add_(0, indices.cuda(), updates.cuda())
+                torch.testing.assert_close(
+                    gpu_storage.cpu(), cpu_storage, rtol=0, atol=0
+                )
+                passed(f"index_add_{dtype}_{length}_offset_{offset}")
+
+            cpu_weight = torch.randn(length, 3, dtype=dtype, requires_grad=True)
+            gpu_weight = cpu_weight.detach().cuda().requires_grad_()
+            (functional.embedding(indices, cpu_weight).sum() * 0.5).backward()
+            (functional.embedding(indices.cuda(), gpu_weight).sum() * 0.5).backward()
+            torch.testing.assert_close(
+                gpu_weight.grad.cpu(), cpu_weight.grad, rtol=0, atol=0
+            )
+            passed(f"embedding_gradient_{dtype}_{length}")
+
     # Compare against FP64 accumulation and cast only the final reference.
     # Low-precision tolerances allow a few output ULPs, including cancellation.
     precisions = (
