@@ -1,0 +1,34 @@
+From 2efc3717efe845e21116c00d715d22b2f12ddc9a Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sun, 11 Oct 2026 23:04:35 +0200
+Subject: [PATCH] fix(hipblaslt): omit device management discovery in host-only
+ mode
+
+---
+ projects/hipblaslt/CMakeLists.txt | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/projects/hipblaslt/CMakeLists.txt b/projects/hipblaslt/CMakeLists.txt
+index 3ff193f53b2..9dfbe0d31b8 100644
+--- a/projects/hipblaslt/CMakeLists.txt
++++ b/projects/hipblaslt/CMakeLists.txt
+@@ -175,10 +175,12 @@ if(HIPBLASLT_ENABLE_HOST)
+     endif()
+ endif()
+ 
+-if(HIPBLASLT_ENABLE_AMD_SMI)
+-    find_package(amd_smi REQUIRED)
+-else()
+-    find_package(amd_smi)
++if(NOT HIPBLASLT_HOST_API_ONLY)
++    if(HIPBLASLT_ENABLE_AMD_SMI)
++        find_package(amd_smi REQUIRED)
++    else()
++        find_package(amd_smi)
++    endif()
+ endif()
+ 
+ if(HIPBLASLT_ENABLE_CLIENT)
+-- 
+2.56.0
+
