@@ -580,6 +580,20 @@ if(_ck_enabled)
   # Composable_kernel
   ##############################################################################
 
+  set(_ck_extra_cmake_args)
+  if(THEROCK_AMDGPU_TARGETS STREQUAL "gfx1013")
+    # Use the existing scalar DL kernels; gfx1013 has no matrix instructions.
+    list(APPEND _ck_extra_cmake_args
+      -DFORCE_DISABLE_XDL=ON
+      -DFORCE_DISABLE_WMMA=ON
+      -DDISABLE_DL_KERNELS=OFF
+      -DDISABLE_DPP_KERNELS=ON
+      -DBUILD_MHA_LIB=OFF
+      -DBUILD_CK_PROFILER=OFF
+      -DBUILD_CK_TILE_FMHA_TESTS=OFF
+    )
+  endif()
+
   therock_cmake_subproject_declare(composable_kernel
     EXTERNAL_SOURCE_DIR "${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/projects/composablekernel"
     BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/composable_kernel"
@@ -591,6 +605,7 @@ if(_ck_enabled)
       "-DBUILD_TESTING=${THEROCK_BUILD_TESTING}"
       -DMIOPEN_REQ_LIBS_ONLY=ON
       "-DHIPTENSOR_REQ_LIBS_ONLY=$<NOT:$<BOOL:${THEROCK_COMPOSABLE_KERNEL_FOR_MIOPEN_ONLY}>>"
+      ${_ck_extra_cmake_args}
     CMAKE_INCLUDES
       therock_explicit_finders.cmake
     COMPILER_TOOLCHAIN
