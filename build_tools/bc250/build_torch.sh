@@ -19,7 +19,7 @@ cp -a "$source_dir/." "$work_dir/"
 cache_dir="${BC250_CCACHE_DIR:-/workspace/cache}"
 export CCACHE_MAXSIZE="${BC250_CCACHE_MAXSIZE:-20G}"
 eval "$(python3 "$therock_source/build_tools/setup_ccache.py" \
-    --dir "$cache_dir" --local-path "$cache_dir/data" --no-reset-stats)"
+    --dir "$cache_dir/torch-config" --local-path "$cache_dir/data" --no-reset-stats)"
 
 export ROCM_PATH="$rocm_prefix"
 export HIP_PATH="$rocm_prefix"

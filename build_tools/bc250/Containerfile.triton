@@ -1,0 +1,10 @@
+# Copyright Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: MIT
+
+FROM localhost/bc250-rocm-build:10.2-ccache
+
+COPY triton-requirements.txt /tmp/triton-requirements.txt
+RUN python3 -m venv /opt/triton-venv \
+    && /opt/triton-venv/bin/pip install --no-cache-dir -r /tmp/triton-requirements.txt
+ENV PATH="/opt/triton-venv/bin:${PATH}"
+WORKDIR /workspace
