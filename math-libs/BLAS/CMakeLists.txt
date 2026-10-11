@@ -21,6 +21,14 @@ endif()
 ##############################################################################
 set(_blas_subproject_names)
 
+# gfx1013 has native rocBLAS kernels but no hipBLASLt matrix-instruction
+# backend. Preserve the descriptor ABI without substituting another GPU ISA.
+set(_hipblaslt_host_api_only OFF)
+therock_filter_amdgpu_targets(_hipblaslt_device_targets hipBLASLt ${THEROCK_AMDGPU_TARGETS})
+if("gfx1013" IN_LIST THEROCK_AMDGPU_TARGETS AND NOT _hipblaslt_device_targets)
+  set(_hipblaslt_host_api_only ON)
+endif()
+
 therock_cmake_subproject_declare(hipBLAS-common
 EXTERNAL_SOURCE_DIR "${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/projects/hipblas-common"
 BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/hipBLAS-common"
@@ -45,7 +53,7 @@ list(APPEND _blas_subproject_names hipBLAS-common)
 # rocRoller
 ##############################################################################
 
-if(WIN32)
+if(WIN32 OR _hipblaslt_host_api_only)
   set(_enable_rocRoller "OFF")
 else()
   set(_enable_rocRoller "ON")
@@ -131,7 +139,7 @@ list(APPEND _blas_subproject_names origami)
 ##############################################################################
 
 set(hipBLASLt_runtime_deps)
-if(NOT WIN32)
+if(NOT WIN32 AND NOT _hipblaslt_host_api_only)
   # Required on Linux.
   list(APPEND hipBLASLt_runtime_deps amdsmi)
 
@@ -139,6 +147,37 @@ if(NOT WIN32)
   if(TARGET rocm_smi_lib)
     list(APPEND hipBLASLt_runtime_deps rocm_smi_lib)
   endif()
+endif()
+
+set(_hipblaslt_declaration_options DEFAULT_GPU_TARGETS gfx1100)
+set(_hipblaslt_extra_cmake_args)
+set(_hipblaslt_build_deps mxDataGenerator)
+set(_hipblaslt_reference_deps therock-host-blas)
+set(_rocblas_hipblaslt_deps hipBLASLt)
+if(_hipblaslt_host_api_only)
+  set(_hipblaslt_declaration_options DISABLE_AMDGPU_TARGETS)
+  set(_hipblaslt_build_deps)
+  set(_hipblaslt_reference_deps)
+  set(_rocblas_hipblaslt_deps)
+  list(APPEND _hipblaslt_extra_cmake_args
+    -DHIPBLASLT_HOST_API_ONLY=ON
+    -DHIPBLASLT_ENABLE_HOST=ON
+    -DTENSILELITE_ENABLE_HOST=ON
+    -DHIPBLASLT_ENABLE_DEVICE=OFF
+    -DHIPBLASLT_ENABLE_CLIENT=OFF
+    -DHIPBLASLT_ENABLE_EXTOPS=OFF
+    -DHIPBLASLT_ENABLE_MATRIX_TRANSFORM=OFF
+    -DHIPBLASLT_ENABLE_MXDATAGENERATOR=OFF
+    -DHIPBLASLT_ENABLE_MARKER=OFF
+    -DTENSILELITE_ENABLE_CLIENT=OFF
+    -DTENSILELITE_BUILD_TESTING=OFF
+    -DTENSILELITE_ENABLE_AUTOBUILD=OFF
+    -DHIPBLASLT_BUILD_TESTING=OFF
+    -DHIPBLASLT_INSTALL_TENSILELITE_TEST_ARTIFACTS=OFF
+    "-DGPU_TARGETS=${THEROCK_AMDGPU_TARGETS}"
+    "-DAMDGPU_TARGETS=${THEROCK_AMDGPU_TARGETS}"
+    "-DCMAKE_HIP_ARCHITECTURES=${THEROCK_AMDGPU_TARGETS}"
+  )
 endif()
 
 set(hipBLASLt_rocRoller_deps)
@@ -159,8 +198,7 @@ therock_cmake_subproject_declare(hipBLASLt
   EXTERNAL_SOURCE_DIR "${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/projects/hipblaslt"
   BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/hipBLASLt"
   BACKGROUND_BUILD
-  DEFAULT_GPU_TARGETS
-    gfx1100  # TODO: Fix hipblaslt to accept an empty target list.
+  ${_hipblaslt_declaration_options}
   CMAKE_ARGS
     -DHIP_PLATFORM=amd
     -DHIPBLASLT_ENABLE_BLIS=OFF  # TODO: Evaluate
@@ -174,13 +212,14 @@ therock_cmake_subproject_declare(hipBLASLt
     -DHIPBLASLT_ENABLE_ROCROLLER=${_enable_rocRoller}
     -DHIPBLASLT_ENABLE_FETCH=OFF
     -DHIPBLASLT_ENABLE_THEROCK=ON
+    ${_hipblaslt_extra_cmake_args}
   CMAKE_INCLUDES
     therock_explicit_finders.cmake
   COMPILER_TOOLCHAIN
     amd-hip
   BUILD_DEPS
     hipBLAS-common
-    mxDataGenerator
+    ${_hipblaslt_build_deps}
     rocm-cmake
     therock-googletest
     therock-msgpack-cxx
@@ -188,7 +227,7 @@ therock_cmake_subproject_declare(hipBLASLt
   RUNTIME_DEPS
     hip-clr
     origami
-    therock-host-blas
+    ${_hipblaslt_reference_deps}
     ${hipBLASLt_rocRoller_runtime_deps}
     ${hipBLASLt_runtime_deps}
     ${optional_profiler_deps}
@@ -242,7 +281,7 @@ therock_cmake_subproject_declare(rocBLAS
     -DROCM_DIR=
     -Dhipblaslt_path=
     -DBUILD_WITH_TENSILE=ON
-    -DBUILD_WITH_HIPBLASLT=ON
+    -DBUILD_WITH_HIPBLASLT=$<NOT:$<BOOL:${_hipblaslt_host_api_only}>>
     # TODO: With `Tensile_TEST_LOCAL_PATH` set, the resulting build path is ${Tensile_TEST_LOCAL_PATH}/build.
     "-DTensile_TEST_LOCAL_PATH=${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/shared/tensile"
     # Since using a local Tensile vs fetched, unset TENSILE_VERSION to avoid
@@ -264,7 +303,7 @@ therock_cmake_subproject_declare(rocBLAS
     therock-msgpack-cxx
   RUNTIME_DEPS
     hip-clr
-    hipBLASLt
+    ${_rocblas_hipblaslt_deps}
     ${rocBLAS_optional_runtime_deps}
     ${optional_profiler_deps}
 )
