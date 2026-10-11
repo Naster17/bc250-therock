@@ -68,7 +68,9 @@ library, which PyTorch's marker bindings require even with Kineto disabled.
 AMD SMI uses a disposable writable source copy for its generated headers.
 rocFFT's ahead-of-time cache compiler uses 16 workers, independently configurable
 with `BC250_FFT_JOBS`. Its cache in the build tree preserves completed kernels
-when resuming; it uses HIPRTC directly rather than ccache.
+when resuming; it uses HIPRTC directly rather than ccache. Its producer pool
+is capped by the CPU affinity count, so larger limits do not create more than
+16 workers on this host.
 
 `continue_torch_on_host.sh` waits for the math build, runs CPU-reference GEMM,
 Cholesky, prime-length FFT and RNG checks, and verifies the host-only hipBLASLt
