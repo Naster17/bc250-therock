@@ -62,6 +62,28 @@ WMMA disabled. hipBLASLt supplies an explicit host/API-only profile while GEMM
 uses native rocBLAS. hipSPARSELt is omitted when its device-target filter is
 empty. Keep MIOpen's CK integration disabled during initial validation.
 
+`build_math.sh` extends the core build with the native math libraries, MIOpen,
+and scalar CK. The topology also enables the profiler SDK and its legacy ROCTX
+library, which PyTorch's marker bindings require even with Kineto disabled.
+AMD SMI uses a disposable writable source copy for its generated headers.
+
+`continue_torch_on_host.sh` waits for the math build, runs CPU-reference GEMM,
+Cholesky, prime-length FFT and RNG checks, and verifies the host-only hipBLASLt
+contract. It then builds the pinned PyTorch source with
+`pip install -e . -v --no-build-isolation` in a separate tool environment.
+Its successful container is saved as `bc250-pytorch-runtime:2.13-gfx1013`.
+Torch defaults to 12 compile jobs and one linker job; use `BC250_TORCH_JOBS`
+to adjust the heavier template build independently from ROCm's 16 jobs.
+The runtime image requires the persistent ROCm and Torch working-directory
+mounts; the editable installation is not a standalone wheel.
+
+Torch execution gates include native target identity, markers, FP16/BF16
+indexed accumulation and embedding gradients, four GEMM precisions, sparse
+CSR multiplication, solvers, FFT, convolution gradients, mathematical SDPA,
+and a CPU-compared 30-step training run. Flash attention, memory-efficient
+attention, CK matrix backends, and distributed execution are disabled in the
+initial profile.
+
 ## Validation status
 
 The old 7.2 runtime passed a CPU-compared 64x64 FP32 torch GEMM on the
@@ -74,6 +96,9 @@ The packed FP16/BF16 atomic gate also passed with unmodified HIP headers,
 including contended packed updates, neighboring scalar lanes, untouched
 sentinels, and returned old values. LLVM's target-aware `__has_builtin` selects
 the existing CAS fallback on `gfx1013`; no atomic header patch is required.
+rocRAND passed six dispatch/configuration tests and all 44 basic tests on the
+new runtime. rocBLAS built 570 native fallback kernels and its clients; its
+numerical hardware gate remains pending.
 
 The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
 configuration downloads sources into the source tree, which is intentionally
