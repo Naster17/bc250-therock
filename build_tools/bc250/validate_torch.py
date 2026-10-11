@@ -109,6 +109,48 @@ def main() -> None:
     )
     passed("batched_gemm")
 
+    for dtype, tolerance in ((torch.float32, 1e-4), (torch.float64, 1e-10)):
+        basis = torch.randn(11, 11, dtype=dtype)
+        matrix = basis @ basis.T + torch.eye(11, dtype=dtype) * 11
+        right = torch.randn(11, 3, dtype=dtype)
+        gpu_matrix = matrix.cuda()
+        torch.testing.assert_close(
+            torch.linalg.cholesky(gpu_matrix).cpu(),
+            torch.linalg.cholesky(matrix.double()).to(dtype),
+            rtol=tolerance,
+            atol=tolerance,
+        )
+        torch.testing.assert_close(
+            torch.linalg.solve(gpu_matrix, right.cuda()).cpu(),
+            torch.linalg.solve(matrix.double(), right.double()).to(dtype),
+            rtol=tolerance,
+            atol=tolerance,
+        )
+        passed(f"cholesky_and_solve_{dtype}")
+
+        dense = torch.randn(17, 19, dtype=dtype)
+        dense[dense.abs() < 0.9] = 0
+        right = torch.randn(19, 3, dtype=dtype)
+        sparse = dense.to_sparse_csr()
+        torch.testing.assert_close(
+            torch.sparse.mm(sparse.cuda(), right.cuda()).cpu(),
+            (dense.double() @ right.double()).to(dtype),
+            rtol=tolerance,
+            atol=tolerance,
+        )
+        passed(f"csr_sparse_matmul_{dtype}")
+
+    torch.cuda.manual_seed(4321)
+    samples = torch.randn(16387, device="cuda")
+    torch.cuda.manual_seed(4321)
+    repeated = torch.randn(16387, device="cuda")
+    torch.testing.assert_close(samples, repeated, rtol=0, atol=0)
+    if not torch.isfinite(samples).all() or abs(samples.mean().item()) > 0.04:
+        raise RuntimeError("GPU normal RNG has invalid values or mean")
+    if abs(samples.var().item() - 1) > 0.05:
+        raise RuntimeError("GPU normal RNG has invalid variance")
+    passed("gpu_rng_reproducibility_and_distribution")
+
     for length in (17, 64, 1024):
         data = torch.randn(2, length)
         result = torch.fft.rfft(data.cuda()).cpu()
