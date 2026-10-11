@@ -1,0 +1,285 @@
+From 9ca9c61165f642a9f20c9262b8406060659fa0fb Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sun, 11 Oct 2026 16:23:22 +0200
+Subject: [PATCH] feat(hipblaslt): provide explicit host API mode without GEMM
+ kernels
+
+---
+ projects/hipblaslt/CMakeLists.txt             | 21 +++++--
+ .../library/src/amd_detail/hipblaslt.cpp      |  8 +++
+ .../rocblaslt/src/rocblaslt_auxiliary.cpp     |  3 +
+ .../amd_detail/rocblaslt/src/tensile_host.cpp | 57 +++++++++++++++++++
+ 4 files changed, 85 insertions(+), 4 deletions(-)
+
+diff --git a/projects/hipblaslt/CMakeLists.txt b/projects/hipblaslt/CMakeLists.txt
+index 35809a55da6..3ff193f53b2 100644
+--- a/projects/hipblaslt/CMakeLists.txt
++++ b/projects/hipblaslt/CMakeLists.txt
+@@ -60,6 +60,7 @@ option(HIPBLASLT_ENABLE_EXTOPS "Build hipBLASLt ExtOp device libraries." ON)
+ option(HIPBLASLT_ENABLE_MATRIX_TRANSFORM "Build hipBLASLt MatrixTransform device library." ON)
+ option(HIPBLASLT_ENABLE_CLIENT "Build hipBLASLt client apps." ON)
+ option(HIPBLASLT_ENABLE_HOST "Build hipBLASLt host library." ON)
++option(HIPBLASLT_HOST_API_ONLY "Build host descriptor APIs without a GEMM backend." OFF)
+ option(HIPBLASLT_BUILD_SHARED_LIBS "Build the hipBLASLt library as shared vs static." ON)
+ option(TENSILELITE_BUILD_SHARED_LIBS "Build the TensileLite host library as shared vs static." ON)
+ option(HIPBLASLT_ENABLE_FETCH "Fetch dependencies using fetch content" OFF)
+@@ -133,12 +134,22 @@ mark_as_advanced(TENSILELITE_ENABLE_AUTOBUILD)
+ 
+ set(GPU_TARGETS "" CACHE STRING "AMD GFX targets to cross-compile")
+ 
+-if(NOT GPU_TARGETS OR GPU_TARGETS STREQUAL "all")
+-    tensilelite_get_base_architectures(GPU_TARGETS)
++if(HIPBLASLT_HOST_API_ONLY)
++    if(NOT HIPBLASLT_ENABLE_HOST OR HIPBLASLT_ENABLE_DEVICE OR HIPBLASLT_ENABLE_ROCROLLER
++       OR HIPBLASLT_ENABLE_EXTOPS OR HIPBLASLT_ENABLE_MATRIX_TRANSFORM)
++        message(FATAL_ERROR "HIPBLASLT_HOST_API_ONLY requires host support and no device backends")
++    endif()
++    if(NOT GPU_TARGETS OR GPU_TARGETS STREQUAL "all")
++        message(FATAL_ERROR "HIPBLASLT_HOST_API_ONLY requires explicit native GPU_TARGETS")
++    endif()
+ else()
+-    tensilelite_validate_gpu_targets("${GPU_TARGETS}")
++    if(NOT GPU_TARGETS OR GPU_TARGETS STREQUAL "all")
++        tensilelite_get_base_architectures(GPU_TARGETS)
++    else()
++        tensilelite_validate_gpu_targets("${GPU_TARGETS}")
++    endif()
++    tensilelite_normalize_targets(GPU_TARGETS ${GPU_TARGETS})
+ endif()
+-tensilelite_normalize_targets(GPU_TARGETS ${GPU_TARGETS})
+ message(STATUS "Building for GPU targets: ${GPU_TARGETS}")
+ 
+ find_package(hip REQUIRED)
+@@ -383,6 +394,8 @@ set(BUILD_SHARED_LIBS "${HIPBLASLT_BUILD_SHARED_LIBS}")
+ 
+ if(HIPBLASLT_ENABLE_HOST)
+     add_library(hipblaslt)
++    target_compile_definitions(hipblaslt PRIVATE
++        HIPBLASLT_HOST_API_ONLY=$<BOOL:${HIPBLASLT_HOST_API_ONLY}>)
+     if(WIN32 AND BUILD_SHARED_LIBS AND _hipblaslt_have_version_rc)
+         target_sources(
+             hipblaslt
+diff --git a/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp b/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp
+index e350e55a3f4..70ace012fbd 100644
+--- a/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp
+@@ -60,7 +60,11 @@ hipblasStatus_t RocBlasLtStatusToHIPStatus(rocblaslt_status_ status)
+     case rocblaslt_status_invalid_handle:
+         return HIPBLAS_STATUS_NOT_INITIALIZED;
+     case rocblaslt_status_not_implemented:
++#if HIPBLASLT_HOST_API_ONLY
++        return HIPBLAS_STATUS_NOT_SUPPORTED;
++#else
+         return HIPBLAS_STATUS_INTERNAL_ERROR;
++#endif
+     case rocblaslt_status_invalid_pointer:
+         return HIPBLAS_STATUS_INVALID_VALUE;
+     case rocblaslt_status_invalid_size:
+@@ -1170,6 +1174,10 @@ hipblasStatus_t hipblasLtMatmul(hipblasLtHandle_t            handle,
+ try
+ {
+     rocblaslt::Debug::Instance().markerStart("hipblasLtMatmul");
++#if HIPBLASLT_HOST_API_ONLY
++    rocblaslt::Debug::Instance().markerStop();
++    return HIPBLAS_STATUS_NOT_SUPPORTED;
++#endif
+     hipblasStatus_t return_status = HIPBLAS_STATUS_SUCCESS;
+ 
+ #if HIPBLASLT_HAS_GEMM_A2A_FUSION
+diff --git a/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/rocblaslt_auxiliary.cpp b/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/rocblaslt_auxiliary.cpp
+index dfd0cb283f1..ad776f778bd 100644
+--- a/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/rocblaslt_auxiliary.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/rocblaslt_auxiliary.cpp
+@@ -2348,6 +2348,9 @@ rocblaslt_status
+         log_error(__func__, "invalid requested count", requestedAlgoCount);
+         return rocblaslt_status_invalid_value;
+     }
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_success;
+     try
+     {
+diff --git a/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/tensile_host.cpp b/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/tensile_host.cpp
+index 3fe9def63b6..bb4ffba878e 100644
+--- a/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/tensile_host.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/rocblaslt/src/tensile_host.cpp
+@@ -3201,6 +3201,15 @@ namespace
+         int                                     device     = -1)
+     try
+     {
++#if HIPBLASLT_HOST_API_ONLY
++        if(library)
++            library->reset();
++        if(deviceProp)
++            deviceProp->reset();
++        if(hardware)
++            hardware->reset();
++        return nullptr;
++#endif
+         // TensileHost is initialized on the first call
+         static TensileHost host;
+ 
+@@ -3659,6 +3668,9 @@ rocblaslt_status runContractionProblem(rocblaslt_handle                   handle
+                                        const RocblasltContractionProblem& prob,
+                                        std::shared_ptr<void>              gemmData)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_internal_error;
+     try
+     {
+@@ -4069,6 +4081,9 @@ rocblaslt_status makeArgument(rocblaslt_handle             handle,
+                               hipStream_t                  stream,
+                               std::shared_ptr<void>        gemmData)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_internal_error;
+     try
+     {
+@@ -4332,6 +4347,9 @@ rocblaslt_status runKernelFromInvocation(rocblaslt_handle       handle,
+                                          hipEvent_t             start,
+                                          hipEvent_t             stop)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_internal_error;
+     try
+     {
+@@ -4486,6 +4504,9 @@ rocblaslt_status getDeviceUserArgumentsValuesFromContractionProblem(rocblaslt_ha
+                                                                     std::shared_ptr<void>  gemmData,
+                                                                     void* hostDeviceUserArgs)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_internal_error;
+     try
+     {
+@@ -4544,6 +4565,9 @@ rocblaslt_status runKernelFromNewDeviceUserArguments(rocblaslt_handle       hand
+                                                      void*                  deviceUserArgs,
+                                                      hipStream_t            stream)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_internal_error;
+     try
+     {
+@@ -4660,6 +4684,9 @@ rocblaslt_status runKernelFromDeviceUserArguments(rocblaslt_handle             h
+                                                   void*                        workspace,
+                                                   hipStream_t                  stream)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_internal_error;
+     try
+     {
+@@ -4900,6 +4927,9 @@ rocblaslt_status getBestSolutions(RocblasltContractionProblem const& prob,
+                                   int*                               returnAlgoCount,
+                                   size_t                             maxWorkSpaceBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     *returnAlgoCount = 0;
+ #ifdef HIPBLASLT_USE_ROCROLLER
+     if(useRocRoller(handle, prob))
+@@ -4971,6 +5001,9 @@ rocblaslt_status getAllSolutions(MyProblem&
+                                  std::vector<rocblaslt_matmul_heuristic_result>& heuristicResults,
+                                  size_t                                          maxWorkSpaceBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     log_api(__func__, "Entering function");
+ 
+     std::shared_ptr<TensileLite::MasterSolutionLibrary<TensileLite::ContractionProblemGemm>>
+@@ -5095,6 +5128,9 @@ rocblaslt_status getAllSolutions(RocblasltContractionProblem&
+                                  std::vector<rocblaslt_matmul_heuristic_result>& heuristicResults,
+                                  size_t                                          maxWorkSpaceBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+ #ifdef HIPBLASLT_USE_ROCROLLER
+     if(useRocRoller(handle, prob))
+         return getAllSolutionsRocRoller(prob, handle, heuristicResults, maxWorkSpaceBytes);
+@@ -5108,6 +5144,9 @@ rocblaslt_status getAllSolutions(std::vector<RocblasltContractionProblem>&
+                                  std::vector<rocblaslt_matmul_heuristic_result>& heuristicResults,
+                                  size_t                                          maxWorkSpaceBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     TensileLite::ContractionProblemGroupedGemm tensile_probs;
+     for(int i = 0; i < probs.size(); i++)
+     {
+@@ -5123,6 +5162,9 @@ rocblaslt_status getAllSolutions(std::shared_ptr<void>
+                                  std::vector<rocblaslt_matmul_heuristic_result>& heuristicResults,
+                                  size_t                                          maxWorkSpaceBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     rocblaslt_status status = rocblaslt_status_success;
+     if(gemmType == rocblaslt::RocGemmType::ROCBLASLT_GEMM)
+     {
+@@ -5167,6 +5209,9 @@ rocblaslt_status
+                           std::vector<rocblaslt_matmul_heuristic_result>& heuristicResults,
+                           size_t                                          maxWorkSpaceBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     GemmMasterLibraryPtr                   library;
+     std::shared_ptr<hipDeviceProp_t>       deviceProp;
+     std::shared_ptr<TensileLite::Hardware> hardware;
+@@ -5226,6 +5271,9 @@ rocblaslt_status isSolutionSupported(rocblaslt_handle       handle,
+                                      const Tuning*          tuning,
+                                      size_t*                workspaceSizeInBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     GemmMasterLibraryPtr                   library;
+     std::shared_ptr<hipDeviceProp_t>       deviceProp;
+     std::shared_ptr<TensileLite::Hardware> hardware;
+@@ -5461,6 +5509,9 @@ rocblaslt_status isSolutionSupported(rocblaslt_handle             handle,
+                                      rocblaslt_matmul_algo*       algo,
+                                      size_t*                      workspaceSizeInBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+ #ifdef HIPBLASLT_USE_ROCROLLER
+     if(useRocRoller(handle, prob))
+         return isRocRollerSolutionSupported(handle, prob, algo, workspaceSizeInBytes);
+@@ -5511,6 +5562,9 @@ rocblaslt_status isSolutionSupported(rocblaslt_handle              handle,
+                                      const Tuning*                 tuning,
+                                      size_t&                       workspaceSizeInBytes)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     if(!gemmData)
+         return rocblaslt_status_invalid_pointer;
+     if(gemmType == rocblaslt::RocGemmType::ROCBLASLT_GEMM)
+@@ -5588,6 +5642,9 @@ rocblaslt_status getBestSolutions(rocblaslt_handle       handle,
+                                   const int              requestedAlgoCount,
+                                   std::vector<rocblaslt_matmul_heuristic_result>& heuristicResults)
+ {
++#if HIPBLASLT_HOST_API_ONLY
++    return rocblaslt_status_not_implemented;
++#endif
+     log_api(__func__, "Entering function");
+ 
+     std::shared_ptr<TensileLite::MasterSolutionLibrary<TensileLite::ContractionProblemGemm>>
+-- 
+2.56.0
+
