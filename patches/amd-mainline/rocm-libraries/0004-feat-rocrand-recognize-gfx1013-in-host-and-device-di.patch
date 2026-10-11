@@ -1,0 +1,71 @@
+From 039b79bcb43c614b86f92b3190a6fed05cf6118c Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sun, 11 Oct 2026 16:34:23 +0200
+Subject: [PATCH] feat(rocrand): recognize gfx1013 in host and device dispatch
+
+---
+ projects/rocrand/library/src/rng/config_types.hpp           | 6 ++++++
+ .../rocrand/test/internal/test_rocrand_config_dispatch.cpp  | 2 ++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/projects/rocrand/library/src/rng/config_types.hpp b/projects/rocrand/library/src/rng/config_types.hpp
+index b35e805cd37..3d242d05e2c 100644
+--- a/projects/rocrand/library/src/rng/config_types.hpp
++++ b/projects/rocrand/library/src/rng/config_types.hpp
+@@ -50,6 +50,7 @@ enum class target_arch : unsigned int
+     gfx90a  = 910,
+     gfx942  = 942,
+     gfx950  = 950,
++    gfx1013 = 1013,
+     gfx1030 = 1030,
+     gfx1100 = 1100,
+     gfx1101 = 1101,
+@@ -69,6 +70,7 @@ constexpr target_arch target_architectures[] = {
+     target_arch::gfx90a,
+     target_arch::gfx942,
+     target_arch::gfx950,
++    target_arch::gfx1013,
+     target_arch::gfx1030,
+     target_arch::gfx1100,
+     target_arch::gfx1101,
+@@ -114,6 +116,8 @@ constexpr target_arch get_device_arch()
+     return target_arch::gfx942;
+ #elif defined(__gfx950__)
+     return target_arch::gfx950;
++#elif defined(__gfx1013__)
++    return target_arch::gfx1013;
+ #elif defined(__gfx1030__)
+     return target_arch::gfx1030;
+ #elif defined(__gfx1100__)
+@@ -145,6 +149,7 @@ inline target_arch parse_gcn_arch(const std::string& arch_name)
+                                                 "gfx90a",
+                                                 "gfx942",
+                                                 "gfx950",
++                                                "gfx1013",
+                                                 "gfx1030",
+                                                 "gfx1100",
+                                                 "gfx1101",
+@@ -161,6 +166,7 @@ inline target_arch parse_gcn_arch(const std::string& arch_name)
+         target_arch::gfx90a,
+         target_arch::gfx942,
+         target_arch::gfx950,
++        target_arch::gfx1013,
+         target_arch::gfx1030,
+         target_arch::gfx1100,
+         target_arch::gfx1101,
+diff --git a/projects/rocrand/test/internal/test_rocrand_config_dispatch.cpp b/projects/rocrand/test/internal/test_rocrand_config_dispatch.cpp
+index 9cd27ed3a88..d80547feb14 100644
+--- a/projects/rocrand/test/internal/test_rocrand_config_dispatch.cpp
++++ b/projects/rocrand/test/internal/test_rocrand_config_dispatch.cpp
+@@ -121,6 +121,8 @@ TEST(rocrand_config_dispatch_tests, parse_common_architectures)
+     ASSERT_EQ(parse_gcn_arch("gfx906:::"), target_arch::gfx906);
+     ASSERT_EQ(parse_gcn_arch("gfx908:"), target_arch::gfx908);
+     ASSERT_EQ(parse_gcn_arch("gfx90a:sramecc+:xnack-"), target_arch::gfx90a);
++    ASSERT_EQ(parse_gcn_arch("gfx1013"), target_arch::gfx1013);
++    ASSERT_EQ(parse_gcn_arch("gfx1013:xnack-"), target_arch::gfx1013);
+ }
+ 
+ TEST(rocrand_config_dispatch_tests, get_config_on_host_and_device)
+-- 
+2.56.0
+
