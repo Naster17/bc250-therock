@@ -118,6 +118,7 @@ file(WRITE "${CMAKE_BINARY_DIR}/sparse_lt" "${sparse_lt}")
         self.assertIn("-DBUILD_WITH_TENSILE=ON", config["rocBLAS.args"])
         self.assertIn("-DBUILD_WITH_HIPBLASLT=0", config["rocBLAS.args"])
         self.assertNotIn("hipBLASLt", config["rocBLAS.deps"])
+        self.assertIn("amdsmi", config["rocBLAS.deps"])
         self.assertEqual(config["sparse_lt"], "")
 
     def test_supported_sparse_lt_is_still_declared(self):

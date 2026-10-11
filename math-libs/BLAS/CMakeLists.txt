@@ -255,6 +255,9 @@ endif()
 if(THEROCK_BUILD_TESTING)
   # Client tests link ILP64 reference BLAS (see cmake/finders/FindBLAS.cmake + BLA_SIZEOF_INTEGER=8).
   list(APPEND rocBLAS_optional_runtime_deps therock-host-blas64)
+  if(NOT WIN32)
+    list(APPEND rocBLAS_optional_runtime_deps amdsmi)
+  endif()
 endif()
 
 set(rocBLAS_extra_cmake_args)
