@@ -26,7 +26,7 @@ set +e
 podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
     -v "$workspace/build:/workspace/build:ro" \
     -e HSA_ENABLE_SDMA=0 \
-    -e OCL_ICD_VENDORS=/workspace/build/bc250-validation/opencl-icd \
+    -e OCL_ICD_VENDORS=/workspace/build/bc250-validation/opencl-icd/ \
     -e LD_LIBRARY_PATH=/workspace/build/core/ocl-icd/dist/lib:/workspace/build/core/ocl-clr/dist/lib:/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib \
     "$image" timeout --kill-after=10s 120s /workspace/build/bc250-validation/opencl_smoke \
     > "$workspace/logs/opencl-validation.log" 2>&1
