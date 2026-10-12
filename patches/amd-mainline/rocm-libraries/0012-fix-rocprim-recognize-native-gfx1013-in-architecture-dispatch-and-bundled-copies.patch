@@ -1,0 +1,159 @@
+From a8fc909de245f749a023db373a62dd1f1cc6212d Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 19:37:10 +0200
+Subject: [PATCH] fix(rocprim): recognize native gfx1013 in architecture
+ dispatch and bundled copies
+
+---
+ .../rocprim/rocprim/include/rocprim/device/config_types.hpp | 5 ++++-
+ .../hipccl2/rocprim/test/rocprim/test_config_dispatch.cpp   | 6 ++++++
+ .../rocprim/rocprim/include/rocprim/device/config_types.hpp | 5 ++++-
+ .../hipccl3/rocprim/test/rocprim/test_config_dispatch.cpp   | 6 ++++++
+ .../rocprim/rocprim/include/rocprim/device/config_types.hpp | 5 ++++-
+ projects/rocprim/test/rocprim/test_config_dispatch.cpp      | 6 ++++++
+ 6 files changed, 30 insertions(+), 3 deletions(-)
+
+diff --git a/projects/hipccl/hipccl2/rocprim/rocprim/include/rocprim/device/config_types.hpp b/projects/hipccl/hipccl2/rocprim/rocprim/include/rocprim/device/config_types.hpp
+index 3d0891fa575..de5c09ca84f 100644
+--- a/projects/hipccl/hipccl2/rocprim/rocprim/include/rocprim/device/config_types.hpp
++++ b/projects/hipccl/hipccl2/rocprim/rocprim/include/rocprim/device/config_types.hpp
+@@ -176,6 +176,7 @@ enum class target_arch : unsigned int
+     gfx1010 = 1010,
+     gfx1011 = 1011,
+     gfx1012 = 1012,
++    gfx1013 = 1013,
+     gfx1030 = 1030,
+     gfx1100 = 1100,
+     gfx1101 = 1101,
+@@ -243,7 +244,8 @@ constexpr gen gen_from_target_arch(target_arch i)
+         case target_arch::gfx950: return gen::cdna4;
+         case target_arch::gfx1010:
+         case target_arch::gfx1011:
+-        case target_arch::gfx1012: return gen::rdna1;
++        case target_arch::gfx1012:
++        case target_arch::gfx1013: return gen::rdna1;
+         case target_arch::gfx1030: return gen::rdna2;
+         case target_arch::gfx1100:
+         case target_arch::gfx1101:
+@@ -317,6 +319,7 @@ constexpr target_arch get_target_arch_from_name(const char* const arch_name, con
+     ROCPRIM_RETURN_IF_ARCH(gfx1010);
+     ROCPRIM_RETURN_IF_ARCH(gfx1011);
+     ROCPRIM_RETURN_IF_ARCH(gfx1012);
++    ROCPRIM_RETURN_IF_ARCH(gfx1013);
+     ROCPRIM_RETURN_IF_ARCH(gfx1030);
+     ROCPRIM_RETURN_IF_ARCH(gfx1100);
+     ROCPRIM_RETURN_IF_ARCH(gfx1101);
+diff --git a/projects/hipccl/hipccl2/rocprim/test/rocprim/test_config_dispatch.cpp b/projects/hipccl/hipccl2/rocprim/test/rocprim/test_config_dispatch.cpp
+index ddf9d2c3d5d..83a59bcfba8 100644
+--- a/projects/hipccl/hipccl2/rocprim/test/rocprim/test_config_dispatch.cpp
++++ b/projects/hipccl/hipccl2/rocprim/test/rocprim/test_config_dispatch.cpp
+@@ -143,6 +143,12 @@ TEST(RocprimConfigDispatchTests, ParseCommonArches)
+     ASSERT_EQ(parse_gcn_arch("gfx906:::"), target_arch::gfx906);
+     ASSERT_EQ(parse_gcn_arch("gfx908:"), target_arch::gfx908);
+     ASSERT_EQ(parse_gcn_arch("gfx90a:sramecc+:xnack-"), target_arch::gfx90a);
++    ASSERT_EQ(parse_gcn_arch("gfx1013"), target_arch::gfx1013);
++    ASSERT_EQ(parse_gcn_arch("gfx1013:xnack-"), target_arch::gfx1013);
++    ASSERT_EQ(parse_gcn_arch("gfx10130"), target_arch::unknown);
++    ASSERT_EQ(parse_gcn_arch("gfx1013suffix"), target_arch::unknown);
++    ASSERT_EQ(rocprim::detail::gen_from_target_arch(target_arch::gfx1013),
++              rocprim::detail::gen::rdna1);
+ }
+ 
+ #ifndef _WIN32
+diff --git a/projects/hipccl/hipccl3/rocprim/rocprim/include/rocprim/device/config_types.hpp b/projects/hipccl/hipccl3/rocprim/rocprim/include/rocprim/device/config_types.hpp
+index d5185d3d144..9bf648ce49b 100644
+--- a/projects/hipccl/hipccl3/rocprim/rocprim/include/rocprim/device/config_types.hpp
++++ b/projects/hipccl/hipccl3/rocprim/rocprim/include/rocprim/device/config_types.hpp
+@@ -177,6 +177,7 @@ enum class target_arch : unsigned int
+     gfx1010 = 1010,
+     gfx1011 = 1011,
+     gfx1012 = 1012,
++    gfx1013        = 1013,
+     gfx1030 = 1030,
+     gfx1100 = 1100,
+     gfx1101 = 1101,
+@@ -249,7 +250,8 @@ constexpr gen gen_from_target_arch(target_arch i)
+         case target_arch::gfx950: return gen::cdna4;
+         case target_arch::gfx1010:
+         case target_arch::gfx1011:
+-        case target_arch::gfx1012: return gen::rdna1;
++        case target_arch::gfx1012:
++        case target_arch::gfx1013: return gen::rdna1;
+         case target_arch::gfx1030: return gen::rdna2;
+         case target_arch::gfx1100:
+         case target_arch::gfx1101:
+@@ -326,6 +328,7 @@ constexpr target_arch get_target_arch_from_name(const char* const arch_name, con
+     ROCPRIM_RETURN_IF_ARCH(gfx1010);
+     ROCPRIM_RETURN_IF_ARCH(gfx1011);
+     ROCPRIM_RETURN_IF_ARCH(gfx1012);
++    ROCPRIM_RETURN_IF_ARCH(gfx1013);
+     ROCPRIM_RETURN_IF_ARCH(gfx1030);
+     ROCPRIM_RETURN_IF_ARCH(gfx1100);
+     ROCPRIM_RETURN_IF_ARCH(gfx1101);
+diff --git a/projects/hipccl/hipccl3/rocprim/test/rocprim/test_config_dispatch.cpp b/projects/hipccl/hipccl3/rocprim/test/rocprim/test_config_dispatch.cpp
+index ddf9d2c3d5d..83a59bcfba8 100644
+--- a/projects/hipccl/hipccl3/rocprim/test/rocprim/test_config_dispatch.cpp
++++ b/projects/hipccl/hipccl3/rocprim/test/rocprim/test_config_dispatch.cpp
+@@ -143,6 +143,12 @@ TEST(RocprimConfigDispatchTests, ParseCommonArches)
+     ASSERT_EQ(parse_gcn_arch("gfx906:::"), target_arch::gfx906);
+     ASSERT_EQ(parse_gcn_arch("gfx908:"), target_arch::gfx908);
+     ASSERT_EQ(parse_gcn_arch("gfx90a:sramecc+:xnack-"), target_arch::gfx90a);
++    ASSERT_EQ(parse_gcn_arch("gfx1013"), target_arch::gfx1013);
++    ASSERT_EQ(parse_gcn_arch("gfx1013:xnack-"), target_arch::gfx1013);
++    ASSERT_EQ(parse_gcn_arch("gfx10130"), target_arch::unknown);
++    ASSERT_EQ(parse_gcn_arch("gfx1013suffix"), target_arch::unknown);
++    ASSERT_EQ(rocprim::detail::gen_from_target_arch(target_arch::gfx1013),
++              rocprim::detail::gen::rdna1);
+ }
+ 
+ #ifndef _WIN32
+diff --git a/projects/rocprim/rocprim/include/rocprim/device/config_types.hpp b/projects/rocprim/rocprim/include/rocprim/device/config_types.hpp
+index 450de156dce..7442f52a6e6 100644
+--- a/projects/rocprim/rocprim/include/rocprim/device/config_types.hpp
++++ b/projects/rocprim/rocprim/include/rocprim/device/config_types.hpp
+@@ -177,6 +177,7 @@ enum class target_arch : unsigned int
+     gfx1010 = 1010,
+     gfx1011 = 1011,
+     gfx1012 = 1012,
++    gfx1013        = 1013,
+     gfx1030 = 1030,
+     gfx1100 = 1100,
+     gfx1101 = 1101,
+@@ -248,7 +249,8 @@ constexpr gen gen_from_target_arch(target_arch i)
+         case target_arch::gfx950: return gen::cdna4;
+         case target_arch::gfx1010:
+         case target_arch::gfx1011:
+-        case target_arch::gfx1012: return gen::rdna1;
++        case target_arch::gfx1012:
++        case target_arch::gfx1013: return gen::rdna1;
+         case target_arch::gfx1030: return gen::rdna2;
+         case target_arch::gfx1100:
+         case target_arch::gfx1101:
+@@ -324,6 +326,7 @@ constexpr target_arch get_target_arch_from_name(const char* const arch_name, con
+     ROCPRIM_RETURN_IF_ARCH(gfx1010);
+     ROCPRIM_RETURN_IF_ARCH(gfx1011);
+     ROCPRIM_RETURN_IF_ARCH(gfx1012);
++    ROCPRIM_RETURN_IF_ARCH(gfx1013);
+     ROCPRIM_RETURN_IF_ARCH(gfx1030);
+     ROCPRIM_RETURN_IF_ARCH(gfx1100);
+     ROCPRIM_RETURN_IF_ARCH(gfx1101);
+diff --git a/projects/rocprim/test/rocprim/test_config_dispatch.cpp b/projects/rocprim/test/rocprim/test_config_dispatch.cpp
+index ddf9d2c3d5d..83a59bcfba8 100644
+--- a/projects/rocprim/test/rocprim/test_config_dispatch.cpp
++++ b/projects/rocprim/test/rocprim/test_config_dispatch.cpp
+@@ -143,6 +143,12 @@ TEST(RocprimConfigDispatchTests, ParseCommonArches)
+     ASSERT_EQ(parse_gcn_arch("gfx906:::"), target_arch::gfx906);
+     ASSERT_EQ(parse_gcn_arch("gfx908:"), target_arch::gfx908);
+     ASSERT_EQ(parse_gcn_arch("gfx90a:sramecc+:xnack-"), target_arch::gfx90a);
++    ASSERT_EQ(parse_gcn_arch("gfx1013"), target_arch::gfx1013);
++    ASSERT_EQ(parse_gcn_arch("gfx1013:xnack-"), target_arch::gfx1013);
++    ASSERT_EQ(parse_gcn_arch("gfx10130"), target_arch::unknown);
++    ASSERT_EQ(parse_gcn_arch("gfx1013suffix"), target_arch::unknown);
++    ASSERT_EQ(rocprim::detail::gen_from_target_arch(target_arch::gfx1013),
++              rocprim::detail::gen::rdna1);
+ }
+ 
+ #ifndef _WIN32
+-- 
+2.56.0
+
