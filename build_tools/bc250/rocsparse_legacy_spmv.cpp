@@ -41,8 +41,6 @@ template <typename T> static bool run(int analyses) {
   hip_check(hipMalloc(&device_offsets, offsets.size() * sizeof(int)));
   hip_check(hipMalloc(&device_columns, columns.size() * sizeof(int)));
   hip_check(hipMalloc(&device_values, values.size() * sizeof(T)));
-  hip_check(hipMalloc(&device_x, rows * sizeof(T)));
-  hip_check(hipMalloc(&device_y, (rows + 16) * sizeof(T)));
   hip_check(hipMemcpy(device_offsets, offsets.data(),
                       offsets.size() * sizeof(int), hipMemcpyHostToDevice));
   hip_check(hipMemcpy(device_columns, columns.data(),
@@ -68,6 +66,10 @@ template <typename T> static bool run(int analyses) {
             device_values, device_offsets, device_columns, info));
     }
   }
+  hip_check(hipMalloc(&device_x, rows * sizeof(T)));
+  hip_check(hipMalloc(&device_y, (rows + 16) * sizeof(T)));
+  hip_check(hipMemset(device_x, 0, rows * sizeof(T)));
+  hip_check(hipMemset(device_y, 0, (rows + 16) * sizeof(T)));
   bool passed = true;
   for (int repeat = 0; repeat < 10; ++repeat)
     for (bool ones : {true, false})
