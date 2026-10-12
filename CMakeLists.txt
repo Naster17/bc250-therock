@@ -210,6 +210,7 @@ option(THEROCK_MINIMAL_DEBUG_INFO "Enables compiler-specific flags for minimal d
 option(THEROCK_COMPILER_RT_DEBUG "Enables compiler-rt debug build" OFF)
 option(THEROCK_QUIET_INSTALL "Enable quiet install logging (install logs only go to the logfile)" ON)
 option(THEROCK_USE_SAFE_DEPENDENCY_PROVIDER "Enable the safe dependency provider, performing strict package checks" ON)
+option(THEROCK_RPP_ENABLE_AUDIO "Build RPP audio augmentations with bundled FFTS" OFF)
 
 ################################################################################
 # Feature selection

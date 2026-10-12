@@ -2,6 +2,10 @@
 # SPDX-License-Identifier: MIT
 
 if(THEROCK_ENABLE_RPP)
+  set(_rpp_audio_deps)
+  if(THEROCK_RPP_ENABLE_AUDIO)
+    list(APPEND _rpp_audio_deps therock-ffts)
+  endif()
   ##############################################################################
   # rpp (ROCm Performance Primitives) library
   ##############################################################################
@@ -19,11 +23,11 @@ if(THEROCK_ENABLE_RPP)
       hip-clr
     BUILD_DEPS
       rocm-half
+      ${_rpp_audio_deps}
     CMAKE_ARGS
       -DROCM_PATH=
       -DBACKEND=HIP
-      # TODO: bundle FFTS as a sysdep to enable audio augmentations.
-      -DRPP_AUDIO_SUPPORT=OFF
+      -DRPP_AUDIO_SUPPORT=${THEROCK_RPP_ENABLE_AUDIO}
     CMAKE_INCLUDES
       therock_explicit_finders.cmake
     # RPP's bundled test suite calls find_package(rpp) on itself.
@@ -58,5 +62,6 @@ if(THEROCK_ENABLE_RPP)
       test
     SUBPROJECT_DEPS
       rpp
+      ${_rpp_audio_deps}
   )
 endif(THEROCK_ENABLE_RPP)
