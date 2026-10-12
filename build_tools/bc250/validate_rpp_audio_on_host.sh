@@ -17,7 +17,7 @@ podman run --rm --network none \
         prefix=/workspace/build/dist/rocm
         stage=/workspace/build/cv-libs/rpp/stage
         export LD_LIBRARY_PATH="$prefix/lib:$prefix/lib/llvm/lib"
-        "$prefix/bin/hipcc" -O2 -std=c++17 --offload-arch=gfx1013 \
+        "$prefix/bin/hipcc" -O2 -std=c++17 --offload-arch=gfx1013 -DAUDIO_SUPPORT \
             -I"$stage/include" -L"$stage/lib" /workspace/helpers/rpp_audio_smoke.cpp \
             -lrpp -o /workspace/build/bc250-validation/rpp_audio_smoke
     ' > "$workspace/logs/rpp-audio-compile.log" 2>&1

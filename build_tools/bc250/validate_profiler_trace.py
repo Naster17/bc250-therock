@@ -15,9 +15,9 @@ def validate(path: Path) -> None:
         assert len(data) == 1, "expected one profiled process"
         data = data[0]
     records = data["buffer_records"]
-    apis = records["hip_api_traces"]
+    apis = records["hip_api"]
     kernels = records["kernel_dispatch"]
-    copies = records["memory_copies"]
+    copies = records["memory_copy"]
     assert apis and kernels and copies, "missing requested tracing domain"
     for domain in (apis, kernels, copies):
         for record in domain:
