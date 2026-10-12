@@ -52,6 +52,6 @@ for component in ocl-icd ocl-clr hipify rpp rocALUTION hipfile hipDNN \
         cmake --build "$build_dir" --target "$component"
     fi
 done
-CMAKE_BUILD_PARALLEL_LEVEL=6 cmake --build "$build_dir" --target hipTensor
+CMAKE_BUILD_PARALLEL_LEVEL="${BC250_HIPTENSOR_JOBS:-12}" cmake --build "$build_dir" --target hipTensor
 cmake --build "$build_dir" --target dist
 ccache --show-stats
