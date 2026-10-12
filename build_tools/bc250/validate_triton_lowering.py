@@ -111,6 +111,9 @@ def validate(triton_opt: Path, output_dir: Path, llvm_bin: Path) -> None:
                 capture_output=True,
                 text=True,
             ).stdout
+            # Export the fixture function so LLVM cannot discard an unreferenced
+            # internal function before instruction selection.
+            llvm_ir = llvm_ir.replace("define internal ", "define ")
             (output_dir / f"{stem}.ll").write_text(llvm_ir)
             assembly = subprocess.run(
                 [
@@ -127,6 +130,12 @@ def validate(triton_opt: Path, output_dir: Path, llvm_bin: Path) -> None:
                 timeout=120,
             ).stdout
             (output_dir / f"{stem}.s").write_text(assembly)
+            function = (
+                "multiply_bf16"
+                if operand_type == "bf16-multiply"
+                else f"dot_{operand_type}"
+            )
+            assert re.search(rf"^{function}:", assembly, re.MULTILINE), stem
             if architecture == "gfx1013":
                 assert not re.search(r"\bv_(?:dot[24]|mfma|wmma)", assembly), stem
             results.append({"case": stem, "operations": counts})
