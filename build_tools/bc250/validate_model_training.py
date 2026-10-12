@@ -238,6 +238,9 @@ def main() -> None:
     )
     passed("finite_gradients_parameter_updates_decreasing_loss_and_frozen_base")
     if args.phase == "train":
+        if args.mode != "full":
+            model.peft_config["default"].base_model_name_or_path = report["model"]["model"]
+            model.peft_config["default"].revision = report["model"]["revision"]
         model.save_pretrained(
             directory / ("model" if args.mode == "full" else "adapter"),
             safe_serialization=True,

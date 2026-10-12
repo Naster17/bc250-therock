@@ -95,7 +95,7 @@ def main() -> None:
         for index in range(1, len(storage), 2):
             assert torch.all(storage[index] == (index * 17 + 3) % 251).item()
         passed("fragmented_allocator_reuse_preserves_live_allocations")
-        del storage, tensor, host
+        del storage, host
     elif args.mode == "streams":
         values = torch.linspace(-1, 1, 1048583)
         expected = values * 3 + 7
