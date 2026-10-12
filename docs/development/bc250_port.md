@@ -184,8 +184,16 @@ Run from an SSH shell on `.104`:
 ```bash
 bc250-torch -c 'import torch; print(torch.cuda.get_device_properties(0).gcnArchName)'
 bc250-torch your_script.py
+bc250-torch ~/bc250work/torch-matrix.py
 bc250-torch --shell
 ```
+
+The launcher maps host script paths into the container, including absolute
+paths and scripts outside the current directory. It retains the caller's working
+directory and mounts an external script's parent directory so sibling imports and
+data files remain available. Python options, `-c`, `-m`, and stdin mode are
+preserved. The user's matrix script passed as `nik` from the home directory and
+with an absolute path from `/tmp` after the launcher path fix on 2026-10-12.
 
 The launcher obtains rootful Podman access through `doas`, then runs the
 container as UID/GID 1000 with the device groups. It mounts the current directory
