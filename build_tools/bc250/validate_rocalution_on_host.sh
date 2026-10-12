@@ -11,7 +11,7 @@ dmesg > "$workspace/logs/kernel-before-rocalution.log"
 set +e
 podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
     -v "$workspace/build:/workspace/build:ro" -e HSA_ENABLE_SDMA=0 -e OMP_NUM_THREADS=4 \
-    -e LD_LIBRARY_PATH=/workspace/build/math-libs/rocALUTION/dist/lib:/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib \
+    -e LD_LIBRARY_PATH=/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib \
     localhost/bc250-rocm-build:10.2-ccache \
     timeout --kill-after=10s 120s \
     /workspace/build/math-libs/rocALUTION/stage/bin/rocalution-test \
