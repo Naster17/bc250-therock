@@ -1,0 +1,48 @@
+From b35368dd8f5289ebae3ad3a3f913e20dd89881a8 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 15:12:12 +0200
+Subject: [PATCH] test(hiptensor): execute generic arithmetic cases on native
+ gfx1013
+
+Allow gfx1013 in the generic FP16/FP32 test capability helpers and use the reported double arithmetic capability for FP64. Leave matrix-core test helpers unchanged so unsupported contraction tests remain excluded.
+---
+ projects/hiptensor/test/utils.hpp | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/projects/hiptensor/test/utils.hpp b/projects/hiptensor/test/utils.hpp
+index 4ec0ae386fc..c7b3b882c5e 100644
+--- a/projects/hiptensor/test/utils.hpp
++++ b/projects/hiptensor/test/utils.hpp
+@@ -122,7 +122,8 @@ inline bool isF16Supported()
+ 
+     std::string deviceName(mProps.gcnArchName);
+ 
+-    return (deviceName.find("gfx908") != std::string::npos)
++    return (deviceName.find("gfx1013") != std::string::npos)
++           || (deviceName.find("gfx908") != std::string::npos)
+            || (deviceName.find("gfx90a") != std::string::npos)
+            || (deviceName.find("gfx942") != std::string::npos)
+            || (deviceName.find("gfx950") != std::string::npos)
+@@ -149,7 +150,8 @@ inline bool isF32Supported()
+ 
+     std::string deviceName(mProps.gcnArchName);
+ 
+-    return (deviceName.find("gfx908") != std::string::npos)
++    return (deviceName.find("gfx1013") != std::string::npos)
++           || (deviceName.find("gfx908") != std::string::npos)
+            || (deviceName.find("gfx90a") != std::string::npos)
+            || (deviceName.find("gfx942") != std::string::npos)
+            || (deviceName.find("gfx950") != std::string::npos)
+@@ -176,7 +178,8 @@ inline bool isF64Supported()
+ 
+     std::string deviceName(mProps.gcnArchName);
+ 
+-    return (deviceName.find("gfx90a") != std::string::npos)
++    return ((deviceName.find("gfx1013") != std::string::npos) && mProps.arch.hasDoubles)
++           || (deviceName.find("gfx90a") != std::string::npos)
+            || (deviceName.find("gfx942") != std::string::npos)
+            || (deviceName.find("gfx950") != std::string::npos)
+            || (deviceName.find("gfx1250") != std::string::npos);
+-- 
+2.56.0
+
