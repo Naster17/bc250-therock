@@ -19,6 +19,12 @@ static void sparse_check(rocsparse_status status) {
     throw std::runtime_error("rocSPARSE operation failed");
 }
 
+template <typename T> __global__ void fill_probe(T *data, int count) {
+  int index = blockIdx.x * blockDim.x + threadIdx.x;
+  if (index < count)
+    data[index] = T(1);
+}
+
 template <typename T> static bool run(int analyses) {
   constexpr int side = 7, rows = side * side;
   std::vector<int> offsets(rows + 1), columns;
@@ -70,6 +76,9 @@ template <typename T> static bool run(int analyses) {
   hip_check(hipMalloc(&device_y, (rows + 16) * sizeof(T)));
   hip_check(hipMemset(device_x, 0, rows * sizeof(T)));
   hip_check(hipMemset(device_y, 0, (rows + 16) * sizeof(T)));
+  hipLaunchKernelGGL(fill_probe<T>, dim3(1), dim3(256), 0, nullptr, device_x, rows);
+  hip_check(hipGetLastError());
+  hip_check(hipDeviceSynchronize());
   bool passed = true;
   for (int repeat = 0; repeat < 10; ++repeat)
     for (bool ones : {true, false})
