@@ -12,7 +12,12 @@ import sys
 import sysconfig
 
 
-PACKAGES = ("transformers==5.19.0", "peft==0.21.2", "accelerate==1.15.0")
+PACKAGES = (
+    "transformers==5.2.0",
+    "peft==0.18.1",
+    "accelerate==1.12.0",
+    "huggingface-hub==1.4.1",
+)
 
 
 def main() -> None:
