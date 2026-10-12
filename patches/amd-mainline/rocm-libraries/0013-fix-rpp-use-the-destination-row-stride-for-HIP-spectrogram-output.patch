@@ -1,0 +1,27 @@
+From b9c8ad41e5b2c67c00bc28dff68b0c6f0df72ac5 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 19:52:36 +0200
+Subject: [PATCH] fix(rpp): use the destination row stride for HIP spectrogram
+ output
+
+---
+ projects/rpp/src/modules/tensor/hip/kernel/spectrogram.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/projects/rpp/src/modules/tensor/hip/kernel/spectrogram.cpp b/projects/rpp/src/modules/tensor/hip/kernel/spectrogram.cpp
+index 957abb8cf08..baad817f544 100644
+--- a/projects/rpp/src/modules/tensor/hip/kernel/spectrogram.cpp
++++ b/projects/rpp/src/modules/tensor/hip/kernel/spectrogram.cpp
+@@ -298,7 +298,8 @@ RppStatus hip_exec_spectrogram_tensor(Rpp32f* srcPtr, RpptDescPtr srcDescPtr, Rp
+                             ceil((float)globalThreads_z / LOCAL_THREADS_Z)),
+                        dim3(LOCAL_THREADS_X, LOCAL_THREADS_Y, LOCAL_THREADS_Z), 0,
+                        handle.GetStream(), windowOutput, make_uint2(windowOutputStride, nfft),
+-                       dstPtr, make_uint2(dstDescPtr->strides.nStride, maxNumWindows),
++                       dstPtr, make_uint2(dstDescPtr->strides.nStride,
++                                          dstDescPtr->strides.hStride),
+                        numWindowsTensor, cosTensor, sinTensor,
+                        make_int4(nfft, numBins, power, numTiles), vertical);
+     HIP_CHECK_LAUNCH_RETURN();
+-- 
+2.56.0
+

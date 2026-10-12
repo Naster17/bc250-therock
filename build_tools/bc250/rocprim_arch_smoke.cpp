@@ -19,7 +19,7 @@ static void hip_check(hipError_t status) {
 
 __global__ void identify(unsigned *output) {
   constexpr auto arch = rocprim::detail::device_target_arch();
-#if defined(__HIP_DEVICE_COMPILE__)
+#if defined(__HIP_DEVICE_COMPILE__) && __HIP_DEVICE_COMPILE__
   static_assert(arch == target_arch::gfx1013);
   static_assert(rocprim::detail::gen_from_target_arch(arch) == gen::rdna1);
 #endif
@@ -50,7 +50,7 @@ int main() {
         throw std::runtime_error(
             "rocPRIM device cache returned an unknown architecture");
     }
-    for (auto selected : {hipStreamDefault, stream}) {
+    for (auto selected : std::initializer_list<hipStream_t>{nullptr, stream}) {
       hip_check(rocprim::detail::host_target_arch(selected, arch));
       if (arch != target_arch::gfx1013 ||
           rocprim::detail::gen_from_target_arch(arch) != gen::rdna1)
