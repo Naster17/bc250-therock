@@ -1,0 +1,162 @@
+From a9e578151e5fbade11af5b5d33938091630744eb Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 15:03:43 +0200
+Subject: [PATCH] feat(hiptensor): add native gfx1013 generic operation profile
+
+Recognize Cyan Skillfish for generic elementwise, permutation and reduction kernels, including native scalar double capability. Add an explicit generic-only build profile that omits matrix contraction device instances and their registration. Preserve gfx1013 matrix-core rejection and the default matrix backend for existing architectures.
+
+Validation: git-clang-format reports no changed-line formatting issues and git diff --check passes. ROCm-wide hooks exclude this component. Native build and CPU-reference GPU operation tests follow on the BC-250 host.
+---
+ projects/hiptensor/CMakeLists.txt                      |  6 ++++++
+ .../Functions/hiptensorSupportedArchitectures.cmake    |  4 ++++
+ projects/hiptensor/library/src/CMakeLists.txt          |  6 +++++-
+ .../hiptensor/library/src/contraction/CMakeLists.txt   |  4 +++-
+ .../src/contraction/contraction_solution_instances.cpp |  4 ++++
+ projects/hiptensor/library/src/hip_device.cpp          | 10 +++++++++-
+ projects/hiptensor/library/src/include/hip_device.hpp  |  1 +
+ 7 files changed, 32 insertions(+), 3 deletions(-)
+
+diff --git a/projects/hiptensor/CMakeLists.txt b/projects/hiptensor/CMakeLists.txt
+index c212b5cb53a..5656bd18fd0 100644
+--- a/projects/hiptensor/CMakeLists.txt
++++ b/projects/hiptensor/CMakeLists.txt
+@@ -81,6 +81,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O1 -ggdb")           # c
+ set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} -O2 -DNDEBUG") # clang++ failed to build the project with the default -Os
+ 
+ # Project options
++option(HIPTENSOR_GENERIC_ONLY "Build generic elementwise and reduction operations without contraction device kernels" OFF)
+ if(CMAKE_PROJECT_NAME STREQUAL "hiptensor")
+     option(HIPTENSOR_BUILD_TESTS "Build hiptensor tests" ON)
+     option(HIPTENSOR_BUILD_SAMPLES "Build hiptensor samples" ON)
+@@ -93,6 +94,11 @@ if(CMAKE_PROJECT_NAME STREQUAL "hiptensor")
+         option(CREATE_TEST_APP_LOCAL_DEPLOY "Copy ROCm runtime DLLs next to test binaries so they take precedence over System32 (Windows only)" OFF)
+     endif()
+ endif()
++if(HIPTENSOR_GENERIC_ONLY)
++    add_compile_definitions(HIPTENSOR_GENERIC_ONLY=1)
++else()
++    add_compile_definitions(HIPTENSOR_GENERIC_ONLY=0)
++endif()
+ 
+ # Setup output paths
+ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin)
+diff --git a/projects/hiptensor/cmake/Functions/hiptensorSupportedArchitectures.cmake b/projects/hiptensor/cmake/Functions/hiptensorSupportedArchitectures.cmake
+index 0078da30361..cac60eea7da 100644
+--- a/projects/hiptensor/cmake/Functions/hiptensorSupportedArchitectures.cmake
++++ b/projects/hiptensor/cmake/Functions/hiptensorSupportedArchitectures.cmake
+@@ -28,6 +28,10 @@ set(DEFAULT_ARCHITECTURES
+     gfx12-generic
+ )
+ 
++if(HIPTENSOR_GENERIC_ONLY)
++    list(APPEND SUPPORTED_ARCHITECTURES gfx1013)
++endif()
++
+ function(hiptensor_is_supported_architecture ARCHITECTURE_NAME RESULT_VAR)
+     list(FIND SUPPORTED_ARCHITECTURES "${ARCHITECTURE_NAME}" INDEX)
+     if (INDEX EQUAL -1)
+diff --git a/projects/hiptensor/library/src/CMakeLists.txt b/projects/hiptensor/library/src/CMakeLists.txt
+index 14a54e97588..3d83d37d346 100644
+--- a/projects/hiptensor/library/src/CMakeLists.txt
++++ b/projects/hiptensor/library/src/CMakeLists.txt
+@@ -83,10 +83,14 @@ endfunction()
+ 
+ # Create shared library target
+ function(create_hiptensor_shared_library)
++    set(_contraction_device_objects)
++    if(NOT HIPTENSOR_GENERIC_ONLY)
++        list(APPEND _contraction_device_objects $<TARGET_OBJECTS:hiptensor_contraction_instances>)
++    endif()
+     add_library(hiptensor SHARED
+         $<TARGET_OBJECTS:hiptensor_core>
+         $<TARGET_OBJECTS:hiptensor_contraction>
+-        $<TARGET_OBJECTS:hiptensor_contraction_instances>
++        ${_contraction_device_objects}
+         $<TARGET_OBJECTS:hiptensor_elementwise>
+         $<TARGET_OBJECTS:hiptensor_reduction>
+     )
+diff --git a/projects/hiptensor/library/src/contraction/CMakeLists.txt b/projects/hiptensor/library/src/contraction/CMakeLists.txt
+index 32ec727210c..f9e093e88bc 100644
+--- a/projects/hiptensor/library/src/contraction/CMakeLists.txt
++++ b/projects/hiptensor/library/src/contraction/CMakeLists.txt
+@@ -36,4 +36,6 @@ set(HIPTENSOR_CONTRACTION_SOURCES
+ 
+ add_hiptensor_component(hiptensor_contraction ${HIPTENSOR_CONTRACTION_SOURCES})
+ 
+-add_subdirectory(device)
++if(NOT HIPTENSOR_GENERIC_ONLY)
++    add_subdirectory(device)
++endif()
+diff --git a/projects/hiptensor/library/src/contraction/contraction_solution_instances.cpp b/projects/hiptensor/library/src/contraction/contraction_solution_instances.cpp
+index 9c265a5dd42..a60b073eacb 100644
+--- a/projects/hiptensor/library/src/contraction/contraction_solution_instances.cpp
++++ b/projects/hiptensor/library/src/contraction/contraction_solution_instances.cpp
+@@ -35,15 +35,18 @@
+ #include <hip/hip_complex.h>
+ 
+ // Ensure access to
++#if !HIPTENSOR_GENERIC_ONLY
+ #include "device/hiptensor_contraction_bilinear_instances.hpp"
+ #include "device/hiptensor_contraction_bilinear_unary_ops_instances.hpp"
+ #include "device/hiptensor_contraction_scale_instances.hpp"
+ #include "device/hiptensor_contraction_scale_unary_ops_instances.hpp"
++#endif
+ 
+ namespace hiptensor
+ {
+     ContractionSolutionInstances::ContractionSolutionInstances()
+     {
++#if !HIPTENSOR_GENERIC_ONLY
+         // Register all the solutions exactly once
+ 
+         // Bilinear bf16
+@@ -559,5 +562,6 @@ namespace hiptensor
+                                           ck::tensor_operation::element_wise::PassThrough,
+                                           ck::tensor_operation::element_wise::ScaleComplex,
+                                           hipDoubleComplex>());
++#endif
+     }
+ } // namespace hiptensor
+diff --git a/projects/hiptensor/library/src/hip_device.cpp b/projects/hiptensor/library/src/hip_device.cpp
+index f039138356d..cfd9df5b787 100644
+--- a/projects/hiptensor/library/src/hip_device.cpp
++++ b/projects/hiptensor/library/src/hip_device.cpp
+@@ -46,7 +46,11 @@ namespace hiptensor
+ 
+         std::string deviceName(mProps.gcnArchName);
+ 
+-        if(deviceName.find("gfx908") != std::string::npos)
++        if(deviceName.find("gfx1013") != std::string::npos)
++        {
++            mGcnArch = hipGcnArch_t::GFX1013;
++        }
++        else if(deviceName.find("gfx908") != std::string::npos)
+         {
+             mGcnArch = hipGcnArch_t::GFX908;
+         }
+@@ -137,6 +141,10 @@ namespace hiptensor
+ 
+     bool HipDevice::supportsF64() const
+     {
++        if(mGcnArch == HipDevice::hipGcnArch_t::GFX1013)
++        {
++            return mArch.hasDoubles;
++        }
+         return (mGcnArch == HipDevice::hipGcnArch_t::GFX90A
+                 || mGcnArch == HipDevice::hipGcnArch_t::GFX942
+                 || mGcnArch == HipDevice::hipGcnArch_t::GFX950
+diff --git a/projects/hiptensor/library/src/include/hip_device.hpp b/projects/hiptensor/library/src/include/hip_device.hpp
+index 386c0fffbe1..1df355642d2 100644
+--- a/projects/hiptensor/library/src/include/hip_device.hpp
++++ b/projects/hiptensor/library/src/include/hip_device.hpp
+@@ -41,6 +41,7 @@ namespace hiptensor
+             GFX90A           = 0x90A,
+             GFX942           = 0x942,
+             GFX950           = 0x950,
++            GFX1013          = 0x1013,
+             GFX1100          = 0x1100,
+             GFX1101          = 0x1101,
+             GFX1102          = 0x1102,
+-- 
+2.56.0
+
