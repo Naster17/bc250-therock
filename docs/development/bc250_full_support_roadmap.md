@@ -194,7 +194,8 @@ rocm-libraries `3d8f334b9a72ad99a0ecd87552613970433e0500`, rocm-systems
 - [x] Use the established pool backend by default on gfx1013.
 - [x] Retain virtual-memory APIs and asynchronous pool allocation availability.
 - [ ] Verify explicit/default pool attributes, reuse, release thresholds and trimming.
-- [ ] Test allocation/free ordering across streams and events.
+- [x] Verify pinned copies, four streams, events and CPU results in the bounded Torch gate.
+- [ ] Expand allocation/free ordering and explicit pool coverage across streams/events.
 - [ ] Test pool import/export and IPC where supported.
 - [ ] Qualify virtual address reserve/map/unmap/access/import/export operations.
 - [ ] Investigate and fix the VM-heap corruption before restoring it as the default.
@@ -202,8 +203,10 @@ rocm-libraries `3d8f334b9a72ad99a0ecd87552613970433e0500`, rocm-systems
   subsequent kernel launches.
 - [ ] Qualify graph allocation/free nodes and repeated graph execution.
 - [ ] Test managed/pinned memory, asynchronous transfers and host/device visibility.
-- [ ] Test large allocations, fragmentation, failed allocations and recovery.
-- [ ] Test multi-process and multi-thread runtime use.
+- [x] Verify 10 GiB GPU allocations, fragmentation/reuse and complete pressure-buffer release.
+- [ ] Test near-capacity allocation failures and recovery.
+- [x] Verify two simultaneous independent Torch GPU processes.
+- [ ] Broaden multi-process and multi-thread runtime use and IPC.
 - [ ] Qualify images/textures, events, callbacks and supported interoperability paths.
 - [ ] Run broader upstream HIP/ROCr tests with meaningful pass/skip accounting.
 
@@ -367,7 +370,7 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 - [x] Pass nine CPU-reference normalization/resampling graph cases.
 - [x] Pass nine CPU-reference MIOpen convolution graph cases across three precisions
   and forward/data-gradient/weight-gradient directions.
-- [ ] Finish requalification after the compiled allocator default changes.
+- [x] Finish requalification after the compiled allocator default changes.
 - [ ] Expand forward/backward normalization, training and layout coverage.
 - [ ] Expand supported provider graphs and bundle-based integration coverage.
 - [ ] Verify unsupported graphs, plans, caching, dynamic loading and serialization.
@@ -387,11 +390,17 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
   global/buffer memory, offset views, sentinels and BF16 rounding cases.
 - [x] Pass the user's Torch matrix twice after fixing the launcher.
 - [x] Pass the initial 120-second installed-runtime soak: 8,074 checked cycles.
-- [ ] Pass the queued eager/compiled gates on the new ROCm candidate.
-- [ ] Pass the queued 10-minute candidate soak.
+- [x] Pass the queued eager/compiled gates on the new ROCm candidate.
+- [x] Pass the queued 10-minute candidate soak.
+- [x] Fine-tune the pretrained 135M model with FP32, finite gradients and decreasing loss.
+- [x] Train rank-eight PEFT LoRA with FP16/BF16 autocast and activation checkpointing.
+- [x] Resume model/adapter, optimizer, scheduler, scaler and RNG state in fresh containers.
+- [x] Compare full-model CPU/GPU logits, loss and four representative parameter gradients.
 - [ ] Run longer training and mixed-operation stress tests.
 - [ ] Expand upstream Torch/Triton coverage for shapes, layouts and supported dtypes.
-- [ ] Qualify memory pressure, allocator reuse, graph capture and multiple processes.
+- [x] Qualify bounded 10 GiB GPU + 768 MiB CPU pressure and fragmented allocation reuse.
+- [x] Qualify four streams/events, eight basic HIP graph replays and two concurrent processes.
+- [ ] Expand memory pressure, graph allocation/free nodes, OOM and process/IPC coverage.
 - [ ] Test eager/compiled agreement and convergence on representative real models.
 - [ ] Tune scalar dot, memory access, reductions and autotuning for the board.
 - [ ] Evaluate useful storage/conversion support for additional low-precision types
@@ -604,3 +613,8 @@ Five fresh release processes passed all 200 CG diagnostic cases.
 Rollback verification switched to the previous release, passed native GEMM,
 restored the expanded release and passed native GEMM again. The user
 `bc250-torch ~/bc250work/torch-matrix.py` invocation passed as `nik`.
+
+The short real-model training/memory milestone passed nine gates in 123.99 seconds
+on 2026-10-13, with unchanged kernel logs. Performance was not started. See
+[bc250_training_memory.md](bc250_training_memory.md) for scope, commands, losses,
+memory figures, artifacts and remaining qualifications.

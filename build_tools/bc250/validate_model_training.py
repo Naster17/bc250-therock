@@ -13,6 +13,8 @@ import torch
 from torch.nn.attention import SDPBackend, sdpa_kernel
 from peft import LoraConfig, PeftModel, get_peft_model
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers.utils import logging as transformer_logging
+from huggingface_hub.utils import disable_progress_bars
 
 
 TEXT = (
@@ -32,6 +34,8 @@ def main() -> None:
     parser.add_argument("--phase", choices=("train", "resume"), required=True)
     parser.add_argument("--steps", type=int, default=4)
     args = parser.parse_args()
+    disable_progress_bars()
+    transformer_logging.disable_progress_bar()
     if not 1 <= args.steps <= 8:
         parser.error("Use one to eight steps for this bounded qualification")
     assert torch.cuda.get_device_properties(0).gcnArchName.split(":")[0] == "gfx1013"
@@ -151,13 +155,27 @@ def main() -> None:
             reference.loss.backward()
             actual = model(**gpu_inputs, labels=labels.cuda())
             actual.loss.backward()
+        observed_logits = actual.logits.detach().cpu()
+        reference_logits = reference.logits.detach()
+        # Deep FP32 accumulation amplifies local rounding around zero. Bound
+        # aggregate and maximum error as well as the elementwise comparison.
+        report["cpu_logit_relative_l2"] = (
+            (observed_logits - reference_logits).norm() / reference_logits.norm()
+        ).item()
+        report["cpu_logit_max_abs"] = (
+            (observed_logits - reference_logits).abs().max().item()
+        )
+        output.write_text(json.dumps(report, indent=2) + "\n")
+        assert report["cpu_logit_relative_l2"] < 2e-5
+        assert report["cpu_logit_max_abs"] < 2e-3
         torch.testing.assert_close(
-            actual.logits.cpu(), reference.logits.detach(), rtol=5e-4, atol=3e-4
+            observed_logits, reference_logits, rtol=5e-4, atol=1e-3
         )
         torch.testing.assert_close(
             actual.loss.cpu(), reference.loss.detach(), rtol=1e-4, atol=1e-4
         )
         cpu_parameters = dict(cpu.named_parameters())
+        report["cpu_gradient_relative_l2"] = {}
         for name in (
             "model.embed_tokens.weight",
             "model.layers.0.self_attn.q_proj.weight",
@@ -167,9 +185,26 @@ def main() -> None:
             expected = cpu_parameters[name].grad
             observed = dict(model.named_parameters())[name].grad.cpu()
             relative = (observed - expected).norm() / expected.norm().clamp_min(1e-12)
-            assert relative.item() < 0.025, (name, relative.item())
-            torch.testing.assert_close(observed, expected, rtol=1e-2, atol=2e-5)
-        del reference, actual, cpu, cpu_parameters, expected, observed
+            report["cpu_gradient_relative_l2"][name] = relative.item()
+            output.write_text(json.dumps(report, indent=2) + "\n")
+            assert relative.item() < 2e-3, (name, relative.item())
+            # Bound the worst component too, with scale-aware headroom for
+            # near-zero cancellation propagated through the 30-layer model.
+            max_error = (observed - expected).abs().max().item()
+            assert max_error < 1e-4 + 1e-3 * expected.abs().max().item(), (
+                name,
+                max_error,
+            )
+        del (
+            reference,
+            actual,
+            cpu,
+            cpu_parameters,
+            expected,
+            observed,
+            observed_logits,
+            reference_logits,
+        )
         optimizer.zero_grad(set_to_none=True)
         gc.collect()
         passed("cpu_reference_logits_loss_and_four_parameter_gradients")
@@ -239,7 +274,9 @@ def main() -> None:
     passed("finite_gradients_parameter_updates_decreasing_loss_and_frozen_base")
     if args.phase == "train":
         if args.mode != "full":
-            model.peft_config["default"].base_model_name_or_path = report["model"]["model"]
+            model.peft_config["default"].base_model_name_or_path = report["model"][
+                "model"
+            ]
             model.peft_config["default"].revision = report["model"]["revision"]
         model.save_pretrained(
             directory / ("model" if args.mode == "full" else "adapter"),

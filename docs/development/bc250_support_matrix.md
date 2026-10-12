@@ -111,3 +111,13 @@ driver exposure, not proof that the silicon physically lacks every media block.
   documents separate tracing domains and output controls.
 - Extend deployment gates before activating an expanded versioned release, then
   rerun the existing eager/compiled Torch and stability checks on that copy.
+
+## Short real-model training and memory milestone
+
+The pretrained SmolLM2-135M gate passed full FP32 fine-tuning, PEFT FP16/BF16
+LoRA, and fresh-container model/adapter plus optimizer/scheduler/scaler/RNG
+resume. Ten GiB GPU pressure with 768 MiB CPU storage, fragmented reuse, four
+streams/events, eight basic graph replays and two simultaneous GPU processes
+passed. The final nine-gate batch took 123.99 seconds with unchanged kernel logs.
+Performance was not started. Details and remaining scope are in
+[bc250_training_memory.md](bc250_training_memory.md).

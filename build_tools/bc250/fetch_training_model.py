@@ -12,6 +12,7 @@ from huggingface_hub import snapshot_download
 
 MODEL = "HuggingFaceTB/SmolLM2-135M"
 REVISION = "93efa2f097d58c2a74874c7e644dbc9b0cee75a2"
+MODEL_SHA256 = "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1"
 
 
 def main() -> None:
@@ -30,6 +31,10 @@ def main() -> None:
         if path.is_file():
             with path.open("rb") as stream:
                 hashes[path.name] = hashlib.file_digest(stream, "sha256").hexdigest()
+    if hashes.get("model.safetensors") != MODEL_SHA256:
+        raise RuntimeError(
+            "Pretrained weights do not match the pinned upstream checksum"
+        )
     (directory / "bc250-model-provenance.json").write_text(
         json.dumps({"model": MODEL, "revision": REVISION, "sha256": hashes}, indent=2)
         + "\n"

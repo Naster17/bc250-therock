@@ -234,3 +234,7 @@ The runtime's `/opt/bc250-stack/current` and `/opt/bc250-stack/previous` symlink
 are independent of the launcher update. See [bc250_port.md](bc250_port.md) for
 runtime recovery and [bc250_full_support_roadmap.md](bc250_full_support_roadmap.md)
 for remaining ROCm work.
+
+Real pretrained full fine-tuning, FP16/BF16 LoRA and fresh-container training
+resume are now qualified for the small recorded workload. Use the isolated
+consumer environment and examples in [bc250_training_memory.md](bc250_training_memory.md).
