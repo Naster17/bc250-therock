@@ -101,8 +101,8 @@ The old 7.2 runtime passed a CPU-compared 64x64 FP32 torch GEMM on the
 The fresh ROCm 10.2 core passed the native HIP hardware gate on `.104` with
 SDMA disabled: 256 allocation/dispatch cycles, LDS reduction, global atomics,
 and CPU-checked copies from 4 KiB through 16 MiB. The reported architecture is
-`gfx1013:xnack-`, with wave32. PyTorch is still building; its execution gates
-have not yet run.
+`gfx1013:xnack-`, with wave32. PyTorch's build and initial execution gates
+passed on 2026-10-12.
 The packed FP16/BF16 atomic gate also passed with unmodified HIP headers,
 including contended packed updates, neighboring scalar lanes, untouched
 sentinels, and returned old values. LLVM's target-aware `__has_builtin` selects
@@ -134,8 +134,11 @@ fixture functions through instruction selection so LLVM cannot discard them.
 The first six MLIR dot checks passed; the extended BF16 multiplication check
 reproduced an LLVM instruction-selection failure before its fix. The updated
 native rebuild and all eight extended MLIR/LLVM/assembly checks passed on
-2026-10-12. Triton GPU execution and Inductor execution remain pending until
-Torch finishes.
+2026-10-12. GPU tests also exposed an omitted RDNA1 buffer-descriptor flag
+branch: buffer kernels returned incorrect results while global-memory kernels
+passed. Adding RDNA1 to the descriptor initialization branch fixed the native
+buffer path. Both paths passed GPU execution checks; the final profile keeps
+buffer operations enabled.
 
 `validate_primitives_on_host.sh` passed 227 upstream GPU tests: eight
 rocPRIM reductions, ten rocPRIM scans, hipCUB's device version test, and
@@ -148,6 +151,49 @@ native gfx1013 dot tests, fused elementwise kernels, and a CPU-compared
 layernorm/softmax/matmul forward-and-backward graph through Inductor.
 `finish_validation_on_host.sh` waits for successful eager Torch, ML,
 primitive and Triton build gates before continuing compiler validation.
+
+The installed release passed all 56 eager checks, including FP32/FP64/FP16/BF16
+GEMM, solvers, sparse CSR multiplication, FFT, convolution gradients, mathematical
+SDPA, ROCTX markers, and the 30-step training run. Its compiler gate passed
+four upstream Triton tests, exact BF16 rounding ties and NaNs, 12 masked-memory
+cases with offset views and sentinels, three fused elementwise precisions, and
+the layernorm/softmax/matmul forward-and-backward graph. Inductor generated seven
+kernels. No new kernel messages appeared during release validation.
+
+## Installed runtime
+
+The first active release on `.104` is
+`/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296`, selected through
+`/opt/bc250-stack/current`. It contains independent copies of ROCm and Torch's
+runtime source tree; later development builds cannot replace its files.
+The immutable image ID and source revisions are recorded in `runtime.json`.
+Triton is installed from our compiled wheel with normal backend entry-point
+metadata. Torch remains an editable installation mounted at its expected
+container path. This is an Alpine-compatible glibc container deployment.
+The TheRock distribution version is 10.2.0; the pinned HIP component reports
+7.17.0 through `torch.version.hip`.
+
+`deploy_on_host.py` requires successful pre-deployment gates, copies the
+candidate, reruns eager and compiler checks as the host user's UID, and switches
+the active symlink only after both pass. Subsequent deployments retain the
+prior release through `/opt/bc250-stack/previous`. The boot kernel and GRUB
+default are independent of this userspace deployment.
+
+Run from an SSH shell on `.104`:
+
+```bash
+bc250-torch -c 'import torch; print(torch.cuda.get_device_properties(0).gcnArchName)'
+bc250-torch your_script.py
+bc250-torch --shell
+```
+
+The launcher obtains rootful Podman access through `doas`, then runs the
+container as UID/GID 1000 with the device groups. It mounts the current directory
+at `/workspace/project`, mounts release files read-only, and retains writable
+runtime caches under the release. SDMA stays disabled in the validated profile.
+`validate_stability.py` repeatedly checks GEMM, 16 MiB allocations, offset-view
+copies and compiled kernels against CPU results; longer qualification and
+performance comparison with `.105` remain separate follow-up work.
 
 The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
 configuration downloads sources into the source tree, which is intentionally
