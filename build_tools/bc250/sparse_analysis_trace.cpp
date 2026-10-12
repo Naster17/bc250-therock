@@ -14,6 +14,9 @@
 #include <vector>
 #include "rocsparse_csrmv_info.hpp"
 
+static rocsparse_mat_info watched_info = nullptr;
+static bool watching = false;
+
 static void dump(rocsparse_mat_info info, const char *where) {
   if (!info)
     return;
@@ -91,6 +94,7 @@ extern "C" hipError_t hipMalloc(void **pointer, size_t bytes) {
   if (!real) return hipErrorUnknown;
   auto status = real(pointer, bytes);
   fprintf(stderr, "HIP_ALLOC pointer=%p bytes=%zu status=%d\n", *pointer, bytes, int(status));
+  if (watching) dump(watched_info, "after hipMalloc");
   return status;
 }
 
@@ -106,5 +110,7 @@ extern "C" hipError_t hipMemset(void *pointer, int value, size_t bytes) {
   static auto real = reinterpret_cast<decltype(&hipMemset)>(dlsym(RTLD_NEXT, "hipMemset"));
   if (!real) return hipErrorUnknown;
   fprintf(stderr, "HIP_MEMSET pointer=%p bytes=%zu value=%d\n", pointer, bytes, value);
-  return real(pointer, value, bytes);
+  auto status = real(pointer, value, bytes);
+  if (watching) dump(watched_info, "after hipMemset");
+  return status;
 }
