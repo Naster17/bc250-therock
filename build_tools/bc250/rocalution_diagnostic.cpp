@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
@@ -33,7 +34,7 @@ template <typename T> bool run_case(bool accelerator, bool jacobi) {
     }
     offsets[rows] = entry;
     if (entry != nnz)
-      return false;
+      throw std::runtime_error("invalid diagnostic CSR matrix");
     LocalMatrix<T> matrix;
     matrix.SetDataPtrCSR(&offsets, &columns, &values, "laplacian", nnz, rows,
                          rows);
@@ -57,7 +58,7 @@ template <typename T> bool run_case(bool accelerator, bool jacobi) {
       if (host[row] != T(4 - neighbors)) {
         fprintf(stderr, "SPMV_MISMATCH row=%d actual=%.17g\n", row,
                 double(host[row]));
-        return false;
+        throw std::runtime_error("diagnostic SpMV differs from CPU");
       }
     }
     x.SetRandomUniform(12345, T(-4), T(6));
@@ -102,11 +103,17 @@ template <typename T> bool run_case(bool accelerator, bool jacobi) {
 
 int main() {
   bool passed = true;
-  for (bool accelerator : {false, true})
-    for (int repeat = 0; repeat < 5; ++repeat)
-      for (bool jacobi : {false, true}) {
-        passed = run_case<float>(accelerator, jacobi) && passed;
-        passed = run_case<double>(accelerator, jacobi) && passed;
-      }
+  try {
+    for (bool accelerator : {false, true})
+      for (int repeat = 0; repeat < 5; ++repeat)
+        for (bool jacobi : {false, true}) {
+          passed = run_case<float>(accelerator, jacobi) && passed;
+          passed = run_case<double>(accelerator, jacobi) && passed;
+        }
+  } catch (const std::exception &error) {
+    fprintf(stderr, "%s\n", error.what());
+    rocalution::stop_rocalution();
+    return 1;
+  }
   return passed ? 0 : 1;
 }

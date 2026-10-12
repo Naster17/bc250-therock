@@ -5,6 +5,7 @@
 set -eu
 workspace="${1:?usage: validate_rpp_audio_on_host.sh <workspace-directory>}"
 test "$(id -u)" -eq 0
+test "$(cat "$workspace/logs/expanded-build.exit")" = 0
 test "$(cat /sys/class/watchdog/watchdog0/state)" = active
 image=localhost/bc250-rocm-build:10.2-ccache
 podman run --rm --network none \
