@@ -58,7 +58,7 @@ run_tests hipkernel-cpu-reference 9 \
     --test-config "$source/hip-kernel-provider/config/HIP_MLOPS_ENGINE.toml" \
     --reference-executor cpu --verification-mode cpu --validator cpu \
     --no-bundles --fail-on-unsupported \
-    '--gtest_filter=Quick/IntegrationGpuLayernormPure4D*.Correctness/0:Smoke/IntegrationGpuRMSNorm*.Correctness/0:Smoke/IntegrationGpuResampleForward*.Correctness/0'
+    '--gtest_filter=Quick/IntegrationGpuLayernormPure4D*.Correctness/0:Smoke/IntegrationGpuRMSNormFp*.Correctness/0:Smoke/IntegrationGpuRMSNormBfp16.Correctness/0:Smoke/IntegrationGpuResampleForward*.Correctness/0'
 
 run_tests miopen-provider-cpu-reference 9 \
     "$prefix/bin/hipdnn_integration_tests" \
