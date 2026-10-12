@@ -103,7 +103,7 @@ template <typename T> static bool run(int analyses) {
               fprintf(stderr,
                       "SPMV_MISMATCH type=%s analysis=%d repeat=%d ones=%d "
                       "beta=%g row=%d actual=%g expected=%g\n",
-                      std::is_same_v<T, float> ? "float" : "double", analyze,
+                      std::is_same_v<T, float> ? "float" : "double", analyses,
                       repeat, ones, double(beta), row, double(y[row]),
                       double(expected));
           }
