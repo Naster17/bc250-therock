@@ -5,6 +5,8 @@
 set -eu
 workspace="${1:?usage: finish_validation_on_host.sh <workspace-directory>}"
 test "$(id -u)" -eq 0
+rm -f "$workspace/logs/compiler-continuation.exit" \
+    "$workspace/logs/torch-compile-validation.exit"
 phase=waiting-for-torch
 trap 'status=$?; echo "$phase $status" > "$workspace/logs/compiler-continuation.exit"' EXIT
 echo "$phase" > "$workspace/logs/compiler-continuation.phase"

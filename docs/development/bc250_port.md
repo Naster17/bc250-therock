@@ -133,13 +133,21 @@ instruction selection against native gfx1013 and gfx1100. Preserve generated
 fixture functions through instruction selection so LLVM cannot discard them.
 The first six MLIR dot checks passed; the extended BF16 multiplication check
 reproduced an LLVM instruction-selection failure before its fix. The updated
-native rebuild and extended checks are pending. Triton GPU execution and
-Inductor execution remain pending until Torch finishes.
+native rebuild and all eight extended MLIR/LLVM/assembly checks passed on
+2026-10-12. Triton GPU execution and Inductor execution remain pending until
+Torch finishes.
+
+`validate_primitives_on_host.sh` passed 227 upstream GPU tests: eight
+rocPRIM reductions, ten rocPRIM scans, hipCUB's device version test, and
+all 208 hipCUB block-reduction cases. Kernel logs gained no new messages
+during the ML and primitive hardware gates.
 
 `validate_compilation_on_host.sh` requires successful eager Torch validation
 and a successful Triton build. It runs the compiler gate, the three upstream
 native gfx1013 dot tests, fused elementwise kernels, and a CPU-compared
 layernorm/softmax/matmul forward-and-backward graph through Inductor.
+`finish_validation_on_host.sh` waits for successful eager Torch, ML,
+primitive and Triton build gates before continuing compiler validation.
 
 The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
 configuration downloads sources into the source tree, which is intentionally

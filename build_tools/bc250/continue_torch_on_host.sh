@@ -10,6 +10,8 @@ image="${BC250_TORCH_BUILD_IMAGE:-localhost/bc250-pytorch-build:2.13-gfx1013}"
 runtime_image=localhost/bc250-pytorch-runtime:2.13-gfx1013
 test "$(id -u)" -eq 0
 mkdir -p "$workspace/pytorch-work"
+rm -f "$workspace/logs/torch-continuation.exit" \
+    "$workspace/logs/torch-build.exit" "$workspace/logs/torch-validation.exit"
 phase=waiting-for-math
 trap 'status=$?; echo "$phase $status" > "$workspace/logs/torch-continuation.exit"' EXIT
 echo "$phase" > "$workspace/logs/torch-continuation.phase"
