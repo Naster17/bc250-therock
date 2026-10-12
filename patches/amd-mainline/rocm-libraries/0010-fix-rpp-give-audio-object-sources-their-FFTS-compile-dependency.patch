@@ -1,0 +1,29 @@
+From 0a912025cc03169157a0cf475c66df05a53651a2 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 19:17:35 +0200
+Subject: [PATCH] fix(rpp): give audio object sources their FFTS compile
+ dependency
+
+---
+ projects/rpp/src/modules/CMakeLists.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/projects/rpp/src/modules/CMakeLists.txt b/projects/rpp/src/modules/CMakeLists.txt
+index 53803faf74d..38a3b69575c 100644
+--- a/projects/rpp/src/modules/CMakeLists.txt
++++ b/projects/rpp/src/modules/CMakeLists.txt
+@@ -119,6 +119,11 @@ add_compile_options("-Wno-unused-result")
+ # Add library
+ add_library(${PROJECT_NAME} OBJECT ${Rpp_Source})
+ target_link_libraries(${PROJECT_NAME} PUBLIC HALF::half)
++if(RPP_AUDIO_SUPPORT)
++    # Spectrogram sources belong to this object library, so they need FFTS's
++    # headers while compiling, before the final shared library is linked.
++    target_link_libraries(${PROJECT_NAME} PRIVATE FFTS::FFTS)
++endif()
+ 
+ # Target settings
+ set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
+-- 
+2.56.0
+
