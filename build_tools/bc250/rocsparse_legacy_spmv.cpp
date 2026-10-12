@@ -141,7 +141,7 @@ template <typename T> static bool run(int analyses) {
 int main() {
   try {
     bool passed = true;
-    for (int analyses : {0, 1, 2}) {
+    for (int analyses : {1, 2, 0}) {
       passed = run<float>(analyses) && passed;
       passed = run<double>(analyses) && passed;
     }
