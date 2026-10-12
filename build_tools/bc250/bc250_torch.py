@@ -2,18 +2,228 @@
 # Copyright Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: MIT
 
-"""Run Python or an interactive shell in the active BC-250 Torch release."""
+"""Run Python or a shell with persistent host paths in the BC-250 Torch release."""
 
+import argparse
+from dataclasses import dataclass, field
 import json
 import os
 from pathlib import Path
+import pwd
+import re
+import stat
+import subprocess
 import sys
+import tempfile
+
+
+@dataclass
+class LaunchOptions:
+    arguments: list[str] = field(default_factory=list)
+    mounts: list[tuple[str, str]] = field(default_factory=list)
+    environment: dict[str, str] = field(default_factory=dict)
+    shm_size: str = "1g"
+    shell: bool = False
+
+
+PROTECTED_ENVIRONMENT = {
+    "HOME",
+    "PATH",
+    "LD_LIBRARY_PATH",
+    "ROCM_PATH",
+    "HIP_PATH",
+    "HSA_ENABLE_SDMA",
+    "TRITON_CACHE_DIR",
+    "TORCHINDUCTOR_CACHE_DIR",
+    "PYTHONHOME",
+    "USER",
+    "LOGNAME",
+    "PYTHONDONTWRITEBYTECODE",
+}
+INHERITED_PREFIXES = ("HF_", "HUGGINGFACE_", "WANDB_", "MLFLOW_")
+INHERITED_NAMES = {
+    "http_proxy",
+    "https_proxy",
+    "no_proxy",
+    "HTTP_PROXY",
+    "HTTPS_PROXY",
+    "NO_PROXY",
+    "OMP_NUM_THREADS",
+    "OPENBLAS_NUM_THREADS",
+    "TOKENIZERS_PARALLELISM",
+    "CUDA_VISIBLE_DEVICES",
+    "HIP_VISIBLE_DEVICES",
+    "ROCR_VISIBLE_DEVICES",
+    "TORCHINDUCTOR_COMPILE_THREADS",
+    "XDG_CACHE_HOME",
+    "TORCH_HOME",
+}
+PROTECTED_PATHS = (
+    Path("/workspace"),
+    Path("/opt/torch-venv"),
+    Path("/opt/bc250-tools"),
+    Path("/usr"),
+    Path("/bin"),
+    Path("/lib"),
+    Path("/lib64"),
+    Path("/etc"),
+    Path("/dev"),
+    Path("/proc"),
+    Path("/sys"),
+)
+
+
+def check_environment(name: str, value: str) -> None:
+    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name):
+        raise ValueError(f"Invalid environment variable name: {name}")
+    if name in PROTECTED_ENVIRONMENT:
+        raise ValueError(f"The validated runtime controls {name}")
+    if "\n" in value or "\r" in value or "\0" in value:
+        raise ValueError(f"Environment variable {name} must be a single line")
+
+
+def check_mount(path: Path) -> None:
+    if not path.is_absolute() or not path.exists():
+        raise ValueError(f"Mount source must exist: {path}")
+    if ":" in str(path) or "\n" in str(path):
+        raise ValueError(f"Unsupported mount path character: {path}")
+    if any(
+        path == protected
+        or protected.is_relative_to(path)
+        or path.is_relative_to(protected)
+        for protected in PROTECTED_PATHS
+    ):
+        raise ValueError(f"Mount would hide container runtime files: {path}")
+
+
+def launcher_help() -> None:
+    parser = argparse.ArgumentParser(
+        prog="bc250-torch",
+        description=__doc__,
+        usage="%(prog)s [launcher options] [--] [python options] script.py [script arguments]",
+        epilog="Options must precede Python arguments. Host paths retain their names; home, cwd and script parent are writable. -h/--help go to Python.",
+        add_help=False,
+    )
+    parser.add_argument(
+        "--launcher-help", action="store_true", help="show this launcher help"
+    )
+    parser.add_argument(
+        "--mount",
+        metavar="PATH",
+        action="append",
+        help="mount an existing host file/directory read-write at the same path",
+    )
+    parser.add_argument(
+        "--mount-ro",
+        metavar="PATH",
+        action="append",
+        help="mount an existing host file/directory read-only at the same path",
+    )
+    parser.add_argument(
+        "--env",
+        metavar="NAME[=VALUE]",
+        action="append",
+        help="pass a variable from the caller or set its value",
+    )
+    parser.add_argument(
+        "--env-file",
+        metavar="PATH",
+        action="append",
+        help="read NAME=VALUE lines; blank lines and # comments allowed",
+    )
+    parser.add_argument(
+        "--shm-size",
+        metavar="SIZE",
+        help="DataLoader shared-memory limit (default: 1g; e.g. 2g)",
+    )
+    parser.add_argument(
+        "--shell",
+        action="store_true",
+        help="run bash; optional remaining arguments go to bash",
+    )
+    parser.print_help()
+
+
+def parse_launcher_arguments(
+    arguments: list[str], environment: dict[str, str]
+) -> LaunchOptions:
+    options = LaunchOptions(
+        environment={
+            name: value
+            for name, value in environment.items()
+            if name in INHERITED_NAMES or name.startswith(INHERITED_PREFIXES)
+        }
+    )
+    index = 0
+    while index < len(arguments):
+        argument = arguments[index]
+        if argument == "--launcher-help":
+            launcher_help()
+            raise SystemExit(0)
+        if argument == "--":
+            index += 1
+            break
+        if argument == "--shell":
+            options.shell = True
+            index += 1
+            break
+        if argument not in (
+            "--mount",
+            "--mount-ro",
+            "--env",
+            "--env-file",
+            "--shm-size",
+        ):
+            break
+        if index + 1 >= len(arguments):
+            raise ValueError(f"Missing value for {argument}")
+        value = arguments[index + 1]
+        if argument.startswith("--mount"):
+            path = Path(value).expanduser().absolute()
+            check_mount(path)
+            options.mounts.append(
+                (str(path), "ro" if argument == "--mount-ro" else "rw")
+            )
+        elif argument == "--env":
+            name, separator, contents = value.partition("=")
+            if not separator:
+                if name not in environment:
+                    raise ValueError(f"Caller environment variable is unset: {name}")
+                contents = environment[name]
+            options.environment[name] = contents
+        elif argument == "--env-file":
+            for line in Path(value).expanduser().read_text().splitlines():
+                if not line.strip() or line.lstrip().startswith("#"):
+                    continue
+                name, separator, contents = line.partition("=")
+                if not separator:
+                    raise ValueError(
+                        f"Expected NAME=VALUE in environment file: {value}"
+                    )
+                options.environment[name.strip()] = contents
+        else:
+            options.shm_size = value
+        index += 2
+    options.arguments = arguments[index:]
+    validate_options(options)
+    return options
+
+
+def validate_options(options: LaunchOptions) -> None:
+    if not re.fullmatch(r"[1-9][0-9]*[bkmgBKMG]?", options.shm_size):
+        raise ValueError("Shared memory size must be positive, e.g. 1g or 512m")
+    for name, value in options.environment.items():
+        check_environment(name, value)
+    for source, mode in options.mounts:
+        if mode not in ("rw", "ro"):
+            raise ValueError(f"Invalid mount mode: {mode}")
+        check_mount(Path(source))
 
 
 def prepare_python_arguments(
     arguments: list[str], workspace: Path
 ) -> tuple[list[str], list[tuple[Path, str]]]:
-    """Map a host script into the container while retaining the caller's cwd."""
+    """Preserve absolute host script paths and mount external script parents."""
     arguments = arguments.copy()
     index = 0
     while index < len(arguments):
@@ -34,83 +244,167 @@ def prepare_python_arguments(
     script = Path(arguments[index]).expanduser()
     if not script.is_absolute():
         script = workspace / script
-    script = script.resolve(strict=True)
+    # Keep the lexical name so __file__ and symlinks retain host semantics.
+    script = script.absolute()
     if not script.is_file():
-        raise ValueError(f"Python script is not a file: {script}")
-    if script.is_relative_to(workspace):
-        arguments[index] = str(
-            Path("/workspace/project") / script.relative_to(workspace)
-        )
-        return arguments, []
-    arguments[index] = str(Path("/workspace/script") / script.name)
-    return arguments, [(script.parent, "/workspace/script")]
+        raise FileNotFoundError(f"Python script is not a file: {script}")
+    arguments[index] = str(script)
+    directories = {script.parent, script.resolve(strict=True).parent}
+    return arguments, [
+        (directory, str(directory))
+        for directory in sorted(directories)
+        if not directory.is_relative_to(workspace)
+    ]
+
+
+def build_command(
+    release: Path,
+    manifest: dict,
+    workspace: Path,
+    home: Path,
+    options: LaunchOptions,
+    groups: list[int],
+    environment_file: Path,
+) -> list[str]:
+    arguments, script_mounts = (
+        (options.arguments, [])
+        if options.shell
+        else prepare_python_arguments(options.arguments, workspace)
+    )
+    mounts = {str(home): "rw", str(workspace): "rw"}
+    mounts.update({destination: "rw" for _, destination in script_mounts})
+    mounts.update(dict(options.mounts))
+    command = [
+        "podman",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--network",
+        "host",
+        "-i",
+        "--shm-size",
+        options.shm_size,
+        "--user",
+        f"{manifest['uid']}:{manifest['gid']}",
+    ]
+    if sys.stdin.isatty() and sys.stdout.isatty():
+        command.append("-t")
+    for group in sorted(set(groups)):
+        command += ["--group-add", str(group)]
+    for device in ("/dev/kfd", "/dev/dri/renderD128"):
+        command += ["--device", device]
+    for source, mode in mounts.items():
+        check_mount(Path(source))
+        command += ["-v", f"{source}:{source}:{mode}"]
+    for source, destination, mode in (
+        (release / "rocm", "/workspace/build/dist/rocm", "ro"),
+        (release / "torch", "/workspace/pytorch-work", "ro"),
+        (release / "cache", "/workspace/user-cache", "rw"),
+    ):
+        command += ["-v", f"{source}:{destination}:{mode}"]
+    command += ["-w", str(workspace), "--env-file", str(environment_file)]
+    fixed = {
+        "HOME": str(home),
+        "USER": pwd.getpwuid(manifest["uid"]).pw_name,
+        "LOGNAME": pwd.getpwuid(manifest["uid"]).pw_name,
+        "ROCM_PATH": "/workspace/build/dist/rocm",
+        "HIP_PATH": "/workspace/build/dist/rocm",
+        "LD_LIBRARY_PATH": "/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib",
+        "PATH": "/workspace/build/dist/rocm/bin:/workspace/build/dist/rocm/lib/llvm/bin:/opt/torch-venv/bin:/usr/local/therock-tools/bin:/usr/bin:/bin",
+        "HSA_ENABLE_SDMA": "0",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TRITON_CACHE_DIR": "/workspace/user-cache/triton",
+        "TORCHINDUCTOR_CACHE_DIR": "/workspace/user-cache/inductor",
+    }
+    if "TORCHINDUCTOR_COMPILE_THREADS" not in options.environment:
+        fixed["TORCHINDUCTOR_COMPILE_THREADS"] = "4"
+    for name, value in fixed.items():
+        command += ["-e", f"{name}={value}"]
+    return command + [
+        manifest["image"],
+        "bash" if options.shell else "python",
+        *arguments,
+    ]
+
+
+def read_context(path: Path, uid: int) -> tuple[LaunchOptions, Path]:
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    with os.fdopen(descriptor) as stream:
+        info = os.fstat(stream.fileno())
+        if (
+            not stat.S_ISREG(info.st_mode)
+            or info.st_uid != uid
+            or stat.S_IMODE(info.st_mode) != 0o600
+        ):
+            raise ValueError(
+                "Invalid private launcher context ownership or permissions"
+            )
+        context = json.load(stream)
+    options = LaunchOptions(**context["options"])
+    validate_options(options)
+    return options, Path(context["workspace"])
+
+
+def exit_status(status: int) -> int:
+    return status if status >= 0 else 128 - status
 
 
 def main() -> None:
-    workspace = Path.cwd().resolve()
     arguments = sys.argv[1:]
-    shell = arguments == ["--shell"]
-    python_arguments, script_mounts = (
-        (arguments, []) if shell else prepare_python_arguments(arguments, workspace)
-    )
-    if os.geteuid() != 0:
-        os.execvp("doas", ["doas", str(Path(__file__).resolve()), *sys.argv[1:]])
+    if "--launcher-help" in arguments[:1]:
+        launcher_help()
+        return
     release = Path("/opt/bc250-stack/current").resolve(strict=True)
     manifest = json.loads((release / "runtime.json").read_text())
     if not manifest["validated"]:
         raise RuntimeError("The selected BC-250 release has not passed validation")
-    command = ["bash"] if shell else ["python", *python_arguments]
-    podman = ["podman", "run", "--rm", "--pull=never", "--network", "host", "-i"]
-    if sys.stdin.isatty() and sys.stdout.isatty():
-        podman.append("-t")
-    for directory, destination in script_mounts:
-        podman += ["-v", f"{directory}:{destination}:rw"]
-    podman += [
-        "--device",
-        "/dev/kfd",
-        "--device",
-        "/dev/dri/renderD128",
-        "--user",
-        f"{manifest['uid']}:{manifest['gid']}",
-        "--group-add",
-        str(Path("/dev/kfd").stat().st_gid),
-        "--group-add",
-        str(Path("/dev/dri/renderD128").stat().st_gid),
-        "-v",
-        f"{release / 'rocm'}:/workspace/build/dist/rocm:ro",
-        "-v",
-        f"{release / 'torch'}:/workspace/pytorch-work:ro",
-        "-v",
-        f"{release / 'cache'}:/workspace/user-cache:rw",
-        "-v",
-        f"{workspace}:/workspace/project:rw",
-        "-w",
-        "/workspace/project",
-        "-e",
-        "ROCM_PATH=/workspace/build/dist/rocm",
-        "-e",
-        "HIP_PATH=/workspace/build/dist/rocm",
-        "-e",
-        "LD_LIBRARY_PATH=/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib",
-        "-e",
-        "PATH=/workspace/build/dist/rocm/bin:/workspace/build/dist/rocm/lib/llvm/bin:/opt/torch-venv/bin:/usr/local/therock-tools/bin:/usr/bin:/bin",
-        "-e",
-        "HOME=/workspace/user-cache/home",
-        "-e",
-        "HSA_ENABLE_SDMA=0",
-        "-e",
-        "PYTHONDONTWRITEBYTECODE=1",
-        "-e",
-        "TRITON_CACHE_DIR=/workspace/user-cache/triton",
-        "-e",
-        "TORCHINDUCTOR_CACHE_DIR=/workspace/user-cache/inductor",
-        "-e",
-        "TORCHINDUCTOR_COMPILE_THREADS=4",
-        manifest["image"],
-        *command,
+    if arguments[:1] == ["--_context"]:
+        if os.geteuid() != 0 or len(arguments) != 2:
+            raise ValueError(
+                "Private launcher contexts are only accepted after elevation"
+            )
+        options, workspace = read_context(Path(arguments[1]), manifest["uid"])
+    else:
+        workspace = Path.cwd().resolve()
+        options = parse_launcher_arguments(arguments, dict(os.environ))
+        if not options.shell:
+            prepare_python_arguments(options.arguments, workspace)
+    if os.geteuid() != 0:
+        if os.geteuid() != manifest["uid"]:
+            raise RuntimeError("This release belongs to a different host user")
+        with tempfile.TemporaryDirectory(prefix="bc250-torch-context-") as directory:
+            path = Path(directory) / "context.json"
+            path.touch(mode=0o600)
+            path.write_text(
+                json.dumps({"workspace": str(workspace), "options": vars(options)})
+            )
+            status = subprocess.call(
+                ["doas", str(Path(__file__).resolve()), "--_context", str(path)]
+            )
+        raise SystemExit(exit_status(status))
+    account = pwd.getpwuid(manifest["uid"])
+    home = Path(account.pw_dir)
+    groups = os.getgrouplist(account.pw_name, manifest["gid"])
+    groups += [
+        Path(device).stat().st_gid for device in ("/dev/kfd", "/dev/dri/renderD128")
     ]
-    os.execvp(podman[0], podman)
+    with tempfile.TemporaryDirectory(prefix="bc250-torch-env-") as directory:
+        path = Path(directory) / "environment"
+        path.touch(mode=0o600)
+        path.write_text(
+            "".join(f"{name}={value}\n" for name, value in options.environment.items())
+        )
+        command = build_command(
+            release, manifest, workspace, home, options, groups, path
+        )
+        raise SystemExit(exit_status(subprocess.call(command)))
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (ValueError, FileNotFoundError, PermissionError) as error:
+        print(f"bc250-torch: {error}", file=sys.stderr)
+        raise SystemExit(2)
+    except KeyboardInterrupt:
+        raise SystemExit(130)
