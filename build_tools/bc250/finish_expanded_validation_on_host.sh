@@ -13,7 +13,7 @@ done
 test "$(cat "$workspace/logs/expanded-build.exit")" = 0
 status=0
 for component in rpp rpp_audio opencl openmp hipfile rocalution_diagnostic \
-    hiptensor hipdnn profiler; do
+    hiptensor hipdnn profiler rocprim_arch; do
     echo "Validating expanded component: $component"
     if sh "$workspace/helpers/validate_${component}_on_host.sh" "$workspace"; then
         echo "Expanded component gate passed: $component"
