@@ -3,7 +3,8 @@
 
 // Diagnostic-only preload for the pinned rocSPARSE source. Never ship this
 // private-layout inspection as part of the runtime API or deployment.
-#include "rocsparse_csrmv_info.hpp"
+#include <cstddef>
+#include <cstdint>
 #include <hip/hip_runtime.h>
 #include <rocsparse/rocsparse.h>
 
@@ -11,6 +12,7 @@
 #include <cstring>
 #include <dlfcn.h>
 #include <vector>
+#include "rocsparse_csrmv_info.hpp"
 
 static void dump(rocsparse_mat_info info, const char *where) {
   if (!info)
