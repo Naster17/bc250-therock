@@ -10,19 +10,61 @@ from pathlib import Path
 import sys
 
 
+def prepare_python_arguments(
+    arguments: list[str], workspace: Path
+) -> tuple[list[str], list[tuple[Path, str]]]:
+    """Map a host script into the container while retaining the caller's cwd."""
+    arguments = arguments.copy()
+    index = 0
+    while index < len(arguments):
+        argument = arguments[index]
+        if argument in ("-c", "-m", "-", "-h", "--help", "-V", "--version"):
+            return arguments, []
+        if argument == "--":
+            index += 1
+            break
+        if argument in ("-W", "-X", "--check-hash-based-pycs"):
+            index += 2
+        elif argument.startswith("-"):
+            index += 1
+        else:
+            break
+    if index >= len(arguments):
+        return arguments, []
+    script = Path(arguments[index]).expanduser()
+    if not script.is_absolute():
+        script = workspace / script
+    script = script.resolve(strict=True)
+    if not script.is_file():
+        raise ValueError(f"Python script is not a file: {script}")
+    if script.is_relative_to(workspace):
+        arguments[index] = str(
+            Path("/workspace/project") / script.relative_to(workspace)
+        )
+        return arguments, []
+    arguments[index] = str(Path("/workspace/script") / script.name)
+    return arguments, [(script.parent, "/workspace/script")]
+
+
 def main() -> None:
+    workspace = Path.cwd().resolve()
+    arguments = sys.argv[1:]
+    shell = arguments == ["--shell"]
+    python_arguments, script_mounts = (
+        (arguments, []) if shell else prepare_python_arguments(arguments, workspace)
+    )
     if os.geteuid() != 0:
         os.execvp("doas", ["doas", str(Path(__file__).resolve()), *sys.argv[1:]])
     release = Path("/opt/bc250-stack/current").resolve(strict=True)
     manifest = json.loads((release / "runtime.json").read_text())
     if not manifest["validated"]:
         raise RuntimeError("The selected BC-250 release has not passed validation")
-    arguments = sys.argv[1:]
-    command = ["bash"] if arguments == ["--shell"] else ["python", *arguments]
-    workspace = Path.cwd().resolve()
+    command = ["bash"] if shell else ["python", *python_arguments]
     podman = ["podman", "run", "--rm", "--pull=never", "--network", "host", "-i"]
     if sys.stdin.isatty() and sys.stdout.isatty():
         podman.append("-t")
+    for directory, destination in script_mounts:
+        podman += ["-v", f"{directory}:{destination}:rw"]
     podman += [
         "--device",
         "/dev/kfd",
