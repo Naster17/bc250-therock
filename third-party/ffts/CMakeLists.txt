@@ -16,6 +16,11 @@ therock_subproject_fetch(therock-ffts-sources
 therock_cmake_subproject_declare(therock-ffts
   EXTERNAL_SOURCE_DIR "${_ffts_source}"
   FPRINT_SOURCE_DIR "${_ffts_original_source}"
+  FPRINT_FILE_GLOBS
+    "${THEROCK_SOURCE_DIR}/third-party/ffts/FFTSConfig.cmake.in"
+    "${THEROCK_SOURCE_DIR}/patches/third-party/ffts/*.patch"
+  EXTRA_DEPENDS
+    "${THEROCK_SOURCE_DIR}/third-party/ffts/FFTSConfig.cmake.in"
   BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}"
   BACKGROUND_BUILD
   EXCLUDE_FROM_ALL
