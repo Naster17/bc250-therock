@@ -3,6 +3,11 @@
 
 include(CMakePackageConfigHelpers)
 set_target_properties(ffts_static PROPERTIES OUTPUT_NAME ffts)
+# Propagate the math dependency to static-library consumers, including the
+# bundled numerical test. The original project only links it in shared mode.
+if(UNIX)
+  target_link_libraries(ffts_static PUBLIC m)
+endif()
 # The bundled project detects SSE3 headers without enabling the target feature
 # for Clang. Its real-transform implementation uses those intrinsics directly.
 if(HAVE_PMMINTRIN_H)
