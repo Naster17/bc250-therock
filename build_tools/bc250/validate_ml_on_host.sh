@@ -12,6 +12,7 @@ dmesg > "$workspace/logs/kernel-before-ml-validation.log"
 mkdir -p "$workspace/build/bc250-validation/ck"
 
 # Use the upstream CPU-reference examples with the installed scalar profile.
+if test "${BC250_ML_SKIP_COMPILE:-0}" != 1; then
 podman run --rm --network none \
     -v "$workspace/source:/workspace/source:ro" \
     -v "$workspace/build:/workspace/build:rw" \
@@ -28,6 +29,7 @@ podman run --rm --network none \
                 -o /workspace/build/bc250-validation/ck/gemm_dl_$precision
         done
     ' > "$workspace/logs/ck-smoke-compile.log" 2>&1
+fi
 
 for precision in fp32 fp16 int8; do
     podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
@@ -50,6 +52,7 @@ for precision in conv convfp16 convbfp16; do
         podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
             -v "$workspace/build:/workspace/build:ro" -e HSA_ENABLE_SDMA=0 \
             -e OMP_NUM_THREADS=2 \
+            -e MIOPEN_DRIVER_USE_GPU_REFERENCE=0 \
             "$image" bash -c '
                 set -euo pipefail
                 prefix=/workspace/build/dist/rocm
