@@ -192,8 +192,10 @@ container as UID/GID 1000 with the device groups. It mounts the current director
 at `/workspace/project`, mounts release files read-only, and retains writable
 runtime caches under the release. SDMA stays disabled in the validated profile.
 `validate_stability.py` repeatedly checks GEMM, 16 MiB allocations, offset-view
-copies and compiled kernels against CPU results; longer qualification and
-performance comparison with `.105` remain separate follow-up work.
+copies and compiled kernels against CPU results. The first installed-runtime
+soak passed 8,074 checked cycles over 120 seconds, with no new kernel messages.
+Longer qualification and performance comparison with `.105` remain separate
+follow-up work.
 
 The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
 configuration downloads sources into the source tree, which is intentionally
