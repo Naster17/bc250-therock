@@ -6,11 +6,13 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
 
-template <typename T> bool run_case(bool accelerator, bool jacobi) {
+template <typename T>
+bool run_case(bool accelerator, bool jacobi, bool inspect_inputs) {
   using namespace rocalution;
   disable_accelerator_rocalution(!accelerator);
   init_rocalution();
@@ -49,6 +51,20 @@ template <typename T> bool run_case(bool accelerator, bool jacobi) {
     b.Allocate("b", rows);
     ones.Allocate("ones", rows);
     ones.Ones();
+    if (inspect_inputs) {
+      std::vector<T> host_ones(rows);
+      ones.CopyToHostData(host_ones.data());
+      for (int row = 0; row < rows; ++row)
+        if (host_ones[row] != T(1)) {
+          fprintf(stderr, "ONES_MISMATCH row=%d actual=%.17g\n", row,
+                  double(host_ones[row]));
+          throw std::runtime_error("rocALUTION vector initialization failed");
+        }
+      if (!matrix.Check())
+        throw std::runtime_error("rocALUTION CSR matrix validation failed");
+      printf("CG_INPUTS_PASS type=%s gpu=%d\n",
+             std::is_same_v<T, float> ? "float" : "double", accelerator);
+    }
     matrix.Apply(ones, &b);
     std::vector<T> host(rows);
     b.CopyToHostData(host.data());
@@ -101,14 +117,23 @@ template <typename T> bool run_case(bool accelerator, bool jacobi) {
   return passed;
 }
 
-int main() {
+int main(int argc, char **argv) {
+  if (argc > 2 || (argc == 2 && std::strcmp(argv[1], "--inspect-inputs"))) {
+    fprintf(stderr, "usage: rocalution_diagnostic [--inspect-inputs]\n");
+    return 2;
+  }
+  // Optional readbacks introduce synchronization. The ordinary qualification
+  // gate keeps them disabled so they cannot conceal an ordering failure.
+  bool inspect_inputs = argc == 2;
   bool passed = true;
   try {
     for (bool accelerator : {false, true})
       for (int repeat = 0; repeat < 5; ++repeat)
         for (bool jacobi : {false, true}) {
-          passed = run_case<float>(accelerator, jacobi) && passed;
-          passed = run_case<double>(accelerator, jacobi) && passed;
+          passed =
+              run_case<float>(accelerator, jacobi, inspect_inputs) && passed;
+          passed =
+              run_case<double>(accelerator, jacobi, inspect_inputs) && passed;
         }
   } catch (const std::exception &error) {
     fprintf(stderr, "%s\n", error.what());
