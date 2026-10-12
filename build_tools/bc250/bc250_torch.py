@@ -323,11 +323,8 @@ def build_command(
         fixed["TORCHINDUCTOR_COMPILE_THREADS"] = "4"
     for name, value in fixed.items():
         command += ["-e", f"{name}={value}"]
-    return command + [
-        manifest["image"],
-        "bash" if options.shell else "python",
-        *arguments,
-    ]
+    interpreter = ["bash", "--noprofile", "--norc"] if options.shell else ["python"]
+    return command + [manifest["image"], *interpreter, *arguments]
 
 
 def read_context(path: Path, uid: int) -> tuple[LaunchOptions, Path]:
