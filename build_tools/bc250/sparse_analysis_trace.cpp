@@ -24,6 +24,8 @@ static void dump(rocsparse_mat_info info, const char *where) {
   if (!matrix)
     return;
   const auto &adaptive = matrix->adaptive;
+  fprintf(stderr, "CSR_POINTERS rows=%p groups=%p flags=%p\n", adaptive.row_blocks,
+          adaptive.wg_ids, (void *)adaptive.wg_flags);
   fprintf(stderr,
           "CSR_METADATA where=%s m=%lld n=%lld nnz=%lld blocks=%zu first=%lld "
           "last=%lld\n",
@@ -83,3 +85,26 @@ TRACE_ANALYSIS(rocsparse_scsrmv_analysis, float)
 TRACE_ANALYSIS(rocsparse_dcsrmv_analysis, double)
 TRACE_SPMV(rocsparse_scsrmv, float)
 TRACE_SPMV(rocsparse_dcsrmv, double)
+
+extern "C" hipError_t hipMalloc(void **pointer, size_t bytes) {
+  static auto real = reinterpret_cast<decltype(&hipMalloc)>(dlsym(RTLD_NEXT, "hipMalloc"));
+  if (!real) return hipErrorUnknown;
+  auto status = real(pointer, bytes);
+  fprintf(stderr, "HIP_ALLOC pointer=%p bytes=%zu status=%d\n", *pointer, bytes, int(status));
+  return status;
+}
+
+extern "C" hipError_t hipMallocAsync(void **pointer, size_t bytes, hipStream_t stream) {
+  static auto real = reinterpret_cast<decltype(&hipMallocAsync)>(dlsym(RTLD_NEXT, "hipMallocAsync"));
+  if (!real) return hipErrorUnknown;
+  auto status = real(pointer, bytes, stream);
+  fprintf(stderr, "HIP_ALLOC_ASYNC pointer=%p bytes=%zu status=%d\n", *pointer, bytes, int(status));
+  return status;
+}
+
+extern "C" hipError_t hipMemset(void *pointer, int value, size_t bytes) {
+  static auto real = reinterpret_cast<decltype(&hipMemset)>(dlsym(RTLD_NEXT, "hipMemset"));
+  if (!real) return hipErrorUnknown;
+  fprintf(stderr, "HIP_MEMSET pointer=%p bytes=%zu value=%d\n", pointer, bytes, value);
+  return real(pointer, value, bytes);
+}
