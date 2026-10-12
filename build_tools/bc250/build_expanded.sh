@@ -28,6 +28,7 @@ cmake -S "$source_dir" -B "$build_dir" -G Ninja \
     -DTHEROCK_ENABLE_OCL_ICD=ON -DTHEROCK_ENABLE_OCL_RUNTIME=ON \
     -DTHEROCK_ENABLE_RPP=ON -DTHEROCK_ENABLE_ROCALUTION=ON \
     -DTHEROCK_RPP_ENABLE_AUDIO=ON \
+    -DTHEROCK_ENABLE_HIPTENSOR=ON -DTHEROCK_HIPTENSOR_GENERIC_ONLY=ON \
     -DTHEROCK_ENABLE_HIPFILE=ON -DTHEROCK_ENABLE_HIPDNN=ON \
     -DTHEROCK_ENABLE_HIPDNN_INTEGRATION_TESTS=ON \
     -DTHEROCK_ENABLE_MIOPENPROVIDER=ON \
@@ -45,7 +46,12 @@ cmake -S "$source_dir" -B "$build_dir" -G Ninja \
 for component in ocl-icd ocl-clr hipify rpp rocALUTION hipfile hipDNN \
     hipdnn_integration_tests miopenprovider hipkernelprovider hipDNN_samples; do
     echo "Building expanded component: $component"
-    cmake --build "$build_dir" --target "$component"
+    if [[ "$component" == rocALUTION ]]; then
+        CMAKE_BUILD_PARALLEL_LEVEL=8 cmake --build "$build_dir" --target "$component"
+    else
+        cmake --build "$build_dir" --target "$component"
+    fi
 done
+CMAKE_BUILD_PARALLEL_LEVEL=6 cmake --build "$build_dir" --target hipTensor
 cmake --build "$build_dir" --target dist
 ccache --show-stats
