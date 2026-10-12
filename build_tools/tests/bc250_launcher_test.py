@@ -162,6 +162,21 @@ class LauncherWorkflowsTest(unittest.TestCase):
             self.assertEqual(args, [str(alias / "train.py")])
             self.assertEqual(set(mounts), {(alias, str(alias)), (target, str(target))})
 
+    def test_read_only_parent_is_not_bypassed_by_automatic_cwd_mount(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            cwd = home / "project"
+            cwd.mkdir()
+            options = launcher.parse_launcher_arguments(
+                ["--mount-ro", str(home), "-c", "pass"], {}
+            )
+            manifest = {"uid": os.getuid(), "gid": os.getgid(), "image": "test-image"}
+            command = launcher.build_command(
+                home / "release", manifest, cwd, home, options, [], home / "env"
+            )
+            self.assertIn(f"{cwd}:{cwd}:ro", command)
+            self.assertNotIn(f"{cwd}:{cwd}:rw", command)
+
     def test_private_context_permissions_and_symlinks(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "context.json"

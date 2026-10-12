@@ -274,7 +274,17 @@ def build_command(
     )
     mounts = {str(home): "rw", str(workspace): "rw"}
     mounts.update({destination: "rw" for _, destination in script_mounts})
-    mounts.update(dict(options.mounts))
+    explicit_mounts = dict(options.mounts)
+    # Automatic child mounts must not undo an explicit read-only parent.
+    for automatic in mounts:
+        ancestors = [
+            (Path(source), mode)
+            for source, mode in explicit_mounts.items()
+            if Path(automatic).is_relative_to(Path(source))
+        ]
+        if ancestors:
+            mounts[automatic] = max(ancestors, key=lambda item: len(item[0].parts))[1]
+    mounts.update(explicit_mounts)
     command = [
         "podman",
         "run",
