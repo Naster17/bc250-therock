@@ -37,6 +37,9 @@ bool run_case(bool accelerator, bool jacobi, bool inspect_inputs) {
     offsets[rows] = entry;
     if (entry != nnz)
       throw std::runtime_error("invalid diagnostic CSR matrix");
+    std::vector<int> expected_offsets(offsets, offsets + rows + 1);
+    std::vector<int> expected_columns(columns, columns + nnz);
+    std::vector<T> expected_values(values, values + nnz);
     LocalMatrix<T> matrix;
     matrix.SetDataPtrCSR(&offsets, &columns, &values, "laplacian", nnz, rows,
                          rows);
@@ -62,6 +65,17 @@ bool run_case(bool accelerator, bool jacobi, bool inspect_inputs) {
         }
       if (!matrix.Check())
         throw std::runtime_error("rocALUTION CSR matrix validation failed");
+      LocalMatrix<T> host_matrix;
+      host_matrix.CopyFrom(matrix);
+      std::vector<int> copied_offsets(rows + 1), copied_columns(nnz);
+      std::vector<T> copied_values(nnz);
+      host_matrix.CopyToCSR(copied_offsets.data(), copied_columns.data(),
+                            copied_values.data());
+      if (copied_offsets != expected_offsets ||
+          copied_columns != expected_columns ||
+          copied_values != expected_values)
+        throw std::runtime_error(
+            "rocALUTION CSR data differs after accelerator transfer");
       printf("CG_INPUTS_PASS type=%s gpu=%d\n",
              std::is_same_v<T, float> ? "float" : "double", accelerator);
     }
