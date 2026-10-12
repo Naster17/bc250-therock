@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import pwd
 import re
+import signal
 import stat
 import subprocess
 import sys
@@ -300,6 +301,8 @@ def build_command(
         (release / "rocm", "/workspace/build/dist/rocm", "ro"),
         (release / "torch", "/workspace/pytorch-work", "ro"),
         (release / "cache", "/workspace/user-cache", "rw"),
+        (Path("/etc/passwd"), "/etc/passwd", "ro"),
+        (Path("/etc/group"), "/etc/group", "ro"),
     ):
         command += ["-v", f"{source}:{destination}:{mode}"]
     command += ["-w", str(workspace), "--env-file", str(environment_file)]
@@ -349,6 +352,33 @@ def exit_status(status: int) -> int:
     return status if status >= 0 else 128 - status
 
 
+def run_process(command: list[str]) -> int:
+    """Keep cleanup active while forwarding termination to the runtime."""
+    with subprocess.Popen(command) as process:
+        previous = signal.getsignal(signal.SIGTERM)
+
+        def terminate(signum: int, frame: object) -> None:
+            if process.poll() is None:
+                process.send_signal(signum)
+
+        if os.geteuid() == 0:
+            signal.signal(signal.SIGTERM, terminate)
+        try:
+            return process.wait()
+        except KeyboardInterrupt:
+            if process.poll() is None:
+                try:
+                    process.send_signal(signal.SIGINT)
+                except PermissionError:
+                    # The terminal already signals the elevated foreground job.
+                    pass
+            process.wait()
+            return 130
+        finally:
+            if os.geteuid() == 0:
+                signal.signal(signal.SIGTERM, previous)
+
+
 def main() -> None:
     arguments = sys.argv[1:]
     if "--launcher-help" in arguments[:1]:
@@ -378,7 +408,7 @@ def main() -> None:
             path.write_text(
                 json.dumps({"workspace": str(workspace), "options": vars(options)})
             )
-            status = subprocess.call(
+            status = run_process(
                 ["doas", str(Path(__file__).resolve()), "--_context", str(path)]
             )
         raise SystemExit(exit_status(status))
@@ -397,7 +427,7 @@ def main() -> None:
         command = build_command(
             release, manifest, workspace, home, options, groups, path
         )
-        raise SystemExit(exit_status(subprocess.call(command)))
+        raise SystemExit(exit_status(run_process(command)))
 
 
 if __name__ == "__main__":

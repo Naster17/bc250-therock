@@ -10,6 +10,7 @@ import json
 from multiprocessing import shared_memory
 from pathlib import Path
 import os
+import pwd
 import urllib.request
 
 import torch
@@ -28,6 +29,9 @@ def main() -> None:
     root = args.root
     assert Path.cwd() == root / "training project"
     assert Path.home() == Path(os.environ["EXPECTED_HOME"])
+    account = pwd.getpwuid(os.getuid())
+    assert account.pw_name == os.environ["USER"]
+    assert account.pw_dir == str(Path.home())
     assert os.environ["HF_TOKEN"] == "BC250_LAUNCHER_FAKE_TOKEN"
     assert os.environ["CUSTOM_TRAINING_SETTING"] == "value with spaces=42"
     assert SIDECAR_VALUE == 1704

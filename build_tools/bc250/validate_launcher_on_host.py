@@ -12,9 +12,11 @@ import os
 from pathlib import Path
 import pwd
 import shutil
+import signal
 import subprocess
 import tempfile
 import threading
+import time
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -83,6 +85,15 @@ def main() -> None:
         (root / "training.env").write_text(
             "CUSTOM_TRAINING_SETTING=value with spaces=42\n"
         )
+        package_source = root / "fixture package"
+        package_source.mkdir()
+        (package_source / "setup.py").write_text(
+            "from setuptools import setup\n"
+            "setup(name='bc250-launcher-fixture', version='0.0.1', py_modules=['bc250_fixture'])\n"
+        )
+        (package_source / "bc250_fixture.py").write_text("VALUE = 1704\n")
+        packages = root / "persistent packages"
+        packages.mkdir()
         for parent in (external, root):
             for path in [parent, *parent.rglob("*")]:
                 os.chown(path, uid, gid, follow_symlinks=False)
@@ -144,6 +155,77 @@ def main() -> None:
             )
             assert data.read_text() == "container update"
             run("missing-file", ["/does-not-exist/train.py"], expected=2)
+            run(
+                "package-install",
+                [
+                    "--env",
+                    "PIP_NO_INDEX=1",
+                    "-m",
+                    "pip",
+                    "install",
+                    "--target",
+                    str(packages),
+                    "--no-deps",
+                    "--no-build-isolation",
+                    str(package_source),
+                ],
+            )
+            assert (packages / "bc250_fixture.py").stat().st_uid == uid
+            run(
+                "package-import-after-restart",
+                [
+                    "--env",
+                    f"PYTHONPATH={packages}",
+                    "-c",
+                    "import bc250_fixture; assert bc250_fixture.VALUE == 1704; print('PERSISTENT_PACKAGE_PASS')",
+                ],
+            )
+            run(
+                "torch-compile",
+                [
+                    "-c",
+                    (
+                        "import torch; x=torch.arange(65539,dtype=torch.float32)/65539; "
+                        "f=torch.compile(lambda x: torch.sin(x)+x*x,fullgraph=True); "
+                        "torch.testing.assert_close(f(x.cuda()).cpu(),torch.sin(x)+x*x,rtol=1e-5,atol=1e-5); "
+                        "print('LAUNCHER_COMPILE_PASS')"
+                    ),
+                ],
+            )
+            for signum, expected in ((signal.SIGTERM, 0), (signal.SIGINT, 130)):
+                name = signal.Signals(signum).name.lower()
+                ready = root / f"{name}-ready"
+                saved = root / f"{name}-saved"
+                code = (
+                    "import signal,time; from pathlib import Path\n"
+                    "def save(signum, frame):\n"
+                    f"    Path({str(saved)!r}).write_text('saved before exit')\n"
+                    "    raise SystemExit(0)\n"
+                    f"signal.signal({int(signum)}, save)\n"
+                    f"Path({str(ready)!r}).touch()\n"
+                    "while True: time.sleep(0.1)\n"
+                )
+                with subprocess.Popen(
+                    [launcher, "-c", code],
+                    cwd=project,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                ) as process:
+                    deadline = time.monotonic() + 30
+                    while not ready.exists() and process.poll() is None:
+                        if time.monotonic() > deadline:
+                            process.kill()
+                            raise RuntimeError(f"Signal case {name} did not start")
+                        time.sleep(0.1)
+                    process.send_signal(signum)
+                    output, _ = process.communicate(timeout=30)
+                    (logs / f"{name}.log").write_text(output)
+                    assert process.returncode == expected, (name, process.returncode)
+                    assert saved.read_text() == "saved before exit"
+                    checks.append(name)
+                    print(f"LAUNCHER_CASE_PASS {name}", flush=True)
         finally:
             server.shutdown()
             server.server_close()
