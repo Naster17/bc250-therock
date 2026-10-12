@@ -87,7 +87,7 @@ TRACE_SPMV(rocsparse_scsrmv, float)
 TRACE_SPMV(rocsparse_dcsrmv, double)
 
 extern "C" hipError_t hipMalloc(void **pointer, size_t bytes) {
-  static auto real = reinterpret_cast<decltype(&hipMalloc)>(dlsym(RTLD_NEXT, "hipMalloc"));
+  static auto real = reinterpret_cast<hipError_t (*)(void **, size_t)>(dlsym(RTLD_NEXT, "hipMalloc"));
   if (!real) return hipErrorUnknown;
   auto status = real(pointer, bytes);
   fprintf(stderr, "HIP_ALLOC pointer=%p bytes=%zu status=%d\n", *pointer, bytes, int(status));
@@ -95,7 +95,7 @@ extern "C" hipError_t hipMalloc(void **pointer, size_t bytes) {
 }
 
 extern "C" hipError_t hipMallocAsync(void **pointer, size_t bytes, hipStream_t stream) {
-  static auto real = reinterpret_cast<decltype(&hipMallocAsync)>(dlsym(RTLD_NEXT, "hipMallocAsync"));
+  static auto real = reinterpret_cast<hipError_t (*)(void **, size_t, hipStream_t)>(dlsym(RTLD_NEXT, "hipMallocAsync"));
   if (!real) return hipErrorUnknown;
   auto status = real(pointer, bytes, stream);
   fprintf(stderr, "HIP_ALLOC_ASYNC pointer=%p bytes=%zu status=%d\n", *pointer, bytes, int(status));
