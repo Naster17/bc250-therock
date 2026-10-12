@@ -1,5 +1,8 @@
 # BC-250 ROCm 10.2 port
 
+See the [full support roadmap](bc250_full_support_roadmap.md) for the completed
+work, remaining hardware-feasible scope and release qualification checklist.
+
 This is an experimental native `gfx1013` port. Registering the target or
 building a component does not establish hardware support; execution results
 are recorded separately.

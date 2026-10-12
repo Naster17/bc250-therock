@@ -8,6 +8,8 @@ The installed PyTorch release and the expanded developer build are separate.
 New components are not activated in the installed release until their gates
 pass and the expanded distribution passes the existing Torch gates again.
 See [bc250_port.md](bc250_port.md) for source revisions and recovery policy.
+The detailed completed/pending checklist is in
+[bc250_full_support_roadmap.md](bc250_full_support_roadmap.md).
 
 ## Executed successfully
 
