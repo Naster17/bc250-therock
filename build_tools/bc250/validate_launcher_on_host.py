@@ -25,6 +25,9 @@ class QuietHandler(SimpleHTTPRequestHandler):
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--workspace", type=Path, required=True)
+    parser.add_argument(
+        "--launcher", type=Path, default=Path("/usr/local/bin/bc250-torch")
+    )
     args = parser.parse_args()
     if os.geteuid() != 0:
         raise RuntimeError("Run host orchestration as root")
@@ -32,13 +35,12 @@ def main() -> None:
     release = Path("/opt/bc250-stack/current").resolve(strict=True)
     manifest = json.loads((release / "runtime.json").read_text())
     uid, gid = manifest["uid"], manifest["gid"]
-    root = workspace / "launcher-io-validation"
-    root.mkdir(exist_ok=False)
+    root = Path(tempfile.mkdtemp(prefix="launcher-io-validation-", dir=workspace))
     project = root / "training project"
     project.mkdir()
     logs = workspace / "logs/launcher-io"
     logs.mkdir(exist_ok=True)
-    launcher = "/usr/local/bin/bc250-torch"
+    launcher = str(args.launcher.resolve(strict=True))
     checks = []
 
     def run(
