@@ -7,7 +7,7 @@ source_dir="${1:?usage: build_triton.sh <source-directory> <working-directory> <
 work_dir="${2:?missing working directory}"
 dependency_dir="${3:?missing dependency directory}"
 therock_source="${4:?missing TheRock source directory}"
-test "$(cat "$source_dir/GIT_REVISION")" = c815e192ca4c98c680ba88e303258d895c1b1c3e
+test "$(cat "$source_dir/GIT_REVISION")" = 270bfb9dc5f0da51c98ff632b3728b35cbfdb7db
 mkdir -p "$work_dir"
 cp -a "$source_dir/." "$work_dir/"
 
