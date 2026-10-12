@@ -6,6 +6,7 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import sys
 
 
@@ -22,6 +23,7 @@ def main() -> None:
     import torch
     import torch.nn.functional as functional
     import triton
+    import triton.language as tl
     from torch._inductor import metrics
 
     assert torch.version.hip is not None
@@ -54,6 +56,43 @@ def main() -> None:
             f"Native Triton dot regression failed: pytest status {status}"
         )
     passed("triton_native_fp16_bf16_signed_int8_dots_and_bf16_multiply")
+
+    @triton.jit
+    def bf16_multiply(A, B, C, N: tl.constexpr):
+        offsets = tl.program_id(0) * 128 + tl.arange(0, 128)
+        a = tl.load(A + offsets, offsets < N, other=0)
+        b = tl.load(B + offsets, offsets < N, other=0)
+        tl.store(C + offsets, a * b, offsets < N)
+
+    # BF16 products exactly halfway between representable results distinguish
+    # round-to-nearest-even from truncation, including positive/negative ties.
+    a = torch.tensor(
+        [1.5, 1.5, 1.5, -1.5, 1.5, 0.0, -0.0, float("inf"), float("nan"), float("inf")],
+        dtype=torch.bfloat16,
+    ).repeat(13)
+    b = torch.tensor(
+        [
+            1.0078125,
+            1.0234375,
+            1.0390625,
+            1.0078125,
+            -1.0078125,
+            2.0,
+            2.0,
+            2.0,
+            1.0,
+            0.0,
+        ],
+        dtype=torch.bfloat16,
+    ).repeat(13)
+    reference = (a.double() * b.double()).bfloat16()
+    output = torch.empty_like(a, device="cuda")
+    compiled_kernel = bf16_multiply[(triton.cdiv(a.numel(), 128),)](
+        a.cuda(), b.cuda(), output, a.numel(), num_warps=4
+    )
+    torch.testing.assert_close(output.cpu(), reference, rtol=0, atol=0, equal_nan=True)
+    assert not re.search(r"\bv_(?:dot[24]|mfma|wmma)", compiled_kernel.asm["amdgcn"])
+    passed("triton_bf16_multiply_exact_rtne_ties_and_nan")
 
     def elementwise(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         return functional.relu(x * y + 1)

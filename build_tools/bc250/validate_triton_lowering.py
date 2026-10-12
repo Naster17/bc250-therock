@@ -67,8 +67,18 @@ def validate(triton_opt: Path, output_dir: Path, llvm_bin: Path) -> None:
             if architecture == "gfx1013":
                 assert not re.search(r"amdgcn\.(?:[fsu]dot|mfma|wmma)", lowered), stem
                 if operand_type == "bf16-multiply":
-                    expected = {"llvm.fmul": 1, "llvm.zext": 2, "llvm.shl": 2}
+                    expected = {
+                        "llvm.fmul": 1,
+                        "llvm.zext": 2,
+                        "llvm.shl": 2,
+                        "llvm.lshr": 2,
+                        "llvm.and": 1,
+                        "llvm.add": 2,
+                        "llvm.trunc": 1,
+                    }
                     assert "bf16 to i16" in lowered, stem
+                    assert "llvm.mlir.constant(32767 : i32)" in lowered, stem
+                    assert "i16 to bf16" in lowered, stem
                 elif operand_type == "i8":
                     expected = {"llvm.sext": 32, "llvm.mul": 16, "llvm.add": 16}
                     assert "i8 to i32" in lowered, stem
