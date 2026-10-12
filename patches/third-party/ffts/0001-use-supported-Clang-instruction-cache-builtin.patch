@@ -1,0 +1,20 @@
+diff --git a/src/ffts.c b/src/ffts.c
+index 76fd19c..440c029 100644
+--- a/src/ffts.c
++++ b/src/ffts.c
+@@ -118,7 +118,7 @@ ffts_flush_instruction_cache(void *start, size_t length)
+ #elif __ANDROID__
+     cacheflush((long) start, (long) start + length, 0);
+ #elif __linux__
+-#if GCC_VERSION_AT_LEAST(4,3)
++#if defined(__clang__) || GCC_VERSION_AT_LEAST(4,3)
+     __builtin___clear_cache(start, (char*) start + length);
+ #elif __GNUC__
+     __clear_cache((long) start, (long) start + length);
+@@ -548,4 +548,4 @@ ffts_init_1d(size_t N, int sign)
+ cleanup:
+     ffts_free_1d(p);
+     return NULL;
+-}
+\ No newline at end of file
++}
