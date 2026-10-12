@@ -165,9 +165,18 @@ kernels. No new kernel messages appeared during release validation.
 
 ## Installed runtime
 
-The first active release on `.104` is
-`/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296`, selected through
-`/opt/bc250-stack/current`. It contains independent copies of ROCm and Torch's
+The expanded release `10.2-gfx1013-20261013-4b000d542` is now active.
+Its source snapshot records TheRock `4b000d54287ee047adbe6febdcd6b2ea459dac85`,
+rocm-libraries `b9c8ad41e5b2c67c00bc28dff68b0c6f0df72ac5` and rocm-systems
+`dbdb7b8d1c56316d873a9b90e548e5a72853496d`. All 13 expanded component gates,
+56 eager checks and 18 compiler checks passed. The independent release copy
+passed another ten-minute soak: 40,339 CPU-checked cycles with no new kernel
+messages. Five fresh release processes passed 200 CG diagnostics without
+allocator overrides. The prior release remains under `/opt/bc250-stack/previous`.
+
+The initial release on `.104` was
+`/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296`; it is now
+retained through `/opt/bc250-stack/previous`. It contains independent copies of ROCm and Torch's
 runtime source tree; later development builds cannot replace its files.
 The immutable image ID and source revisions are recorded in `runtime.json`.
 Triton is installed from our compiled wheel with normal backend entry-point
@@ -177,8 +186,10 @@ The TheRock distribution version is 10.2.0; the pinned HIP component reports
 7.17.0 through `torch.version.hip`.
 
 `deploy_on_host.py` requires successful pre-deployment gates, copies the
-candidate, reruns eager and compiler checks as the host user's UID, and switches
-the active symlink only after both pass. Subsequent deployments retain the
+candidate, reruns eager and compiler checks plus a ten-minute CPU-checked soak
+as the host user's UID, and switches the active symlink only after all pass.
+Expanded build/component gates and candidate eager/compiler/soak evidence are
+required before copying. Queued, failed and incomplete result files are rejected. Subsequent deployments retain the
 prior release through `/opt/bc250-stack/previous`. The boot kernel and GRUB
 default are independent of this userspace deployment.
 
@@ -217,3 +228,9 @@ and two SDMA engines. VCN decode, VCN encode, JPEG, UVD, and VCE counts return
 `-EINVAL` with zero available rings. The current kernel therefore exposes no
 hardware media decode backend; firmware file presence alone does not establish
 one.
+
+`verify_rollback_on_host.py` verified native gfx1013 GEMM through the launcher
+on the previous release, restored the current symlink in a `finally` block,
+then verified the expanded release again. The matrix script also passed as
+`nik` against the expanded release. Rollback evidence is preserved in
+`validation/rollback.json` and the host workspace rollback log.

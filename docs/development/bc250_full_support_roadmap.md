@@ -66,21 +66,21 @@ developer distribution are separate.
 - [x] Rebuild with the compiled allocator default.
 - [x] Pass all 40 CPU/GPU CG diagnostic cases with that compiled default and no
   allocator environment override.
-- [ ] Repeat the ordinary GPU CG gates across fresh processes and allocator reuse.
-- [ ] Finish the entire expanded validation sequence after the allocator change.
+- [x] Repeat the ordinary GPU CG gates across fresh processes and allocator reuse.
+- [x] Finish the entire expanded validation sequence after the allocator change.
 - [x] Queue automatic candidate eager Torch, compiled Torch/Triton and stability
   checks after the expanded library gates pass.
-- [ ] Pass candidate eager Torch validation against the new ROCm distribution.
-- [ ] Pass candidate compiled Torch/Triton validation.
-- [ ] Pass the queued 10-minute CPU-checked candidate stability run.
-- [ ] Review kernel messages and resource growth across those gates.
-- [ ] Reconcile source snapshot metadata, actual transferred files and helper
+- [x] Pass candidate eager Torch validation against the new ROCm distribution.
+- [x] Pass candidate compiled Torch/Triton validation.
+- [x] Pass the queued 10-minute CPU-checked candidate stability run.
+- [x] Review kernel messages and resource growth across those gates.
+- [x] Reconcile source snapshot metadata, actual transferred files and helper
   revisions before creating a release manifest.
-- [ ] Extend deployment requirements to include the expanded-component evidence.
-- [ ] Copy the candidate into a new versioned release and validate that copy.
-- [ ] Switch the active userspace symlink only after release-copy gates pass.
-- [ ] Retain and verify rollback to the previous working release.
-- [ ] Verify `bc250-torch` against the newly activated release as `nik`.
+- [x] Extend deployment requirements to include the expanded-component evidence.
+- [x] Copy the candidate into a new versioned release and validate that copy.
+- [x] Switch the active userspace symlink only after release-copy gates pass.
+- [x] Retain and verify rollback to the previous working release.
+- [x] Verify `bc250-torch` against the newly activated release as `nik`.
 
 ## 2. Hardware inventory and applicability
 
@@ -145,7 +145,7 @@ The current working kernel is `7.1.5-bc250rocm-r2`. Boot files remain under
   resulting modified files with the committed tree.
 - [ ] Repeat clean patch-application checks when patch series change.
 - [ ] Export complete source manifests for each qualified candidate.
-- [ ] Preserve unchanged-file timestamps when updating snapshots to avoid needless
+- [x] Preserve unchanged-file timestamps when updating snapshots to avoid needless
   configure/code-generation rebuilds.
 - [ ] Verify each candidate from a clean source reconstruction, not only an
   accumulated development directory.
@@ -163,8 +163,12 @@ rocm-libraries `3d8f334b9a72ad99a0ecd87552613970433e0500`, rocm-systems
 `c779020750d7dc99a39ea8c104ef8df1fc9d0755`, and Triton
 `66b3f9ff575eb8db6adec658bbf0badd9a8d2e25`.
 
-## 5. LLVM, device libraries, COMGR and HIPRTC
+## 5. LLVM, device libraries, COMGR, HIPRTC and HIPIFY
 
+- [x] Build HIPIFY tools.
+- [x] Translate CUDA runtime APIs and a kernel with hipify-perl, compile the output
+  for gfx1013 and verify execution against exact CPU results.
+- [ ] Qualify hipify-clang translation with the required CUDA SDK/parser inputs.
 - [x] Compile native gfx1013 HIP code and execute it on the board.
 - [x] Build and use native device-library bitcode.
 - [x] Use COMGR/HIPRTC through actual runtime compilation consumers.
@@ -260,7 +264,9 @@ These remain major implementation tasks. Host API support is not device matmul.
   alpha, signed/constant inputs, beta values and allocation guards.
 - [x] Trace the live metadata overwrite rather than relaxing numerical tolerances.
 - [x] Pass 40 CPU/GPU CG cases after the allocator-default fix.
-- [ ] Repeat upstream CG tests and fresh-process diagnostic runs.
+- [x] Pass 200 ordinary CG diagnostic cases across five fresh processes on the
+  installed expanded release.
+- [ ] Repeat upstream CG tests with larger and more varied systems.
 - [ ] Qualify more rocALUTION solvers and preconditioners.
 - [ ] Expand sparse-format coverage: CSR/COO and other hardware-feasible formats.
 - [ ] Qualify SpMV/SpMM, conversions, sorting and applicable sparse solves.
@@ -513,11 +519,11 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 - [ ] Qualify interactive shell behavior and representative file/import workflows.
 - [ ] Document additional data mounts when arbitrary host paths are needed beyond
   the current-directory/script-directory mappings.
-- [ ] Record component profiles and limitations in release manifests.
-- [ ] Require fresh expanded, Torch and stability evidence before activation.
+- [x] Record component profiles and limitations in release manifests.
+- [x] Require fresh expanded, Torch and stability evidence before activation.
 - [ ] Validate installed-prefix relocation and dynamic library resolution.
 - [ ] Package licenses, headers, tools, plugins, tests and relevant cache assets.
-- [ ] Verify rollback, launcher compatibility and cache ownership after each release.
+- [x] Verify rollback, launcher compatibility and cache ownership after each release.
 - [ ] Add a concise diagnostic/reporting command for installed releases.
 - [ ] Document known unsupported features and how experimental options are enabled.
 - [ ] Establish an update/rebase procedure with reproducible regression gates.
@@ -544,7 +550,7 @@ expanded release needs all of these conditions.
 
 ## 28. Recommended order after the current milestone
 
-- [ ] **P0:** finish compiled allocator-default qualification, candidate Torch/soak
+- [x] **P0:** finish compiled allocator-default qualification, candidate Torch/soak
   gates and safe deployment of the expanded release.
 - [ ] **P1:** expand numerical/concurrency coverage and tune the libraries already
   serving real Torch workloads.
@@ -563,7 +569,7 @@ expanded release needs all of these conditions.
 
 - Local source: `/home/nik/Documents/Vibe/therock`.
 - Host workspace: `/home/nik/bc250work/rocm-10.2-gfx1013` on `.104`.
-- Initial active release: `/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296`.
+- Initial fallback release: `/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296`.
 - Candidate build result: `logs/expanded-build.exit`.
 - Expanded gate result/details: `logs/expanded-validation.exit` and
   `logs/expanded-validation.log`.
@@ -576,5 +582,14 @@ expanded release needs all of these conditions.
 
 An in-progress result file can contain a sentinel rather than a final outcome.
 Check the runner state and detailed logs before treating an old or intermediate
-status as a new pass/failure. At this review, the expanded sequence was still
-running and the candidate Torch/soak evidence had not yet completed.
+status as a new pass/failure. The compiled-default expanded sequence and
+candidate Torch/compile gates passed. The candidate ten-minute soak completed
+39,657 CPU-checked cycles in 600.005 seconds, with unchanged kernel logs.
+The independent release copy passed eager/compiler gates and 40,339 checked
+cycles in 600.001 seconds, with unchanged kernel logs. The active expanded
+release is `/opt/bc250-stack/releases/10.2-gfx1013-20261013-4b000d542`.
+Five fresh release processes passed all 200 CG diagnostic cases.
+
+Rollback verification switched to the previous release, passed native GEMM,
+restored the expanded release and passed native GEMM again. The user
+`bc250-torch ~/bc250work/torch-matrix.py` invocation passed as `nik`.
