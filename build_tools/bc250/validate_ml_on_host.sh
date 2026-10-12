@@ -24,7 +24,7 @@ podman run --rm --network none \
             "$prefix/bin/hipcc" -O2 -std=c++17 --offload-arch=gfx1013 \
                 -I"$ck_stage/include" -I"$ck_stage/include/ck" \
                 /workspace/source/rocm-libraries/projects/composablekernel/example/01_gemm/gemm_dl_$precision.cpp \
-                "$ck_stage/lib/libutility.a" -lpthread \
+                -L"$ck_stage/lib" -lutility -lpthread \
                 -o /workspace/build/bc250-validation/ck/gemm_dl_$precision
         done
     ' > "$workspace/logs/ck-smoke-compile.log" 2>&1
