@@ -1,0 +1,37 @@
+From 270bfb9dc5f0da51c98ff632b3728b35cbfdb7db Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 12:09:37 +0200
+Subject: [PATCH] fix(amd): use scalar BF16 elementwise multiplication on
+ gfx1013
+
+The RDNA-wide BF16 multiply path emits an unsupported packed-dot intrinsic on gfx1013. Use the existing FP32 widening and round-to-nearest BF16 conversion for this target. Preserve all other targets.
+
+Validation: the original lowering reproduced LLVM instruction-selection failure on gfx1013. Native rebuild and scalar/packed regression gates follow on the BC-250 host.
+---
+ .../amd/lib/TritonAMDGPUToLLVM/ElementwiseOpToLLVM.cpp       | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/third_party/amd/lib/TritonAMDGPUToLLVM/ElementwiseOpToLLVM.cpp b/third_party/amd/lib/TritonAMDGPUToLLVM/ElementwiseOpToLLVM.cpp
+index 30ec918..974b986 100644
+--- a/third_party/amd/lib/TritonAMDGPUToLLVM/ElementwiseOpToLLVM.cpp
++++ b/third_party/amd/lib/TritonAMDGPUToLLVM/ElementwiseOpToLLVM.cpp
+@@ -1,4 +1,5 @@
+ #include "Dialect/TritonAMDGPU/IR/Dialect.h"
++#include "Dialect/TritonAMDGPU/IR/TargetFeatures.h"
+ #include "TargetInfo.h"
+ #include "Utility.h"
+ #include "mlir/Dialect/Arith/IR/Arith.h"
+@@ -93,7 +94,9 @@ struct FMulOpConversion
+     auto lhsElemTy = getElementTypeOrSelf(op.getLhs());
+     auto rhsElemTy = getElementTypeOrSelf(op.getRhs());
+     if (lhsElemTy.isBF16() && rhsElemTy.isBF16()) {
+-      if (triton::amdgpu::isRDNA(isaFamily)) {
++      auto target = triton::amdgpu::TargetFeatures::fromModuleOp(
++          op->getParentOfType<ModuleOp>());
++      if (triton::amdgpu::isRDNA(isaFamily) && target.getArch() != "gfx1013") {
+         // To avoid casting to/from fp32, we compute a dot product with one
+         // element of each vector set to zero.
+         auto b = TritonLLVMOpBuilder(loc, rewriter);
+-- 
+2.56.0
+
