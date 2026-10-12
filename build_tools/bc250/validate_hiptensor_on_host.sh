@@ -7,6 +7,7 @@ workspace="${1:?usage: validate_hiptensor_on_host.sh <workspace-directory>}"
 test "$(id -u)" -eq 0
 test "$(cat "$workspace/logs/expanded-build.exit")" = 0
 test "$(cat /sys/class/watchdog/watchdog0/state)" = active
+echo 1 > "$workspace/logs/hiptensor-validation.exit"
 image=localhost/bc250-rocm-build:10.2-ccache
 prefix=/workspace/build/dist/rocm
 dmesg > "$workspace/logs/kernel-before-hiptensor.log"
@@ -14,6 +15,7 @@ dmesg > "$workspace/logs/kernel-before-hiptensor.log"
 run_tests() {
     binary="$1"
     config="$2"
+    echo 1 > "$workspace/logs/hiptensor-$binary.exit"
     set +e
     podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
         -v "$workspace/build:/workspace/build:ro" \
@@ -27,7 +29,9 @@ run_tests() {
         > "$workspace/logs/hiptensor-$binary.log" 2>&1
     status=$?
     set -e
-    echo "$status" > "$workspace/logs/hiptensor-$binary.exit"
+    if test "$status" -ne 0; then
+        echo "$status" > "$workspace/logs/hiptensor-$binary.exit"
+    fi
     test "$status" -eq 0
     python3 - "$workspace/logs/hiptensor-$binary.xml" <<'PY'
 import sys
@@ -42,6 +46,7 @@ for case in root.iter("testcase"):
     assert case.find("skipped") is None, case.attrib
 print("HIPTENSOR_GENERIC_GPU_TESTS_PASS", root.attrib["tests"])
 PY
+    echo 0 > "$workspace/logs/hiptensor-$binary.exit"
 }
 
 run_tests rank2_reduction_test 03_reduction/rank2_test_params.yaml

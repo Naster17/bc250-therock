@@ -7,6 +7,7 @@ workspace="${1:?usage: validate_rocalution_diagnostic_on_host.sh <workspace-dire
 test "$(id -u)" -eq 0
 test "$(cat "$workspace/logs/expanded-build.exit")" = 0
 test "$(cat /sys/class/watchdog/watchdog0/state)" = active
+echo 1 > "$workspace/logs/rocalution-diagnostic.exit"
 image=localhost/bc250-rocm-build:10.2-ccache
 podman run --rm --network none \
     -v "$workspace/build:/workspace/build:rw" \
@@ -30,7 +31,10 @@ podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
     /workspace/build/bc250-validation/rocalution_diagnostic > "$workspace/logs/rocalution-diagnostic.log" 2>&1
 status=$?
 set -e
-echo "$status" > "$workspace/logs/rocalution-diagnostic.exit"
+if test "$status" -ne 0; then
+    echo "$status" > "$workspace/logs/rocalution-diagnostic.exit"
+fi
 dmesg > "$workspace/logs/kernel-after-rocalution-diagnostic.log"
 test "$status" -eq 0
 test "$(grep -c 'CG_DIAGNOSTIC.*pass=1' "$workspace/logs/rocalution-diagnostic.log")" -eq 40
+echo 0 > "$workspace/logs/rocalution-diagnostic.exit"

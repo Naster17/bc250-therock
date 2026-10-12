@@ -7,6 +7,7 @@ workspace="${1:?usage: validate_hipdnn_on_host.sh <workspace-directory>}"
 test "$(id -u)" -eq 0
 test "$(cat "$workspace/logs/expanded-build.exit")" = 0
 test "$(cat /sys/class/watchdog/watchdog0/state)" = active
+echo 1 > "$workspace/logs/hipdnn-validation.exit"
 image=localhost/bc250-rocm-build:10.2-ccache
 prefix=/workspace/build/dist/rocm
 source=/workspace/source/rocm-libraries/dnn-providers
@@ -16,6 +17,7 @@ run_tests() {
     label="$1"
     expected="$2"
     shift 2
+    echo 1 > "$workspace/logs/$label.exit"
     set +e
     podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
         -v "$workspace/source:/workspace/source:ro" \
@@ -29,7 +31,9 @@ run_tests() {
         > "$workspace/logs/$label.log" 2>&1
     status=$?
     set -e
-    echo "$status" > "$workspace/logs/$label.exit"
+    if test "$status" -ne 0; then
+        echo "$status" > "$workspace/logs/$label.exit"
+    fi
     test "$status" -eq 0
     # An exit status of zero also covers no-device and all-skipped runs upstream.
     python3 - "$workspace/logs/$label.xml" "$expected" <<'PY'
@@ -45,6 +49,7 @@ for case in root.iter("testcase"):
     assert case.find("skipped") is None, case.attrib
 print("HIPDNN_GPU_TESTS_PASS", root.attrib["tests"])
 PY
+    echo 0 > "$workspace/logs/$label.exit"
 }
 
 run_tests hipkernel-pass-by-value 5 \

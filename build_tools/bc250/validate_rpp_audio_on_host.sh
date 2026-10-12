@@ -7,6 +7,7 @@ workspace="${1:?usage: validate_rpp_audio_on_host.sh <workspace-directory>}"
 test "$(id -u)" -eq 0
 test "$(cat "$workspace/logs/expanded-build.exit")" = 0
 test "$(cat /sys/class/watchdog/watchdog0/state)" = active
+echo 1 > "$workspace/logs/rpp-audio-validation.exit"
 image=localhost/bc250-rocm-build:10.2-ccache
 podman run --rm --network none \
     -v "$workspace/build:/workspace/build:rw" \
@@ -29,7 +30,10 @@ podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
     > "$workspace/logs/rpp-audio-validation.log" 2>&1
 status=$?
 set -e
-echo "$status" > "$workspace/logs/rpp-audio-validation.exit"
+if test "$status" -ne 0; then
+    echo "$status" > "$workspace/logs/rpp-audio-validation.exit"
+fi
 dmesg > "$workspace/logs/kernel-after-rpp-audio.log"
 test "$status" -eq 0
 grep -F 'RPP_AUDIO_NATIVE_GFX1013_PASS' "$workspace/logs/rpp-audio-validation.log"
+echo 0 > "$workspace/logs/rpp-audio-validation.exit"
