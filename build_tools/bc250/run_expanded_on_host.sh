@@ -16,6 +16,7 @@ podman run --rm --name bc250-rocm-expanded-build --network host \
     -v "$workspace/build:/workspace/build:rw" \
     -v "$workspace/cache:/workspace/cache:rw" \
     -e BC250_BUILD_JOBS="${BC250_BUILD_JOBS:-16}" \
+    -e BC250_HIPDNN_TEST_JOBS="${BC250_HIPDNN_TEST_JOBS:-6}" \
     -e BC250_HIPTENSOR_JOBS="${BC250_HIPTENSOR_JOBS:-12}" \
     -e BC250_CCACHE_MAXSIZE="${BC250_CCACHE_MAXSIZE:-20G}" \
     "$image" bash /workspace/helpers/build_expanded.sh /workspace/source /workspace/build \

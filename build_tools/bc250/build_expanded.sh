@@ -49,6 +49,8 @@ for component in ocl-icd ocl-clr hipify rpp rocALUTION hipfile hipDNN \
     echo "Building expanded component: $component"
     if [[ "$component" == rocALUTION ]]; then
         CMAKE_BUILD_PARALLEL_LEVEL=8 cmake --build "$build_dir" --target "$component"
+    elif [[ "$component" == hipdnn_integration_tests ]]; then
+        CMAKE_BUILD_PARALLEL_LEVEL="${BC250_HIPDNN_TEST_JOBS:-6}" cmake --build "$build_dir" --target "$component"
     else
         cmake --build "$build_dir" --target "$component"
     fi
