@@ -28,6 +28,29 @@ def switch_link(link: Path, target: Path) -> None:
     os.replace(temporary, link)
 
 
+def require_expanded_evidence(workspace: Path) -> None:
+    """Reject incomplete expanded builds, including queued or failed GPU gates."""
+    logs = workspace / "logs"
+    for relative in (
+        "expanded-build.exit",
+        "expanded-validation.exit",
+        "candidate-torch-validation.exit",
+        "candidate-runtime/eager.exit",
+        "candidate-runtime/compiler.exit",
+        "candidate-runtime/stability.exit",
+    ):
+        if (logs / relative).read_text().strip() != "0":
+            raise RuntimeError(f"Required expanded gate has not passed: {relative}")
+    stability = json.loads((logs / "candidate-runtime/stability.json").read_text())
+    if (
+        stability["status"] != "passed"
+        or stability["seconds"] < 600
+        or stability["cycles"] <= 0
+        or stability["arch"].split(":")[0] != "gfx1013"
+    ):
+        raise RuntimeError("Candidate stability evidence is incomplete")
+
+
 def deploy(workspace: Path, release_name: str) -> None:
     if os.geteuid() != 0:
         raise RuntimeError("Run deployment as root")
@@ -35,6 +58,7 @@ def deploy(workspace: Path, release_name: str) -> None:
         raise ValueError("Invalid release name")
     if Path("/sys/class/watchdog/watchdog0/state").read_text().strip() != "active":
         raise RuntimeError("Hardware watchdog is not active")
+    require_expanded_evidence(workspace)
     for name in (
         "torch-validation",
         "torch-compile-validation",
@@ -127,12 +151,29 @@ def deploy(workspace: Path, release_name: str) -> None:
         "uid": ownership.st_uid,
         "gid": ownership.st_gid,
         "therock_revision": (workspace / "source/GIT_REVISION").read_text().strip(),
+        "rocm_libraries_revision": (workspace / "source/rocm-libraries/GIT_REVISION")
+        .read_text()
+        .strip(),
+        "rocm_systems_revision": (workspace / "source/rocm-systems/GIT_REVISION")
+        .read_text()
+        .strip(),
         "torch_revision": (workspace / "pytorch-work/GIT_REVISION").read_text().strip(),
         "triton_revision": (workspace / "triton-work/GIT_REVISION").read_text().strip(),
         "triton_wheel_sha256": wheel_hash,
         "sdma": False,
         "validated": False,
+        "profile": "gfx1013-expanded",
+        "limitations": [
+            "SDMA disabled",
+            "gfx1013 experimental VM heap disabled by default",
+            "hipTensor generic operations only; no contractions",
+            "hipBLASLt host/API profile only; no device GEMM",
+            "hipFile compatibility backend",
+            "hardware counters, media acceleration and distributed use unqualified",
+        ],
     }
+    shutil.copytree(workspace / "logs/candidate-runtime", validation / "candidate")
+    shutil.copy2(workspace / "logs/expanded-validation.log", validation)
     (release / "runtime.json").write_text(json.dumps(manifest, indent=2) + "\n")
     common = [
         "podman",
@@ -191,10 +232,13 @@ def deploy(workspace: Path, release_name: str) -> None:
     for name, script in (
         ("eager", "validate_torch.py"),
         ("compiler", "validate_torch_compile.py"),
+        ("stability", "validate_stability.py"),
     ):
         arguments = ["--output", f"/workspace/logs/{name}.json"]
         if name == "compiler":
             arguments += ["--triton-source", "/workspace/triton-work"]
+        if name == "stability":
+            arguments += ["--duration", "600"]
         run(
             common
             + [
