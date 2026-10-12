@@ -1,0 +1,53 @@
+From e0eb4c93e7a85f4c93e1db81d5a9b9d562e7d004 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 12 Oct 2026 19:27:53 +0200
+Subject: [PATCH] fix(hiptensor): isolate generated headers and generic CK
+ package requirements
+
+---
+ projects/hiptensor/CMakeLists.txt      | 8 ++++++--
+ projects/hiptensor/test/CMakeLists.txt | 2 +-
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/projects/hiptensor/CMakeLists.txt b/projects/hiptensor/CMakeLists.txt
+index 5656bd18fd0..3182030e186 100644
+--- a/projects/hiptensor/CMakeLists.txt
++++ b/projects/hiptensor/CMakeLists.txt
+@@ -217,7 +217,11 @@ endif()
+ # disable warning about 'amdgpu-waves-per-eu'
+ add_compile_options(-Wno-pass-failed)
+ 
+-find_package(composable_kernel 1.0.0 REQUIRED COMPONENTS device_contraction_operations device_reduction_operations device_other_operations)
++set(_hiptensor_ck_components device_reduction_operations device_other_operations)
++if(NOT HIPTENSOR_GENERIC_ONLY)
++    list(APPEND _hiptensor_ck_components device_contraction_operations)
++endif()
++find_package(composable_kernel 1.0.0 REQUIRED COMPONENTS ${_hiptensor_ck_components})
+ rocm_package_add_dependencies("composable_kernel >= 1.0.0" COMPONENT tests)
+ 
+ # Configure library build
+@@ -247,7 +251,7 @@ rocm_setup_version(VERSION ${VERSION_STRING})
+ 
+ # Configure a header file to pass the CMake version settings to the source
+ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/library/include/hiptensor/internal/hiptensor-version.h.in"
+-               "${CMAKE_CURRENT_SOURCE_DIR}/library/include/hiptensor/internal/hiptensor-version.h")
++               "${PROJECT_BINARY_DIR}/include/hiptensor/internal/hiptensor-version.h")
+ 
+ # Configure Windows version resource file so hiptensor.dll exposes file metadata
+ # (File description, version, product name, copyright) in Explorer properties.
+diff --git a/projects/hiptensor/test/CMakeLists.txt b/projects/hiptensor/test/CMakeLists.txt
+index 37f455da8fc..10870b93296 100644
+--- a/projects/hiptensor/test/CMakeLists.txt
++++ b/projects/hiptensor/test/CMakeLists.txt
+@@ -183,7 +183,7 @@ function(add_hiptensor_test BINARY_NAME YAML_CONFIG_FILE TEST_SOURCES)
+     # - hiptensor_test_NAME
+     # - hiptensor_test_YAML_STRING
+     # - hiptensor_test_YAML_INCLUDE_FILE
+-    get_filename_component(hiptensor_test_YAML_DIR "${YAML_CONFIG_FILE}" PATH)
++    set(hiptensor_test_YAML_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated/${BINARY_NAME}")
+     get_filename_component(hiptensor_test_NAME "${YAML_CONFIG_FILE}" NAME_WE)
+     set(hiptensor_test_YAML_INCLUDE_FILE "${hiptensor_test_NAME}.hpp")
+     configure_file("${PROJECT_SOURCE_DIR}/test/hiptensor-test-yaml.hpp.in"
+-- 
+2.56.0
+
