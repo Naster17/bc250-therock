@@ -16,4 +16,5 @@ export TRITON_APPEND_CMAKE_ARGS="-DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=$helper_dir/
 cd "$work_dir"
 make
 python "$helper_dir/validate_triton_lowering.py" \
-    --triton-opt "$work_dir/build/bin/triton-opt" --output-dir "$output_dir"
+    --triton-opt "$work_dir/build/bin/triton-opt" --output-dir "$output_dir" \
+    --llvm-bin "$LLVM_SYSPATH/bin"

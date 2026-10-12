@@ -25,14 +25,30 @@ module attributes {{"ttg.num-ctas" = 1 : i32, "ttg.num-warps" = 4 : i32, ttg.tar
 """
 
 
-def validate(triton_opt: Path, output_dir: Path) -> None:
+def multiply_module(architecture: str) -> str:
+    tensor = "tensor<128xbf16, #blocked>"
+    return f"""#blocked = #ttg.blocked<{{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [4], order = [0]}}>
+module attributes {{"ttg.num-ctas" = 1 : i32, "ttg.num-warps" = 4 : i32, ttg.target = "hip:{architecture}", "ttg.threads-per-warp" = 32 : i32}} {{
+  tt.func private @multiply_bf16(%a: {tensor}, %b: {tensor}) -> {tensor} {{
+    %c = arith.mulf %a, %b : {tensor}
+    tt.return %c : {tensor}
+  }}
+}}
+"""
+
+
+def validate(triton_opt: Path, output_dir: Path, llvm_bin: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     results = []
     for architecture in ("gfx1013", "gfx1100"):
-        for operand_type in ("f16", "bf16", "i8"):
+        for operand_type in ("f16", "bf16", "i8", "bf16-multiply"):
             stem = f"{architecture}-{operand_type}"
             source = output_dir / f"{stem}.mlir"
-            source.write_text(dot_module(architecture, operand_type))
+            source.write_text(
+                multiply_module(architecture)
+                if operand_type == "bf16-multiply"
+                else dot_module(architecture, operand_type)
+            )
             completed = subprocess.run(
                 [
                     str(triton_opt),
@@ -49,7 +65,10 @@ def validate(triton_opt: Path, output_dir: Path) -> None:
             (output_dir / f"{stem}.llvm.mlir").write_text(lowered)
             if architecture == "gfx1013":
                 assert not re.search(r"amdgcn\.(?:[fsu]dot|mfma|wmma)", lowered), stem
-                if operand_type == "i8":
+                if operand_type == "bf16-multiply":
+                    expected = {"llvm.fmul": 1, "llvm.zext": 2, "llvm.shl": 2}
+                    assert "bf16 to i16" in lowered, stem
+                elif operand_type == "i8":
                     expected = {"llvm.sext": 32, "llvm.mul": 16, "llvm.add": 16}
                     assert "i8 to i32" in lowered, stem
                     assert "llvm.zext" not in lowered, stem
@@ -67,10 +86,13 @@ def validate(triton_opt: Path, output_dir: Path) -> None:
                     "f16": "llvm.amdgcn.fdot2",
                     "bf16": "llvm.amdgcn.fdot2.f32.bf16",
                     "i8": "llvm.amdgcn.sdot4",
+                    "bf16-multiply": "llvm.amdgcn.fdot2.bf16.bf16",
                 }[operand_type]
                 expected = {
                     f'llvm.call_intrinsic "{intrinsic}"': (
-                        4 if operand_type == "i8" else 8
+                        1
+                        if operand_type == "bf16-multiply"
+                        else (4 if operand_type == "i8" else 8)
                     )
                 }
                 assert '"llvm.fmuladd.f32"' not in lowered, stem
@@ -82,6 +104,31 @@ def validate(triton_opt: Path, output_dir: Path) -> None:
                     actual = lowered.count(operation)
                 assert actual == count, (stem, operation, actual, count)
                 counts[operation] = actual
+            llvm_ir = subprocess.run(
+                [str(llvm_bin / "mlir-translate"), "--mlir-to-llvmir"],
+                input=lowered,
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout
+            (output_dir / f"{stem}.ll").write_text(llvm_ir)
+            assembly = subprocess.run(
+                [
+                    str(llvm_bin / "llc"),
+                    "-mtriple=amdgcn-amd-amdhsa",
+                    f"-mcpu={architecture}",
+                    "-o",
+                    "-",
+                ],
+                input=llvm_ir,
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=120,
+            ).stdout
+            (output_dir / f"{stem}.s").write_text(assembly)
+            if architecture == "gfx1013":
+                assert not re.search(r"\bv_(?:dot[24]|mfma|wmma)", assembly), stem
             results.append({"case": stem, "operations": counts})
             print(f"TRITON_DOT_LOWERING_PASS {stem}", flush=True)
     (output_dir / "results.json").write_text(json.dumps(results, indent=2) + "\n")
@@ -91,8 +138,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--triton-opt", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--llvm-bin", type=Path, required=True)
     args = parser.parse_args()
-    validate(args.triton_opt.resolve(), args.output_dir.resolve())
+    validate(
+        args.triton_opt.resolve(), args.output_dir.resolve(), args.llvm_bin.resolve()
+    )
 
 
 if __name__ == "__main__":
