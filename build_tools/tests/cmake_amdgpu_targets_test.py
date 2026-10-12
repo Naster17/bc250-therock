@@ -113,6 +113,36 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class CmakeTargetSelectionTest(unittest.TestCase):
+    def test_bc250_generic_tensor_profile_does_not_enable_matrix_projects(self):
+        for generic in (False, True):
+            with self.subTest(generic=generic), tempfile.TemporaryDirectory() as tmp:
+                script = Path(tmp) / "probe.cmake"
+                script.write_text(
+                    f"""cmake_minimum_required(VERSION 3.25)
+set(THEROCK_HIPTENSOR_GENERIC_ONLY {"ON" if generic else "OFF"})
+include("{ROOT.as_posix()}/cmake/therock_amdgpu_targets.cmake")
+get_property(tensor_excludes GLOBAL PROPERTY THEROCK_AMDGPU_PROJECT_TARGET_EXCLUDES_hipTensor)
+if({"" if generic else "NOT "}"gfx1013" IN_LIST tensor_excludes)
+  message(FATAL_ERROR "Wrong gfx1013 generic tensor selection")
+endif()
+foreach(project hipBLASLt hipSPARSELt)
+  get_property(excludes GLOBAL PROPERTY THEROCK_AMDGPU_PROJECT_TARGET_EXCLUDES_${{project}})
+  if(NOT "gfx1013" IN_LIST excludes)
+    message(FATAL_ERROR "Generic tensor selection enabled matrix project ${{project}}")
+  endif()
+endforeach()
+if(NOT "gfx1010" IN_LIST tensor_excludes)
+  message(FATAL_ERROR "Generic tensor selection changed another architecture")
+endif()
+"""
+                )
+                subprocess.run(
+                    ["cmake", "-P", str(script)],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+
     def test_bc250_registration(self):
         families = amdgpu_family_map()
         self.assertEqual(families["gfx1013"], ["gfx1013"])
