@@ -11,6 +11,7 @@ if podman container exists bc250-triton-build; then
     podman rm bc250-triton-build
 fi
 podman image inspect "$image" > "$workspace/logs/triton-build-image.json"
+mkdir -p "$workspace/wheels"
 rm -f "$workspace/logs/triton-build.exit"
 set +e
 podman run --name bc250-triton-build --network none \
@@ -20,8 +21,10 @@ podman run --name bc250-triton-build --network none \
     -v "$workspace/triton-work:/workspace/triton-work:rw" \
     -v "$workspace/triton-deps:/workspace/triton-deps:ro" \
     -v "$workspace/cache:/workspace/cache:rw" \
+    -v "$workspace/wheels:/workspace/wheels:rw" \
     -e BC250_TRITON_JOBS="${BC250_TRITON_JOBS:-4}" \
     -e BC250_CCACHE_MAXSIZE="${BC250_CCACHE_MAXSIZE:-20G}" \
+    -e BC250_TRITON_WHEEL_DIR="${BC250_TRITON_WHEEL_DIR:-}" \
     "$image" nice -n 10 bash /workspace/helpers/build_triton.sh \
     /workspace/triton-source /workspace/triton-work /workspace/triton-deps \
     /workspace/source > "$workspace/logs/triton-build.log" 2>&1

@@ -30,5 +30,9 @@ cd "$work_dir"
 make dev-install-triton
 # Rebuild through the repository's required entry point before compiler tests.
 make
+if [[ -n "${BC250_TRITON_WHEEL_DIR:-}" ]]; then
+    python -m pip wheel . --no-build-isolation --no-deps \
+        --wheel-dir "$BC250_TRITON_WHEEL_DIR"
+fi
 build/bin/triton-opt --version
 ccache --show-stats
