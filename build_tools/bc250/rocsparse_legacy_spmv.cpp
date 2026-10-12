@@ -19,7 +19,7 @@ static void sparse_check(rocsparse_status status) {
     throw std::runtime_error("rocSPARSE operation failed");
 }
 
-template <typename T> static bool run(bool analyze) {
+template <typename T> static bool run(int analyses) {
   constexpr int side = 7, rows = side * side;
   std::vector<int> offsets(rows + 1), columns;
   std::vector<T> values;
@@ -55,22 +55,24 @@ template <typename T> static bool run(bool analyze) {
   sparse_check(rocsparse_create_handle(&handle));
   sparse_check(rocsparse_create_mat_descr(&descriptor));
   sparse_check(rocsparse_set_pointer_mode(handle, rocsparse_pointer_mode_host));
-  if (analyze) {
+  if (analyses) {
     sparse_check(rocsparse_create_mat_info(&info));
-    if constexpr (std::is_same_v<T, float>)
-      sparse_check(rocsparse_scsrmv_analysis(
-          handle, rocsparse_operation_none, rows, rows, nnz, descriptor,
-          device_values, device_offsets, device_columns, info));
-    else
-      sparse_check(rocsparse_dcsrmv_analysis(
-          handle, rocsparse_operation_none, rows, rows, nnz, descriptor,
-          device_values, device_offsets, device_columns, info));
+    for (int iteration = 0; iteration < analyses; ++iteration) {
+      if constexpr (std::is_same_v<T, float>)
+        sparse_check(rocsparse_scsrmv_analysis(
+            handle, rocsparse_operation_none, rows, rows, nnz, descriptor,
+            device_values, device_offsets, device_columns, info));
+      else
+        sparse_check(rocsparse_dcsrmv_analysis(
+            handle, rocsparse_operation_none, rows, rows, nnz, descriptor,
+            device_values, device_offsets, device_columns, info));
+    }
   }
   bool passed = true;
   for (int repeat = 0; repeat < 10; ++repeat)
     for (bool ones : {true, false})
       for (T beta : {T(0), T(0.5)}) {
-        T alpha = T(1.5);
+        T alpha = repeat % 2 ? T(1) : T(1.5);
         std::vector<T> x(rows), y(rows + 16, T(-17));
         for (int row = 0; row < rows; ++row)
           x[row] = ones ? T(1) : T(row % 7 - 3);
@@ -121,16 +123,16 @@ template <typename T> static bool run(bool analyze) {
   hip_check(hipFree(device_columns));
   hip_check(hipFree(device_offsets));
   printf("LEGACY_SPMV type=%s analysis=%d cases=40 pass=%d\n",
-         std::is_same_v<T, float> ? "float" : "double", analyze, passed);
+         std::is_same_v<T, float> ? "float" : "double", analyses, passed);
   return passed;
 }
 
 int main() {
   try {
     bool passed = true;
-    for (bool analyze : {false, true}) {
-      passed = run<float>(analyze) && passed;
-      passed = run<double>(analyze) && passed;
+    for (int analyses : {0, 1, 2}) {
+      passed = run<float>(analyses) && passed;
+      passed = run<double>(analyses) && passed;
     }
     return passed ? 0 : 1;
   } catch (const std::exception &error) {
