@@ -64,7 +64,7 @@ static void dump(rocsparse_mat_info info, const char *where) {
     auto status =                                                              \
         real(handle, trans, m, n, nnz, descr, values, rows, columns, info);    \
     if (status == rocsparse_status_success)                                    \
-      dump(info, #NAME);                                                       \
+      watched_info = info; watching = true; dump(info, #NAME);                  \
     return status;                                                             \
   }
 
@@ -79,7 +79,7 @@ static void dump(rocsparse_mat_info info, const char *where) {
         reinterpret_cast<decltype(&NAME)>(dlsym(RTLD_NEXT, #NAME));            \
     if (!real)                                                                 \
       return rocsparse_status_internal_error;                                  \
-    dump(info, #NAME);                                                         \
+    dump(info, #NAME); watching = false;                                       \
     return real(handle, trans, m, n, nnz, alpha, descr, values, rows, columns, \
                 info, x, beta, y);                                             \
   }
