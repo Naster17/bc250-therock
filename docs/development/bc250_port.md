@@ -81,6 +81,11 @@ Torch defaults to 12 compile jobs and one linker job; use `BC250_TORCH_JOBS`
 to adjust the heavier template build independently from ROCm's 16 jobs.
 The runtime image requires the persistent ROCm and Torch working-directory
 mounts; the editable installation is not a standalone wheel.
+The math profile includes libhipcxx, required by ROCm 8+ consumers. Torch uses
+the controlled CMake 3.31.12 executable because some bundled projects retain
+older minimum-version declarations. A CMake toolchain hook runs upstream HIP
+generation inside the pip build before CMake discovers generated sources and
+sets native GPU targets before importing HIP packages in the GPU-less builder.
 
 Torch execution gates include native target identity, markers, FP16/BF16
 indexed accumulation and embedding gradients, four GEMM precisions, sparse
@@ -96,7 +101,8 @@ The old 7.2 runtime passed a CPU-compared 64x64 FP32 torch GEMM on the
 The fresh ROCm 10.2 core passed the native HIP hardware gate on `.104` with
 SDMA disabled: 256 allocation/dispatch cycles, LDS reduction, global atomics,
 and CPU-checked copies from 4 KiB through 16 MiB. The reported architecture is
-`gfx1013:xnack-`, with wave32. Math libraries and PyTorch remain unvalidated.
+`gfx1013:xnack-`, with wave32. PyTorch is still building; its execution gates
+have not yet run.
 The packed FP16/BF16 atomic gate also passed with unmodified HIP headers,
 including contended packed updates, neighboring scalar lanes, untouched
 sentinels, and returned old values. LLVM's target-aware `__has_builtin` selects
@@ -105,6 +111,35 @@ rocRAND passed six dispatch/configuration tests and all 44 basic tests on the
 new runtime. rocBLAS built 570 native fallback kernels and passed the upstream
 CPU-compared 1023×1024×1025 SGEMM example. The host-only hipBLASLt descriptor,
 heuristic, extension enumeration and unsupported-execution gate passed.
+On 2026-10-12, the complete math build and the CPU-reference math gate passed:
+rocBLAS/hipBLAS GEMM, rocSOLVER Cholesky, hipFFT prime-length DFT, and rocRAND
+reproducibility/distribution checks. This is initial operation coverage, not
+full upstream test-suite coverage.
+
+`validate_ml_on_host.sh` passed CK's upstream scalar DL FP32, FP16 and signed
+INT8 GEMM examples with CPU verification. MIOpen's driver passed FP32, FP16
+and BF16 convolution for groups 1 and 2, including forward, input gradients,
+and weight gradients. Set `MIOPEN_DRIVER_USE_GPU_REFERENCE=0` explicitly:
+the pinned driver's default reference is the GPU. Its initial tests use
+fresh per-container caches; no gfx1013 tuning database is supplied yet.
+
+Triton baseline `66b3f9ff575eb8db6adec658bbf0badd9a8d2e25` builds with the
+upstream pinned LLVM 23 package. The patches under `patches/bc250-triton/`
+replace unsupported gfx1013 packed FP16/BF16/INT8 dot lowering with widened
+scalar operations, and BF16 elementwise multiplication with the existing
+FP32 conversion fallback. Other targets retain their packed paths.
+`validate_triton_lowering.sh` rebuilds through `make` and checks MLIR and LLVM
+instruction selection against native gfx1013 and gfx1100. Preserve generated
+fixture functions through instruction selection so LLVM cannot discard them.
+The first six MLIR dot checks passed; the extended BF16 multiplication check
+reproduced an LLVM instruction-selection failure before its fix. The updated
+native rebuild and extended checks are pending. Triton GPU execution and
+Inductor execution remain pending until Torch finishes.
+
+`validate_compilation_on_host.sh` requires successful eager Torch validation
+and a successful Triton build. It runs the compiler gate, the three upstream
+native gfx1013 dot tests, fused elementwise kernels, and a CPU-compared
+layernorm/softmax/matmul forward-and-backward graph through Inductor.
 
 The BC-250 math build disables AMD SMI's EPYC-only ESMI library. Its default
 configuration downloads sources into the source tree, which is intentionally
