@@ -210,8 +210,8 @@ preserved. The user's matrix script passed as `nik` from the home directory and
 with an absolute path from `/tmp` after the launcher path fix on 2026-10-12.
 
 The launcher obtains rootful Podman access through `doas`, then runs the
-container as UID/GID 1000 with the device groups. It mounts the current directory
-at `/workspace/project`, mounts release files read-only, and retains writable
+container as UID/GID 1000 with the device groups. It mounts the host home, current directory and script directory at their original
+paths, mounts release files read-only, and retains writable
 runtime caches under the release. SDMA stays disabled in the validated profile.
 `validate_stability.py` repeatedly checks GEMM, 16 MiB allocations, offset-view
 copies and compiled kernels against CPU results. The first installed-runtime
@@ -234,3 +234,11 @@ on the previous release, restored the current symlink in a `finally` block,
 then verified the expanded release again. The matrix script also passed as
 `nik` against the expanded release. Rollback evidence is preserved in
 `validation/rollback.json` and the host workspace rollback log.
+
+The training/file launcher update preserves host absolute paths and `HOME`,
+adds `--mount`/`--mount-ro`, private environment handoff across `doas`,
+and a default 1 GiB shared-memory limit. Thirteen host integration scenarios
+passed, including checkpoint resume across containers, HTTP downloads,
+spawn DataLoader workers, persistent packages, Inductor and interrupted file
+writes. The environment/checkpoint handoff was also verified as `nik`.
+See [bc250_torch_usage.md](bc250_torch_usage.md) for detailed examples.

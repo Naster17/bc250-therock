@@ -516,9 +516,20 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 - [x] Verify the launcher as `nik`, from home and from `/tmp`.
 - [x] Preserve Python `-c`, `-m`, option and stdin argument handling.
 - [x] Provide interactive shell mode in the launcher.
-- [ ] Qualify interactive shell behavior and representative file/import workflows.
-- [ ] Document additional data mounts when arbitrary host paths are needed beyond
+- [x] Qualify interactive shell behavior and representative file/import workflows.
+- [x] Document additional data mounts when arbitrary host paths are needed beyond
   the current-directory/script-directory mappings.
+- [x] Preserve host absolute paths, caller cwd, home and host identity in the container.
+- [x] Support explicit read-write/read-only host file and directory mounts.
+- [x] Verify checkpoint model/optimizer/RNG save and resume across separate containers.
+- [x] Verify host edits, sibling/module imports, stdin, exit codes and file ownership.
+- [x] Verify HTTP downloads persist in the host home cache across invocations.
+- [x] Verify private environment handoff through doas as nik.
+- [x] Verify spawn DataLoader workers, pinned memory and more than 64 MiB of shared memory.
+- [x] Verify persistent extra Python packages in a mounted target directory.
+- [x] Verify torch.compile through the updated launcher.
+- [x] Verify application file-save handlers receive SIGINT and root-issued SIGTERM.
+- [x] Document training file workflows in [bc250_torch_usage.md](bc250_torch_usage.md).
 - [x] Record component profiles and limitations in release manifests.
 - [x] Require fresh expanded, Torch and stability evidence before activation.
 - [ ] Validate installed-prefix relocation and dynamic library resolution.
