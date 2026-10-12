@@ -40,6 +40,7 @@ cmake -S "$source_dir" -B "$build_dir" -G Ninja \
     -DTHEROCK_ENABLE_SOLVER=ON \
     -DTHEROCK_ENABLE_MIOPEN=ON \
     -DTHEROCK_ENABLE_COMPOSABLE_KERNEL=ON \
+    -DTHEROCK_ENABLE_LIBHIPCXX=ON \
     -DTHEROCK_MIOPEN_USE_COMPOSABLE_KERNEL=OFF \
     -DTHEROCK_BUILD_TESTING=ON \
     -DTHEROCK_ENABLE_LLVM_TESTS=OFF \
@@ -68,5 +69,6 @@ done
 # CK's template instantiations need more RAM per compiler process.
 CMAKE_BUILD_PARALLEL_LEVEL="${BC250_CK_JOBS:-6}" \
     cmake --build "$build_dir" --target composable_kernel
+cmake --build "$build_dir" --target libhipcxx
 cmake --build "$build_dir" --target dist
 ccache --show-stats

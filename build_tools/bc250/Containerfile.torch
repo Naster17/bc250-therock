@@ -13,3 +13,7 @@ ENV PATH="/opt/torch-venv/bin:${PATH}"
 WORKDIR /workspace
 RUN apt-get update && apt-get install -y --no-install-recommends libopenblas-dev \
     && rm -rf /var/lib/apt/lists/*
+# PyTorch's bundled third-party projects still require CMake 3 compatibility.
+RUN mkdir -p /opt/bc250-tools \
+    && ln -s /usr/local/therock-tools/bin/cmake /opt/bc250-tools/cmake
+ENV PATH="/opt/bc250-tools:${PATH}"

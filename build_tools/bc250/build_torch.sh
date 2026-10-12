@@ -32,6 +32,8 @@ export CMAKE_C_COMPILER_LAUNCHER=ccache
 export CMAKE_CXX_COMPILER_LAUNCHER=ccache
 export CMAKE_HIP_COMPILER_LAUNCHER=ccache
 export CMAKE_HIP_COMPILER="$rocm_prefix/lib/llvm/bin/clang++"
+helper_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export CMAKE_TOOLCHAIN_FILE="$helper_dir/torch_toolchain.cmake"
 export CMAKE_BUILD_TYPE=Release
 export MAX_JOBS="${BC250_TORCH_JOBS:-12}"
 export CMAKE_JOB_POOLS=link=1
@@ -48,6 +50,8 @@ export USE_NCCL=0 USE_DISTRIBUTED=0 USE_KINETO=0
 export BUILD_TEST=0 USE_CUSPARSELT=0
 
 cd "$work_dir"
+# Regenerate configuration after a failed configure, preserving compiled objects.
+rm -f build/CMakeCache.txt
 python -m pip install -e . -v --no-build-isolation
 python -m pip freeze
 ccache --show-stats
