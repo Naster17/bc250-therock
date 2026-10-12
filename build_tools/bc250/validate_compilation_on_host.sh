@@ -4,6 +4,7 @@
 
 set -eu
 workspace="${1:?usage: validate_compilation_on_host.sh <workspace-directory>}"
+image="${BC250_TORCH_RUNTIME_IMAGE:-localhost/bc250-pytorch-runtime:2.13-gfx1013}"
 test "$(id -u)" -eq 0
 test "$(cat "$workspace/logs/torch-validation.exit")" = 0
 test "$(cat "$workspace/logs/triton-build.exit")" = 0
@@ -34,13 +35,13 @@ podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
     -e HSA_ENABLE_SDMA=0 -e OMP_NUM_THREADS=2 \
     -e ROCM_PATH=/workspace/build/dist/rocm \
     -e LD_LIBRARY_PATH=/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib \
-    -e PYTHONPATH=/workspace/triton-work/python \
-    -e TRITON_BACKENDS_IN_TREE=1 \
+    -e PYTHONPATH="${BC250_TRITON_PYTHONPATH-/workspace/triton-work/python}" \
+    -e TRITON_BACKENDS_IN_TREE="${BC250_TRITON_BACKENDS_IN_TREE:-1}" \
     -e AMDGCN_USE_BUFFER_OPS="${BC250_TRITON_BUFFER_OPS:-1}" \
     -e TRITON_CACHE_DIR=/workspace/triton-cache \
     -e TORCHINDUCTOR_CACHE_DIR=/workspace/inductor-cache \
     -e TORCHINDUCTOR_COMPILE_THREADS=4 \
-    localhost/bc250-pytorch-runtime:2.13-gfx1013 \
+    "$image" \
     timeout --kill-after=10s 900s python /workspace/helpers/validate_torch_compile.py \
     --triton-source /workspace/triton-work --output /workspace/logs/torch-compile-validation.json \
     > "$workspace/logs/torch-compile-validation.log" 2>&1

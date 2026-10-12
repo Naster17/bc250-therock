@@ -5,6 +5,7 @@
 
 import argparse
 import json
+import os
 from pathlib import Path
 import re
 import sys
@@ -93,6 +94,32 @@ def main() -> None:
     torch.testing.assert_close(output.cpu(), reference, rtol=0, atol=0, equal_nan=True)
     assert not re.search(r"\bv_(?:dot[24]|mfma|wmma)", compiled_kernel.asm["amdgcn"])
     passed("triton_bf16_multiply_exact_rtne_ties_and_nan")
+
+    @triton.jit
+    def masked_copy(X, Y, N: tl.constexpr):
+        offsets = tl.program_id(0) * 128 + tl.arange(0, 128)
+        values = tl.load(X + offsets, offsets < N, other=0)
+        tl.store(Y + offsets, values * 2 + 7, offsets < N)
+
+    buffer_operations = os.environ.get("AMDGCN_USE_BUFFER_OPS", "1") == "1"
+    for dtype in (torch.float32, torch.float16, torch.bfloat16, torch.int32):
+        for length in (31, 129, 257):
+            inputs = (torch.arange(length + 2) % 17 - 8).to(dtype)
+            expected = torch.full_like(inputs, -17)
+            expected[1:-1] = inputs[1:-1] * 2 + 7
+            gpu_inputs = inputs.cuda()
+            output = torch.full_like(gpu_inputs, -17)
+            kernel = masked_copy[(triton.cdiv(length, 128),)](
+                gpu_inputs[1:-1], output[1:-1], length, num_warps=4
+            )
+            torch.testing.assert_close(output.cpu(), expected, rtol=0, atol=0)
+            assembly = kernel.asm["amdgcn"]
+            if buffer_operations:
+                assert re.search(r"\bbuffer_load_", assembly)
+                assert re.search(r"\bbuffer_store_", assembly)
+            else:
+                assert not re.search(r"\bbuffer_(?:load|store)_", assembly)
+            passed(f"triton_masked_memory_{dtype}_{length}_buffer_{buffer_operations}")
 
     def elementwise(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         return functional.relu(x * y + 1)
