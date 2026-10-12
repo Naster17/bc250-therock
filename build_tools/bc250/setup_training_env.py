@@ -38,7 +38,7 @@ def main() -> None:
     constraints.write_text(
         "".join(
             f"{name}=={importlib.metadata.version(name)}\n"
-            for name in ("torch", "triton", "numpy")
+            for name in ("torch", "triton", "numpy", "click")
         )
     )
     subprocess.run(
