@@ -15,25 +15,31 @@ dmesg > "$workspace/logs/kernel-before-hiptensor.log"
 run_tests() {
     binary="$1"
     config="$2"
-    echo 1 > "$workspace/logs/hiptensor-$binary.exit"
+    label="${3:-$binary}"
+    case "$config" in
+        /*) ;;
+        *) config="$prefix/bin/hiptensor/configs/validation/quick/$config" ;;
+    esac
+    echo 1 > "$workspace/logs/hiptensor-$label.exit"
     set +e
     podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
         -v "$workspace/build:/workspace/build:ro" \
         -v "$workspace/logs:/workspace/logs:rw" \
+        -v "$workspace/helpers:/workspace/helpers:ro" \
         -w "$prefix/bin/hiptensor" \
         -e HSA_ENABLE_SDMA=0 \
         -e LD_LIBRARY_PATH="$prefix/lib:$prefix/lib/llvm/lib" \
-        -e GTEST_OUTPUT="xml:/workspace/logs/hiptensor-$binary.xml" \
+        -e GTEST_OUTPUT="xml:/workspace/logs/hiptensor-$label.xml" \
         "$image" timeout --kill-after=10s 300s "../$binary" \
-        -y "configs/validation/quick/$config" -v ON --hot_runs 1 --cold_runs 0 \
-        > "$workspace/logs/hiptensor-$binary.log" 2>&1
+        -y "$config" -v ON --hot_runs 1 --cold_runs 0 \
+        > "$workspace/logs/hiptensor-$label.log" 2>&1
     status=$?
     set -e
     if test "$status" -ne 0; then
-        echo "$status" > "$workspace/logs/hiptensor-$binary.exit"
+        echo "$status" > "$workspace/logs/hiptensor-$label.exit"
     fi
     test "$status" -eq 0
-    python3 - "$workspace/logs/hiptensor-$binary.xml" <<'PY'
+    python3 - "$workspace/logs/hiptensor-$label.xml" <<'PY'
 import sys
 import xml.etree.ElementTree as ET
 
@@ -46,13 +52,15 @@ for case in root.iter("testcase"):
     assert case.find("skipped") is None, case.attrib
 print("HIPTENSOR_GENERIC_GPU_TESTS_PASS", root.attrib["tests"])
 PY
-    echo 0 > "$workspace/logs/hiptensor-$binary.exit"
+    echo 0 > "$workspace/logs/hiptensor-$label.exit"
 }
 
 run_tests rank2_reduction_test 03_reduction/rank2_test_params.yaml
 run_tests rank2_elementwise_permute_test 02_elementwise/permutation/rank2_test_params.yaml
 run_tests rank2_elementwise_binary_op_test 02_elementwise/binary_op/rank2_binary_op_test_params.yaml
 run_tests rank2_elementwise_trinary_op_test 02_elementwise/trinary_op/rank2_trinary_op_test_params.yaml
+
+run_tests rank2_reduction_test /workspace/helpers/hiptensor_reduction_gfx1013.yaml rank2_reduction_extended
 
 dmesg > "$workspace/logs/kernel-after-hiptensor.log"
 echo 0 > "$workspace/logs/hiptensor-validation.exit"
