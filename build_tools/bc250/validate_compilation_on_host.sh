@@ -35,6 +35,7 @@ podman run --rm --network none --device /dev/kfd --device /dev/dri/renderD128 \
     -e ROCM_PATH=/workspace/build/dist/rocm \
     -e LD_LIBRARY_PATH=/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib \
     -e PYTHONPATH=/workspace/triton-work/python \
+    -e TRITON_BACKENDS_IN_TREE=1 \
     -e TRITON_CACHE_DIR=/workspace/triton-cache \
     -e TORCHINDUCTOR_CACHE_DIR=/workspace/inductor-cache \
     -e TORCHINDUCTOR_COMPILE_THREADS=4 \
