@@ -39,6 +39,7 @@ module attributes {{"ttg.num-ctas" = 1 : i32, "ttg.num-warps" = 4 : i32, ttg.tar
 
 def validate(triton_opt: Path, output_dir: Path, llvm_bin: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "results.json").unlink(missing_ok=True)
     results = []
     for architecture in ("gfx1013", "gfx1100"):
         for operand_type in ("f16", "bf16", "i8", "bf16-multiply"):

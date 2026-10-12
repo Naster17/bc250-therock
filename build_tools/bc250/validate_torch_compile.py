@@ -41,15 +41,19 @@ def main() -> None:
             "-s",
             "--tb=short",
             "--device=cuda",
+            "-p",
+            "no:cacheprovider",
             str(args.triton_source / "python/test/unit/language/test_core.py")
             + "::test_dot_gfx1013_scalar_fallback",
+            str(args.triton_source / "python/test/unit/language/test_core.py")
+            + "::test_bin_op[1-bfloat16-bfloat16-*]",
         ]
     )
     if status != 0:
         raise RuntimeError(
             f"Native Triton dot regression failed: pytest status {status}"
         )
-    passed("triton_native_fp16_bf16_signed_int8_dots")
+    passed("triton_native_fp16_bf16_signed_int8_dots_and_bf16_multiply")
 
     def elementwise(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         return functional.relu(x * y + 1)
