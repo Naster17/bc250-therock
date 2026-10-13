@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    "inductor_gpu_cpu_reference_without_development_mounts",
+    "frozen_transformers_peft_lora_gpu_updates",
+    "host_visible_checkpoint_roundtrip"
+  ],
+  "losses": [
+    4.831070899963379,
+    4.808656692504883,
+    4.781088352203369
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "triton_path": "/opt/torch-venv/lib/python3.12/site-packages/triton/__init__.py",
+  "transformers_path": "/workspace/release-consumers/transformers/__init__.py",
+  "versions": {
+    "torch": "2.13.0a0+gfx1013",
+    "triton": "3.8.0",
+    "transformers": "5.2.0",
+    "peft": "0.18.1",
+    "accelerate": "1.12.0"
+  }
+}

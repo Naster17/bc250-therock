@@ -47,7 +47,9 @@ class Bc250BlasConfigTest(unittest.TestCase):
                             result.returncode, 0, result.stdout + result.stderr
                         )
 
-    def _configure(self, targets: str) -> dict[str, str]:
+    def _configure(
+        self, targets: str, *, scalar: bool = False, sparse_lt: bool = True
+    ) -> dict[str, str]:
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory)
             script = r"""
@@ -58,9 +60,12 @@ include("@ROOT@/cmake/therock_subproject.cmake")
 set(THEROCK_AMDGPU_TARGETS "@TARGETS@")
 set(THEROCK_BUILD_TESTING ON)
 set(THEROCK_ENABLE_SPARSE ON)
+set(THEROCK_ENABLE_SPARSELT @SPARSE_LT@)
+set(THEROCK_GFX1013_SCALAR_BACKENDS @SCALAR@)
 set(THEROCK_ROCM_LIBRARIES_SOURCE_DIR "@ROOT@/rocm-libraries")
 
 function(therock_cmake_subproject_declare name)
+  add_custom_target(${name})
   cmake_parse_arguments(ARG "BACKGROUND_BUILD;DISABLE_AMDGPU_TARGETS" ""
     "EXTERNAL_SOURCE_DIR;BINARY_DIR;DEFAULT_GPU_TARGETS;CMAKE_ARGS;CMAKE_INCLUDES;COMPILER_TOOLCHAIN;BUILD_DEPS;RUNTIME_DEPS" ${ARGN})
   set_property(GLOBAL PROPERTY "probe_${name}" TRUE)
@@ -73,10 +78,14 @@ function(therock_cmake_subproject_dist_dir output name)
 endfunction()
 foreach(command therock_cmake_subproject_activate
     therock_cmake_subproject_glob_c_sources
-    therock_cmake_subproject_provide_package therock_provide_artifact)
+    therock_cmake_subproject_provide_package)
   function(${command})
   endfunction()
 endforeach()
+function(therock_provide_artifact name)
+  cmake_parse_arguments(ARG "" "DESCRIPTOR" "COMPONENTS;SUBPROJECT_DEPS" ${ARGN})
+  file(WRITE "${CMAKE_BINARY_DIR}/${name}.artifact" "${ARG_DESCRIPTOR};${ARG_SUBPROJECT_DEPS}")
+endfunction()
 include("@ROOT@/math-libs/BLAS/CMakeLists.txt")
 get_property(roller GLOBAL PROPERTY probe_rocRoller)
 file(WRITE "${CMAKE_BINARY_DIR}/roller" "${roller}")
@@ -84,7 +93,10 @@ get_property(sparse_lt GLOBAL PROPERTY probe_hipSPARSELt)
 file(WRITE "${CMAKE_BINARY_DIR}/sparse_lt" "${sparse_lt}")
 """
             (source / "CMakeLists.txt").write_text(
-                script.replace("@ROOT@", ROOT.as_posix()).replace("@TARGETS@", targets)
+                script.replace("@ROOT@", ROOT.as_posix())
+                .replace("@TARGETS@", targets)
+                .replace("@SCALAR@", "ON" if scalar else "OFF")
+                .replace("@SPARSE_LT@", "ON" if sparse_lt else "OFF")
             )
             build = source / "build"
             result = subprocess.run(
@@ -94,7 +106,7 @@ file(WRITE "${CMAKE_BINARY_DIR}/sparse_lt" "${sparse_lt}")
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             return {
-                name: (build / name).read_text()
+                name: (build / name).read_text() if (build / name).exists() else ""
                 for name in (
                     "hipBLASLt.args",
                     "hipBLASLt.deps",
@@ -103,6 +115,10 @@ file(WRITE "${CMAKE_BINARY_DIR}/sparse_lt" "${sparse_lt}")
                     "rocBLAS.deps",
                     "roller",
                     "sparse_lt",
+                    "hipSPARSELt.args",
+                    "hipSPARSELt.targets",
+                    "sparse.artifact",
+                    "sparselt.artifact",
                 )
             }
 
@@ -124,6 +140,29 @@ file(WRITE "${CMAKE_BINARY_DIR}/sparse_lt" "${sparse_lt}")
     def test_supported_sparse_lt_is_still_declared(self):
         config = self._configure("gfx942")
         self.assertEqual(config["sparse_lt"], "TRUE")
+        self.assertEqual(
+            config["sparselt.artifact"], "artifact-sparselt.toml;hipSPARSELt"
+        )
+        self.assertNotIn("hipSPARSELt", config["sparse.artifact"])
+
+    def test_native_scalar_libraries_have_device_targets_and_distinct_packs(self):
+        config = self._configure("gfx1013", scalar=True)
+        self.assertIn("-DHIPBLASLT_ENABLE_GFX1013_SCALAR=ON", config["hipBLASLt.args"])
+        self.assertIn(
+            "-DHIPSPARSELT_GFX1013_SCALAR_ONLY=ON", config["hipSPARSELt.args"]
+        )
+        self.assertIn("-DGPU_TARGETS=gfx1013", config["hipSPARSELt.args"])
+        self.assertEqual(config["hipSPARSELt.targets"], "TRUE;")
+        self.assertEqual(
+            config["sparselt.artifact"], "artifact-sparselt.toml;hipSPARSELt"
+        )
+        self.assertNotIn("hipSPARSELt", config["sparse.artifact"])
+
+    def test_sparse_lt_can_be_disabled_without_disabling_sparse(self):
+        config = self._configure("gfx942", sparse_lt=False)
+        self.assertEqual(config["sparse_lt"], "")
+        self.assertEqual(config["sparselt.artifact"], "")
+        self.assertIn("rocSPARSE", config["sparse.artifact"])
 
     def test_sparse_artifacts_allow_excluded_lt_stage(self):
         with tempfile.TemporaryDirectory() as directory:

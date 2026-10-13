@@ -161,6 +161,7 @@ if(_hipblaslt_host_api_only)
   set(_rocblas_hipblaslt_deps)
   list(APPEND _hipblaslt_extra_cmake_args
     -DHIPBLASLT_HOST_API_ONLY=ON
+    "-DHIPBLASLT_ENABLE_GFX1013_SCALAR=${THEROCK_GFX1013_SCALAR_BACKENDS}"
     -DHIPBLASLT_ENABLE_HOST=ON
     -DTENSILELITE_ENABLE_HOST=ON
     -DHIPBLASLT_ENABLE_DEVICE=OFF
@@ -395,7 +396,23 @@ if(THEROCK_ENABLE_SPARSE)
   ##############################################################################
 
   therock_filter_amdgpu_targets(_hipsparselt_device_targets hipSPARSELt ${THEROCK_AMDGPU_TARGETS})
-  if(NOT WIN32 AND _hipsparselt_device_targets)
+  set(_hipsparselt_extra_cmake_args)
+  set(_hipsparselt_declaration_options)
+  if(THEROCK_GFX1013_SCALAR_BACKENDS)
+    set(_hipsparselt_device_targets gfx1013)
+    set(_hipsparselt_declaration_options DISABLE_AMDGPU_TARGETS)
+    list(APPEND _hipsparselt_extra_cmake_args
+      -DHIPSPARSELT_GFX1013_SCALAR_ONLY=ON
+      -DHIPSPARSELT_ENABLE_CLIENT=OFF
+      -DHIPSPARSELT_BUILD_TESTING=OFF
+      -DHIPSPARSELT_ENABLE_BENCHMARKS=OFF
+      -DHIPSPARSELT_ENABLE_MARKER=OFF
+      -DGPU_TARGETS=gfx1013
+      -DAMDGPU_TARGETS=gfx1013
+      -DCMAKE_HIP_ARCHITECTURES=gfx1013
+    )
+  endif()
+  if(NOT WIN32 AND _hipsparselt_device_targets AND THEROCK_ENABLE_SPARSELT)
     # hipSPARSELt expects amd_smi on Linux.
     set(hipSPARSELt_runtime_deps)
 
@@ -411,6 +428,7 @@ if(THEROCK_ENABLE_SPARSE)
       EXTERNAL_SOURCE_DIR "${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/projects/hipsparselt"
       BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/hipSPARSELt"
       BACKGROUND_BUILD
+      ${_hipsparselt_declaration_options}
       CMAKE_ARGS
         -DHIP_PLATFORM=amd
         -DHIPSPARSELT_BUILD_TESTING=${THEROCK_BUILD_TESTING}
@@ -418,6 +436,7 @@ if(THEROCK_ENABLE_SPARSE)
         -DHIPSPARSELT_ENABLE_SAMPLES=OFF
         -DHIPSPARSELT_ENABLE_FETCH=OFF
         -DHIPSPARSELT_ENABLE_THEROCK=ON
+        ${_hipsparselt_extra_cmake_args}
       COMPILER_TOOLCHAIN
         amd-hip
       BUILD_DEPS
@@ -439,11 +458,27 @@ if(THEROCK_ENABLE_SPARSE)
       SUBDIRS
         .
     )
+    if(THEROCK_GFX1013_SCALAR_BACKENDS)
+      # The generic C/C++ source glob does not include HIP translation units.
+      target_sources(hipSPARSELt PRIVATE
+        "${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip"
+      )
+    endif()
     therock_cmake_subproject_provide_package(hipSPARSELt hipsparselt lib/cmake/hipsparselt)
     therock_cmake_subproject_activate(hipSPARSELt)
     list(APPEND _sparse_subproject_names hipSPARSELt)
   endif()
 
+  if(TARGET hipSPARSELt)
+    # Distinct packs prevent flattening hipSPARSELt's native HIP code over the
+    # existing rocSPARSE pack of the same artifact/component/architecture name.
+    list(REMOVE_ITEM _sparse_subproject_names hipSPARSELt)
+    therock_provide_artifact(sparselt
+      DESCRIPTOR artifact-sparselt.toml
+      COMPONENTS dbg dev doc lib run test
+      SUBPROJECT_DEPS hipSPARSELt
+    )
+  endif()
   therock_provide_artifact(sparse
     DESCRIPTOR artifact-sparse.toml
     COMPONENTS

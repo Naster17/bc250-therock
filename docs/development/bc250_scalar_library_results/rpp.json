@@ -1,0 +1,16 @@
+{
+  "group": "rpp",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-rpp_extended_smoke",
+      "executed_tests": 1,
+      "seconds": 7.833987844991498
+    },
+    {
+      "name": "rpp_extended_smoke",
+      "executed_tests": 1,
+      "seconds": 1.769173566979589
+    }
+  ]
+}

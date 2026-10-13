@@ -11,6 +11,12 @@ See [bc250_port.md](bc250_port.md) for source revisions and recovery policy.
 The detailed completed/pending checklist is in
 [bc250_full_support_roadmap.md](bc250_full_support_roadmap.md).
 
+Additional development-candidate results are recorded in
+[bc250_scalar_library_expansion.md](bc250_scalar_library_expansion.md): native
+hipBLASLt GEMM, hipTensor contractions and hipSPARSELt scalar prune/compress/matmul,
+plus CK Tile and wider generic/Torch coverage. These additions have not replaced
+the frozen active release; the table below retains that release's support limits.
+
 ## Executed successfully
 
 Evidence below was collected on 2026-10-12 and 2026-10-13. Tests use native `gfx1013:xnack-`

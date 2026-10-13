@@ -1,0 +1,16 @@
+{
+  "group": "dnn",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "dnn-hip",
+      "executed_tests": 10,
+      "seconds": 6.980846887017833
+    },
+    {
+      "name": "dnn-miopen",
+      "executed_tests": 4,
+      "seconds": 4.374144789995626
+    }
+  ]
+}

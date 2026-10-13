@@ -3,6 +3,14 @@
 Resume manually around **2026-10-18**. Preserve all existing work. This is an
 operational handoff, not an instruction to schedule autonomous work.
 
+**Update:** the user explicitly resumed library development on 2026-10-13 before
+that planned return. The frozen active/previous releases below remain unchanged.
+The new developer candidate is documented in
+[bc250_scalar_library_expansion.md](bc250_scalar_library_expansion.md), including
+native scalar hipBLASLt/hipTensor/hipSPARSELt, generic operation coverage, source
+commits, kernel-pack separation and the Torch pooling fix. Read that milestone
+before assuming the developer sources still match the frozen baseline.
+
 ## Starting state
 
 - Local source: `/home/nik/Documents/Vibe/therock`.

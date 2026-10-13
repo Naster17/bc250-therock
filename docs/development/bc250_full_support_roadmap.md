@@ -229,22 +229,30 @@ rocm-libraries `3d8f334b9a72ad99a0ecd87552613970433e0500`, rocm-systems
 
 ## 8. hipBLASLt and hipSPARSELt
 
-These remain major implementation tasks. Host API support is not device matmul.
+Native scalar device paths are now qualified in the development candidate; the
+frozen daily-use release still has its original host-only/excluded profiles. See
+[the scalar expansion evidence](bc250_scalar_library_expansion.md) for exact limits.
 
 - [x] Provide an explicit host/API-only hipBLASLt profile.
 - [x] Test descriptor APIs, heuristic enumeration and honest unsupported execution.
 - [x] Exclude unsupported hipSPARSELt device builds from the current profile.
-- [ ] Design a native scalar/SIMD hipBLASLt backend with correct layouts and semantics.
-- [ ] Add ISA/capability/serialization/loading support required by that backend.
-- [ ] Supply real kernel metadata, valid heuristics and workspace handling.
-- [ ] Implement and verify supported bias, activation and other epilogues.
-- [ ] Qualify applicable precisions, batching, alignment and corner cases.
+- [x] Design a native scalar/SIMD hipBLASLt backend with correct layouts and semantics.
+- [x] Compile/load the scalar kernels for native gfx1013 without matrix instructions.
+- [x] Supply a real scalar algorithm, valid heuristics and zero-workspace handling.
+- [x] Implement and verify bias, ReLU and GELU epilogues.
+- [ ] Extend auxiliary/backward and other applicable epilogues.
+- [x] Qualify FP32/FP16/BF16 input combinations, row/column layouts, transposes,
+  padded/broadcast batches and zero-scalar corner cases: 403 GPU cases, including bias/ReLU/GELU epilogues.
+- [ ] Extend supported precision/layout/epilogue combinations beyond that scalar subset.
 - [ ] Integrate and qualify the hipBLASLt hipDNN provider only after device GEMM works.
-- [ ] Evaluate hipSPARSELt generic pruning/compression independently of matmul.
-- [ ] Implement faithful sparse-matmul metadata decoding and a scalar backend.
-- [ ] Test sparse matmul against dense CPU references.
+- [x] Qualify hipSPARSELt strip pruning/checking/compression independently of matmul.
+- [x] Implement a documented scalar compression format with faithful metadata decoding.
+- [x] Test sparse matmul against dense CPU references: 162 strip/TILE dtype/layout/transpose/batch
+  combinations, decoded metadata, guards and zero-scalar/Search regressions.
+- [x] Add genuine maximum-L1 FP16/BF16 TILE pruning with independent mask references.
+- [ ] Extend remaining sparse API/epilogue/type combinations.
 - [ ] Tune both libraries after correctness is established.
-- [ ] Keep native matrix-instruction capability reports false on this hardware.
+- [x] Keep native matrix-instruction capability reports false on this hardware.
 
 ## 9. rocSOLVER and hipSOLVER
 
@@ -323,8 +331,11 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 - [x] Enable scalar DL paths for gfx1013 with XDL/WMMA disabled.
 - [x] Pass upstream FP32, FP16 and signed INT8 scalar GEMM examples against CPU results.
 - [x] Use existing generic CK support for hipTensor operations.
-- [ ] Qualify standalone CK Tile reduction/permutation/transpose/elementwise examples.
-- [ ] Qualify generic normalization, pooling, top-k and other applicable operations.
+- [x] Qualify selected CK Tile reduction/permutation/transpose/elementwise examples:
+  12 CPU-reference executions, including odd/padded strides and tails.
+- [x] Qualify FP16 CK Tile 3D max pooling and output indices against CPU results.
+- [x] Qualify six FP16/BF16/FP32 RMSNorm runs with odd/padded widths.
+- [ ] Qualify top-k and additional normalization/pooling/other operations.
 - [ ] Extend scalar DL GEMM coverage to layouts, tails, batching and supported types.
 - [ ] Audit architecture checks and wave32 assumptions throughout generic kernels.
 - [ ] Integrate useful generic CK paths into consumers after independent validation.
@@ -355,10 +366,13 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 - [x] Pass reduction, permutation, binary and trinary operation gates.
 - [x] Pass extended FP16/BF16/FP32/FP64 reductions with sum/product/min/max and
   nonzero beta: 154 total executed cases across the current gates.
-- [ ] Extend ranks, modes, layouts, strides, operators and dtype combinations.
+- [x] Add 23 executed rank-three/four generic reduction/permutation/binary/trinary cases.
+- [ ] Extend remaining ranks, modes, layouts, strides, operators and dtype combinations.
 - [ ] Qualify memory/workspace handling and unsupported-operation reporting.
-- [ ] Implement a scalar contraction backend for applicable tensor operations.
-- [ ] Verify contraction results, plans, algorithm selection and workspace semantics.
+- [x] Implement a scalar contraction backend for the supported real tensor subset.
+- [x] Verify scalar contraction values, plan ownership, fixed algorithm and zero
+  workspace: 76 numerical/descriptor cases, including FP16/BF16→FP32 and FP32→FP64.
+- [ ] Extend contraction types, unary operations, mode/rank coverage and plan caching.
 - [ ] Tune generic operations and any new contraction implementation.
 
 ## 17. hipDNN and providers
@@ -372,6 +386,8 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
   and forward/data-gradient/weight-gradient directions.
 - [x] Finish requalification after the compiled allocator default changes.
 - [ ] Expand forward/backward normalization, training and layout coverage.
+- [x] Add 14 CPU-reference LayerNorm/RMSNorm backward and MIOpen batchnorm training/backward
+  graph cases, including NCHW/NHWC and FP32/FP16/mixed normalization.
 - [ ] Expand supported provider graphs and bundle-based integration coverage.
 - [ ] Verify unsupported graphs, plans, caching, dynamic loading and serialization.
 - [ ] Qualify provider interaction, discovery and installed-prefix relocation.
@@ -430,6 +446,9 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 - [x] Enable RPP audio and fix the discovered HIP spectrogram row-stride error.
 - [x] Verify host and HIP pre-emphasis for three border modes.
 - [x] Verify host and HIP spectrogram in NTF/NFT against independent CPU DFT values.
+- [x] Fix and qualify 1D/2D decibels, non-unit/automatic references, zero inputs and padding.
+- [x] Add 16 independent CPU-reference blend/contrast/exposure/offset-crop cases
+  across NHWC/NCHW source/destination layouts, padded rows and allocation guards.
 - [ ] Expand image augmentations, ROI handling, types and layouts.
 - [ ] Qualify normalization/statistical and applicable volumetric operations.
 - [ ] Expand audio transforms, window/FFT sizes, padding and batch lengths.

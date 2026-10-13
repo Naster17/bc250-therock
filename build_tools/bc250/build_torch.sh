@@ -8,7 +8,7 @@ source_dir="${1:?usage: build_torch.sh <source-directory> <working-directory> <r
 work_dir="${2:?missing working directory}"
 rocm_prefix="${3:?missing ROCm prefix}"
 therock_source="${4:?missing TheRock source directory}"
-expected_revision=c779020750d7dc99a39ea8c104ef8df1fc9d0755
+expected_revision="${BC250_TORCH_SOURCE_REVISION:-b36877506d38eb74abcd01d667e9b05d6b60430a}"
 test "$(cat "$source_dir/GIT_REVISION")" = "$expected_revision"
 test -x "$rocm_prefix/bin/amdclang++"
 test -f "$rocm_prefix/lib/libMIOpen.so"

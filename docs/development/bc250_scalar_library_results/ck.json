@@ -1,0 +1,101 @@
+{
+  "group": "ck",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "ck-rmsnorm-fp16-17",
+      "executed_tests": 1,
+      "seconds": 0.615253235999262
+    },
+    {
+      "name": "ck-rmsnorm-fp16-129",
+      "executed_tests": 1,
+      "seconds": 0.6149752229976002
+    },
+    {
+      "name": "ck-rmsnorm-bf16-17",
+      "executed_tests": 1,
+      "seconds": 0.6149937210138887
+    },
+    {
+      "name": "ck-rmsnorm-bf16-129",
+      "executed_tests": 1,
+      "seconds": 0.6151285149971955
+    },
+    {
+      "name": "ck-rmsnorm-fp32-17",
+      "executed_tests": 1,
+      "seconds": 0.6151578850112855
+    },
+    {
+      "name": "ck-rmsnorm-fp32-129",
+      "executed_tests": 1,
+      "seconds": 0.6152217119815759
+    },
+    {
+      "name": "ck-reduce-fp16",
+      "executed_tests": 1,
+      "seconds": 0.6656620450085029
+    },
+    {
+      "name": "ck-reduce-bf16",
+      "executed_tests": 1,
+      "seconds": 0.6654741399979685
+    },
+    {
+      "name": "ck-permute-fp16-3,5,7",
+      "executed_tests": 1,
+      "seconds": 0.6650973720243201
+    },
+    {
+      "name": "ck-permute-fp16-2,3,5,7",
+      "executed_tests": 1,
+      "seconds": 0.6654176359879784
+    },
+    {
+      "name": "ck-transpose-fp16",
+      "executed_tests": 1,
+      "seconds": 0.6654119250015356
+    },
+    {
+      "name": "ck-permute-fp32-3,5,7",
+      "executed_tests": 1,
+      "seconds": 0.6652709199988749
+    },
+    {
+      "name": "ck-permute-fp32-2,3,5,7",
+      "executed_tests": 1,
+      "seconds": 0.6654036899853963
+    },
+    {
+      "name": "ck-transpose-fp32",
+      "executed_tests": 1,
+      "seconds": 0.6652950959978625
+    },
+    {
+      "name": "ck-unary-square",
+      "executed_tests": 1,
+      "seconds": 0.665375678014243
+    },
+    {
+      "name": "ck-unary-tanh",
+      "executed_tests": 1,
+      "seconds": 0.665343569999095
+    },
+    {
+      "name": "ck-unary-fastgelu",
+      "executed_tests": 1,
+      "seconds": 0.6653390979918186
+    },
+    {
+      "name": "ck-unary-convert",
+      "executed_tests": 1,
+      "seconds": 0.6151830629969481
+    },
+    {
+      "name": "ck-pool3d",
+      "executed_tests": 1,
+      "seconds": 0.6654904809838627
+    }
+  ]
+}

@@ -660,8 +660,17 @@ source_paths = ["rocprim", "hipcub", "rocthrust", "primbench"]
 artifact_group = "math-libs"
 type = "target-specific"
 artifact_deps = ["blas", "prim"]
+source_paths = ["rocsparse", "hipsparse"]
+
+[artifacts.sparselt]
+# Separate native scalar pack avoids collisions with rocSPARSE in a flattened prefix.
+artifact_group = "math-libs"
+type = "target-specific"
+artifact_deps = ["blas", "sparse"]
 split_databases = ["hipsparselt"]
-source_paths = ["rocsparse", "hipsparse", "hipsparselt"]
+source_paths = ["hipsparselt"]
+feature_name = "SPARSELT"
+disable_platforms = ["windows"]
 
 [artifacts.solver]
 artifact_group = "math-libs"

@@ -95,6 +95,94 @@ static void run(RppBackend backend) {
     }
     printf("RPP_AUDIO_PREEMPHASIS_PASS gpu=%d border=%d\n", gpu, int(border));
   }
+  // Magnitude padding is deliberately larger than every logical element.
+  RpptImagePatch *dimensions;
+  hip_check(hipHostMalloc(&dimensions, batches * sizeof(RpptImagePatch)));
+  for (bool matrix : {false, true}) {
+    auto descriptor = source;
+    descriptor.numDims = matrix ? 3 : 2;
+    descriptor.h = matrix ? 3 : samples;
+    descriptor.w = matrix ? 7 : 1;
+    descriptor.strides.hStride = matrix ? 16 : 1;
+    std::vector<float> magnitudes(input.size(), 100.0f);
+    for (unsigned n = 0; n < batches; ++n) {
+      dimensions[n].height = matrix ? 2 + n % 2 : 37 + n * 12;
+      dimensions[n].width = matrix ? 5 + n : 1;
+      for (unsigned y = 0; y < dimensions[n].height; ++y)
+        for (unsigned x = 0; x < dimensions[n].width; ++x) {
+          size_t i = n * samples + y * descriptor.strides.hStride + x;
+          magnitudes[i] =
+              n == 0 ? 0.0f
+                     : std::pow(10.0f, -float((y * 7 + x * 3 + n) % 19) / 2);
+        }
+    }
+    hip_check(hipMemcpy(device_input, magnitudes.data(),
+                        input.size() * sizeof(float), hipMemcpyHostToDevice));
+    for (float multiplier : {10.0f, 20.0f})
+      for (float reference : {0.0f, 2.0f}) {
+        std::fill(output.begin(), output.end(), sentinel);
+        hip_check(hipMemcpy(device_output, output.data(),
+                            output.size() * sizeof(float),
+                            hipMemcpyHostToDevice));
+        rpp_check(rppt_to_decibels(
+            gpu ? device_input : magnitudes.data(), &descriptor,
+            gpu ? device_output : output.data(), &descriptor, dimensions,
+            -80.0f, multiplier, reference, handle, backend));
+        if (gpu)
+          hip_check(hipMemcpy(output.data(), device_output,
+                              output.size() * sizeof(float),
+                              hipMemcpyDeviceToHost));
+        for (unsigned n = 0; n < batches; ++n) {
+          double ref = reference;
+          if (ref == 0) {
+            for (unsigned y = 0; y < dimensions[n].height; ++y)
+              for (unsigned x = 0; x < dimensions[n].width; ++x)
+                ref = std::max(
+                    ref,
+                    double(magnitudes[n * samples +
+                                      y * descriptor.strides.hStride + x]));
+            if (ref == 0)
+              ref = 1; // Public CPU backend's all-zero reference policy.
+          }
+          std::vector<bool> written(samples, false);
+          for (unsigned y = 0; y < dimensions[n].height; ++y)
+            for (unsigned x = 0; x < dimensions[n].width; ++x) {
+              auto offset = y * descriptor.strides.hStride + x;
+              auto i = n * samples + offset;
+              written[offset] = true;
+              double expected =
+                  multiplier *
+                  std::log10(std::max(double(magnitudes[i]) / ref,
+                                      std::pow(10.0, -80.0 / multiplier)));
+              if (!std::isfinite(output[i]) ||
+                  std::abs(output[i] - expected) > 3e-4) {
+                fprintf(stderr,
+                        "decibels gpu=%d matrix=%d n=%u i=%zu got=%g "
+                        "expected=%g ref=%g\n",
+                        gpu, matrix, n, i, output[i], expected, ref);
+                throw std::runtime_error(
+                    "decibels differs from independent CPU reference");
+              }
+            }
+          if (gpu && !matrix)
+            for (unsigned i = dimensions[n].height;
+                 i < (dimensions[n].height + 7) / 8 * 8; ++i)
+              written[i] = true;
+          for (unsigned i = 0; i < samples; ++i)
+            if (!written[i] && output[n * samples + i] != sentinel)
+              throw std::runtime_error("decibels overwrote row/batch padding");
+        }
+        for (size_t i = batches * samples; i < output.size(); ++i)
+          if (output[i] != sentinel)
+            throw std::runtime_error("decibels overwrote allocation guard");
+        printf("RPP_AUDIO_DECIBELS_PASS gpu=%d matrix=%d multiplier=%g "
+               "reference=%g\n",
+               gpu, matrix, multiplier, reference);
+      }
+  }
+  hip_check(hipHostFree(dimensions));
+  hip_check(hipMemcpy(device_input, input.data(), input.size() * sizeof(float),
+                      hipMemcpyHostToDevice));
   for (unsigned n = 0; n < batches; ++n)
     lengths[n] = samples;
   for (auto layout : {RpptLayout::NTF, RpptLayout::NFT}) {

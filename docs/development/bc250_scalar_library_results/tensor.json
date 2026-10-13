@@ -1,0 +1,46 @@
+{
+  "group": "tensor",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "tensor-rank3-reduction",
+      "executed_tests": 6,
+      "seconds": 1.6196212469949387
+    },
+    {
+      "name": "tensor-rank3-elementwise_permute",
+      "executed_tests": 2,
+      "seconds": 1.3180516950087622
+    },
+    {
+      "name": "tensor-rank3-elementwise_binary_op",
+      "executed_tests": 3,
+      "seconds": 1.268006976984907
+    },
+    {
+      "name": "tensor-rank3-elementwise_trinary_op",
+      "executed_tests": 2,
+      "seconds": 1.2678871729876846
+    },
+    {
+      "name": "tensor-rank4-reduction",
+      "executed_tests": 3,
+      "seconds": 1.3680099600169342
+    },
+    {
+      "name": "tensor-rank4-elementwise_permute",
+      "executed_tests": 2,
+      "seconds": 1.0672204060247168
+    },
+    {
+      "name": "tensor-rank4-elementwise_binary_op",
+      "executed_tests": 3,
+      "seconds": 1.4186792290129233
+    },
+    {
+      "name": "tensor-rank4-elementwise_trinary_op",
+      "executed_tests": 2,
+      "seconds": 1.267891695984872
+    }
+  ]
+}
