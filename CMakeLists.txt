@@ -212,6 +212,10 @@ option(THEROCK_QUIET_INSTALL "Enable quiet install logging (install logs only go
 option(THEROCK_USE_SAFE_DEPENDENCY_PROVIDER "Enable the safe dependency provider, performing strict package checks" ON)
 option(THEROCK_RPP_ENABLE_AUDIO "Build RPP audio augmentations with bundled FFTS" OFF)
 option(THEROCK_HIPTENSOR_GENERIC_ONLY "Build hipTensor without matrix contraction device kernels" OFF)
+option(THEROCK_GFX1013_SCALAR_BACKENDS "Enable experimental native gfx1013 hipBLASLt and hipSPARSELt scalar backends" OFF)
+if(THEROCK_GFX1013_SCALAR_BACKENDS AND NOT THEROCK_AMDGPU_FAMILIES STREQUAL "gfx1013")
+  message(FATAL_ERROR "THEROCK_GFX1013_SCALAR_BACKENDS requires the exclusive gfx1013 family")
+endif()
 
 ################################################################################
 # Feature selection

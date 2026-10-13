@@ -1,0 +1,694 @@
+From 7bc253117ee6864b77bb9e02644d96c40bc7aa6c Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 00:26:36 +0200
+Subject: [PATCH] feat(gfx1013): expand scalar epilogues, types, pruning, and
+ audio
+
+---
+ .../10_rmsnorm2d/example_rmsnorm2d_fwd.cpp    |   4 +
+ .../hipblaslt/docs/gfx1013-scalar-backend.rst |   4 +-
+ .../library/src/amd_detail/gfx1013_scalar.cpp | 100 +++++++++++----
+ .../docs/gfx1013-scalar-backend.rst           |   7 +-
+ .../library/src/hcc_detail/gfx1013_scalar.hip | 120 +++++++++++++++++-
+ .../src/contraction/contraction_scalar.cpp    | 113 ++++++++++-------
+ .../modules/tensor/hip/kernel/to_decibels.cpp |  72 ++++-------
+ 7 files changed, 300 insertions(+), 120 deletions(-)
+
+diff --git a/projects/composablekernel/example/ck_tile/10_rmsnorm2d/example_rmsnorm2d_fwd.cpp b/projects/composablekernel/example/ck_tile/10_rmsnorm2d/example_rmsnorm2d_fwd.cpp
+index 52f27fbd228..53d38aa56a2 100644
+--- a/projects/composablekernel/example/ck_tile/10_rmsnorm2d/example_rmsnorm2d_fwd.cpp
++++ b/projects/composablekernel/example/ck_tile/10_rmsnorm2d/example_rmsnorm2d_fwd.cpp
+@@ -214,5 +214,9 @@ int main(int argc, char* argv[])
+         }
+     }
+ 
++    if(data_type == "bf16" && use_model_sensitive_rmsnorm == 0)
++        return run<ck_tile::bf16_t, 0>(arg_parser) ? 0 : -2;
++    if(data_type == "fp32" && use_model_sensitive_rmsnorm == 0)
++        return run<float, 0>(arg_parser) ? 0 : -2;
+     return -3;
+ }
+diff --git a/projects/hipblaslt/docs/gfx1013-scalar-backend.rst b/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
+index 7dc4c91e04a..6b750106a42 100644
+--- a/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
++++ b/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
+@@ -25,6 +25,8 @@ Supported operations
+   not read A or B. K=0 scales C without reading A or B.
+ * Explicit heuristic algorithms or a null algorithm for implicit selection.
+   The scalar kernel needs no workspace and executes on the supplied HIP stream.
++* Bias, ReLU, GELU and their bias combinations. Bias follows logical output rows;
++  output-type or FP32 bias supports broadcast or padded batch strides.
+ 
+ Limitations
+ -----------
+@@ -33,7 +35,7 @@ This is a correctness-oriented scalar FMA implementation using 16x16 shared
+ memory tiles. It does not claim performance parity with optimized BLAS kernels.
+ Matrix instructions are not emitted because gfx1013 has neither MFMA nor WMMA.
+ 
+-Epilogues, bias, scaling pointers, auxiliary outputs, FP8/INT8/FP64, pointer-array
++Auxiliary/backward epilogues, scaling pointers, auxiliary outputs, FP8/INT8/FP64, pointer-array
+ batches, packed layouts, C leading-dimension-zero broadcasting, grouped GEMM
+ and C++ extension algorithm enumeration are unsupported. Non-default SM-count,
+ Stream-K and search/configuration controls are rejected rather than ignored.
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+index 95db9ccd771..5dc330f337c 100644
+--- a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+@@ -18,6 +18,18 @@ namespace gfx1013_scalar
+         constexpr uint8_t  algorithm_id[16]
+             = {'g', 'f', 'x', '1', '0', '1', '3', 's', 'c', 'a', 'l', 'a', 'r', 1, 0, 0};
+ 
++        bool uses_bias(rocblaslt_epilogue epilogue)
++        {
++            return epilogue == ROCBLASLT_EPILOGUE_BIAS || epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS
++                   || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS;
++        }
++
++        bool supported_epilogue(rocblaslt_epilogue epilogue)
++        {
++            return epilogue == ROCBLASLT_EPILOGUE_DEFAULT || uses_bias(epilogue)
++                   || epilogue == ROCBLASLT_EPILOGUE_RELU || epilogue == ROCBLASLT_EPILOGUE_GELU;
++        }
++
+         struct Layout
+         {
+             uint64_t            rows, cols, ld, stride, offset;
+@@ -76,14 +88,14 @@ namespace gfx1013_scalar
+             if(device != h->device || std::strncmp(h->properties.gcnArchName, "gfx1013", 7)
+                || (h->properties.gcnArchName[7] && h->properties.gcnArchName[7] != ':'))
+                 return HIPBLAS_STATUS_ARCH_MISMATCH;
+-            if(op->epilogue != ROCBLASLT_EPILOGUE_DEFAULT || op->bias || op->scaleA || op->scaleB
+-               || op->scaleC || op->scaleD || op->scaleE || op->amaxD || op->e
+-               || op->scaleAType != RocblasltContractionProblem::ScalingFormat::None
++            if(!supported_epilogue(op->epilogue) || (!uses_bias(op->epilogue) && op->bias)
++               || op->scaleA || op->scaleB || op->scaleC || op->scaleD || op->scaleE || op->amaxD
++               || op->e || op->scaleAType != RocblasltContractionProblem::ScalingFormat::None
+                || op->scaleBType != RocblasltContractionProblem::ScalingFormat::None
+                || op->compute_input_typeA != HIPBLASLT_DATATYPE_INVALID
+                || op->compute_input_typeB != HIPBLASLT_DATATYPE_INVALID
+                || op->scale_type != HIP_R_32F || op->sm_count_target || h->sm_count_target
+-               || op->streamk_tile_scheduling_ext || op->bias_stride
++               || op->streamk_tile_scheduling_ext
+                || h->check_numerics != hipblaslt_check_numerics_mode_no_check
+                || (op->compute_type_original != rocblaslt_compute_f32
+                    && op->compute_type_original != rocblaslt_compute_f32_pedantic)
+@@ -101,6 +113,18 @@ namespace gfx1013_scalar
+                || (a->type != HIP_R_32F && a->type != HIP_R_16F && a->type != HIP_R_16BF)
+                || (d->type != a->type && d->type != HIP_R_32F))
+                 return HIPBLAS_STATUS_NOT_SUPPORTED;
++            if(uses_bias(op->epilogue))
++            {
++                if(!op->bias || op->bias_stride < 0
++                   || (op->bias_stride && uint64_t(op->bias_stride) < d->m))
++                    return HIPBLAS_STATUS_INVALID_VALUE;
++                const auto bias_type
++                    = op->bias_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->bias_type;
++                if(bias_type != d->type && bias_type != HIP_R_32F)
++                    return HIPBLAS_STATUS_NOT_SUPPORTED;
++            }
++            else if(op->bias_stride)
++                return HIPBLAS_STATUS_NOT_SUPPORTED;
+             for(auto x : {a, b, c, d})
+             {
+                 if((x->order != HIPBLASLT_ORDER_COL && x->order != HIPBLASLT_ORDER_ROW)
+@@ -124,21 +148,25 @@ namespace gfx1013_scalar
+         }
+ 
+         template <typename Input, typename Output>
+-        __global__ void gemm(Layout        a,
+-                             Layout        b,
+-                             Layout        c,
+-                             Layout        d,
+-                             const Input*  A,
+-                             const Input*  B,
+-                             const Output* C,
+-                             Output*       D,
+-                             uint64_t      k,
+-                             bool          trans_a,
+-                             bool          trans_b,
+-                             float         alpha_host,
+-                             float         beta_host,
+-                             const float*  alpha_device,
+-                             const float*  beta_device)
++        __global__ void gemm(Layout             a,
++                             Layout             b,
++                             Layout             c,
++                             Layout             d,
++                             const Input*       A,
++                             const Input*       B,
++                             const Output*      C,
++                             Output*            D,
++                             uint64_t           k,
++                             bool               trans_a,
++                             bool               trans_b,
++                             float              alpha_host,
++                             float              beta_host,
++                             const float*       alpha_device,
++                             const float*       beta_device,
++                             const void*        bias,
++                             hipDataType        bias_type,
++                             uint64_t           bias_stride,
++                             rocblaslt_epilogue epilogue)
+         {
+             __shared__ float left[tile][tile];
+             __shared__ float right[tile][tile];
+@@ -173,8 +201,30 @@ namespace gfx1013_scalar
+             if(row < d.rows && col < d.cols)
+             {
+                 // BLAS beta=0 must not read C: uninitialised/NaN C is valid in this case.
+-                const float value_c         = beta == 0 ? 0 : float(C[c.index(row, col, batch)]);
+-                D[d.index(row, col, batch)] = Output(__builtin_fmaf(alpha, acc, beta * value_c));
++                const float value_c = beta == 0 ? 0 : float(C[c.index(row, col, batch)]);
++                float       value   = __builtin_fmaf(alpha, acc, beta * value_c);
++                if(bias)
++                {
++                    // Bias is indexed by logical D row, independent of storage order.
++                    const uint64_t index = batch * bias_stride + row;
++                    if(bias_type == HIP_R_32F)
++                        value += static_cast<const float*>(bias)[index];
++                    else if(bias_type == HIP_R_16F)
++                        value += float(static_cast<const __half*>(bias)[index]);
++                    else
++                        value += float(static_cast<const hip_bfloat16*>(bias)[index]);
++                }
++                if(epilogue == ROCBLASLT_EPILOGUE_RELU || epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS)
++                    value = fmaxf(value, 0.0f);
++                else if(epilogue == ROCBLASLT_EPILOGUE_GELU
++                        || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS)
++                {
++                    // Match the tanh approximation used by upstream activation kernels.
++                    const float inner
++                        = 0.7978845608028654f * value * (1.0f + 0.044715f * value * value);
++                    value = 0.5f * value * (1.0f + tanhf(inner));
++                }
++                D[d.index(row, col, batch)] = Output(value);
+             }
+         }
+ 
+@@ -202,7 +252,7 @@ namespace gfx1013_scalar
+             const uint64_t k = op->op_A == HIPBLAS_OP_N ? a->n : a->m;
+             if(!D || ((device || bh != 0) && !C) || (k && (device || ah != 0) && (!A || !B)))
+                 return HIPBLAS_STATUS_INVALID_VALUE;
+-            if(D == A || D == B)
++            if(D == A || D == B || (op->bias && D == op->bias))
+                 return HIPBLAS_STATUS_INVALID_VALUE;
+             if(C == D
+                && (c->ld != d->ld || c->batch_stride != d->batch_stride
+@@ -227,7 +277,11 @@ namespace gfx1013_scalar
+                 ah,
+                 bh,
+                 device ? static_cast<const float*>(alpha) : nullptr,
+-                device ? static_cast<const float*>(beta) : nullptr);
++                device ? static_cast<const float*>(beta) : nullptr,
++                uses_bias(op->epilogue) ? op->bias : nullptr,
++                op->bias_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->bias_type,
++                uint64_t(op->bias_stride),
++                op->epilogue);
+             return hipGetLastError() == hipSuccess ? HIPBLAS_STATUS_SUCCESS
+                                                    : HIPBLAS_STATUS_EXECUTION_FAILED;
+         }
+diff --git a/projects/hipsparselt/docs/gfx1013-scalar-backend.rst b/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
+index 5f98d01203c..b0b9e7dae28 100644
+--- a/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
++++ b/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
+@@ -13,6 +13,7 @@ Implemented operations
+ * FP32 compute with matching FP32, FP16, or BF16 matrix input/output types.
+ * One structured operand, either A or B; row/column storage and real transpose.
+ * Strip magnitude pruning and prune checking, including in-place strip pruning.
++* FP16/BF16 maximum-L1 4x4 TILE pruning with two selected entries per row and column.
+ * Compression and compressed scalar GEMM, through both descriptor and plan APIs.
+ * Positive, equal batch counts with explicit nonoverlapping padded batch strides.
+ * Host ``float`` alpha/beta, arbitrary valid leading dimensions, separate C/D
+@@ -22,7 +23,7 @@ Implemented operations
+   stream completes, without changing its configuration. Only one search
+   iteration is accepted. Matmul remains asynchronous.
+ 
+-The fallback rejects tile pruning, integer/FP8/TF32 compute modes, mixed matrix
++The fallback rejects FP32 tile pruning, integer/FP8/TF32 compute modes, mixed matrix
+ storage types, bias/activation/vector scaling, split-K, multiple streams, batch
+ broadcasting, multiple search iterations, and sparse/sparse multiplication. It does not silently ignore
+ unsupported attributes. Descriptors use bounded positive dimensions to keep
+@@ -50,7 +51,7 @@ Qualification
+ API against independent CPU magnitude pruning and double-precision dense GEMM,
+ independently decodes compressed values/metadata, destroys the original sparse
+ storage before GEMM, checks padding/buffer guards, and detects invalid sparsity.
+-Its 96 cases combine three types, A/B sparsity, two layouts, four transpose
+-pairs, and one/two batches. GPU execution must be recorded separately from
++Its 162 cases cover strip/TILE pruning, independent mask enumeration, partial
++tiles, types, A/B sparsity, layouts, transposes and batches. GPU execution must be recorded separately from
+ host/device compilation; passing syntax checks alone does not qualify runtime
+ support.
+diff --git a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+index 8af253a73f1..c1f65335aad 100644
+--- a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
++++ b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+@@ -1,7 +1,7 @@
+ // Copyright Advanced Micro Devices, Inc., or its affiliates.
+ // SPDX-License-Identifier: MIT
+ // Native gfx1013 fallback: ordinary scalar HIP instructions, host FP32 scalars,
+-// strip pruning, and no fusion. The compressed buffer is backend-specific:
++// strip/4x4 tile pruning, and no fusion. The compressed buffer is backend-specific:
+ // tightly packed retained values for each logical contraction row followed by
+ // one byte per group containing two-bit indices. FP16/BF16 use 2:4, FP32 1:2.
+ // Its orientation follows sparse A's rows or sparse B's columns after op().
+@@ -246,6 +246,122 @@ namespace
+         }
+     }
+ 
++    template <class T>
++    __global__ void tile_kernel(
++        Matrix matrix, bool sparse_a, hipsparseOperation_t op, const T* input, T* output)
++    {
++        int64_t tile    = int64_t(blockIdx.x) * blockDim.x + threadIdx.x;
++        int64_t k       = contraction(matrix, sparse_a, op);
++        int64_t length  = sparse_a ? rows(matrix, op) : cols(matrix, op);
++        int64_t columns = k / 4, per_batch = ((length + 3) / 4) * columns;
++        if(tile >= per_batch * matrix.batches)
++            return;
++        int     batch     = tile / per_batch;
++        int64_t first_row = ((tile % per_batch) / columns) * 4;
++        int64_t first_col = (tile % columns) * 4;
++        T       values[16];
++        double  magnitude[16];
++        for(int r = 0; r < 4; ++r)
++            for(int c = 0; c < 4; ++c)
++            {
++                values[r * 4 + c]    = first_row + r < length
++                                           ? input[offset(matrix,
++                                                          op,
++                                                          sparse_a ? first_row + r : first_col + c,
++                                                          sparse_a ? first_col + c : first_row + r,
++                                                          batch)]
++                                           : T(0.0f);
++                magnitude[r * 4 + c] = fabs(double(float(values[r * 4 + c])));
++            }
++        // Enumerate the six 2-of-4 masks for each of the first three rows.
++        // Column counts uniquely determine the fourth row. Precisely 90 of
++        // these 216 candidates have two selections in every row AND column.
++        // FP64 scores avoid overflowing finite BF16 magnitudes in FP32.
++        constexpr unsigned masks[6]   = {3, 5, 6, 9, 10, 12};
++        unsigned           best_mask  = 0xCC33;
++        double             best_score = -1;
++        for(unsigned a : masks)
++            for(unsigned b : masks)
++                for(unsigned c : masks)
++                {
++                    unsigned d          = 0;
++                    bool     admissible = true;
++                    for(int column = 0; column < 4; ++column)
++                    {
++                        int count = ((a >> column) & 1) + ((b >> column) & 1) + ((c >> column) & 1);
++                        admissible &= count == 1 || count == 2;
++                        if(count == 1)
++                            d |= 1u << column;
++                    }
++                    if(!admissible || __builtin_popcount(d) != 2)
++                        continue;
++                    unsigned mask  = a | (b << 4) | (c << 8) | (d << 12);
++                    double   score = 0;
++                    for(int i = 0; i < 16; ++i)
++                        if((mask >> i) & 1)
++                            score += magnitude[i];
++                    if(score > best_score || (score == best_score && mask < best_mask))
++                    {
++                        best_score = score;
++                        best_mask  = mask;
++                    }
++                }
++        for(int r = 0; r < 4 && first_row + r < length; ++r)
++            for(int c = 0; c < 4; ++c)
++                output[offset(matrix,
++                              op,
++                              sparse_a ? first_row + r : first_col + c,
++                              sparse_a ? first_col + c : first_row + r,
++                              batch)]
++                    = ((best_mask >> (r * 4 + c)) & 1) ? values[r * 4 + c] : T(0.0f);
++    }
++
++    hipsparseStatus_t launch_tile(const hipsparseLtHandle_t* handle,
++                                  const Matrix&              matrix,
++                                  int                        sparse_a,
++                                  hipsparseOperation_t       op,
++                                  const void*                input,
++                                  void*                      output,
++                                  hipStream_t                stream)
++    {
++        if(!valid(handle) || !matrix.sparse || !operation(op) || !input || !output
++           || (sparse_a != 0 && sparse_a != 1))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        // TILE's 2-per-row/column masks are incompatible with FP32's 1:2
++        // contract: two retained values can land in the same adjacent pair.
++        if(matrix.type != HIP_R_16F && matrix.type != HIP_R_16BF)
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++        int64_t k = contraction(matrix, sparse_a, op);
++        if(k % 4)
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++        int64_t length = sparse_a ? rows(matrix, op) : cols(matrix, op);
++        int64_t count  = ((length + 3) / 4) * (k / 4) * matrix.batches;
++        dim3    grid((count + 63) / 64), block(64);
++        if(matrix.type == HIP_R_16F)
++            hipLaunchKernelGGL(tile_kernel<__half>,
++                               grid,
++                               block,
++                               0,
++                               stream,
++                               matrix,
++                               bool(sparse_a),
++                               op,
++                               (const __half*)input,
++                               (__half*)output);
++        else
++            hipLaunchKernelGGL(tile_kernel<hip_bfloat16>,
++                               grid,
++                               block,
++                               0,
++                               stream,
++                               matrix,
++                               bool(sparse_a),
++                               op,
++                               (const hip_bfloat16*)input,
++                               (hip_bfloat16*)output);
++        return hip_status(hipGetLastError());
++    }
++
+     template <class T>
+     __global__ void multiply_kernel(
+         Multiply mm, float alpha, float beta, const T* a, const T* b, const T* c, T* d)
+@@ -792,6 +908,8 @@ hipsparseStatus_t hipsparseLtSpMMAPrune2(const hipsparseLtHandle_t*        h,
+     Matrix m{};
+     if(!read(d, m, matrix_tag))
+         return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(alg == HIPSPARSELT_PRUNE_SPMMA_TILE)
++        return launch_tile(h, m, sa, op, in, out, stream);
+     if(alg != HIPSPARSELT_PRUNE_SPMMA_STRIP)
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     return launch_strip<false, false>(h, m, sa, op, in, out, nullptr, stream);
+diff --git a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+index 8db78165182..6858f82ca69 100644
+--- a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
++++ b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+@@ -73,41 +73,48 @@ namespace hiptensor
+                || (desc->mDescC && !supportedOp(desc->mOpC)))
+                 return HIPTENSOR_STATUS_NOT_SUPPORTED;
+ 
+-            auto type = desc->mDescD->mType;
+-            bool fp32
+-                = (type == HIPTENSOR_R_16F || type == HIPTENSOR_R_16BF || type == HIPTENSOR_R_32F)
+-                  && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_32F;
+-            bool fp64 = type == HIPTENSOR_R_64F && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_64F;
+-            if((!fp32 && !fp64) || desc->mDescA->mType != type || desc->mDescB->mType != type
+-               || (desc->mDescC && desc->mDescC->mType != type))
++            auto inputType  = desc->mDescA->mType;
++            auto outputType = desc->mDescD->mType;
++            // Keep the public C/D dtype contract while permitting useful widened
++            // outputs. Inputs are converted before multiplication and accumulation.
++            bool fp32Input = inputType == HIPTENSOR_R_16F || inputType == HIPTENSOR_R_16BF
++                             || inputType == HIPTENSOR_R_32F;
++            bool fp32      = fp32Input && (outputType == inputType || outputType == HIPTENSOR_R_32F)
++                             && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_32F;
++            bool fp64      = (inputType == HIPTENSOR_R_32F || inputType == HIPTENSOR_R_64F)
++                             && outputType == HIPTENSOR_R_64F
++                             && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_64F;
++            if((!fp32 && !fp64) || desc->mDescB->mType != inputType
++               || (desc->mDescC && desc->mDescC->mType != outputType))
+                 return HIPTENSOR_STATUS_NOT_SUPPORTED;
+ 
+             std::map<int32_t, uint64_t> lengths;
+-            auto                        collect = [&](hiptensorTensorDescriptor_t tensor,
+-                                                      std::vector<int32_t> const& modes) {
+-                if(!tensor)
+-                    return modes.empty();
+-                if(modes.size() != tensor->mLengths.size()
+-                   || modes.size() != tensor->mStrides.size() || modes.size() > MaxModes)
+-                    return false;
+-                std::set<int32_t> unique;
+-                uint64_t          extent = 1;
+-                for(size_t i = 0; i < modes.size(); ++i)
+-                {
+-                    uint64_t len = tensor->mLengths[i], stride = tensor->mStrides[i];
+-                    if(len == 0 || stride == 0 || len > std::numeric_limits<int64_t>::max()
+-                       || stride > std::numeric_limits<int64_t>::max()
+-                       || !unique.insert(modes[i]).second)
+-                        return false;
+-                    auto inserted = lengths.emplace(modes[i], len);
+-                    if(!inserted.second && inserted.first->second != len)
+-                        return false;
+-                    if(len - 1 > (std::numeric_limits<uint64_t>::max() - extent) / stride)
+-                        return false;
+-                    extent += (len - 1) * stride;
+-                }
+-                return extent <= std::numeric_limits<int64_t>::max() / hiptensorDataTypeSize(type);
+-            };
++            auto                        collect
++                = [&](hiptensorTensorDescriptor_t tensor, std::vector<int32_t> const& modes) {
++                      if(!tensor)
++                          return modes.empty();
++                      if(modes.size() != tensor->mLengths.size()
++                         || modes.size() != tensor->mStrides.size() || modes.size() > MaxModes)
++                          return false;
++                      std::set<int32_t> unique;
++                      uint64_t          extent = 1;
++                      for(size_t i = 0; i < modes.size(); ++i)
++                      {
++                          uint64_t len = tensor->mLengths[i], stride = tensor->mStrides[i];
++                          if(len == 0 || stride == 0 || len > std::numeric_limits<int64_t>::max()
++                             || stride > std::numeric_limits<int64_t>::max()
++                             || !unique.insert(modes[i]).second)
++                              return false;
++                          auto inserted = lengths.emplace(modes[i], len);
++                          if(!inserted.second && inserted.first->second != len)
++                              return false;
++                          if(len - 1 > (std::numeric_limits<uint64_t>::max() - extent) / stride)
++                              return false;
++                          extent += (len - 1) * stride;
++                      }
++                      return extent <= std::numeric_limits<int64_t>::max()
++                                           / hiptensorDataTypeSize(tensor->mType);
++                  };
+             if(!collect(desc->mDescA, desc->mModeA) || !collect(desc->mDescB, desc->mModeB)
+                || !collect(desc->mDescC, desc->mModeC) || !collect(desc->mDescD, desc->mModeD))
+                 return HIPTENSOR_STATUS_INVALID_VALUE;
+@@ -191,9 +198,14 @@ namespace hiptensor
+             return value;
+         }
+ 
+-        template <class T, class Acc>
+-        __global__ void scalarContraction(
+-            ScalarProblem p, Acc alpha, const T* a, const T* b, Acc beta, const T* c, T* d)
++        template <class Input, class Output, class Acc>
++        __global__ void scalarContraction(ScalarProblem p,
++                                          Acc           alpha,
++                                          const Input*  a,
++                                          const Input*  b,
++                                          Acc           beta,
++                                          const Output* c,
++                                          Output*       d)
+         {
+             for(uint64_t out = uint64_t(blockIdx.x) * blockDim.x + threadIdx.x;
+                 out < p.outputElements;
+@@ -226,11 +238,11 @@ namespace hiptensor
+                 Acc value = alpha * sum;
+                 if(beta != Acc(0))
+                     value += beta * unary(Acc(c[cOffset]), p.opC);
+-                d[dOffset] = T(value);
++                d[dOffset] = Output(value);
+             }
+         }
+ 
+-        template <class T, class Acc>
++        template <class Input, class Output, class Acc>
+         hiptensorStatus_t launch(ScalarProblem const& problem,
+                                  const void*          alpha,
+                                  const void*          a,
+@@ -245,18 +257,18 @@ namespace hiptensor
+             if(betaValue != Acc(0) && !c)
+                 return HIPTENSOR_STATUS_INVALID_VALUE;
+             uint32_t blocks = std::min<uint64_t>(65535, 1 + (problem.outputElements - 1) / 256);
+-            hipLaunchKernelGGL((scalarContraction<T, Acc>),
++            hipLaunchKernelGGL((scalarContraction<Input, Output, Acc>),
+                                dim3(blocks),
+                                dim3(256),
+                                0,
+                                stream,
+                                problem,
+                                alphaValue,
+-                               static_cast<const T*>(a),
+-                               static_cast<const T*>(b),
++                               static_cast<const Input*>(a),
++                               static_cast<const Input*>(b),
+                                betaValue,
+-                               static_cast<const T*>(c),
+-                               static_cast<T*>(d));
++                               static_cast<const Output*>(c),
++                               static_cast<Output*>(d));
+             return hipGetLastError() == hipSuccess ? HIPTENSOR_STATUS_SUCCESS
+                                                    : HIPTENSOR_STATUS_EXECUTION_FAILED;
+         }
+@@ -301,16 +313,23 @@ namespace hiptensor
+            && (d != c || desc->mModeC != desc->mModeD
+                || desc->mDescC->mStrides != desc->mDescD->mStrides))
+             return HIPTENSOR_STATUS_NOT_SUPPORTED;
+-        switch(desc->mDescD->mType)
++        switch(desc->mDescA->mType)
+         {
+         case HIPTENSOR_R_16F:
+-            return launch<__half, float>(problem, alpha, a, b, beta, c, d, stream);
++            if(desc->mDescD->mType == HIPTENSOR_R_32F)
++                return launch<__half, float, float>(problem, alpha, a, b, beta, c, d, stream);
++            return launch<__half, __half, float>(problem, alpha, a, b, beta, c, d, stream);
+         case HIPTENSOR_R_16BF:
+-            return launch<hip_bfloat16, float>(problem, alpha, a, b, beta, c, d, stream);
++            if(desc->mDescD->mType == HIPTENSOR_R_32F)
++                return launch<hip_bfloat16, float, float>(problem, alpha, a, b, beta, c, d, stream);
++            return launch<hip_bfloat16, hip_bfloat16, float>(
++                problem, alpha, a, b, beta, c, d, stream);
+         case HIPTENSOR_R_32F:
+-            return launch<float, float>(problem, alpha, a, b, beta, c, d, stream);
++            if(desc->mDescD->mType == HIPTENSOR_R_64F)
++                return launch<float, double, double>(problem, alpha, a, b, beta, c, d, stream);
++            return launch<float, float, float>(problem, alpha, a, b, beta, c, d, stream);
+         case HIPTENSOR_R_64F:
+-            return launch<double, double>(problem, alpha, a, b, beta, c, d, stream);
++            return launch<double, double, double>(problem, alpha, a, b, beta, c, d, stream);
+         default:
+             return HIPTENSOR_STATUS_NOT_SUPPORTED;
+         }
+diff --git a/projects/rpp/src/modules/tensor/hip/kernel/to_decibels.cpp b/projects/rpp/src/modules/tensor/hip/kernel/to_decibels.cpp
+index 3766ee2b0a8..ff20cd32a69 100644
+--- a/projects/rpp/src/modules/tensor/hip/kernel/to_decibels.cpp
++++ b/projects/rpp/src/modules/tensor/hip/kernel/to_decibels.cpp
+@@ -51,6 +51,7 @@ __device__ __forceinline__ void to_decibels_hip_compute(d_float8* src_f8, d_floa
+ // -------------------- Set 1 -  kernels for finding inverse magnitude value --------------------
+ 
+ __global__ void inverse_magnitude_hip_tensor(float* srcPtr, int maxLength, bool computeMax,
++                                             float referenceMagnitude,
+                                              float* inverseMagnitudeTensor)
+ 
+ {
+@@ -61,18 +62,9 @@ __global__ void inverse_magnitude_hip_tensor(float* srcPtr, int maxLength, bool
+     if (computeMax) {
+         uint srcIdx = id_z * maxLength;
+         __shared__ float max_smem[256];  // 256 values of src in a 256 x 1 thread block
+-        max_smem[hipThreadIdx_x] =
+-            srcPtr[srcIdx];  // initialization of LDS to start value using all 256 threads
+-
+-        if (id_x >= maxLength) return;
+-
+-        srcIdx += id_x;
+-        float maxVal = srcPtr[srcIdx];
+-        while (id_x < maxLength) {
+-            maxVal = fmaxf(maxVal, srcPtr[srcIdx]);
+-            id_x += hipBlockDim_x;
+-            srcIdx += hipBlockDim_x;
+-        }
++        float maxVal = -INFINITY;
++        for (int i = id_x; i < maxLength; i += hipBlockDim_x)
++            maxVal = fmaxf(maxVal, srcPtr[srcIdx + i]);
+         max_smem[hipThreadIdx_x] = maxVal;
+         __syncthreads();  // syncthreads after max compute
+ 
+@@ -85,9 +77,10 @@ __global__ void inverse_magnitude_hip_tensor(float* srcPtr, int maxLength, bool
+         }
+ 
+         // Final store to dst
+-        if (hipThreadIdx_x == 0) inverseMagnitudeTensor[id_z] = 1.f / max_smem[0];
++        if (hipThreadIdx_x == 0)
++            inverseMagnitudeTensor[id_z] = max_smem[0] == 0 ? 1.f : 1.f / max_smem[0];
+     } else {
+-        inverseMagnitudeTensor[id_z] = 1.0f;
++        inverseMagnitudeTensor[id_z] = 1.f / referenceMagnitude;
+     }
+ }
+ 
+@@ -99,15 +92,11 @@ __global__ void max_reduction_1d_hip_tensor(float* srcPtr, uint2 srcStridesNH,
+     uint srcLength = srcDims[id_z].height;
+     uint srcIdx = id_z * srcStridesNH.x;
+     __shared__ float max_smem[256];  // 256 values of src in a 256 x 1 thread block
+-    max_smem[hipThreadIdx_x] =
+-        srcPtr[srcIdx];  // initialization of LDS to start value using all 256 threads
+-
+-    if (id_x >= srcLength) return;
+-
+-    srcIdx += id_x;
+-    d_float8 src_f8;
+-    rpp_hip_load8_and_unpack_to_float8(srcPtr + srcIdx, &src_f8);  // load 8 pixels to local memory
+-    rpp_hip_math_max8(&src_f8, &max_smem[hipThreadIdx_x]);
++    float maxVal = -INFINITY;
++    // Do not include the final vector's padding in the reference magnitude.
++    for (int i = 0; i < 8; ++i)
++        if (id_x + i < srcLength) maxVal = fmaxf(maxVal, srcPtr[srcIdx + id_x + i]);
++    max_smem[hipThreadIdx_x] = maxVal;
+     __syncthreads();  // syncthreads after max compute
+ 
+     // Reduction of 256 floats on 256 threads per block in x dimension
+@@ -134,12 +123,9 @@ __global__ void max_reduction_2d_hip_tensor(float* srcPtr, uint2 srcStridesNH,
+     float* partialMaxRowPtr_smem =
+         &partialMax_smem[hipThreadIdx_y][0];  // float pointer to beginning of each row in LDS
+     partialMaxRowPtr_smem[hipThreadIdx_x] =
+-        srcPtr[srcIdx];  // initialization of LDS to start value using all 16 x 16 threads
+-
+-    if ((id_y >= srcDims[id_z].height) || (id_x >= srcDims[id_z].width)) return;
+-
+-    srcIdx += ((id_y * srcStridesNH.y) + id_x);
+-    partialMaxRowPtr_smem[hipThreadIdx_x] = srcPtr[srcIdx];
++        id_y < srcDims[id_z].height && id_x < srcDims[id_z].width
++            ? srcPtr[srcIdx + id_y * srcStridesNH.y + id_x]
++            : -INFINITY;
+     __syncthreads();  // syncthreads
+ 
+     // Reduction of 16 floats on 16 threads per block in x dimension (for every y dimension)
+@@ -151,20 +137,16 @@ __global__ void max_reduction_2d_hip_tensor(float* srcPtr, uint2 srcStridesNH,
+         __syncthreads();
+     }
+ 
+-    if (hipThreadIdx_x == 0) {
+-        // Reduction of 16 floats on 16 threads per block in y dimension
+-        for (int threadMax = 8, increment = 128; threadMax >= 1; threadMax /= 2, increment /= 2) {
+-            if (hipThreadIdx_y < threadMax)
+-                partialMaxRowPtr_smem[0] =
+-                    fmaxf(partialMaxRowPtr_smem[0], partialMaxRowPtr_smem[increment]);
+-            __syncthreads();
+-        }
+-
+-        // Final store to dst
+-        if (hipThreadIdx_y == 0)
+-            maxArr[(hipBlockIdx_z * hipGridDim_y + hipBlockIdx_y) * hipGridDim_x + hipBlockIdx_x] =
+-                partialMaxRowPtr_smem[0];
++    // Every thread must participate in each barrier, including padded rows.
++    for (int threadMax = 8; threadMax >= 1; threadMax /= 2) {
++        if (hipThreadIdx_x == 0 && hipThreadIdx_y < threadMax)
++            partialMax_smem[hipThreadIdx_y][0] = fmaxf(
++                partialMax_smem[hipThreadIdx_y][0], partialMax_smem[hipThreadIdx_y + threadMax][0]);
++        __syncthreads();
+     }
++    if (hipThreadIdx_x == 0 && hipThreadIdx_y == 0)
++        maxArr[(hipBlockIdx_z * hipGridDim_y + hipBlockIdx_y) * hipGridDim_x + hipBlockIdx_x] =
++            partialMax_smem[0][0];
+ }
+ 
+ // -------------------- Set 2 - to decibels kernels --------------------
+@@ -239,10 +221,10 @@ RppStatus hip_exec_to_decibels_tensor(Rpp32f* srcPtr, RpptDescPtr srcDescPtr, Rp
+             HIP_CHECK_LAUNCH_RETURN();
+         } else if (numDims == 2) {
+             Rpp32s gridDim_x =
+-                ceil(static_cast<Rpp32f>((srcDescPtr->strides.hStride) / LOCAL_THREADS_X));
++                ceil(static_cast<Rpp32f>(srcDescPtr->strides.hStride) / LOCAL_THREADS_X);
+             Rpp32s gridDim_y = ceil(static_cast<Rpp32f>(srcDescPtr->h) / LOCAL_THREADS_Y);
+             Rpp32s gridDim_z = ceil(static_cast<Rpp32f>(globalThreads_z) / LOCAL_THREADS_Z);
+-            numBlocksPerSample = gridDim_x * gridDim_y * gridDim_z;
++            numBlocksPerSample = gridDim_x * gridDim_y;
+             hipLaunchKernelGGL(max_reduction_2d_hip_tensor, dim3(gridDim_x, gridDim_y, gridDim_z),
+                                dim3(LOCAL_THREADS_X, LOCAL_THREADS_Y, LOCAL_THREADS_Z), 0,
+                                handle.GetStream(), srcPtr,
+@@ -256,7 +238,7 @@ RppStatus hip_exec_to_decibels_tensor(Rpp32f* srcPtr, RpptDescPtr srcDescPtr, Rp
+     Rpp32f* inverseMagnitudeTensor = partialMaxArr + globalThreads_z * numBlocksPerSample;
+     hipLaunchKernelGGL(inverse_magnitude_hip_tensor, dim3(1, 1, globalThreads_z),
+                        dim3(blockSize, 1, 1), 0, handle.GetStream(), partialMaxArr,
+-                       numBlocksPerSample, computeMax, inverseMagnitudeTensor);
++                       numBlocksPerSample, computeMax, referenceMagnitude, inverseMagnitudeTensor);
+     HIP_CHECK_LAUNCH_RETURN();
+     RPP_HIP_RETURN_IF_ERROR(hipStreamSynchronize(handle.GetStream()));
+ 
+-- 
+2.56.0
+

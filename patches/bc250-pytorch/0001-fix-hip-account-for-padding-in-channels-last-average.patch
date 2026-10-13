@@ -1,0 +1,28 @@
+From b36877506d38eb74abcd01d667e9b05d6b60430a Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Tue, 13 Oct 2026 11:36:27 +0200
+Subject: [PATCH] fix(hip): account for padding in channels-last average-pool
+ gradients
+
+---
+ aten/src/ATen/native/cuda/AveragePool2d.cu | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/aten/src/ATen/native/cuda/AveragePool2d.cu b/aten/src/ATen/native/cuda/AveragePool2d.cu
+index 96202c7..71dd612 100644
+--- a/aten/src/ATen/native/cuda/AveragePool2d.cu
++++ b/aten/src/ATen/native/cuda/AveragePool2d.cu
+@@ -194,8 +194,8 @@ __global__ void avg_pool2d_backward_out_cuda_frame_nhwc(const index_t nthreads,
+     bool count_include_pad, bool use_divisor) {
+   CUDA_KERNEL_LOOP_TYPE(index, nthreads, index_t) {
+     const int c = index % channels;
+-    const int w = (index / channels) % width;
+-    const int h = (index / channels / width) % height;
++    const int w = (index / channels) % width + pad_w;
++    const int h = (index / channels / width) % height + pad_h;
+     const int n = index / channels / width / height;
+ 
+     const int phstart = (h < kernel_h) ? 0 : (h - kernel_h) / stride_h + 1;
+-- 
+2.56.0
+

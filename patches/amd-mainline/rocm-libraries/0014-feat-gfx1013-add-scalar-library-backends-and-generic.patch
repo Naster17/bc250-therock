@@ -1,0 +1,2344 @@
+From a66565652537244e0b5a0db5f2ff7005ecf4d856 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Tue, 13 Oct 2026 11:35:19 +0200
+Subject: [PATCH] feat(gfx1013): add scalar library backends and generic CK
+ Tile fixes
+
+---
+ projects/composablekernel/CMakeLists.txt      |   3 +
+ .../elementwise_example_unary.cpp             |   7 +-
+ .../include/ck_tile/core/arch/arch.hpp        |  25 +-
+ .../host/reference/reference_elementwise.hpp  |  17 +-
+ .../elementwise/kernel/elementwise_kernel.hpp |  15 +-
+ .../ops/pooling/kernel/pool_kernel.hpp        |   3 +
+ .../reduce/kernel/multi_reduce2d_kernel.hpp   |   3 +
+ .../ops/reduce/kernel/reduce2d_kernel.hpp     |   3 +
+ projects/hipblaslt/CMakeLists.txt             |  10 +-
+ .../hipblaslt/docs/gfx1013-scalar-backend.rst |  46 +
+ .../library/src/amd_detail/CMakeLists.txt     |   4 +
+ .../library/src/amd_detail/gfx1013_scalar.cpp | 313 ++++++
+ .../library/src/amd_detail/gfx1013_scalar.hpp |  34 +
+ .../library/src/amd_detail/hipblaslt.cpp      |  37 +
+ projects/hipsparselt/CMakeLists.txt           |  13 +-
+ .../hipsparselt_supported_architectures.cmake |   3 +
+ .../docs/gfx1013-scalar-backend.rst           |  56 ++
+ projects/hipsparselt/library/CMakeLists.txt   |   4 +-
+ .../library/src/hcc_detail/CMakeLists.txt     |   9 +-
+ .../library/src/hcc_detail/gfx1013_scalar.hip | 894 ++++++++++++++++++
+ .../library/src/contraction/CMakeLists.txt    |   1 +
+ .../src/contraction/contraction_scalar.cpp    | 318 +++++++
+ .../src/contraction/contraction_scalar.hpp    |  42 +
+ .../src/contraction/hiptensor_contraction.cpp |  52 +-
+ 24 files changed, 1894 insertions(+), 18 deletions(-)
+ create mode 100644 projects/hipblaslt/docs/gfx1013-scalar-backend.rst
+ create mode 100644 projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+ create mode 100644 projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp
+ create mode 100644 projects/hipsparselt/docs/gfx1013-scalar-backend.rst
+ create mode 100644 projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+ create mode 100644 projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+ create mode 100644 projects/hiptensor/library/src/contraction/contraction_scalar.hpp
+
+diff --git a/projects/composablekernel/CMakeLists.txt b/projects/composablekernel/CMakeLists.txt
+index 8591b1d0a13..cefcfc0a142 100644
+--- a/projects/composablekernel/CMakeLists.txt
++++ b/projects/composablekernel/CMakeLists.txt
+@@ -161,6 +161,9 @@ function(_ck_gpu_target_string_to_id TARGET_STR OUT_VAR)
+         set(${OUT_VAR} "0x0942" PARENT_SCOPE)
+     elseif(_tgt STREQUAL "gfx950")
+         set(${OUT_VAR} "0x0950" PARENT_SCOPE)
++    # GFX10.1
++    elseif(_tgt STREQUAL "gfx1013")
++        set(${OUT_VAR} "0x1013" PARENT_SCOPE)
+     # GFX10.3
+     elseif(_tgt STREQUAL "gfx1030")
+         set(${OUT_VAR} "0x1030" PARENT_SCOPE)
+diff --git a/projects/composablekernel/example/ck_tile/21_elementwise/elementwise_example_unary.cpp b/projects/composablekernel/example/ck_tile/21_elementwise/elementwise_example_unary.cpp
+index 844067b9847..ee472ae3353 100644
+--- a/projects/composablekernel/example/ck_tile/21_elementwise/elementwise_example_unary.cpp
++++ b/projects/composablekernel/example/ck_tile/21_elementwise/elementwise_example_unary.cpp
+@@ -53,6 +53,9 @@ bool run(const ck_tile::ArgParser& arg_parser)
+     ck_tile::DeviceMem x_buf_a(x_host_a.get_element_space_size_in_bytes());
+     ck_tile::DeviceMem y_buf(y_host.get_element_space_size_in_bytes());
+     x_buf_a.ToDevice(x_host_a.data());
++    // Preserve and validate padding between rows, including the strided regression.
++    std::fill(y_host.mData.begin(), y_host.mData.end(), ck_tile::type_convert<YDataType>(-7.f));
++    y_buf.ToDevice(y_host.data());
+ 
+     // 3. Create the kernel
+ 
+@@ -105,8 +108,8 @@ bool run(const ck_tile::ArgParser& arg_parser)
+                                           kBlockSize,
+                                           0,
+                                           input_size,
+-                                          ck_tile::make_tuple(N, 1), // Input Stride
+-                                          ck_tile::make_tuple(N, 1), // Output Stride
++                                          ck_tile::make_tuple(stride, 1), // Input Stride
++                                          ck_tile::make_tuple(stride, 1), // Output Stride
+                                           input_tensors,
+                                           static_cast<YDataType*>(y_buf.GetDeviceBuffer())));
+ 
+diff --git a/projects/composablekernel/include/ck_tile/core/arch/arch.hpp b/projects/composablekernel/include/ck_tile/core/arch/arch.hpp
+index 0588ab3d8d0..5baf5f4c0b4 100644
+--- a/projects/composablekernel/include/ck_tile/core/arch/arch.hpp
++++ b/projects/composablekernel/include/ck_tile/core/arch/arch.hpp
+@@ -100,6 +100,7 @@ enum struct amdgcn_target_id
+     GFX90A         = 0x090A,
+     GFX942         = 0x0942,
+     GFX950         = 0x0950,
++    GFX1013        = 0x1013,
+     GFX1030        = 0x1030,
+     GFX1031        = 0x1031,
+     GFX1032        = 0x1032,
+@@ -134,6 +135,7 @@ CK_TILE_HOST_DEVICE constexpr const char* to_string(amdgcn_target_id target_id)
+     case amdgcn_target_id::GFX90A: return "GFX90A";
+     case amdgcn_target_id::GFX942: return "GFX942";
+     case amdgcn_target_id::GFX950: return "GFX950";
++    case amdgcn_target_id::GFX1013: return "GFX1013";
+     case amdgcn_target_id::GFX1030: return "GFX1030";
+     case amdgcn_target_id::GFX1031: return "GFX1031";
+     case amdgcn_target_id::GFX1032: return "GFX1032";
+@@ -164,6 +166,7 @@ CK_TILE_HOST_DEVICE constexpr const char* to_string(amdgcn_target_id target_id)
+ enum struct amdgcn_target_family_id
+ {
+     GFX9    = 0x09,
++    GFX10_1 = 0x101,
+     GFX10_3 = 0x10,
+     GFX11   = 0x11,
+     GFX12   = 0x12,
+@@ -180,6 +183,7 @@ CK_TILE_HOST_DEVICE constexpr const char* to_string(amdgcn_target_family_id fami
+     switch(family_id)
+     {
+     case amdgcn_target_family_id::GFX9: return "GFX9";
++    case amdgcn_target_family_id::GFX10_1: return "GFX10_1";
+     case amdgcn_target_family_id::GFX10_3: return "GFX10_3";
+     case amdgcn_target_family_id::GFX11: return "GFX11";
+     case amdgcn_target_family_id::GFX12: return "GFX12";
+@@ -408,7 +412,15 @@ static constexpr bool is_target_wave_size_64()
+  */
+ constexpr auto get_compiler_target()
+ {
+-    MAP_COMPILER_STATE_TO_GFX9_TARGET(CK_TILE_ARCH_GFX908, GFX908);
++    if constexpr(amdgcn_compiler_target_state::CK_TILE_ARCH_GFX1013)
++    {
++        return amdgcn_target<amdgcn_target_id::GFX1013,
++                             amdgcn_target_family_id::GFX10_1,
++                             amdgcn_target_arch_id::RDNA,
++                             amdgcn_target_wave_size_id::WAVE32>{};
++    }
++    else
++        MAP_COMPILER_STATE_TO_GFX9_TARGET(CK_TILE_ARCH_GFX908, GFX908);
+     MAP_COMPILER_STATE_TO_GFX9_TARGET(CK_TILE_ARCH_GFX90A, GFX90A);
+     MAP_COMPILER_STATE_TO_GFX9_TARGET(CK_TILE_ARCH_GFX942, GFX942);
+     MAP_COMPILER_STATE_TO_GFX9_TARGET(CK_TILE_ARCH_GFX950, GFX950);
+@@ -485,6 +497,13 @@ static constexpr auto getCMakeCompilerTarget()
+     {
+         return make_amdgcn_gfx9_target<id>();
+     }
++    else if constexpr(id == amdgcn_target_id::GFX1013)
++    {
++        return amdgcn_target<id,
++                             amdgcn_target_family_id::GFX10_1,
++                             amdgcn_target_arch_id::RDNA,
++                             amdgcn_target_wave_size_id::WAVE32>{};
++    }
+     else if constexpr(id == amdgcn_target_id::GFX1030 || id == amdgcn_target_id::GFX1031 ||
+                       id == amdgcn_target_id::GFX1032 || id == amdgcn_target_id::GFX1033 ||
+                       id == amdgcn_target_id::GFX1034 || id == amdgcn_target_id::GFX1035 ||
+@@ -1119,6 +1138,10 @@ CK_TILE_HOST bool is_wave32()
+  */
+ CK_TILE_HOST_DEVICE constexpr index_t get_warp_size()
+ {
++    // Launch dimensions and tile template types must agree in both compiler passes.
++    if constexpr(core::arch::getCMakeCompilerTarget().TARGET_ID ==
++                 core::arch::amdgcn_target_id::GFX1013)
++        return 32;
+     return static_cast<index_t>(core::arch::get_compiler_target().WAVE_SIZE_ID);
+ }
+ 
+diff --git a/projects/composablekernel/include/ck_tile/host/reference/reference_elementwise.hpp b/projects/composablekernel/include/ck_tile/host/reference/reference_elementwise.hpp
+index f55882b9d5a..da92238a4bd 100644
+--- a/projects/composablekernel/include/ck_tile/host/reference/reference_elementwise.hpp
++++ b/projects/composablekernel/include/ck_tile/host/reference/reference_elementwise.hpp
+@@ -15,12 +15,21 @@ CK_TILE_HOST void reference_unary_elementwise(const HostTensor<ADataType>& a,
+ {
+     // TODO: imeplement gpu version reference function
+     auto f = [&](auto i) {
+-        auto v_a   = type_convert<ComputeDataType>(a.mData[i]);
+-        auto v_b   = element_op(v_a);
+-        b.mData[i] = ck_tile::type_convert<BDataType>(v_b);
++        // Iterate logical coordinates: allocation padding is not a tensor element.
++        std::size_t linear = i, a_offset = 0, b_offset = 0;
++        for(std::size_t dim = b.get_num_of_dimension(); dim-- > 0;)
++        {
++            auto coordinate = linear % b.get_length(dim);
++            linear /= b.get_length(dim);
++            a_offset += coordinate * a.get_stride(dim);
++            b_offset += coordinate * b.get_stride(dim);
++        }
++        auto v_a          = type_convert<ComputeDataType>(a.mData[a_offset]);
++        auto v_b          = element_op(v_a);
++        b.mData[b_offset] = ck_tile::type_convert<BDataType>(v_b);
+     };
+ 
+-    make_ParallelTensorFunctor(f, b.get_element_space_size())(std::thread::hardware_concurrency());
++    make_ParallelTensorFunctor(f, b.get_element_size())(std::thread::hardware_concurrency());
+ }
+ 
+ template <typename ADataType,
+diff --git a/projects/composablekernel/include/ck_tile/ops/elementwise/kernel/elementwise_kernel.hpp b/projects/composablekernel/include/ck_tile/ops/elementwise/kernel/elementwise_kernel.hpp
+index d9d38971017..b6a3758c895 100644
+--- a/projects/composablekernel/include/ck_tile/ops/elementwise/kernel/elementwise_kernel.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/elementwise/kernel/elementwise_kernel.hpp
+@@ -24,6 +24,9 @@ struct ElementWiseKernel
+     static constexpr index_t kBlockSize = Problem::BlockShape::kBlockSize;
+     CK_TILE_HOST static constexpr auto BlockSize()
+     {
++        if constexpr(core::arch::getCMakeCompilerTarget().TARGET_ID ==
++                     core::arch::amdgcn_target_id::GFX1013)
++            return kBlockSize; // The configured shape already uses native wave32.
+         return is_wave32() ? kBlockSize / 2 : kBlockSize;
+     }
+ 
+@@ -38,6 +41,14 @@ struct ElementWiseKernel
+                                    YDataType* p_y) const
+     {
+         using S = typename Problem::BlockShape;
++        // Runtime strides and odd row lengths do not establish a contiguous
++        // vector of S::kVectorM elements. A false hint crosses transpose and
++        // padded row/tail boundaries. Keep the per-thread tile vector, but
++        // address its elements individually on the native path.
++        constexpr index_t vectorHint =
++            core::arch::getCMakeCompilerTarget().TARGET_ID == core::arch::amdgcn_target_id::GFX1013
++                ? 1
++                : S::kVectorM;
+ 
+         // Setup block-level coordinates and transforms
+         const index_t iM           = get_block_id() * S::kBlockM;
+@@ -49,7 +60,7 @@ struct ElementWiseKernel
+         const auto x_tiles = ck_tile::generate_tuple(
+             [&](auto i) {
+                 const auto tensor_view = make_naive_tensor_view<address_space_enum::global>(
+-                    input_tensors.get(i), lens, input_strides, number<S::kVectorM>{}, number<1>{});
++                    input_tensors.get(i), lens, input_strides, number<vectorHint>{}, number<1>{});
+ 
+                 const auto transformed_tensor = pad_tensor_view(
+                     transform_tensor_view(
+@@ -88,7 +99,7 @@ struct ElementWiseKernel
+ 
+         // Setup output window and store the result tile.
+         const auto y_m_n = make_naive_tensor_view<address_space_enum::global>(
+-            p_y, lens, output_strides, number<S::kVectorM>{});
++            p_y, lens, output_strides, number<vectorHint>{});
+ 
+         const auto transformed_y_m_n =
+             pad_tensor_view(transform_tensor_view(
+diff --git a/projects/composablekernel/include/ck_tile/ops/pooling/kernel/pool_kernel.hpp b/projects/composablekernel/include/ck_tile/ops/pooling/kernel/pool_kernel.hpp
+index 8f6ee146631..88e170efddd 100644
+--- a/projects/composablekernel/include/ck_tile/ops/pooling/kernel/pool_kernel.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/pooling/kernel/pool_kernel.hpp
+@@ -94,6 +94,9 @@ struct PoolKernel
+ 
+     CK_TILE_HOST static constexpr auto BlockSize()
+     {
++        if constexpr(core::arch::getCMakeCompilerTarget().TARGET_ID ==
++                     core::arch::amdgcn_target_id::GFX1013)
++            return kBlockSize; // The configured shape already uses native wave32.
+         return is_wave32() ? kBlockSize / 2 : kBlockSize;
+     }
+ 
+diff --git a/projects/composablekernel/include/ck_tile/ops/reduce/kernel/multi_reduce2d_kernel.hpp b/projects/composablekernel/include/ck_tile/ops/reduce/kernel/multi_reduce2d_kernel.hpp
+index b37da6cefe4..94a82afa237 100644
+--- a/projects/composablekernel/include/ck_tile/ops/reduce/kernel/multi_reduce2d_kernel.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/reduce/kernel/multi_reduce2d_kernel.hpp
+@@ -39,6 +39,9 @@ struct MultiReduce2d
+ 
+     CK_TILE_HOST static constexpr auto BlockSize()
+     {
++        if constexpr(core::arch::getCMakeCompilerTarget().TARGET_ID ==
++                     core::arch::amdgcn_target_id::GFX1013)
++            return kBlockSize; // The configured shape already uses native wave32.
+         return is_wave32() ? kBlockSize / 2 : kBlockSize;
+     }
+ 
+diff --git a/projects/composablekernel/include/ck_tile/ops/reduce/kernel/reduce2d_kernel.hpp b/projects/composablekernel/include/ck_tile/ops/reduce/kernel/reduce2d_kernel.hpp
+index dddfa26a53e..8c7d49d40f3 100644
+--- a/projects/composablekernel/include/ck_tile/ops/reduce/kernel/reduce2d_kernel.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/reduce/kernel/reduce2d_kernel.hpp
+@@ -28,6 +28,9 @@ struct ReduceKernel
+     static constexpr index_t kBlockSize = Problem::BlockShape::BlockSize;
+     CK_TILE_HOST static constexpr auto BlockSize()
+     {
++        if constexpr(core::arch::getCMakeCompilerTarget().TARGET_ID ==
++                     core::arch::amdgcn_target_id::GFX1013)
++            return kBlockSize; // The configured shape already uses native wave32.
+         return is_wave32() ? kBlockSize / 2 : kBlockSize;
+     }
+ 
+diff --git a/projects/hipblaslt/CMakeLists.txt b/projects/hipblaslt/CMakeLists.txt
+index 9dfbe0d31b8..a172af55783 100644
+--- a/projects/hipblaslt/CMakeLists.txt
++++ b/projects/hipblaslt/CMakeLists.txt
+@@ -61,6 +61,7 @@ option(HIPBLASLT_ENABLE_MATRIX_TRANSFORM "Build hipBLASLt MatrixTransform device
+ option(HIPBLASLT_ENABLE_CLIENT "Build hipBLASLt client apps." ON)
+ option(HIPBLASLT_ENABLE_HOST "Build hipBLASLt host library." ON)
+ option(HIPBLASLT_HOST_API_ONLY "Build host descriptor APIs without a GEMM backend." OFF)
++option(HIPBLASLT_ENABLE_GFX1013_SCALAR "Build the native gfx1013 scalar GEMM backend." OFF)
+ option(HIPBLASLT_BUILD_SHARED_LIBS "Build the hipBLASLt library as shared vs static." ON)
+ option(TENSILELITE_BUILD_SHARED_LIBS "Build the TensileLite host library as shared vs static." ON)
+ option(HIPBLASLT_ENABLE_FETCH "Fetch dependencies using fetch content" OFF)
+@@ -134,6 +135,12 @@ mark_as_advanced(TENSILELITE_ENABLE_AUTOBUILD)
+ 
+ set(GPU_TARGETS "" CACHE STRING "AMD GFX targets to cross-compile")
+ 
++if(HIPBLASLT_ENABLE_GFX1013_SCALAR)
++    if(NOT HIPBLASLT_HOST_API_ONLY OR NOT GPU_TARGETS STREQUAL "gfx1013")
++        message(FATAL_ERROR "HIPBLASLT_ENABLE_GFX1013_SCALAR requires HOST_API_ONLY and GPU_TARGETS=gfx1013")
++    endif()
++endif()
++
+ if(HIPBLASLT_HOST_API_ONLY)
+     if(NOT HIPBLASLT_ENABLE_HOST OR HIPBLASLT_ENABLE_DEVICE OR HIPBLASLT_ENABLE_ROCROLLER
+        OR HIPBLASLT_ENABLE_EXTOPS OR HIPBLASLT_ENABLE_MATRIX_TRANSFORM)
+@@ -397,7 +404,8 @@ set(BUILD_SHARED_LIBS "${HIPBLASLT_BUILD_SHARED_LIBS}")
+ if(HIPBLASLT_ENABLE_HOST)
+     add_library(hipblaslt)
+     target_compile_definitions(hipblaslt PRIVATE
+-        HIPBLASLT_HOST_API_ONLY=$<BOOL:${HIPBLASLT_HOST_API_ONLY}>)
++        HIPBLASLT_HOST_API_ONLY=$<BOOL:${HIPBLASLT_HOST_API_ONLY}>
++        HIPBLASLT_ENABLE_GFX1013_SCALAR=$<BOOL:${HIPBLASLT_ENABLE_GFX1013_SCALAR}>)
+     if(WIN32 AND BUILD_SHARED_LIBS AND _hipblaslt_have_version_rc)
+         target_sources(
+             hipblaslt
+diff --git a/projects/hipblaslt/docs/gfx1013-scalar-backend.rst b/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
+new file mode 100644
+index 00000000000..7dc4c91e04a
+--- /dev/null
++++ b/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
+@@ -0,0 +1,46 @@
++Native gfx1013 scalar GEMM
++=========================
++
++``HIPBLASLT_ENABLE_GFX1013_SCALAR=ON`` builds a native HIP implementation of
++``hipblasLtMatmul`` and ``hipblasLtMatmulAlgoGetHeuristic`` for gfx1013. The
++option defaults to OFF and requires ``GPU_TARGETS=gfx1013`` and
++``HIPBLASLT_HOST_API_ONLY=ON``. The latter selects the descriptor library
++without Tensile device libraries; the scalar option adds its own GPU backend.
++Device-library, rocRoller, ExtOp and MatrixTransform options must remain OFF.
++Other architecture builds retain their existing dispatch.
++
++Supported operations
++--------------------
++
++* FP32, FP16 or BF16 A and B, with matching input types and FP32 accumulation.
++* C and D both use the input type or FP32.
++* Column-major and row-major layouts, with padded leading dimensions.
++* Independent transpose or non-transpose operations on A and B.
++* Strided batches with matching batch counts; zero input batch stride broadcasts
++  a matrix across batches. Output batches must not overlap.
++* Host or device FP32 alpha and beta. Host beta=0 permits a null C pointer;
++  device scalar mode requires C because beta is not inspected on the host.
++* In-place C/D with identical layout, stride and offset, or separate C/D with
++  different leading dimensions. A zero beta does not read C. A zero alpha does
++  not read A or B. K=0 scales C without reading A or B.
++* Explicit heuristic algorithms or a null algorithm for implicit selection.
++  The scalar kernel needs no workspace and executes on the supplied HIP stream.
++
++Limitations
++-----------
++
++This is a correctness-oriented scalar FMA implementation using 16x16 shared
++memory tiles. It does not claim performance parity with optimized BLAS kernels.
++Matrix instructions are not emitted because gfx1013 has neither MFMA nor WMMA.
++
++Epilogues, bias, scaling pointers, auxiliary outputs, FP8/INT8/FP64, pointer-array
++batches, packed layouts, C leading-dimension-zero broadcasting, grouped GEMM
++and C++ extension algorithm enumeration are unsupported. Non-default SM-count,
++Stream-K and search/configuration controls are rejected rather than ignored.
++Numerics-scanner requests are also unsupported. The handle must belong to the
++current gfx1013 device. Matrix dimensions and leading dimensions are bounded by
++INT32_MAX, and address spans and grid size are checked before launch.
++
++The hardware probe ``build_tools/bc250/hipblaslt_scalar_smoke.cpp`` in TheRock
++checks public API dispatch against an independent CPU double-precision reference,
++including padding, transposes, batches, beta=0, K=0, alpha=0 and rejection cases.
+diff --git a/projects/hipblaslt/library/src/amd_detail/CMakeLists.txt b/projects/hipblaslt/library/src/amd_detail/CMakeLists.txt
+index 840317f2913..729c523c2fe 100644
+--- a/projects/hipblaslt/library/src/amd_detail/CMakeLists.txt
++++ b/projects/hipblaslt/library/src/amd_detail/CMakeLists.txt
+@@ -3,6 +3,10 @@
+ 
+ add_subdirectory(rocblaslt)
+ 
++if(HIPBLASLT_ENABLE_GFX1013_SCALAR)
++    target_sources(hipblaslt PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/gfx1013_scalar.cpp")
++endif()
++
+ target_sources(hipblaslt
+     PRIVATE
+         "${CMAKE_CURRENT_SOURCE_DIR}/hipblaslt_ostream.cpp"
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+new file mode 100644
+index 00000000000..95db9ccd771
+--- /dev/null
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+@@ -0,0 +1,313 @@
++// Copyright Advanced Micro Devices, Inc.
++// SPDX-License-Identifier: MIT
++
++#include "gfx1013_scalar.hpp"
++#include "handle.h"
++#include <climits>
++#include <cstring>
++#include <hip/hip_bfloat16.h>
++#include <hip/hip_fp16.h>
++#include <hip/hip_runtime.h>
++#include <limits>
++
++namespace gfx1013_scalar
++{
++    namespace
++    {
++        constexpr unsigned tile = 16;
++        constexpr uint8_t  algorithm_id[16]
++            = {'g', 'f', 'x', '1', '0', '1', '3', 's', 'c', 'a', 'l', 'a', 'r', 1, 0, 0};
++
++        struct Layout
++        {
++            uint64_t            rows, cols, ld, stride, offset;
++            bool                row_major;
++            __device__ uint64_t index(uint64_t row, uint64_t col, uint64_t batch) const
++            {
++                return offset + batch * stride + (row_major ? row * ld + col : col * ld + row);
++            }
++        };
++
++        Layout layout(const _rocblaslt_matrix_layout& x)
++        {
++            return {x.m,
++                    x.n,
++                    uint64_t(x.ld),
++                    uint64_t(x.batch_stride),
++                    uint64_t(x.batch_offset),
++                    x.order == HIPBLASLT_ORDER_ROW};
++        }
++
++        // Bound the last byte addressed, including batch and per-matrix padding.
++        bool valid_span(const _rocblaslt_matrix_layout& x, bool output)
++        {
++            if(x.m > INT_MAX || x.n > INT_MAX || x.ld < 0 || x.ld > INT_MAX || x.batch_count < 1
++               || x.batch_stride < 0 || x.batch_offset < 0)
++                return false;
++            const bool     row   = x.order == HIPBLASLT_ORDER_ROW;
++            const uint64_t inner = row ? x.n : x.m, outer = row ? x.m : x.n;
++            if(x.ld < int64_t(inner))
++                return false;
++            const uint64_t span = outer && inner ? (outer - 1) * uint64_t(x.ld) + inner : 0;
++            if(output && x.batch_count > 1 && uint64_t(x.batch_stride) < span)
++                return false;
++            const uint64_t limit = uint64_t(std::numeric_limits<int64_t>::max()) / 4;
++            if(uint64_t(x.batch_offset) > limit || span > limit - uint64_t(x.batch_offset))
++                return false;
++            return !x.batch_stride
++                   || uint64_t(x.batch_count - 1)
++                          <= (limit - uint64_t(x.batch_offset) - span) / uint64_t(x.batch_stride);
++        }
++
++        hipblasStatus_t validate(rocblaslt_handle        h,
++                                 rocblaslt_matmul_desc   op,
++                                 rocblaslt_matrix_layout a,
++                                 rocblaslt_matrix_layout b,
++                                 rocblaslt_matrix_layout c,
++                                 rocblaslt_matrix_layout d)
++        {
++            if(!h)
++                return HIPBLAS_STATUS_NOT_INITIALIZED;
++            if(!op || !a || !b || !c || !d)
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            int device = -1;
++            if(hipGetDevice(&device) != hipSuccess)
++                return HIPBLAS_STATUS_EXECUTION_FAILED;
++            if(device != h->device || std::strncmp(h->properties.gcnArchName, "gfx1013", 7)
++               || (h->properties.gcnArchName[7] && h->properties.gcnArchName[7] != ':'))
++                return HIPBLAS_STATUS_ARCH_MISMATCH;
++            if(op->epilogue != ROCBLASLT_EPILOGUE_DEFAULT || op->bias || op->scaleA || op->scaleB
++               || op->scaleC || op->scaleD || op->scaleE || op->amaxD || op->e
++               || op->scaleAType != RocblasltContractionProblem::ScalingFormat::None
++               || op->scaleBType != RocblasltContractionProblem::ScalingFormat::None
++               || op->compute_input_typeA != HIPBLASLT_DATATYPE_INVALID
++               || op->compute_input_typeB != HIPBLASLT_DATATYPE_INVALID
++               || op->scale_type != HIP_R_32F || op->sm_count_target || h->sm_count_target
++               || op->streamk_tile_scheduling_ext || op->bias_stride
++               || h->check_numerics != hipblaslt_check_numerics_mode_no_check
++               || (op->compute_type_original != rocblaslt_compute_f32
++                   && op->compute_type_original != rocblaslt_compute_f32_pedantic)
++               || (op->pointermode != rocblaslt_pointer_mode_host
++                   && op->pointermode != rocblaslt_pointer_mode_device))
++                return HIPBLAS_STATUS_NOT_SUPPORTED;
++#if HIPBLASLT_HAS_GEMM_A2A_FUSION
++            if(op->fused_epilogue)
++                return HIPBLAS_STATUS_NOT_SUPPORTED;
++#endif
++            if((op->op_A != HIPBLAS_OP_N && op->op_A != HIPBLAS_OP_T)
++               || (op->op_B != HIPBLAS_OP_N && op->op_B != HIPBLAS_OP_T))
++                return HIPBLAS_STATUS_NOT_SUPPORTED;
++            if(a->type != b->type || c->type != d->type
++               || (a->type != HIP_R_32F && a->type != HIP_R_16F && a->type != HIP_R_16BF)
++               || (d->type != a->type && d->type != HIP_R_32F))
++                return HIPBLAS_STATUS_NOT_SUPPORTED;
++            for(auto x : {a, b, c, d})
++            {
++                if((x->order != HIPBLASLT_ORDER_COL && x->order != HIPBLASLT_ORDER_ROW)
++                   || x->batch_mode != HIPBLASLT_BATCH_MODE_STRIDED)
++                    return HIPBLAS_STATUS_NOT_SUPPORTED;
++                if(!valid_span(*x, x == d))
++                    return HIPBLAS_STATUS_INVALID_VALUE;
++            }
++            const uint64_t m  = op->op_A == HIPBLAS_OP_N ? a->m : a->n;
++            const uint64_t k  = op->op_A == HIPBLAS_OP_N ? a->n : a->m;
++            const uint64_t bk = op->op_B == HIPBLAS_OP_N ? b->m : b->n;
++            const uint64_t n  = op->op_B == HIPBLAS_OP_N ? b->n : b->m;
++            if(k != bk || c->m != m || d->m != m || c->n != n || d->n != n || c->order != d->order
++               || a->batch_count != d->batch_count || b->batch_count != d->batch_count
++               || c->batch_count != d->batch_count)
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            const uint64_t blocks = ((m + tile - 1) / tile) * ((n + tile - 1) / tile);
++            if(blocks > uint64_t(INT_MAX) / uint64_t(d->batch_count))
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            return HIPBLAS_STATUS_SUCCESS;
++        }
++
++        template <typename Input, typename Output>
++        __global__ void gemm(Layout        a,
++                             Layout        b,
++                             Layout        c,
++                             Layout        d,
++                             const Input*  A,
++                             const Input*  B,
++                             const Output* C,
++                             Output*       D,
++                             uint64_t      k,
++                             bool          trans_a,
++                             bool          trans_b,
++                             float         alpha_host,
++                             float         beta_host,
++                             const float*  alpha_device,
++                             const float*  beta_device)
++        {
++            __shared__ float left[tile][tile];
++            __shared__ float right[tile][tile];
++            const unsigned   x = threadIdx.x, y = threadIdx.y;
++            const uint64_t   tiles_m  = (d.rows + tile - 1) / tile;
++            const uint64_t   tiles_n  = (d.cols + tile - 1) / tile;
++            const uint64_t   batch    = uint64_t(blockIdx.x) / (tiles_m * tiles_n);
++            const uint64_t   position = uint64_t(blockIdx.x) % (tiles_m * tiles_n);
++            const uint64_t   row      = (position % tiles_m) * tile + y;
++            const uint64_t   col      = (position / tiles_m) * tile + x;
++            const float      alpha    = alpha_device ? *alpha_device : alpha_host;
++            const float      beta     = beta_device ? *beta_device : beta_host;
++            float            acc      = 0;
++            // Scalar arithmetic only: gfx1013 does not have MFMA or WMMA instructions.
++            if(alpha != 0)
++                for(uint64_t start = 0; start < k; start += tile)
++                {
++                    const uint64_t ak = start + x, bk = start + y;
++                    left[y][x]
++                        = row < d.rows && ak < k
++                              ? float(A[a.index(trans_a ? ak : row, trans_a ? row : ak, batch)])
++                              : 0;
++                    right[y][x]
++                        = col < d.cols && bk < k
++                              ? float(B[b.index(trans_b ? col : bk, trans_b ? bk : col, batch)])
++                              : 0;
++                    __syncthreads();
++                    for(unsigned i = 0; i < tile && start + i < k; ++i)
++                        acc = __builtin_fmaf(left[y][i], right[i][x], acc);
++                    __syncthreads();
++                }
++            if(row < d.rows && col < d.cols)
++            {
++                // BLAS beta=0 must not read C: uninitialised/NaN C is valid in this case.
++                const float value_c         = beta == 0 ? 0 : float(C[c.index(row, col, batch)]);
++                D[d.index(row, col, batch)] = Output(__builtin_fmaf(alpha, acc, beta * value_c));
++            }
++        }
++
++        template <typename Input, typename Output>
++        hipblasStatus_t launch(rocblaslt_matmul_desc   op,
++                               rocblaslt_matrix_layout a,
++                               rocblaslt_matrix_layout b,
++                               rocblaslt_matrix_layout c,
++                               rocblaslt_matrix_layout d,
++                               const void*             alpha,
++                               const void*             A,
++                               const void*             B,
++                               const void*             beta,
++                               const void*             C,
++                               void*                   D,
++                               hipStream_t             stream)
++        {
++            const bool device = op->pointermode == rocblaslt_pointer_mode_device;
++            float      ah = 0, bh = 0;
++            if(!device)
++            {
++                std::memcpy(&ah, alpha, sizeof(ah));
++                std::memcpy(&bh, beta, sizeof(bh));
++            }
++            const uint64_t k = op->op_A == HIPBLAS_OP_N ? a->n : a->m;
++            if(!D || ((device || bh != 0) && !C) || (k && (device || ah != 0) && (!A || !B)))
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            if(D == A || D == B)
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            if(C == D
++               && (c->ld != d->ld || c->batch_stride != d->batch_stride
++                   || c->batch_offset != d->batch_offset))
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            const uint64_t blocks = ((d->m + tile - 1) / tile) * ((d->n + tile - 1) / tile)
++                                    * uint64_t(d->batch_count);
++            if(!blocks)
++                return HIPBLAS_STATUS_SUCCESS;
++            gemm<Input, Output><<<dim3(unsigned(blocks)), dim3(tile, tile), 0, stream>>>(
++                layout(*a),
++                layout(*b),
++                layout(*c),
++                layout(*d),
++                static_cast<const Input*>(A),
++                static_cast<const Input*>(B),
++                static_cast<const Output*>(C),
++                static_cast<Output*>(D),
++                k,
++                op->op_A == HIPBLAS_OP_T,
++                op->op_B == HIPBLAS_OP_T,
++                ah,
++                bh,
++                device ? static_cast<const float*>(alpha) : nullptr,
++                device ? static_cast<const float*>(beta) : nullptr);
++            return hipGetLastError() == hipSuccess ? HIPBLAS_STATUS_SUCCESS
++                                                   : HIPBLAS_STATUS_EXECUTION_FAILED;
++        }
++    }
++
++    hipblasStatus_t heuristic(hipblasLtHandle_t                 handle,
++                              hipblasLtMatmulDesc_t             desc,
++                              hipblasLtMatrixLayout_t           A,
++                              hipblasLtMatrixLayout_t           B,
++                              hipblasLtMatrixLayout_t           C,
++                              hipblasLtMatrixLayout_t           D,
++                              hipblasLtMatmulPreference_t       preference,
++                              int                               requested,
++                              hipblasLtMatmulHeuristicResult_t* results,
++                              int*                              count)
++    {
++        if(!count)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        *count = 0;
++        if(!preference || !results || requested < 1)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        const auto pref = reinterpret_cast<rocblaslt_matmul_preference>(preference);
++        if(pref->search_mode || pref->sm_count_target || pref->alg_config_id || pref->alg_max_id
++           || pref->search_iterations)
++            return HIPBLAS_STATUS_NOT_SUPPORTED;
++        auto status = validate(reinterpret_cast<rocblaslt_handle>(handle),
++                               reinterpret_cast<rocblaslt_matmul_desc>(desc),
++                               reinterpret_cast<rocblaslt_matrix_layout>(A),
++                               reinterpret_cast<rocblaslt_matrix_layout>(B),
++                               reinterpret_cast<rocblaslt_matrix_layout>(C ? C : D),
++                               reinterpret_cast<rocblaslt_matrix_layout>(D));
++        if(status != HIPBLAS_STATUS_SUCCESS)
++            return status;
++        results[0] = {};
++        std::memcpy(results[0].algo.data, algorithm_id, sizeof(algorithm_id));
++        results[0].state = HIPBLAS_STATUS_SUCCESS;
++        *count           = 1;
++        return HIPBLAS_STATUS_SUCCESS;
++    }
++
++    hipblasStatus_t matmul(hipblasLtHandle_t            handle,
++                           hipblasLtMatmulDesc_t        desc,
++                           const void*                  alpha,
++                           const void*                  A,
++                           hipblasLtMatrixLayout_t      Adesc,
++                           const void*                  B,
++                           hipblasLtMatrixLayout_t      Bdesc,
++                           const void*                  beta,
++                           const void*                  C,
++                           hipblasLtMatrixLayout_t      Cdesc,
++                           void*                        D,
++                           hipblasLtMatrixLayout_t      Ddesc,
++                           const hipblasLtMatmulAlgo_t* algo,
++                           void*                        workspace,
++                           size_t                       workspace_bytes,
++                           hipStream_t                  stream)
++    {
++        auto op     = reinterpret_cast<rocblaslt_matmul_desc>(desc);
++        auto a      = reinterpret_cast<rocblaslt_matrix_layout>(Adesc);
++        auto b      = reinterpret_cast<rocblaslt_matrix_layout>(Bdesc);
++        auto c      = reinterpret_cast<rocblaslt_matrix_layout>(Cdesc ? Cdesc : Ddesc);
++        auto d      = reinterpret_cast<rocblaslt_matrix_layout>(Ddesc);
++        auto status = validate(reinterpret_cast<rocblaslt_handle>(handle), op, a, b, c, d);
++        if(status != HIPBLAS_STATUS_SUCCESS)
++            return status;
++        if(!alpha || !beta || workspace_bytes > UINT32_MAX
++           || (workspace_bytes && (!workspace || (reinterpret_cast<uintptr_t>(workspace) & 15)))
++           || (algo
++               && (std::memcmp(algo->data, algorithm_id, sizeof(algorithm_id))
++                   || algo->max_workspace_bytes)))
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        if(a->type == HIP_R_32F)
++            return launch<float, float>(op, a, b, c, d, alpha, A, B, beta, C, D, stream);
++        if(a->type == HIP_R_16F)
++            return d->type == HIP_R_32F
++                       ? launch<__half, float>(op, a, b, c, d, alpha, A, B, beta, C, D, stream)
++                       : launch<__half, __half>(op, a, b, c, d, alpha, A, B, beta, C, D, stream);
++        return d->type == HIP_R_32F
++                   ? launch<hip_bfloat16, float>(op, a, b, c, d, alpha, A, B, beta, C, D, stream)
++                   : launch<hip_bfloat16, hip_bfloat16>(
++                         op, a, b, c, d, alpha, A, B, beta, C, D, stream);
++    }
++}
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp
+new file mode 100644
+index 00000000000..4de61c2a2a9
+--- /dev/null
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp
+@@ -0,0 +1,34 @@
++// Copyright Advanced Micro Devices, Inc.
++// SPDX-License-Identifier: MIT
++#pragma once
++#include <hipblaslt/hipblaslt.h>
++
++namespace gfx1013_scalar
++{
++    hipblasStatus_t heuristic(hipblasLtHandle_t,
++                              hipblasLtMatmulDesc_t,
++                              hipblasLtMatrixLayout_t,
++                              hipblasLtMatrixLayout_t,
++                              hipblasLtMatrixLayout_t,
++                              hipblasLtMatrixLayout_t,
++                              hipblasLtMatmulPreference_t,
++                              int,
++                              hipblasLtMatmulHeuristicResult_t*,
++                              int*);
++    hipblasStatus_t matmul(hipblasLtHandle_t,
++                           hipblasLtMatmulDesc_t,
++                           const void*,
++                           const void*,
++                           hipblasLtMatrixLayout_t,
++                           const void*,
++                           hipblasLtMatrixLayout_t,
++                           const void*,
++                           const void*,
++                           hipblasLtMatrixLayout_t,
++                           void*,
++                           hipblasLtMatrixLayout_t,
++                           const hipblasLtMatmulAlgo_t*,
++                           void*,
++                           size_t,
++                           hipStream_t);
++}
+diff --git a/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp b/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp
+index 70ace012fbd..a0abe7c3eef 100644
+--- a/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/hipblaslt.cpp
+@@ -31,6 +31,9 @@
+ #include "handle.h"
+ #include "hipblaslt/hipblaslt-ext-op.h"
+ #include "hipblaslt_internal.hpp"
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++#include "gfx1013_scalar.hpp"
++#endif
+ 
+ #include <hip/hip_runtime_api.h>
+ #include <iostream>
+@@ -1122,6 +1125,20 @@ hipblasStatus_t
+ try
+ {
+     rocblaslt::Debug::Instance().markerStart("hipblasLtMatmulAlgoGetHeuristic");
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++    auto scalar_status = gfx1013_scalar::heuristic(handle,
++                                                   matmulDesc,
++                                                   Adesc,
++                                                   Bdesc,
++                                                   Cdesc,
++                                                   Ddesc,
++                                                   pref,
++                                                   requestedAlgoCount,
++                                                   heuristicResultsArray,
++                                                   returnAlgoCount);
++    rocblaslt::Debug::Instance().markerStop();
++    return scalar_status;
++#endif
+ 
+ #if HIPBLASLT_HAS_GEMM_A2A_FUSION
+     // Everything a communicating stage can be judged on before a solution exists
+@@ -1174,6 +1191,26 @@ hipblasStatus_t hipblasLtMatmul(hipblasLtHandle_t            handle,
+ try
+ {
+     rocblaslt::Debug::Instance().markerStart("hipblasLtMatmul");
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++    auto scalar_status = gfx1013_scalar::matmul(handle,
++                                                matmul_descr,
++                                                alpha,
++                                                A,
++                                                matA,
++                                                B,
++                                                matB,
++                                                beta,
++                                                C,
++                                                matC,
++                                                D,
++                                                matD,
++                                                algo,
++                                                workspace,
++                                                workspaceSizeInBytes,
++                                                stream);
++    rocblaslt::Debug::Instance().markerStop();
++    return scalar_status;
++#endif
+ #if HIPBLASLT_HOST_API_ONLY
+     rocblaslt::Debug::Instance().markerStop();
+     return HIPBLAS_STATUS_NOT_SUPPORTED;
+diff --git a/projects/hipsparselt/CMakeLists.txt b/projects/hipsparselt/CMakeLists.txt
+index 6dd986e6232..e9cc4861509 100644
+--- a/projects/hipsparselt/CMakeLists.txt
++++ b/projects/hipsparselt/CMakeLists.txt
+@@ -65,6 +65,7 @@ option(HIPSPARSELT_BUILD_TESTING "Build test client." ON)
+ option(HIPSPARSELT_BUILD_COVERAGE "Build tests with coverage enabled." OFF)
+ 
+ option(HIPSPARSELT_ENABLE_DEVICE "Build hipSPARSELt device libraries." ON)
++option(HIPSPARSELT_GFX1013_SCALAR_ONLY "Build the native gfx1013 scalar sparse backend." OFF)
+ set(TENSILELITE_LIBLOGIC_PATH
+     "${CMAKE_CURRENT_SOURCE_DIR}/library/src/hcc_detail/rocsparselt/src/spmm/Tensile/Logic/asm_full"
+     CACHE PATH "Path to the hipSPARSELt TensileLite logic files."
+@@ -104,6 +105,14 @@ if(NOT HIPSPARSELT_ENABLE_CUDA)
+     message(STATUS "Building for GPU targets: ${GPU_TARGETS}")
+ endif()
+ 
++if(HIPSPARSELT_GFX1013_SCALAR_ONLY)
++    if(NOT HIPSPARSELT_ENABLE_HIP OR NOT GPU_TARGETS STREQUAL "gfx1013")
++        message(FATAL_ERROR "The scalar backend requires HIP and GPU_TARGETS=gfx1013")
++    endif()
++    enable_language(HIP)
++    set(CMAKE_HIP_ARCHITECTURES gfx1013)
++endif()
++
+ if(HIPSPARSELT_ENABLE_FORTRAN AND HIPSPARSELT_ENABLE_ASAN)
+     message(FATAL_ERROR "Cannot enable fortran clients and address sanitizers.")
+ endif()
+@@ -155,7 +164,7 @@ if(HIPSPARSELT_ENABLE_CUDA)
+     message(STATUS "Found cusparseLt: ${cusparselt_LIBRARY}")
+ endif()
+ 
+-if(HIPSPARSELT_ENABLE_HIP)
++if(HIPSPARSELT_ENABLE_HIP AND NOT HIPSPARSELT_GFX1013_SCALAR_ONLY)
+     if(NOT HIPBLASLT_TENSILELITE_PATH)
+         set(HIPBLASLT_TENSILELITE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../hipblaslt/tensilelite")
+     endif()
+@@ -233,7 +242,7 @@ set(BUILD_SHARED_LIBS "${HIPSPARSELT_BUILD_SHARED_LIBS}")
+ add_subdirectory(library)
+ 
+ set(_hipsparselt_requires_hipblaslt OFF)
+-if(HIPSPARSELT_ENABLE_HIP
++if(HIPSPARSELT_ENABLE_HIP AND NOT HIPSPARSELT_GFX1013_SCALAR_ONLY
+         AND (HIPSPARSELT_ENABLE_THEROCK OR NOT BUILD_SHARED_LIBS))
+     set(_hipsparselt_requires_hipblaslt ON)
+ endif()
+diff --git a/projects/hipsparselt/cmake/hipsparselt_supported_architectures.cmake b/projects/hipsparselt/cmake/hipsparselt_supported_architectures.cmake
+index 7083f1a1300..6410ab3b2bc 100644
+--- a/projects/hipsparselt/cmake/hipsparselt_supported_architectures.cmake
++++ b/projects/hipsparselt/cmake/hipsparselt_supported_architectures.cmake
+@@ -28,6 +28,9 @@ endif()
+ # unsupported target is found.
+ function(hipsparselt_validate_gpu_targets targets)
+     set(supported_list ${SUPPORTED_ARCHITECTURES})
++    if(HIPSPARSELT_GFX1013_SCALAR_ONLY)
++        list(APPEND supported_list gfx1013)
++    endif()
+     set(target_list ${targets})
+ 
+     string(REGEX REPLACE ";" " " supported_flat "${supported_list}")
+diff --git a/projects/hipsparselt/docs/gfx1013-scalar-backend.rst b/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
+new file mode 100644
+index 00000000000..5f98d01203c
+--- /dev/null
++++ b/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
+@@ -0,0 +1,56 @@
++Native gfx1013 scalar backend
++============================
++
++``HIPSPARSELT_GFX1013_SCALAR_ONLY=ON`` selects a separate HIP implementation for
++``GPU_TARGETS=gfx1013``. It does not generate or load Tensile matrix-instruction
++kernels. Its purpose is functional structured sparsity on hardware without
++sparse matrix instructions; it is not an accelerated sparse tensor-core path.
++The default backend and its architecture list remain unchanged.
++
++Implemented operations
++----------------------
++
++* FP32 compute with matching FP32, FP16, or BF16 matrix input/output types.
++* One structured operand, either A or B; row/column storage and real transpose.
++* Strip magnitude pruning and prune checking, including in-place strip pruning.
++* Compression and compressed scalar GEMM, through both descriptor and plan APIs.
++* Positive, equal batch counts with explicit nonoverlapping padded batch strides.
++* Host ``float`` alpha/beta, arbitrary valid leading dimensions, separate C/D
++  layouts, and C/D aliasing when their layouts and batch strides match.
++* One algorithm (configuration 0), no workspace, and the caller's one HIP stream.
++  Search executes this sole algorithm and blocks until its selected/default
++  stream completes, without changing its configuration. Only one search
++  iteration is accepted. Matmul remains asynchronous.
++
++The fallback rejects tile pruning, integer/FP8/TF32 compute modes, mixed matrix
++storage types, bias/activation/vector scaling, split-K, multiple streams, batch
++broadcasting, multiple search iterations, and sparse/sparse multiplication. It does not silently ignore
++unsupported attributes. Descriptors use bounded positive dimensions to keep
++all index and launch products valid.
++
++Compression format
++------------------
++
++A compressed buffer is opaque and specific to this backend; it must not be
++interchanged with Tensile buffers or persisted across backend changes. For
++logical sparse A it stores each row along K; for logical sparse B each column
++along K. Batches follow consecutively regardless of the original leading
++or batch strides. FP16/BF16 retain two values per four consecutive K elements;
++FP32 retains one per two, matching the public sparsity contract. Values occupy
++``rows * cols * batches / 2 * sizeof(type)`` bytes. Immediately following is one
++metadata byte per group, with ascending, distinct two-bit indices identifying
++retained K positions. Unused retained slots hold existing zeros. Compression
++requires a valid sparse matrix: prune and/or check first. GEMM decodes this
++metadata and never accesses the original dense sparse operand.
++
++Qualification
++-------------
++
++``build_tools/bc250/hipsparselt_scalar_smoke.cpp`` in TheRock exercises the public
++API against independent CPU magnitude pruning and double-precision dense GEMM,
++independently decodes compressed values/metadata, destroys the original sparse
++storage before GEMM, checks padding/buffer guards, and detects invalid sparsity.
++Its 96 cases combine three types, A/B sparsity, two layouts, four transpose
++pairs, and one/two batches. GPU execution must be recorded separately from
++host/device compilation; passing syntax checks alone does not qualify runtime
++support.
+diff --git a/projects/hipsparselt/library/CMakeLists.txt b/projects/hipsparselt/library/CMakeLists.txt
+index a917665ffef..c9eb6090896 100644
+--- a/projects/hipsparselt/library/CMakeLists.txt
++++ b/projects/hipsparselt/library/CMakeLists.txt
+@@ -67,7 +67,9 @@ if(HIPSPARSELT_ENABLE_CUDA)
+ endif()
+ 
+ if(HIPSPARSELT_ENABLE_HIP)
+-    target_compile_definitions(hipsparselt PRIVATE BUILD_WITH_TENSILE)
++    if(NOT HIPSPARSELT_GFX1013_SCALAR_ONLY)
++        target_compile_definitions(hipsparselt PRIVATE BUILD_WITH_TENSILE)
++    endif()
+     target_compile_definitions(hipsparselt PRIVATE __HIP_HCC_COMPAT_MODE__=1)
+     target_include_directories(
+         hipsparselt PUBLIC $<BUILD_INTERFACE:${HIP_INCLUDE_DIRS}> # Needed?
+diff --git a/projects/hipsparselt/library/src/hcc_detail/CMakeLists.txt b/projects/hipsparselt/library/src/hcc_detail/CMakeLists.txt
+index 9f6d343eae9..b6797770594 100644
+--- a/projects/hipsparselt/library/src/hcc_detail/CMakeLists.txt
++++ b/projects/hipsparselt/library/src/hcc_detail/CMakeLists.txt
+@@ -1,6 +1,9 @@
+ # Copyright Advanced Micro Devices, Inc., or its affiliates.
+ # SPDX-License-Identifier: MIT
+ 
+-target_sources(hipsparselt PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/hipsparselt.cpp")
+-
+-add_subdirectory(rocsparselt)
++if(HIPSPARSELT_GFX1013_SCALAR_ONLY)
++  target_sources(hipsparselt PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/gfx1013_scalar.hip")
++else()
++  target_sources(hipsparselt PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/hipsparselt.cpp")
++  add_subdirectory(rocsparselt)
++endif()
+diff --git a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+new file mode 100644
+index 00000000000..8af253a73f1
+--- /dev/null
++++ b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+@@ -0,0 +1,894 @@
++// Copyright Advanced Micro Devices, Inc., or its affiliates.
++// SPDX-License-Identifier: MIT
++// Native gfx1013 fallback: ordinary scalar HIP instructions, host FP32 scalars,
++// strip pruning, and no fusion. The compressed buffer is backend-specific:
++// tightly packed retained values for each logical contraction row followed by
++// one byte per group containing two-bit indices. FP16/BF16 use 2:4, FP32 1:2.
++// Its orientation follows sparse A's rows or sparse B's columns after op().
++// Compression never aliases a dense buffer and GEMM reads only these values
++// and their indices, not the original dense matrix.
++#include <algorithm>
++#include <cmath>
++#include <cstdio>
++#include <cstdlib>
++#include <cstring>
++#include <hip/hip_runtime.h>
++#include <hipsparselt/hipsparselt.h>
++#include <limits>
++
++#define HIPSPARSELT_STRINGIFY_IMPL(value) #value
++#define HIPSPARSELT_STRINGIFY(value) HIPSPARSELT_STRINGIFY_IMPL(value)
++
++namespace
++{
++    constexpr uint64_t handle_tag = 0x10130001, matrix_tag = 0x10130002, multiply_tag = 0x10130003,
++                       algorithm_tag = 0x10130004, plan_tag = 0x10130005;
++    struct Handle
++    {
++        uint64_t tag    = handle_tag;
++        int      device = 0;
++    };
++    struct Matrix
++    {
++        uint64_t         tag = matrix_tag;
++        int64_t          rows, cols, ld, batch_stride;
++        int              batches = 1;
++        hipDataType      type;
++        hipsparseOrder_t order;
++        bool             sparse;
++    };
++    struct Multiply
++    {
++        uint64_t             tag = multiply_tag;
++        Matrix               a, b, c, d;
++        hipsparseOperation_t opa, opb;
++    };
++    struct Algorithm
++    {
++        uint64_t tag        = algorithm_tag;
++        int      iterations = 1;
++    };
++    struct Plan
++    {
++        uint64_t tag = plan_tag;
++        Multiply mm;
++    };
++    static_assert(sizeof(Plan) <= sizeof(hipsparseLtMatmulPlan_t));
++    static_assert(sizeof(Multiply) <= sizeof(hipsparseLtMatmulDescriptor_t));
++    template <class T, class O>
++    bool read(const O* opaque, T& value, uint64_t tag)
++    {
++        if(!opaque)
++            return false;
++        std::memcpy(&value, opaque->data, sizeof(T));
++        return value.tag == tag;
++    }
++    template <class T, class O>
++    void write(O* opaque, const T& value)
++    {
++        std::memset(opaque->data, 0, sizeof(opaque->data));
++        std::memcpy(opaque->data, &value, sizeof(T));
++    }
++    template <class O>
++    hipsparseStatus_t destroy(const O* object, uint64_t tag)
++    {
++        uint64_t actual = 0;
++        if(object)
++            std::memcpy(&actual, object->data, sizeof(actual));
++        if(actual != tag)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memset(const_cast<O*>(object)->data, 0, sizeof(object->data));
++        return HIPSPARSE_STATUS_SUCCESS;
++    }
++    bool valid(const hipsparseLtHandle_t* handle)
++    {
++        Handle h;
++        int    device;
++        return read(handle, h, handle_tag) && hipGetDevice(&device) == hipSuccess
++               && device == h.device;
++    }
++    hipsparseStatus_t hip_status(hipError_t error)
++    {
++        if(error != hipSuccess && std::getenv("HIPSPARSELT_SCALAR_DIAGNOSTICS"))
++            std::fprintf(stderr,
++                         "hipSPARSELt scalar HIP error: %s (%s)\n",
++                         hipGetErrorName(error),
++                         hipGetErrorString(error));
++        return error == hipSuccess ? HIPSPARSE_STATUS_SUCCESS : HIPSPARSE_STATUS_EXECUTION_FAILED;
++    }
++    __host__ __device__ int64_t rows(const Matrix& a, hipsparseOperation_t op)
++    {
++        return op == HIPSPARSE_OPERATION_NON_TRANSPOSE ? a.rows : a.cols;
++    }
++    __host__ __device__ int64_t cols(const Matrix& a, hipsparseOperation_t op)
++    {
++        return op == HIPSPARSE_OPERATION_NON_TRANSPOSE ? a.cols : a.rows;
++    }
++    __host__ __device__ int64_t
++        offset(const Matrix& a, hipsparseOperation_t op, int64_t row, int64_t col, int batch)
++    {
++        if(op != HIPSPARSE_OPERATION_NON_TRANSPOSE)
++        {
++            auto tmp = row;
++            row      = col;
++            col      = tmp;
++        }
++        return (a.batches == 1 ? 0 : batch * a.batch_stride)
++               + (a.order == HIPSPARSE_ORDER_ROW ? row * a.ld + col : col * a.ld + row);
++    }
++    bool operation(hipsparseOperation_t op)
++    {
++        return op == HIPSPARSE_OPERATION_NON_TRANSPOSE || op == HIPSPARSE_OPERATION_TRANSPOSE;
++    }
++    size_t width(hipDataType type)
++    {
++        return type == HIP_R_32F ? 4 : 2;
++    }
++    int group_size(const Matrix& matrix)
++    {
++        return matrix.type == HIP_R_32F ? 2 : 4;
++    }
++    int64_t outer(const Matrix& matrix, bool sparse_a, hipsparseOperation_t op)
++    {
++        return sparse_a ? rows(matrix, op) : cols(matrix, op);
++    }
++    __host__ __device__ int64_t contraction(const Matrix&        matrix,
++                                            bool                 sparse_a,
++                                            hipsparseOperation_t op)
++    {
++        return sparse_a ? cols(matrix, op) : rows(matrix, op);
++    }
++    const Matrix& sparse(const Multiply& mm)
++    {
++        return mm.a.sparse ? mm.a : mm.b;
++    }
++    hipsparseOperation_t sparse_op(const Multiply& mm)
++    {
++        return mm.a.sparse ? mm.opa : mm.opb;
++    }
++    int64_t groups(const Matrix& matrix)
++    {
++        return matrix.rows * matrix.cols / group_size(matrix);
++    }
++    size_t value_bytes(const Matrix& matrix)
++    {
++        return matrix.rows * matrix.cols / 2 * matrix.batches * width(matrix.type);
++    }
++    size_t compressed_bytes(const Matrix& matrix)
++    {
++        return value_bytes(matrix) + groups(matrix) * matrix.batches;
++    }
++
++    // A group owns all its dense output locations, allowing in-place strip pruning.
++    template <class T, bool Check, bool Compress>
++    __global__ void strip_kernel(Matrix               matrix,
++                                 bool                 sparse_a,
++                                 hipsparseOperation_t op,
++                                 const T*             input,
++                                 T*                   output,
++                                 int*                 invalid)
++    {
++        int64_t group = int64_t(blockIdx.x) * blockDim.x + threadIdx.x;
++        int     size = matrix.type == HIP_R_32F ? 2 : 4, kept = size / 2;
++        int64_t k = contraction(matrix, sparse_a, op), per_row = k / size;
++        int64_t per_batch = matrix.rows * matrix.cols / size;
++        if(group >= per_batch * matrix.batches)
++            return;
++        int     batch   = group / per_batch;
++        int64_t logical = group % per_batch, row = logical / per_row,
++                start = logical % per_row * size;
++        T       values[4];
++        int     indices[4] = {0, 1, 2, 3};
++        int     nonzero    = 0;
++        for(int i = 0; i < size; ++i)
++        {
++            values[i] = input[offset(
++                matrix, op, sparse_a ? row : start + i, sparse_a ? start + i : row, batch)];
++            nonzero += float(values[i]) != 0;
++        }
++        if constexpr(Check)
++        {
++            if(nonzero > kept)
++                atomicExch(invalid, 1);
++            return;
++        }
++        // Descending absolute value, stable lowest-index tie break. NaNs retained.
++        for(int i = 0; i < size; ++i)
++            for(int j = i + 1; j < size; ++j)
++            {
++                float a = fabsf(float(values[indices[i]])), b = fabsf(float(values[indices[j]]));
++                if((isnan(b) && !isnan(a)) || b > a
++                   || ((b == a || (isnan(a) && isnan(b))) && indices[j] < indices[i]))
++                {
++                    int tmp    = indices[i];
++                    indices[i] = indices[j];
++                    indices[j] = tmp;
++                }
++            }
++        if constexpr(Compress)
++        {
++            // Compression selects existing nonzeros (not magnitude pruning). Input
++            // must satisfy PruneCheck; fill unused slots with distinct zero indices.
++            int selected[2] = {0, 0}, count = 0;
++            for(int i = 0; i < size && count < kept; ++i)
++                if(float(values[i]) != 0)
++                    selected[count++] = i;
++            for(int i = 0; i < size && count < kept; ++i)
++                if(float(values[i]) == 0)
++                    selected[count++] = i;
++            if(kept == 2 && selected[0] > selected[1])
++            {
++                int tmp     = selected[0];
++                selected[0] = selected[1];
++                selected[1] = tmp;
++            }
++            unsigned char md = 0;
++            for(int i = 0; i < kept; ++i)
++            {
++                output[group * kept + i] = values[selected[i]];
++                md |= selected[i] << (2 * i);
++            }
++            auto metadata   = reinterpret_cast<unsigned char*>(output)
++                              + matrix.rows * matrix.cols / 2 * matrix.batches * sizeof(T);
++            metadata[group] = md;
++        }
++        else
++        {
++            for(int i = 0; i < size; ++i)
++            {
++                bool retain = false;
++                for(int j = 0; j < kept; ++j)
++                    retain |= indices[j] == i;
++                output[offset(
++                    matrix, op, sparse_a ? row : start + i, sparse_a ? start + i : row, batch)]
++                    = retain ? values[i] : T(0.0f);
++            }
++        }
++    }
++
++    template <class T>
++    __global__ void multiply_kernel(
++        Multiply mm, float alpha, float beta, const T* a, const T* b, const T* c, T* d)
++    {
++        int64_t m = rows(mm.a, mm.opa), n = cols(mm.b, mm.opb), k = cols(mm.a, mm.opa);
++        int64_t element = int64_t(blockIdx.x) * blockDim.x + threadIdx.x;
++        if(element >= m * n * mm.d.batches)
++            return;
++        int      batch = element / (m * n);
++        int64_t  row = (element % (m * n)) / n, col = element % n;
++        Matrix   sm         = mm.a.sparse ? mm.a : mm.b;
++        const T* compressed = mm.a.sparse ? a : b;
++        int      size = sm.type == HIP_R_32F ? 2 : 4, kept = size / 2;
++        int64_t  group_count = sm.rows * sm.cols / size;
++        auto     metadata    = reinterpret_cast<const unsigned char*>(compressed)
++                               + sm.rows * sm.cols / 2 * sm.batches * sizeof(T);
++        int64_t  base
++            = (sm.batches == 1 ? 0 : batch * group_count) + (mm.a.sparse ? row : col) * (k / size);
++        float sum = 0;
++        for(int64_t g = 0; alpha != 0 && g < k / size; ++g)
++            for(int t = 0; t < kept; ++t)
++            {
++                int64_t kk = g * size + ((metadata[base + g] >> (t * 2)) & 3);
++                float   sv = float(compressed[(base + g) * kept + t]);
++                float   dv = mm.a.sparse ? float(b[offset(mm.b, mm.opb, kk, col, batch)])
++                                         : float(a[offset(mm.a, mm.opa, row, kk, batch)]);
++                sum += sv * dv;
++            }
++        // beta==0 must not read C, which may contain NaNs or uninitialized data.
++        float value = alpha * sum;
++        if(beta != 0)
++            value += beta
++                     * float(c[offset(mm.c, HIPSPARSE_OPERATION_NON_TRANSPOSE, row, col, batch)]);
++        d[offset(mm.d, HIPSPARSE_OPERATION_NON_TRANSPOSE, row, col, batch)] = T(value);
++    }
++
++    template <bool Check, bool Compress>
++    hipsparseStatus_t launch_strip(const hipsparseLtHandle_t* handle,
++                                   const Matrix&              matrix,
++                                   int                        sparse_a,
++                                   hipsparseOperation_t       op,
++                                   const void*                input,
++                                   void*                      output,
++                                   int*                       invalid,
++                                   hipStream_t                stream)
++    {
++        bool valid_handle = valid(handle);
++        if(!valid_handle || !matrix.sparse || !operation(op) || (sparse_a != 0 && sparse_a != 1)
++           || !input || (Check ? !invalid : !output))
++        {
++            if(std::getenv("HIPSPARSELT_SCALAR_DIAGNOSTICS"))
++                std::fprintf(stderr,
++                             "hipSPARSELt strip arguments: handle=%d structured=%d op=%d "
++                             "sparse_a=%d input=%d output=%d invalid=%d rows=%lld cols=%lld\n",
++                             int(valid_handle),
++                             int(matrix.sparse),
++                             int(op),
++                             sparse_a,
++                             int(input != nullptr),
++                             int(output != nullptr),
++                             int(invalid != nullptr),
++                             static_cast<long long>(matrix.rows),
++                             static_cast<long long>(matrix.cols));
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        }
++        if(contraction(matrix, sparse_a, op) % group_size(matrix))
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++        if constexpr(Compress)
++            if(input == output)
++                return HIPSPARSE_STATUS_INVALID_VALUE;
++        if constexpr(Check)
++        {
++            if(hipMemsetAsync(invalid, 0, sizeof(int), stream) != hipSuccess)
++                return HIPSPARSE_STATUS_EXECUTION_FAILED;
++        }
++        int64_t count = groups(matrix) * matrix.batches;
++        dim3    grid((count + 255) / 256), block(256);
++        if(matrix.type == HIP_R_32F)
++            hipLaunchKernelGGL((strip_kernel<float, Check, Compress>),
++                               grid,
++                               block,
++                               0,
++                               stream,
++                               matrix,
++                               bool(sparse_a),
++                               op,
++                               (const float*)input,
++                               (float*)output,
++                               invalid);
++        else if(matrix.type == HIP_R_16F)
++            hipLaunchKernelGGL((strip_kernel<__half, Check, Compress>),
++                               grid,
++                               block,
++                               0,
++                               stream,
++                               matrix,
++                               bool(sparse_a),
++                               op,
++                               (const __half*)input,
++                               (__half*)output,
++                               invalid);
++        else
++            hipLaunchKernelGGL((strip_kernel<hip_bfloat16, Check, Compress>),
++                               grid,
++                               block,
++                               0,
++                               stream,
++                               matrix,
++                               bool(sparse_a),
++                               op,
++                               (const hip_bfloat16*)input,
++                               (hip_bfloat16*)output,
++                               invalid);
++        return hip_status(hipGetLastError());
++    }
++    hipsparseStatus_t init_matrix(const hipsparseLtHandle_t*  handle,
++                                  hipsparseLtMatDescriptor_t* desc,
++                                  int64_t                     r,
++                                  int64_t                     c,
++                                  int64_t                     ld,
++                                  uint32_t                    alignment,
++                                  hipDataType                 type,
++                                  hipsparseOrder_t            order,
++                                  bool                        structured)
++    {
++        if(!valid(handle) || !desc || r <= 0 || c <= 0 || ld <= 0 || !alignment
++           || (alignment & (alignment - 1))
++           || (order != HIPSPARSE_ORDER_ROW && order != HIPSPARSE_ORDER_COL))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        if(type != HIP_R_32F && type != HIP_R_16F && type != HIP_R_16BF)
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++        if(ld < (order == HIPSPARSE_ORDER_ROW ? c : r))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        // Bound all launch/index/size products before multiplication, including
++        // user-selected batch strides; the fallback is intended for bounded work.
++        constexpr int64_t limit = int64_t(1) << 30;
++        if(r > limit || c > limit || ld > limit || r > limit / c
++           || ld > limit / (order == HIPSPARSE_ORDER_ROW ? r : c))
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++        Matrix matrix{};
++        matrix.rows         = r;
++        matrix.cols         = c;
++        matrix.ld           = ld;
++        matrix.batch_stride = ld * (order == HIPSPARSE_ORDER_ROW ? r : c);
++        matrix.type         = type;
++        matrix.order        = order;
++        matrix.sparse       = structured;
++        write(desc, matrix);
++        return HIPSPARSE_STATUS_SUCCESS;
++    }
++}
++
++extern "C" {
++hipsparseStatus_t hipsparseLtInit(hipsparseLtHandle_t* opaque)
++{
++    if(!opaque)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    Handle          h;
++    hipDeviceProp_t properties{};
++    if(hipGetDevice(&h.device) != hipSuccess
++       || hipGetDeviceProperties(&properties, h.device) != hipSuccess)
++        return HIPSPARSE_STATUS_EXECUTION_FAILED;
++    if(std::strncmp(properties.gcnArchName, "gfx1013", 7)
++       || (properties.gcnArchName[7] && properties.gcnArchName[7] != ':'))
++        return HIPSPARSE_STATUS_ARCH_MISMATCH;
++    write(opaque, h);
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtDestroy(const hipsparseLtHandle_t* h)
++{
++    return destroy(h, handle_tag);
++}
++void              hipsparseLtInitialize() { }
++hipsparseStatus_t hipsparseLtGetVersion(const hipsparseLtHandle_t* h, int* v)
++{
++    if(!valid(h) || !v)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    *v = hipsparseltVersionMajor * 100000 + hipsparseltVersionMinor * 100 + hipsparseltVersionPatch;
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtGetProperty(hipLibraryPropertyType p, int* v)
++{
++    if(!v)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    switch(p)
++    {
++    case HIP_LIBRARY_MAJOR_VERSION:
++        *v = hipsparseltVersionMajor;
++        break;
++    case HIP_LIBRARY_MINOR_VERSION:
++        *v = hipsparseltVersionMinor;
++        break;
++    case HIP_LIBRARY_PATCH_LEVEL:
++        *v = hipsparseltVersionPatch;
++        break;
++    default:
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    }
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtGetGitRevision(hipsparseLtHandle_t h, char* rev)
++{
++    if(!valid(&h) || !rev)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    std::strcpy(rev, HIPSPARSELT_STRINGIFY(hipsparseltVersionTweak));
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtGetArchName(char** name)
++{
++    if(!name)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    *name = nullptr;
++    int             device;
++    hipDeviceProp_t properties{};
++    if(hipGetDevice(&device) != hipSuccess
++       || hipGetDeviceProperties(&properties, device) != hipSuccess)
++        return HIPSPARSE_STATUS_EXECUTION_FAILED;
++    size_t length = std::strlen(properties.gcnArchName) + 1;
++    *name         = static_cast<char*>(std::malloc(length));
++    if(!*name)
++        return HIPSPARSE_STATUS_ALLOC_FAILED;
++    std::memcpy(*name, properties.gcnArchName, length);
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtDenseDescriptorInit(const hipsparseLtHandle_t*  h,
++                                                 hipsparseLtMatDescriptor_t* d,
++                                                 int64_t                     r,
++                                                 int64_t                     c,
++                                                 int64_t                     ld,
++                                                 uint32_t                    align,
++                                                 hipDataType                 type,
++                                                 hipsparseOrder_t            order)
++{
++    return init_matrix(h, d, r, c, ld, align, type, order, false);
++}
++hipsparseStatus_t hipsparseLtStructuredDescriptorInit(const hipsparseLtHandle_t*  h,
++                                                      hipsparseLtMatDescriptor_t* d,
++                                                      int64_t                     r,
++                                                      int64_t                     c,
++                                                      int64_t                     ld,
++                                                      uint32_t                    align,
++                                                      hipDataType                 type,
++                                                      hipsparseOrder_t            order,
++                                                      hipsparseLtSparsity_t       sparsity)
++{
++    if(sparsity != HIPSPARSELT_SPARSITY_50_PERCENT)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    return init_matrix(h, d, r, c, ld, align, type, order, true);
++}
++hipsparseStatus_t hipsparseLtMatDescriptorDestroy(const hipsparseLtMatDescriptor_t* d)
++{
++    return destroy(d, matrix_tag);
++}
++hipsparseStatus_t hipsparseLtMatDescSetAttribute(const hipsparseLtHandle_t*    h,
++                                                 hipsparseLtMatDescriptor_t*   d,
++                                                 hipsparseLtMatDescAttribute_t attr,
++                                                 const void*                   value,
++                                                 size_t                        bytes)
++{
++    Matrix matrix{};
++    if(!valid(h) || !read(d, matrix, matrix_tag) || !value)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(attr == HIPSPARSELT_MAT_NUM_BATCHES && bytes == sizeof(int))
++    {
++        int n;
++        std::memcpy(&n, value, bytes);
++        if(n <= 0 || n > 65535 || matrix.rows * matrix.cols > (int64_t(1) << 30) / n)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        matrix.batches = n;
++    }
++    else if(attr == HIPSPARSELT_MAT_BATCH_STRIDE && bytes == sizeof(int64_t))
++    {
++        int64_t stride;
++        std::memcpy(&stride, value, bytes);
++        int64_t span
++            = matrix.ld * (matrix.order == HIPSPARSE_ORDER_ROW ? matrix.rows : matrix.cols);
++        if(stride < span || stride > (int64_t(1) << 40) / 65535)
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++        matrix.batch_stride = stride;
++    }
++    else
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    write(d, matrix);
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatDescGetAttribute(const hipsparseLtHandle_t*        h,
++                                                 const hipsparseLtMatDescriptor_t* d,
++                                                 hipsparseLtMatDescAttribute_t     attr,
++                                                 void*                             value,
++                                                 size_t                            bytes)
++{
++    Matrix m{};
++    if(!valid(h) || !read(d, m, matrix_tag) || !value)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(attr == HIPSPARSELT_MAT_NUM_BATCHES && bytes == sizeof(int))
++        std::memcpy(value, &m.batches, bytes);
++    else if(attr == HIPSPARSELT_MAT_BATCH_STRIDE && bytes == sizeof(int64_t))
++        std::memcpy(value, &m.batch_stride, bytes);
++    else
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatmulDescriptorInit(const hipsparseLtHandle_t*        h,
++                                                  hipsparseLtMatmulDescriptor_t*    d,
++                                                  hipsparseOperation_t              opa,
++                                                  hipsparseOperation_t              opb,
++                                                  const hipsparseLtMatDescriptor_t* a,
++                                                  const hipsparseLtMatDescriptor_t* b,
++                                                  const hipsparseLtMatDescriptor_t* c,
++                                                  const hipsparseLtMatDescriptor_t* out,
++                                                  hipsparseLtComputetype_t          compute)
++{
++    Multiply mm{};
++    if(!valid(h) || !d || !read(a, mm.a, matrix_tag) || !read(b, mm.b, matrix_tag)
++       || !read(c, mm.c, matrix_tag) || !read(out, mm.d, matrix_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(!operation(opa) || !operation(opb) || compute != HIPSPARSELT_COMPUTE_32F)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    mm.opa = opa;
++    mm.opb = opb;
++    if(mm.a.sparse == mm.b.sparse || mm.c.sparse || mm.d.sparse || mm.a.type != mm.b.type
++       || mm.a.type != mm.c.type || mm.a.type != mm.d.type)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    int64_t m = rows(mm.a, opa), n = cols(mm.b, opb), k = cols(mm.a, opa);
++    if(k != rows(mm.b, opb) || mm.c.rows != m || mm.d.rows != m || mm.c.cols != n || mm.d.cols != n)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(k % group_size(sparse(mm)))
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    if(mm.a.batches != mm.d.batches || mm.b.batches != mm.d.batches || mm.c.batches != mm.d.batches)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    write(d, mm);
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*     h,
++                                                    hipsparseLtMatmulDescriptor_t* d,
++                                                    hipsparseLtMatmulDescAttribute_t,
++                                                    const void*,
++                                                    size_t)
++{
++    Multiply mm{};
++    return valid(h) && read(d, mm, multiply_tag) ? HIPSPARSE_STATUS_NOT_SUPPORTED
++                                                 : HIPSPARSE_STATUS_INVALID_VALUE;
++}
++hipsparseStatus_t hipsparseLtMatmulDescGetAttribute(const hipsparseLtHandle_t*           h,
++                                                    const hipsparseLtMatmulDescriptor_t* d,
++                                                    hipsparseLtMatmulDescAttribute_t,
++                                                    void*,
++                                                    size_t)
++{
++    Multiply mm{};
++    return valid(h) && read(d, mm, multiply_tag) ? HIPSPARSE_STATUS_NOT_SUPPORTED
++                                                 : HIPSPARSE_STATUS_INVALID_VALUE;
++}
++hipsparseStatus_t hipsparseLtMatmulAlgSelectionInit(const hipsparseLtHandle_t*           h,
++                                                    hipsparseLtMatmulAlgSelection_t*     d,
++                                                    const hipsparseLtMatmulDescriptor_t* desc,
++                                                    hipsparseLtMatmulAlg_t               alg)
++{
++    Multiply mm{};
++    if(!valid(h) || !d || !read(desc, mm, multiply_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(alg != HIPSPARSELT_MATMUL_ALG_DEFAULT)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    write(d, Algorithm{});
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatmulAlgSelectionDestroy(const hipsparseLtMatmulAlgSelection_t* d)
++{
++    return destroy(d, algorithm_tag);
++}
++hipsparseStatus_t hipsparseLtMatmulAlgSetAttribute(const hipsparseLtHandle_t*       h,
++                                                   hipsparseLtMatmulAlgSelection_t* d,
++                                                   hipsparseLtMatmulAlgAttribute_t  attr,
++                                                   const void*                      value,
++                                                   size_t                           bytes)
++{
++    Algorithm a;
++    if(!valid(h) || !read(d, a, algorithm_tag) || !value || bytes != sizeof(int))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    int v;
++    std::memcpy(&v, value, bytes);
++    if(attr == HIPSPARSELT_MATMUL_ALG_CONFIG_ID)
++    {
++        if(v != 0)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++    }
++    else if(attr == HIPSPARSELT_MATMUL_SEARCH_ITERATIONS)
++    {
++        if(v <= 0)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        if(v != 1)
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    }
++    else
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    write(d, a);
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatmulAlgGetAttribute(const hipsparseLtHandle_t*             h,
++                                                   const hipsparseLtMatmulAlgSelection_t* d,
++                                                   hipsparseLtMatmulAlgAttribute_t        attr,
++                                                   void*                                  value,
++                                                   size_t                                 bytes)
++{
++    Algorithm a;
++    if(!valid(h) || !read(d, a, algorithm_tag) || !value || bytes != sizeof(int))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    int v;
++    if(attr == HIPSPARSELT_MATMUL_ALG_CONFIG_ID)
++        v = 0;
++    else if(attr == HIPSPARSELT_MATMUL_ALG_CONFIG_MAX_ID)
++        v = 1;
++    else if(attr == HIPSPARSELT_MATMUL_SEARCH_ITERATIONS)
++        v = a.iterations;
++    else
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    std::memcpy(value, &v, bytes);
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatmulPlanInit(const hipsparseLtHandle_t*             h,
++                                            hipsparseLtMatmulPlan_t*               out,
++                                            const hipsparseLtMatmulDescriptor_t*   d,
++                                            const hipsparseLtMatmulAlgSelection_t* alg)
++{
++    Plan      p;
++    Algorithm a;
++    if(!valid(h) || !out || !read(d, p.mm, multiply_tag) || !read(alg, a, algorithm_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    write(out, p);
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatmulPlanDestroy(const hipsparseLtMatmulPlan_t* p)
++{
++    return destroy(p, plan_tag);
++}
++hipsparseStatus_t hipsparseLtMatmulGetWorkspace(const hipsparseLtHandle_t*     h,
++                                                const hipsparseLtMatmulPlan_t* p,
++                                                size_t*                        bytes)
++{
++    Plan plan;
++    if(!valid(h) || !read(p, plan, plan_tag) || !bytes)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    *bytes = 0;
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
++                                    const hipsparseLtMatmulPlan_t* p,
++                                    const void*                    alpha,
++                                    const void*                    a,
++                                    const void*                    b,
++                                    const void*                    beta,
++                                    const void*                    c,
++                                    void*                          d,
++                                    void*,
++                                    hipStream_t* streams,
++                                    int32_t      count)
++{
++    Plan plan;
++    if(!valid(h) || !read(p, plan, plan_tag) || !alpha || !beta || !a || !b || !c || !d || count < 0
++       || (count && !streams))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(count > 1)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    if(d == a || d == b)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(d == c
++       && (plan.mm.c.order != plan.mm.d.order || plan.mm.c.ld != plan.mm.d.ld
++           || plan.mm.c.batch_stride != plan.mm.d.batch_stride))
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    float av, bv;
++    std::memcpy(&av, alpha, sizeof(float));
++    std::memcpy(&bv, beta, sizeof(float));
++    hipStream_t stream = count ? streams[0] : nullptr;
++    int64_t     total  = plan.mm.d.rows * plan.mm.d.cols * plan.mm.d.batches;
++    dim3        grid((total + 255) / 256), block(256);
++    if(plan.mm.a.type == HIP_R_32F)
++        hipLaunchKernelGGL(multiply_kernel<float>,
++                           grid,
++                           block,
++                           0,
++                           stream,
++                           plan.mm,
++                           av,
++                           bv,
++                           (const float*)a,
++                           (const float*)b,
++                           (const float*)c,
++                           (float*)d);
++    else if(plan.mm.a.type == HIP_R_16F)
++        hipLaunchKernelGGL(multiply_kernel<__half>,
++                           grid,
++                           block,
++                           0,
++                           stream,
++                           plan.mm,
++                           av,
++                           bv,
++                           (const __half*)a,
++                           (const __half*)b,
++                           (const __half*)c,
++                           (__half*)d);
++    else
++        hipLaunchKernelGGL(multiply_kernel<hip_bfloat16>,
++                           grid,
++                           block,
++                           0,
++                           stream,
++                           plan.mm,
++                           av,
++                           bv,
++                           (const hip_bfloat16*)a,
++                           (const hip_bfloat16*)b,
++                           (const hip_bfloat16*)c,
++                           (hip_bfloat16*)d);
++    return hip_status(hipGetLastError());
++}
++hipsparseStatus_t hipsparseLtMatmulSearch(const hipsparseLtHandle_t* h,
++                                          hipsparseLtMatmulPlan_t*   p,
++                                          const void*                alpha,
++                                          const void*                a,
++                                          const void*                b,
++                                          const void*                beta,
++                                          const void*                c,
++                                          void*                      d,
++                                          void*                      workspace,
++                                          hipStream_t*               streams,
++                                          int32_t                    count)
++{
++    auto status = hipsparseLtMatmul(h, p, alpha, a, b, beta, c, d, workspace, streams, count);
++    if(status != HIPSPARSE_STATUS_SUCCESS)
++        return status;
++    // The public Search API is blocking on streams[0], unlike Matmul.
++    return hip_status(hipStreamSynchronize(count ? streams[0] : nullptr));
++}
++hipsparseStatus_t hipsparseLtSpMMAPrune2(const hipsparseLtHandle_t*        h,
++                                         const hipsparseLtMatDescriptor_t* d,
++                                         int                               sa,
++                                         hipsparseOperation_t              op,
++                                         const void*                       in,
++                                         void*                             out,
++                                         hipsparseLtPruneAlg_t             alg,
++                                         hipStream_t                       stream)
++{
++    Matrix m{};
++    if(!read(d, m, matrix_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(alg != HIPSPARSELT_PRUNE_SPMMA_STRIP)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    return launch_strip<false, false>(h, m, sa, op, in, out, nullptr, stream);
++}
++hipsparseStatus_t hipsparseLtSpMMAPruneCheck2(const hipsparseLtHandle_t*        h,
++                                              const hipsparseLtMatDescriptor_t* d,
++                                              int                               sa,
++                                              hipsparseOperation_t              op,
++                                              const void*                       in,
++                                              int*                              invalid,
++                                              hipStream_t                       stream)
++{
++    Matrix m{};
++    if(!read(d, m, matrix_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    return launch_strip<true, false>(h, m, sa, op, in, nullptr, invalid, stream);
++}
++hipsparseStatus_t hipsparseLtSpMMAPrune(const hipsparseLtHandle_t*           h,
++                                        const hipsparseLtMatmulDescriptor_t* d,
++                                        const void*                          in,
++                                        void*                                out,
++                                        hipsparseLtPruneAlg_t                alg,
++                                        hipStream_t                          stream)
++{
++    Multiply mm{};
++    if(!read(d, mm, multiply_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    hipsparseLtMatDescriptor_t desc{};
++    write(&desc, sparse(mm));
++    return hipsparseLtSpMMAPrune2(h, &desc, mm.a.sparse, sparse_op(mm), in, out, alg, stream);
++}
++hipsparseStatus_t hipsparseLtSpMMAPruneCheck(const hipsparseLtHandle_t*           h,
++                                             const hipsparseLtMatmulDescriptor_t* d,
++                                             const void*                          in,
++                                             int*                                 invalid,
++                                             hipStream_t                          stream)
++{
++    Multiply mm{};
++    if(!read(d, mm, multiply_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    hipsparseLtMatDescriptor_t desc{};
++    write(&desc, sparse(mm));
++    return hipsparseLtSpMMAPruneCheck2(h, &desc, mm.a.sparse, sparse_op(mm), in, invalid, stream);
++}
++hipsparseStatus_t hipsparseLtSpMMACompressedSize2(const hipsparseLtHandle_t*        h,
++                                                  const hipsparseLtMatDescriptor_t* d,
++                                                  size_t*                           bytes,
++                                                  size_t*                           workspace)
++{
++    Matrix m{};
++    if(!valid(h) || !read(d, m, matrix_tag) || !m.sparse || !bytes || !workspace)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(m.rows * m.cols % group_size(m))
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    *bytes     = compressed_bytes(m);
++    *workspace = 0;
++    return HIPSPARSE_STATUS_SUCCESS;
++}
++hipsparseStatus_t hipsparseLtSpMMACompress2(const hipsparseLtHandle_t*        h,
++                                            const hipsparseLtMatDescriptor_t* d,
++                                            int                               sa,
++                                            hipsparseOperation_t              op,
++                                            const void*                       in,
++                                            void*                             out,
++                                            void*,
++                                            hipStream_t stream)
++{
++    Matrix m{};
++    if(!read(d, m, matrix_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    return launch_strip<false, true>(h, m, sa, op, in, out, nullptr, stream);
++}
++hipsparseStatus_t hipsparseLtSpMMACompressedSize(const hipsparseLtHandle_t*     h,
++                                                 const hipsparseLtMatmulPlan_t* p,
++                                                 size_t*                        bytes,
++                                                 size_t*                        workspace)
++{
++    Plan plan;
++    if(!read(p, plan, plan_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    hipsparseLtMatDescriptor_t desc{};
++    write(&desc, sparse(plan.mm));
++    return hipsparseLtSpMMACompressedSize2(h, &desc, bytes, workspace);
++}
++hipsparseStatus_t hipsparseLtSpMMACompress(const hipsparseLtHandle_t*     h,
++                                           const hipsparseLtMatmulPlan_t* p,
++                                           const void*                    in,
++                                           void*                          out,
++                                           void*                          workspace,
++                                           hipStream_t                    stream)
++{
++    Plan plan;
++    if(!read(p, plan, plan_tag))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    hipsparseLtMatDescriptor_t desc{};
++    write(&desc, sparse(plan.mm));
++    return hipsparseLtSpMMACompress2(
++        h, &desc, plan.mm.a.sparse, sparse_op(plan.mm), in, out, workspace, stream);
++}
++}
+diff --git a/projects/hiptensor/library/src/contraction/CMakeLists.txt b/projects/hiptensor/library/src/contraction/CMakeLists.txt
+index f9e093e88bc..15e0a34f172 100644
+--- a/projects/hiptensor/library/src/contraction/CMakeLists.txt
++++ b/projects/hiptensor/library/src/contraction/CMakeLists.txt
+@@ -26,6 +26,7 @@
+ 
+ set(HIPTENSOR_CONTRACTION_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/hiptensor_contraction.cpp
++   ${CMAKE_CURRENT_SOURCE_DIR}/contraction_scalar.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/contraction_cpu_reference.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/contraction_selection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/contraction_solution_instances.cpp
+diff --git a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+new file mode 100644
+index 00000000000..8db78165182
+--- /dev/null
++++ b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+@@ -0,0 +1,318 @@
++/*******************************************************************************
++ *
++ * MIT License
++ *
++ * Copyright (C) 2023-2026 Advanced Micro Devices, Inc. All rights reserved.
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ *
++ *******************************************************************************/
++#include "contraction_scalar.hpp"
++
++#include <algorithm>
++#include <hip/hip_runtime.h>
++#include <limits>
++#include <map>
++#include <set>
++
++namespace hiptensor
++{
++    namespace
++    {
++        constexpr int MaxModes = 16;
++        struct ScalarProblem
++        {
++            int                 freeModes          = 0;
++            int                 sumModes           = 0;
++            uint64_t            outputElements     = 1;
++            uint64_t            sumElements        = 1;
++            uint64_t            lengths[MaxModes]  = {};
++            uint64_t            aStrides[MaxModes] = {};
++            uint64_t            bStrides[MaxModes] = {};
++            uint64_t            cStrides[MaxModes] = {};
++            uint64_t            dStrides[MaxModes] = {};
++            hiptensorOperator_t opA, opB, opC;
++        };
++
++        bool checkedMultiply(uint64_t& value, uint64_t factor)
++        {
++            if(factor == 0 || value > std::numeric_limits<uint64_t>::max() / factor)
++                return false;
++            value *= factor;
++            return true;
++        }
++
++        bool supportedOp(hiptensorOperator_t op)
++        {
++            return op == HIPTENSOR_OP_IDENTITY || op == HIPTENSOR_OP_NEG || op == HIPTENSOR_OP_ABS
++                   || op == HIPTENSOR_OP_RELU;
++        }
++
++        hiptensorStatus_t makeProblem(hiptensorOperationDescriptor_t desc, ScalarProblem& problem)
++        {
++            if(!desc || desc->mOperationType != HIPTENSOR_CONTRACTION || !desc->mDescA
++               || !desc->mDescB || !desc->mDescD)
++                return HIPTENSOR_STATUS_INVALID_VALUE;
++            if(!supportedOp(desc->mOpA) || !supportedOp(desc->mOpB)
++               || (desc->mDescC && !supportedOp(desc->mOpC)))
++                return HIPTENSOR_STATUS_NOT_SUPPORTED;
++
++            auto type = desc->mDescD->mType;
++            bool fp32
++                = (type == HIPTENSOR_R_16F || type == HIPTENSOR_R_16BF || type == HIPTENSOR_R_32F)
++                  && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_32F;
++            bool fp64 = type == HIPTENSOR_R_64F && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_64F;
++            if((!fp32 && !fp64) || desc->mDescA->mType != type || desc->mDescB->mType != type
++               || (desc->mDescC && desc->mDescC->mType != type))
++                return HIPTENSOR_STATUS_NOT_SUPPORTED;
++
++            std::map<int32_t, uint64_t> lengths;
++            auto                        collect = [&](hiptensorTensorDescriptor_t tensor,
++                                                      std::vector<int32_t> const& modes) {
++                if(!tensor)
++                    return modes.empty();
++                if(modes.size() != tensor->mLengths.size()
++                   || modes.size() != tensor->mStrides.size() || modes.size() > MaxModes)
++                    return false;
++                std::set<int32_t> unique;
++                uint64_t          extent = 1;
++                for(size_t i = 0; i < modes.size(); ++i)
++                {
++                    uint64_t len = tensor->mLengths[i], stride = tensor->mStrides[i];
++                    if(len == 0 || stride == 0 || len > std::numeric_limits<int64_t>::max()
++                       || stride > std::numeric_limits<int64_t>::max()
++                       || !unique.insert(modes[i]).second)
++                        return false;
++                    auto inserted = lengths.emplace(modes[i], len);
++                    if(!inserted.second && inserted.first->second != len)
++                        return false;
++                    if(len - 1 > (std::numeric_limits<uint64_t>::max() - extent) / stride)
++                        return false;
++                    extent += (len - 1) * stride;
++                }
++                return extent <= std::numeric_limits<int64_t>::max() / hiptensorDataTypeSize(type);
++            };
++            if(!collect(desc->mDescA, desc->mModeA) || !collect(desc->mDescB, desc->mModeB)
++               || !collect(desc->mDescC, desc->mModeC) || !collect(desc->mDescD, desc->mModeD))
++                return HIPTENSOR_STATUS_INVALID_VALUE;
++            if(lengths.size() > MaxModes)
++                return HIPTENSOR_STATUS_NOT_SUPPORTED;
++
++            // Each non-output mode must belong to both multiplicands. Output modes may
++            // be shared (batch), or occur in either multiplicand (free/outer product).
++            auto contains = [](std::vector<int32_t> const& modes, int32_t mode) {
++                return std::find(modes.begin(), modes.end(), mode) != modes.end();
++            };
++            std::vector<int32_t> ordered = desc->mModeD;
++            for(auto const& item : lengths)
++            {
++                bool a = contains(desc->mModeA, item.first);
++                bool b = contains(desc->mModeB, item.first);
++                bool d = contains(desc->mModeD, item.first);
++                if((d && !a && !b) || (!d && (!a || !b)))
++                    return HIPTENSOR_STATUS_NOT_SUPPORTED;
++                if(!d)
++                    ordered.push_back(item.first);
++            }
++            if(desc->mDescC
++               && (desc->mModeC.size() != desc->mModeD.size()
++                   || std::set<int32_t>(desc->mModeC.begin(), desc->mModeC.end())
++                          != std::set<int32_t>(desc->mModeD.begin(), desc->mModeD.end())))
++                return HIPTENSOR_STATUS_NOT_SUPPORTED;
++
++            // Ensure distinct output elements never race. This admits padded and
++            // transposed layouts; interleaved exotic strides are conservatively rejected.
++            std::vector<std::pair<uint64_t, uint64_t>> outputDimensions;
++            for(size_t i = 0; i < desc->mModeD.size(); ++i)
++                if(desc->mDescD->mLengths[i] > 1)
++                    outputDimensions.emplace_back(desc->mDescD->mStrides[i],
++                                                  desc->mDescD->mLengths[i]);
++            std::sort(outputDimensions.begin(), outputDimensions.end());
++            uint64_t span = 1;
++            for(auto dimension : outputDimensions)
++            {
++                if(dimension.first < span)
++                    return HIPTENSOR_STATUS_NOT_SUPPORTED;
++                span += (dimension.second - 1) * dimension.first;
++            }
++
++            problem.freeModes = desc->mModeD.size();
++            problem.sumModes  = ordered.size() - problem.freeModes;
++            problem.opA       = desc->mOpA;
++            problem.opB       = desc->mOpB;
++            problem.opC       = desc->mOpC;
++            auto stride       = [](hiptensorTensorDescriptor_t tensor,
++                                   std::vector<int32_t> const& modes,
++                                   int32_t                     mode) -> uint64_t {
++                auto pos = std::find(modes.begin(), modes.end(), mode);
++                return !tensor || pos == modes.end() ? 0 : tensor->mStrides[pos - modes.begin()];
++            };
++            for(size_t i = 0; i < ordered.size(); ++i)
++            {
++                problem.lengths[i]  = lengths.at(ordered[i]);
++                problem.aStrides[i] = stride(desc->mDescA, desc->mModeA, ordered[i]);
++                problem.bStrides[i] = stride(desc->mDescB, desc->mModeB, ordered[i]);
++                problem.cStrides[i] = stride(desc->mDescC, desc->mModeC, ordered[i]);
++                problem.dStrides[i] = stride(desc->mDescD, desc->mModeD, ordered[i]);
++                if(!checkedMultiply(i < static_cast<size_t>(problem.freeModes)
++                                        ? problem.outputElements
++                                        : problem.sumElements,
++                                    problem.lengths[i]))
++                    return HIPTENSOR_STATUS_INVALID_VALUE;
++            }
++            return HIPTENSOR_STATUS_SUCCESS;
++        }
++
++        template <class Acc>
++        __device__ Acc unary(Acc value, hiptensorOperator_t op)
++        {
++            if(op == HIPTENSOR_OP_NEG)
++                return -value;
++            if(op == HIPTENSOR_OP_ABS)
++                return value == Acc(0) ? Acc(0) : (value < Acc(0) ? -value : value);
++            if(op == HIPTENSOR_OP_RELU)
++                return value < Acc(0) ? Acc(0) : value;
++            return value;
++        }
++
++        template <class T, class Acc>
++        __global__ void scalarContraction(
++            ScalarProblem p, Acc alpha, const T* a, const T* b, Acc beta, const T* c, T* d)
++        {
++            for(uint64_t out = uint64_t(blockIdx.x) * blockDim.x + threadIdx.x;
++                out < p.outputElements;
++                out += uint64_t(gridDim.x) * blockDim.x)
++            {
++                uint64_t linear = out, aBase = 0, bBase = 0, cOffset = 0, dOffset = 0;
++                for(int i = 0; i < p.freeModes; ++i)
++                {
++                    uint64_t coordinate = linear % p.lengths[i];
++                    linear /= p.lengths[i];
++                    aBase += coordinate * p.aStrides[i];
++                    bBase += coordinate * p.bStrides[i];
++                    cOffset += coordinate * p.cStrides[i];
++                    dOffset += coordinate * p.dStrides[i];
++                }
++                Acc sum = 0;
++                if(alpha != Acc(0))
++                    for(uint64_t k = 0; k < p.sumElements; ++k)
++                    {
++                        uint64_t contracted = k, aOffset = aBase, bOffset = bBase;
++                        for(int i = p.freeModes; i < p.freeModes + p.sumModes; ++i)
++                        {
++                            uint64_t coordinate = contracted % p.lengths[i];
++                            contracted /= p.lengths[i];
++                            aOffset += coordinate * p.aStrides[i];
++                            bOffset += coordinate * p.bStrides[i];
++                        }
++                        sum += unary(Acc(a[aOffset]), p.opA) * unary(Acc(b[bOffset]), p.opB);
++                    }
++                Acc value = alpha * sum;
++                if(beta != Acc(0))
++                    value += beta * unary(Acc(c[cOffset]), p.opC);
++                d[dOffset] = T(value);
++            }
++        }
++
++        template <class T, class Acc>
++        hiptensorStatus_t launch(ScalarProblem const& problem,
++                                 const void*          alpha,
++                                 const void*          a,
++                                 const void*          b,
++                                 const void*          beta,
++                                 const void*          c,
++                                 void*                d,
++                                 hipStream_t          stream)
++        {
++            Acc alphaValue = *static_cast<const Acc*>(alpha);
++            Acc betaValue  = beta ? *static_cast<const Acc*>(beta) : Acc(0);
++            if(betaValue != Acc(0) && !c)
++                return HIPTENSOR_STATUS_INVALID_VALUE;
++            uint32_t blocks = std::min<uint64_t>(65535, 1 + (problem.outputElements - 1) / 256);
++            hipLaunchKernelGGL((scalarContraction<T, Acc>),
++                               dim3(blocks),
++                               dim3(256),
++                               0,
++                               stream,
++                               problem,
++                               alphaValue,
++                               static_cast<const T*>(a),
++                               static_cast<const T*>(b),
++                               betaValue,
++                               static_cast<const T*>(c),
++                               static_cast<T*>(d));
++            return hipGetLastError() == hipSuccess ? HIPTENSOR_STATUS_SUCCESS
++                                                   : HIPTENSOR_STATUS_EXECUTION_FAILED;
++        }
++    }
++
++    hiptensorStatus_t validateScalarContraction(hiptensorOperationDescriptor_t desc)
++    {
++        ScalarProblem problem;
++        return makeProblem(desc, problem);
++    }
++
++    hiptensorStatus_t executeScalarContraction(hiptensorOperationDescriptor_t desc,
++                                               const void*                    alpha,
++                                               const void*                    a,
++                                               const void*                    b,
++                                               const void*                    beta,
++                                               const void*                    c,
++                                               void*                          d,
++                                               hipStream_t                    stream)
++    {
++        ScalarProblem problem;
++        auto          status = makeProblem(desc, problem);
++        if(status != HIPTENSOR_STATUS_SUCCESS)
++            return status;
++        if(!alpha || !a || !b || !d || (desc->mDescC && !beta) || (!desc->mDescC && c))
++            return HIPTENSOR_STATUS_INVALID_VALUE;
++        auto extent = [](hiptensorTensorDescriptor_t tensor) {
++            uint64_t span = 1;
++            for(size_t i = 0; i < tensor->mLengths.size(); ++i)
++                span += (tensor->mLengths[i] - 1) * tensor->mStrides[i];
++            return span * hiptensorDataTypeSize(tensor->mType);
++        };
++        auto overlaps = [](const void* lhs, uint64_t lhsBytes, const void* rhs, uint64_t rhsBytes) {
++            auto x = reinterpret_cast<uintptr_t>(lhs), y = reinterpret_cast<uintptr_t>(rhs);
++            return x < y ? y - x < lhsBytes : x - y < rhsBytes;
++        };
++        auto outputBytes = extent(desc->mDescD);
++        if(overlaps(d, outputBytes, a, extent(desc->mDescA))
++           || overlaps(d, outputBytes, b, extent(desc->mDescB)))
++            return HIPTENSOR_STATUS_NOT_SUPPORTED;
++        if(c && overlaps(d, outputBytes, c, extent(desc->mDescC))
++           && (d != c || desc->mModeC != desc->mModeD
++               || desc->mDescC->mStrides != desc->mDescD->mStrides))
++            return HIPTENSOR_STATUS_NOT_SUPPORTED;
++        switch(desc->mDescD->mType)
++        {
++        case HIPTENSOR_R_16F:
++            return launch<__half, float>(problem, alpha, a, b, beta, c, d, stream);
++        case HIPTENSOR_R_16BF:
++            return launch<hip_bfloat16, float>(problem, alpha, a, b, beta, c, d, stream);
++        case HIPTENSOR_R_32F:
++            return launch<float, float>(problem, alpha, a, b, beta, c, d, stream);
++        case HIPTENSOR_R_64F:
++            return launch<double, double>(problem, alpha, a, b, beta, c, d, stream);
++        default:
++            return HIPTENSOR_STATUS_NOT_SUPPORTED;
++        }
++    }
++}
+diff --git a/projects/hiptensor/library/src/contraction/contraction_scalar.hpp b/projects/hiptensor/library/src/contraction/contraction_scalar.hpp
+new file mode 100644
+index 00000000000..ffce483dbd2
+--- /dev/null
++++ b/projects/hiptensor/library/src/contraction/contraction_scalar.hpp
+@@ -0,0 +1,42 @@
++/*******************************************************************************
++ *
++ * MIT License
++ *
++ * Copyright (C) 2023-2026 Advanced Micro Devices, Inc. All rights reserved.
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ *
++ *******************************************************************************/
++#pragma once
++
++#include "data_types.hpp"
++
++namespace hiptensor
++{
++    // Scalar arithmetic backend for native RDNA1; no MFMA/WMMA instructions.
++    hiptensorStatus_t validateScalarContraction(hiptensorOperationDescriptor_t desc);
++    hiptensorStatus_t executeScalarContraction(hiptensorOperationDescriptor_t desc,
++                                               const void*                    alpha,
++                                               const void*                    a,
++                                               const void*                    b,
++                                               const void*                    beta,
++                                               const void*                    c,
++                                               void*                          d,
++                                               hipStream_t                    stream);
++}
+diff --git a/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp b/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp
+index afb011bb323..156e1b2d376 100644
+--- a/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp
++++ b/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp
+@@ -28,6 +28,7 @@
+ 
+ #include <hiptensor/hiptensor.h>
+ 
++#include "contraction_scalar.hpp"
+ #include "contraction_selection.hpp"
+ #include "contraction_solution.hpp"
+ #include "contraction_solution_instances.hpp"
+@@ -122,6 +123,10 @@ hiptensorStatus_t contractionGetWorkspaceSize(const hiptensorHandle_t
+     }
+ 
+     *workspaceSize = 0u;
++    if(handle->getDevice().getGcnArch() == hiptensor::HipDevice::GFX1013)
++    {
++        return hiptensor::validateScalarContraction(desc);
++    }
+ 
+     for(auto* candidate : planPref->mCandidates)
+     {
+@@ -203,7 +208,15 @@ hiptensorStatus_t hiptensorCreateContraction(const hiptensorHandle_t
+         return checkResult;
+     }
+ 
+-    if(!handle->getDevice().matrixCoreSupport(descCompute))
++    bool scalar = handle->getDevice().getGcnArch() == hiptensor::HipDevice::GFX1013;
++    if(scalar)
++    {
++        if(descCompute != HIPTENSOR_COMPUTE_DESC_32F && descCompute != HIPTENSOR_COMPUTE_DESC_64F)
++            return HIPTENSOR_STATUS_NOT_SUPPORTED;
++        if(descCompute == HIPTENSOR_COMPUTE_DESC_64F && !handle->getDevice().supportsF64())
++            return HIPTENSOR_STATUS_ARCH_MISMATCH;
++    }
++    else if(!handle->getDevice().matrixCoreSupport(descCompute))
+     {
+         return HIPTENSOR_STATUS_ARCH_MISMATCH;
+     }
+@@ -219,7 +232,7 @@ hiptensorStatus_t hiptensorCreateContraction(const hiptensorHandle_t
+     int                  nModeD = descD->mLengths.size();
+     std::vector<int32_t> modeDV(modeD, modeD + nModeD);
+ 
+-    if(int32_t sharedMode; hasSharedBatchMode(modeAV, modeBV, modeDV, sharedMode))
++    if(int32_t sharedMode; !scalar && hasSharedBatchMode(modeAV, modeBV, modeDV, sharedMode))
+     {
+         snprintf(msg,
+                  sizeof(msg),
+@@ -274,6 +287,16 @@ hiptensorStatus_t hiptensorCreateContraction(const hiptensorHandle_t
+     (*desc)->mModeE = {};
+ 
+     (*desc)->mDescCompute = descCompute;
++    if(scalar)
++    {
++        auto status = hiptensor::validateScalarContraction(*desc);
++        if(status != HIPTENSOR_STATUS_SUCCESS)
++        {
++            delete *desc;
++            *desc = nullptr;
++        }
++        return status;
++    }
+     return HIPTENSOR_STATUS_SUCCESS;
+ }
+ 
+@@ -292,6 +315,17 @@ hiptensorStatus_t hiptensorContract(const hiptensorHandle_t handle,
+     using hiptensor::Logger;
+     auto& logger = Logger::instance();
+ 
++    // Scalar plans do not enter the CK solver/autotune registry.
++    if(handle && plan && handle->getDevice().getGcnArch() == hiptensor::HipDevice::GFX1013)
++    {
++        hiptensor::HipDevice currentDevice;
++        if(currentDevice.getDeviceId() != handle->getDevice().getDeviceId())
++            return HIPTENSOR_STATUS_ARCH_MISMATCH;
++        if(!plan->mOpDesc || plan->mOpDesc->mOperationType != HIPTENSOR_CONTRACTION)
++            return HIPTENSOR_STATUS_INVALID_VALUE;
++        return hiptensor::executeScalarContraction(plan->mOpDesc, alpha, A, B, beta, C, D, stream);
++    }
++
+     using hiptensor::PlancacheAutotuneMgr;
+     auto& autotuneMgr = PlancacheAutotuneMgr::instance();
+     autotuneMgr->startAutotune(hiptensor::AutotuneOps::Autotune_Contraction);
+@@ -609,6 +643,20 @@ hiptensorStatus_t contractionInitPlan(const hiptensorHandle_t              handl
+         return HIPTENSOR_STATUS_ARCH_MISMATCH;
+     }
+ 
++    if(handle->getDevice().getGcnArch() == hiptensor::HipDevice::GFX1013)
++    {
++        auto status = hiptensor::validateScalarContraction(desc);
++        if(status == HIPTENSOR_STATUS_SUCCESS)
++        {
++            plan->mRequiredWorkspace = 0;
++            plan->mOpDesc            = desc;
++            plan->mPref              = pref;
++            pref->mCandidates.clear();
++            pref->mSolution = nullptr;
++        }
++        return status;
++    }
++
+     // At this point, we need to format inputs for kernels as they will be tested via selection model.
+     // Brute force method currently uses CK kernel format, so we will adjust inputs to that style.
+ 
+-- 
+2.56.0
+
