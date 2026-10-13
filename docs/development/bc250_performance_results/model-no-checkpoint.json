@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "torch": "2.13.0a0+gfx1013",
+  "hip": "7.17.0",
+  "arch": "gfx1013:xnack-",
+  "batch": 1,
+  "sequence_length": 32,
+  "optimizer": "AdamW",
+  "lr": 0,
+  "notes": "lr=0 holds weights fixed during timing; optimizer state updates still execute",
+  "cases": [
+    {
+      "name": "lora-fp32",
+      "step_samples_ms": [
+        109.39506666424374,
+        111.48856033105403,
+        112.02254900126718,
+        112.07046233660851,
+        111.71831166332898
+      ],
+      "step_median_ms": 111.71831166332898,
+      "step_iqr_percent": 1.4363734533733368,
+      "tokens_per_second": 286.4346902809833,
+      "first_step_ms": 1400.4973660048563,
+      "trainable_parameters": 460800,
+      "peak_allocated_bytes": 669809664,
+      "activation_checkpointing": false
+    },
+    {
+      "name": "lora-fp16",
+      "step_samples_ms": [
+        135.96888967246437,
+        138.81702499929816,
+        138.8741493380318,
+        139.7134696599096,
+        140.35859999906583
+      ],
+      "step_median_ms": 138.8741493380318,
+      "step_iqr_percent": 1.9032177739379,
+      "tokens_per_second": 230.4244537412734,
+      "first_step_ms": 196.81457499973476,
+      "trainable_parameters": 460800,
+      "peak_allocated_bytes": 929690112,
+      "activation_checkpointing": false
+    },
+    {
+      "name": "lora-bf16",
+      "step_samples_ms": [
+        137.79627833476601,
+        140.5352133248622,
+        140.43923700228333,
+        141.03799766356437,
+        140.93348965980113
+      ],
+      "step_median_ms": 140.5352133248622,
+      "step_iqr_percent": 1.32919426310616,
+      "tokens_per_second": 227.70093873930776,
+      "first_step_ms": 199.44098699488677,
+      "trainable_parameters": 460800,
+      "peak_allocated_bytes": 929688576,
+      "activation_checkpointing": false
+    }
+  ]
+}

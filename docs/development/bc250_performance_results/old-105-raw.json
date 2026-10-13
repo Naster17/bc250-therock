@@ -1,0 +1,1195 @@
+{
+  "status": "passed",
+  "label": "old-105-matched",
+  "torch": "2.9.1a0",
+  "hip": "7.2.53211-97f5574fe2",
+  "arch": "gfx1013:xnack-",
+  "wgp_count": 20,
+  "gpu_memory_bytes": 15938355200,
+  "kernel": "7.1.5-bc250rocm-r2",
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "torch_threads": 4,
+  "sdma": "0",
+  "architecture_override": null,
+  "cases": [
+    {
+      "name": "gemm_1024_float32",
+      "status": "passed",
+      "inputs_sha256": "ba0ae89ef0f7c787ac2a4d37b6ab41b1dede018fa10c371c0eb176ddaa03e8d1",
+      "first_invocation_ms": 97.70977700009098,
+      "iterations_per_sample": 437,
+      "wall_samples_ms": [
+        0.4391539519446367,
+        0.4395738924483612,
+        0.43946526315770623,
+        0.4395185972537982,
+        0.43922624485113837
+      ],
+      "gpu_samples_ms": [
+        0.4391039187084346,
+        0.4395173026986198,
+        0.43940553294166546,
+        0.43945542953107125,
+        0.4391869167441362
+      ],
+      "wall_median_ms": 0.43946526315770623,
+      "wall_iqr_percent": 0.0810408655813147,
+      "gpu_median_ms": 0.43940553294166546,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 85000,
+      "gflops": 4886.583373096671
+    },
+    {
+      "name": "gemm_1024_float16",
+      "status": "passed",
+      "inputs_sha256": "ad5addbeb6b460473dcf1964450eed6e2094e63d13965c84700bc2d90592c747",
+      "first_invocation_ms": 0.5928999999014195,
+      "iterations_per_sample": 475,
+      "wall_samples_ms": [
+        0.40469675157893154,
+        0.40511564631551183,
+        0.406552277894853,
+        0.40664915578944555,
+        0.4088007073685156
+      ],
+      "gpu_samples_ms": [
+        0.4046419163754112,
+        0.40505522075452305,
+        0.4065153101870888,
+        0.40659664756373354,
+        0.40874380011307565
+      ],
+      "wall_median_ms": 0.406552277894853,
+      "wall_iqr_percent": 0.693325996438747,
+      "gpu_median_ms": 0.4065153101870888,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 86000,
+      "gflops": 5282.183288013469
+    },
+    {
+      "name": "gemm_1024_bfloat16",
+      "status": "passed",
+      "inputs_sha256": "2bcf9585df461e33cfd23ee19f366dee051f7df44af2ca35662032f4d5dc47ae",
+      "first_invocation_ms": 0.7068909999361495,
+      "iterations_per_sample": 384,
+      "wall_samples_ms": [
+        0.5027431041675356,
+        0.505280627603355,
+        0.5080271406256998,
+        0.5096288593750368,
+        0.5120273151047646
+      ],
+      "gpu_samples_ms": [
+        0.5026997327804565,
+        0.5052238702774048,
+        0.5079614718755087,
+        0.5095802148183187,
+        0.5119731823603312
+      ],
+      "wall_median_ms": 0.5080271406256998,
+      "wall_iqr_percent": 1.341704174714037,
+      "gpu_median_ms": 0.5079614718755087,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 88000,
+      "gflops": 4227.104176668793
+    },
+    {
+      "name": "gemm_2048_float32",
+      "status": "passed",
+      "inputs_sha256": "64318d71e1ead23302c87fb4277c12a41f4a077b4ccb623ba7beea75c0c509bf",
+      "first_invocation_ms": 4.686444000071788,
+      "iterations_per_sample": 67,
+      "wall_samples_ms": [
+        3.009584014925262,
+        3.0244399850784953,
+        3.0407850746263674,
+        3.0545503731337336,
+        3.068710597018701
+      ],
+      "gpu_samples_ms": [
+        3.0093422505392957,
+        3.0241587624621036,
+        3.0405041139517257,
+        3.0542395292822992,
+        3.0684459173857275
+      ],
+      "wall_median_ms": 3.0407850746263674,
+      "wall_iqr_percent": 1.4673343883017178,
+      "gpu_median_ms": 3.0405041139517257,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 89000,
+      "gflops": 5649.813703492659
+    },
+    {
+      "name": "gemm_2048_float16",
+      "status": "passed",
+      "inputs_sha256": "c88d73c982692767cff44b3d0b0720bbcf75d09209de61f80f964cb845adb6b0",
+      "first_invocation_ms": 3.3919400002559996,
+      "iterations_per_sample": 64,
+      "wall_samples_ms": [
+        3.1238968281215307,
+        3.1420765312475396,
+        3.1571879218788013,
+        3.1727110468793285,
+        3.189801031247441
+      ],
+      "gpu_samples_ms": [
+        3.1236448287963867,
+        3.1417930126190186,
+        3.1568617820739746,
+        3.172414779663086,
+        3.1895291805267334
+      ],
+      "wall_median_ms": 3.1571879218788013,
+      "wall_iqr_percent": 1.528871913019521,
+      "gpu_median_ms": 3.1568617820739746,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 88000,
+      "gflops": 5441.509852785856
+    },
+    {
+      "name": "gemm_2048_bfloat16",
+      "status": "passed",
+      "inputs_sha256": "ec53eb96498a52ad9411aeb317258dcbfbfe595a0a64c2b055c74d8d8526f051",
+      "first_invocation_ms": 3.97925800007215,
+      "iterations_per_sample": 53,
+      "wall_samples_ms": [
+        3.7995596226381787,
+        3.820147867921854,
+        3.837661622643316,
+        3.859298905654385,
+        3.8760842641561295
+      ],
+      "gpu_samples_ms": [
+        3.799208443119841,
+        3.819770669037441,
+        3.83702260143352,
+        3.858714553545106,
+        3.875658431143131
+      ],
+      "wall_median_ms": 3.837661622643316,
+      "wall_iqr_percent": 1.5071114994605312,
+      "gpu_median_ms": 3.83702260143352,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 91000,
+      "gflops": 4476.650333795401
+    },
+    {
+      "name": "conv_fwd_bwd_1x16x32x32_fp32",
+      "status": "passed",
+      "inputs_sha256": "15b133120eaa01034c8caa36a920498c1d1fcf0d80311432163fe759ba98f101",
+      "first_invocation_ms": 146.42049599979146,
+      "iterations_per_sample": 370,
+      "wall_samples_ms": [
+        0.6088123432434529,
+        1.0200224648653258,
+        1.8659034486481196,
+        1.8447361540536902,
+        1.972072048648762
+      ],
+      "gpu_samples_ms": [
+        0.6087494308884079,
+        1.0198983682168496,
+        1.865771484375,
+        1.8445114548141892,
+        1.9718924857474662
+      ],
+      "wall_median_ms": 1.8447361540536902,
+      "wall_iqr_percent": 59.876874108355736,
+      "gpu_median_ms": 1.8445114548141892,
+      "observed_gpu_clock_hz_median": 2000000,
+      "peak_temperature_millicelsius": 75000
+    },
+    {
+      "name": "conv_fwd_bwd_8x32x32x32_fp32",
+      "status": "passed",
+      "inputs_sha256": "14d11c3e95a65d78cfa20a400d03f2fff40777a1415331d823a67e061e48b1ac",
+      "first_invocation_ms": 5.618333999791503,
+      "iterations_per_sample": 221,
+      "wall_samples_ms": [
+        0.7431908371036445,
+        0.7457224524878915,
+        0.7453926108614292,
+        0.7457578552029236,
+        0.7451596289597525
+      ],
+      "gpu_samples_ms": [
+        0.7430995060847356,
+        0.7456078162560096,
+        0.7452933885393099,
+        0.7456209346719457,
+        0.7450096855336185
+      ],
+      "wall_median_ms": 0.7453926108614292,
+      "wall_iqr_percent": 0.20994584476770373,
+      "gpu_median_ms": 0.7452933885393099,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 85000
+    },
+    {
+      "name": "device_copy_128mib",
+      "status": "passed",
+      "inputs_sha256": "2ef228d8d9d824ec8fea97c7f4b4c37d41e44fbb05f94cda2aae62e885b73d71",
+      "first_invocation_ms": 0.7380269998975564,
+      "iterations_per_sample": 293,
+      "wall_samples_ms": [
+        0.6703703139921078,
+        0.6704031569958495,
+        0.6708051945393897,
+        0.6705527235485518,
+        0.6706545563132496
+      ],
+      "gpu_samples_ms": [
+        0.6703188118267385,
+        0.6703404241047621,
+        0.6707362152203765,
+        0.6704827005952698,
+        0.6705814921408383
+      ],
+      "wall_median_ms": 0.6705527235485518,
+      "wall_iqr_percent": 0.05117269981770102,
+      "gpu_median_ms": 0.6704827005952698,
+      "observed_gpu_clock_hz_median": 2000000.0,
+      "peak_temperature_millicelsius": 76000,
+      "gflops": 1.1006248636079384e-06,
+      "effective_gb_per_second": 400.3196863916157
+    }
+  ],
+  "telemetry": [
+    {
+      "monotonic": 2743.392288716,
+      "freq1_input": 2000000,
+      "temp1_input": 64000,
+      "power1_average": 43165000
+    },
+    {
+      "monotonic": 2743.495600449,
+      "freq1_input": 100000000,
+      "temp1_input": 64000,
+      "power1_average": 64127000
+    },
+    {
+      "monotonic": 2743.596187376,
+      "freq1_input": 13000000,
+      "temp1_input": 66000,
+      "power1_average": 60169000
+    },
+    {
+      "monotonic": 2743.696758249,
+      "freq1_input": 2000000,
+      "temp1_input": 69000,
+      "power1_average": 73168000
+    },
+    {
+      "monotonic": 2743.797252611,
+      "freq1_input": 2000000,
+      "temp1_input": 78000,
+      "power1_average": 126003000
+    },
+    {
+      "monotonic": 2743.897781635,
+      "freq1_input": 2000000,
+      "temp1_input": 81000,
+      "power1_average": 126056000
+    },
+    {
+      "monotonic": 2743.998331807,
+      "freq1_input": 2000000,
+      "temp1_input": 80000,
+      "power1_average": 125215000
+    },
+    {
+      "monotonic": 2744.098918844,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 127193000
+    },
+    {
+      "monotonic": 2744.199469427,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 126079000
+    },
+    {
+      "monotonic": 2744.300032818,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 127067000
+    },
+    {
+      "monotonic": 2744.400569808,
+      "freq1_input": 2000000,
+      "temp1_input": 82000,
+      "power1_average": 126195000
+    },
+    {
+      "monotonic": 2744.501133398,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 127061000
+    },
+    {
+      "monotonic": 2744.601834562,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 126149000
+    },
+    {
+      "monotonic": 2744.702415082,
+      "freq1_input": 2000000,
+      "temp1_input": 82000,
+      "power1_average": 127007000
+    },
+    {
+      "monotonic": 2744.802960992,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 127008000
+    },
+    {
+      "monotonic": 2744.903520392,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 126178000
+    },
+    {
+      "monotonic": 2745.004052873,
+      "freq1_input": 100000000,
+      "temp1_input": 83000,
+      "power1_average": 123083000
+    },
+    {
+      "monotonic": 2745.104572431,
+      "freq1_input": 100000000,
+      "temp1_input": 85000,
+      "power1_average": 138063000
+    },
+    {
+      "monotonic": 2745.205076265,
+      "freq1_input": 85000000,
+      "temp1_input": 86000,
+      "power1_average": 136053000
+    },
+    {
+      "monotonic": 2745.305616955,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 132103000
+    },
+    {
+      "monotonic": 2745.406177847,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 129005000
+    },
+    {
+      "monotonic": 2745.506856823,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 127168000
+    },
+    {
+      "monotonic": 2745.607418839,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 128110000
+    },
+    {
+      "monotonic": 2745.707972578,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 128191000
+    },
+    {
+      "monotonic": 2745.808515757,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 127062000
+    },
+    {
+      "monotonic": 2745.909050874,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 128168000
+    },
+    {
+      "monotonic": 2746.009612632,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 127154000
+    },
+    {
+      "monotonic": 2746.11049153,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 129141000
+    },
+    {
+      "monotonic": 2746.211446068,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 128152000
+    },
+    {
+      "monotonic": 2746.312426499,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 126234000
+    },
+    {
+      "monotonic": 2746.413326946,
+      "freq1_input": 100000000,
+      "temp1_input": 85000,
+      "power1_average": 131015000
+    },
+    {
+      "monotonic": 2746.513921004,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 142169000
+    },
+    {
+      "monotonic": 2746.61443201,
+      "freq1_input": 7000000,
+      "temp1_input": 88000,
+      "power1_average": 140231000
+    },
+    {
+      "monotonic": 2746.715018084,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 133009000
+    },
+    {
+      "monotonic": 2746.815495259,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 138173000
+    },
+    {
+      "monotonic": 2746.916043175,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 132251000
+    },
+    {
+      "monotonic": 2747.016574092,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 131076000
+    },
+    {
+      "monotonic": 2747.117157532,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 133142000
+    },
+    {
+      "monotonic": 2747.217700999,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 131245000
+    },
+    {
+      "monotonic": 2747.318265139,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 132200000
+    },
+    {
+      "monotonic": 2747.418969297,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 130010000
+    },
+    {
+      "monotonic": 2747.519785281,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 129203000
+    },
+    {
+      "monotonic": 2747.620722567,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 130135000
+    },
+    {
+      "monotonic": 2747.721696902,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 130088000
+    },
+    {
+      "monotonic": 2747.822866766,
+      "freq1_input": 100000000,
+      "temp1_input": 75000,
+      "power1_average": 84229000
+    },
+    {
+      "monotonic": 2747.923431246,
+      "freq1_input": 100000000,
+      "temp1_input": 74000,
+      "power1_average": 93103000
+    },
+    {
+      "monotonic": 2748.024050229,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 142118000
+    },
+    {
+      "monotonic": 2748.124645656,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 136116000
+    },
+    {
+      "monotonic": 2748.22511763,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 137230000
+    },
+    {
+      "monotonic": 2748.325588945,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 134057000
+    },
+    {
+      "monotonic": 2748.426066769,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 133125000
+    },
+    {
+      "monotonic": 2748.526544649,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 138084000
+    },
+    {
+      "monotonic": 2748.627091263,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 133148000
+    },
+    {
+      "monotonic": 2748.727599486,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 138013000
+    },
+    {
+      "monotonic": 2748.828075569,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 133179000
+    },
+    {
+      "monotonic": 2748.928547587,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 133233000
+    },
+    {
+      "monotonic": 2749.029110524,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 134231000
+    },
+    {
+      "monotonic": 2749.129618215,
+      "freq1_input": 2000000,
+      "temp1_input": 89000,
+      "power1_average": 135254000
+    },
+    {
+      "monotonic": 2749.230111788,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 134136000
+    },
+    {
+      "monotonic": 2749.330590746,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 134101000
+    },
+    {
+      "monotonic": 2749.43172887,
+      "freq1_input": 100000000,
+      "temp1_input": 81000,
+      "power1_average": 117149000
+    },
+    {
+      "monotonic": 2749.533401182,
+      "freq1_input": 100000000,
+      "temp1_input": 75000,
+      "power1_average": 92057000
+    },
+    {
+      "monotonic": 2749.633855082,
+      "freq1_input": 100000000,
+      "temp1_input": 82000,
+      "power1_average": 127117000
+    },
+    {
+      "monotonic": 2749.734327551,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 136191000
+    },
+    {
+      "monotonic": 2749.834837987,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 137012000
+    },
+    {
+      "monotonic": 2749.935375511,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 136173000
+    },
+    {
+      "monotonic": 2750.036046141,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 134217000
+    },
+    {
+      "monotonic": 2750.136570454,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 132120000
+    },
+    {
+      "monotonic": 2750.237159848,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 130149000
+    },
+    {
+      "monotonic": 2750.337650075,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 131102000
+    },
+    {
+      "monotonic": 2750.43816969,
+      "freq1_input": 2000000,
+      "temp1_input": 87000,
+      "power1_average": 129174000
+    },
+    {
+      "monotonic": 2750.538652846,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 131200000
+    },
+    {
+      "monotonic": 2750.63920628,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 130003000
+    },
+    {
+      "monotonic": 2750.739709323,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 130140000
+    },
+    {
+      "monotonic": 2750.840189713,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 129007000
+    },
+    {
+      "monotonic": 2750.940674363,
+      "freq1_input": 2000000,
+      "temp1_input": 88000,
+      "power1_average": 127161000
+    },
+    {
+      "monotonic": 2751.042048366,
+      "freq1_input": 100000000,
+      "temp1_input": 80000,
+      "power1_average": 113052000
+    },
+    {
+      "monotonic": 2751.142590923,
+      "freq1_input": 100000000,
+      "temp1_input": 76000,
+      "power1_average": 93137000
+    },
+    {
+      "monotonic": 2751.243134593,
+      "freq1_input": 100000000,
+      "temp1_input": 85000,
+      "power1_average": 130095000
+    },
+    {
+      "monotonic": 2751.343586657,
+      "freq1_input": 2000000,
+      "temp1_input": 86000,
+      "power1_average": 145130000
+    },
+    {
+      "monotonic": 2751.444125154,
+      "freq1_input": 2000000,
+      "temp1_input": 89000,
+      "power1_average": 141085000
+    },
+    {
+      "monotonic": 2751.544598012,
+      "freq1_input": 2000000,
+      "temp1_input": 90000,
+      "power1_average": 141105000
+    },
+    {
+      "monotonic": 2751.64529574,
+      "freq1_input": 2000000,
+      "temp1_input": 90000,
+      "power1_average": 139186000
+    },
+    {
+      "monotonic": 2751.746057747,
+      "freq1_input": 2000000,
+      "temp1_input": 90000,
+      "power1_average": 138211000
+    },
+    {
+      "monotonic": 2751.846804686,
+      "freq1_input": 2000000,
+      "temp1_input": 90000,
+      "power1_average": 138025000
+    },
+    {
+      "monotonic": 2751.947582631,
+      "freq1_input": 2000000,
+      "temp1_input": 90000,
+      "power1_average": 133050000
+    },
+    {
+      "monotonic": 2752.048413487,
+      "freq1_input": 2000000,
+      "temp1_input": 90000,
+      "power1_average": 137133000
+    },
+    {
+      "monotonic": 2752.149451808,
+      "freq1_input": 2000000,
+      "temp1_input": 91000,
+      "power1_average": 135220000
+    },
+    {
+      "monotonic": 2752.250535137,
+      "freq1_input": 2000000,
+      "temp1_input": 91000,
+      "power1_average": 137137000
+    },
+    {
+      "monotonic": 2752.351522194,
+      "freq1_input": 2000000,
+      "temp1_input": 91000,
+      "power1_average": 137207000
+    },
+    {
+      "monotonic": 2752.452525626,
+      "freq1_input": 2000000,
+      "temp1_input": 91000,
+      "power1_average": 136182000
+    },
+    {
+      "monotonic": 2752.553521268,
+      "freq1_input": 2000000,
+      "temp1_input": 91000,
+      "power1_average": 137200000
+    },
+    {
+      "monotonic": 2752.654466318,
+      "freq1_input": 100000000,
+      "temp1_input": 88000,
+      "power1_average": 131013000
+    },
+    {
+      "monotonic": 2752.755650765,
+      "freq1_input": 12000000,
+      "temp1_input": 76000,
+      "power1_average": 75148000
+    },
+    {
+      "monotonic": 2752.856255137,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 73118000
+    },
+    {
+      "monotonic": 2752.957029132,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 67050000
+    },
+    {
+      "monotonic": 2753.058084518,
+      "freq1_input": 2000000,
+      "temp1_input": 74000,
+      "power1_average": 67180000
+    },
+    {
+      "monotonic": 2753.158799018,
+      "freq1_input": 2000000,
+      "temp1_input": 74000,
+      "power1_average": 70100000
+    },
+    {
+      "monotonic": 2753.259615502,
+      "freq1_input": 2000000,
+      "temp1_input": 74000,
+      "power1_average": 78015000
+    },
+    {
+      "monotonic": 2753.36036637,
+      "freq1_input": 2000000,
+      "temp1_input": 74000,
+      "power1_average": 75042000
+    },
+    {
+      "monotonic": 2753.461163231,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 75051000
+    },
+    {
+      "monotonic": 2753.562010264,
+      "freq1_input": 2000000,
+      "temp1_input": 74000,
+      "power1_average": 69195000
+    },
+    {
+      "monotonic": 2753.662776977,
+      "freq1_input": 2000000,
+      "temp1_input": 73000,
+      "power1_average": 64098000
+    },
+    {
+      "monotonic": 2753.763864775,
+      "freq1_input": 2000000,
+      "temp1_input": 72000,
+      "power1_average": 63117000
+    },
+    {
+      "monotonic": 2753.86496436,
+      "freq1_input": 2000000,
+      "temp1_input": 72000,
+      "power1_average": 64052000
+    },
+    {
+      "monotonic": 2753.966343044,
+      "freq1_input": 2000000,
+      "temp1_input": 72000,
+      "power1_average": 60223000
+    },
+    {
+      "monotonic": 2754.067974604,
+      "freq1_input": 2000000,
+      "temp1_input": 72000,
+      "power1_average": 61141000
+    },
+    {
+      "monotonic": 2754.169496262,
+      "freq1_input": 2000000,
+      "temp1_input": 72000,
+      "power1_average": 60038000
+    },
+    {
+      "monotonic": 2754.270615634,
+      "freq1_input": 2000000,
+      "temp1_input": 72000,
+      "power1_average": 61129000
+    },
+    {
+      "monotonic": 2754.372062681,
+      "freq1_input": 2000000,
+      "temp1_input": 72000,
+      "power1_average": 62001000
+    },
+    {
+      "monotonic": 2754.473407499,
+      "freq1_input": 9000000,
+      "temp1_input": 71000,
+      "power1_average": 61121000
+    },
+    {
+      "monotonic": 2754.574893167,
+      "freq1_input": 26000000,
+      "temp1_input": 71000,
+      "power1_average": 65071000
+    },
+    {
+      "monotonic": 2754.676415136,
+      "freq1_input": 2000000,
+      "temp1_input": 71000,
+      "power1_average": 57059000
+    },
+    {
+      "monotonic": 2754.777834584,
+      "freq1_input": 2000000,
+      "temp1_input": 71000,
+      "power1_average": 57224000
+    },
+    {
+      "monotonic": 2754.878941805,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 56170000
+    },
+    {
+      "monotonic": 2754.980264701,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 57033000
+    },
+    {
+      "monotonic": 2755.081867199,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 55039000
+    },
+    {
+      "monotonic": 2755.183394826,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 56064000
+    },
+    {
+      "monotonic": 2755.284844284,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 57056000
+    },
+    {
+      "monotonic": 2755.386340575,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 56199000
+    },
+    {
+      "monotonic": 2755.487910792,
+      "freq1_input": 2000000,
+      "temp1_input": 71000,
+      "power1_average": 56096000
+    },
+    {
+      "monotonic": 2755.589309558,
+      "freq1_input": 22000000,
+      "temp1_input": 70000,
+      "power1_average": 52246000
+    },
+    {
+      "monotonic": 2755.690814887,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 51231000
+    },
+    {
+      "monotonic": 2755.791916364,
+      "freq1_input": 2000000,
+      "temp1_input": 70000,
+      "power1_average": 50119000
+    },
+    {
+      "monotonic": 2755.893027052,
+      "freq1_input": 2000000,
+      "temp1_input": 69000,
+      "power1_average": 50235000
+    },
+    {
+      "monotonic": 2755.994140754,
+      "freq1_input": 100000000,
+      "temp1_input": 73000,
+      "power1_average": 91189000
+    },
+    {
+      "monotonic": 2756.094585147,
+      "freq1_input": 4000000,
+      "temp1_input": 74000,
+      "power1_average": 84096000
+    },
+    {
+      "monotonic": 2756.195028956,
+      "freq1_input": 2000000,
+      "temp1_input": 76000,
+      "power1_average": 84004000
+    },
+    {
+      "monotonic": 2756.295641178,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 84022000
+    },
+    {
+      "monotonic": 2756.396414534,
+      "freq1_input": 2000000,
+      "temp1_input": 80000,
+      "power1_average": 110233000
+    },
+    {
+      "monotonic": 2756.497052365,
+      "freq1_input": 2000000,
+      "temp1_input": 81000,
+      "power1_average": 116179000
+    },
+    {
+      "monotonic": 2756.597683204,
+      "freq1_input": 2000000,
+      "temp1_input": 82000,
+      "power1_average": 124175000
+    },
+    {
+      "monotonic": 2756.69847344,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 116191000
+    },
+    {
+      "monotonic": 2756.799245702,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 119083000
+    },
+    {
+      "monotonic": 2756.899942995,
+      "freq1_input": 2000000,
+      "temp1_input": 84000,
+      "power1_average": 116102000
+    },
+    {
+      "monotonic": 2757.00071054,
+      "freq1_input": 2000000,
+      "temp1_input": 85000,
+      "power1_average": 120157000
+    },
+    {
+      "monotonic": 2757.101462207,
+      "freq1_input": 11000000,
+      "temp1_input": 83000,
+      "power1_average": 124236000
+    },
+    {
+      "monotonic": 2757.202276294,
+      "freq1_input": 2000000,
+      "temp1_input": 80000,
+      "power1_average": 109049000
+    },
+    {
+      "monotonic": 2757.30297402,
+      "freq1_input": 2000000,
+      "temp1_input": 76000,
+      "power1_average": 82009000
+    },
+    {
+      "monotonic": 2757.40371963,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 94034000
+    },
+    {
+      "monotonic": 2757.504237892,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 94033000
+    },
+    {
+      "monotonic": 2757.604776343,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 94183000
+    },
+    {
+      "monotonic": 2757.705569585,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 92227000
+    },
+    {
+      "monotonic": 2757.806083526,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 91118000
+    },
+    {
+      "monotonic": 2757.906607752,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 91103000
+    },
+    {
+      "monotonic": 2758.007121241,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 91114000
+    },
+    {
+      "monotonic": 2758.107655962,
+      "freq1_input": 5000000,
+      "temp1_input": 75000,
+      "power1_average": 92182000
+    },
+    {
+      "monotonic": 2758.208575811,
+      "freq1_input": 7000000,
+      "temp1_input": 75000,
+      "power1_average": 91108000
+    },
+    {
+      "monotonic": 2758.309082884,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 91104000
+    },
+    {
+      "monotonic": 2758.409597154,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 91098000
+    },
+    {
+      "monotonic": 2758.510090292,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 91102000
+    },
+    {
+      "monotonic": 2758.610630293,
+      "freq1_input": 2000000,
+      "temp1_input": 75000,
+      "power1_average": 92091000
+    }
+  ],
+  "telemetry_final": {
+    "monotonic": 2758.645985154,
+    "freq1_input": 7000000,
+    "temp1_input": 75000,
+    "power1_average": 90177000
+  }
+}

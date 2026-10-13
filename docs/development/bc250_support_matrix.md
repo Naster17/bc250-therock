@@ -121,3 +121,8 @@ streams/events, eight basic graph replays and two simultaneous GPU processes
 passed. The final nine-gate batch took 123.99 seconds with unchanged kernel logs.
 Performance was not started. Details and remaining scope are in
 [bc250_training_memory.md](bc250_training_memory.md).
+
+Initial matched-input performance comparisons and SmolLM2 training-step timings
+are recorded in [bc250_performance.md](bc250_performance.md). GEMM/copy speeds
+remain close to the old stack; small-convolution results are variable. The
+fastest small-model LoRA profile tested uses FP32 without activation checkpointing.

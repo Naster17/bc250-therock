@@ -505,11 +505,15 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 
 - [x] Retain build/cache work across interrupted builds.
 - [x] Use measured memory consumption to set heavy-component job limits.
-- [ ] Establish a reproducible benchmark suite with warm/cold cases.
-- [ ] Compare the new stack against `.105` on identical inputs and precision policies.
+- [x] Establish shared-fixture GPU benchmarks with synchronized warm measurements.
+- [ ] Extend first-invocation measurements to controlled cold-cache/startup cases.
+- [x] Compare nine GPU workloads against `.105` with identical tensor bytes and precision policies.
 - [ ] Record compiler, kernel, firmware, clock, temperature and memory conditions.
-- [ ] Measure GEMM, convolution, FFT, sparse operations, copies and reductions.
-- [ ] Measure representative Torch inference/training and compilation overhead.
+- [x] Measure FP32/FP16/BF16 GEMM, convolution forward/backward and device copies.
+- [ ] Extend measurements to FFT, sparse operations and reductions.
+- [x] Measure SmolLM2-135M full training and LoRA step throughput on `.104`.
+- [x] Measure LoRA precision and activation-checkpointing tradeoffs for the small workload.
+- [ ] Extend model shapes/inference measurements and compilation overhead coverage.
 - [ ] Separate correctness improvements from performance improvements.
 - [ ] Tune kernels and databases with numerical checks retained.
 - [ ] Investigate launch overhead, memory bandwidth, LDS and occupancy bottlenecks.
@@ -618,3 +622,9 @@ The short real-model training/memory milestone passed nine gates in 123.99 secon
 on 2026-10-13, with unchanged kernel logs. Performance was not started. See
 [bc250_training_memory.md](bc250_training_memory.md) for scope, commands, losses,
 memory figures, artifacts and remaining qualifications.
+
+Initial Performance measurements are now complete: nine matched-input GPU
+comparisons plus six SmolLM2 training profiles. See
+[bc250_performance.md](bc250_performance.md) for raw data, variability, hardware
+confounds and remaining work. The earlier stop-before-Performance entry above
+is the historical boundary of the previous milestone.
