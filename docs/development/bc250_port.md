@@ -1,5 +1,9 @@
 # BC-250 ROCm 10.2 port
 
+The reviewed daily-use snapshot and pause policy are documented in
+[bc250_release_20261013.md](bc250_release_20261013.md). Use `bc250-torch` for
+standard Torch and `bc250-train` for the frozen Transformers/PEFT environment.
+
 See the [full support roadmap](bc250_full_support_roadmap.md) for the completed
 work, remaining hardware-feasible scope and release qualification checklist.
 

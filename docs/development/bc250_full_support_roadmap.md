@@ -525,6 +525,9 @@ hipCCL here is the primitive/container-library packaging project, not RCCL.
 - [x] Use versioned releases and an active userspace symlink.
 - [x] Run Torch as the host user's UID with required GPU groups.
 - [x] Keep release runtime files separate from mutable developer builds.
+- [x] Freeze the training consumers separately and provide `bc250-train`.
+- [x] Verify standalone GPU/Inductor/PEFT execution without development mounts.
+- [x] Record runtime checksums, review evidence and a preservation handoff for the pause.
 - [x] Fix absolute script paths and scripts outside the launch directory.
 - [x] Verify the launcher as `nik`, from home and from `/tmp`.
 - [x] Preserve Python `-c`, `-m`, option and stdin argument handling.
@@ -628,3 +631,8 @@ comparisons plus six SmolLM2 training profiles. See
 [bc250_performance.md](bc250_performance.md) for raw data, variability, hardware
 confounds and remaining work. The earlier stop-before-Performance entry above
 is the historical boundary of the previous milestone.
+
+The current daily-use release is reviewed and retained for the development pause.
+See [bc250_release_20261013.md](bc250_release_20261013.md) and
+[bc250_development_handoff.md](bc250_development_handoff.md). All source, build,
+cache, image, checkpoint and prior-release data remains in place.

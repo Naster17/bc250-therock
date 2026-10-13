@@ -1,5 +1,9 @@
 # Using bc250-torch for training and persistent files
 
+The reviewed daily-use release now supplies `bc250-train train.py`, which selects
+the independently frozen Transformers/PEFT/Accelerate packages. The original
+developer venv remains available. See [bc250_release_20261013.md](bc250_release_20261013.md).
+
 `bc250-torch` runs the validated Torch/ROCm image through rootful Podman on
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
