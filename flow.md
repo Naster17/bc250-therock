@@ -30,6 +30,23 @@ release claims must not override this cursor and current manifests.
   Signing key is generated remotely in build/certs only; never copy private keys.
   Local clone and full-source audit jobs finished; authenticated root SSH session
   68487 remains open for orchestration. No GPU test, install or reboot yet.
+- **K3/K4 preparation checkpoint:** host fan-build waiter PID25715, log
+  `.../kernel-r3-7.2.10/logs/fan-build.log`; rebuild/sign separate nct6687 module
+  only after kernel phase`staged`, with the new build's private key kept remote.
+  Fan source imported read-only from.105 into new repo`kernel/board-fan`,
+  revision`9086701`; original fan Makefile install/uninstall recipes not executed.
+  R3 memory/reference probe compiled (initial void** API compile correction logged
+  separately); no GPU execution yet. Candidate-only boot guard dry-run checks
+  passed: valid ACK, stale ACK rejected/expiry, wrong release inactive. Hardware
+  watchdog expiry/SSH recovery NOT yet exercised; do not call recovery qualified.
+  Helpers under`kernel/r3/`: early initramfs watchdog handoff, boot ACK deadline,
+  inactive candidate installer and serial GPU/Torch runner; not installed yet.
+  Firmware snapshot: actual r2 initramfs contains8 cyan entries, of which the2
+  SDMA blobs exactly match root Navi12 firmware and differ from root cyan blobs.
+  Pinned selected bytes in host`.../firmware-from-r2`; initial candidate uses that
+  override to avoid changing kernel and firmware together. Root firmware untouched;
+  ROCr SDMA remains disabled. Inspection handled usr/lib→lib path normalization;
+  initial parser/compile failures retained in hostlogs, no GPU fault involved.
 - **Immediate next:** finish build; rebuild retained NCT6687 cooling module from
   .105 read-only source import`kernel/board-fan` against r3. Check source modules/
   firmware/initramfs, prepare one-shot entry with persistent r2 default. First
