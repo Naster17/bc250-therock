@@ -1,0 +1,71 @@
+{
+  "task": "N1.4",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 6.1226171339994835
+    },
+    {
+      "name": "baseline-zero-stride",
+      "exit": 0,
+      "seconds": 0.26499768499979837
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 6.872460482000861
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 3.0694705859996247
+    },
+    {
+      "name": "scalar-regression",
+      "exit": 0,
+      "seconds": 1.6173956950005959
+    }
+  ],
+  "before_library_sha256": "b89043c024448068eb6137e223fbe68b738c0bd954593cb098d2a67adf8aa41f",
+  "source_delta_sha256": "76887703b5be80faff8c0b545d9f6c541fbd9bf306557fb783c2e32f6f70f818",
+  "test_source_sha256": "f87334e7c0cc37913b3b55c1dc35e0617a270d29e9ff5776bc89527f5b438768",
+  "resources": {
+    "jobs": 16,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "scalar-regression",
+  "after_source_sha256": "6ebcbc6164c738f1a3adce49e65e094d91f94477eb28ef9701cef181ec4c9265",
+  "after_library_sha256": "12c57c5ebd8b34cf973dcfb4bbe8f2d708c04a3b641dcde5a9e16d932c175b89",
+  "executed_cases": 609,
+  "timings": [],
+  "scalar_regression_cases": 234,
+  "rocm_libraries_revision": "40e2c04af95e6f9f95001aaec2a7e5b48b590924",
+  "scope": {
+    "native_arch": "gfx1013",
+    "numerical_broadcast_cases": 604,
+    "descriptor_rejections": 5,
+    "scalar_regression_cases": 234,
+    "contract": "A/B/C/D logical batch counts still match. A/B/C may use stride0 to broadcast one physical matrix; multi-batch D stride0 is rejected. Single-batch stride0 also tested.",
+    "coverage": "all7 nonempty A/B/C masks; sparse A/B; both orders; all input transpose combinations; f32/f16/bf16; strip and low-precision TILE pruning, partial tiles, six activation epilogues; descriptor/plan compression agrees, independent packed decoding, original sparse storage poisoned before matmul, exact CPU double reference/padding except unchanged tolerances for nonlinear ops; in-place pruning and overlap rejection",
+    "compression": "Sparse stride0 stores one values/metadata pack and pruning/compression launch once per physical matrix; GEMM reuses that pack across logical output batches",
+    "alias_guards": "partial input/D, partial C/D, broadcast C==D and partial compression overlap rejected; valid exact in-place pruning retained",
+    "not_qualified": [
+      "mismatched logical batch counts",
+      "multi-stream/split-K",
+      "bias/vector scaling/new types",
+      "hardware sparse acceleration",
+      "general performance or long stability"
+    ]
+  },
+  "post_run_review": {
+    "kernel_log": "identical1009 lines, no new messages",
+    "kernel_before_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "kernel_after_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "qualified_log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n14-sparselt",
+    "prior_prefix_backup": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/n14-sparselt-before.so.0.1",
+    "upstream_contract_evidence": "rocsparselt_auxiliary.cpp requires matching logical counts; rocsparselt_compress.cpp collapses sparse stride0 to one physical pack"
+  }
+}

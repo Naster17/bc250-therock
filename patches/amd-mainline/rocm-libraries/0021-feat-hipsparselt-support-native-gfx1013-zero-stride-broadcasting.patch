@@ -1,0 +1,150 @@
+From 40e2c04af95e6f9f95001aaec2a7e5b48b590924 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 16:44:07 +0200
+Subject: [PATCH] feat(hipsparselt): support native gfx1013 zero-stride
+ broadcasting
+
+---
+ .../library/src/hcc_detail/gfx1013_scalar.hip | 65 ++++++++++++++-----
+ 1 file changed, 50 insertions(+), 15 deletions(-)
+
+diff --git a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+index 7dda9edada5..8a1f29cb55a 100644
+--- a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
++++ b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+@@ -185,11 +185,24 @@ namespace
+     }
+     size_t value_bytes(const Matrix& matrix)
+     {
+-        return matrix.rows * matrix.cols / 2 * matrix.batches * width(matrix.type);
++        return matrix.rows * matrix.cols / 2 * (matrix.batch_stride == 0 ? 1 : matrix.batches)
++               * width(matrix.type);
+     }
+     size_t compressed_bytes(const Matrix& matrix)
+     {
+-        return value_bytes(matrix) + groups(matrix) * matrix.batches;
++        return value_bytes(matrix)
++               + groups(matrix) * (matrix.batch_stride == 0 ? 1 : matrix.batches);
++    }
++
++    size_t dense_bytes(const Matrix& matrix)
++    {
++        size_t span = matrix.ld * (matrix.order == HIPSPARSE_ORDER_ROW ? matrix.rows : matrix.cols);
++        return (span + (matrix.batches - 1) * matrix.batch_stride) * width(matrix.type);
++    }
++    bool overlaps(const void* a, size_t a_bytes, const void* b, size_t b_bytes)
++    {
++        auto x = reinterpret_cast<uintptr_t>(a), y = reinterpret_cast<uintptr_t>(b);
++        return x < y ? y - x < a_bytes : x - y < b_bytes;
+     }
+ 
+     // A group owns all its dense output locations, allowing in-place strip pruning.
+@@ -350,7 +363,7 @@ namespace
+     }
+ 
+     hipsparseStatus_t launch_tile(const hipsparseLtHandle_t* handle,
+-                                  const Matrix&              matrix,
++                                  Matrix                     matrix,
+                                   int                        sparse_a,
+                                   hipsparseOperation_t       op,
+                                   const void*                input,
+@@ -367,6 +380,12 @@ namespace
+         int64_t k = contraction(matrix, sparse_a, op);
+         if(k % 4)
+             return HIPSPARSE_STATUS_NOT_SUPPORTED;
++        if(input != output && overlaps(input, dense_bytes(matrix), output, dense_bytes(matrix)))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        // A zero-stride input is one physical matrix. Each tile/group must have
++        // a single writer even when the descriptor has several logical batches.
++        if(matrix.batch_stride == 0)
++            matrix.batches = 1;
+         int64_t length = sparse_a ? rows(matrix, op) : cols(matrix, op);
+         int64_t count  = ((length + 3) / 4) * (k / 4) * matrix.batches;
+         dim3    grid((count + 63) / 64), block(64);
+@@ -409,11 +428,12 @@ namespace
+         const T* compressed = mm.a.sparse ? a : b;
+         int      size = sm.type == HIP_R_32F ? 2 : 4, kept = size / 2;
+         int64_t  group_count = sm.rows * sm.cols / size;
+-        auto     metadata    = reinterpret_cast<const unsigned char*>(compressed)
+-                               + sm.rows * sm.cols / 2 * sm.batches * sizeof(T);
+-        int64_t  base
+-            = (sm.batches == 1 ? 0 : batch * group_count) + (mm.a.sparse ? row : col) * (k / size);
+-        float sum = 0;
++        auto     metadata
++            = reinterpret_cast<const unsigned char*>(compressed)
++              + sm.rows * sm.cols / 2 * (sm.batch_stride == 0 ? 1 : sm.batches) * sizeof(T);
++        int64_t base = (sm.batches == 1 || sm.batch_stride == 0 ? 0 : batch * group_count)
++                       + (mm.a.sparse ? row : col) * (k / size);
++        float   sum  = 0;
+         for(int64_t g = 0; alpha != 0 && g < k / size; ++g)
+             for(int t = 0; t < kept; ++t)
+             {
+@@ -448,7 +468,7 @@ namespace
+ 
+     template <bool Check, bool Compress>
+     hipsparseStatus_t launch_strip(const hipsparseLtHandle_t* handle,
+-                                   const Matrix&              matrix,
++                                   Matrix                     matrix,
+                                    int                        sparse_a,
+                                    hipsparseOperation_t       op,
+                                    const void*                input,
+@@ -477,9 +497,15 @@ namespace
+         }
+         if(contraction(matrix, sparse_a, op) % group_size(matrix))
+             return HIPSPARSE_STATUS_NOT_SUPPORTED;
+-        if constexpr(Compress)
+-            if(input == output)
++        if constexpr(!Check)
++        {
++            size_t output_bytes = Compress ? compressed_bytes(matrix) : dense_bytes(matrix);
++            if((Compress || input != output)
++               && overlaps(input, dense_bytes(matrix), output, output_bytes))
+                 return HIPSPARSE_STATUS_INVALID_VALUE;
++        }
++        if(matrix.batch_stride == 0)
++            matrix.batches = 1;
+         if constexpr(Check)
+         {
+             if(hipMemsetAsync(invalid, 0, sizeof(int), stream) != hipSuccess)
+@@ -686,7 +712,7 @@ hipsparseStatus_t hipsparseLtMatDescSetAttribute(const hipsparseLtHandle_t*    h
+         std::memcpy(&stride, value, bytes);
+         int64_t span
+             = matrix.ld * (matrix.order == HIPSPARSE_ORDER_ROW ? matrix.rows : matrix.cols);
+-        if(stride < span || stride > (int64_t(1) << 40) / 65535)
++        if((stride != 0 && stride < span) || stride > (int64_t(1) << 40) / 65535)
+             return HIPSPARSE_STATUS_NOT_SUPPORTED;
+         matrix.batch_stride = stride;
+     }
+@@ -740,6 +766,8 @@ hipsparseStatus_t hipsparseLtMatmulDescriptorInit(const hipsparseLtHandle_t*
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     if(mm.a.batches != mm.d.batches || mm.b.batches != mm.d.batches || mm.c.batches != mm.d.batches)
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    if(mm.d.batches > 1 && mm.d.batch_stride == 0)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     write(d, mm);
+     return HIPSPARSE_STATUS_SUCCESS;
+ }
+@@ -917,10 +945,17 @@ hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+     if(count > 1)
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+-    if(d == a || d == b)
++    if(overlaps(d,
++                dense_bytes(plan.mm.d),
++                a,
++                plan.mm.a.sparse ? compressed_bytes(plan.mm.a) : dense_bytes(plan.mm.a))
++       || overlaps(d,
++                   dense_bytes(plan.mm.d),
++                   b,
++                   plan.mm.b.sparse ? compressed_bytes(plan.mm.b) : dense_bytes(plan.mm.b)))
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+-    if(d == c
+-       && (plan.mm.c.order != plan.mm.d.order || plan.mm.c.ld != plan.mm.d.ld
++    if(overlaps(d, dense_bytes(plan.mm.d), c, dense_bytes(plan.mm.c))
++       && (d != c || plan.mm.c.order != plan.mm.d.order || plan.mm.c.ld != plan.mm.d.ld
+            || plan.mm.c.batch_stride != plan.mm.d.batch_stride))
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     float av, bv;
+-- 
+2.56.0
+

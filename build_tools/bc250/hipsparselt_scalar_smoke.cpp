@@ -51,7 +51,10 @@ struct Layout {
   int64_t rows, cols, ld, stride;
   hipsparseOrder_t order;
   int batches;
-  size_t storage() const { return stride * batches; }
+  size_t storage() const {
+    return stride == 0 ? ld * (order == HIPSPARSE_ORDER_ROW ? rows : cols)
+                       : stride * batches;
+  }
   size_t index(int batch, int64_t row, int64_t col, bool trans = false) const {
     if (trans)
       std::swap(row, col);
@@ -109,8 +112,8 @@ const std::vector<unsigned> &tile_masks() {
 template <class T>
 void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
          hipsparseOrder_t order, bool ta, bool tb, int batches,
-         bool tile_mode = false, bool partial_tile = false,
-         int activation = -1) {
+         bool tile_mode = false, bool partial_tile = false, int activation = -1,
+         int broadcast_mask = 0) {
   std::fprintf(stderr,
                "CASE type=%d sparse_a=%d order=%d ta=%d tb=%d batches=%d "
                "tile=%d partial=%d\n",
@@ -129,6 +132,13 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                    order == HIPSPARSE_ORDER_ROW ? HIPSPARSE_ORDER_COL
                                                 : HIPSPARSE_ORDER_ROW,
                    batches);
+  if (broadcast_mask & 1)
+    la.stride = 0;
+  if (broadcast_mask & 2)
+    lb.stride = 0;
+  if (broadcast_mask & 4)
+    lc.stride = 0;
+  const int sparse_batches = (sparse_a ? la : lb).stride == 0 ? 1 : batches;
   std::vector<T> a(la.storage(), T(-99.0f)), b(lb.storage(), T(-99.0f)),
       c(lc.storage(), T(-99.0f)), output(ld.storage(), T(-99.0f));
   for (int batch = 0; batch < batches; ++batch) {
@@ -316,7 +326,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   LT(hipsparseLtMatmulGetWorkspace(&handle, &plan, &workspace));
   expect(workspace == 0, "zero workspace");
   LT(hipsparseLtSpMMACompressedSize(&handle, &plan, &size, &workspace));
-  size_t elements = (sparse_a ? m : n) * k * batches;
+  size_t elements = (sparse_a ? m : n) * k * sparse_batches;
   expect(size == elements / 2 * sizeof(T) + elements / group && workspace == 0,
          "packed size");
   Device gpu_a(a.size() * sizeof(T)), gpu_b(b.size() * sizeof(T)),
@@ -393,6 +403,13 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   expect(std::memcmp(inplace.data(), reference.data(),
                      inplace.size() * sizeof(T)) == 0,
          "descriptor API in-place pruning");
+  if (broadcast_mask) {
+    expect(hipsparseLtSpMMACompress(
+               &handle, &plan, gpu_sparse.data,
+               static_cast<unsigned char *>(gpu_sparse.data) + sizeof(T),
+               nullptr, stream) == HIPSPARSE_STATUS_INVALID_VALUE,
+           "partial compression overlap rejected");
+  }
   LT(hipsparseLtSpMMACompress(&handle, &plan, gpu_sparse.data, compressed.data,
                               nullptr, stream));
   HIP(hipStreamSynchronize(stream));
@@ -410,7 +427,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                 hipMemcpyDeviceToHost));
   expect(packed == packed2, "descriptor and plan compression agree");
   size_t byte_offset = elements / 2 * sizeof(T);
-  for (int batch = 0; batch < batches; ++batch)
+  for (int batch = 0; batch < sparse_batches; ++batch)
     for (int outer = 0; outer < (sparse_a ? m : n); ++outer)
       for (int start = 0; start < k; start += group) {
         size_t g =
@@ -440,6 +457,28 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                 input.size() * sizeof(T)));
   HIP(hipMemset(gpu_sparse.data, 0xFF, pruned.size() * sizeof(T)));
   float alpha = 1.25f, beta = -0.375f;
+  if (broadcast_mask) {
+    const void *pa = sparse_a ? compressed.data : gpu_a.data;
+    const void *pb = sparse_a ? gpu_b.data : compressed.data;
+    for (const void *input : {pa, pb})
+      expect(hipsparseLtMatmul(
+                 &handle, &plan, &alpha, pa, pb, &beta, gpu_c.data,
+                 const_cast<unsigned char *>(
+                     static_cast<const unsigned char *>(input)) +
+                     sizeof(T),
+                 nullptr, &stream, 1) == HIPSPARSE_STATUS_INVALID_VALUE,
+             "partial input/output overlap rejected");
+    expect(hipsparseLtMatmul(
+               &handle, &plan, &alpha, pa, pb, &beta,
+               static_cast<unsigned char *>(gpu_d.data) + sizeof(T), gpu_d.data,
+               nullptr, &stream, 1) == HIPSPARSE_STATUS_NOT_SUPPORTED,
+           "partial C/D overlap rejected");
+    if (lc.stride == 0)
+      expect(hipsparseLtMatmul(&handle, &plan, &alpha, pa, pb, &beta,
+                               gpu_c.data, gpu_c.data, nullptr, &stream,
+                               1) == HIPSPARSE_STATUS_NOT_SUPPORTED,
+             "broadcast C cannot alias batched D");
+  }
   LT(hipsparseLtMatmul(&handle, &plan, &alpha,
                        sparse_a ? compressed.data : gpu_a.data,
                        sparse_a ? gpu_b.data : compressed.data, &beta,
