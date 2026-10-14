@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <string>
 #include <thread>
+#include <type_traits>
 #include <vector>
 
 #define HIP(call)                                                              \
@@ -110,12 +111,20 @@ const std::vector<unsigned> &tile_masks() {
   return masks;
 }
 
+// Independent CPU storage conversion; INT8 public output rounds ties to even
+// and saturates, unlike a C++ integer cast which truncates/wraps.
+template <class T> T reference_store(float value) {
+  if constexpr (std::is_same_v<T, int8_t>)
+    return T(std::max(-128.0, std::min(127.0, std::nearbyint(double(value)))));
+  return T(value);
+}
+
 template <class T>
 void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
          hipsparseOrder_t order, bool ta, bool tb, int batches,
          bool tile_mode = false, bool partial_tile = false, int activation = -1,
          int broadcast_mask = 0, int bias_mode = 0, int scalar_mode = 0,
-         bool inplace_cd = false, int vector_mode = 0) {
+         bool inplace_cd = false, int vector_mode = 0, int integer_fixture = 0) {
   std::fprintf(stderr,
                "CASE type=%d sparse_a=%d order=%d ta=%d tb=%d batches=%d "
                "tile=%d partial=%d\n",
@@ -123,7 +132,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                int(tile_mode), int(partial_tile));
   const int64_t m = tile_mode && !partial_tile ? 8 : 5;
   const int64_t n = tile_mode && !partial_tile ? 12 : 7;
-  constexpr int64_t k = 12;
+  const int64_t k = integer_fixture == 1 ? 4096 : integer_fixture == 3 ? 262140 : 12;
   auto prune_alg =
       tile_mode ? HIPSPARSELT_PRUNE_SPMMA_TILE : HIPSPARSELT_PRUNE_SPMMA_STRIP;
   const int group = type == HIP_R_32F ? 2 : 4, kept = group / 2;
@@ -171,6 +180,24 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
             input[ls.index(batch, sparse_a ? outer : start + i,
                            sparse_a ? start + i : outer, transpose)] =
                 T(i == group - 1 ? 0.5f : 0.0f);
+  if constexpr (std::is_same_v<T, int8_t>) {
+    const int values[] = {-128, 127, -17, 13, 0, 1, -1, 2};
+    for (int batch = 0; batch < batches; ++batch) {
+      for (int row = 0; row < m; ++row)
+        for (int col = 0; col < k; ++col)
+          a[la.index(batch, row, col, ta)] = (integer_fixture == 1 ? -127 : integer_fixture == 3 ? -128 : integer_fixture == 2 ? 0 : values[(row * 3 + col + batch) % 8]);
+      for (int row = 0; row < k; ++row)
+        for (int col = 0; col < n; ++col)
+          b[lb.index(batch, row, col, tb)] = (integer_fixture == 1 ? -127 : integer_fixture == 3 ? -128 : integer_fixture == 2 ? 0 : values[(row + col * 3 + batch * 2) % 8]);
+    }
+  }
+  if (integer_fixture == 2) {
+    const int ties[] = {1, 3, 5, -1, -3, -5, 127, -128};
+    for (int batch = 0; batch < batches; ++batch)
+      for (int row = 0; row < m; ++row)
+        for (int col = 0; col < n; ++col)
+          c[lc.index(batch, row, col)] = T(ties[(row + col) % 8]);
+  }
   std::vector<T> pruned(input.size(), T(-99.0f)), reference = pruned;
   if (tile_mode) {
     // All rows independently prefer the same two columns: a STRIP alias would
@@ -182,7 +209,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                          transpose)] =
               T(col >= 4  ? 1.0f
                 : col < 2 ? 8.0f - col
-                          : float(2 + r + col) * 0.125f);
+                          : float(2 + r + col) * (type == HIP_R_8I ? 1.0f : 0.125f));
     int length = sparse_a ? m : n;
     for (int batch = 0; batch < batches; ++batch)
       for (int first_row = 0; first_row < length; first_row += 4)
@@ -252,7 +279,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   for (int batch = 0; batch < (bias_stride ? batches : 1); ++batch)
     for (int row = 0; row < m; ++row) {
       auto index = 4 + batch * bias_stride + row;
-      host_bias[index] = float(row - 2 + batch * 3) * 0.125f + 0.00390625f;
+      host_bias[index] = integer_fixture == 1 ? 0.49609375f : float(row - 2 + batch * 3) * 0.125f + 0.00390625f;
       typed_bias[index] = T(host_bias[index]);
     }
   std::unique_ptr<Device> gpu_bias;
@@ -285,7 +312,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   hipsparseLtMatmulAlgSelection_t alg{};
   hipsparseLtMatmulPlan_t plan{};
   LT(hipsparseLtMatmulDescriptorInit(&handle, &mm, opa, opb, &da, &db, &dc, &dd,
-                                     HIPSPARSELT_COMPUTE_32F));
+                                     (type == HIP_R_8I ? HIPSPARSELT_COMPUTE_32I : HIPSPARSELT_COMPUTE_32F)));
   if (vector_mode) {
     int enabled = 1, observed = 0;
     LT(hipsparseLtMatmulDescSetAttribute(
@@ -399,7 +426,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
     LT(hipsparseLtMatmulDescSetAttribute(
         &handle, &mm, HIPSPARSELT_MATMUL_BIAS_STRIDE, &changed_stride,
         sizeof(changed_stride)));
-    hipDataType changed_type = float_bias ? type : HIP_R_32F;
+    hipDataType changed_type = float_bias && type != HIP_R_8I ? type : HIP_R_32F;
     LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
                                          HIPSPARSELT_MATMUL_BIAS_TYPE,
                                          &changed_type, sizeof(changed_type)));
@@ -564,7 +591,8 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   HIP(hipMemset(sparse_a ? gpu_a.data : gpu_b.data, 0xFF,
                 input.size() * sizeof(T)));
   HIP(hipMemset(gpu_sparse.data, 0xFF, pruned.size() * sizeof(T)));
-  float alpha = 1.25f, beta = -0.375f;
+  float alpha = integer_fixture == 1 ? 1.0f / 524288.0f : 1.25f;
+  float beta = integer_fixture == 2 ? 0.5f : integer_fixture ? 0.0f : -0.375f;
   if ((scalar_mode & 1) || vector_mode == 2) {
     alpha = 0;
     HIP(hipMemset(compressed.data, 0xFF, size));
@@ -664,14 +692,16 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
           value = float(1.0 / (1.0 + std::exp(-double(value))));
         if (activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH)
           value = float(std::tanh(double(value) * 0.5) * 1.25);
+        if constexpr (std::is_same_v<T, int8_t>)
+          value = float(std::max(-128.0, std::min(127.0, std::nearbyint(double(value)))));
         expected[ld.index(batch, row, col)] = T(value);
       }
   // Inputs are powers of two with small K, so FP32 accumulation and CPU double
   // reference are exact; any conversion difference or padding write is a
   // failure.
-  bool nonlinear = activation == HIPSPARSELT_MATMUL_ACTIVATION_GELU ||
+  bool nonlinear = type != HIP_R_8I && (activation == HIPSPARSELT_MATMUL_ACTIVATION_GELU ||
                    activation == HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID ||
-                   activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH;
+                   activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH);
   if (!nonlinear &&
       std::memcmp(expected.data(), output.data(), output.size() * sizeof(T))) {
     int printed = 0;
@@ -748,7 +778,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
     for (int row = 0; row < m; ++row)
       for (int col = 0; col < n; ++col)
         expect(float(output[ld.index(0, row, col)]) ==
-                   float(T(half * float(c[lc.index(0, row, col)]))),
+                   float(reference_store<T>(half * float(c[lc.index(0, row, col)]))),
                "alpha zero ignores NaN input");
     HIP(hipMemcpy(gpu_b.data, b.data(), b.size() * sizeof(T),
                   hipMemcpyHostToDevice));
@@ -766,7 +796,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
           sum += double(float(reference[la.index(0, row, kk)])) *
                  double(float(b[lb.index(0, kk, col)]));
         expect(float(output[ld.index(0, row, col)]) ==
-                   float(T(float(alpha * sum))),
+                   float(reference_store<T>(float(alpha * sum))),
                "beta zero ignores NaN C");
       }
     // A queued, delayed host marker makes an asynchronous implementation of

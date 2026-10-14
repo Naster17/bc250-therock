@@ -1,0 +1,90 @@
+{
+  "task": "N1.7",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 13.227546690999588
+    },
+    {
+      "name": "baseline-int8",
+      "exit": 0,
+      "seconds": 0.31506208599967067
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 2.818227776002459
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 1.566936136001459
+    },
+    {
+      "name": "scalar-regression",
+      "exit": 0,
+      "seconds": 1.616469959000824
+    },
+    {
+      "name": "broadcast-regression",
+      "exit": 0,
+      "seconds": 3.019866901999194
+    },
+    {
+      "name": "bias-regression",
+      "exit": 0,
+      "seconds": 2.7179121970002598
+    },
+    {
+      "name": "vector-regression",
+      "exit": 0,
+      "seconds": 2.217376583001169
+    }
+  ],
+  "before_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+  "source_delta_sha256": "91aafd2f10e7845140aaccbe32696adb4777a385b7958df97ad217a00021d077",
+  "test_source_sha256": "e431d649f3221e784f4ae67e707c6b5339ad1cf31c078a163594edc40dd8d757",
+  "resources": {
+    "jobs": 16,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "vector-regression",
+  "after_source_sha256": "52c8ace6df8b31768aa3c3ef6f90716aee30821d200c0c0c243e00d414c66d52",
+  "after_library_sha256": "fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47",
+  "executed_cases": 150,
+  "timings": [],
+  "scalar_regression_cases": 234,
+  "broadcast_regression_cases": 609,
+  "bias_regression_cases": 567,
+  "vector_regression_cases": 438,
+  "numerical_cases": 134,
+  "api_checks": 16,
+  "log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n17-sparselt-r4",
+  "library_revision": "2fd5619d7c8ec6193eeb23077ea347887bdda77c",
+  "kernel_log": {
+    "before_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "after_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "identical": true,
+    "lines": 1009
+  },
+  "scope": "Native gfx1013 INT8 A/B/C/D with INT32 accumulation (K multiple4, <=262140); host FP32 scalar alpha/beta or device per-row FP32 alpha vector; FP32 bias; nearest-even saturating INT8 output; sparse A/B, layouts/transposes, broadcast inputs, strip/TILE/partial tiles, activation epilogues and in-place C/D.",
+  "limitations": [
+    "INT8 widened FP16/BF16/INT32 outputs unimplemented; no FP8 path",
+    "INT8 sigmoid/tanh enable rejected per pinned upstream; RELU/ABS/leakyRELU/GELU qualified only in bounded cases",
+    "No integer accumulator overflow/wrap contract admitted; K>262140 rejected",
+    "Beta vector remains unsupported",
+    "Non-finite FP32 scaling/bias and exhaustive rounding/activation edge combinations unqualified",
+    "No performance, automatic Torch routing, matrix-instruction acceleration or sustained-stability claim"
+  ],
+  "contract_evidence": [
+    "library/src/hcc_detail/rocsparselt/src/include/handle.h: MATMUL_DATATYPE_I8_I8_S uses compute_i32",
+    "library/src/hcc_detail/rocsparselt/src/spmm/rocsparselt_spmm.cpp: GENERATE_DEFINITIONS(int8_t,int8_t,float)",
+    "library/src/hcc_detail/rocsparselt/src/rocsparselt_auxiliary.cpp: integer default bias FP32, sigmoid/tanh unsupported for INT8",
+    "clients/common/cblas_interface.cpp: cblas_gemm<int8_t,int8_t,float> nearbyint/saturation",
+    "clients/include/spmm/testing_spmm.hpp: FP32 bias/activation and nearest-even INT8 conversion"
+  ],
+  "attempts_file": "n17-sparselt-attempts.json"
+}

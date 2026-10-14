@@ -1,0 +1,136 @@
+{
+  "task": "N1.7",
+  "attempts": [
+    {
+      "log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n17-sparselt",
+      "diagnosis": "INT8 TILE fixture converted fractional nonzero entries to zero; nonzero-cardinality assertion invalid. Fixed integer fixture; production unchanged.",
+      "report": {
+        "task": "N1.7",
+        "status": "failed",
+        "checks": [
+          {
+            "name": "compile-probe",
+            "exit": 0,
+            "seconds": 12.22849257299822
+          },
+          {
+            "name": "baseline-int8",
+            "exit": 0,
+            "seconds": 0.26490997099972446
+          },
+          {
+            "name": "targeted-build",
+            "exit": 0,
+            "seconds": 6.9266270240004815
+          },
+          {
+            "name": "gpu-correctness",
+            "exit": 1,
+            "seconds": 0.9660188779998862
+          }
+        ],
+        "before_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+        "source_delta_sha256": "91aafd2f10e7845140aaccbe32696adb4777a385b7958df97ad217a00021d077",
+        "test_source_sha256": "19485e8b32e9733cc5bb95642aa081156cc998a8fa9b87cc58c49352eaac95b3",
+        "resources": {
+          "jobs": 16,
+          "ccache": "20G",
+          "sdma": false
+        },
+        "phase": "gpu-correctness",
+        "after_source_sha256": "52c8ace6df8b31768aa3c3ef6f90716aee30821d200c0c0c243e00d414c66d52",
+        "after_library_sha256": "fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47",
+        "error": "gpu-correctness: exit 1; see /home/nik/bc250work/rocm-10.2-gfx1013/logs/n17-sparselt",
+        "prefix_restored": true
+      }
+    },
+    {
+      "log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n17-sparselt-r2",
+      "diagnosis": "Legacy extra zero-alpha CPU assertion used truncating integer cast instead of nearest-even saturating storage. Fixed reference conversion; production unchanged.",
+      "report": {
+        "task": "N1.7",
+        "status": "failed",
+        "checks": [
+          {
+            "name": "compile-probe",
+            "exit": 0,
+            "seconds": 13.290798355999868
+          },
+          {
+            "name": "baseline-int8",
+            "exit": 0,
+            "seconds": 0.3150359929968545
+          },
+          {
+            "name": "targeted-build",
+            "exit": 0,
+            "seconds": 2.818473757997708
+          },
+          {
+            "name": "gpu-correctness",
+            "exit": 1,
+            "seconds": 1.2667391089999
+          }
+        ],
+        "before_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+        "source_delta_sha256": "91aafd2f10e7845140aaccbe32696adb4777a385b7958df97ad217a00021d077",
+        "test_source_sha256": "672d44d0e2a62749e8eebae6a97682edcfd8a8478e1ef15bede34aeadf860761",
+        "resources": {
+          "jobs": 16,
+          "ccache": "20G",
+          "sdma": false
+        },
+        "phase": "gpu-correctness",
+        "after_source_sha256": "52c8ace6df8b31768aa3c3ef6f90716aee30821d200c0c0c243e00d414c66d52",
+        "after_library_sha256": "fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47",
+        "error": "gpu-correctness: exit 1; see /home/nik/bc250work/rocm-10.2-gfx1013/logs/n17-sparselt-r2",
+        "prefix_restored": true
+      }
+    },
+    {
+      "log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n17-sparselt-r3",
+      "diagnosis": "All 134 numerical/16 API checks passed, but per-numerical PASS records absent; runner count assertion failed. Added explicit PASS records; production unchanged.",
+      "report": {
+        "task": "N1.7",
+        "status": "failed",
+        "checks": [
+          {
+            "name": "compile-probe",
+            "exit": 0,
+            "seconds": 13.328987502998643
+          },
+          {
+            "name": "baseline-int8",
+            "exit": 0,
+            "seconds": 0.3150648929986346
+          },
+          {
+            "name": "targeted-build",
+            "exit": 0,
+            "seconds": 2.8197629370006325
+          },
+          {
+            "name": "gpu-correctness",
+            "exit": 0,
+            "seconds": 1.5670704869990004
+          }
+        ],
+        "before_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+        "source_delta_sha256": "91aafd2f10e7845140aaccbe32696adb4777a385b7958df97ad217a00021d077",
+        "test_source_sha256": "672d44d0e2a62749e8eebae6a97682edcfd8a8478e1ef15bede34aeadf860761",
+        "resources": {
+          "jobs": 16,
+          "ccache": "20G",
+          "sdma": false
+        },
+        "phase": "gpu-correctness",
+        "after_source_sha256": "52c8ace6df8b31768aa3c3ef6f90716aee30821d200c0c0c243e00d414c66d52",
+        "after_library_sha256": "fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47",
+        "error": "",
+        "prefix_restored": true
+      }
+    }
+  ],
+  "successful_attempt": "n17-sparselt-r4",
+  "production_source_and_library_unchanged_across_attempts": true
+}
