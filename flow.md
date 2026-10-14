@@ -8,37 +8,44 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **Current task:** N1.1 hipTensor unilateral contraction modes is implemented,
-  staged in the mutable .104 prefix and bounded-qualified. N1 remains open.
-- **Last qualified code batch:** N1.1 root `d22fb68a35052b4c437b14113b3048c842df2aef`,
-  libraries `681d2f8a25d83db3ef99140461600883f7b71dba` (patch00018). P2
-  `ce0025df5`, P1 `71f9f0ee4` and scalar `fdde5561c` remain prior evidence.
-- **No outstanding build/GPU gate or running job.** .104 logs:
-  `WS/logs/n11-hiptensor-r3/`, report `result.json`; build17.1s, GPU2.7s,
-  12jobs/20GiB ccache, targeted `hipTensor+dist`, exclusive runtime lock.
-- **N1.1 evidence:** old library rejected the first unilateral case; updated
-  native gfx1013 library passed273 API cases (253 CPU-referenced numerical,
-  20 descriptor rejections), including seven real type combinations, single and
-  mixed sums, padded/permuted layouts, nonlinear unary ops,16-mode union,
-  zero scalars with NaN inputs, alias guards and destroyed source descriptors.
-  Nine algorithm/workspace combinations passed with JIT NONE and zero workspace;
-  this does not qualify arbitrary plan/JIT contracts. Kernel logs identical.
-  Fourteen small-fixture event timings: single sum12.6–13.5µs, mixed27.7–29.3µs
-  (30 repeats, includes submission gaps); no speedup or general-performance claim.
-- **Host readiness fix:** .104 had rebooted with cgroups service stopped/not in
-  boot runlevel. First two container attempts failed before compilation
-  (`WS/logs/n11-hiptensor{,-r2}`); runc cannot disable cgroups. Started existing
-  cgroup2 service and added it to boot. No kernel/boot-file changes or reboot.
-- **Installed/source provenance:** `SOURCE_N11.json` verifies7 changed files
-  on the P2 snapshot; runtime.json records N1.1 revisions and library SHA256
-  `ff481cfdfe245e6446e22b7c7e428392939c7bc41bf1c32434307a14deafa08a`.
-  Independent old library backup: `WS/recovery/n11-hiptensor-before.so.0.1`.
-  All18 library patches reconstruct the exact committed tree. Frozen P2 candidate
-  and .105 are unchanged; Torch/Triton were not rebuilt.
-- **Next implementation on “continue”: N1.2, hipTensor complex contractions.**
-  Inspect scalar dtype/unary validation, public complex alpha/beta ABI and
-  gfx1013 descriptor/plan routing, then implement a bounded native C32F/C64F
-  path with CPU references, zero-scalar/span/alias guards. Do not restart P1/P2.
+- **Current task:** N1.2 native hipTensor complex contractions is implemented,
+  installed in the mutable .104 prefix and bounded-qualified. N1 remains open.
+- **Last qualified code:** root `3dae3539c3ffe46bb10cb83176cfdfebe1fd2dd7`,
+  libraries `c6ac34f0ba3c4de11a0aa7e21fc9ec19adc6ef9e` (patch0019).
+  N1.1 `d22fb68a3`/`681d2f8a25d` and P2 `ce0025df5` remain prior evidence.
+- **N1.2 behavior:** same-type C32F/C64F storage/compute using public HIP complex
+  host scalars; identity, NEG and CONJ on A/B/C. Correct complex multiplication
+  shares the real kernel's layout, unilateral/shared sums and span/alias guards.
+  Real compute and real-CONJ rejection retained; complex widening/mixed types
+  and other complex unary functions explicitly rejected.
+- **Passed on .104:**450 complex API cases (426 independent std::complex<double>
+  numerical references +24 descriptor rejections), then273 real API regressions.
+  Covers27 A/B/C unary combinations across seven layouts/two types, NaN-poisoned
+  zero scalars/null zero-beta C, imaginary scalars, in-place conjugated C/D,
+  input/output guards,16-mode union with unit axes, plan source lifetime and
+  nine algorithm/workspace pairs for each complex type (JIT NONE, zero workspace).
+  Kernel logs identical1009 lines. Tiny-fixture30-repeat stream-event timings
+  8.7–9.9µs GEMM and21.5–23.2µs mixed sums include submission gaps;
+  no cross-batch speedup/large-performance claim.
+- **Evidence/jobs:** `WS/logs/n12-hiptensor-r2/result.json`, repository
+  `bc250_scalar_library_results/n12-{hiptensor,reconstruction}.json`.
+  Targeted `hipTensor+dist`,12jobs/20GiB ccache under exclusive runtime lock;
+  first build17.1s, successful cached restage4.9s, complex gate2.3s/real2.8s.
+  No running jobs or outstanding gates. First attempt `WS/logs/n12-hiptensor`
+  failed on a test's mistaken partial-alias assertion for adjacent single-element
+  dot C/D tensors; prior prefix was restored before unlocking. Corrected test
+  requires multi-element spans; production arithmetic was unchanged on retry.
+- **Provenance/recovery:** `SOURCE_N12.json` verifies8 changed files on N1.1/P2;
+  active library SHA256 `33a6ac9bf280a1ae5dedc883f68251b434a50134c0c6148014fea804e9305974`.
+  Independent prior library `WS/recovery/n12-hiptensor-before.so.0.1` retained.
+  All19 library patches reconstruct the exact committed tree. .105, frozen
+  candidates, Torch/Triton and kernel/boot files unchanged. Cgroups service
+  readiness fixed in N1.1 remains enabled; no reboot in either batch.
+- **Next: N1.3, hipTensor plan contracts.** Inspect `hiptensorCreatePlanPreference`,
+  `hiptensorPlanPreferenceSetAttribute`, `hiptensorCreatePlan` and scalar plan
+  initialization for enum/attribute-size validation and cache/JIT semantics.
+  Implement bounded correct acceptance/rejection and lifecycle tests; do not
+  claim scalar preferences provide tuning/JIT behavior that is not implemented.
 
 At resume: read this file, inspect local Git status/log and `.104` runtime/source
 manifests, then read the inventory section for the selected task. Check evidence
@@ -78,17 +85,17 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 
 | Item                     | Current identity                                                                                                          |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Qualified root code      | `d22fb68a35052b4c437b14113b3048c842df2aef`                                                                                |
-| rocm-libraries           | `681d2f8a25d83db3ef99140461600883f7b71dba`, ordered patches0001–0018                                                      |
+| Qualified root code      | `3dae3539c3ffe46bb10cb83176cfdfebe1fd2dd7`                                                                                |
+| rocm-libraries           | `c6ac34f0ba3c4de11a0aa7e21fc9ec19adc6ef9e`, ordered patches0001–0019                                                      |
 | rocm-systems             | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`, patches0001–0003                                                              |
 | Torch                    | `4f13bf86476252e3d57b17d1c72f8512814400e9`, patches0001–0002; editable pip                                                |
 | Triton                   | `ee65ff3b85f99d52e678b252a99c8425fa46e329`, patches0001–0004; qualified wheel retained                                    |
 | LLVM                     | Clean upstream `7667f52dd687899256a3285ab0bce3c53bc73394`                                                                 |
-| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1 dev profile**                  |
+| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1/N1.2 dev profile**                  |
 | ROCm/Torch/cache         | `WS/build/dist/rocm`, `WS/pytorch-work`, `WS/cache/dev-user` (uid/gid1000)                                                |
 | Runtime image ID         | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                        |
 | Runtime/build tags       | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; `localhost/bc250-rocm-build:10.2-ccache`                        |
-| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N11.json` delta on `SOURCE_PRIORITY2.json`                |
+| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N12.json` delta on `SOURCE_N11.json`/P2                |
 | Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
 | Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
 | Kernel/boot              | `7.1.5-bc250rocm-r2`; live boot files in `/home/nik/bc250work/bc250-rocm-lab`, backups `WS/recovery/`                     |
@@ -98,7 +105,7 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 Manifests and immutable image IDs outrank mutable tag names. Component version
 strings differ legitimately (TheRock10.2, HIP7.17, Torch 2.13). Source archive names
 and generated Torch Git labels may retain older baselines; do not relabel them.
-The P2 source transfer verified51 files; N1.1 adds7 verified changed files. Candidate payload verified191
+The P2 source transfer verified51 files; N1.1 adds7 and N1.2 adds8 verified changed files. Candidate payload verified191
 independent shared-object/kernel-pack copies. Detailed hashes are in manifests.
 
 ## Unified local workspace
@@ -141,6 +148,7 @@ reads CPU Tctl, not GPU edge. Full measured hardware/recovery facts are in inven
 | P1                        | Lt C++/host-grouped consumers and epilogues; CK247 numerical+400 rejection cases; hipDNN100 graph cases; Torch64 including36 observed real Lt calls. Mutable dev stack activated.                                                                                                               |
 | P2                        | hipTensor166, hipSPARSELt234, hipBLASLt964 API, math149, primitives138 GPU cases;71 performance cases. Exact library/system/Torch patch reconstruction; independent candidate and installed launcher each passed20 cycles with sparse/compiled/FFT/checkpoint checks.                           |
 | N1.1                      | hipTensor unilateral A/B sums and mixed shared reductions:253 numerical +20 descriptor cases; alias/zero-scalar/span guards,16-mode union, nine algorithm/workspace combinations, small-fixture timings. Patch00018; native scalar routing. |
+| N1.2 | Same-type C32F/C64F hipTensor contractions with identity/NEG/CONJ:426 numerical +24 descriptor cases,273 real regressions, scalar ABI/zero-scalars/alias/span/plan-lifetime guards; patch0019. |
 | Performance               | Matched `.104`/`.105` comparisons already done: most GEMM/copy differences small, variable small-conv results. Separate same-board P2 large LtGEMM≈2.1–2.4x faster; selected large compiled HIP-graph fusion≈4x. No whole-Torch or universal speedup claim; default BLAS unchanged.             |
 
 Reports: `docs/development/bc250_scalar_library_results/priority{1,2}-*.json`,
@@ -186,7 +194,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | State | ID                   | Work and acceptance boundary                                                                                                                                                                                                                                                                                                                                                                        |
 | ----- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [x]   | N1.1 | hipTensor unilateral contraction modes completed within the bounded scope above. Preserved zero-scalar, span and alias guards; CPU-referenced types/layouts/plan-lifetime gates and small-fixture timing passed. |
-| [ ]   | **N1 / N1.2 — next** | Continue feasible scalar/generic library APIs: first N1.2 is hipTensor complex contractions, then wider plan combinations; sparse Lt batching/bias/types and Lt small/skinny shapes/epilogues remain. Inspect existing scalar/public ABI paths first; qualify native routing, CPU-referenced type/layout/zero-scalar/plan guards and bounded timings. |
+| [x]   | N1.2 | Native same-type C32F/C64F hipTensor contractions, identity/NEG/CONJ, bounded numerical and real-regression gates completed as above; mixed/widened complex and other unary functions remain rejected. |
+| [ ]   | **N1 / N1.3 — next** | hipTensor plan contracts: enum and attribute-size validation, honest cache/JIT acceptance/rejection and plan lifecycle. Then continue sparse Lt batching/bias/types and Lt small/skinny shapes/epilogues. Inspect existing code/evidence first; qualify actual native execution and supported contracts. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |
