@@ -1,0 +1,66 @@
+{
+  "group": "ck-priority1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "ck-p1-topk",
+      "executed_tests": 60,
+      "seconds": 0.6652291829814203
+    },
+    {
+      "name": "ck-p1-layernorm",
+      "executed_tests": 18,
+      "seconds": 0.6652698300022166
+    },
+    {
+      "name": "ck-p1-scalar_gemm",
+      "executed_tests": 160,
+      "seconds": 0.665174999012379
+    },
+    {
+      "name": "ck-p1-pool-fp16-max",
+      "executed_tests": 1,
+      "seconds": 0.6656011719896924
+    },
+    {
+      "name": "ck-p1-pool-fp16-min",
+      "executed_tests": 1,
+      "seconds": 0.6653264070046134
+    },
+    {
+      "name": "ck-p1-pool-fp16-sum",
+      "executed_tests": 1,
+      "seconds": 0.6651101080060471
+    },
+    {
+      "name": "ck-p1-pool-bf16-max",
+      "executed_tests": 1,
+      "seconds": 0.665236394997919
+    },
+    {
+      "name": "ck-p1-pool-bf16-min",
+      "executed_tests": 1,
+      "seconds": 0.7653450340148993
+    },
+    {
+      "name": "ck-p1-pool-bf16-sum",
+      "executed_tests": 1,
+      "seconds": 0.6654298290086444
+    },
+    {
+      "name": "ck-p1-pool-fp32-max",
+      "executed_tests": 1,
+      "seconds": 0.6150105170090683
+    },
+    {
+      "name": "ck-p1-pool-fp32-min",
+      "executed_tests": 1,
+      "seconds": 0.6651720039953943
+    },
+    {
+      "name": "ck-p1-pool-fp32-sum",
+      "executed_tests": 1,
+      "seconds": 0.7655158819979988
+    }
+  ]
+}

@@ -26,5 +26,8 @@ export USE_FLASH_ATTENTION=0 USE_MEM_EFF_ATTENTION=0
 export USE_ROCM_CK_GEMM=0 USE_ROCM_CK_SDPA=0 USE_MSLK=0
 export USE_NCCL=0 USE_DISTRIBUTED=0 USE_KINETO=0 BUILD_TEST=0 USE_CUSPARSELT=0
 cd "$work_dir"
+# A cached CMake configure does not regenerate HIP sources after CUDA edits.
+# Hipify compares contents and preserves unchanged generated files and objects.
+python tools/amd_build/build_amd.py --out-of-place-only
 # Required editable-pip workflow: preserves the existing objects and cache.
 python -m pip install -e . -v --no-build-isolation

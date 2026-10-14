@@ -234,7 +234,18 @@ static void run(hipblasLtHandle_t handle, hipDataType input_type,
   lt_check(hipblasLtMatmul(handle, op, &alpha, da, ad, db, bd, &beta, dc, cd,
                            dd, ddsc, &invalid, nullptr, 0, stream),
            HIPBLAS_STATUS_INVALID_VALUE);
-  const auto unsupported = HIPBLASLT_EPILOGUE_GELU_AUX;
+  // Auxiliary GELU is supported now, but a missing auxiliary buffer is invalid.
+  const auto missing_aux =
+      bias_gpu ? HIPBLASLT_EPILOGUE_GELU_AUX_BIAS : HIPBLASLT_EPILOGUE_GELU_AUX;
+  lt_check(hipblasLtMatmulDescSetAttribute(op, HIPBLASLT_MATMUL_DESC_EPILOGUE,
+                                           &missing_aux, sizeof(missing_aux)));
+  count = 9;
+  lt_check(hipblasLtMatmulAlgoGetHeuristic(handle, op, ad, bd, cd, ddsc, pref,
+                                           1, &result, &count),
+           HIPBLAS_STATUS_INVALID_VALUE);
+  if (count != 0)
+    std::exit(1);
+  const auto unsupported = HIPBLASLT_EPILOGUE_BGRADA;
   lt_check(hipblasLtMatmulDescSetAttribute(op, HIPBLASLT_MATMUL_DESC_EPILOGUE,
                                            &unsupported, sizeof(unsupported)));
   count = 9;

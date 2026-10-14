@@ -4,18 +4,14 @@ This records operation-level evidence for the native ROCm 10.2 port on `.104`.
 It is not an upstream support declaration or a claim that every operation in
 a listed library works. `.105` remains the unchanged ROCm 7.2 reference host.
 
-The active release is the independently copied expanded stack:
-`10.2-gfx1013-20261013-4b000d542`. The initial release remains available
-through `/opt/bc250-stack/previous`; `.105` remains unchanged.
-See [bc250_port.md](bc250_port.md) for source revisions and recovery policy.
-The detailed completed/pending checklist is in
-[bc250_full_support_roadmap.md](bc250_full_support_roadmap.md).
+The active stack is now mutable `/opt/bc250-stack/dev/priority1`. See
+[flow.md](../../flow.md) for current revisions, GPU qualification and recovery.
+The frozen `10.2-gfx1013-20261013-4b000d542` release remains retained.
 
-Additional development-candidate results are recorded in
-[bc250_scalar_library_expansion.md](bc250_scalar_library_expansion.md): native
-hipBLASLt GEMM, hipTensor contractions and hipSPARSELt scalar prune/compress/matmul,
-plus CK Tile and wider generic/Torch coverage. These additions have not replaced
-the frozen active release; the table below retains that release's support limits.
+The table below records that frozen release's evidence. Additional scalar
+backends and Priority 1 GPU qualification extend its coverage; see
+[bc250_scalar_library_expansion.md](bc250_scalar_library_expansion.md) and
+[flow.md](../../flow.md). `.105` remains unchanged.
 
 ## Executed successfully
 

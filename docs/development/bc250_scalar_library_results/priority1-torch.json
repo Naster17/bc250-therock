@@ -1,0 +1,604 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "checks": [
+    "strided_duplicate_gather_shape0_eager_forward_backward",
+    "strided_duplicate_gather_shape0_inductor_forward_backward",
+    "strided_duplicate_gather_shape1_eager_forward_backward",
+    "strided_duplicate_gather_shape1_inductor_forward_backward",
+    "duplicate_scatter_add_shape0_eager_forward_backward",
+    "duplicate_scatter_add_shape0_inductor_forward_backward",
+    "duplicate_scatter_add_shape1_eager_forward_backward",
+    "duplicate_scatter_add_shape1_inductor_forward_backward",
+    "duplicate_index_add_shape0_eager_forward_backward",
+    "duplicate_index_add_shape0_inductor_forward_backward",
+    "duplicate_index_add_shape1_eager_forward_backward",
+    "duplicate_index_add_shape1_inductor_forward_backward",
+    "scatter_amax_ties_shape0_eager_forward_backward",
+    "scatter_amax_ties_shape0_inductor_forward_backward",
+    "scatter_amax_ties_shape1_eager_forward_backward",
+    "scatter_amax_ties_shape1_inductor_forward_backward",
+    "embedding_duplicates_padding_shape0_eager_forward_backward",
+    "embedding_duplicates_padding_shape0_inductor_forward_backward",
+    "embedding_duplicates_padding_shape1_eager_forward_backward",
+    "embedding_duplicates_padding_shape1_inductor_forward_backward",
+    "strided_layernorm_torch.float32_shape0_eager_forward_backward",
+    "strided_layernorm_torch.float32_shape0_inductor_forward_backward",
+    "strided_layernorm_torch.float32_shape1_eager_forward_backward",
+    "strided_layernorm_torch.float32_shape1_inductor_forward_backward",
+    "strided_layernorm_torch.float16_shape0_eager_forward_backward",
+    "strided_layernorm_torch.float16_shape0_inductor_forward_backward",
+    "strided_layernorm_torch.float16_shape1_eager_forward_backward",
+    "strided_layernorm_torch.float16_shape1_inductor_forward_backward",
+    "strided_layernorm_torch.bfloat16_shape0_eager_forward_backward",
+    "strided_layernorm_torch.bfloat16_shape0_inductor_forward_backward",
+    "strided_layernorm_torch.bfloat16_shape1_eager_forward_backward",
+    "strided_layernorm_torch.bfloat16_shape1_inductor_forward_backward",
+    "training_mlp_shape0_eager_forward_backward",
+    "training_mlp_shape0_inductor_forward_backward",
+    "training_mlp_shape1_eager_forward_backward",
+    "training_mlp_shape1_inductor_forward_backward",
+    "attention_causal_torch.float32_shape0_eager_forward_backward",
+    "attention_causal_torch.float32_shape0_inductor_forward_backward",
+    "attention_causal_torch.float32_shape1_eager_forward_backward",
+    "attention_causal_torch.float32_shape1_inductor_forward_backward",
+    "attention_boolean_fully_masked_torch.float32_shape0_eager_forward_backward",
+    "attention_boolean_fully_masked_torch.float32_shape0_inductor_forward_backward",
+    "attention_boolean_fully_masked_torch.float32_shape1_eager_forward_backward",
+    "attention_boolean_fully_masked_torch.float32_shape1_inductor_forward_backward",
+    "attention_additive_torch.float16_shape0_eager_forward_backward",
+    "attention_additive_torch.float16_shape0_inductor_forward_backward",
+    "attention_additive_torch.float16_shape1_eager_forward_backward",
+    "attention_additive_torch.float16_shape1_inductor_forward_backward",
+    "attention_gqa_torch.bfloat16_shape0_eager_forward_backward",
+    "attention_gqa_torch.bfloat16_shape0_inductor_forward_backward",
+    "attention_gqa_torch.bfloat16_shape1_eager_forward_backward",
+    "attention_gqa_torch.bfloat16_shape1_inductor_forward_backward",
+    "hipblaslt_offset_strided_mm_torch.float32_forward_backward",
+    "hipblaslt_bias_addmm_torch.float32_forward_backward",
+    "hipblaslt_linear_bias_torch.float32_forward_backward",
+    "hipblaslt_strided_bmm_torch.float32_forward_backward",
+    "hipblaslt_offset_strided_mm_torch.float16_forward_backward",
+    "hipblaslt_bias_addmm_torch.float16_forward_backward",
+    "hipblaslt_linear_bias_torch.float16_forward_backward",
+    "hipblaslt_strided_bmm_torch.float16_forward_backward",
+    "hipblaslt_offset_strided_mm_torch.bfloat16_forward_backward",
+    "hipblaslt_bias_addmm_torch.bfloat16_forward_backward",
+    "hipblaslt_linear_bias_torch.bfloat16_forward_backward",
+    "hipblaslt_strided_bmm_torch.bfloat16_forward_backward"
+  ],
+  "compilation": {
+    "strided_duplicate_gather": {
+      "graphs": 1,
+      "generated_kernels": 4,
+      "shapes": [
+        [
+          [
+            5,
+            75
+          ],
+          [
+            3,
+            41
+          ]
+        ],
+        [
+          [
+            7,
+            131
+          ],
+          [
+            5,
+            69
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "duplicate_scatter_add": {
+      "graphs": 1,
+      "generated_kernels": 5,
+      "shapes": [
+        [
+          [
+            3,
+            37
+          ],
+          [
+            3,
+            77
+          ],
+          [
+            3,
+            77
+          ]
+        ],
+        [
+          [
+            3,
+            65
+          ],
+          [
+            3,
+            133
+          ],
+          [
+            3,
+            133
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "duplicate_index_add": {
+      "graphs": 2,
+      "generated_kernels": 10,
+      "shapes": [
+        [
+          [
+            7,
+            17
+          ],
+          [
+            17,
+            17
+          ],
+          [
+            17
+          ]
+        ],
+        [
+          [
+            11,
+            17
+          ],
+          [
+            25,
+            17
+          ],
+          [
+            25
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "scatter_amax_ties": {
+      "graphs": 1,
+      "generated_kernels": 7,
+      "shapes": [
+        [
+          [
+            2,
+            17
+          ],
+          [
+            2,
+            51
+          ],
+          [
+            2,
+            51
+          ]
+        ],
+        [
+          [
+            2,
+            33
+          ],
+          [
+            2,
+            99
+          ],
+          [
+            2,
+            99
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "embedding_duplicates_padding": {
+      "graphs": 1,
+      "generated_kernels": 3,
+      "shapes": [
+        [
+          [
+            23,
+            17
+          ],
+          [
+            3,
+            13
+          ]
+        ],
+        [
+          [
+            23,
+            17
+          ],
+          [
+            3,
+            25
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "strided_layernorm_torch.float32": {
+      "graphs": 1,
+      "generated_kernels": 6,
+      "shapes": [
+        [
+          [
+            5,
+            75
+          ],
+          [
+            37
+          ],
+          [
+            37
+          ]
+        ],
+        [
+          [
+            7,
+            131
+          ],
+          [
+            65
+          ],
+          [
+            65
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "strided_layernorm_torch.float16": {
+      "graphs": 1,
+      "generated_kernels": 6,
+      "shapes": [
+        [
+          [
+            5,
+            75
+          ],
+          [
+            37
+          ],
+          [
+            37
+          ]
+        ],
+        [
+          [
+            7,
+            131
+          ],
+          [
+            65
+          ],
+          [
+            65
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "strided_layernorm_torch.bfloat16": {
+      "graphs": 1,
+      "generated_kernels": 6,
+      "shapes": [
+        [
+          [
+            5,
+            75
+          ],
+          [
+            37
+          ],
+          [
+            37
+          ]
+        ],
+        [
+          [
+            7,
+            131
+          ],
+          [
+            65
+          ],
+          [
+            65
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "training_mlp": {
+      "graphs": 1,
+      "generated_kernels": 3,
+      "shapes": [
+        [
+          [
+            3,
+            17
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            23
+          ]
+        ],
+        [
+          [
+            7,
+            17
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            23
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "attention_causal_torch.float32": {
+      "graphs": 1,
+      "generated_kernels": 7,
+      "shapes": [
+        [
+          [
+            1,
+            2,
+            17,
+            16
+          ],
+          [
+            1,
+            2,
+            23,
+            16
+          ],
+          [
+            1,
+            2,
+            23,
+            19
+          ],
+          [
+            17,
+            23
+          ]
+        ],
+        [
+          [
+            1,
+            2,
+            29,
+            16
+          ],
+          [
+            1,
+            2,
+            37,
+            16
+          ],
+          [
+            1,
+            2,
+            37,
+            19
+          ],
+          [
+            29,
+            37
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "attention_boolean_fully_masked_torch.float32": {
+      "graphs": 1,
+      "generated_kernels": 10,
+      "shapes": [
+        [
+          [
+            1,
+            2,
+            17,
+            32
+          ],
+          [
+            1,
+            2,
+            23,
+            32
+          ],
+          [
+            1,
+            2,
+            23,
+            38
+          ],
+          [
+            17,
+            23
+          ]
+        ],
+        [
+          [
+            1,
+            2,
+            29,
+            32
+          ],
+          [
+            1,
+            2,
+            37,
+            32
+          ],
+          [
+            1,
+            2,
+            37,
+            38
+          ],
+          [
+            29,
+            37
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "attention_additive_torch.float16": {
+      "graphs": 1,
+      "generated_kernels": 12,
+      "shapes": [
+        [
+          [
+            1,
+            2,
+            17,
+            16
+          ],
+          [
+            1,
+            2,
+            23,
+            16
+          ],
+          [
+            1,
+            2,
+            23,
+            19
+          ],
+          [
+            17,
+            23
+          ]
+        ],
+        [
+          [
+            1,
+            2,
+            29,
+            16
+          ],
+          [
+            1,
+            2,
+            37,
+            16
+          ],
+          [
+            1,
+            2,
+            37,
+            19
+          ],
+          [
+            29,
+            37
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    },
+    "attention_gqa_torch.bfloat16": {
+      "graphs": 1,
+      "generated_kernels": 13,
+      "shapes": [
+        [
+          [
+            1,
+            4,
+            17,
+            16
+          ],
+          [
+            1,
+            2,
+            23,
+            16
+          ],
+          [
+            1,
+            2,
+            23,
+            19
+          ],
+          [
+            17,
+            23
+          ]
+        ],
+        [
+          [
+            1,
+            4,
+            29,
+            16
+          ],
+          [
+            1,
+            2,
+            37,
+            16
+          ],
+          [
+            1,
+            2,
+            37,
+            19
+          ],
+          [
+            29,
+            37
+          ]
+        ]
+      ],
+      "fullgraph": true,
+      "dynamic": true
+    }
+  },
+  "hipblaslt_dispatch": {
+    "hipblaslt_offset_strided_mm_torch.float32_forward_backward": 3,
+    "hipblaslt_bias_addmm_torch.float32_forward_backward": 3,
+    "hipblaslt_linear_bias_torch.float32_forward_backward": 3,
+    "hipblaslt_strided_bmm_torch.float32_forward_backward": 3,
+    "hipblaslt_offset_strided_mm_torch.float16_forward_backward": 3,
+    "hipblaslt_bias_addmm_torch.float16_forward_backward": 3,
+    "hipblaslt_linear_bias_torch.float16_forward_backward": 3,
+    "hipblaslt_strided_bmm_torch.float16_forward_backward": 3,
+    "hipblaslt_offset_strided_mm_torch.bfloat16_forward_backward": 3,
+    "hipblaslt_bias_addmm_torch.bfloat16_forward_backward": 3,
+    "hipblaslt_linear_bias_torch.bfloat16_forward_backward": 3,
+    "hipblaslt_strided_bmm_torch.bfloat16_forward_backward": 3
+  },
+  "seconds": 56.672517361002974
+}

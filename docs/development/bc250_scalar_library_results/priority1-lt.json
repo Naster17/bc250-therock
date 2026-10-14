@@ -1,0 +1,26 @@
+{
+  "group": "lt-priority1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-hipblaslt_scalar_smoke",
+      "executed_tests": 1,
+      "seconds": 4.369222626002738
+    },
+    {
+      "name": "hipblaslt_scalar_smoke",
+      "executed_tests": 403,
+      "seconds": 2.518474779993994
+    },
+    {
+      "name": "compile-hipblaslt_priority1_smoke",
+      "executed_tests": 1,
+      "seconds": 5.220767719001742
+    },
+    {
+      "name": "hipblaslt_priority1_smoke",
+      "executed_tests": 465,
+      "seconds": 0.8659155660134275
+    }
+  ]
+}

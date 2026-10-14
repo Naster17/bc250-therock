@@ -17,7 +17,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("workspace", type=Path)
     parser.add_argument(
-        "--group", choices=("scalar", "ck", "rpp", "tensor", "dnn"), required=True
+        "--group",
+        choices=(
+            "scalar",
+            "lt-priority1",
+            "ck",
+            "ck-priority1",
+            "rpp",
+            "tensor",
+            "dnn",
+        ),
+        required=True,
     )
     args = parser.parse_args()
     ws = args.workspace.resolve()
@@ -128,6 +138,13 @@ def main() -> None:
             ):
                 compile_probe(name, library)
                 run(name, [f"/workspace/build/bc250-coverage/{name}"], marker=marker)
+        elif args.group == "lt-priority1":
+            for name, marker in (
+                ("hipblaslt_scalar_smoke", "HIPBLASLT_SCALAR_PASS"),
+                ("hipblaslt_priority1_smoke", "HIPBLASLT_PRIORITY1_PASS"),
+            ):
+                compile_probe(name, "hipblaslt")
+                run(name, [f"/workspace/build/bc250-coverage/{name}"], marker=marker)
         elif args.group == "rpp":
             compile_probe("rpp_extended_smoke", "rpp")
             run(
@@ -135,6 +152,48 @@ def main() -> None:
                 ["/workspace/build/bc250-coverage/rpp_extended_smoke"],
                 marker="RPP_EXTENDED_NATIVE_GFX1013_PASS",
             )
+        elif args.group == "ck-priority1":
+            path = "/workspace/build/bc250-coverage/ck-tile-priority1"
+            for name, marker in (
+                ("topk", "CK_TILE_TOPK_PASS"),
+                ("layernorm", "CK_TILE_LAYERNORM_PASS"),
+                ("scalar_gemm", "CK_TILE_SCALAR_GEMM_PASS"),
+            ):
+                run(f"ck-p1-{name}", [f"{path}/{name}"], marker=marker)
+            for dtype in ("fp16", "bf16", "fp32"):
+                for operation in ("max", "min", "sum"):
+                    run(
+                        f"ck-p1-pool-{dtype}-{operation}",
+                        [
+                            f"{path}/pool3d",
+                            f"-prec={dtype}",
+                            f"-op={operation}",
+                            "-N=1",
+                            "-D=5",
+                            "-H=7",
+                            "-W=9",
+                            "-C=17",
+                            "-Z=2",
+                            "-Y=3",
+                            "-X=2",
+                            "-Sz=1",
+                            "-Sy=2",
+                            "-Sx=2",
+                            "-Dz=2",
+                            "-Dy=1",
+                            "-Dx=2",
+                            "-LeftPz=1",
+                            "-LeftPy=1",
+                            "-LeftPx=1",
+                            "-RightPz=0",
+                            "-RightPy=1",
+                            "-RightPx=0",
+                            "-warmup=0",
+                            "-repeat=1",
+                            "-v=1",
+                        ],
+                        marker="valid:y",
+                    )
         elif args.group == "ck":
             path = "/workspace/build/bc250-coverage/ck-tile"
             for dtype in ("fp16", "bf16", "fp32"):

@@ -1,0 +1,2357 @@
+From f12e43e3f9be393dca54de17d7b34a29daffc57b Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 10:06:26 +0200
+Subject: [PATCH] feat(gfx1013): integrate scalar GEMM consumers and generic
+ neural operations
+
+---
+ .../conv/IntegrationGpuConvFwdBiasActiv.cpp   |  48 +-
+ dnn-providers/miopen-provider/CMakeLists.txt  |  10 +
+ .../miopen-provider/config/MIOPEN_ENGINE.toml |  15 +-
+ .../plans/MiopenConvFwdBiasActivPlan.cpp      | 192 ++++++
+ .../plans/MiopenConvFwdBiasActivPlan.hpp      |   8 +
+ .../engines/plans/MiopenConvFwdPlan.cpp       |  11 +-
+ .../engines/plans/MiopenConvFwdPlan.hpp       |   4 +-
+ .../engines/plans/MiopenGfx1013Pointwise.hip  | 106 ++++
+ .../engines/plans/MiopenGfx1013Pointwise.hpp  |  29 +
+ .../plans/TestMiopenConvFwdBiasActivPlan.cpp  |  42 ++
+ .../ck_tile/09_topk_softmax/topk_softmax.cpp  |  17 +-
+ .../09_topk_softmax/topk_softmax_api.cpp      | 219 ++-----
+ .../example/ck_tile/36_pooling/pool3d.cpp     |  33 +-
+ .../include/ck_tile/ops/gemm.hpp              |   2 +
+ .../ops/gemm/kernel/scalar_gemm_kernel.hpp    | 147 +++++
+ .../ops/topk/block/block_topk_stream_2d.hpp   |  29 +-
+ .../topk_softmax_warp_per_row_pipeline.hpp    |  14 +-
+ .../topk_softmax_warp_per_row_problem.hpp     |   4 +-
+ .../hipblaslt/docs/gfx1013-scalar-backend.rst |  12 +-
+ .../library/src/amd_detail/gfx1013_scalar.cpp | 143 ++++-
+ .../library/src/amd_detail/gfx1013_scalar.hpp |   8 +
+ .../library/src/amd_detail/hipblaslt-ext.cpp  | 564 +++++++++++++++++-
+ 22 files changed, 1455 insertions(+), 202 deletions(-)
+ create mode 100644 dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hip
+ create mode 100644 dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hpp
+ create mode 100644 projects/composablekernel/include/ck_tile/ops/gemm/kernel/scalar_gemm_kernel.hpp
+
+diff --git a/dnn-providers/integration-tests/src/integration-tests/conv/IntegrationGpuConvFwdBiasActiv.cpp b/dnn-providers/integration-tests/src/integration-tests/conv/IntegrationGpuConvFwdBiasActiv.cpp
+index 10c072a5ec6..8e08fce2971 100644
+--- a/dnn-providers/integration-tests/src/integration-tests/conv/IntegrationGpuConvFwdBiasActiv.cpp
++++ b/dnn-providers/integration-tests/src/integration-tests/conv/IntegrationGpuConvFwdBiasActiv.cpp
+@@ -25,7 +25,7 @@ using ConvFwdBiasActivTestCase = std::tuple<TensorLayout,
+                                             bool,
+                                             test_activation_common::ActivTestCase>;
+ 
+-template <typename DataType>
++template <typename DataType, bool HomogeneousIntermediates = false>
+ class ConvFwdBiasActiv
+     : public IntegrationGraphVerificationHarness<DataType, ConvFwdBiasActivTestCase>
+ {
+@@ -44,7 +44,9 @@ public:
+         graphObj.set_name(doBias ? "ConvFwdBiasActivTest" : "ConvFwdActivTest");
+ 
+         auto dataType = getDataTypeEnumFromType<DataType>();
+-        graphObj.set_intermediate_data_type(hipdnn_frontend::DataType::FLOAT)
++        graphObj
++            .set_intermediate_data_type(HomogeneousIntermediates ? dataType
++                                                                 : hipdnn_frontend::DataType::FLOAT)
+             .set_compute_data_type(hipdnn_frontend::DataType::FLOAT)
+             .set_io_data_type(dataType);
+ 
+@@ -154,8 +156,50 @@ using IntegrationGpuConvFwdBiasActiv3dFp32 = ConvFwdBiasActiv<float>;
+ using IntegrationGpuConvFwdBiasActiv3dBfp16 = ConvFwdBiasActiv<bfloat16>;
+ using IntegrationGpuConvFwdBiasActiv3dFp16 = ConvFwdBiasActiv<half>;
+ 
++// These graphs explicitly request rounding into the IO storage type between
++// operations. Keep the existing FP32-intermediate fixtures unchanged.
++using IntegrationGpuConvFwdBiasActivHomogeneous2dFp16 = ConvFwdBiasActiv<half, true>;
++using IntegrationGpuConvFwdBiasActivHomogeneous2dBfp16 = ConvFwdBiasActiv<bfloat16, true>;
++
++std::vector<ConvFwdBiasActivTestCase> homogeneousFusionCases()
++{
++    using PointwiseMode = hipdnn_flatbuffers_sdk::data_objects::PointwiseMode;
++    const test_conv_common::ConvTestCase conv(
++        {1, 4, 7, 9}, {6, 4, 3, 3}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, 10131704);
++    std::vector<ConvFwdBiasActivTestCase> cases;
++    for(const auto& layout : {TensorLayout::NCHW, TensorLayout::NHWC})
++    {
++        cases.emplace_back(
++            layout, conv, true, test_activation_common::ActivTestCase(PointwiseMode::RELU_FWD));
++        cases.emplace_back(
++            layout,
++            conv,
++            true,
++            test_activation_common::ActivTestCase(PointwiseMode::RELU_FWD, std::nullopt, 0.75f));
++    }
++    return cases;
++}
++
+ } // namespace
+ 
++TEST_P(IntegrationGpuConvFwdBiasActivHomogeneous2dFp16, Correctness)
++{
++    runGraphTest();
++}
++
++TEST_P(IntegrationGpuConvFwdBiasActivHomogeneous2dBfp16, Correctness)
++{
++    runGraphTest();
++}
++
++INSTANTIATE_TEST_SUITE_P(HomogeneousSmoke,
++                         IntegrationGpuConvFwdBiasActivHomogeneous2dFp16,
++                         testing::ValuesIn(homogeneousFusionCases()));
++
++INSTANTIATE_TEST_SUITE_P(HomogeneousSmoke,
++                         IntegrationGpuConvFwdBiasActivHomogeneous2dBfp16,
++                         testing::ValuesIn(homogeneousFusionCases()));
++
+ // 2D tests
+ GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(IntegrationGpuConvFwdBiasActiv2dFp32);
+ TEST_P(IntegrationGpuConvFwdBiasActiv2dFp32, Correctness)
+diff --git a/dnn-providers/miopen-provider/CMakeLists.txt b/dnn-providers/miopen-provider/CMakeLists.txt
+index 871d5849739..26f66ffdfe3 100644
+--- a/dnn-providers/miopen-provider/CMakeLists.txt
++++ b/dnn-providers/miopen-provider/CMakeLists.txt
+@@ -62,6 +62,11 @@ if(DEFINED HIP_DNN_SKIP_TESTS)
+ endif()
+ option(MIOPENPROVIDER_SKIP_TESTS "Skip building tests" OFF)
+ option(MIOPENPROVIDER_ENABLE_COVERAGE "Build with code coverage flags" OFF)
++option(MIOPENPROVIDER_GFX1013_SCALAR "Enable native gfx1013 FP16/BF16 pointwise fallback" OFF)
++if(MIOPENPROVIDER_GFX1013_SCALAR)
++    set(CMAKE_HIP_ARCHITECTURES gfx1013)
++    enable_language(HIP)
++endif()
+ 
+ option(BUILD_ADDRESS_SANITIZER "Build with Address Sanitizer enabled" OFF)
+ option(ENABLE_CLANG_FORMAT "Enable Clang-Format checks" ON)
+@@ -237,6 +242,11 @@ target_include_directories(miopen_plugin_impl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+ target_link_libraries(miopen_plugin_impl PUBLIC ${MIOPEN_PROVIDER_MIOPEN_LIB} hipdnn_data_sdk hipdnn_flatbuffers_sdk hipdnn_plugin_sdk)
+ 
+ target_compile_definitions(miopen_plugin_impl PUBLIC MIOPEN_BETA_API)
++if(MIOPENPROVIDER_GFX1013_SCALAR)
++    target_sources(miopen_plugin_impl PRIVATE engines/plans/MiopenGfx1013Pointwise.hip)
++    target_compile_definitions(miopen_plugin_impl PRIVATE MIOPENPROVIDER_GFX1013_SCALAR=1)
++    set_property(TARGET miopen_plugin_impl PROPERTY HIP_STANDARD 17)
++endif()
+ # When linking the private implementation library, force-include the symbol-rename
+ # header so the provider's public C API calls bind the _impl entry points exported
+ # by libMIOpen_private.so. This mirrors how MIOpen_private itself is built (a
+diff --git a/dnn-providers/miopen-provider/config/MIOPEN_ENGINE.toml b/dnn-providers/miopen-provider/config/MIOPEN_ENGINE.toml
+index 27f767406b5..e0ba9c407bd 100644
+--- a/dnn-providers/miopen-provider/config/MIOPEN_ENGINE.toml
++++ b/dnn-providers/miopen-provider/config/MIOPEN_ENGINE.toml
+@@ -106,6 +106,19 @@ rtol = 0.01
+ # IS_WORKAROUND_ISSUE_6979 / shouldSkipOnEngineConfigResult in
+ # dnn-providers/miopen-provider/tests/common/TestWorkarounds.hpp.
+ [[test_skips]]
+-archs   = ["gfx90a", "gfx10", "gfx11", "gfx12"]
++# gfx1013 has a sequential homogeneous-storage backend; enable its real tests.
++archs   = ["gfx90a", "gfx1010", "gfx1011", "gfx1012", "gfx103", "gfx11", "gfx12"]
+ filters = ["*ConvFwdBiasActiv*"]
+ reason  = "ROCm/rocm-libraries#6979 — no engine has an applicable solution for ConvBiasActiv fusion (gfx90a returns wrong results; RDNA archs have no CK fusion kernels)"
++
++# Existing low-precision fixtures request FP32 virtual intermediates. The native
++# sequential backend currently requires homogeneous storage on every graph edge.
++[[test_skips]]
++archs = ["gfx1013"]
++filters = [
++    "Smoke/IntegrationGpuConvFwdBiasActiv2dFp16.*",
++    "Smoke/IntegrationGpuConvFwdBiasActiv3dFp16.*",
++    "Smoke/IntegrationGpuConvFwdBiasActiv2dBfp16.*",
++    "Smoke/IntegrationGpuConvFwdBiasActiv3dBfp16.*",
++]
++reason = "gfx1013 sequential convolution fusion requires homogeneous intermediate storage; dedicated homogeneous fixtures execute separately"
+diff --git a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.cpp b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.cpp
+index 31f8fb36a2b..12e1b1c5e43 100644
+--- a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.cpp
++++ b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.cpp
+@@ -3,6 +3,8 @@
+ 
+ #include <hipdnn_data_sdk/utilities/ShapeUtilities.hpp>
+ #include <hipdnn_flatbuffers_sdk/utilities/FlatbufferUtils.hpp>
++#include <hipdnn_plugin_sdk/DeviceQuery.hpp>
++#include <limits>
+ 
+ #include "MiopenConvFwdBiasActivPlan.hpp"
+ 
+@@ -75,6 +77,94 @@ ConvFwdBiasActivParams::ConvFwdBiasActivParams(
+ 
+     HIPDNN_PREPEND_MESSAGE_ON_THROW(_activParams = mapPointwiseModeToMiopenActivation(activAttr),
+                                     "ConvFwdBiasActivParams: ");
++
++    // Reusing the final output as an intermediate is exact only when each graph
++    // edge has the same storage type and shape. Do not silently introduce early
++    // rounding into graphs that request FP32 virtual intermediates.
++    const auto& attrY = findTensorAttributes(tensorMap, _y.uid());
++    const auto sameOutput = [&](int64_t uid) {
++        const auto& attr = findTensorAttributes(tensorMap, uid);
++        return attr.data_type() == attrY.data_type()
++               && hipdnn_flatbuffers_sdk::utilities::convertFlatBufferVectorToStdVector(attr.dims())
++                      == hipdnn_flatbuffers_sdk::utilities::convertFlatBufferVectorToStdVector(
++                          attrY.dims());
++    };
++    using DataType = hipdnn_flatbuffers_sdk::data_objects::DataType;
++    const auto type = attrY.data_type();
++    bool validBias = !biasAttr;
++    if(biasAttr)
++    {
++        const auto& attrBias = findTensorAttributes(tensorMap, _bias->uid());
++        const auto biasDims = hipdnn_flatbuffers_sdk::utilities::convertFlatBufferVectorToStdVector(
++            attrBias.dims());
++        const auto outputDims
++            = hipdnn_flatbuffers_sdk::utilities::convertFlatBufferVectorToStdVector(attrY.dims());
++        validBias = attrBias.data_type() == type && biasDims.size() == outputDims.size();
++        for(size_t dimension = 0; validBias && dimension < biasDims.size(); ++dimension)
++        {
++            validBias = biasDims[dimension] == (dimension == 1 ? outputDims[dimension] : 1);
++        }
++    }
++    if((type == DataType::FLOAT || type == DataType::HALF || type == DataType::BFLOAT16)
++       && attrX.data_type() == type && attrW.data_type() == type
++       && sameOutput(convAttr.y_tensor_uid()) && sameOutput(activAttr.in_0_tensor_uid())
++       && validBias)
++    {
++        _sequentialConvolutionParams
++            = std::make_unique<ConvFwdParams>(convAttr, tensorMap, deterministicEnabled, _y.uid());
++        if((type == DataType::HALF || type == DataType::BFLOAT16) && attrY.dims()->size() > 5)
++        {
++            _sequentialConvolutionParams.reset();
++        }
++        else if(type == DataType::HALF || type == DataType::BFLOAT16)
++        {
++            Gfx1013PointwiseDescriptor descriptor;
++            descriptor.fp16 = type == DataType::HALF;
++            descriptor.rank = attrY.dims()->size();
++            for(std::size_t dimension = 0; dimension < descriptor.rank; ++dimension)
++            {
++                const auto length
++                    = attrY.dims()->Get(static_cast<flatbuffers::uoffset_t>(dimension));
++                const auto stride
++                    = attrY.strides()->Get(static_cast<flatbuffers::uoffset_t>(dimension));
++                if(length <= 0 || stride <= 0
++                   || static_cast<std::size_t>(length)
++                          > std::numeric_limits<std::size_t>::max() / descriptor.elements)
++                {
++                    throw hipdnn_plugin_sdk::HipdnnPluginException(
++                        HIPDNN_PLUGIN_STATUS_BAD_PARAM,
++                        "Invalid gfx1013 FP16/BF16 pointwise dimensions");
++                }
++                descriptor.dims[dimension] = static_cast<std::size_t>(length);
++                descriptor.strides[dimension] = static_cast<std::size_t>(stride);
++                descriptor.elements *= static_cast<std::size_t>(length);
++            }
++            if(_bias)
++            {
++                descriptor.biasStride = static_cast<std::size_t>(
++                    findTensorAttributes(tensorMap, _bias->uid()).strides()->Get(1));
++            }
++            switch(_activParams.mode)
++            {
++            case miopenActivationRELU:
++                descriptor.upper = std::numeric_limits<float>::infinity();
++                break;
++            case miopenActivationCLIPPEDRELU:
++                descriptor.upper = static_cast<float>(_activParams.alpha);
++                break;
++            case miopenActivationCLAMP:
++                descriptor.lower = static_cast<float>(_activParams.alpha);
++                descriptor.upper = static_cast<float>(_activParams.beta);
++                break;
++            default:
++                // Decline only the native sequential path. Other architectures
++                // retain the original fusion implementation and its mode support.
++                _sequentialConvolutionParams.reset();
++                return;
++            }
++            _pointwiseDescriptor = descriptor;
++        }
++    }
+ }
+ 
+ const MiopenTensor& ConvFwdBiasActivParams::x() const
+@@ -107,6 +197,16 @@ const MiopenTensor& ConvFwdBiasActivParams::y() const
+     return _y;
+ }
+ 
++std::unique_ptr<ConvFwdParams> ConvFwdBiasActivParams::takeSequentialConvolutionParams()
++{
++    return std::move(_sequentialConvolutionParams);
++}
++
++const std::optional<Gfx1013PointwiseDescriptor>& ConvFwdBiasActivParams::pointwiseDescriptor() const
++{
++    return _pointwiseDescriptor;
++}
++
+ ConvFwdBiasActivPlan::ConvFwdBiasActivPlan(const HipdnnMiopenHandle& handle,
+                                            ConvFwdBiasActivParams&& params,
+                                            const HipdnnMiopenSettings& executionSettings,
+@@ -115,6 +215,43 @@ ConvFwdBiasActivPlan::ConvFwdBiasActivPlan(const HipdnnMiopenHandle& handle,
+     : _params(std::move(params))
+     , _executionSettings(executionSettings)
+ {
++    const auto arch = hipdnn_plugin_sdk::getDeviceArch(handle.getStream());
++    if(arch.substr(0, arch.find(':')) == "gfx1013")
++    {
++#ifndef MIOPENPROVIDER_GFX1013_SCALAR
++        if(_params.pointwiseDescriptor())
++        {
++            throw hipdnn_plugin_sdk::HipdnnPluginException(
++                HIPDNN_PLUGIN_STATUS_BAD_PARAM,
++                "gfx1013 FP16/BF16 sequential fusion requires MIOPENPROVIDER_GFX1013_SCALAR");
++        }
++#endif
++        auto convolutionParams = _params.takeSequentialConvolutionParams();
++        if(!convolutionParams)
++        {
++            throw hipdnn_plugin_sdk::HipdnnPluginException(
++                HIPDNN_PLUGIN_STATUS_BAD_PARAM,
++                "gfx1013 sequential convolution fusion requires homogeneous FP32/FP16/BF16 "
++                "tensors and intermediate storage types");
++        }
++        _sequentialConvolution = std::make_unique<ConvFwdPlan>(
++            handle, std::move(*convolutionParams), executionSettings);
++        _workspaceSize = _sequentialConvolution->getWorkspaceSize(handle);
++        miopenActivationDescriptor_t activation = nullptr;
++        THROW_ON_MIOPEN_FAILURE(miopenCreateActivationDescriptor(&activation));
++        _activationDesc = hipdnn_data_sdk::utilities::ScopedResource<miopenActivationDescriptor_t>(
++            activation, [](miopenActivationDescriptor_t desc) {
++                LOG_ON_MIOPEN_FAILURE(miopenDestroyActivationDescriptor(desc));
++            });
++        const auto& activationParams = _params.activParams();
++        THROW_ON_MIOPEN_FAILURE(miopenSetActivationDescriptor(activation,
++                                                              activationParams.mode,
++                                                              activationParams.alpha,
++                                                              activationParams.beta,
++                                                              activationParams.gamma));
++        return;
++    }
++
+     // Set tuning policy based on benchmarking flag - RAII ensures restoration
+     const ScopedTuningPolicy tuningGuard(handle.miopenHandle,
+                                          _executionSettings.benchmarkingEnabled());
+@@ -180,6 +317,61 @@ void ConvFwdBiasActivPlan::execute(const HipdnnMiopenHandle& handle,
+                                    uint32_t numDeviceBuffers,
+                                    void* workspace) const
+ {
++    if(_sequentialConvolution)
++    {
++        _sequentialConvolution->execute(handle, deviceBuffers, numDeviceBuffers, workspace);
++        const auto output = hipdnn_plugin_sdk::findDeviceBuffer(
++            _params.y().uid(), deviceBuffers, numDeviceBuffers);
++#ifdef MIOPENPROVIDER_GFX1013_SCALAR
++        if(_params.pointwiseDescriptor())
++        {
++            const void* bias = nullptr;
++            if(_params.bias())
++            {
++                bias = hipdnn_plugin_sdk::findDeviceBuffer(
++                           _params.bias()->uid(), deviceBuffers, numDeviceBuffers)
++                           .ptr;
++            }
++            const auto status = launchGfx1013BiasActivation(
++                handle.getStream(), output.ptr, bias, *_params.pointwiseDescriptor());
++            if(status != hipSuccess)
++            {
++                throw hipdnn_plugin_sdk::HipdnnPluginException(
++                    HIPDNN_PLUGIN_STATUS_INTERNAL_ERROR,
++                    std::string("gfx1013 FP16/BF16 pointwise launch failed: ")
++                        + hipGetErrorString(status));
++            }
++            return;
++        }
++#endif
++        const float alpha = 1.0f;
++        // ForwardBias computes alpha*y + alpha*bias + beta*y: beta must
++        // be zero because the convolution value is already its first input.
++        const float beta = 0.0f;
++        if(_params.bias())
++        {
++            const auto bias = hipdnn_plugin_sdk::findDeviceBuffer(
++                _params.bias()->uid(), deviceBuffers, numDeviceBuffers);
++            THROW_ON_MIOPEN_FAILURE(miopenConvolutionForwardBias(handle.miopenHandle,
++                                                                 &alpha,
++                                                                 _params.bias()->tensorDescriptor(),
++                                                                 bias.ptr,
++                                                                 &beta,
++                                                                 _params.y().tensorDescriptor(),
++                                                                 output.ptr));
++        }
++        const float overwrite = 0.0f;
++        THROW_ON_MIOPEN_FAILURE(miopenActivationForward(handle.miopenHandle,
++                                                        _activationDesc.get(),
++                                                        &alpha,
++                                                        _params.y().tensorDescriptor(),
++                                                        output.ptr,
++                                                        &overwrite,
++                                                        _params.y().tensorDescriptor(),
++                                                        output.ptr));
++        return;
++    }
++
+     miopenOperatorArgs_t fusionArgs;
+     THROW_ON_MIOPEN_FAILURE(miopenCreateOperatorArgs(&fusionArgs));
+     auto fusionArgsRes = hipdnn_data_sdk::utilities::ScopedResource<miopenOperatorArgs_t>(
+diff --git a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.hpp b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.hpp
+index 77c314b994a..349f33168d5 100644
+--- a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.hpp
++++ b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdBiasActivPlan.hpp
+@@ -17,6 +17,8 @@
+ #include "HipdnnMiopenHandle.hpp"
+ #include "HipdnnMiopenSettings.hpp"
+ #include "MiopenConvDescriptor.hpp"
++#include "MiopenConvFwdPlan.hpp"
++#include "MiopenGfx1013Pointwise.hpp"
+ #include "MiopenTensor.hpp"
+ #include "MiopenUtils.hpp"
+ 
+@@ -46,6 +48,8 @@ public:
+     const std::optional<MiopenTensor>& bias() const;
+     const miopen_utils::ActivationParams& activParams() const;
+     const MiopenTensor& y() const;
++    std::unique_ptr<ConvFwdParams> takeSequentialConvolutionParams();
++    const std::optional<Gfx1013PointwiseDescriptor>& pointwiseDescriptor() const;
+ 
+ private:
+     size_t _spatialDimCount;
+@@ -55,6 +59,8 @@ private:
+     std::optional<MiopenTensor> _bias;
+     miopen_utils::ActivationParams _activParams;
+     MiopenTensor _y;
++    std::unique_ptr<ConvFwdParams> _sequentialConvolutionParams;
++    std::optional<Gfx1013PointwiseDescriptor> _pointwiseDescriptor;
+ };
+ 
+ class ConvFwdBiasActivPlan : public hipdnn_plugin_sdk::IPlan<HipdnnMiopenHandle>
+@@ -85,6 +91,8 @@ private:
+     hipdnn_data_sdk::utilities::ScopedResource<miopenFusionPlanDescriptor_t> _fusePlanDesc;
+     size_t _workspaceSize = 0;
+     HipdnnMiopenSettings _executionSettings;
++    std::unique_ptr<ConvFwdPlan> _sequentialConvolution;
++    hipdnn_data_sdk::utilities::ScopedResource<miopenActivationDescriptor_t> _activationDesc;
+ };
+ 
+ } // namespace miopen_plugin
+diff --git a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.cpp b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.cpp
+index 9c6acb94d57..642912992e5 100644
+--- a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.cpp
++++ b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.cpp
+@@ -17,16 +17,19 @@ ConvFwdParams::ConvFwdParams(
+     const std::unordered_map<int64_t,
+                              const hipdnn_flatbuffers_sdk::data_objects::TensorAttributes*>&
+         tensorMap,
+-    bool deterministicEnabled)
++    bool deterministicEnabled,
++    std::optional<int64_t> outputUid)
+     : _spatialDimCount(miopen_utils::getSpatialDimCount(
+           miopen_utils::findTensorAttributes(tensorMap, attributes.x_tensor_uid())))
+     , _unpaddedWDimCount(
+           miopen_utils::findTensorAttributes(tensorMap, attributes.w_tensor_uid()).dims()->size())
+-    , _unpaddedYDimCount(
+-          miopen_utils::findTensorAttributes(tensorMap, attributes.y_tensor_uid()).dims()->size())
++    , _unpaddedYDimCount(miopen_utils::findTensorAttributes(
++                             tensorMap, outputUid.value_or(attributes.y_tensor_uid()))
++                             .dims()
++                             ->size())
+     , _x(miopen_utils::createPaddedTensor(tensorMap, attributes.x_tensor_uid()))
+     , _w(miopen_utils::createPaddedTensor(tensorMap, attributes.w_tensor_uid()))
+-    , _y(miopen_utils::createPaddedTensor(tensorMap, attributes.y_tensor_uid()))
++    , _y(miopen_utils::createPaddedTensor(tensorMap, outputUid.value_or(attributes.y_tensor_uid())))
+ {
+     const auto& attrX = miopen_utils::findTensorAttributes(tensorMap, _x.uid());
+     const auto& attrW = miopen_utils::findTensorAttributes(tensorMap, _w.uid());
+diff --git a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.hpp b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.hpp
+index 79e1ea50fdc..4970cf9e1a6 100644
+--- a/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.hpp
++++ b/dnn-providers/miopen-provider/engines/plans/MiopenConvFwdPlan.hpp
+@@ -5,6 +5,7 @@
+ 
+ #include <memory>
+ #include <mutex>
++#include <optional>
+ 
+ #include "MiopenApi.hpp"
+ #include <hipdnn_flatbuffers_sdk/data_objects/convolution_fwd_attributes_generated.h>
+@@ -28,7 +29,8 @@ public:
+         const std::unordered_map<int64_t,
+                                  const hipdnn_flatbuffers_sdk::data_objects::TensorAttributes*>&
+             tensorMap,
+-        bool deterministicEnabled = false);
++        bool deterministicEnabled = false,
++        std::optional<int64_t> outputUid = std::nullopt);
+ 
+     ConvFwdParams(const ConvFwdParams&) = delete;
+     ConvFwdParams& operator=(const ConvFwdParams&) = delete;
+diff --git a/dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hip b/dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hip
+new file mode 100644
+index 00000000000..fb20d41d5e8
+--- /dev/null
++++ b/dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hip
+@@ -0,0 +1,106 @@
++// Copyright © Advanced Micro Devices, Inc., or its affiliates.
++// SPDX-License-Identifier: MIT
++
++#include <hip/hip_fp16.h>
++#include <hip/hip_runtime.h>
++
++#include "MiopenGfx1013Pointwise.hpp"
++
++namespace miopen_plugin
++{
++namespace
++{
++
++__device__ float loadBf16(unsigned short value)
++{
++    return __uint_as_float(static_cast<unsigned int>(value) << 16);
++}
++
++__device__ unsigned short roundBf16(float value)
++{
++    auto bits = __float_as_uint(value);
++    if((bits & 0x7f800000u) == 0x7f800000u && (bits & 0x007fffffu) != 0)
++    {
++        return static_cast<unsigned short>((bits >> 16) | 0x40u);
++    }
++    bits += 0x7fffu + ((bits >> 16) & 1u);
++    return static_cast<unsigned short>(bits >> 16);
++}
++
++__device__ float loadStorage(unsigned short value, bool fp16)
++{
++    return fp16 ? __half2float(__ushort_as_half(value)) : loadBf16(value);
++}
++
++__device__ unsigned short roundStorage(float value, bool fp16)
++{
++    return fp16 ? __half_as_ushort(__float2half_rn(value)) : roundBf16(value);
++}
++
++__global__ void biasActivation(unsigned short* output,
++                               const unsigned short* bias,
++                               Gfx1013PointwiseDescriptor descriptor)
++{
++    const std::size_t step = static_cast<std::size_t>(blockDim.x) * gridDim.x;
++    for(std::size_t linear = static_cast<std::size_t>(blockIdx.x) * blockDim.x + threadIdx.x;
++        linear < descriptor.elements;
++        linear += step)
++    {
++        auto remaining = linear;
++        std::size_t offset = 0;
++        std::size_t channel = 0;
++        for(std::size_t dimension = descriptor.rank; dimension-- > 0;)
++        {
++            const auto coordinate = remaining % descriptor.dims[dimension];
++            remaining /= descriptor.dims[dimension];
++            offset += coordinate * descriptor.strides[dimension];
++            if(dimension == 1)
++            {
++                channel = coordinate;
++            }
++        }
++        float value = loadStorage(output[offset], descriptor.fp16);
++        if(bias)
++        {
++            // The graph explicitly stores the bias node's output in FP16/BF16 before
++            // the activation node. Preserve that rounding boundary in this kernel.
++            value = loadStorage(
++                roundStorage(
++                    value + loadStorage(bias[channel * descriptor.biasStride], descriptor.fp16),
++                    descriptor.fp16),
++                descriptor.fp16);
++        }
++        if(!isnan(value))
++        {
++            value = fmaxf(descriptor.lower, fminf(descriptor.upper, value));
++        }
++        output[offset] = roundStorage(value, descriptor.fp16);
++    }
++}
++
++} // namespace
++
++hipError_t launchGfx1013BiasActivation(hipStream_t stream,
++                                       void* output,
++                                       const void* bias,
++                                       const Gfx1013PointwiseDescriptor& descriptor)
++{
++    if(descriptor.elements == 0)
++    {
++        return hipSuccess;
++    }
++    constexpr unsigned int block = 256;
++    const auto requiredBlocks = (descriptor.elements - 1) / block + 1;
++    const auto grid = static_cast<unsigned int>(requiredBlocks > 4096 ? 4096 : requiredBlocks);
++    hipLaunchKernelGGL(biasActivation,
++                       dim3(grid),
++                       dim3(block),
++                       0,
++                       stream,
++                       static_cast<unsigned short*>(output),
++                       static_cast<const unsigned short*>(bias),
++                       descriptor);
++    return hipGetLastError();
++}
++
++} // namespace miopen_plugin
+diff --git a/dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hpp b/dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hpp
+new file mode 100644
+index 00000000000..6f9fb667202
+--- /dev/null
++++ b/dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hpp
+@@ -0,0 +1,29 @@
++// Copyright © Advanced Micro Devices, Inc., or its affiliates.
++// SPDX-License-Identifier: MIT
++
++#pragma once
++
++#include <cstddef>
++#include <hip/hip_runtime_api.h>
++
++namespace miopen_plugin
++{
++
++struct Gfx1013PointwiseDescriptor
++{
++    bool fp16 = false;
++    std::size_t rank = 0;
++    std::size_t dims[5]{};
++    std::size_t strides[5]{};
++    std::size_t elements = 1;
++    std::size_t biasStride = 0;
++    float lower = 0.0f;
++    float upper = 0.0f;
++};
++
++hipError_t launchGfx1013BiasActivation(hipStream_t stream,
++                                       void* output,
++                                       const void* bias,
++                                       const Gfx1013PointwiseDescriptor& descriptor);
++
++} // namespace miopen_plugin
+diff --git a/dnn-providers/miopen-provider/tests/engines/plans/TestMiopenConvFwdBiasActivPlan.cpp b/dnn-providers/miopen-provider/tests/engines/plans/TestMiopenConvFwdBiasActivPlan.cpp
+index aefd6f02e27..3cbcf757603 100644
+--- a/dnn-providers/miopen-provider/tests/engines/plans/TestMiopenConvFwdBiasActivPlan.cpp
++++ b/dnn-providers/miopen-provider/tests/engines/plans/TestMiopenConvFwdBiasActivPlan.cpp
+@@ -74,6 +74,48 @@ TEST(TestConvFwdBiasActivParams, InitializeFromValidConvFwdBiasActivGraph)
+     const ConvFwdBiasActivParams params(*convAttr, biasAttr, *activAttr, graph.getTensorMap());
+ }
+ 
++TEST(TestConvFwdBiasActivParams, SequentialConvolutionUsesNonVirtualFinalOutput)
++{
++    auto builder = createValidConvFwdBiasActivGraph();
++    const hipdnn_flatbuffers_sdk::flatbuffer_utilities::GraphWrapper graph(
++        builder.GetBufferPointer(), builder.GetSize());
++    const auto* conv = graph.getNode(0).attributes_as_ConvolutionFwdAttributes();
++    const auto* bias = graph.getNode(1).attributes_as_PointwiseAttributes();
++    const auto* activation = graph.getNode(2).attributes_as_PointwiseAttributes();
++    ConvFwdBiasActivParams params(*conv, bias, *activation, graph.getTensorMap());
++    auto sequential = params.takeSequentialConvolutionParams();
++    ASSERT_NE(sequential, nullptr);
++    EXPECT_TRUE(sequential->validTensors());
++    EXPECT_EQ(sequential->y().uid(), activation->out_0_tensor_uid());
++    EXPECT_NE(sequential->y().uid(), conv->y_tensor_uid());
++}
++
++TEST(TestConvFwdBiasActivParams, SequentialConvolutionRejectsDifferentIntermediateStorage)
++{
++    auto original = createValidConvFwdBiasActivGraph();
++    const hipdnn_flatbuffers_sdk::flatbuffer_utilities::GraphWrapper originalGraph(
++        original.GetBufferPointer(), original.GetSize());
++    std::unique_ptr<GraphT> native(originalGraph.getGraph().UnPack());
++    // Retaining a different virtual type would require a real intermediate
++    // buffer. It must not be optimized into the final output by this fallback.
++    for(auto& tensor : native->tensors)
++    {
++        if(tensor->virtual_)
++        {
++            tensor->data_type = DataType::HALF;
++        }
++    }
++    flatbuffers::FlatBufferBuilder builder;
++    builder.Finish(Graph::Pack(builder, native.get()));
++    const hipdnn_flatbuffers_sdk::flatbuffer_utilities::GraphWrapper graph(
++        builder.GetBufferPointer(), builder.GetSize());
++    const auto* conv = graph.getNode(0).attributes_as_ConvolutionFwdAttributes();
++    const auto* bias = graph.getNode(1).attributes_as_PointwiseAttributes();
++    const auto* activation = graph.getNode(2).attributes_as_PointwiseAttributes();
++    ConvFwdBiasActivParams params(*conv, bias, *activation, graph.getTensorMap());
++    EXPECT_EQ(params.takeSequentialConvolutionParams(), nullptr);
++}
++
+ TEST(TestConvFwdBiasActivParams, PadsOneDimensionalGraphToTwoDimensions)
+ {
+     // The fused path builds its bias descriptor through its own
+diff --git a/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax.cpp b/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax.cpp
+index 977cbf82d36..ab64a5d9cb8 100644
+--- a/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax.cpp
++++ b/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax.cpp
+@@ -154,7 +154,8 @@ auto create_args(int argc, char* argv[])
+         .insert("repeat", "20", "number of iterations to benchmark the kernel")
+         .insert("json", "0", "0: No Json, 1: Dump Results in Json format")
+         .insert("jsonfile", "topk_softmax.json", "json file name to dump results")
+-        .insert("activation", "softmax", "activation function to use: softmax or sigmoid");
++        .insert(
++            "activation", "softmax", "activation function to use: softmax, sigmoid or identity");
+ 
+     bool result = arg_parser.parse(argc, argv);
+     return std::make_tuple(result, arg_parser);
+@@ -280,6 +281,11 @@ bool test_topk_softmax(ck_tile::ArgParser args)
+             reference_topk_sigmoid<InputType, WeightType, IndexType>(
+                 x_host, value_ref, index_ref, topk);
+         }
++        else if(activation == "identity")
++        {
++            auto x_fp32 = x_host.template CopyAsType<float>();
++            reference_topk(x_fp32, value_ref, index_ref, topk);
++        }
+         else
+         {
+             throw std::runtime_error("unsupported activation type: " + activation);
+@@ -350,5 +356,14 @@ int main(int argc, char** argv)
+         r &= test_topk_softmax<ck_tile::bf16_t, float, ck_tile::index_t>(args);
+     }
+ 
++    else if(input_prec == "fp32" && weight_prec == "fp32")
++    {
++        r &= test_topk_softmax<float, float, ck_tile::index_t>(args);
++    }
++    else
++    {
++        std::cerr << "Unsupported input/output precision\n";
++        return -1;
++    }
+     return r ? 0 : -1;
+ }
+diff --git a/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax_api.cpp b/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax_api.cpp
+index f6b235456a8..8333766398d 100644
+--- a/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax_api.cpp
++++ b/projects/composablekernel/example/ck_tile/09_topk_softmax/topk_softmax_api.cpp
+@@ -3,167 +3,68 @@
+ 
+ #include "topk_softmax_api.hpp"
+ 
+-#define TOPK_SOFTMAX_DISPATCH(experts_, use_softmax_)                                              \
+-    constexpr ck_tile::index_t ts_experts = experts_;                                              \
+-    constexpr bool ts_use_softmax         = use_softmax_;                                          \
+-    using ts_problem                      = ck_tile::TopkSoftmaxWarpPerRowProblem<ts_input_type,   \
+-                                                                                  ts_weight_type,  \
+-                                                                                  ts_index_type,   \
+-                                                                                  ts_experts,      \
+-                                                                                  ts_use_softmax>; \
+-    using ts_pipeline                     = ck_tile::TopkSoftmaxWarpPerRowPipeline<ts_problem>;    \
+-                                                                                                   \
+-    using kernel = ck_tile::TopkSoftmaxKernel<ts_pipeline>;                                        \
+-                                                                                                   \
+-    auto kargs = kernel::MakeKargs(a);                                                             \
+-                                                                                                   \
+-    const dim3 grids  = kernel::GridSize(a);                                                       \
+-    const dim3 blocks = kernel::BlockSize();                                                       \
+-                                                                                                   \
+-    float ave_time =                                                                               \
+-        ck_tile::launch_kernel(s, ck_tile::make_kernel<1>(kernel{}, grids, blocks, 0, kargs));     \
+-                                                                                                   \
+-    return ave_time;
++// Identity exposes the same streaming top-k primitive without an activation.
++template <typename Input, bool Softmax, bool ApplyActivation>
++float dispatch_topk(topk_softmax_kargs a, ck_tile::stream_config s)
++{
++    const auto launch = [&]<ck_tile::index_t Experts>() {
++        using Problem = ck_tile::TopkSoftmaxWarpPerRowProblem<Input,
++                                                              float,
++                                                              ck_tile::index_t,
++                                                              Experts,
++                                                              Softmax,
++                                                              2,
++                                                              sizeof(Input),
++                                                              0,
++                                                              256,
++                                                              ApplyActivation>;
++        using Kernel  = ck_tile::TopkSoftmaxKernel<ck_tile::TopkSoftmaxWarpPerRowPipeline<Problem>>;
++        return ck_tile::launch_kernel(
++            s,
++            ck_tile::make_kernel<1>(
++                Kernel{}, Kernel::GridSize(a), Kernel::BlockSize(), 0, Kernel::MakeKargs(a)));
++    };
++    if(a.num_experts <= 8)
++        return launch.template operator()<8>();
++    if(a.num_experts <= 16)
++        return launch.template operator()<16>();
++    if(a.num_experts <= 32)
++        return launch.template operator()<32>();
++    if(a.num_experts <= 64)
++        return launch.template operator()<64>();
++    if(a.num_experts <= 128)
++        return launch.template operator()<128>();
++    if(a.num_experts <= 192)
++        return launch.template operator()<192>();
++    return -1;
++}
++
++template <typename Input>
++float dispatch_activation(const topk_softmax_trait& t,
++                          topk_softmax_kargs a,
++                          ck_tile::stream_config s)
++{
++    if(t.activation == "softmax")
++        return dispatch_topk<Input, true, true>(a, s);
++    if(t.activation == "sigmoid")
++        return dispatch_topk<Input, false, true>(a, s);
++    if(t.activation == "identity")
++        return dispatch_topk<Input, false, false>(a, s);
++    return -1;
++}
+ 
+ float topk_softmax(topk_softmax_trait t, topk_softmax_kargs a, ck_tile::stream_config s)
+ {
+-    if(t.input_type == "fp16" && t.weight_type == "fp32" && t.activation == "softmax")
+-    {
+-        using ts_input_type  = ck_tile::fp16_t;
+-        using ts_weight_type = float;
+-        using ts_index_type  = ck_tile::index_t;
+-#if 1
+-        if(t.experts <= 8)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(8, true)
+-        }
+-        else if(t.experts <= 16)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(16, true)
+-        }
+-        else if(t.experts <= 32)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(32, true)
+-        }
+-        else if(t.experts <= 64)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(64, true)
+-        }
+-        else if(t.experts <= 128)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(128, true)
+-        }
+-        else if(t.experts <= 192)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(192, true)
+-        }
+-#else
+-        if(t.experts <= 128)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(128, true)
+-        }
+-#endif
+-    }
+-    else if(t.input_type == "bf16" && t.weight_type == "fp32" && t.activation == "softmax")
+-    {
+-#if 1
+-        using ts_input_type  = ck_tile::bf16_t;
+-        using ts_weight_type = float;
+-        using ts_index_type  = ck_tile::index_t;
+-        if(t.experts <= 8)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(8, true)
+-        }
+-        else if(t.experts <= 16)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(16, true)
+-        }
+-        else if(t.experts <= 32)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(32, true)
+-        }
+-        else if(t.experts <= 64)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(64, true)
+-        }
+-        else if(t.experts <= 128)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(128, true)
+-        }
+-        else if(t.experts <= 192)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(192, true)
+-        }
+-#endif
+-    }
+-    else if(t.input_type == "fp16" && t.weight_type == "fp32" && t.activation == "sigmoid")
+-    {
+-        using ts_input_type  = ck_tile::fp16_t;
+-        using ts_weight_type = float;
+-        using ts_index_type  = ck_tile::index_t;
+-#if 1
+-        if(t.experts <= 8)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(8, false)
+-        }
+-        else if(t.experts <= 16)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(16, false)
+-        }
+-        else if(t.experts <= 32)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(32, false)
+-        }
+-        else if(t.experts <= 64)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(64, false)
+-        }
+-        else if(t.experts <= 128)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(128, false)
+-        }
+-        else if(t.experts <= 192)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(192, false)
+-        }
+-#else
+-        if(t.experts <= 128)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(128, false)
+-        }
+-#endif
+-    }
+-    else if(t.input_type == "bf16" && t.weight_type == "fp32" && t.activation == "sigmoid")
+-    {
+-#if 1
+-        using ts_input_type  = ck_tile::bf16_t;
+-        using ts_weight_type = float;
+-        using ts_index_type  = ck_tile::index_t;
+-        if(t.experts <= 8)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(8, false)
+-        }
+-        else if(t.experts <= 16)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(16, false)
+-        }
+-        else if(t.experts <= 32)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(32, false)
+-        }
+-        else if(t.experts <= 64)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(64, false)
+-        }
+-        else if(t.experts <= 128)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(128, false)
+-        }
+-        else if(t.experts <= 192)
+-        {
+-            TOPK_SOFTMAX_DISPATCH(192, false)
+-        }
+-#endif
+-    }
++    if(t.weight_type != "fp32" || t.experts != a.num_experts || a.num_rows <= 0 ||
++       a.num_experts <= 0 || a.topk <= 0 || a.topk > a.num_experts ||
++       a.stride_input < a.num_experts || a.stride_output < a.topk || !a.p_input || !a.p_output ||
++       !a.p_indices)
++        return -1;
++    if(t.input_type == "fp16")
++        return dispatch_activation<ck_tile::fp16_t>(t, a, s);
++    if(t.input_type == "bf16")
++        return dispatch_activation<ck_tile::bf16_t>(t, a, s);
++    if(t.input_type == "fp32")
++        return dispatch_activation<float>(t, a, s);
+     return -1;
+ }
+diff --git a/projects/composablekernel/example/ck_tile/36_pooling/pool3d.cpp b/projects/composablekernel/example/ck_tile/36_pooling/pool3d.cpp
+index 69745d155b9..de485e965ee 100644
+--- a/projects/composablekernel/example/ck_tile/36_pooling/pool3d.cpp
++++ b/projects/composablekernel/example/ck_tile/36_pooling/pool3d.cpp
+@@ -30,6 +30,8 @@ auto create_args(int argc, char* argv[])
+         .insert("RightPz", "1", "right padding d")
+         .insert("RightPy", "1", "right padding h")
+         .insert("RightPx", "1", "right padding w")
++        .insert("prec", "fp16", "fp16/bf16/fp32 precision")
++        .insert("op", "max", "max/min/sum pooling reduction")
+         .insert("v", "1", "cpu validation or not")
+         .insert("warmup", "20", "cold iter")
+         .insert("repeat", "100", "hot iter");
+@@ -41,7 +43,9 @@ auto create_args(int argc, char* argv[])
+ template <typename InDataType,
+           typename OutDataType,
+           typename ComputeDataType,
+-          typename IndexDataType>
++          typename IndexDataType,
++          typename ReduceOp,
++          bool OutputIndex>
+ bool run(const ck_tile::ArgParser& arg_parser)
+ {
+ 
+@@ -87,7 +91,6 @@ bool run(const ck_tile::ArgParser& arg_parser)
+     int warmup        = arg_parser.get_int("warmup");
+     int repeat        = arg_parser.get_int("repeat");
+ 
+-    constexpr bool OutputIndex  = true;
+     constexpr bool PropagateNan = false;
+ 
+     // Shapes / strides / parameters (NDHWC)
+@@ -119,7 +122,6 @@ bool run(const ck_tile::ArgParser& arg_parser)
+ 
+     in_buf.ToDevice(in.data());
+ 
+-    using ReduceOp   = ck_tile::ReduceOp::Max;
+     using BlockWarps = ck_tile::sequence<1, 1>;
+     using BlockTile  = ck_tile::sequence<128, 1>;
+     using WarpTile   = ck_tile::sequence<128, 1>;
+@@ -206,11 +208,34 @@ bool run(const ck_tile::ArgParser& arg_parser)
+     return pass;
+ }
+ 
++template <typename T>
++bool dispatch_pool(const ck_tile::ArgParser& args)
++{
++    const auto op = args.get_str("op");
++    if(op == "max")
++        return run<T, T, float, ck_tile::index_t, ck_tile::ReduceOp::Max, true>(args);
++    if(op == "min")
++        return run<T, T, float, ck_tile::index_t, ck_tile::ReduceOp::Min, true>(args);
++    if(op == "sum")
++        return run<T, T, float, ck_tile::index_t, ck_tile::ReduceOp::Add, false>(args);
++    throw std::runtime_error("Unsupported pooling reduction");
++}
++
+ int main(int argc, char* argv[])
+ {
+     auto [result, arg_parser] = create_args(argc, argv);
+     if(!result)
+         return -1;
+ 
+-    return run<ck_tile::half_t, ck_tile::half_t, float, ck_tile::index_t>(arg_parser) ? 0 : -2;
++    const auto prec = arg_parser.get_str("prec");
++    bool pass       = false;
++    if(prec == "fp16")
++        pass = dispatch_pool<ck_tile::half_t>(arg_parser);
++    else if(prec == "bf16")
++        pass = dispatch_pool<ck_tile::bf16_t>(arg_parser);
++    else if(prec == "fp32")
++        pass = dispatch_pool<float>(arg_parser);
++    else
++        throw std::runtime_error("Unsupported pooling precision");
++    return pass ? 0 : -2;
+ }
+diff --git a/projects/composablekernel/include/ck_tile/ops/gemm.hpp b/projects/composablekernel/include/ck_tile/ops/gemm.hpp
+index b93163c2023..b0e274193f4 100644
+--- a/projects/composablekernel/include/ck_tile/ops/gemm.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/gemm.hpp
+@@ -108,3 +108,5 @@
+ #include "ck_tile/ops/common/streamk_common.hpp"
+ #include "ck_tile/ops/common/tensor_layout.hpp"
+ #include "ck_tile/ops/common/utils.hpp"
++
++#include "ck_tile/ops/gemm/kernel/scalar_gemm_kernel.hpp"
+diff --git a/projects/composablekernel/include/ck_tile/ops/gemm/kernel/scalar_gemm_kernel.hpp b/projects/composablekernel/include/ck_tile/ops/gemm/kernel/scalar_gemm_kernel.hpp
+new file mode 100644
+index 00000000000..9e8c4a813ac
+--- /dev/null
++++ b/projects/composablekernel/include/ck_tile/ops/gemm/kernel/scalar_gemm_kernel.hpp
+@@ -0,0 +1,147 @@
++// Copyright (c) Advanced Micro Devices, Inc., or its affiliates.
++// SPDX-License-Identifier: MIT
++#pragma once
++
++#include "ck_tile/core.hpp"
++#include <cstdint>
++#include <string>
++#include <type_traits>
++
++namespace ck_tile {
++
++// Explicit scalar-FMA kernel for devices without a supported matrix instruction.
++// This is an independent kernel, not an alias for an MFMA/WMMA pipeline. Tensor
++// strides describe logical A[M,K], B[K,N], and C[M,N]; A/B may broadcast batches.
++template <typename InputType, typename OutputType = InputType>
++struct ScalarGemmKernel
++{
++    static_assert(std::is_same_v<InputType, float> || std::is_same_v<InputType, fp16_t> ||
++                  std::is_same_v<InputType, bf16_t>);
++    static_assert(std::is_same_v<OutputType, float> || std::is_same_v<OutputType, InputType>);
++    static constexpr index_t Tile       = 16;
++    static constexpr index_t kBlockSize = Tile * Tile;
++
++    struct Kargs
++    {
++        const InputType* a;
++        const InputType* b;
++        OutputType* c;
++        index_t m, n, k, batches;
++        long_index_t a_row, a_col, b_row, b_col, c_row, c_col;
++        long_index_t a_batch, b_batch, c_batch;
++        float alpha, beta;
++    };
++    using Hargs = Kargs;
++
++    CK_TILE_HOST static constexpr bool IsSupportedArgument(const Hargs& a)
++    {
++        const auto span = [](index_t rows, index_t cols, long_index_t rs, long_index_t cs) {
++            return static_cast<long_index_t>(rows - 1) * rs +
++                   static_cast<long_index_t>(cols - 1) * cs + 1;
++        };
++        const auto valid_layout = [](index_t rows, index_t cols, long_index_t rs, long_index_t cs) {
++            // Prevent multiplication overflow and exclude overlapping matrices.
++            constexpr long_index_t limit = 1LL << 29;
++            return rs > 0 && cs > 0 && rs <= limit / rows && cs <= limit / cols &&
++                   ((cs == 1 && rs >= cols) || (rs == 1 && cs >= rows));
++        };
++        if(a.m <= 0 || a.n <= 0 || a.k < 0 || a.batches <= 0 || a.batches > 65535 || !a.c ||
++           a.a_batch < 0 || a.b_batch < 0 || a.c_batch < 0 || a.a_batch > (1LL << 40) / a.batches ||
++           a.b_batch > (1LL << 40) / a.batches || a.c_batch > (1LL << 40) / a.batches ||
++           !valid_layout(a.m, a.n, a.c_row, a.c_col))
++            return false;
++        if(a.batches > 1 && a.c_batch < span(a.m, a.n, a.c_row, a.c_col))
++            return false;
++        if(a.alpha == 0.f || a.k == 0)
++            return true;
++        if(!a.a || !a.b || !valid_layout(a.m, a.k, a.a_row, a.a_col) ||
++           !valid_layout(a.k, a.n, a.b_row, a.b_col))
++            return false;
++        if((a.a_batch != 0 && a.a_batch < span(a.m, a.k, a.a_row, a.a_col)) ||
++           (a.b_batch != 0 && a.b_batch < span(a.k, a.n, a.b_row, a.b_col)))
++            return false;
++        const auto overlaps_c = [&](const InputType* input,
++                                    long_index_t batch_stride,
++                                    long_index_t input_span) {
++            const auto c_begin = reinterpret_cast<std::uintptr_t>(a.c);
++            const auto x_begin = reinterpret_cast<std::uintptr_t>(input);
++            const auto c_bytes = static_cast<std::uintptr_t>((a.batches - 1) * a.c_batch +
++                                                             span(a.m, a.n, a.c_row, a.c_col)) *
++                                 sizeof(OutputType);
++            const auto x_bytes =
++                static_cast<std::uintptr_t>((a.batches - 1) * batch_stride + input_span) *
++                sizeof(InputType);
++            // Difference comparisons avoid address-addition overflow.
++            return c_begin <= x_begin ? x_begin - c_begin < c_bytes : c_begin - x_begin < x_bytes;
++        };
++        return !overlaps_c(a.a, a.a_batch, span(a.m, a.k, a.a_row, a.a_col)) &&
++               !overlaps_c(a.b, a.b_batch, span(a.k, a.n, a.b_row, a.b_col));
++    }
++
++    CK_TILE_HOST static constexpr auto GridSize(const Hargs& a)
++    { return dim3(integer_divide_ceil(a.n, Tile), integer_divide_ceil(a.m, Tile), a.batches); }
++    CK_TILE_HOST_DEVICE static constexpr index_t BlockSize() { return kBlockSize; }
++    CK_TILE_HOST static constexpr Kargs MakeKargs(const Hargs& a) { return a; }
++    CK_TILE_HOST static std::string GetName() { return "scalar_gemm_16x16_f32acc"; }
++
++    CK_TILE_DEVICE void operator()(Kargs a) const
++    {
++        const index_t lr         = get_thread_id() / Tile;
++        const index_t lc         = get_thread_id() % Tile;
++        const index_t row        = blockIdx.y * Tile + lr;
++        const index_t col        = blockIdx.x * Tile + lc;
++        const long_index_t batch = blockIdx.z;
++        __shared__ float left[Tile * Tile];
++        __shared__ float right[Tile * Tile];
++        float acc = 0.f;
++        if(a.alpha != 0.f && a.k != 0)
++        {
++            // Scalar buffer accesses preserve odd offsets/strides and tail safety.
++            auto av = make_naive_tensor_view<address_space_enum::global,
++                                             memory_operation_enum::set,
++                                             amd_buffer_coherence_enum::coherence_default,
++                                             true>(
++                a.a + batch * a.a_batch,
++                make_tuple(a.m, a.k),
++                make_tuple(static_cast<index_t>(a.a_row), static_cast<index_t>(a.a_col)),
++                number<1>{},
++                number<1>{});
++            auto bv = make_naive_tensor_view<address_space_enum::global,
++                                             memory_operation_enum::set,
++                                             amd_buffer_coherence_enum::coherence_default,
++                                             true>(
++                a.b + batch * a.b_batch,
++                make_tuple(a.k, a.n),
++                make_tuple(static_cast<index_t>(a.b_row), static_cast<index_t>(a.b_col)),
++                number<1>{},
++                number<1>{});
++            for(index_t start = 0; start < a.k; start += Tile)
++            {
++                const auto ac = make_tensor_coordinate<true>(av.get_tensor_descriptor(),
++                                                             make_array(row, start + lc));
++                const auto bc = make_tensor_coordinate<true>(bv.get_tensor_descriptor(),
++                                                             make_array(start + lr, col));
++                left[get_thread_id()] =
++                    type_convert<float>(av.template get_vectorized_elements<InputType>(
++                        ac, long_index_t{0}, row < a.m && start + lc < a.k));
++                right[get_thread_id()] =
++                    type_convert<float>(bv.template get_vectorized_elements<InputType>(
++                        bc, long_index_t{0}, col < a.n && start + lr < a.k));
++                block_sync_lds();
++                for(index_t kk = 0; kk < Tile; ++kk)
++                    acc = __builtin_fmaf(left[lr * Tile + kk], right[kk * Tile + lc], acc);
++                block_sync_lds();
++            }
++        }
++        if(row < a.m && col < a.n)
++        {
++            const long_index_t offset = batch * a.c_batch + row * a.c_row + col * a.c_col;
++            float value               = a.alpha * acc;
++            if(a.beta != 0.f)
++                value = __builtin_fmaf(a.beta, type_convert<float>(a.c[offset]), value);
++            a.c[offset] = type_convert<OutputType>(value);
++        }
++    }
++};
++
++} // namespace ck_tile
+diff --git a/projects/composablekernel/include/ck_tile/ops/topk/block/block_topk_stream_2d.hpp b/projects/composablekernel/include/ck_tile/ops/topk/block/block_topk_stream_2d.hpp
+index ee1e19dee8f..dc3981ca1a2 100644
+--- a/projects/composablekernel/include/ck_tile/ops/topk/block/block_topk_stream_2d.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/topk/block/block_topk_stream_2d.hpp
+@@ -33,7 +33,8 @@ struct BlockTopkStream2D
+                                    const OutWindow& out_window,
+                                    const IdxWindow& idx_window,
+                                    index_t k,
+-                                   number<dim> = {})
++                                   number<dim>        = {},
++                                   index_t valid_cols = numeric<index_t>::max())
+     {
+         OutWindow out_window_tmp = out_window;
+         IdxWindow idx_window_tmp = idx_window;
+@@ -42,12 +43,22 @@ struct BlockTopkStream2D
+             std::is_same_v<typename DistributedTensor::DataType, DataType>);
+         static_assert(std::is_same_v<typename IdxWindow::DataType, IndexType>);
+ 
+-        DistributedTensor x_tmp = x;
++        auto selected           = tile_elementwise_in([](const auto&) { return index_t{0}; }, x);
+         constexpr auto dst_dist = typename IdxWindow::TileDstr{};
+ 
+         // argmax for topk
+         const auto f_argmax = [](ArgmaxPacket e0, ArgmaxPacket e1) {
+-            return e0.arg > e1.arg ? e0 : e1;
++            if(e0.value == numeric<index_t>::max())
++                return e1;
++            if(e1.value == numeric<index_t>::max())
++                return e0;
++            const bool nan0 = e0.arg != e0.arg;
++            const bool nan1 = e1.arg != e1.arg;
++            if(nan0 != nan1)
++                return nan0 ? e0 : e1;
++            if(nan0 && nan1)
++                return e0.value < e1.value ? e0 : e1;
++            return e0.arg > e1.arg || (e0.arg == e1.arg && e0.value < e1.value) ? e0 : e1;
+         };
+ 
+         for(index_t i_k = 0; i_k < k; i_k++)
+@@ -62,15 +73,18 @@ struct BlockTopkStream2D
+                             tmp.get_tile_distribution(), make_tuple(idx0, idx1));
+                         constexpr auto i_j_idx = make_tuple(idx0, idx1);
+                         ArgmaxPacket t;
+-                        t.arg        = x_tmp(i_j_idx); // !!! we reference x here
+-                        t.value      = tile_idx.at(number<1>{});
++                        t.arg          = x[i_j_idx];
++                        const auto col = tile_idx.at(number<1>{});
++                        t.value =
++                            selected(i_j_idx) || col >= valid_cols ? numeric<index_t>::max() : col;
+                         tmp(i_j_idx) = t;
+                     });
+                 });
+                 return tmp;
+             }();
+ 
+-            auto argmax_init = ArgmaxPacket{-numeric<DataType>::infinity(), 0};
++            auto argmax_init =
++                ArgmaxPacket{-numeric<DataType>::infinity(), numeric<index_t>::max()};
+             auto r = block_tile_reduce<ArgmaxPacket>(packet, sequence<1>{}, f_argmax, argmax_init);
+             block_tile_reduce_xor_sync(r, f_argmax);
+ 
+@@ -94,8 +108,7 @@ struct BlockTopkStream2D
+ 
+                     constexpr auto i_j_idx = make_tuple(idx0, idx1);
+ 
+-                    x_tmp(i_j_idx) = (col_id == r(i_j_idx).value) ? -numeric<DataType>::infinity()
+-                                                                  : x_tmp(i_j_idx);
++                    selected(i_j_idx) |= col_id == r(i_j_idx).value;
+                 });
+             });
+ 
+diff --git a/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_pipeline.hpp b/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_pipeline.hpp
+index eefe2ebc575..dc9a0095343 100644
+--- a/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_pipeline.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_pipeline.hpp
+@@ -90,10 +90,12 @@ struct TopkSoftmaxWarpPerRowPipeline
+                     const auto current_expert = x_indices.at(number<1>{});
+                     w_(idx) =
+                         current_expert >= experts ? -numeric<WeightType>::infinity() : w_(idx);
+-                    if constexpr(!Problem::ActivationIsSoftmax)
++                    if constexpr(Problem::ApplyActivation && !Problem::ActivationIsSoftmax)
+                     {
+-                        // sigmoid can be pre-computed already here if not using softmax
+-                        w_(idx) = WeightType(1) / (WeightType(1) + exp(-w_(idx)));
++                        // Keep padded experts below every valid sigmoid output, including zero.
++                        w_(idx) = current_expert >= experts
++                                      ? -numeric<WeightType>::infinity()
++                                      : WeightType(1) / (WeightType(1) + exp(-w_(idx)));
+                     }
+                 };
+                 tile_sweeper<decltype(w_), decltype(w_f)> ts{w_, w_f};
+@@ -102,15 +104,15 @@ struct TopkSoftmaxWarpPerRowPipeline
+ #endif
+             }();
+ 
+-            if constexpr(Problem::ActivationIsSoftmax)
++            if constexpr(Problem::ApplyActivation && Problem::ActivationIsSoftmax)
+             {
+                 auto y = softmax(w);
+-                topk(y, out_win, idx_win, k);
++                topk(y, out_win, idx_win, k, number<1>{}, experts);
+             }
+             else
+             {
+                 // sigmoid was already pre-computed above, so only do topk now
+-                topk(w, out_win, idx_win, k);
++                topk(w, out_win, idx_win, k, number<1>{}, experts);
+             }
+ 
+             // check exit
+diff --git a/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_problem.hpp b/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_problem.hpp
+index 3bb3ac2897e..46aa1800b21 100644
+--- a/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_problem.hpp
++++ b/projects/composablekernel/include/ck_tile/ops/topk_softmax/pipeline/topk_softmax_warp_per_row_problem.hpp
+@@ -17,7 +17,8 @@ template <typename InputType_,
+           index_t IssuesPerCol_     = 2,    // issue along col, to make sure block_reduce() OK
+           index_t BytesPerIssue_    = sizeof(InputType_),
+           index_t LaunchType_       = 0, // 0-streaming, >0, persistent #occupancy
+-          index_t BlockSize_        = 256>
++          index_t BlockSize_        = 256,
++          bool ApplyActivation_     = true>
+ struct TopkSoftmaxWarpPerRowProblem
+ {
+     // TODO: this kernel only support warp per row
+@@ -33,6 +34,7 @@ struct TopkSoftmaxWarpPerRowProblem
+     static constexpr index_t WarpSize      = get_warp_size();
+ 
+     static constexpr bool ActivationIsSoftmax = ActivationIsSoftmax_;
++    static constexpr bool ApplyActivation     = ApplyActivation_;
+ 
+     static_assert(BytesPerIssue % sizeof(InputType) == 0);
+     static constexpr index_t VectorSize = BytesPerIssue / sizeof(InputType);
+diff --git a/projects/hipblaslt/docs/gfx1013-scalar-backend.rst b/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
+index 6b750106a42..ca2934431d0 100644
+--- a/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
++++ b/projects/hipblaslt/docs/gfx1013-scalar-backend.rst
+@@ -25,6 +25,12 @@ Supported operations
+   not read A or B. K=0 scales C without reading A or B.
+ * Explicit heuristic algorithms or a null algorithm for implicit selection.
+   The scalar kernel needs no workspace and executes on the supplied HIP stream.
++* Bias, ReLU, GELU, fixed-beta-one Swish, sigmoid, clamp and applicable bias
++  combinations. Clamp uses the supplied activation bounds. GELU/clamp auxiliary
++  outputs and DGELU are supported with column-major auxiliary storage.
++* Native C++ Gemm/GroupedGemm host-problem APIs, owning descriptor clones and
++  host scalar snapshots, heuristic/support/index queries and stream/event execution.
++* Matching FP16/BF16 FAST compute aliases use FP32 scalar accumulation.
+ * Bias, ReLU, GELU and their bias combinations. Bias follows logical output rows;
+   output-type or FP32 bias supports broadcast or padded batch strides.
+ 
+@@ -35,9 +41,9 @@ This is a correctness-oriented scalar FMA implementation using 16x16 shared
+ memory tiles. It does not claim performance parity with optimized BLAS kernels.
+ Matrix instructions are not emitted because gfx1013 has neither MFMA nor WMMA.
+ 
+-Auxiliary/backward epilogues, scaling pointers, auxiliary outputs, FP8/INT8/FP64, pointer-array
+-batches, packed layouts, C leading-dimension-zero broadcasting, grouped GEMM
+-and C++ extension algorithm enumeration are unsupported. Non-default SM-count,
++Bias-gradient and packed-ReLU auxiliary epilogues, scaling pointers, FP8/INT8/FP64,
++pointer-array batches, device user-argument grouped execution, packed layouts and
++C leading-dimension-zero broadcasting are unsupported. Non-default SM-count,
+ Stream-K and search/configuration controls are rejected rather than ignored.
+ Numerics-scanner requests are also unsupported. The handle must belong to the
+ current gfx1013 device. Matrix dimensions and leading dimensions are bounded by
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+index 5dc330f337c..f866d548e4d 100644
+--- a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+@@ -21,13 +21,29 @@ namespace gfx1013_scalar
+         bool uses_bias(rocblaslt_epilogue epilogue)
+         {
+             return epilogue == ROCBLASLT_EPILOGUE_BIAS || epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS
+-                   || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS;
++                   || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS
++                   || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS
++                   || epilogue == ROCBLASLT_EPILOGUE_SWISH_BIAS_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_BIAS_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT;
++        }
++
++        bool uses_aux(rocblaslt_epilogue epilogue)
++        {
++            return epilogue == ROCBLASLT_EPILOGUE_GELU_AUX
++                   || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS
++                   || epilogue == ROCBLASLT_EPILOGUE_DGELU
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT;
+         }
+ 
+         bool supported_epilogue(rocblaslt_epilogue epilogue)
+         {
+             return epilogue == ROCBLASLT_EPILOGUE_DEFAULT || uses_bias(epilogue)
+-                   || epilogue == ROCBLASLT_EPILOGUE_RELU || epilogue == ROCBLASLT_EPILOGUE_GELU;
++                   || epilogue == ROCBLASLT_EPILOGUE_RELU || epilogue == ROCBLASLT_EPILOGUE_GELU
++                   || uses_aux(epilogue) || epilogue == ROCBLASLT_EPILOGUE_SIGMOID
++                   || epilogue == ROCBLASLT_EPILOGUE_SWISH_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_EXT;
+         }
+ 
+         struct Layout
+@@ -90,7 +106,8 @@ namespace gfx1013_scalar
+                 return HIPBLAS_STATUS_ARCH_MISMATCH;
+             if(!supported_epilogue(op->epilogue) || (!uses_bias(op->epilogue) && op->bias)
+                || op->scaleA || op->scaleB || op->scaleC || op->scaleD || op->scaleE || op->amaxD
+-               || op->e || op->scaleAType != RocblasltContractionProblem::ScalingFormat::None
++               || (!uses_aux(op->epilogue) && op->e)
++               || op->scaleAType != RocblasltContractionProblem::ScalingFormat::None
+                || op->scaleBType != RocblasltContractionProblem::ScalingFormat::None
+                || op->compute_input_typeA != HIPBLASLT_DATATYPE_INVALID
+                || op->compute_input_typeB != HIPBLASLT_DATATYPE_INVALID
+@@ -98,7 +115,11 @@ namespace gfx1013_scalar
+                || op->streamk_tile_scheduling_ext
+                || h->check_numerics != hipblaslt_check_numerics_mode_no_check
+                || (op->compute_type_original != rocblaslt_compute_f32
+-                   && op->compute_type_original != rocblaslt_compute_f32_pedantic)
++                   && op->compute_type_original != rocblaslt_compute_f32_pedantic
++                   && !(op->compute_type_original == rocblaslt_compute_f32_fast_f16
++                        && a->type == HIP_R_16F)
++                   && !(op->compute_type_original == rocblaslt_compute_f32_fast_bf16
++                        && a->type == HIP_R_16BF))
+                || (op->pointermode != rocblaslt_pointer_mode_host
+                    && op->pointermode != rocblaslt_pointer_mode_device))
+                 return HIPBLAS_STATUS_NOT_SUPPORTED;
+@@ -123,7 +144,22 @@ namespace gfx1013_scalar
+                 if(bias_type != d->type && bias_type != HIP_R_32F)
+                     return HIPBLAS_STATUS_NOT_SUPPORTED;
+             }
+-            else if(op->bias_stride)
++            if(uses_aux(op->epilogue))
++            {
++                // Upstream auxiliary tensors are column-major, even for row-major D.
++                const auto aux_type
++                    = op->aux_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->aux_type;
++                if(aux_type != d->type && aux_type != HIP_R_32F)
++                    return HIPBLAS_STATUS_NOT_SUPPORTED;
++                _rocblaslt_matrix_layout aux = *d;
++                aux.order                    = HIPBLASLT_ORDER_COL;
++                aux.ld                       = op->lde;
++                aux.batch_stride             = op->stride_e;
++                aux.batch_offset             = 0;
++                if(!op->e || !valid_span(aux, op->epilogue != ROCBLASLT_EPILOGUE_DGELU))
++                    return HIPBLAS_STATUS_INVALID_VALUE;
++            }
++            if(!uses_bias(op->epilogue) && op->bias_stride)
+                 return HIPBLAS_STATUS_NOT_SUPPORTED;
+             for(auto x : {a, b, c, d})
+             {
+@@ -166,7 +202,13 @@ namespace gfx1013_scalar
+                              const void*        bias,
+                              hipDataType        bias_type,
+                              uint64_t           bias_stride,
+-                             rocblaslt_epilogue epilogue)
++                             rocblaslt_epilogue epilogue,
++                             void*              aux,
++                             hipDataType        aux_type,
++                             uint64_t           aux_ld,
++                             uint64_t           aux_stride,
++                             float              act0,
++                             float              act1)
+         {
+             __shared__ float left[tile][tile];
+             __shared__ float right[tile][tile];
+@@ -214,10 +256,54 @@ namespace gfx1013_scalar
+                     else
+                         value += float(static_cast<const hip_bfloat16*>(bias)[index]);
+                 }
+-                if(epilogue == ROCBLASLT_EPILOGUE_RELU || epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS)
++                const uint64_t aux_index = batch * aux_stride + col * aux_ld + row;
++                if(epilogue == ROCBLASLT_EPILOGUE_GELU_AUX
++                   || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT)
++                {
++                    if(aux_type == HIP_R_32F)
++                        static_cast<float*>(aux)[aux_index] = value;
++                    else if(aux_type == HIP_R_16F)
++                        static_cast<__half*>(aux)[aux_index] = __half(value);
++                    else
++                        static_cast<hip_bfloat16*>(aux)[aux_index] = hip_bfloat16(value);
++                }
++                if(epilogue == ROCBLASLT_EPILOGUE_CLAMP_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_BIAS_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_EXT
++                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT)
++                    value = fmaxf(act0, fminf(value, act1));
++                else if(epilogue == ROCBLASLT_EPILOGUE_DGELU)
++                {
++                    const float x = aux_type == HIP_R_32F ? static_cast<float*>(aux)[aux_index]
++                                    : aux_type == HIP_R_16F
++                                        ? float(static_cast<__half*>(aux)[aux_index])
++                                        : float(static_cast<hip_bfloat16*>(aux)[aux_index]);
++                    const float t = tanhf(0.7978845608028654f * x * (1 + 0.044715f * x * x));
++                    value *= 0.5f * (1 + t)
++                             + 0.3989422804014327f * x * (1 + 0.134145f * x * x) * (1 - t * t);
++                }
++                else if(epilogue == ROCBLASLT_EPILOGUE_SIGMOID
++                        || epilogue == ROCBLASLT_EPILOGUE_SWISH_EXT
++                        || epilogue == ROCBLASLT_EPILOGUE_SWISH_BIAS_EXT)
++                {
++                    // Stable sigmoid avoids infinity/overflow for large negative inputs.
++                    // The public SWISH_EXT epilogue is Swish(x, 1). Activation
++                    // arguments parameterize CLAMP; they do not change this beta.
++                    const float argument  = value;
++                    const float exp_value = expf(-fabsf(argument));
++                    const float sigmoid
++                        = argument >= 0 ? 1 / (1 + exp_value) : exp_value / (1 + exp_value);
++                    value = epilogue == ROCBLASLT_EPILOGUE_SIGMOID ? sigmoid : value * sigmoid;
++                }
++                else if(epilogue == ROCBLASLT_EPILOGUE_RELU
++                        || epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS)
+                     value = fmaxf(value, 0.0f);
+                 else if(epilogue == ROCBLASLT_EPILOGUE_GELU
+-                        || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS)
++                        || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS
++                        || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX
++                        || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS)
+                 {
+                     // Match the tanh approximation used by upstream activation kernels.
+                     const float inner
+@@ -252,7 +338,9 @@ namespace gfx1013_scalar
+             const uint64_t k = op->op_A == HIPBLAS_OP_N ? a->n : a->m;
+             if(!D || ((device || bh != 0) && !C) || (k && (device || ah != 0) && (!A || !B)))
+                 return HIPBLAS_STATUS_INVALID_VALUE;
+-            if(D == A || D == B || (op->bias && D == op->bias))
++            if(D == A || D == B || (op->bias && D == op->bias)
++               || (op->e
++                   && (op->e == D || op->e == A || op->e == B || op->e == C || op->e == op->bias)))
+                 return HIPBLAS_STATUS_INVALID_VALUE;
+             if(C == D
+                && (c->ld != d->ld || c->batch_stride != d->batch_stride
+@@ -281,12 +369,47 @@ namespace gfx1013_scalar
+                 uses_bias(op->epilogue) ? op->bias : nullptr,
+                 op->bias_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->bias_type,
+                 uint64_t(op->bias_stride),
+-                op->epilogue);
++                op->epilogue,
++                op->e,
++                op->aux_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->aux_type,
++                uint64_t(op->lde),
++                uint64_t(op->stride_e),
++                op->act0,
++                op->act1);
+             return hipGetLastError() == hipSuccess ? HIPBLAS_STATUS_SUCCESS
+                                                    : HIPBLAS_STATUS_EXECUTION_FAILED;
+         }
+     }
+ 
++    bool is_algo(const hipblasLtMatmulAlgo_t& algo)
++    {
++        return !std::memcmp(algo.data, algorithm_id, sizeof(algorithm_id))
++               && !algo.max_workspace_bytes;
++    }
++
++    hipblasLtMatmulHeuristicResult_t algorithm()
++    {
++        hipblasLtMatmulHeuristicResult_t result{};
++        std::memcpy(result.algo.data, algorithm_id, sizeof(algorithm_id));
++        result.state = HIPBLAS_STATUS_SUCCESS;
++        return result;
++    }
++
++    hipblasStatus_t supported(hipblasLtHandle_t       handle,
++                              hipblasLtMatmulDesc_t   desc,
++                              hipblasLtMatrixLayout_t a,
++                              hipblasLtMatrixLayout_t b,
++                              hipblasLtMatrixLayout_t c,
++                              hipblasLtMatrixLayout_t d)
++    {
++        return validate(reinterpret_cast<rocblaslt_handle>(handle),
++                        reinterpret_cast<rocblaslt_matmul_desc>(desc),
++                        reinterpret_cast<rocblaslt_matrix_layout>(a),
++                        reinterpret_cast<rocblaslt_matrix_layout>(b),
++                        reinterpret_cast<rocblaslt_matrix_layout>(c ? c : d),
++                        reinterpret_cast<rocblaslt_matrix_layout>(d));
++    }
++
+     hipblasStatus_t heuristic(hipblasLtHandle_t                 handle,
+                               hipblasLtMatmulDesc_t             desc,
+                               hipblasLtMatrixLayout_t           A,
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp
+index 4de61c2a2a9..8b7a0d14c69 100644
+--- a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.hpp
+@@ -5,6 +5,14 @@
+ 
+ namespace gfx1013_scalar
+ {
++    bool                             is_algo(const hipblasLtMatmulAlgo_t&);
++    hipblasLtMatmulHeuristicResult_t algorithm();
++    hipblasStatus_t                  supported(hipblasLtHandle_t,
++                                               hipblasLtMatmulDesc_t,
++                                               hipblasLtMatrixLayout_t,
++                                               hipblasLtMatrixLayout_t,
++                                               hipblasLtMatrixLayout_t,
++                                               hipblasLtMatrixLayout_t);
+     hipblasStatus_t heuristic(hipblasLtHandle_t,
+                               hipblasLtMatmulDesc_t,
+                               hipblasLtMatrixLayout_t,
+diff --git a/projects/hipblaslt/library/src/amd_detail/hipblaslt-ext.cpp b/projects/hipblaslt/library/src/amd_detail/hipblaslt-ext.cpp
+index 9333e60c76b..e8f6b76255d 100644
+--- a/projects/hipblaslt/library/src/amd_detail/hipblaslt-ext.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/hipblaslt-ext.cpp
+@@ -27,6 +27,12 @@
+ #include "hipblaslt/hipblaslt-ext.hpp"
+ #include "exceptions.hpp"
+ #include "hipblaslt_internal.hpp"
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++#include "gfx1013_scalar.hpp"
++#include "handle.h"
++#include <climits>
++#include <cstring>
++#endif
+ #include <Debug.hpp>
+ #include <algorithm>
+ #include <hip/hip_runtime.h>
+@@ -288,8 +294,8 @@ namespace hipblaslt_ext
+             = RocblasltContractionProblem::ScalingFormat::None;
+         RocblasltContractionProblem::ScalingFormat scaling_b_type
+             = RocblasltContractionProblem::ScalingFormat::None;
+-        float act0;
+-        float act1;
++        float act0 = 0;
++        float act1 = 0;
+     };
+ 
+     GemmEpilogue::GemmEpilogue()
+@@ -711,6 +717,211 @@ namespace hipblaslt_ext
+     // End of pimpl classes
+     /////////////////////////////////////////////////////
+ 
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++    namespace
++    {
++        // Reuse the existing opaque instance storage; the public C++ ABI is unchanged.
++        struct ScalarProblem
++        {
++            _rocblaslt_matmul_desc   op;
++            _rocblaslt_matrix_layout a, b, c, d;
++            const void *             alpha = nullptr, *A = nullptr, *B = nullptr;
++            const void *             beta = nullptr, *C = nullptr;
++            void*                    D          = nullptr;
++            float                    alpha_host = 0, beta_host = 0;
++        };
++        struct ScalarInstance
++        {
++            std::vector<ScalarProblem> problems;
++            bool                       initialized = false;
++        };
++        hipblasLtMatmulDesc_t scalar_desc(ScalarProblem& p)
++        {
++            return reinterpret_cast<hipblasLtMatmulDesc_t>(&p.op);
++        }
++        hipblasLtMatrixLayout_t scalar_layout(_rocblaslt_matrix_layout& x)
++        {
++            return reinterpret_cast<hipblasLtMatrixLayout_t>(&x);
++        }
++        GemmProblemType scalar_problem_type(const ScalarProblem& p)
++        {
++            GemmProblemType type(p.op.op_A,
++                                 p.op.op_B,
++                                 p.a.type,
++                                 p.b.type,
++                                 p.c.type,
++                                 p.d.type,
++                                 static_cast<hipblasComputeType_t>(p.op.compute_type_original));
++            type.setOrderA(p.a.order);
++            type.setOrderB(p.b.order);
++            return type;
++        }
++        hipblasStatus_t scalar_check(hipblasLtHandle_t handle, ScalarProblem& p)
++        {
++            if(!p.alpha || !p.beta)
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            return gfx1013_scalar::supported(handle,
++                                             scalar_desc(p),
++                                             scalar_layout(p.a),
++                                             scalar_layout(p.b),
++                                             scalar_layout(p.c),
++                                             scalar_layout(p.d));
++        }
++        hipblasStatus_t scalar_clone(ScalarProblem&          p,
++                                     hipblasLtMatmulDesc_t   desc,
++                                     const void*             alpha,
++                                     const void*             A,
++                                     hipblasLtMatrixLayout_t a,
++                                     const void*             B,
++                                     hipblasLtMatrixLayout_t b,
++                                     const void*             beta,
++                                     const void*             C,
++                                     hipblasLtMatrixLayout_t c,
++                                     void*                   D,
++                                     hipblasLtMatrixLayout_t d)
++        {
++            if(!desc || !a || !b || !d)
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            p.op = *reinterpret_cast<rocblaslt_matmul_desc>(desc);
++            p.op.m_data.reset();
++            p.a     = *reinterpret_cast<rocblaslt_matrix_layout>(a);
++            p.b     = *reinterpret_cast<rocblaslt_matrix_layout>(b);
++            p.c     = *reinterpret_cast<rocblaslt_matrix_layout>(c ? c : d);
++            p.d     = *reinterpret_cast<rocblaslt_matrix_layout>(d);
++            p.alpha = alpha;
++            p.A     = A;
++            p.B     = B;
++            p.beta  = beta;
++            p.C     = C;
++            p.D     = D;
++            return HIPBLAS_STATUS_SUCCESS;
++        }
++        hipblasStatus_t scalar_typed(ScalarProblem&         p,
++                                     int64_t                m,
++                                     int64_t                n,
++                                     int64_t                k,
++                                     int64_t                batch,
++                                     int64_t                lda,
++                                     int64_t                ldb,
++                                     int64_t                ldc,
++                                     int64_t                ldd,
++                                     int64_t                sa,
++                                     int64_t                sb,
++                                     int64_t                sc,
++                                     int64_t                sd,
++                                     GemmEpilogue&          e,
++                                     const GemmInputs&      i,
++                                     const GemmProblemType& t,
++                                     bool                   scaled = false)
++        {
++            if(m <= 0 || n <= 0 || k < 0 || batch < 1 || batch > INT_MAX)
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            if(i.getScaleA() || i.getScaleB() || i.getScaleC() || i.getScaleD() || i.getScaleAux()
++               || i.getScaleAlphaVec() || i.getAmaxD() || scaled)
++                return HIPBLAS_STATUS_NOT_SUPPORTED;
++            p.op.op_A         = t.getOpA();
++            p.op.op_B         = t.getOpB();
++            p.op.compute_type = p.op.compute_type_original
++                = static_cast<rocblaslt_compute_type>(t.getTypeCompute());
++            p.op.scale_type = HIP_R_32F;
++            p.op.epilogue   = static_cast<rocblaslt_epilogue>(e.getMode());
++            p.op.bias       = const_cast<void*>(i.getBias());
++            p.op.bias_type  = e.getBiasDataType();
++            p.op.e          = const_cast<void*>(i.getAux());
++            p.op.aux_type   = e.getAuxDataType();
++            p.op.lde        = e.getAuxLeadingDimension();
++            p.op.stride_e   = e.getAuxBatchStride();
++            p.op.act0       = e.getAct0();
++            p.op.act1       = e.getAct1();
++            const auto init = [batch](_rocblaslt_matrix_layout& x,
++                                      hipDataType               type,
++                                      int64_t                   rows,
++                                      int64_t                   cols,
++                                      int64_t                   ld,
++                                      int64_t                   stride,
++                                      hipblasLtOrder_t          order) {
++                x.type         = type;
++                x.m            = rows;
++                x.n            = cols;
++                x.ld           = ld;
++                x.batch_count  = int32_t(batch);
++                x.batch_stride = stride;
++                x.order        = order;
++            };
++            init(p.a,
++                 t.getTypeA(),
++                 t.getOpA() == HIPBLAS_OP_N ? m : k,
++                 t.getOpA() == HIPBLAS_OP_N ? k : m,
++                 lda,
++                 sa,
++                 t.getOrderA());
++            init(p.b,
++                 t.getTypeB(),
++                 t.getOpB() == HIPBLAS_OP_N ? k : n,
++                 t.getOpB() == HIPBLAS_OP_N ? n : k,
++                 ldb,
++                 sb,
++                 t.getOrderB());
++            init(p.c, t.getTypeC(), m, n, ldc, sc, HIPBLASLT_ORDER_COL);
++            init(p.d, t.getTypeD(), m, n, ldd, sd, HIPBLASLT_ORDER_COL);
++            p.alpha = i.getAlpha();
++            p.beta  = i.getBeta();
++            p.A     = i.getA();
++            p.B     = i.getB();
++            p.C     = i.getC();
++            p.D     = const_cast<void*>(i.getD());
++            return HIPBLAS_STATUS_SUCCESS;
++        }
++        hipblasStatus_t scalar_publish(hipblasLtHandle_t               handle,
++                                       std::shared_ptr<ScalarInstance> candidate,
++                                       std::shared_ptr<void>&          data,
++                                       size_t&                         count)
++        {
++            // On failure the old problem is invalidated instead of accidentally running it.
++            data.reset();
++            count = 0;
++            if(candidate->problems.empty())
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            for(auto& p : candidate->problems)
++            {
++                auto status = scalar_check(handle, p);
++                if(status != HIPBLAS_STATUS_SUCCESS)
++                    return status;
++                if(p.op.pointermode == rocblaslt_pointer_mode_host)
++                {
++                    // C++ setProblem captures scalar values, just like Tensile inputs.
++                    std::memcpy(&p.alpha_host, p.alpha, sizeof(float));
++                    std::memcpy(&p.beta_host, p.beta, sizeof(float));
++                }
++            }
++            count = candidate->problems.size();
++            data  = std::move(candidate);
++            return HIPBLAS_STATUS_SUCCESS;
++        }
++        hipblasStatus_t scalar_instance_supported(hipblasLtHandle_t            handle,
++                                                  const std::shared_ptr<void>& data,
++                                                  const hipblasLtMatmulAlgo_t& algo,
++                                                  size_t&                      workspace)
++        {
++            workspace = 0;
++            if(!data)
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            if(!gfx1013_scalar::is_algo(algo))
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            auto state = std::static_pointer_cast<ScalarInstance>(data);
++            if(state->problems.empty())
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            for(auto& p : state->problems)
++            {
++                auto status = scalar_check(handle, p);
++                if(status != HIPBLAS_STATUS_SUCCESS)
++                    return status;
++            }
++            return HIPBLAS_STATUS_SUCCESS;
++        }
++    }
++#endif
++
+     // Gemm Instance
+     ////////////////////////////////////////////////////////////
+ 
+@@ -738,6 +949,20 @@ namespace hipblaslt_ext
+         const GemmPreference&                          pref,
+         std::vector<hipblasLtMatmulHeuristicResult_t>& heuristicResults)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        heuristicResults.clear();
++        if(!m_data || !m_gemm_count || requestedAlgoCount < 1)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        if(pref.getStreamKTileSchedulingMode() != HIPBLASLT_STREAMK_TILE_SCHEDULING_OFF)
++            return HIPBLAS_STATUS_NOT_SUPPORTED;
++        auto   scalar_algo      = gfx1013_scalar::algorithm();
++        size_t scalar_workspace = 0;
++        auto   scalar_status
++            = scalar_instance_supported(m_handle, m_data, scalar_algo.algo, scalar_workspace);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            heuristicResults.push_back(scalar_algo);
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtAlgoGetHeuristicV2Cpp");
+         if(m_gemm_count == 0)
+         {
+@@ -768,6 +993,9 @@ namespace hipblaslt_ext
+                                                   size_t&                workspaceSizeInBytes)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return scalar_instance_supported(m_handle, m_data, algo, workspaceSizeInBytes);
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtIsAlgoSupportedCpp");
+         auto                    gemmType = static_cast<rocblaslt::RocGemmType>(m_gemm_type);
+         applyStreamKTileSchedulingMode(m_data, gemmType, m_streamk_tile_scheduling_mode);
+@@ -790,6 +1018,11 @@ namespace hipblaslt_ext
+                                                   size_t&                workspaceSizeInBytes)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        if(tuning.getSplitK() || tuning.getWgm())
++            return HIPBLAS_STATUS_NOT_SUPPORTED;
++        return scalar_instance_supported(m_handle, m_data, algo, workspaceSizeInBytes);
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtIsAlgoSupportedTuningV2Cpp");
+         auto gemmType  = static_cast<rocblaslt::RocGemmType>(m_gemm_type);
+         applyStreamKTileSchedulingMode(m_data, gemmType, m_streamk_tile_scheduling_mode);
+@@ -828,6 +1061,17 @@ namespace hipblaslt_ext
+                                              hipStream_t                  stream)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        if(m_data)
++            std::static_pointer_cast<ScalarInstance>(m_data)->initialized = false;
++        if(useUserArgs)
++            return HIPBLAS_STATUS_NOT_SUPPORTED;
++        size_t scalar_workspace = 0;
++        auto   scalar_status = scalar_instance_supported(m_handle, m_data, algo, scalar_workspace);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            std::static_pointer_cast<ScalarInstance>(m_data)->initialized = true;
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtInitializeCpp");
+         if((m_gemm_count == 0) || (workspace == nullptr && m_workspace_bytes > 0))
+         {
+@@ -862,6 +1106,19 @@ namespace hipblaslt_ext
+                                              hipStream_t                  stream)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        if(tuning.getSplitK() || tuning.getWgm())
++            return HIPBLAS_STATUS_NOT_SUPPORTED;
++        if(m_data)
++            std::static_pointer_cast<ScalarInstance>(m_data)->initialized = false;
++        if(useUserArgs)
++            return HIPBLAS_STATUS_NOT_SUPPORTED;
++        size_t scalar_workspace = 0;
++        auto   scalar_status = scalar_instance_supported(m_handle, m_data, algo, scalar_workspace);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            std::static_pointer_cast<ScalarInstance>(m_data)->initialized = true;
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtInitializeTuningV2Cpp");
+         if((m_gemm_count == 0) || (workspace == nullptr && m_workspace_bytes > 0))
+         {
+@@ -892,6 +1149,40 @@ namespace hipblaslt_ext
+     hipblasStatus_t GemmInstance::run(hipStream_t stream, hipEvent_t start, hipEvent_t stop)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        if(!m_data || !m_gemm_count)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        auto scalar_state = std::static_pointer_cast<ScalarInstance>(m_data);
++        if(!scalar_state->initialized)
++            return HIPBLAS_STATUS_NOT_INITIALIZED;
++        if(start && hipEventRecord(start, stream) != hipSuccess)
++            return HIPBLAS_STATUS_EXECUTION_FAILED;
++        for(auto& p : scalar_state->problems)
++        {
++            auto status = gfx1013_scalar::matmul(
++                m_handle,
++                scalar_desc(p),
++                p.op.pointermode == rocblaslt_pointer_mode_host ? &p.alpha_host : p.alpha,
++                p.A,
++                scalar_layout(p.a),
++                p.B,
++                scalar_layout(p.b),
++                p.op.pointermode == rocblaslt_pointer_mode_host ? &p.beta_host : p.beta,
++                p.C,
++                scalar_layout(p.c),
++                p.D,
++                scalar_layout(p.d),
++                nullptr,
++                nullptr,
++                0,
++                stream);
++            if(status != HIPBLAS_STATUS_SUCCESS)
++                return status;
++        }
++        if(stop && hipEventRecord(stop, stream) != hipSuccess)
++            return HIPBLAS_STATUS_EXECUTION_FAILED;
++        return HIPBLAS_STATUS_SUCCESS;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtRunCpp");
+         if(m_gemm_count == 0)
+         {
+@@ -912,6 +1203,9 @@ namespace hipblaslt_ext
+ 
+     std::string GemmInstance::getSolutionName()
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return m_gemm_count ? "gfx1013_scalar_fma_16x16" : "";
++#endif
+         auto gemmType = static_cast<rocblaslt::RocGemmType>(m_gemm_type);
+         return rocblaslt_get_solution_name_from_data_cpp(
+             (rocblaslt_handle)m_handle, gemmType, m_data);
+@@ -919,6 +1213,9 @@ namespace hipblaslt_ext
+ 
+     std::string GemmInstance::getKernelName()
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return m_gemm_count ? "gfx1013_scalar_fma_16x16" : "";
++#endif
+         auto gemmType = static_cast<rocblaslt::RocGemmType>(m_gemm_type);
+         return rocblaslt_get_kernel_name_from_data_cpp(
+             (rocblaslt_handle)m_handle, gemmType, m_data);
+@@ -934,6 +1231,11 @@ namespace hipblaslt_ext
+                hipblasComputeType_t typeCompute)
+         : GemmInstance(handle, GemmType::HIPBLASLT_GEMM)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        m_problem_types.push_back({opA, opB, typeA, typeB, typeC, typeD, typeCompute});
++        m_data = std::make_shared<ScalarInstance>();
++        return;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtCreateGemmCpp");
+         m_problem_types.push_back({opA, opB, typeA, typeB, typeC, typeD, typeCompute});
+         rocblaslt_init_gemmData((rocblaslt_handle)m_handle,
+@@ -983,6 +1285,15 @@ namespace hipblaslt_ext
+                                      GemmEpilogue& epilogue,
+                                      GemmInputs&   inputs)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        if(m <= 0 || n <= 0 || k < 0 || m > INT_MAX || n > INT_MAX || k > INT_MAX
++           || m_problem_types.empty())
++        {
++            m_data.reset();
++            m_gemm_count = 0;
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        }
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGemmSetProblemV2Cpp");
+         if(n == 0 || m == 0)
+         {
+@@ -1031,6 +1342,38 @@ namespace hipblaslt_ext
+                                      GemmInputs&      inputs,
+                                      GemmProblemType& problemtype)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        m_data.reset();
++        m_gemm_count      = 0;
++        auto scalar_state = std::make_shared<ScalarInstance>();
++        scalar_state->problems.resize(1);
++        auto scalar_status = scalar_typed(
++            scalar_state->problems[0],
++            m,
++            n,
++            k,
++            batch_count,
++            lda,
++            ldb,
++            ldc,
++            ldd,
++            strideA,
++            strideB,
++            strideC,
++            strideD,
++            epilogue,
++            inputs,
++            problemtype,
++            epilogue.pimpl->scaling_a_type != RocblasltContractionProblem::ScalingFormat::None
++                || epilogue.pimpl->scaling_b_type
++                       != RocblasltContractionProblem::ScalingFormat::None);
++        if(scalar_status != HIPBLAS_STATUS_SUCCESS)
++            return scalar_status;
++        scalar_status = scalar_publish(m_handle, scalar_state, m_data, m_gemm_count);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            m_problem_types = {problemtype};
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGemmSetProblemFullV2Cpp");
+         auto rocepilogue = reinterpret_cast<rocblaslt::RocGemmEpilogueV2*>(epilogue.pimpl.get());
+         auto rocepinputs = reinterpret_cast<rocblaslt::RocGemmInputsV2*>(inputs.pimpl.get());
+@@ -1075,6 +1418,33 @@ namespace hipblaslt_ext
+                                      void*                   D,
+                                      hipblasLtMatrixLayout_t matD)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        m_data.reset();
++        m_gemm_count      = 0;
++        auto scalar_state = std::make_shared<ScalarInstance>();
++        scalar_state->problems.resize(1);
++        auto scalar_status = scalar_clone(scalar_state->problems[0],
++                                          matmul_descr,
++                                          alpha,
++                                          A,
++                                          matA,
++                                          B,
++                                          matB,
++                                          beta,
++                                          C,
++                                          matC,
++                                          D,
++                                          matD);
++        if(scalar_status != HIPBLAS_STATUS_SUCCESS)
++            return scalar_status;
++        scalar_status = scalar_publish(m_handle, scalar_state, m_data, m_gemm_count);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++        {
++            auto& p         = scalar_state->problems[0];
++            m_problem_types = {scalar_problem_type(p)};
++        }
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGemmSetProblemCAPICpp");
+         auto rocproblemtypes
+             = reinterpret_cast<std::vector<rocblaslt::RocGemmProblemTypeV2>*>(&m_problem_types);
+@@ -1113,6 +1483,11 @@ namespace hipblaslt_ext
+                                               hipblasComputeType_t typeCompute)
+         : GemmInstance(handle, GemmType::HIPBLASLT_GROUPED_GEMM)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        m_problem_types.push_back({opA, opB, typeA, typeB, typeC, typeD, typeCompute});
++        m_data = std::make_shared<ScalarInstance>();
++        return;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtCreateGroupedGemmCpp");
+         m_problem_types.push_back({opA, opB, typeA, typeB, typeC, typeD, typeCompute});
+         rocblaslt_init_gemmData((rocblaslt_handle)m_handle,
+@@ -1162,6 +1537,24 @@ namespace hipblaslt_ext
+                                             std::vector<GemmEpilogue>& epilogue,
+                                             std::vector<GemmInputs>&   inputs)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        if(m.empty() || n.size() != m.size() || k.size() != m.size()
++           || batch_count.size() != m.size() || epilogue.size() != m.size()
++           || inputs.size() != m.size() || m_problem_types.size() != 1)
++        {
++            m_data.reset();
++            m_gemm_count = 0;
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        }
++        for(size_t i = 0; i < m.size(); ++i)
++            if(m[i] <= 0 || n[i] <= 0 || k[i] < 0 || m[i] > INT_MAX || n[i] > INT_MAX
++               || k[i] > INT_MAX)
++            {
++                m_data.reset();
++                m_gemm_count = 0;
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            }
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGroupedGemmSetProblemV2Cpp");
+         std::vector<int64_t> lda;
+         std::vector<int64_t> ldb;
+@@ -1218,6 +1611,50 @@ namespace hipblaslt_ext
+                                             std::vector<GemmInputs>&   inputs,
+                                             GemmProblemType&           problemtype)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        m_data.reset();
++        m_gemm_count            = 0;
++        const auto scalar_count = m.size();
++        if(!scalar_count || n.size() != scalar_count || k.size() != scalar_count
++           || batch_count.size() != scalar_count || lda.size() != scalar_count
++           || ldb.size() != scalar_count || ldc.size() != scalar_count || ldd.size() != scalar_count
++           || strideA.size() != scalar_count || strideB.size() != scalar_count
++           || strideC.size() != scalar_count || strideD.size() != scalar_count
++           || epilogue.size() != scalar_count || inputs.size() != scalar_count)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        auto scalar_state = std::make_shared<ScalarInstance>();
++        scalar_state->problems.resize(scalar_count);
++        for(size_t scalar_i = 0; scalar_i < scalar_count; ++scalar_i)
++        {
++            auto status
++                = scalar_typed(scalar_state->problems[scalar_i],
++                               m[scalar_i],
++                               n[scalar_i],
++                               k[scalar_i],
++                               batch_count[scalar_i],
++                               lda[scalar_i],
++                               ldb[scalar_i],
++                               ldc[scalar_i],
++                               ldd[scalar_i],
++                               strideA[scalar_i],
++                               strideB[scalar_i],
++                               strideC[scalar_i],
++                               strideD[scalar_i],
++                               epilogue[scalar_i],
++                               inputs[scalar_i],
++                               problemtype,
++                               epilogue[scalar_i].pimpl->scaling_a_type
++                                       != RocblasltContractionProblem::ScalingFormat::None
++                                   || epilogue[scalar_i].pimpl->scaling_b_type
++                                          != RocblasltContractionProblem::ScalingFormat::None);
++            if(status != HIPBLAS_STATUS_SUCCESS)
++                return status;
++        }
++        auto scalar_status = scalar_publish(m_handle, scalar_state, m_data, m_gemm_count);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            m_problem_types = {problemtype};
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGroupedGemmSetProblemFullV2Cpp");
+         std::vector<rocblaslt::RocGemmEpilogueV2> rocepilogue;
+         for(auto& e : epilogue)
+@@ -1272,6 +1709,43 @@ namespace hipblaslt_ext
+                                             std::vector<void*>&                   D,
+                                             std::vector<hipblasLtMatrixLayout_t>& matD)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        m_data.reset();
++        m_gemm_count            = 0;
++        const auto scalar_count = matmul_descr.size();
++        if(!scalar_count || alpha.size() != scalar_count || A.size() != scalar_count
++           || matA.size() != scalar_count || B.size() != scalar_count || matB.size() != scalar_count
++           || beta.size() != scalar_count || C.size() != scalar_count || matC.size() != scalar_count
++           || D.size() != scalar_count || matD.size() != scalar_count)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        auto scalar_state = std::make_shared<ScalarInstance>();
++        scalar_state->problems.resize(scalar_count);
++        for(size_t scalar_i = 0; scalar_i < scalar_count; ++scalar_i)
++        {
++            auto status = scalar_clone(scalar_state->problems[scalar_i],
++                                       matmul_descr[scalar_i],
++                                       alpha[scalar_i],
++                                       A[scalar_i],
++                                       matA[scalar_i],
++                                       B[scalar_i],
++                                       matB[scalar_i],
++                                       beta[scalar_i],
++                                       C[scalar_i],
++                                       matC[scalar_i],
++                                       D[scalar_i],
++                                       matD[scalar_i]);
++            if(status != HIPBLAS_STATUS_SUCCESS)
++                return status;
++        }
++        auto scalar_status = scalar_publish(m_handle, scalar_state, m_data, m_gemm_count);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++        {
++            m_problem_types.clear();
++            for(auto& p : scalar_state->problems)
++                m_problem_types.push_back(scalar_problem_type(p));
++        }
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGroupedGemmSetProblemCAPICpp");
+         auto matmul_descr_groupedGemm
+             = reinterpret_cast<std::vector<rocblaslt_matmul_desc>*>(&matmul_descr);
+@@ -1323,6 +1797,9 @@ namespace hipblaslt_ext
+     HIPBLASLT_EXPORT hipblasStatus_t
+         GroupedGemm::getDefaultValueForDeviceUserArguments(void* hostDeviceUserArgs)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return HIPBLAS_STATUS_NOT_SUPPORTED;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGroupedGemmGetDefaultUserArgsCpp");
+         auto gemmType = static_cast<rocblaslt::RocGemmType>(m_gemm_type);
+         auto status   = RocBlasLtStatusToHIPStatus(rocblaslt_get_default_user_args(
+@@ -1333,6 +1810,9 @@ namespace hipblaslt_ext
+ 
+     HIPBLASLT_EXPORT hipblasStatus_t GroupedGemm::run(void* deviceUserArgs, hipStream_t stream)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return HIPBLAS_STATUS_NOT_SUPPORTED;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGroupedGemmRunCpp");
+         if(m_gemm_count == 0)
+         {
+@@ -1358,6 +1838,12 @@ namespace hipblaslt_ext
+                                           size_t&                 workspaceSizeInBytes)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        workspaceSizeInBytes = 0;
++        if(!alpha || !beta || !gfx1013_scalar::is_algo(algo))
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        return gfx1013_scalar::supported(handle, matmulDesc, Adesc, Bdesc, Cdesc, Ddesc);
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtMatMulIsAlgoSupportedCpp");
+         auto status = RocBlasLtStatusToHIPStatus(
+             rocblaslt_matmul_is_algo_supported((rocblaslt_handle)handle,
+@@ -1401,6 +1887,39 @@ namespace hipblaslt_ext
+                                 std::vector<hipblasLtMatmulHeuristicResult_t>& heuristicResults)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        heuristicResults.clear();
++        if(typeGemm != GemmType::HIPBLASLT_GEMM && typeGemm != GemmType::HIPBLASLT_GROUPED_GEMM)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        ScalarProblem   scalar_problem;
++        GemmProblemType scalar_type(opA, opB, typeA, typeB, typeC, typeD, typeCompute);
++        GemmEpilogue    scalar_epilogue;
++        GemmInputs      scalar_inputs;
++        const float     scalar_alpha = 1, scalar_beta = 0;
++        scalar_inputs.setAlpha(&scalar_alpha);
++        scalar_inputs.setBeta(&scalar_beta);
++        auto scalar_status = scalar_typed(scalar_problem,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          1,
++                                          scalar_epilogue,
++                                          scalar_inputs,
++                                          scalar_type);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            scalar_status = scalar_check(handle, scalar_problem);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            heuristicResults.push_back(gfx1013_scalar::algorithm());
++        return scalar_status;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGetAllAlgosCpp");
+         auto results
+             = reinterpret_cast<std::vector<rocblaslt_matmul_heuristic_result>*>(&heuristicResults);
+@@ -1433,12 +1952,18 @@ namespace hipblaslt_ext
+ 
+     std::string getSolutionNameFromAlgo(hipblasLtHandle_t handle, hipblasLtMatmulAlgo_t& algo)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return handle && gfx1013_scalar::is_algo(algo) ? "gfx1013_scalar_fma_16x16" : "";
++#endif
+         auto rocalgo = reinterpret_cast<const rocblaslt_matmul_algo*>(&algo);
+         return rocblaslt_get_solution_name_from_algo((rocblaslt_handle)handle, *rocalgo);
+     }
+ 
+     std::string getKernelNameFromAlgo(hipblasLtHandle_t handle, hipblasLtMatmulAlgo_t& algo)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return handle && gfx1013_scalar::is_algo(algo) ? "gfx1013_scalar_fma_16x16" : "";
++#endif
+         auto rocalgo = reinterpret_cast<const rocblaslt_matmul_algo*>(&algo);
+         return rocblaslt_get_kernel_name_from_algo((rocblaslt_handle)handle, *rocalgo);
+     }
+@@ -1449,6 +1974,18 @@ namespace hipblaslt_ext
+                           std::vector<hipblasLtMatmulHeuristicResult_t>& heuristicResults)
+     try
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        heuristicResults.clear();
++        auto scalar_algo  = gfx1013_scalar::algorithm();
++        int  scalar_index = 0;
++        std::memcpy(&scalar_index, scalar_algo.algo.data, sizeof(scalar_index));
++        if(!handle)
++            return HIPBLAS_STATUS_NOT_INITIALIZED;
++        for(auto index : algoIndex)
++            if(index == scalar_index)
++                heuristicResults.push_back(scalar_algo);
++        return HIPBLAS_STATUS_SUCCESS;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtGetAlgosFromIndexCpp");
+         auto results
+             = reinterpret_cast<std::vector<rocblaslt_matmul_heuristic_result>*>(&heuristicResults);
+@@ -1479,6 +2016,9 @@ namespace hipblaslt_ext
+                       hipblasLtMatrixLayout_t Cdesc,
+                       hipblasLtMatrixLayout_t Ddesc)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        return 0;
++#endif
+         rocblaslt::Debug::Instance().markerStart("hipblasLtMatmulIsTunedCpp");
+         auto status = rocblaslt_matmul_is_tuned((rocblaslt_handle)handle,
+                                                 (rocblaslt_matmul_desc)matmulDesc,
+@@ -1508,6 +2048,26 @@ namespace hipblaslt_ext
+                                          size_t*                            workspaceSize,
+                                          int*                               returnAlgoCount)
+     {
++#if HIPBLASLT_ENABLE_GFX1013_SCALAR
++        if(!heuristicResultsArray || !returnAlgoCount)
++            return HIPBLAS_STATUS_INVALID_VALUE;
++        size_t scalar_workspace = 0;
++        auto   scalar_status    = matmulIsAlgoSupported(handle,
++                                                        matmulDesc,
++                                                        alpha,
++                                                        matA,
++                                                        matB,
++                                                        beta,
++                                                        matC,
++                                                        matD,
++                                                        heuristicResultsArray[0].algo,
++                                                        scalar_workspace);
++        if(scalar_status == HIPBLAS_STATUS_SUCCESS)
++            ++*returnAlgoCount;
++        if(workspaceSize)
++            *workspaceSize = scalar_workspace;
++        return scalar_status;
++#endif
+         if(heuristicResultsArray[0].algo.data[0] != 0)
+         {
+             rocblaslt_status status = rocblaslt_matmul_is_algo_supported((rocblaslt_handle)handle,
+-- 
+2.56.0
+

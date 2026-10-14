@@ -210,6 +210,7 @@ if(THEROCK_ENABLE_MIOPENPROVIDER)
       "-DHIP_DNN_SKIP_TESTS=$<NOT:$<BOOL:${THEROCK_BUILD_TESTING}>>"
       -DENABLE_CLANG_TIDY=OFF
       -DENABLE_CLANG_FORMAT=OFF
+      "-DMIOPENPROVIDER_GFX1013_SCALAR=${THEROCK_GFX1013_SCALAR_BACKENDS}"
     CMAKE_INCLUDES
       therock_explicit_finders.cmake
     COMPILER_TOOLCHAIN
@@ -227,6 +228,14 @@ if(THEROCK_ENABLE_MIOPENPROVIDER)
   SUBDIRS
     .
   )
+  target_sources(miopenprovider PRIVATE
+    "${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/dnn-providers/miopen-provider/config/MIOPEN_ENGINE.toml"
+  )
+  if(THEROCK_GFX1013_SCALAR_BACKENDS)
+    target_sources(miopenprovider PRIVATE
+      "${THEROCK_ROCM_LIBRARIES_SOURCE_DIR}/dnn-providers/miopen-provider/engines/plans/MiopenGfx1013Pointwise.hip"
+    )
+  endif()
   therock_cmake_subproject_activate(miopenprovider)
 
   therock_provide_artifact(miopenprovider
