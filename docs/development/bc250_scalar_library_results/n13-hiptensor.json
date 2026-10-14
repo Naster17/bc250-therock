@@ -1,0 +1,81 @@
+{
+  "task": "N1.3",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 5.976616375000049
+    },
+    {
+      "name": "baseline-invalid-algo",
+      "exit": 0,
+      "seconds": 0.36496998600068764
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 4.9243453569997655
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 1.4665152039997338
+    },
+    {
+      "name": "real-regression",
+      "exit": 0,
+      "seconds": 2.667694984999798
+    },
+    {
+      "name": "complex-regression",
+      "exit": 0,
+      "seconds": 2.269054352999774
+    }
+  ],
+  "before_library_sha256": "33a6ac9bf280a1ae5dedc883f68251b434a50134c0c6148014fea804e9305974",
+  "source_delta_sha256": "ce71852544ee1147e7716b40896a8ccb3c2712158a7df9d7531d7c06d6c54b9b",
+  "test_source_sha256": "673c01c13c4107e02ad98454543fa249abc8f1f6aa533201965bb151210c9ede",
+  "resources": {
+    "jobs": 12,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "complex-regression",
+  "after_source_sha256": "d86cb8abe2e597d7031254e9eebe043f5d364aa8f03515e03cda3b37d156de4b",
+  "after_library_sha256": "d849ff7d982ea38c601dfcf742e146a13e7bc72edce7977d3a26372545d4d66a",
+  "executed_cases": 316,
+  "timings": [],
+  "real_regression_cases": 273,
+  "complex_regression_cases": 450,
+  "rocm_libraries_revision": "18983cf7497cd7a54a454cd20748364d0ce3fc80",
+  "scope": {
+    "native_arch": "gfx1013",
+    "plan_api_checks": 304,
+    "plan_gpu_reference_executions": 12,
+    "gpu_types": [
+      "R32F",
+      "R64F",
+      "C32F",
+      "C64F"
+    ],
+    "real_regression_cases": 273,
+    "complex_regression_cases": 450,
+    "validated": "null arguments; exact setter/getter byte sizes including large adversarial sizes; enum and nonnegative count/rank validation; unchanged state/output on failed setter/query; plan outputs null on failure; owning plans survive source preference mutation/destruction and descriptor destruction; three algorithm aliases and workspace limits0/1/UINT64_MAX; required workspace0",
+    "scalar_policy": "cache NONE default; JIT NONE; autotune NONE; count0; rank0. Explicit PEDANTIC cache, DEFAULT JIT, INCREMENTAL autotune, positive count/rank return NOT_SUPPORTED. Three algorithms are aliases of the deterministic scalar implementation.",
+    "not_qualified": [
+      "JIT/cache/autotuning/ranked alternatives",
+      "non-gfx1013 numerical execution",
+      "large performance or long stability",
+      "every internal initialization failure injection"
+    ]
+  },
+  "post_run_review": {
+    "kernel_log": "identical1009 lines; no new messages",
+    "kernel_before_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "kernel_after_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "initial_attempt": "logs/n13-hiptensor: probe passed316 checks, runner count assertion failed because304 API checks were not individually printed; prefix restored before unlocking. Printing each API check fixed report accounting; production code unchanged.",
+    "qualified_log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n13-hiptensor-r2",
+    "prior_prefix_backup": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/n13-hiptensor-before.so.0.1"
+  }
+}
