@@ -1,0 +1,200 @@
+From 48e1e564d6fd1f8baaff7fd8e60b35217aa425da Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 22:22:22 +0200
+Subject: [PATCH] perf(hipblaslt): use subgroups for short small and skinny
+ gfx1013 GEMMs
+
+---
+ .../library/src/amd_detail/gfx1013_scalar.cpp | 127 ++++++++++++------
+ 1 file changed, 83 insertions(+), 44 deletions(-)
+
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+index 6b260fb4838..06f83f68472 100644
+--- a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+@@ -48,7 +48,7 @@ namespace gfx1013_scalar
+ 
+         struct Layout
+         {
+-            uint64_t            rows, cols, ld, stride, offset;
++            uint64_t            rows, cols, ld, stride, offset, batches;
+             bool                row_major;
+             __device__ uint64_t index(uint64_t row, uint64_t col, uint64_t batch) const
+             {
+@@ -63,6 +63,7 @@ namespace gfx1013_scalar
+                     uint64_t(x.ld),
+                     uint64_t(x.batch_stride),
+                     uint64_t(x.batch_offset),
++                    uint64_t(x.batch_count),
+                     x.order == HIPBLASLT_ORDER_ROW};
+         }
+ 
+@@ -183,7 +184,7 @@ namespace gfx1013_scalar
+             return HIPBLAS_STATUS_SUCCESS;
+         }
+ 
+-        template <typename Input, typename Output, unsigned Outputs = 1>
++        template <typename Input, typename Output, unsigned Outputs = 1, bool Cooperative = false>
+         __global__ void gemm(Layout             a,
+                              Layout             b,
+                              Layout             c,
+@@ -215,21 +216,53 @@ namespace gfx1013_scalar
+             constexpr unsigned block_tile = tile * Outputs;
+             __shared__ float   left[block_tile][tile];
+             __shared__ float   right[tile][block_tile];
+-            const unsigned     x = threadIdx.x, y = threadIdx.y;
+-            const uint64_t     tiles_m                 = (d.rows + block_tile - 1) / block_tile;
+-            const uint64_t     tiles_n                 = (d.cols + block_tile - 1) / block_tile;
+-            const uint64_t     batch                   = uint64_t(blockIdx.x) / (tiles_m * tiles_n);
+-            const uint64_t     position                = uint64_t(blockIdx.x) % (tiles_m * tiles_n);
+-            const uint64_t     base_row                = (position % tiles_m) * block_tile;
+-            const uint64_t     base_col                = (position / tiles_m) * block_tile;
+-            const float        alpha                   = alpha_device ? *alpha_device : alpha_host;
+-            const float        beta                    = beta_device ? *beta_device : beta_host;
+-            float              accum[Outputs][Outputs] = {};
++            const unsigned     x = Cooperative ? 0 : threadIdx.x, y = Cooperative ? 0 : threadIdx.y;
++            const uint64_t     tiles_m = (d.rows + block_tile - 1) / block_tile;
++            const uint64_t     tiles_n = (d.cols + block_tile - 1) / block_tile;
++            const uint64_t     linear
++                = (uint64_t(blockIdx.x) * tile * tile + threadIdx.y * tile + threadIdx.x)
++                  / (Cooperative ? 32 : 1);
++            const uint64_t batch    = Cooperative ? linear / (d.rows * d.cols)
++                                                  : uint64_t(blockIdx.x) / (tiles_m * tiles_n);
++            const uint64_t position = uint64_t(blockIdx.x) % (tiles_m * tiles_n);
++            const uint64_t output   = linear % (d.rows * d.cols);
++            const uint64_t base_row = Cooperative
++                                          ? (d.row_major ? output / d.cols : output % d.rows)
++                                          : (position % tiles_m) * block_tile;
++            const uint64_t base_col = Cooperative
++                                          ? (d.row_major ? output % d.cols : output / d.rows)
++                                          : (position / tiles_m) * block_tile;
++            const float    alpha    = alpha_device ? *alpha_device : alpha_host;
++            const float    beta     = beta_device ? *beta_device : beta_host;
++            float          accum[Outputs][Outputs] = {};
+             // Choose load lanes independently from output lanes so either storage
+             // order can read contiguous input values. All threads still reach barriers.
+             const bool a_rows = Outputs == 1 || a.row_major != trans_a;
+             const bool b_rows = Outputs == 1 || b.row_major != trans_b;
+-            if(alpha != 0)
++            if constexpr(Cooperative)
++            {
++                // One 32-lane subgroup computes each short dot product. More
++                // independent blocks than a mostly empty 16x16 output tile;
++                // no LDS/barriers. Width32 also isolates halves of wave64.
++                if(linear >= d.rows * d.cols * d.batches)
++                    return;
++                const unsigned lane = (threadIdx.y * tile + threadIdx.x) & 31;
++                if(alpha != 0)
++                    for(uint64_t i = lane; i < k; i += 32)
++                        accum[0][0] = __builtin_fmaf(
++                            float(
++                                A[a.index(trans_a ? i : base_row, trans_a ? base_row : i, batch)]),
++                            float(
++                                B[b.index(trans_b ? base_col : i, trans_b ? i : base_col, batch)]),
++                            accum[0][0]);
++                // FP32 tree reduction changes rounding versus ascending-K FMA.
++                // It remains ordinary scalar ALU work, without matrix engines.
++                for(unsigned distance = 16; distance; distance /= 2)
++                    accum[0][0] += __shfl_down(accum[0][0], distance, 32);
++                if(lane != 0)
++                    return;
++            }
++            else if(alpha != 0)
+                 for(uint64_t start = 0; start < k; start += tile)
+                 {
+                     const unsigned ar = a_rows ? y : x, ac = a_rows ? x : y;
+@@ -348,7 +381,7 @@ namespace gfx1013_scalar
+                 }
+         }
+ 
+-        template <typename Input, typename Output, unsigned Outputs = 1>
++        template <typename Input, typename Output, unsigned Outputs = 1, bool Cooperative = false>
+         hipblasStatus_t launch(rocblaslt_matmul_desc   op,
+                                rocblaslt_matrix_layout a,
+                                rocblaslt_matrix_layout b,
+@@ -380,8 +413,12 @@ namespace gfx1013_scalar
+                && (c->ld != d->ld || c->batch_stride != d->batch_stride
+                    || c->batch_offset != d->batch_offset))
+                 return HIPBLAS_STATUS_INVALID_VALUE;
+-            if constexpr(Outputs == 1)
++            if constexpr(Outputs == 1 && !Cooperative)
+             {
++                if(((d->m <= 32 && d->n <= 32 && d->m * d->n <= 512) || d->m <= 4 || d->n <= 4)
++                   && k <= 64)
++                    return launch<Input, Output, 1, true>(
++                        op, a, b, c, d, alpha, A, B, beta, C, D, stream);
+                 // Small/skinny problems retain the finer grid; larger matrices reuse
+                 // four outputs per thread without changing the public algorithm ID.
+                 if(d->m >= 128 && d->n >= 128)
+@@ -389,37 +426,39 @@ namespace gfx1013_scalar
+                         op, a, b, c, d, alpha, A, B, beta, C, D, stream);
+             }
+             constexpr unsigned block_tile = tile * Outputs;
+-            const uint64_t     blocks     = ((d->m + block_tile - 1) / block_tile)
+-                                            * ((d->n + block_tile - 1) / block_tile)
+-                                            * uint64_t(d->batch_count);
++            const uint64_t blocks = Cooperative ? (d->m * d->n * uint64_t(d->batch_count) + 7) / 8
++                                                : ((d->m + block_tile - 1) / block_tile)
++                                                      * ((d->n + block_tile - 1) / block_tile)
++                                                      * uint64_t(d->batch_count);
+             if(!blocks)
+                 return HIPBLAS_STATUS_SUCCESS;
+-            gemm<Input, Output, Outputs><<<dim3(unsigned(blocks)), dim3(tile, tile), 0, stream>>>(
+-                layout(*a),
+-                layout(*b),
+-                layout(*c),
+-                layout(*d),
+-                static_cast<const Input*>(A),
+-                static_cast<const Input*>(B),
+-                static_cast<const Output*>(C),
+-                static_cast<Output*>(D),
+-                k,
+-                op->op_A == HIPBLAS_OP_T,
+-                op->op_B == HIPBLAS_OP_T,
+-                ah,
+-                bh,
+-                device ? static_cast<const float*>(alpha) : nullptr,
+-                device ? static_cast<const float*>(beta) : nullptr,
+-                uses_bias(op->epilogue) ? op->bias : nullptr,
+-                op->bias_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->bias_type,
+-                uint64_t(op->bias_stride),
+-                op->epilogue,
+-                op->e,
+-                op->aux_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->aux_type,
+-                uint64_t(op->lde),
+-                uint64_t(op->stride_e),
+-                op->act0,
+-                op->act1);
++            gemm<Input, Output, Outputs, Cooperative>
++                <<<dim3(unsigned(blocks)), dim3(tile, tile), 0, stream>>>(
++                    layout(*a),
++                    layout(*b),
++                    layout(*c),
++                    layout(*d),
++                    static_cast<const Input*>(A),
++                    static_cast<const Input*>(B),
++                    static_cast<const Output*>(C),
++                    static_cast<Output*>(D),
++                    k,
++                    op->op_A == HIPBLAS_OP_T,
++                    op->op_B == HIPBLAS_OP_T,
++                    ah,
++                    bh,
++                    device ? static_cast<const float*>(alpha) : nullptr,
++                    device ? static_cast<const float*>(beta) : nullptr,
++                    uses_bias(op->epilogue) ? op->bias : nullptr,
++                    op->bias_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->bias_type,
++                    uint64_t(op->bias_stride),
++                    op->epilogue,
++                    op->e,
++                    op->aux_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->aux_type,
++                    uint64_t(op->lde),
++                    uint64_t(op->stride_e),
++                    op->act0,
++                    op->act1);
+             return hipGetLastError() == hipSuccess ? HIPBLAS_STATUS_SUCCESS
+                                                    : HIPBLAS_STATUS_EXECUTION_FAILED;
+         }
+-- 
+2.56.0
+
