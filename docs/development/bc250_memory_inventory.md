@@ -148,14 +148,14 @@ Important operational facts:
 | Item                   | Current code / location                                                                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Branch                 | `users/Naster17/rocm-10.2-gfx1013`                                                                                                                           |
-| Qualified TheRock code | `ce0025df5220f99f4f604431b4fb80911f56989f`; newer docs commits need no runtime rebuild                                                                       |
-| Libraries              | `01566e3144d854944c7bb1f6b045e965ddb5aae9`                                                                                                                   |
+| Qualified TheRock code | `d22fb68a35052b4c437b14113b3048c842df2aef` (N1.1); newer docs commits need no runtime rebuild                                                                       |
+| Libraries              | `681d2f8a25d83db3ef99140461600883f7b71dba`                                                                                                                   |
 | Systems                | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`                                                                                                                   |
 | LLVM                   | Upstream `7667f52dd687899256a3285ab0bce3c53bc73394`; no custom LLVM architecture patch                                                                       |
 | Torch                  | `4f13bf86476252e3d57b17d1c72f8512814400e9`; release/2.13 baseline `c779020750d7dc99a39ea8c104ef8df1fc9d0755`                                                 |
 | Triton                 | `ee65ff3b85f99d52e678b252a99c8425fa46e329`; baseline `66b3f9ff575eb8db6adec658bbf0badd9a8d2e25`                                                              |
 | Distribution/version   | TheRock 10.2.0; HIP component reports 7.17.0; Torch 2.13.0a0+gfx1013, qualified Triton 3.8 wheel. Different component version strings are not a failed port. |
-| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-dev`                              |
+| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n11-dev`                              |
 | ROCm / Torch           | `WS/build/dist/rocm`, editable `WS/pytorch-work`                                                                                                             |
 | Runtime image ID       | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                                                           |
 | Runtime tag            | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; tag name predates P2, immutable ID above is authoritative                                          |
@@ -173,13 +173,16 @@ workspace-root/dev/candidate copies exist. `SOURCE_PRIORITY1.json` and
 not magically updated by patching extracted trees. Generated torch.version's
 Git label may retain the original export revision; use source manifests instead.
 
-Reconstruction: 17 patches in `patches/amd-mainline/rocm-libraries`, three in
+Reconstruction: 18 patches in `patches/amd-mainline/rocm-libraries`, three in
 `patches/amd-mainline/rocm-systems`, two in `patches/bc250-pytorch`, four in
 `patches/bc250-triton`. Apply in order. The P2 reconstruction helper verified
 exact library/system/Torch trees using private indexes; it did not recreate the
 entire compiler or claim a clean-room full rebuild. Nested committed branches
 and `.smrev` metadata preserve the port independently from root submodule pins.
-Do not reset sources or casually change pinned submodules.
+Do not reset sources or casually change pinned submodules. N1.1 adds
+`SOURCE_N11.json` (7 verified changed files, qualified root/library revisions,
+active hipTensor hash) on the P2 snapshot; P2 manifests/candidate stay unchanged.
+N1.1 library reconstruction matched all18 ordered patches exactly.
 
 ## Library patch index
 
@@ -202,6 +205,7 @@ Do not reset sources or casually change pinned submodules.
 | 0015  | Wider types/epilogues/pruning, generic operators, decibel fixes: `7bc253117ee`         |
 | 0016  | Lt C++/grouped consumers, CK Tile, hipDNN fusion/provider integration: `f12e43e3f9b`   |
 | 0017  | Register-tiled Lt GEMM, tensor unary expansion, sparse activations: `01566e3144d`      |
+| 0018  | hipTensor unilateral scalar contraction modes: `681d2f8a25d` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -221,7 +225,7 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 | rocBLAS/Tensile + hipBLAS                   | Native identity and scalar capability/predicate patches, 570 fallback kernels; large SGEMM and four Torch precisions; P2 BLAS18                                                                              | No complete tuned database/BLAS suite. hipBLAS uses this backend, not custom new kernels.                                                                   |
 | hipBLASLt                                   | 964 C/C++ API cases: f32/f16/bf16 with f32 accumulation, layouts/transposes/batches, host/device scalars, bias/activation/AUX/DGELU, host grouped queries/events/lifetimes; register tile                    | No FP8/INT8/FP64, device user groups, arbitrary tuning or matrix engine. Default Torch BLAS remains rocBLAS.                                                |
 | hipTensor generic                           | Historical154 rank-two and23 higher-rank reduction/permutation/binary/trinary checks in generic-only profile                                                                                                 | Wider rank/layout/operators remain; these counts are separate from contractions                                                                             |
-| hipTensor contraction                       | 166 cases, seven real storage/compute combinations, widened outputs, up to16 modes, multiple sum/free/shared axes, strided output, plan lifetime/zero-scalars/alias protection,19 additional unary functions | Complex/unilateral sums and more plan/algorithm contracts remain                                                                                            |
+| hipTensor contraction | N1.1:273 API cases (253 CPU-referenced numerical +20 descriptor rejections), seven real storage/compute combinations; unilateral A/B and mixed shared sums, up to16 modes, padded/permuted output, zero-scalars/NaN, span/alias guards, plan lifetime, nine algorithm/workspace combinations with JIT NONE; prior19 unary functions retained | Complex is next N1.2; broader plan/JIT contracts remain. Small-fixture event timings do not imply general performance. |
 | hipSPARSELt                                 | 234 cases: f32/f16/bf16, strip prune/check/compress/matmul, low-precision maximum-L1 TILE, sparse A/B, layouts/transposes/padded batches, descriptor/plan/Search; six activation families                    | Separate backend compression. No FP32 TILE, integer/FP8, bias/vector scaling, split-K/multi-stream/broadcast guarantees or measured hardware sparse speedup |
 | CK scalar DL                                | CPU-checked FP32/FP16/signedINT8 GEMM examples; native architecture applicability changes                                                                                                                    | Admitted DL convolution/grouped classes are not automatically executed/qualified                                                                            |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
@@ -318,6 +322,19 @@ manual writes. `/usr/local/bin/bc250-torch.before-priority2` and recovery launch
 copies are retained. Metadata `/opt/bc250-stack/launcher.json` predates the P2
 lock change; installed-script hash plus committed source and P2 launcher report
 are newer evidence. Do not overwrite historical metadata to fake provenance.
+
+N1.1 .104 gate: `WS/logs/n11-hiptensor-r3/result.json`, root report
+`bc250_scalar_library_results/n11-hiptensor.json`. Old library rejected the new
+case; targeted12-job/20GiB-ccache build17.1s and GPU gate2.7s passed under the
+exclusive runtime lock. Kernel logs identical (1009 lines). Thirty-repeat HIP
+stream-event timings across seven types: A-only12.6–13.5µs, mixed27.7–29.3µs;
+includes submission gaps, no previous implementation/speedup comparison.
+Independent prior library: `WS/recovery/n11-hiptensor-before.so.0.1`.
+Two initial container failures (`WS/logs/n11-hiptensor{,-r2}`) happened before
+compilation: cgroups were unmounted after a host reboot, and runc rejected
+NoCgroups. Existing cgroups service started in unified mode and enabled in boot;
+no kernel change or reboot, SSH/fallback intact. Do not use disabled cgroups
+with the installed runc. N1.1 did not rebuild Torch or alter .105/frozen candidates.
 
 ## Defects and traps already investigated: do not rediscover them
 
