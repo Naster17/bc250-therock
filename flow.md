@@ -8,6 +8,22 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **ACTIVE user priority: K1–K6, clean upstream BC-250 kernel workstream**
+  (authorized2026-10-14), alongside the existing ROCm/Torch port. Fetch and verify
+  latest stable Linux7.2.10 (kernel.org lists mainline7.3-rc7 separately), review
+  required gfx1013 changes, build/test a separately versioned r3 on .104. Preserve
+  r2 sources/modules/images/default entry, all ROCm artifacts and .105 unchanged.
+  No new kernel boot until SSH-only recovery/one-shot/panic/watchdog arrangements
+  are concrete and checked. A boot menu entry alone cannot recover a hung board.
+  Current .104 remains7.1.5-r2,32GiB-ish free disk; plan16 build jobs/20GiB ccache
+  with debug-symbol output disabled, preserving hardware config. No code/boot
+  changes yet. Local signed-tag clone running via exec session12215;
+  `kernel/verification/clone-7.2.10.log`, target`kernel/linux-r3`, source official
+  stable Git. Separate public-only GPG home`kernel/verification/gnupg`, WKD import
+  log`kernel/verification/key-import.log`; verify full signer fingerprint/tag.
+  Next immediate action: finish signature verification, inspect GRUB/watchdog and
+  latest driver APIs, then implement reviewed source changes. N2.1 remains the
+  next library item after the kernel batch; do not reconstruct N1/P0/P1/P2.
 - **Latest user-requested kernel review:** preliminary read-only r2 audit complete;
   see `docs/development/bc250_kernel_audit_20261014.{md,json,patch}`. Both hosts run
   the recorded7.1.5-r2 image; installed AMDGPU module hashes match. Archive-derived
@@ -243,6 +259,17 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
 | [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |
+
+Kernel workstream added at the user's request (2026-10-14):
+
+| State | ID | Work and acceptance boundary |
+| ----- | -- | ---------------------------- |
+| [ ] | K1 | Verify latest stable upstream Git tag/source and signing identity; compare legacy source/config/modules and retain provenance/fallbacks. |
+| [ ] | K2 | Review/reimplement only needed gfx1013 patches; correct diagnostic register restoration and analyze TLB error/locking/lifetime behavior; telemetry separately. |
+| [ ] | K3 | Build separate r3 image/modules/config with ccache/resource/disk bounds on .104; inspect artifacts and initramfs without replacing r2. |
+| [ ] | K4 | Establish and check one-shot boot, persistent r2 default, early panic/watchdog and SSH recovery; bounded candidate boot only after recovery readiness. |
+| [ ] | K5 | Bounded memory/remap/queue/process correctness and qualified ROCm/Torch references on the candidate; review kernel logs, preserve failures and compare r2. |
+| [ ] | K6 | Record qualified scope/artifact hashes, source patch series and reproducible build/boot/recovery instructions; integrate only supported settings and retain r2 fallback. |
 
 Every component ultimately needs a documented disposition: qualified native path,
 qualified explicit fallback, or a concrete hardware/API limitation. Missing matrix
