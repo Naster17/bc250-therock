@@ -1,5 +1,11 @@
 # BC-250 short training and memory qualification
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 Qualified on `.104` on 2026-10-13 using the installed expanded release
 `10.2-gfx1013-20261013-4b000d542`, native `gfx1013`, and SDMA disabled.
 Performance benchmarking and tuning were not started. `.105` was unchanged.

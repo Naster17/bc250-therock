@@ -1,5 +1,11 @@
 # Using bc250-torch for training and persistent files
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 The reviewed daily-use release now supplies `bc250-train train.py`, which selects
 the independently frozen Transformers/PEFT/Accelerate packages. The original
 developer venv remains available. See [bc250_release_20261013.md](bc250_release_20261013.md).

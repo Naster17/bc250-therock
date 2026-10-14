@@ -1,5 +1,11 @@
 # BC-250 ROCm 10.2 port
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 The reviewed daily-use snapshot and pause policy are documented in
 [bc250_release_20261013.md](bc250_release_20261013.md). Use `bc250-torch` for
 standard Torch and `bc250-train` for the frozen Transformers/PEFT environment.

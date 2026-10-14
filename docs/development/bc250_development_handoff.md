@@ -1,5 +1,11 @@
 # BC-250 development handoff: pause after the 2026-10-13 release
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 Resume manually around **2026-10-18**. Preserve all existing work. This is an
 operational handoff, not an instruction to schedule autonomous work.
 

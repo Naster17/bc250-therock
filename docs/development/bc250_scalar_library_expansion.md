@@ -1,5 +1,11 @@
 # BC-250 scalar library expansion
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 Implemented locally and GPU-tested on `.104`; the frozen daily-use release and
 fallback remain unchanged. `.105`, kernel, SDMA policy and existing data are preserved.
 

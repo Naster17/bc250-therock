@@ -1,5 +1,11 @@
 # BC-250 native gfx1013 ROCm roadmap
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 Last reviewed: **2026-10-13**. This is a manual progress snapshot, not a live
 dashboard. Host logs and committed source revisions are the authoritative
 evidence when the state changes.

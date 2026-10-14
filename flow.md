@@ -1,213 +1,180 @@
-# BC-250 native ROCm development handoff
+# BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-14. Read this first when continuing this port.
+Updated 2026-10-14. This is the **canonical working memory**, not a release note.
+Detailed hardware, implementation history, evidence and resolved defects:
+[bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
+Old milestone documents are evidence snapshots; their unchecked boxes and active
+release claims must not override this cursor and current manifests.
 
-## Purpose and working rules
+## Resume cursor
 
-Port ROCm 10.2 and PyTorch to the AMD BC-250's native **gfx1013** GPU, covering
-what the hardware can execute correctly. Use scalar/vector implementations where
-matrix instruction hardware is absent. Do not spoof another GPU architecture.
-All work, communication and documentation are in English.
+- **Current task:** memory/history audit completed; no new implementation queued.
+- **Last qualified code batch:** P2, root `ce0025df5`; P1 `71f9f0ee4`, scalar batch
+  `fdde5561c`. Later memory/docs commits do not require a runtime rebuild.
+- **No outstanding build/GPU gate at handoff.** An unrelated global MIOpen rebuild
+  was stopped; objects retained, targeted P2 staging and all required gates passed.
+- **Next implementation on a new “continue”: N1.1 below**, unless the user steers
+  elsewhere. First inspect hipTensor unilateral-reduction mode rejection in the scalar
+  contraction path, then implement that bounded gap; do not restart the backend.
+- **This turn changed memory/documentation only.** Do not rerun P1/P2, reinstall
+  Torch, recreate images or redownload models to validate this update.
 
-Implement locally in this repository, transfer explicit changed files to `.104`,
-then build and qualify on its GPU. User authorized development, installation and
-kernel experiments on `.104`; preserve SSH recovery and boot fallback. `.105`
-is the unchanged ROCm 7.2 comparison machine: do not upgrade it yet.
-Keep previous releases, images, sources, build objects, caches and checkpoints.
-Do not reset submodules with `fetch_sources.py` over port changes. Do not touch
-the unrelated untracked local `src/` directory. Group commits and update this
-file once at the end of a work batch; avoid repeated documentation and long tests.
+At resume: read this file, inspect local Git status/log and `.104` runtime/source
+manifests, then read the inventory section for the selected task. Check evidence
+before deciding something is missing. If state differs, reconcile it; do not
+silently replace the plan or downgrade already qualified work.
 
-## Hardware and validated runtime profile
+## Goal, authorization and working agreements
 
-- Hosts: `nik@192.168.1.104` (development), `nik@192.168.1.105` (reference).
-- `.104`: unlocked 8 CPU cores / 16 threads, 40 CU / 20 WGP / 80 SIMD, wave32,
-  64 KiB LDS. HIP reports 20 multiprocessors, not 40 CU.
-- Native target `gfx1013:xnack-`, KFD device 100103. No MFMA/WMMA hardware.
-- GPU reports 15,938,355,200 bytes, approximately 14.84 GiB. GPU and CPU share
-  approximately 16 GB physical RAM; these are not independent memory pools.
-- Kernel `7.1.5-bc250rocm-r2`; fallback workspace
-  `/home/nik/bc250work/bc250-rocm-lab` retained. OpenRC watchdog active, actual
-  GPU hang recovery is not qualified.
-- Keep **`HSA_ENABLE_SDMA=0`**. Experimental gfx13 VM heap stays off; ordinary
-  VMM and asynchronous pools remain available. Media engine rings unavailable
-  under current kernel. Counter/debug/SDMA paths need separate qualification.
-- SSH keys work. Elevated operations use interactive doas; never put credentials
-  in source files, manifests, logs or scripts.
+Build the most functional, reliable and efficient **native gfx1013 ROCm/Torch**
+stack the BC-250 can support: compiler/runtime, feasible libraries, training,
+profiling/debug tools, communication, packaging and measured performance.
+Do not spoof another GPU or pretend missing matrix instructions exist. A scalar
+implementation of a mathematical operation may be feasible even when an upstream
+matrix backend is not. CPU fallbacks must be labeled.
 
-## Active development stack and recovery
+- English communication/code/docs. Work locally, transfer explicit changed files,
+  build/test/install on `.104`. User authorizes development/kernel experiments;
+  retain SSH/boot fallback. No push/publish without explicit instruction.
+- `.105` is the preserved old-stack reference. Read-only comparison is authorized;
+  do not upgrade it until `.104` is stable and the user authorizes migration.
+- Preserve releases, sources, caches, build objects, images, models/checkpoints,
+  kernel/initramfs/GRUB recovery and unrelated untracked `src/`.
+- Use bounded meaningful CPU-compared GPU tests. Reuse objects/ccache, group commits
+  at milestones, keep routine documentation short. No automatic long soaks.
+- Do not run `fetch_sources.py`, reset submodules, expunge or prune as a resume step.
+- SSH keys work. Doas credentials are transient session information; **never write
+  passwords, tokens or raw credential-bearing prompts into memory/source/logs**.
 
-The launcher uses the mutable Priority 2 development stack. The directory retains
-its original `priority1` name; its runtime profile is `gfx1013-priority2-dev`:
+## Current state and paths
 
-| Item                        | Current value                                                      |
-| --------------------------- | ------------------------------------------------------------------ |
-| Active symlink              | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`      |
-| Workspace (WS)              | `/home/nik/bc250work/rocm-10.2-gfx1013`                            |
-| ROCm                        | `WS/build/dist/rocm`                                               |
-| Torch editable installation | `WS/pytorch-work`                                                  |
-| User cache                  | `WS/cache/dev-user`, uid/gid 1000                                  |
-| Image tag                   | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`           |
-| Image ID                    | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59` |
-| Build image                 | `localhost/bc250-rocm-build:10.2-ccache`                           |
-| Recovery link               | `/opt/bc250-stack/before-dev-current`                              |
-| Recovery release            | `10.2-gfx1013-20261013-4b000d542`                                  |
+`WS` = `/home/nik/bc250work/rocm-10.2-gfx1013` on `nik@192.168.1.104`.
+Local root `/home/nik/Documents/Vibe/therock`, branch
+`users/Naster17/rocm-10.2-gfx1013`. `.104` host is Alpine, ROCm userspace is glibc
+inside rootful Podman; this is not the separate native-musl gfx1103 project.
 
-The initial `10.2-gfx1013-20261012-a640c9296` release is also retained.
-`bc250-torch` was tested after activation as nik: native GPU, compiled
-forward/backward, checkpoint save/load and uid-1000 ownership passed.
-`/home/nik/bc250work/priority1-dev-launcher.json` and
-`priority1-dev-checkpoint.pt` preserve this evidence.
-`bc250-train` mounts the retained Python consumer bundle from the previous
-release, using its training.env; earlier training/LoRA qualification remains
-available, but no additional long training qualification was run this batch.
+| Item                     | Current identity                                                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Qualified root code      | `ce0025df5220f99f4f604431b4fb80911f56989f`                                                                                |
+| rocm-libraries           | `01566e3144d854944c7bb1f6b045e965ddb5aae9`, ordered patches0001–0017                                                      |
+| rocm-systems             | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`, patches0001–0003                                                              |
+| Torch                    | `4f13bf86476252e3d57b17d1c72f8512814400e9`, patches0001–0002; editable pip                                                |
+| Triton                   | `ee65ff3b85f99d52e678b252a99c8425fa46e329`, patches0001–0004; qualified wheel retained                                    |
+| LLVM                     | Clean upstream `7667f52dd687899256a3285ab0bce3c53bc73394`                                                                 |
+| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 dev profile**                  |
+| ROCm/Torch/cache         | `WS/build/dist/rocm`, `WS/pytorch-work`, `WS/cache/dev-user` (uid/gid1000)                                                |
+| Runtime image ID         | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                        |
+| Runtime/build tags       | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; `localhost/bc250-rocm-build:10.2-ccache`                        |
+| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_PRIORITY2.json` hashes                |
+| Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
+| Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
+| Kernel/boot              | `7.1.5-bc250rocm-r2`; live boot files in `/home/nik/bc250work/bc250-rocm-lab`, backups `WS/recovery/`                     |
+| Memory backup            | `WS/agent-memory/latest` (documentation only; preserves qualified source snapshots)                                       |
+| Training artifacts       | `WS/training-model`, `training-env-stable`, `training-validation`, `logs/training-memory/`                                |
 
-## Source identity and reproduction
+Manifests and immutable image IDs outrank mutable tag names. Component version
+strings differ legitimately (TheRock10.2, HIP7.17, Torch 2.13). Source archive names
+and generated Torch Git labels may retain older baselines; do not relabel them.
+The latest source transfer verified51 files; candidate payload verified191
+independent shared-object/kernel-pack copies. Detailed hashes are in manifests.
 
-Local branch: `users/Naster17/rocm-10.2-gfx1013`. Use `git log -1` for the final
-TheRock commit containing this handoff (a file cannot contain its own commit ID).
+## Hardware and indispensable constraints
 
-| Repository     | Current source revision                    |
-| -------------- | ------------------------------------------ |
-| rocm-libraries | `01566e3144d854944c7bb1f6b045e965ddb5aae9` |
-| PyTorch        | `4f13bf86476252e3d57b17d1c72f8512814400e9` |
-| rocm-systems   | `dbdb7b8d1c56316d873a9b90e548e5a72853496d` |
-| Triton         | `ee65ff3b85f99d52e678b252a99c8425fa46e329` |
+`.104` has eight CPU cores/16 threads, **40CU/20WGP/80SIMD**, qualified wave32,
+64KiB LDS, KFD100103/HIPgfx1013:xnack−, PCI1002:13fe. HIP multiprocessor count20
+is correct for WGP reporting. GTT15,938,355,200 bytes≈14.844GiB and systemRAM
+≈14.858GiB share physical GDDR6; they are not two independent memory budgets.
 
-Apply library patches in `patches/amd-mainline/rocm-libraries` in order through
-0017, and Torch patches in `patches/bc250-pytorch` through 0002.
-`.104` source trees are exported, gitless copies: `WS/source`,
-`WS/pytorch-source`, `WS/pytorch-work`. Their GIT_REVISION files and
-`WS/SOURCE_PRIORITY2.json` record the latest provenance. SOURCE_PRIORITY1.json
-retains its earlier snapshot identity. Earlier source archives and
-SOURCE_CANDIDATE.json retain their original baseline meaning. The generated
-Torch version git label can retain its original export revision; use the
-source manifest for the patched revision. Triton wheel SHA256:
-`2d65d6fefe359116521640e3cc2257bd03b4b24f6877fc8e28946ee9c57544d8`.
+Keep SDMA disabled (`HSA_ENABLE_SDMA=0`) and experimental VM heap default off;
+VMM/async pools remain available. Current GPU recovery parameter is0. Watchdog
+SP5100 TCO service is active (10s/120s), but actual hang/reset recovery is not
+qualified. No usable MFMA/WMMA or packed-dot backend. Wave64/XNACK+ and hardware
+media/counter/debug modes are separate qualification, not inferred from enums.
+No cpufreq governor exists on this host; GPU clock telemetry conflicts. Fan curve
+reads CPU Tctl, not GPU edge. Full measured hardware/recovery facts are in inventory.
 
-## Completed Priority 1 batch
+## Completed work: do not restart it
 
-These are bounded GPU qualification scopes, not full library support claims.
+| Batch                     | Qualified work / evidence anchor                                                                                                                                                                                                                                                                |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Core and expanded release | Native HIP/RTC/Torch/Triton; BLAS/solver/FFT/RNG/sparse; grouped MIOpen convolution, primitives, OpenCL/OpenMP, RPP, hipTensor generic, hipDNN providers, hipFile compatibility, profiler tracing. Historical13 component/56 eager/18 compiler gates; independent frozen600s soak40,339 cycles. |
+| Training/files            | Real SmolLM2-135M full FP32 and AMP LoRA FP16/BF16, optimizer/scheduler/scaler/RNG checkpoint/resume; 10GiB GPU+ 768 MiB CPU pressure, streams/graphs/processes. Persistent host paths, mount modes, downloads/DataLoader/pip/stdin/shell/interruption qualification already exists.            |
+| Scalar milestone          | Real native hipBLASLt/hipTensor/hipSPARSELt backends, CK/RPP/generic/Torch coverage; Torch NHWC average-pool gradient fix and separate sparse Lt kernel-pack ownership.                                                                                                                         |
+| P1                        | Lt C++/host-grouped consumers and epilogues; CK247 numerical+400 rejection cases; hipDNN100 graph cases; Torch64 including36 observed real Lt calls. Mutable dev stack activated.                                                                                                               |
+| P2                        | hipTensor166, hipSPARSELt234, hipBLASLt964 API, math149, primitives138 GPU cases;71 performance cases. Exact library/system/Torch patch reconstruction; independent candidate and installed launcher each passed20 cycles with sparse/compiled/FFT/checkpoint checks.                           |
+| Performance               | Matched `.104`/`.105` comparisons already done: most GEMM/copy differences small, variable small-conv results. Separate same-board P2 large LtGEMM≈2.1–2.4x faster; selected large compiled HIP-graph fusion≈4x. No whole-Torch or universal speedup claim; default BLAS unchanged.             |
 
-| Done | Area                        | GPU evidence and limits                                                                                                                                                                                                                                                     |
-| ---- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [x]  | hipBLASLt scalar consumers  | 403 existing + 465 new API cases = 868. C++ Gemm/GroupedGemm, host group lists, descriptors/lifetimes/streams/query APIs, f32/f16/bf16 and added activation/AUX epilogues. FP32 accumulation. No device group arguments, matrix kernels, FP8/INT8/FP64 or arbitrary tuning. |
-| [x]  | CK Tile generic operations  | 247 numerical cases: top-k 60, LayerNorm 18, scalar GEMM 160, Pool3D 9; plus 400 GEMM argument rejections. Installed public ScalarGemmKernel header. Explicit API, not an automatic replacement for matrix kernels.                                                         |
-| [x]  | hipDNN consumers            | 100 graph cases: hipBLASLt provider 48, HIP provider 18, MIOpen 3D forward/dx/dw 18, convolution+bias+activation fallback 16. Six additional host parameter tests.                                                                                                          |
-| [x]  | Torch/Triton/Inductor       | 64 checks: 52 eager/compiled indexing, normalization, training and attention checks; 12 explicit hipBLASLt forward/backward checks with 36 observed successful native library calls. CPU references, dynamic shapes, real generated GPU kernels.                            |
-| [x]  | Dev launcher and provenance | Mutable stack activated; nik GPU checkpoint/Inductor smoke passed. Recovery stack preserved.                                                                                                                                                                                |
+Reports: `docs/development/bc250_scalar_library_results/priority{1,2}-*.json`,
+`bc250_performance_results/`, host `WS/logs`. Detailed coverage limits, patch
+index, training/model pins and old defects are in the inventory. Counts overlap.
 
-Final kernel log matched the pre-test baseline with no new messages. No build or
-GPU qualification job remained running at handoff. Local verification: 92
-meaningful tests, plus source syntax/formatting checks.
-Reports are under `docs/development/bc250_scalar_library_results/priority1-*`
-and `WS/logs`; exact case scopes are encoded in the checked-in probes.
+## Known pitfalls and resolved problems
 
-Previously qualified runtime/compiler, rocBLAS/hipBLAS, solver/FFT/RNG/sparse,
-rocPRIM/hipCUB, RPP and training subsets remain available. Previous scalar
-hipTensor (76 cases) and hipSPARSELt (162 cases) are retained. Consult
-`docs/development/bc250_support_matrix.md` and
-`docs/development/bc250_scalar_library_expansion.md` for those narrower scopes.
-
-## Build and test procedure / important findings
-
-- Use ccache (20 GiB limit), typically 16 build jobs, 6 for providers/hipDNN,
-  12 for Torch with one link job. Keep objects; do not expunge to iterate.
-- In the existing build container, `helpers/build_priority1.sh /workspace/source /workspace/build` configures opt-in gfx13 scalar backends and the hipBLASLt
-  provider, builds components and stages dist. `BC250_STAGE_ONLY=1` omits the
-  final global dist rebuild. Container mounts must match `/workspace` paths.
-- **Stop GPU tests/user Torch during updates of the mutable dist prefix.**
-  Build/stage first, then run the bounded GPU validators. An earlier concurrent
-  rebuild/test crash has no established root cause; avoid this unsafe overlap.
-- **Explicitly regenerate derived HIP sources before every Torch source rebuild:**
+- **Proven old CSR corruption:** experimental VM heap overwrote live rocSPARSE
+  analysis metadata. Safe compiled CLR default fixed repeated CG gates (40 and
+  five-process200); it did not repair the experimental heap. Preserve this fix.
+- **Separate later segfault:** Python CPU execution fault at0x3b3e6, cause unknown.
+  Do not identify it as the proven CSR defect or claim bounded reruns solved it.
+- **Prefix concurrency:** launcher holds shared `.runtime.lock`; run every host
+  prefix update through `helpers/update_dev_prefix.py -- COMMAND...` (exclusive).
+  Arbitrary manual writes bypass this protection. Never test against staging libs.
+- **Torch generation:** before each source rebuild, run upstream
   `python tools/amd_build/build_amd.py --out-of-place-only`, then
-  `python -m pip install -e . -v --no-build-isolation`. Existing CMake caches
-  otherwise leave HIPHooks stale. Both Torch build helpers implement this.
-- Use `THEROCK_GFX1013_SCALAR_BACKENDS=ON`; options remain off for other profiles.
-- The hipBLASLt provider option is `THEROCK_ENABLE_HIPBLASLTPROVIDER=ON`.
-  Native Torch hook checks an actual linked zero-workspace f32 heuristic.
-  Default Torch BLAS stays hipBLAS/rocBLAS; explicit hipBLASLt selection works.
-- SWISH follows the public fixed-beta-1 contract; activation arg0 is not beta.
-- MIOpen legacy bias computes alpha*y + alpha*b + beta\*y: use beta=0.
-  Legacy BF16 and FP16 NHWC pointwise behavior required the opt-in private HIP
-  bias/activation shader, with strided layouts and rounding after each stage.
-  Mixed low-precision output / FP32 virtual fusion intermediates stay rejected.
-- Public CK headers and provider TOML/HIP files require explicit superbuild
-  tracking, now included. A noop component build does not prove headers staged.
-- LD_PRELOAD hipBLASLt observation is test-only; handle RTLD_LOCAL via explicit
-  library lookup. Never load the observer in the normal launcher.
-- hipSPARSELt scalar compression/pack format is separate from hardware sparse
-  matrix formats; retain its guards. Do not imply hardware acceleration.
+  `python -m pip install -e . -v --no-build-isolation`. Cached CMake can leave HIP
+  sources stale; don't rebuild solely to change generated version metadata.
+- **Targeted builds:** prefer component+dist, including
+  `hipBLASLt+dist hipTensor+dist hipSPARSELt+dist`. Global dist can rebuild unrelated
+  MIOpen. Keep16 normal jobs, tensor12/providers6/Torch 12/link 1 and20GiB ccache.
+- **Flag names:** use `THEROCK_GFX1013_SCALAR_BACKENDS=ON` with exclusive gfx1013;
+  similarly named `THEROCK_ENABLE_...` cache entries are not this option.
+- **Already fixed:** Triton RDNA1 buffer flags/low-precision lowering, RPP
+  spectrogram/decibel handling, Torch pooling, CK/header tracking, FFTS linking,
+  launcher path/read-only/shell/consumer pins. Read inventory before redoing them.
+- **ABI details:** Lt SWISH beta is fixed 1; MIOpen bias uses beta 0; mixed fusion
+  intermediates remain rejected. SparseLt compression is backend-specific.
+- **Testing:** require real execution/counts, CPU references, unchanged meaningful
+  tolerances andguards. Clone float64 CPU references before gradient mutation.
+  Do not disable/skips tests to turn red into green.
+- **History:** native Alpine branch testedgfx1103, not BC-250. Historical frozen
+  long-soak results do not qualify the currentmutableprefix forlongstability.
 
-## Completed Priority 2 batch
+## Ordered full-port plan: stable task IDs
 
-The user's P2 scope is tensor algebra, sparse Lt, math libraries, primitives,
-performance and candidate packaging. Debug/telemetry/communication bring-up was
-explicitly deferred in this batch; `.105` remains unchanged.
+P0/P1/P2 milestones are completed **within their recorded scopes**. Remaining
+work is below; do not revive their old unchecked checklist lines as new tasks.
+Work through one measurable subtask at a time and keep these IDs stable.
 
-| Done | Area                     | Final evidence                                                                                                                                                                                                                                                                                                                          |
-| ---- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [x]  | hipTensor                | 166 native GPU cases. Nineteen additional real unary operations, strided dot and three contracted modes; common single-contracted-mode loop avoids repeated mixed-radix division. Seven supported storage/compute combinations retained; no complex or unilateral-reduction claim.                                                      |
-| [x]  | hipSPARSELt              | 234 native GPU cases. ReLU, ABS, LeakyReLU, GELU, Sigmoid and parameterized Tanh; clipped ReLU, activation parameter set/get and plan snapshot independence. FP32/FP16/BF16 scalar execution retained; no integer or hardware sparse speedup claim.                                                                                     |
-| [x]  | Math libraries           | 149 GPU checks: BLAS 18, FFT 30, solvers 32, Torch sparse 25, direct hipSPARSE triangular solves 16, Torch RNG 6, direct rocRAND 22. CPU references, solver residuals/condition-10,000 systems, gradients, odd/strided/batched FFTs, COO/CSR, six pseudo and four Sobol generators.                                                     |
-| [x]  | rocPRIM/hipCUB/rocThrust | 138 int32 GPU reference cases: 42/48/48. Stable signed-key sorts, selection, scans, reductions, wave32/block algorithms and default/nonblocking streams, Thrust par/par_nosync. Guards and counts checked. Installed headers required no new port fix.                                                                                  |
-| [x]  | Performance              | 71 bounded CPU-checked timing cases. hipBLASLt register-tiled GEMM verified by 403 existing + 561 expanded API cases = 964. Measured large GEMM approximately 2.1–2.4x faster than the prior scalar Lt implementation; small-shape timings roughly flat/slightly worse. Default Torch BLAS unchanged.                                   |
-| [x]  | Candidate                | Exact source-tree reconstruction from 17 library patches, three runtime-system patches and two Torch patches. Independent ROCm/Torch copy with 191 shared-object/kernel-pack hashes; nik GPU checkpoint plus 20 sparse/compiled-forward/backward/FFT/allocation cycles passed. Separate candidate, not a newly activated daily release. |
+| State | ID                   | Work and acceptance boundary                                                                                                                                                                                                                                                                                                                                                                        |
+| ----- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ ]   | **N1 / N1.1 — next** | Expand feasible scalar/generic library APIs: tensor complex/unilateral sums/plan combinations, sparse Lt batching/bias/types, Lt small/skinny shapes/epilogues; first subtask N1.1 is unilateral contraction modes in `contraction_scalar.cpp`, preserving zero-scalar, span and alias guards. CPU-referenced API/type/layout/zero-scalar/plan tests, correct native routing, measured performance. |
+| [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
+| [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
+| [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |
+| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
+| [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
+| [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
+| [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |
 
-Reports: `docs/development/bc250_scalar_library_results/priority2-*.json` and
-`WS/logs/priority2-*`. Independent package:
-`/opt/bc250-stack/candidates/priority2-20261014`; its runtime manifest records
-payload hashes. `bc250-torch` remains on the mutable dev prefix with the new work.
-Previous releases, images, caches, checkpoints and source snapshots are retained.
+Every component ultimately needs a documented disposition: qualified native path,
+qualified explicit fallback, or a concrete hardware/API limitation. Missing matrix
+instructions themselves are **not pending implementation**. Do not compute a
+completion percentage from boxes; an infinite API-combination sweep is not a plan.
 
-Performance findings are workload-specific. Plain Inductor reductions often
-measured slower than eager. Explicit HIP graph replay of the compiled fused
-SiLU/square/sum at 1,048,576 elements measured about 4x faster than eager; replay
-requires fixed captured storage/shapes. Sum/dot graph replay improved the tested
-large cases about 1.35–1.4x. No automatic graph or BLAS policy was changed.
-For known SPD systems, measured Cholesky factorization/solve was cheaper than a
-general solve, particularly with a reused factor; this does not justify silently
-assuming arbitrary matrices are SPD. Benchmark source contains the exact cases.
+## Memory maintenance rule for every future agent
 
-The archived segfault is a Python CPU execution fault at address `0x3b3e6`,
-without an adjacent reported GPU reset/fault. The logs contain no useful stack
-or identified operator, so the cause remains **unconfirmed**. Independent-copy
-and stable-prefix sparse checks passed; they do not establish the cause.
-The installed launcher now holds a shared `.runtime.lock` during developer
-workloads. Use the host `helpers/update_dev_prefix.py -- COMMAND...` wrapper for
-**every mutable-prefix update**; it takes the exclusive lock. Arbitrary writes
-that bypass this wrapper remain unprotected. Lock exclusion, exception cleanup
-and symlink rejection passed local regression tests.
+At the end of each meaningful batch, and before handoff/compaction if work is
+still running, update this file once. Record: taskID/subtask, actual source and
+installed revisions, exact changed behavior, passed/failed evidence andscope,
+unresolved failures, next concrete action, running container/PID/log/exit paths,
+resource settings andany user scope changes. Update the affected inventory row
+when a capability/decision changes. Preserve historical reports/failures; don't
+rewrite the entire history or make a commit after every command.
 
-Use component `hipBLASLt+dist hipTensor+dist hipSPARSELt+dist` targets for these
-changes. A global `dist` unnecessarily started rebuilding MIOpen and was stopped
-(exit 137); objects were preserved. Targeted staging passed (exit 0), all updated
-native kpacks were flattened, and GPU gates ran after staging. No full clean
-rebuild was needed. Future global builds can resume the preserved MIOpen objects.
+Temporary tool cell/session IDs and `/tmp` transfer helpers are not durable state.
+Record replayable repository/host commands and artifact paths. Never record
+credentials. Mark complete only when implemented, staged and numerically executed
+for the stated scope. New plans/assumptions must be labeled, not quietly promoted
+to hardware facts. If interrupted, write **in-progress/unknown**, not passed.
 
-Local final verification: 27 launcher/lock/config/deployment/performance tests,
-source syntax/format hooks, nested diff checks and exact patch reconstruction.
-
-## Remaining work, ordered
-
-- [ ] Further measured tuning, especially small/skinny GEMM, scalar tensor/sparse
-  throughput, reduction launch policies and representative long training steps.
-- [ ] Wider numerical/type/layout/API coverage: floating/custom and segmented
-  primitives, additional solver/FFT/sparse operations, RPP and generic tensors.
-- [ ] Feasible hipTensor complex/unilateral reductions and further plan APIs;
-  hipSPARSELt additional types and API combinations. Keep hardware-instruction
-  limitations and backend-specific compression explicit.
-- [ ] hipDNN mixed intermediate types, more fusion graphs and provider coverage;
-  wider hipBLASLt grouped APIs and epilogues where feasible.
-- [ ] Longer training/checkpoint/resume and sustained shared-memory/stability
-  checks. The current developer profile is mutable and only bounded-qualified.
-- [ ] Diagnose the historical crash if it recurs with a stable prefix and capture
-  a real stack; current successful gates are not proof of its root cause.
-- [ ] Distributed/RCCL qualification later; preserve `.105` for comparison until
-  `.104` is stable and user authorizes its migration.
-- [ ] Protected driver/telemetry/debug/counter investigations; SDMA, reset and
-  experimental VM heap require isolated qualification with SSH/boot recovery.
-- [ ] Media engines only if kernel/firmware exposes working hardware rings.
-
-Do not call this 100% ROCm support. Hardware matrix instructions are unavailable;
-unsupported paths must remain explicit rather than architecture aliases.
+Before repeating work, answer: what already exists, which source/report proves it,
+and what new change/uncovered case/failure requires another build or test?

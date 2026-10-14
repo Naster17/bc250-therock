@@ -1,5 +1,11 @@
 # BC-250 gfx1013 support matrix
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 This records operation-level evidence for the native ROCm 10.2 port on `.104`.
 It is not an upstream support declaration or a claim that every operation in
 a listed library works. `.105` remains the unchanged ROCm 7.2 reference host.

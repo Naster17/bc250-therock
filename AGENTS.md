@@ -2,6 +2,23 @@
 
 TheRock is a CMake super-project for building HIP and ROCm from source.
 
+## BC-250 persistent memory and resume rules
+
+For this gfx1013 port, read root [flow.md](flow.md) before starting a new session,
+resuming after compaction, or acting on “continue.” It is the canonical task cursor.
+Consult [the detailed memory inventory](docs/development/bc250_memory_inventory.md)
+for the selected component before reimplementing, rebuilding or repeating tests.
+Current manifests and committed evidence override older milestone checklists.
+Do not restart completed P0/P1/P2 work merely because conversation context is lost.
+
+At the end of each meaningful batch, or before a handoff with work running, update
+flow.md once with task status, revisions, evidence, failures, next action and exact
+job/log paths. Update affected inventory entries when capabilities/plans change.
+Preserve historical evidence; never store credentials. Group commits at milestones.
+Respect the recorded .104 development authority, .105 preservation, recovery and
+user-owned untracked src/ constraints. Documentation-only memory updates do not
+require ROCm/Torch rebuilds or GPU requalification.
+
 ## Quick Start
 
 ```bash

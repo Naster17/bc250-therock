@@ -1,5 +1,11 @@
 # BC-250 initial Torch performance comparison
 
+> **Historical snapshot notice:** this file preserves a previous milestone.
+> Read [flow.md](../../flow.md) and the
+> [current memory inventory](bc250_memory_inventory.md) before acting on its
+> active-release claims or unchecked tasks. Newer qualified scopes supersede
+> older unsupported/pending rows; retain the original evidence.
+
 Measured on 2026-10-13. These are short GPU benchmarks of the deployed stacks
 on two physical boards. They are not clock-normalized measurements of ROCm
 alone. No kernel, clock, fan, service or installed runtime changes were made.
