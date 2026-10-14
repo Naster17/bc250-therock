@@ -18,6 +18,18 @@ release claims must not override this cursor and current manifests.
   kernel/fan, exercise hardware watchdog recovery on r2, guarded r2 references,
   and only then one-shot candidate boot/base SSH and controlled GPU gates.
   Preserve generated remote signing private key; never include it in evidence.
+- **Recovery preparation batch (build still running):** GPU runner now saves
+  durable phase checkpoints and rejects new kernel faults/WARNs or ring rotation;
+  existing boot warnings remain in before-log. Ten local log-review cases passed.
+  Actual host init copy passes generated-hook shell/order checks; three guard
+  dry-run cases recorded in`kernel/r3/evidence/recovery-preparation.json`.
+  Prepared/transferred`test-watchdog-on-host.py` (verified feeder SIGSTOP plus
+  detached165s same-boot/PID fail-safe CONT) and`ack-base-boot-on-host.py`
+  (root watchdog/nowayout, cooling/fan, NIC, consumed one-shot, AMDGPU deferred).
+  These live helpers NOT executed; recovery/boot/GPU still unqualified.
+  Native signing key permissions verified600/root, stays remote. CPU~62°C,
+  fan~3500RPM during build. Memory checkpoint backed up on.104 at
+  `WS/agent-memory/8c6efe00e-kernel-build` and`latest` points there; sources intact.
 - **ACTIVE user priority: K1–K6, clean upstream BC-250 kernel workstream**
   (authorized2026-10-14), alongside ROCm/Torch. K1 source fetched: signed stable
   `v7.2.10`, base`7b20d05fd38de8e0be168956f6fd241d750c7d69`; Greg fingerprint
