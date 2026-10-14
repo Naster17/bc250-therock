@@ -65,8 +65,8 @@ static void run(hipblasLtHandle_t handle, hipDataType input_type,
                 int batches, bool zero_beta, bool device_scalars, bool inplace,
                 bool implicit, int &passed, int k = 23, bool zero_alpha = false,
                 hipblasLtEpilogue_t epilogue = HIPBLASLT_EPILOGUE_DEFAULT,
-                hipDataType bias_type = HIPBLASLT_DATATYPE_INVALID) {
-  const int m = 17, n = 19;
+                hipDataType bias_type = HIPBLASLT_DATATYPE_INVALID,
+                int m = 17, int n = 19, bool benchmark = false) {
   const bool bias_enabled = epilogue == HIPBLASLT_EPILOGUE_BIAS ||
                             epilogue == HIPBLASLT_EPILOGUE_RELU_BIAS ||
                             epilogue == HIPBLASLT_EPILOGUE_GELU_BIAS;
@@ -228,6 +228,40 @@ static void run(hipblasLtHandle_t handle, hipDataType input_type,
                    passed, i, actual, reference);
       std::exit(1);
     }
+  }
+  if (benchmark) {
+    // Capture repeated public API launches to measure short kernels without
+    // host submission gaps. Compare identical graph fixtures across libraries.
+    constexpr int repeats = 32;
+    hipGraph_t graph{};
+    hipGraphExec_t executable{};
+    hip_check(hipStreamBeginCapture(stream, hipStreamCaptureModeGlobal));
+    for (int repeat = 0; repeat < repeats; ++repeat)
+      lt_check(hipblasLtMatmul(handle, op, scalars ? scalars : &alpha, da, ad,
+                              db, bd, scalars ? scalars + 1 : &beta, dc, cd, dd,
+                              ddsc, &result.algo, nullptr, 0, stream));
+    hip_check(hipStreamEndCapture(stream, &graph));
+    hip_check(hipGraphInstantiate(&executable, graph, nullptr, nullptr, 0));
+    for (int warmup = 0; warmup < 3; ++warmup)
+      hip_check(hipGraphLaunch(executable, stream));
+    hip_check(hipStreamSynchronize(stream));
+    hipEvent_t start{}, stop{};
+    hip_check(hipEventCreate(&start));
+    hip_check(hipEventCreate(&stop));
+    for (int sample = 0; sample < 5; ++sample) {
+      hip_check(hipEventRecord(start, stream));
+      hip_check(hipGraphLaunch(executable, stream));
+      hip_check(hipEventRecord(stop, stream));
+      hip_check(hipEventSynchronize(stop));
+      float ms = 0;
+      hip_check(hipEventElapsedTime(&ms, start, stop));
+      std::printf("TIMING m=%d n=%d k=%d input=%d output=%d row=%d ta=%d tb=%d batches=%d sample=%d us=%.6f\n",
+                  m,n,k,int(input_type),int(output_type),int(row),int(ta),int(tb),batches,sample,ms*1000/repeats);
+    }
+    hip_check(hipEventDestroy(start));
+    hip_check(hipEventDestroy(stop));
+    hip_check(hipGraphExecDestroy(executable));
+    hip_check(hipGraphDestroy(graph));
   }
   auto invalid = result.algo;
   invalid.data[0] ^= 1;
