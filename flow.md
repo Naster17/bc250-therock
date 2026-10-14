@@ -10,14 +10,15 @@ release claims must not override this cursor and current manifests.
 
 - **Current task:** N1.8 hipBLASLt short small/skinny GEMM dispatch implemented,
   installed on .104 and bounded-qualified. N1.1–N1.7 retained in their scopes.
-- **Last qualified code:** root `a8a241bcc88dc04b6c9ddcbed817b7c0b89e5a2c`,
-  libraries `48e1e564d6fd1f8baaff7fd8e60b35217aa425da` (patch0025).
+- **Last qualified code:** root `0115c01f06f8654b26b5a665286069caf89eda2d`,
+  libraries `a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8` (patches0025–0026).
 - **N1.8 contract:** K<=64 and either min(M,N)<=4 or both M,N<=32 with M*N<=512
   use one32-lane scalar subgroup/output, eight outputs/block. Physical D order
   guides output lanes; no LDS/barriers in this specialization. FP32 tree reduction
   changes rounding from ascending-K FMA; same/mixed f32/f16/bf16 and existing
   scalar/bias/activation/AUX/DGELU epilogues retained. Public algorithm unchanged;
-  remaining shapes keep tiled/register-tile dispatch. No matrix engine claim.
+  remaining shapes keep tiled/register-tile dispatch. Subgroup grids above INT_MAX
+  also fall back to the validated tiled grid; no oversized launch was executed. No matrix engine claim.
 - **Passed:**664 new CPU-double-referenced GPU cases +403 scalar/561 extended Lt
   regressions. Orders/all transposes, padded/broadcast batches, host/device and
   zero scalars, compatible in-place C/D, K0/1/15/16/17/63/64/65 and area512/544,
@@ -25,17 +26,18 @@ release claims must not override this cursor and current manifests.
   lines; no general bitwise/nonfinite or sustained qualification.
 - **Timings:**36 CPU-checked deterministic C++ fixtures ×A1/B1/B2/A2; five GPU-event
   samples of32-launch HIP graphs/pass. Selected skinny ratios1.14–1.86x and
-  selected small1.21–1.61x; controls0.999–1.007x (roughly flat); max repeated-pass
-  median drift0.28%. Column-major NN, batch1, host scalars/default epilogue only.
+  selected small1.21–1.61x; controls0.998–1.006x (roughly flat); max repeated-pass
+  median drift0.24%. Column-major NN, batch1, host scalars/default epilogue only.
   These are graph-replay kernel costs, not uncaptured application or Torch speedups.
   Clock telemetry remains untrusted; default Torch BLAS stays rocBLAS.
-- **Evidence/jobs:** `WS/logs/n18-lt-r3/result.json`, repository
+- **Evidence/jobs:** `WS/logs/n18-lt-r4/result.json`, repository
   `bc250_scalar_library_results/n18-{lt,lt-attempts,lt-performance,lt-pack,reconstruction}.json`.
-  Targeted hipBLASLt+dist,16jobs/20GiB ccache/exclusive lock; final build11.6s,
-  numerical3.5s/scalar2.0s/extended1.7s, each36-case timing pass~1s. No running
+  Targeted hipBLASLt+dist,16jobs/20GiB ccache/exclusive lock; final build11.8s,
+  numerical3.7s/scalar2.3s/extended2.1s, each36-case timing pass1.0–1.2s. No running
   jobs/gates. Initial one-thread/output candidate passed504 cases but was slower
   (0.46–0.76x selected ratios); rejected. Cooperative r2 passed504+964 checks,
-  but32x32 regressed0.91–0.96x: final area<=512 restriction retains its tiled path.
+  but32x32 regressed0.91–0.96x: final area<=512 restriction retains its tiled path. r3 passed664+964; final
+  review added the subgroup grid-bound fallback and r4 repeated the full gate.
 - **Recovery finding:** BLAS DSO references external `.kpack/blas_lib_gfx1013.kpack`.
   Initial attempt restored only DSO; A2 aborted134 on missing old GPU symbol.
   Recovered exact baseline pair from immutable P2 candidate (DSO hash matched),
@@ -45,12 +47,12 @@ release claims must not override this cursor and current manifests.
   complete runtime rollback from those fields or reuse old runners unchanged.
   Their successful final GPU gates remain evidence. This host-side code-object
   mismatch is distinct from unresolved Python CPU segfault and fixed pool/VM issue.
-- **Provenance:** `SOURCE_N18.json` verifies11 source files on N1.7/P2 plus both
-  active BLAS hashes: DSO `2f559cb8d2ab85554432b779af22600b1cde28f02923042cef843bd97a844aeb`;
+- **Provenance:** `SOURCE_N18.json` verifies12 source files on N1.7/P2 plus both
+  active BLAS hashes: DSO `91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6`;
   pack `a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5`.
   Pack payload comparison:1 hipBLASLt entry changed,68 entries unchanged (including
   all67 rocBLAS entries). Independent recovery DSO `WS/recovery/n18-lt-before.so.1.5`
-  and pack `WS/recovery/n18-blas_lib_gfx1013-before.kpack` retained. All25 patches
+  and pack `WS/recovery/n18-blas_lib_gfx1013-before.kpack` retained. All26 patches
   reconstruct exact tree; .105/frozen candidates/kernel/boot/Torch unchanged.
 - **Next: N2.1, solver difficult/complex coverage and selection audit.** Read the
   existing32 P2 solver cases, residual/gradient/condition10,000 evidence, patched
@@ -98,8 +100,8 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 
 | Item                     | Current identity                                                                                                          |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Qualified root code      | `a8a241bcc88dc04b6c9ddcbed817b7c0b89e5a2c`                                                                                |
-| rocm-libraries           | `48e1e564d6fd1f8baaff7fd8e60b35217aa425da`, ordered patches0001–0025                                                      |
+| Qualified root code      | `0115c01f06f8654b26b5a665286069caf89eda2d`                                                                                |
+| rocm-libraries           | `a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8`, ordered patches0001–0026                                                      |
 | rocm-systems             | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`, patches0001–0003                                                              |
 | Torch                    | `4f13bf86476252e3d57b17d1c72f8512814400e9`, patches0001–0002; editable pip                                                |
 | Triton                   | `ee65ff3b85f99d52e678b252a99c8425fa46e329`, patches0001–0004; qualified wheel retained                                    |
@@ -118,7 +120,7 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 Manifests and immutable image IDs outrank mutable tag names. Component version
 strings differ legitimately (TheRock10.2, HIP7.17, Torch 2.13). Source archive names
 and generated Torch Git labels may retain older baselines; do not relabel them.
-The P2 source transfer verified51 files; N1.1 adds7; N1.2–N1.7 each add8 verified changed files; N1.8 adds11 and BLAS DSO/pack hashes. Candidate payload verified191
+The P2 source transfer verified51 files; N1.1 adds7; N1.2–N1.7 each add8 verified changed files; N1.8 adds12 and BLAS DSO/pack hashes. Candidate payload verified191
 independent shared-object/kernel-pack copies. Detailed hashes are in manifests.
 
 ## Unified local workspace
@@ -167,7 +169,7 @@ reads CPU Tctl, not GPU edge. Full measured hardware/recovery facts are in inven
 | N1.5 | Native GPU sparse Lt per-row bias: same-type/FP32, batch broadcast/strides, before activation, plan snapshots and size/type/span/alias guards.526 numerical +41 API checks,234 scalar/609 broadcast regressions; patch0022. |
 | N1.6 | Native device FP32 per-row alpha vector shared across batches, plan flag snapshots and span/alignment guards.404 numerical +34 API checks;234 scalar/609 broadcast/567 bias regressions. Beta-vector enable explicitly unsupported; patch0023. |
 | N1.7 | Native INT8 input/output, bounded INT32 accumulation, FP32 epilogue/bias, nearest-even saturation.134 numerical +16 API and234/609/567/438 regressions; K<=262140, widened outputs unimplemented; patch0024. |
-| N1.8 | Short small/skinny Lt subgroup dispatch:664 new +964 regression cases,36 A/B graph timing fixtures; selected1.14–1.86x, controls~flat; paired DSO/kpack recovery; patch0025. |
+| N1.8 | Short small/skinny Lt subgroup dispatch:664 new +964 regression cases,36 A/B graph timing fixtures; selected1.14–1.86x, controls~flat; paired DSO/kpack recovery; patches0025–0026. |
 | Performance               | Matched `.104`/`.105` comparisons already done: most GEMM/copy differences small, variable small-conv results. Separate same-board P2 large LtGEMM≈2.1–2.4x faster; selected large compiled HIP-graph fusion≈4x. No whole-Torch or universal speedup claim; default BLAS unchanged.             |
 
 Reports: `docs/development/bc250_scalar_library_results/priority{1,2}-*.json`,

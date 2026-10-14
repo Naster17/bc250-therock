@@ -148,8 +148,8 @@ Important operational facts:
 | Item                   | Current code / location                                                                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Branch                 | `users/Naster17/rocm-10.2-gfx1013`                                                                                                                           |
-| Qualified TheRock code | `a8a241bcc88dc04b6c9ddcbed817b7c0b89e5a2c` (N1.8); newer docs commits need no runtime rebuild                                                                       |
-| Libraries              | `48e1e564d6fd1f8baaff7fd8e60b35217aa425da`                                                                                                                   |
+| Qualified TheRock code | `0115c01f06f8654b26b5a665286069caf89eda2d` (N1.8); newer docs commits need no runtime rebuild                                                                       |
+| Libraries              | `a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8`                                                                                                                   |
 | Systems                | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`                                                                                                                   |
 | LLVM                   | Upstream `7667f52dd687899256a3285ab0bce3c53bc73394`; no custom LLVM architecture patch                                                                       |
 | Torch                  | `4f13bf86476252e3d57b17d1c72f8512814400e9`; release/2.13 baseline `c779020750d7dc99a39ea8c104ef8df1fc9d0755`                                                 |
@@ -173,7 +173,7 @@ workspace-root/dev/candidate copies exist. `SOURCE_PRIORITY1.json` and
 not magically updated by patching extracted trees. Generated torch.version's
 Git label may retain the original export revision; use source manifests instead.
 
-Reconstruction: 25 patches in `patches/amd-mainline/rocm-libraries`, three in
+Reconstruction: 26 patches in `patches/amd-mainline/rocm-libraries`, three in
 `patches/amd-mainline/rocm-systems`, two in `patches/bc250-pytorch`, four in
 `patches/bc250-triton`. Apply in order. The P2 reconstruction helper verified
 exact library/system/Torch trees using private indexes; it did not recreate the
@@ -216,6 +216,7 @@ library reconstruction; retained earlier manifests keep their original meaning. 
 | 0023  | Sparse Lt device FP32 per-row alpha-vector flag/indexing and guards: `a9a1ace297c` |
 | 0024  | Sparse Lt INT8 input/output, bounded INT32 accumulation, FP32 epilogue and saturating round-even conversion: `2fd5619d7c8` |
 | 0025  | Lt 32-lane subgroup short small/skinny GEMMs and bounded dispatch: `48e1e564d6f` |
+| 0026  | Preserve validated launch-grid bound for Lt subgroup dispatch: `a6f7d3d8ba7` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -487,7 +488,7 @@ No performance/automatic Torch routing/new matrix-instruction/long-stability
 claim; .105/kernel/Torch unchanged. Next N1.8: inspect existing Lt scalar/register
 shape dispatch and timing evidence; select one measured small/skinny improvement.
 
-N1.8 `WS/logs/n18-lt-r3/result.json`, repository
+N1.8 `WS/logs/n18-lt-r4/result.json`, repository
 `bc250_scalar_library_results/n18-{lt,lt-attempts,lt-performance,lt-pack,reconstruction}.json`:
 664 CPU-double-referenced GPU cases plus403 scalar/561 extended Lt regressions.
 Native 32-lane scalar subgroup/output (eight/block) for K<=64 and either min(M,N)<=4
@@ -501,7 +502,10 @@ Initial direct one-thread/output candidate passed504 cases but selected ratios
 A2 aborted134 on missing GPU symbol. Exact prior DSO SHA matched frozen P2, whose
 retained pack restored the baseline pair under lock. r2 cooperative path passed
 504+964 cases and paired A2 restoration, but32x32 ratios0.91–0.96x regressed; final
-area<=512 bound keeps32x32 tiled. Every attempt/log preserved; no GPU fault/reset
+area<=512 bound keeps32x32 tiled. r3 passed664+964; final host grid-bound
+review added fallback to the tiled path when subgroup blocks exceed INT_MAX. r4
+repeated664+964 and all36 paired timing fixtures; oversized launches not executed.
+Every attempt/log preserved; no GPU fault/reset
 or new kernel messages. N1.8 runner restores/hashes both DSO and pack on failures.
 **Correction to historical rollback wording:** N1.1–N1.7 reports only checked DSO
 restoration; they did not verify/restore external packs. Do not treat those fields
@@ -511,12 +515,12 @@ code-object-symbol abort is separate from unresolved Python CPU segfault0x3b3e6
 and the already fixed allocator corruption/default-pool issue.
 36 deterministic same-input C++ fixtures, column-major NN/batch1/host scalars/default
 epilogue, A1/B1/B2/A2 order; five GPU-event samples of32-launch HIP graph/pass.
-Selected skinny ratios1.14–1.86x, selected small1.21–1.61x; controls0.999–1.007x;
-max repeated-pass median drift0.28%. Kernel-focused graph replay, not uncaptured
+Selected skinny ratios1.14–1.86x, selected small1.21–1.61x; controls0.998–1.006x;
+max repeated-pass median drift0.24%. Kernel-focused graph replay, not uncaptured
 application latency or Torch speedup; clocks untrusted, no clock attribution.
-Final targeted16-job/20GiB ccache build11.6s, numerical3.5s/scalar2.0s/extended1.7s;
-timing passes~1s, all under exclusive lock. Kernel logs identical1009 lines.
-`SOURCE_N18.json` verifies11 source files plus BLAS DSO/pack hashes;25 patches
+Final targeted16-job/20GiB ccache build11.6s, numerical3.7s/scalar2.3s/extended2.1s;
+timing passes1.0–1.2s, all under exclusive lock. Kernel logs identical1009 lines.
+`SOURCE_N18.json` verifies12 source files plus BLAS DSO/pack hashes;26 patches
 reconstruct exact tree. Pack payload comparison:1 Lt entry changed,68 unchanged
 including all67 rocBLAS entries. Recovery DSO `WS/recovery/n18-lt-before.so.1.5`
 and pack `WS/recovery/n18-blas_lib_gfx1013-before.kpack` independent copies retained.
