@@ -1,0 +1,195 @@
+From 2fd5619d7c8ec6193eeb23077ea347887bdda77c Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 21:22:08 +0200
+Subject: [PATCH] feat(hipsparselt): admit bounded native gfx1013 INT8
+ contractions
+
+---
+ .../library/src/hcc_detail/gfx1013_scalar.hip | 79 ++++++++++++++++---
+ 1 file changed, 67 insertions(+), 12 deletions(-)
+
+diff --git a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+index 24c66e68717..d5e62c7fa88 100644
+--- a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
++++ b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+@@ -15,6 +15,7 @@
+ #include <hip/hip_runtime.h>
+ #include <hipsparselt/hipsparselt.h>
+ #include <limits>
++#include <type_traits>
+ 
+ #define HIPSPARSELT_STRINGIFY_IMPL(value) #value
+ #define HIPSPARSELT_STRINGIFY(value) HIPSPARSELT_STRINGIFY_IMPL(value)
+@@ -159,7 +160,7 @@ namespace
+     }
+     size_t width(hipDataType type)
+     {
+-        return type == HIP_R_32F ? 4 : 2;
++        return type == HIP_R_8I ? 1 : (type == HIP_R_32F ? 4 : 2);
+     }
+     int group_size(const Matrix& matrix)
+     {
+@@ -383,7 +384,7 @@ namespace
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+         // TILE's 2-per-row/column masks are incompatible with FP32's 1:2
+         // contract: two retained values can land in the same adjacent pair.
+-        if(matrix.type != HIP_R_16F && matrix.type != HIP_R_16BF)
++        if(matrix.type != HIP_R_16F && matrix.type != HIP_R_16BF && matrix.type != HIP_R_8I)
+             return HIPSPARSE_STATUS_NOT_SUPPORTED;
+         int64_t k = contraction(matrix, sparse_a, op);
+         if(k % 4)
+@@ -408,6 +409,17 @@ namespace
+                                op,
+                                (const __half*)input,
+                                (__half*)output);
++        else if(matrix.type == HIP_R_8I)
++            hipLaunchKernelGGL(tile_kernel<int8_t>,
++                               grid,
++                               block,
++                               0,
++                               stream,
++                               matrix,
++                               bool(sparse_a),
++                               op,
++                               (const int8_t*)input,
++                               (int8_t*)output);
+         else
+             hipLaunchKernelGGL(tile_kernel<hip_bfloat16>,
+                                grid,
+@@ -449,18 +461,21 @@ namespace
+               + sm.rows * sm.cols / 2 * (sm.batch_stride == 0 ? 1 : sm.batches) * sizeof(T);
+         int64_t base = (sm.batches == 1 || sm.batch_stride == 0 ? 0 : batch * group_count)
+                        + (mm.a.sparse ? row : col) * (k / size);
+-        float   sum  = 0;
++        // At most K/2 retained INT8 products. Descriptor K bound proves
++        // every partial sum fits int32; convert once for the FP32 epilogue.
++        using Accumulator = std::conditional_t<std::is_same_v<T, int8_t>, int32_t, float>;
++        Accumulator sum   = 0;
+         for(int64_t g = 0; alpha != 0 && g < k / size; ++g)
+             for(int t = 0; t < kept; ++t)
+             {
+-                int64_t kk = g * size + ((metadata[base + g] >> (t * 2)) & 3);
+-                float   sv = float(compressed[(base + g) * kept + t]);
+-                float   dv = mm.a.sparse ? float(b[offset(mm.b, mm.opb, kk, col, batch)])
+-                                         : float(a[offset(mm.a, mm.opa, row, kk, batch)]);
++                int64_t     kk = g * size + ((metadata[base + g] >> (t * 2)) & 3);
++                Accumulator sv = Accumulator(compressed[(base + g) * kept + t]);
++                Accumulator dv = mm.a.sparse ? Accumulator(b[offset(mm.b, mm.opb, kk, col, batch)])
++                                             : Accumulator(a[offset(mm.a, mm.opa, row, kk, batch)]);
+                 sum += sv * dv;
+             }
+         // beta==0 must not read C, which may contain NaNs or uninitialized data.
+-        float value = alpha * sum;
++        float value = alpha * float(sum);
+         if(beta != 0)
+             value += beta
+                      * float(c[offset(mm.c, HIPSPARSE_OPERATION_NON_TRANSPOSE, row, col, batch)]);
+@@ -485,6 +500,10 @@ namespace
+             value = value >= 0 ? 1.0f / (1.0f + expf(-value)) : expf(value) / (1.0f + expf(value));
+         else if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH)
+             value = tanhf(value * mm.tanhAlpha) * mm.tanhBeta;
++        if constexpr(std::is_same_v<T, int8_t>)
++            // Upstream INT8 output uses nearest-even rounding then saturation.
++            // Clamp before conversion also avoids undefined casts at infinity.
++            value = nearbyintf(fminf(127.0f, fmaxf(-128.0f, value)));
+         d[offset(mm.d, HIPSPARSE_OPERATION_NON_TRANSPOSE, row, col, batch)] = T(value);
+     }
+ 
+@@ -559,6 +578,18 @@ namespace
+                                (const __half*)input,
+                                (__half*)output,
+                                invalid);
++        else if(matrix.type == HIP_R_8I)
++            hipLaunchKernelGGL((strip_kernel<int8_t, Check, Compress>),
++                               grid,
++                               block,
++                               0,
++                               stream,
++                               matrix,
++                               bool(sparse_a),
++                               op,
++                               (const int8_t*)input,
++                               (int8_t*)output,
++                               invalid);
+         else
+             hipLaunchKernelGGL((strip_kernel<hip_bfloat16, Check, Compress>),
+                                grid,
+@@ -587,7 +618,7 @@ namespace
+            || (alignment & (alignment - 1))
+            || (order != HIPSPARSE_ORDER_ROW && order != HIPSPARSE_ORDER_COL))
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+-        if(type != HIP_R_32F && type != HIP_R_16F && type != HIP_R_16BF)
++        if(type != HIP_R_32F && type != HIP_R_16F && type != HIP_R_16BF && type != HIP_R_8I)
+             return HIPSPARSE_STATUS_NOT_SUPPORTED;
+         if(ld < (order == HIPSPARSE_ORDER_ROW ? c : r))
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+@@ -774,17 +805,23 @@ hipsparseStatus_t hipsparseLtMatmulDescriptorInit(const hipsparseLtHandle_t*
+     if(!valid(h) || !d || !read(a, mm.a, matrix_tag) || !read(b, mm.b, matrix_tag)
+        || !read(c, mm.c, matrix_tag) || !read(out, mm.d, matrix_tag))
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+-    if(!operation(opa) || !operation(opb) || compute != HIPSPARSELT_COMPUTE_32F)
++    if(!operation(opa) || !operation(opb)
++       || compute != (mm.a.type == HIP_R_8I ? HIPSPARSELT_COMPUTE_32I : HIPSPARSELT_COMPUTE_32F))
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     mm.opa       = opa;
+     mm.opb       = opb;
+-    mm.bias_type = mm.a.type;
++    mm.bias_type = mm.a.type == HIP_R_8I ? HIP_R_32F : mm.a.type;
+     if(mm.a.sparse == mm.b.sparse || mm.c.sparse || mm.d.sparse || mm.a.type != mm.b.type
+        || mm.a.type != mm.c.type || mm.a.type != mm.d.type)
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     int64_t m = rows(mm.a, opa), n = cols(mm.b, opb), k = cols(mm.a, opa);
+     if(k != rows(mm.b, opb) || mm.c.rows != m || mm.d.rows != m || mm.c.cols != n || mm.d.cols != n)
+         return HIPSPARSE_STATUS_INVALID_VALUE;
++    // INT8 minimum product is -16256, maximum 16384. With 2:4 packing,
++    // K<=262140 guarantees K/2*16384<=INT32_MAX, including partial sums.
++    // Larger contractions and widened outputs remain deliberately unadmitted.
++    if(mm.a.type == HIP_R_8I && k > 262140)
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     if(k % group_size(sparse(mm)))
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     if(mm.a.batches != mm.d.batches || mm.b.batches != mm.d.batches || mm.c.batches != mm.d.batches)
+@@ -842,7 +879,7 @@ hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*
+         if(bytes != sizeof(mm.bias_type))
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+         std::memcpy(&mm.bias_type, value, bytes);
+-        if(mm.bias_type != mm.a.type && mm.bias_type != HIP_R_32F)
++        if(mm.bias_type != HIP_R_32F && (mm.a.type == HIP_R_8I || mm.bias_type != mm.a.type))
+             return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     }
+     else if(activationAttribute(attr))
+@@ -853,6 +890,10 @@ hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*
+         std::memcpy(&enabled, value, bytes);
+         if(enabled != 0 && enabled != 1)
+             return HIPSPARSE_STATUS_INVALID_VALUE;
++        if(enabled && mm.d.type == HIP_R_8I
++           && (attr == HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID
++               || attr == HIPSPARSELT_MATMUL_ACTIVATION_TANH))
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
+         mm.activation = enabled ? int(attr) : -1;
+     }
+     else if(auto parameter = activationParameter(mm, attr))
+@@ -1101,6 +1142,20 @@ hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
+                            (const __half*)b,
+                            (const __half*)c,
+                            (__half*)d);
++    else if(plan.mm.a.type == HIP_R_8I)
++        hipLaunchKernelGGL(multiply_kernel<int8_t>,
++                           grid,
++                           block,
++                           0,
++                           stream,
++                           plan.mm,
++                           av,
++                           bv,
++                           plan.mm.alpha_vector ? static_cast<const float*>(alpha) : nullptr,
++                           (const int8_t*)a,
++                           (const int8_t*)b,
++                           (const int8_t*)c,
++                           (int8_t*)d);
+     else
+         hipLaunchKernelGGL(multiply_kernel<hip_bfloat16>,
+                            grid,
+-- 
+2.56.0
+
