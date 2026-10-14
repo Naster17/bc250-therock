@@ -148,14 +148,14 @@ Important operational facts:
 | Item                   | Current code / location                                                                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Branch                 | `users/Naster17/rocm-10.2-gfx1013`                                                                                                                           |
-| Qualified TheRock code | `3dae3539c3ffe46bb10cb83176cfdfebe1fd2dd7` (N1.2); newer docs commits need no runtime rebuild                                                                       |
-| Libraries              | `c6ac34f0ba3c4de11a0aa7e21fc9ec19adc6ef9e`                                                                                                                   |
+| Qualified TheRock code | `04aac483823c682ba50b03cc6f55e19798d9e05d` (N1.3); newer docs commits need no runtime rebuild                                                                       |
+| Libraries              | `18983cf7497cd7a54a454cd20748364d0ce3fc80`                                                                                                                   |
 | Systems                | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`                                                                                                                   |
 | LLVM                   | Upstream `7667f52dd687899256a3285ab0bce3c53bc73394`; no custom LLVM architecture patch                                                                       |
 | Torch                  | `4f13bf86476252e3d57b17d1c72f8512814400e9`; release/2.13 baseline `c779020750d7dc99a39ea8c104ef8df1fc9d0755`                                                 |
 | Triton                 | `ee65ff3b85f99d52e678b252a99c8425fa46e329`; baseline `66b3f9ff575eb8db6adec658bbf0badd9a8d2e25`                                                              |
 | Distribution/version   | TheRock 10.2.0; HIP component reports 7.17.0; Torch 2.13.0a0+gfx1013, qualified Triton 3.8 wheel. Different component version strings are not a failed port. |
-| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n11-n12-dev`                              |
+| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n13-dev`                              |
 | ROCm / Torch           | `WS/build/dist/rocm`, editable `WS/pytorch-work`                                                                                                             |
 | Runtime image ID       | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                                                           |
 | Runtime tag            | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; tag name predates P2, immutable ID above is authoritative                                          |
@@ -173,7 +173,7 @@ workspace-root/dev/candidate copies exist. `SOURCE_PRIORITY1.json` and
 not magically updated by patching extracted trees. Generated torch.version's
 Git label may retain the original export revision; use source manifests instead.
 
-Reconstruction: 19 patches in `patches/amd-mainline/rocm-libraries`, three in
+Reconstruction: 20 patches in `patches/amd-mainline/rocm-libraries`, three in
 `patches/amd-mainline/rocm-systems`, two in `patches/bc250-pytorch`, four in
 `patches/bc250-triton`. Apply in order. The P2 reconstruction helper verified
 exact library/system/Torch trees using private indexes; it did not recreate the
@@ -184,7 +184,8 @@ Do not reset sources or casually change pinned submodules. N1.1 adds
 active hipTensor hash) on the P2 snapshot; P2 manifests/candidate stay unchanged.
 N1.1 library reconstruction matched all18 ordered patches exactly. N1.2 adds
 `SOURCE_N12.json` (8 verified changed files) on N1.1/P2 and exact19-patch
-library reconstruction; retained earlier manifests keep their original meaning.
+library reconstruction; retained earlier manifests keep their original meaning. N1.3 adds
+`SOURCE_N13.json` (8 verified changed files), exact20-patch reconstruction.
 
 ## Library patch index
 
@@ -209,6 +210,7 @@ library reconstruction; retained earlier manifests keep their original meaning.
 | 0017  | Register-tiled Lt GEMM, tensor unary expansion, sparse activations: `01566e3144d`      |
 | 0018  | hipTensor unilateral scalar contraction modes: `681d2f8a25d` |
 | 0019  | hipTensor native C32F/C64F scalar contractions and identity/NEG/CONJ: `c6ac34f0ba3` |
+| 0020  | hipTensor plan API validation and honest scalar preference contracts: `18983cf7497` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -228,7 +230,7 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 | rocBLAS/Tensile + hipBLAS                   | Native identity and scalar capability/predicate patches, 570 fallback kernels; large SGEMM and four Torch precisions; P2 BLAS18                                                                              | No complete tuned database/BLAS suite. hipBLAS uses this backend, not custom new kernels.                                                                   |
 | hipBLASLt                                   | 964 C/C++ API cases: f32/f16/bf16 with f32 accumulation, layouts/transposes/batches, host/device scalars, bias/activation/AUX/DGELU, host grouped queries/events/lifetimes; register tile                    | No FP8/INT8/FP64, device user groups, arbitrary tuning or matrix engine. Default Torch BLAS remains rocBLAS.                                                |
 | hipTensor generic                           | Historical154 rank-two and23 higher-rank reduction/permutation/binary/trinary checks in generic-only profile                                                                                                 | Wider rank/layout/operators remain; these counts are separate from contractions                                                                             |
-| hipTensor contraction | N1.1 real273 API cases (253 numerical +20 descriptor); N1.2 complex450 (426 numerical +24 descriptor) and273 real regressions. Same-type C32F/C64F, identity/NEG/CONJ, public complex scalars, shared/unilateral sums, padded/permuted layouts, zero/imaginary scalars, span/alias/guard bytes, in-place conjugated C/D,16-mode union with unit axes, plan lifetime and3algorithms×3workspace preferences/type with JIT NONE | Next N1.3: plan enum/attribute-size validation and honest cache/JIT contracts. Mixed/widened complex and other complex unary ops unsupported; small-fixture timing is not general performance. |
+| hipTensor contraction | N1.1 real273 API cases (253 numerical +20 descriptor); N1.2 complex450 (426 numerical +24 descriptor) and273 real regressions. Same-type C32F/C64F, identity/NEG/CONJ, public complex scalars, shared/unilateral sums, padded/permuted layouts, zero/imaginary scalars, span/alias/guard bytes, in-place conjugated C/D,16-mode union with unit axes, plan lifetime and3algorithms×3workspace preferences/type with JIT NONE | N1.3:304 plan API checks +12 numerical executions across four real/complex types; pointer/size/enum guards, atomic failed setters, owning plans, zero required workspace. Scalar cache NONE/JIT NONE/autotune NONE/count0/rank0; alternative requests explicitly unsupported. Broader cache/JIT implementations remain optional. Mixed/widened complex and other complex unary ops unsupported; small-fixture timing is not general performance. |
 | hipSPARSELt                                 | 234 cases: f32/f16/bf16, strip prune/check/compress/matmul, low-precision maximum-L1 TILE, sparse A/B, layouts/transposes/padded batches, descriptor/plan/Search; six activation families                    | Separate backend compression. No FP32 TILE, integer/FP8, bias/vector scaling, split-K/multi-stream/broadcast guarantees or measured hardware sparse speedup |
 | CK scalar DL                                | CPU-checked FP32/FP16/signedINT8 GEMM examples; native architecture applicability changes                                                                                                                    | Admitted DL convolution/grouped classes are not automatically executed/qualified                                                                            |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
@@ -358,6 +360,24 @@ ccache, targeted hipTensor+dist/exclusive lock. Thirty-repeat tiny stream-event
 timings: GEMM8.7–9.9µs, mixed21.5–23.2µs including submission gaps; no speedup
 or large-performance inference. Independent prior library:
 `WS/recovery/n12-hiptensor-before.so.0.1`. No new host/kernel/Torch changes.
+
+N1.3 plan contracts: common plan APIs validate pointers, enums, exact attribute
+sizes and workspace preferences before copying/allocating; failed setters/query
+leave state/output unchanged, failed plan creation returns null with owning
+cleanup. Native scalar defaults use cache NONE, JIT NONE, autotune NONE, count0,
+rank0; PEDANTIC/DEFAULT-JIT/INCREMENTAL/positive count or rank return NOT_SUPPORTED.
+Three algorithms remain deterministic aliases, not new performance models.
+`WS/logs/n13-hiptensor-r2/result.json`:304 API checks +12 CPU-referenced GPU
+executions (R32F/R64F/C32F/C64F ×3algorithms; limits0/1/UINT64_MAX); mutated/destroyed
+source preferences/descriptors do not invalidate existing plans.273 real/450
+complex regressions passed, kernel logs identical1009 lines. Initial17.6s build;
+first probe passed316 but runner's count assertion failed (API checks were not
+printed individually), preserved in attempt1 report and `WS/logs/n13-hiptensor`;
+prior prefix restored before unlock. Reporting fixed, production code unchanged;
+cached restage4.9s, plan1.5s/real2.7s/complex2.3s gates under exclusive lock,
+12jobs/20GiB ccache. Prior library `WS/recovery/n13-hiptensor-before.so.0.1`.
+Common validation changed, but non-gfx1013 numerical execution and every internal
+initialization-failure injection are not qualified. No new performance claim.
 
 ## Defects and traps already investigated: do not rediscover them
 
