@@ -85,8 +85,10 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 ## Kernel, unlock, cooling and recovery
 
 Active kernel: `7.1.5-bc250rocm-r2 #2 SMP PREEMPT_DYNAMIC`, built 2026-09-16.
-The complete r2 kernel CONFIG was not recovered from `/proc/config.gz`; do not
-invent its flags from unrelated 7.0.10 headers.
+The running kernel CONFIG was not available through `/proc/config.gz`. A later
+workspace-organization task recovered its original build-tree configuration from
+.105 at `bc250stack/kernel/configs/r2.config`; provenance records this distinction.
+Do not infer it from unrelated 7.0.10 headers.
 
 Live boot files:
 `/home/nik/bc250work/bc250-rocm-lab/{vmlinuz,initramfs}-7.1.5-bc250rocm-r2`.
@@ -466,3 +468,28 @@ patch subjects and validation registry, compare current code/profile, then state
 new work/test is necessary (new change, uncovered case, genuine failure or invalid old
 reference). An old unchecked box, context compaction, stale PID, mutable tag name or
 component version number mismatch is not a reason to restart the port.
+
+## Unified workspace organization (after the memory audit)
+
+Current local workspace: `/home/nik/Documents/Vibe/bc250stack`. The existing
+TheRock checkout moved intact to `therock/`; `/home/nik/Documents/Vibe/therock`
+is a compatibility symlink. The separate fresh PyTorch checkout moved intact to
+`references/pytorch-upstream`, with its original `Vibe/pytorch` path preserved.
+Canonical `torch/` and `triton/` aliases point to the qualified patched sources
+inside TheRock, so there is no duplicated or silently upgraded port checkout.
+
+Kernel source was found on .105 at
+`/home/nik/bc250work/alpine-rocm-7.1/sources/linux-7.1-bc250-test` and copied
+read-only into `kernel/source`. Five source/configuration anchors were verified.
+The kernel binary SHA256 is
+`792f904835f27574b680d2fd5cfd7e42b348fb3a3d9b39d8e8c87348873c3b0d`, identical
+on both hosts. Configuration, legacy scripts and the existing bc250-linux
+packaging repository are preserved separately. This is an already-patched source
+snapshot, not a clean upstream checkout; generated build products/private signing
+keys/initramfs archives are excluded. No remote installation or reboot occurred.
+
+Workspace README/AGENTS and workspace-manifest.json explain component identities.
+The workspace repository tracks coordination files; source changes stay in their
+component repositories. Board support copies retain driver and CU-unlock history.
+New session history may use the new workspace cwd; the earlier Codex thread-index
+lookup by the old therock cwd remains useful for archived sessions.

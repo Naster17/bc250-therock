@@ -8,7 +8,8 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **Current task:** memory/history audit completed; no new implementation queued.
+- **Current task:** unified workspace organized at `/home/nik/Documents/Vibe/bc250stack`;
+  source retrieval completed; no ROCm implementation/build queued.
 - **Last qualified code batch:** P2, root `ce0025df5`; P1 `71f9f0ee4`, scalar batch
   `fdde5561c`. Later memory/docs commits do not require a runtime rebuild.
 - **No outstanding build/GPU gate at handoff.** An unrelated global MIOpen rebuild
@@ -16,7 +17,7 @@ release claims must not override this cursor and current manifests.
 - **Next implementation on a new “continue”: N1.1 below**, unless the user steers
   elsewhere. First inspect hipTensor unilateral-reduction mode rejection in the scalar
   contraction path, then implement that bounded gap; do not restart the backend.
-- **This turn changed memory/documentation only.** Do not rerun P1/P2, reinstall
+- **Latest turn organized local checkouts and imported kernel sources only.** Do not rerun P1/P2, reinstall
   Torch, recreate images or redownload models to validate this update.
 
 At resume: read this file, inspect local Git status/log and `.104` runtime/source
@@ -49,7 +50,9 @@ matrix backend is not. CPU fallbacks must be labeled.
 ## Current state and paths
 
 `WS` = `/home/nik/bc250work/rocm-10.2-gfx1013` on `nik@192.168.1.104`.
-Local root `/home/nik/Documents/Vibe/therock`, branch
+Workspace root `/home/nik/Documents/Vibe/bc250stack`; TheRock root
+`/home/nik/Documents/Vibe/bc250stack/therock` (old path remains a compatibility
+symlink), branch
 `users/Naster17/rocm-10.2-gfx1013`. `.104` host is Alpine, ROCm userspace is glibc
 inside rootful Podman; this is not the separate native-musl gfx1103 project.
 
@@ -77,6 +80,21 @@ strings differ legitimately (TheRock10.2, HIP7.17, Torch 2.13). Source archive n
 and generated Torch Git labels may retain older baselines; do not relabel them.
 The latest source transfer verified51 files; candidate payload verified191
 independent shared-object/kernel-pack copies. Detailed hashes are in manifests.
+
+## Unified local workspace
+
+The new parent workspace has its own AGENTS.md/README and component manifest.
+`torch/` and `triton/` link to our patched sources inside TheRock. Your fresh
+upstream checkout is retained under `references/pytorch-upstream`; it is not an
+upgrade/replacement of the qualified Torch. Old `Vibe/therock` and `Vibe/pytorch`
+paths remain symlinks to preserve absolute build paths. Do not delete them yet.
+
+`kernel/source` is the already-patched Linux7.1.5 r2 source recovered read-only
+from .105, with `kernel/configs/r2.config`, packaging repository, legacy scripts
+and provenance. Kernel binary hash matches both hosts. Compiled objects/private
+signing keys/generated initramfs archives are excluded. Do not apply legacy
+patches twice. Existing board driver/CU-unlock repositories are copied under
+`board-support`. Organization did not change either remote runtime or boot state.
 
 ## Hardware and indispensable constraints
 
