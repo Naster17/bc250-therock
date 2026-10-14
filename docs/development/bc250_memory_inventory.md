@@ -518,7 +518,7 @@ epilogue, A1/B1/B2/A2 order; five GPU-event samples of32-launch HIP graph/pass.
 Selected skinny ratios1.14–1.86x, selected small1.21–1.61x; controls0.998–1.006x;
 max repeated-pass median drift0.24%. Kernel-focused graph replay, not uncaptured
 application latency or Torch speedup; clocks untrusted, no clock attribution.
-Final targeted16-job/20GiB ccache build11.6s, numerical3.7s/scalar2.3s/extended2.1s;
+Final targeted16-job/20GiB ccache build11.8s, numerical3.7s/scalar2.3s/extended2.1s;
 timing passes1.0–1.2s, all under exclusive lock. Kernel logs identical1009 lines.
 `SOURCE_N18.json` verifies12 source files plus BLAS DSO/pack hashes;26 patches
 reconstruct exact tree. Pack payload comparison:1 Lt entry changed,68 unchanged
