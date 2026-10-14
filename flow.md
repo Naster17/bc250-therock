@@ -47,6 +47,15 @@ release claims must not override this cursor and current manifests.
   override to avoid changing kernel and firmware together. Root firmware untouched;
   ROCr SDMA remains disabled. Inspection handled usr/lib→lib path normalization;
   initial parser/compile failures retained in hostlogs, no GPU fault involved.
+- **R2 identity gap closed during K1:** retained initramfs and installed AMDGPU
+  payload SHA`cf6c4c0ec2bae53da7c5ad800719997deb9b2f1ccd90f1da882a76d35bd1e611`
+  match; loaded/installed/archive build ID all`4bbb2004029bff0b0e9f8e60185968ebd073c27e`.
+  Evidence`kernel/r3/evidence/r2-module-identity.json`; not a bit-reproducible build
+  proof. Firmware comparison now normalizes initramfs usr/lib to root/lib and
+  checks decompressed payloads; only2 SDMA entries differ, exactly Navi12 blobs.
+  `kernel/r3/evidence/r3.config` and config diff retain actual migrated settings.
+  Native build still PID12625, fan waiter25715; patched TTM compiled, other modules
+  still compiling. No install/boot/GPU test yet; no actual watchdog expiry gate.
 - **Immediate next:** finish build; rebuild retained NCT6687 cooling module from
   .105 read-only source import`kernel/board-fan` against r3. Check source modules/
   firmware/initramfs, prepare one-shot entry with persistent r2 default. First
@@ -296,7 +305,7 @@ Kernel workstream added at the user's request (2026-10-14):
 
 | State | ID | Work and acceptance boundary |
 | ----- | -- | ---------------------------- |
-| [ ] | K1 | Verify latest stable upstream Git tag/source and signing identity; compare legacy source/config/modules and retain provenance/fallbacks. |
+| [x] | K1 | Verified latest stable upstream Git tag/source and signing identity; compare legacy source/config/modules and retain provenance/fallbacks. |
 | [ ] | K2 | Review/reimplement only needed gfx1013 patches; correct diagnostic register restoration and analyze TLB error/locking/lifetime behavior; telemetry separately. |
 | [ ] | K3 | Build separate r3 image/modules/config with ccache/resource/disk bounds on .104; inspect artifacts and initramfs without replacing r2. |
 | [ ] | K4 | Establish and check one-shot boot, persistent r2 default, early panic/watchdog and SSH recovery; bounded candidate boot only after recovery readiness. |

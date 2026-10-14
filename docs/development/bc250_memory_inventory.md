@@ -143,6 +143,24 @@ Important operational facts:
   `/home/nik/{bc250-40cu-unlock,bc250_smu_oc,rocm-systems}`. Older Vulkan7.0.10
   module/initramfs artifacts are distinct from the live r2 kernel.
 
+Active user-authorized clean-kernel workstream K1–K6 (2026-10-14): fresh signed
+Linux7.2.10 Git base`7b20d05fd38de8e0be168956f6fd241d750c7d69`, Greg signer
+`647F28654894E3BD457199BE38DBBDC86092693E`; new repo`bc250stack/kernel/linux-r3`,
+reviewed code`84995f1a85188cde56910729214b0a68a7e402da`. Separate .104 native build
+workspace`/home/nik/bc250work/kernel-r3-7.2.10`,16jobs/20GiB ccache, stage only;
+no candidate boot/install qualification yet. Preserve r2/.105 and all ROCm state.
+Full93,517-file legacy-source comparison found only7 active AMD files +5 backups
+against local archived7.1+7.1.5 baseline (those archive signatures not checked).
+New patches retain explicit CU/PASID/TTM quirks, restore all probe registers and
+propagate runlist errors via existing partial-operation error paths; failure
+injection remains unqualified. Eight-core telemetry remains separate/open.
+The r2 retained/installed AMDGPU payloads match byte for byte and loaded build ID
+matches both (`4bbb2004029bff0b0e9f8e60185968ebd073c27e`); module identity gap from
+initial audit is now closed, without claiming reproducible compilation. Actual
+r2 initramfs has Navi12 SDMA firmware under cyan names; two entries differ from
+root cyan blobs. First r3 pins actual r2 bytes privately; SDMA stays off. See
+`bc250stack/kernel/r3/evidence/` and canonical flow for current jobs/recovery gate.
+
 Read-only kernel review2026-10-14:
 [report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),
 [active AMD delta](bc250_kernel_audit_20261014.patch). Reconstructed AMD subtree
