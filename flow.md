@@ -8,6 +8,16 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Live checkpoint 2026-10-14 21:48 UTC (user requested before compaction):**
+  K3 build PID12625 alive after27min, phase`build`, fan waiter25715 alive;
+  log advancing through AMDGPU/network/USB/filesystem modules, no build failure
+  observed,28.3GiB free. Same command/log/status/stage paths below. No install,
+  reboot or GPU execution; running kernel remains r2, persistent default r2.
+  Next independent preparation: make GPU runner reject new kernel faults/WARNs
+  and validate early-init hook/installer guards locally. Then finish staged
+  kernel/fan, exercise hardware watchdog recovery on r2, guarded r2 references,
+  and only then one-shot candidate boot/base SSH and controlled GPU gates.
+  Preserve generated remote signing private key; never include it in evidence.
 - **ACTIVE user priority: K1–K6, clean upstream BC-250 kernel workstream**
   (authorized2026-10-14), alongside ROCm/Torch. K1 source fetched: signed stable
   `v7.2.10`, base`7b20d05fd38de8e0be168956f6fd241d750c7d69`; Greg fingerprint
@@ -65,7 +75,8 @@ release claims must not override this cursor and current manifests.
   base-boot guard before boot test. Preserve all r2/ROCm files and .105 unchanged.
   No blanket recovery guarantee without out-of-band access; no deliberate GPU
   reset/SDMA/fault experiments. N2.1 remains next library item after kernel batch.
-- **Latest user-requested kernel review:** preliminary read-only r2 audit complete;
+- **Historical initial kernel review (superseded by K1/K3 checkpoints above):**
+  preliminary read-only r2 audit complete;
   see `docs/development/bc250_kernel_audit_20261014.{md,json,patch}`. Both hosts run
   the recorded7.1.5-r2 image; installed AMDGPU module hashes match. Archive-derived
   AMD subtree comparison:7 active files/136 additions/3 removals,2762 identical
@@ -73,10 +84,9 @@ release claims must not override this cursor and current manifests.
   Findings: four ignored runlist-flush error returns; CU probe modes leave RLC
   changed; retained eight-core telemetry patch absent; two pre-existing Display
   Core boot warnings. No kernel cause for unresolved Python fault established.
-  No kernel/module/boot/runtime changes, builds, GPU tests or running audit jobs.
-  Next kernel action: authenticate upstream base/full delta, review minimal patch
-  series and module/initramfs provenance before preparing a separate candidate;
-  retain r2/default/SSH fallback and .105 unchanged. N2.1 library cursor retained.
+  At that initial checkpoint there were no kernel/module/boot/runtime changes
+  or builds. Upstream/full-tree and module identity work since completed above;
+  use the current K3/K4 cursor, not this historical next step. N2.1 retained.
 - **Current task:** N1.8 hipBLASLt short small/skinny GEMM dispatch implemented,
   installed on .104 and bounded-qualified. N1.1–N1.7 retained in their scopes.
 - **Last qualified code:** root `0115c01f06f8654b26b5a665286069caf89eda2d`,
