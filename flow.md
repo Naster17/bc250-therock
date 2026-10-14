@@ -1,6 +1,7 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-14. This is the **canonical working memory**, not a release note.
+Updated 2026-10-15 (local; checkpoints explicitly use UTC). This is the
+**canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
 Old milestone documents are evidence snapshots; their unchecked boxes and active
@@ -38,6 +39,13 @@ release claims must not override this cursor and current manifests.
   and pre-mark ranges unmapped: no end-to-end failed-flush lifetime containment
   claim; investigate separately before fault/migration experiments. Latest build
   check22:00UTC:~10,500 objects/1.3GiB output, phase build, no observed error.
+  Alpine `/usr/lib/sysctl.d/00-alpine.conf` overrides panic to120; candidate-only
+  OpenRC guard now starts after bootmisc/sysctl, arms its deadline FIRST, then
+  restores panic60/oops/softlockup/hardlockup policy for r3 only. Base ACK verifies
+  these live values. Existing r2 services/settings unchanged. GPU runner records
+  immutable image/source identities and BLAS DSO/kpack hashes, exact664/150/316
+  consumer markers and19 Torch references; VMM unsupported is explicitly
+  unqualified rather than counted as executed. Live GPU execution still pending.
 - **ACTIVE user priority: K1–K6, clean upstream BC-250 kernel workstream**
   (authorized2026-10-14), alongside ROCm/Torch. K1 source fetched: signed stable
   `v7.2.10`, base`7b20d05fd38de8e0be168956f6fd241d750c7d69`; Greg fingerprint
