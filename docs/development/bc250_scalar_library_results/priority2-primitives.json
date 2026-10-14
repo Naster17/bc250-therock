@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "cases": 138,
+  "checks": [
+    {
+      "status": "passed",
+      "library": "rocPRIM",
+      "architecture": "gfx1013",
+      "cases": 42,
+      "streams": 2,
+      "guards": true
+    },
+    {
+      "status": "passed",
+      "library": "hipCUB",
+      "architecture": "gfx1013",
+      "cases": 48,
+      "streams": 2,
+      "guards": true
+    },
+    {
+      "status": "passed",
+      "library": "rocThrust",
+      "architecture": "gfx1013",
+      "cases": 48,
+      "streams": 2,
+      "guards": true
+    }
+  ],
+  "seconds": 0.619
+}

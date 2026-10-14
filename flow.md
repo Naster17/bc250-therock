@@ -37,7 +37,8 @@ file once at the end of a work batch; avoid repeated documentation and long test
 
 ## Active development stack and recovery
 
-The launcher now uses a mutable development stack, not the frozen daily release:
+The launcher uses the mutable Priority 2 development stack. The directory retains
+its original `priority1` name; its runtime profile is `gfx1013-priority2-dev`:
 
 | Item                        | Current value                                                      |
 | --------------------------- | ------------------------------------------------------------------ |
@@ -66,18 +67,19 @@ available, but no additional long training qualification was run this batch.
 Local branch: `users/Naster17/rocm-10.2-gfx1013`. Use `git log -1` for the final
 TheRock commit containing this handoff (a file cannot contain its own commit ID).
 
-| Repository     | Final Priority 1 revision                  |
+| Repository     | Current source revision                    |
 | -------------- | ------------------------------------------ |
-| rocm-libraries | `f12e43e3f9be393dca54de17d7b34a29daffc57b` |
+| rocm-libraries | `01566e3144d854944c7bb1f6b045e965ddb5aae9` |
 | PyTorch        | `4f13bf86476252e3d57b17d1c72f8512814400e9` |
 | rocm-systems   | `dbdb7b8d1c56316d873a9b90e548e5a72853496d` |
 | Triton         | `ee65ff3b85f99d52e678b252a99c8425fa46e329` |
 
 Apply library patches in `patches/amd-mainline/rocm-libraries` in order through
-0016, and Torch patches in `patches/bc250-pytorch` through 0002.
+0017, and Torch patches in `patches/bc250-pytorch` through 0002.
 `.104` source trees are exported, gitless copies: `WS/source`,
 `WS/pytorch-source`, `WS/pytorch-work`. Their GIT_REVISION files and
-`WS/SOURCE_PRIORITY1.json` record provenance. Earlier source archives and
+`WS/SOURCE_PRIORITY2.json` record the latest provenance. SOURCE_PRIORITY1.json
+retains its earlier snapshot identity. Earlier source archives and
 SOURCE_CANDIDATE.json retain their original baseline meaning. The generated
 Torch version git label can retain its original export revision; use the
 source manifest for the patched revision. Triton wheel SHA256:
@@ -137,18 +139,70 @@ hipTensor (76 cases) and hipSPARSELt (162 cases) are retained. Consult
 - hipSPARSELt scalar compression/pack format is separate from hardware sparse
   matrix formats; retain its guards. Do not imply hardware acceleration.
 
+## Completed Priority 2 batch
+
+The user's P2 scope is tensor algebra, sparse Lt, math libraries, primitives,
+performance and candidate packaging. Debug/telemetry/communication bring-up was
+explicitly deferred in this batch; `.105` remains unchanged.
+
+| Done | Area                     | Final evidence                                                                                                                                                                                                                                                                                                                          |
+| ---- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [x]  | hipTensor                | 166 native GPU cases. Nineteen additional real unary operations, strided dot and three contracted modes; common single-contracted-mode loop avoids repeated mixed-radix division. Seven supported storage/compute combinations retained; no complex or unilateral-reduction claim.                                                      |
+| [x]  | hipSPARSELt              | 234 native GPU cases. ReLU, ABS, LeakyReLU, GELU, Sigmoid and parameterized Tanh; clipped ReLU, activation parameter set/get and plan snapshot independence. FP32/FP16/BF16 scalar execution retained; no integer or hardware sparse speedup claim.                                                                                     |
+| [x]  | Math libraries           | 149 GPU checks: BLAS 18, FFT 30, solvers 32, Torch sparse 25, direct hipSPARSE triangular solves 16, Torch RNG 6, direct rocRAND 22. CPU references, solver residuals/condition-10,000 systems, gradients, odd/strided/batched FFTs, COO/CSR, six pseudo and four Sobol generators.                                                     |
+| [x]  | rocPRIM/hipCUB/rocThrust | 138 int32 GPU reference cases: 42/48/48. Stable signed-key sorts, selection, scans, reductions, wave32/block algorithms and default/nonblocking streams, Thrust par/par_nosync. Guards and counts checked. Installed headers required no new port fix.                                                                                  |
+| [x]  | Performance              | 71 bounded CPU-checked timing cases. hipBLASLt register-tiled GEMM verified by 403 existing + 561 expanded API cases = 964. Measured large GEMM approximately 2.1–2.4x faster than the prior scalar Lt implementation; small-shape timings roughly flat/slightly worse. Default Torch BLAS unchanged.                                   |
+| [x]  | Candidate                | Exact source-tree reconstruction from 17 library patches, three runtime-system patches and two Torch patches. Independent ROCm/Torch copy with 191 shared-object/kernel-pack hashes; nik GPU checkpoint plus 20 sparse/compiled-forward/backward/FFT/allocation cycles passed. Separate candidate, not a newly activated daily release. |
+
+Reports: `docs/development/bc250_scalar_library_results/priority2-*.json` and
+`WS/logs/priority2-*`. Independent package:
+`/opt/bc250-stack/candidates/priority2-20261014`; its runtime manifest records
+payload hashes. `bc250-torch` remains on the mutable dev prefix with the new work.
+Previous releases, images, caches, checkpoints and source snapshots are retained.
+
+Performance findings are workload-specific. Plain Inductor reductions often
+measured slower than eager. Explicit HIP graph replay of the compiled fused
+SiLU/square/sum at 1,048,576 elements measured about 4x faster than eager; replay
+requires fixed captured storage/shapes. Sum/dot graph replay improved the tested
+large cases about 1.35–1.4x. No automatic graph or BLAS policy was changed.
+For known SPD systems, measured Cholesky factorization/solve was cheaper than a
+general solve, particularly with a reused factor; this does not justify silently
+assuming arbitrary matrices are SPD. Benchmark source contains the exact cases.
+
+The archived segfault is a Python CPU execution fault at address `0x3b3e6`,
+without an adjacent reported GPU reset/fault. The logs contain no useful stack
+or identified operator, so the cause remains **unconfirmed**. Independent-copy
+and stable-prefix sparse checks passed; they do not establish the cause.
+The installed launcher now holds a shared `.runtime.lock` during developer
+workloads. Use the host `helpers/update_dev_prefix.py -- COMMAND...` wrapper for
+**every mutable-prefix update**; it takes the exclusive lock. Arbitrary writes
+that bypass this wrapper remain unprotected. Lock exclusion, exception cleanup
+and symlink rejection passed local regression tests.
+
+Use component `hipBLASLt+dist hipTensor+dist hipSPARSELt+dist` targets for these
+changes. A global `dist` unnecessarily started rebuilding MIOpen and was stopped
+(exit 137); objects were preserved. Targeted staging passed (exit 0), all updated
+native kpacks were flattened, and GPU gates ran after staging. No full clean
+rebuild was needed. Future global builds can resume the preserved MIOpen objects.
+
+Local final verification: 27 launcher/lock/config/deployment/performance tests,
+source syntax/format hooks, nested diff checks and exact patch reconstruction.
+
 ## Remaining work, ordered
 
-- [ ] Performance: compare actual hipBLASLt versus rocBLAS dispatch and CPU;
-  representative Torch training/attention, GEMM shapes and memory pressure.
-  Tune native scalar kernels only after correctness checks. No new speedup claim.
-- [ ] Broader existing-library numerical/shape/layout/type coverage, including
-  solver, sparse, FFT, RPP, CK Tile and hipTensor. Expand unsupported public API
-  subsets only where hardware allows; maintain honest operation-level tables.
+- [ ] Further measured tuning, especially small/skinny GEMM, scalar tensor/sparse
+  throughput, reduction launch policies and representative long training steps.
+- [ ] Wider numerical/type/layout/API coverage: floating/custom and segmented
+  primitives, additional solver/FFT/sparse operations, RPP and generic tensors.
+- [ ] Feasible hipTensor complex/unilateral reductions and further plan APIs;
+  hipSPARSELt additional types and API combinations. Keep hardware-instruction
+  limitations and backend-specific compression explicit.
 - [ ] hipDNN mixed intermediate types, more fusion graphs and provider coverage;
-  wider hipBLASLt epilogues and grouped APIs where feasible.
-- [ ] Longer training/checkpoint/resume and sustained memory/stability checks,
-  especially under shared CPU/GPU memory pressure. Current dev profile is mutable.
+  wider hipBLASLt grouped APIs and epilogues where feasible.
+- [ ] Longer training/checkpoint/resume and sustained shared-memory/stability
+  checks. The current developer profile is mutable and only bounded-qualified.
+- [ ] Diagnose the historical crash if it recurs with a stable prefix and capture
+  a real stack; current successful gates are not proof of its root cause.
 - [ ] Distributed/RCCL qualification later; preserve `.105` for comparison until
   `.104` is stable and user authorizes its migration.
 - [ ] Protected driver/telemetry/debug/counter investigations; SDMA, reset and

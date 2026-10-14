@@ -45,6 +45,7 @@ struct Case {
   Layout a, b, c, d;
   bool hasC = true, inPlace = false;
   double alpha = 1.25, beta = -0.5;
+  bool positiveInputs = false;
   hiptensorOperator_t opA = HIPTENSOR_OP_IDENTITY, opB = HIPTENSOR_OP_IDENTITY,
                       opC = HIPTENSOR_OP_IDENTITY;
 };
@@ -55,6 +56,45 @@ static double unary(double value, hiptensorOperator_t op) {
     return std::abs(value);
   if (op == HIPTENSOR_OP_RELU)
     return std::max(0.0, value);
+  if (op == HIPTENSOR_OP_SQRT)
+    return sqrt(value);
+  if (op == HIPTENSOR_OP_RCP)
+    return 1.0 / value;
+  if (op == HIPTENSOR_OP_SIGMOID)
+    return value >= 0.0 ? 1.0 / (1.0 + exp(-value))
+                        : exp(value) / (1.0 + exp(value));
+  if (op == HIPTENSOR_OP_TANH)
+    return tanh(value);
+  if (op == HIPTENSOR_OP_EXP)
+    return exp(value);
+  if (op == HIPTENSOR_OP_LOG)
+    return log(value);
+  if (op == HIPTENSOR_OP_SIN)
+    return sin(value);
+  if (op == HIPTENSOR_OP_COS)
+    return cos(value);
+  if (op == HIPTENSOR_OP_TAN)
+    return tan(value);
+  if (op == HIPTENSOR_OP_SINH)
+    return sinh(value);
+  if (op == HIPTENSOR_OP_COSH)
+    return cosh(value);
+  if (op == HIPTENSOR_OP_ASIN)
+    return asin(value);
+  if (op == HIPTENSOR_OP_ACOS)
+    return acos(value);
+  if (op == HIPTENSOR_OP_ATAN)
+    return atan(value);
+  if (op == HIPTENSOR_OP_ASINH)
+    return asinh(value);
+  if (op == HIPTENSOR_OP_ACOSH)
+    return acosh(value);
+  if (op == HIPTENSOR_OP_ATANH)
+    return atanh(value);
+  if (op == HIPTENSOR_OP_CEIL)
+    return ceil(value);
+  if (op == HIPTENSOR_OP_FLOOR)
+    return floor(value);
   return value;
 }
 static hiptensorTensorDescriptor_t descriptor(hiptensorHandle_t handle,
@@ -83,6 +123,14 @@ run(hiptensorHandle_t handle, Case const &test, hiptensorDataType_t dtype,
     b[i] = T(Acc(int(i % 11) - 5) / Acc(11));
   for (size_t i = 0; i < c.size(); ++i)
     c[i] = Output(Acc(int(i % 7) - 3) / Acc(7));
+  if (test.positiveInputs) {
+    for (auto &v : a)
+      v = T(std::abs(double(v)) + 1.125);
+    for (auto &v : b)
+      v = T(std::abs(double(v)) + 1.125);
+    for (auto &v : c)
+      v = Output(std::abs(double(v)) + 1.125);
+  }
   if (test.alpha == 0)
     std::fill(a.begin(), a.end(), T(std::numeric_limits<float>::quiet_NaN()));
   if (test.beta == 0)
@@ -253,6 +301,16 @@ int main() {
                {{'n'}, {3}, {3}},
                {{'n', 'm'}, {3, 5}, {1, 7}},
                {{'m', 'n'}, {5, 3}, {7, 1}}};
+    Case dot{"dot-unit-output-mode",
+             {{'k', 'u'}, {257, 1}, {2, 1027}},
+             {{'u', 'k'}, {1, 257}, {1029, 3}},
+             {{'u'}, {1}, {1}},
+             {{'u'}, {1}, {1}}};
+    Case threeSums{"three-contracted-modes",
+                   {{'q', 'k', 'r', 'm'}, {2, 3, 2, 3}, {1, 3, 13, 31}},
+                   {{'r', 'n', 'k', 'q'}, {2, 4, 3, 2}, {1, 3, 17, 61}},
+                   {{'m', 'n'}, {3, 4}, {11, 2}},
+                   {{'n', 'm'}, {4, 3}, {1, 7}}};
     auto scale = gemm;
     scale.name = "scale-no-c";
     scale.hasC = false;
@@ -277,7 +335,7 @@ int main() {
     largeK.a.lengths[0] = largeK.b.lengths[1] = 257;
     largeK.a.strides[1] = 263;
     for (auto const &test : {gemm, batch, outer, scale, unaryCase, inplace,
-                             alphaZero, betaZero, largeK}) {
+                             alphaZero, betaZero, largeK, dot, threeSums}) {
       run<float>(handle, test, HIPTENSOR_R_32F);
       run<double>(handle, test, HIPTENSOR_R_64F);
       run<__half>(handle, test, HIPTENSOR_R_16F);
@@ -285,6 +343,196 @@ int main() {
       run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
       run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
       run<float, double>(handle, test, HIPTENSOR_R_32F, HIPTENSOR_R_64F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-sqrt";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_SQRT;
+      test.positiveInputs = true;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-rcp";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_RCP;
+      test.positiveInputs = true;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-sigmoid";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_SIGMOID;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-tanh";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_TANH;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-exp";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_EXP;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-log";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_LOG;
+      test.positiveInputs = true;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-sin";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_SIN;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-cos";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_COS;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-tan";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_TAN;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-sinh";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_SINH;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-cosh";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_COSH;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-asin";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_ASIN;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-acos";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_ACOS;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-atan";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_ATAN;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-asinh";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_ASINH;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-acosh";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_ACOSH;
+      test.positiveInputs = true;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-atanh";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_ATANH;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-ceil";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_CEIL;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+    }
+    {
+      auto test = batch;
+      test.name = "unary-floor";
+      test.opA = test.opB = test.opC = HIPTENSOR_OP_FLOOR;
+      test.positiveInputs = false;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
     }
     auto duplicate = gemm;
     duplicate.name = "duplicate-mode";
@@ -303,9 +551,9 @@ int main() {
     unilateral.a.modes[0] = 'z';
     reject(handle, unilateral, HIPTENSOR_STATUS_NOT_SUPPORTED);
     auto unsupported = gemm;
-    unsupported.name = "unsupported-unary-sqrt";
+    unsupported.name = "unsupported-unary-complex-conj";
     reject(handle, unsupported, HIPTENSOR_STATUS_NOT_SUPPORTED,
-           HIPTENSOR_OP_SQRT);
+           HIPTENSOR_OP_CONJ);
     unsupported.name = "mixed-precision-tensors";
     reject(handle, unsupported, HIPTENSOR_STATUS_NOT_SUPPORTED,
            HIPTENSOR_OP_IDENTITY, HIPTENSOR_R_64F);
@@ -335,7 +583,7 @@ int main() {
     reject(handle, unsupported, HIPTENSOR_STATUS_NOT_SUPPORTED,
            HIPTENSOR_OP_IDENTITY, HIPTENSOR_R_32F, HIPTENSOR_COMPUTE_DESC_64F);
     tensorCheck(hiptensorDestroy(handle));
-    std::cout << "HIPTENSOR_SCALAR_PASS cases=76\n";
+    std::cout << "HIPTENSOR_SCALAR_PASS cases=166\n";
   } catch (std::exception const &error) {
     std::cerr << "FAIL " << error.what() << '\n';
     return 1;

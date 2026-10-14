@@ -115,8 +115,9 @@ template <class T> struct Problem {
           hipblasLtEpilogue_t epi,
           float arg0 = std::numeric_limits<float>::quiet_NaN(),
           float arg1 = std::numeric_limits<float>::quiet_NaN())
-      : m(7 + shape), n(11 - shape), k(13 + shape), batches(2), ta(trans_a),
-        tb(trans_b), type(t), epilogue(epi) {
+      : m(shape < 0 ? 129 : 7 + shape), n(shape < 0 ? 131 : 11 - shape),
+        k(shape < 0 ? 33 : 13 + shape), batches(2), ta(trans_a), tb(trans_b),
+        type(t), epilogue(epi) {
     act0 = std::isnan(arg0) ? (clamp_mode(epi)   ? -0.2f
                                : swish_mode(epi) ? 1.0f
                                                  : 0.0f)
@@ -336,12 +337,12 @@ static void execute(hipblaslt_ext::GemmInstance &g, hipStream_t stream) {
   hip_check(hipEventDestroy(stop));
 }
 template <class T>
-static void single(hipblasLtHandle_t handle, hipStream_t stream,
-                   hipDataType type, bool row, bool ta, bool tb,
-                   hipblasLtEpilogue_t epi, bool typed, int &passed,
-                   float arg0 = std::numeric_limits<float>::quiet_NaN(),
-                   float arg1 = std::numeric_limits<float>::quiet_NaN()) {
-  Problem<T> p(type, 0, ta, tb, row, epi, arg0, arg1);
+static void
+single(hipblasLtHandle_t handle, hipStream_t stream, hipDataType type, bool row,
+       bool ta, bool tb, hipblasLtEpilogue_t epi, bool typed, int &passed,
+       float arg0 = std::numeric_limits<float>::quiet_NaN(),
+       float arg1 = std::numeric_limits<float>::quiet_NaN(), int shape = 0) {
+  Problem<T> p(type, shape, ta, tb, row, epi, arg0, arg1);
   auto t = p.problem_type();
   hipblaslt_ext::Gemm g(handle, t.getOpA(), t.getOpB(), type, type, type, type,
                         p.compute);
@@ -571,6 +572,16 @@ static void sweep(hipblasLtHandle_t h, hipStream_t s, hipDataType type,
             passed, 0.0f, 0.0f);
   single<T>(h, s, type, true, true, false,
             HIPBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT, false, passed, 0.4f, -0.1f);
+  // Register-tiled dispatch: odd dimensions, two batches, padded layouts,
+  // every transpose and output type, including auxiliary/activation epilogues.
+  for (auto epi :
+       {HIPBLASLT_EPILOGUE_DEFAULT, HIPBLASLT_EPILOGUE_GELU_AUX_BIAS,
+        HIPBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT, HIPBLASLT_EPILOGUE_DGELU})
+    for (int trans = 0; trans < 4; ++trans)
+      for (bool row : {false, true})
+        single<T>(h, s, type, row, trans & 1, trans & 2, epi, false, passed,
+                  std::numeric_limits<float>::quiet_NaN(),
+                  std::numeric_limits<float>::quiet_NaN(), -1);
   grouped<T>(h, s, type, false, passed);
   grouped<T>(h, s, type, true, passed);
 }

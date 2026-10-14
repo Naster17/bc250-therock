@@ -1,0 +1,755 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "checks": [
+    {
+      "name": "blas_bmm_strided_torch.float16",
+      "status": "passed",
+      "seconds": 0.03230170501046814
+    },
+    {
+      "name": "blas_addmm_scaling_torch.float16",
+      "status": "passed",
+      "seconds": 0.004437453986611217
+    },
+    {
+      "name": "blas_broadcast_matmul_torch.float16",
+      "status": "passed",
+      "seconds": 0.0008973139920271933
+    },
+    {
+      "name": "blas_bmm_strided_torch.bfloat16",
+      "status": "passed",
+      "seconds": 0.00519366399385035
+    },
+    {
+      "name": "blas_addmm_scaling_torch.bfloat16",
+      "status": "passed",
+      "seconds": 0.0005099789996165782
+    },
+    {
+      "name": "blas_broadcast_matmul_torch.bfloat16",
+      "status": "passed",
+      "seconds": 0.00043222500244155526
+    },
+    {
+      "name": "blas_bmm_strided_torch.float32",
+      "status": "passed",
+      "seconds": 0.001457996986573562
+    },
+    {
+      "name": "blas_addmm_scaling_torch.float32",
+      "status": "passed",
+      "seconds": 0.0004786300123669207
+    },
+    {
+      "name": "blas_broadcast_matmul_torch.float32",
+      "status": "passed",
+      "seconds": 0.0004719909920822829
+    },
+    {
+      "name": "blas_bmm_strided_torch.float64",
+      "status": "passed",
+      "seconds": 0.0014466750144492835
+    },
+    {
+      "name": "blas_addmm_scaling_torch.float64",
+      "status": "passed",
+      "seconds": 0.0004780890012625605
+    },
+    {
+      "name": "blas_broadcast_matmul_torch.float64",
+      "status": "passed",
+      "seconds": 0.00038183198194019496
+    },
+    {
+      "name": "blas_bmm_strided_torch.complex64",
+      "status": "passed",
+      "seconds": 0.001846824015956372
+    },
+    {
+      "name": "blas_addmm_scaling_torch.complex64",
+      "status": "passed",
+      "seconds": 0.0005268709792289883
+    },
+    {
+      "name": "blas_broadcast_matmul_torch.complex64",
+      "status": "passed",
+      "seconds": 0.00046972802374511957
+    },
+    {
+      "name": "blas_bmm_strided_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0018167679954785854
+    },
+    {
+      "name": "blas_addmm_scaling_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0005237330042291433
+    },
+    {
+      "name": "blas_broadcast_matmul_torch.complex128",
+      "status": "passed",
+      "seconds": 0.00047973301843740046
+    },
+    {
+      "name": "rng_uniform_state_replay",
+      "status": "passed",
+      "seconds": 0.005382383009418845
+    },
+    {
+      "name": "rng_uniform_distribution",
+      "status": "passed",
+      "seconds": 0.08162956600426696
+    },
+    {
+      "name": "rng_normal_state_replay",
+      "status": "passed",
+      "seconds": 0.00426479201996699
+    },
+    {
+      "name": "rng_normal_distribution",
+      "status": "passed",
+      "seconds": 0.0005770880088675767
+    },
+    {
+      "name": "rng_integer_state_replay",
+      "status": "passed",
+      "seconds": 0.014456325996434316
+    },
+    {
+      "name": "rng_integer_distribution",
+      "status": "passed",
+      "seconds": 0.042729493987280875
+    },
+    {
+      "name": "rocrand_xorwow_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.07262159200035967
+    },
+    {
+      "name": "rocrand_xorwow_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.006814160995418206
+    },
+    {
+      "name": "rocrand_xorwow_normal_statistics",
+      "status": "passed",
+      "seconds": 0.004752073989948258
+    },
+    {
+      "name": "rocrand_mrg32k3a_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.028594881994649768
+    },
+    {
+      "name": "rocrand_mrg32k3a_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.0038251559890341014
+    },
+    {
+      "name": "rocrand_mrg32k3a_normal_statistics",
+      "status": "passed",
+      "seconds": 0.002511171012884006
+    },
+    {
+      "name": "rocrand_mtgp32_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.03008060497813858
+    },
+    {
+      "name": "rocrand_mtgp32_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.0053713500092271715
+    },
+    {
+      "name": "rocrand_mtgp32_normal_statistics",
+      "status": "passed",
+      "seconds": 0.0025755310198292136
+    },
+    {
+      "name": "rocrand_philox_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.02674462800496258
+    },
+    {
+      "name": "rocrand_philox_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.0021097120188642293
+    },
+    {
+      "name": "rocrand_philox_normal_statistics",
+      "status": "passed",
+      "seconds": 0.0014903070114087313
+    },
+    {
+      "name": "rocrand_mrg31k3p_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.02924933299073018
+    },
+    {
+      "name": "rocrand_mrg31k3p_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.00430741798481904
+    },
+    {
+      "name": "rocrand_mrg31k3p_normal_statistics",
+      "status": "passed",
+      "seconds": 0.002509226993424818
+    },
+    {
+      "name": "rocrand_lfsr113_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.03194594298838638
+    },
+    {
+      "name": "rocrand_lfsr113_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.0055094069975893945
+    },
+    {
+      "name": "rocrand_lfsr113_normal_statistics",
+      "status": "passed",
+      "seconds": 0.0026246419874951243
+    },
+    {
+      "name": "rocrand_sobol32_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.013016597979003564
+    },
+    {
+      "name": "rocrand_scrambled_sobol32_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.012420789018506184
+    },
+    {
+      "name": "rocrand_sobol64_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.0299825310066808
+    },
+    {
+      "name": "rocrand_scrambled_sobol64_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.030288770998595282
+    },
+    {
+      "name": "rfftn_torch.float32_(3, 17)_backward",
+      "status": "passed",
+      "seconds": 0.1300292109954171
+    },
+    {
+      "name": "rfftn_torch.float32_(3, 17)_ortho",
+      "status": "passed",
+      "seconds": 0.016708336013834924
+    },
+    {
+      "name": "rfftn_torch.float32_(3, 17)_forward",
+      "status": "passed",
+      "seconds": 0.0004964330000802875
+    },
+    {
+      "name": "fft_roundtrip_torch.float32_(3, 17)",
+      "status": "passed",
+      "seconds": 0.11330228799488395
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 45)_backward",
+      "status": "passed",
+      "seconds": 0.08040080600767396
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 45)_ortho",
+      "status": "passed",
+      "seconds": 0.00048821899690665305
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 45)_forward",
+      "status": "passed",
+      "seconds": 0.00043009198270738125
+    },
+    {
+      "name": "fft_roundtrip_torch.float32_(2, 45)",
+      "status": "passed",
+      "seconds": 0.0457952780125197
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 7, 13)_backward",
+      "status": "passed",
+      "seconds": 0.10881824101670645
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 7, 13)_ortho",
+      "status": "passed",
+      "seconds": 0.0005175590049475431
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 7, 13)_forward",
+      "status": "passed",
+      "seconds": 0.0004564210248645395
+    },
+    {
+      "name": "fft_roundtrip_torch.float32_(2, 7, 13)",
+      "status": "passed",
+      "seconds": 0.10778015101095662
+    },
+    {
+      "name": "complex_fft_torch.complex64_19",
+      "status": "passed",
+      "seconds": 0.3199670650064945
+    },
+    {
+      "name": "complex_fft_torch.complex64_32",
+      "status": "passed",
+      "seconds": 0.2807583770190831
+    },
+    {
+      "name": "rfft_backward_torch.float32",
+      "status": "passed",
+      "seconds": 0.3542620360094588
+    },
+    {
+      "name": "rfftn_torch.float64_(3, 17)_backward",
+      "status": "passed",
+      "seconds": 0.14862029301002622
+    },
+    {
+      "name": "rfftn_torch.float64_(3, 17)_ortho",
+      "status": "passed",
+      "seconds": 0.0004674200026784092
+    },
+    {
+      "name": "rfftn_torch.float64_(3, 17)_forward",
+      "status": "passed",
+      "seconds": 0.0003819450212176889
+    },
+    {
+      "name": "fft_roundtrip_torch.float64_(3, 17)",
+      "status": "passed",
+      "seconds": 0.1102507199975662
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 45)_backward",
+      "status": "passed",
+      "seconds": 0.07998899000813253
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 45)_ortho",
+      "status": "passed",
+      "seconds": 0.00048212800174951553
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 45)_forward",
+      "status": "passed",
+      "seconds": 0.00042182201286777854
+    },
+    {
+      "name": "fft_roundtrip_torch.float64_(2, 45)",
+      "status": "passed",
+      "seconds": 0.04575652600033209
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 7, 13)_backward",
+      "status": "passed",
+      "seconds": 0.10904057300649583
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 7, 13)_ortho",
+      "status": "passed",
+      "seconds": 0.0004821459879167378
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 7, 13)_forward",
+      "status": "passed",
+      "seconds": 0.0004171530017629266
+    },
+    {
+      "name": "fft_roundtrip_torch.float64_(2, 7, 13)",
+      "status": "passed",
+      "seconds": 0.11960185298812576
+    },
+    {
+      "name": "complex_fft_torch.complex128_19",
+      "status": "passed",
+      "seconds": 0.3492822910193354
+    },
+    {
+      "name": "complex_fft_torch.complex128_32",
+      "status": "passed",
+      "seconds": 0.288691324996762
+    },
+    {
+      "name": "rfft_backward_torch.float64",
+      "status": "passed",
+      "seconds": 0.30436128500150517
+    },
+    {
+      "name": "solve_torch.float32",
+      "status": "passed",
+      "seconds": 0.09897825701045804
+    },
+    {
+      "name": "cholesky_torch.float32",
+      "status": "passed",
+      "seconds": 0.02399893998517655
+    },
+    {
+      "name": "eigvalsh_torch.float32",
+      "status": "passed",
+      "seconds": 0.06428120701457374
+    },
+    {
+      "name": "svdvals_torch.float32",
+      "status": "passed",
+      "seconds": 0.04509455102379434
+    },
+    {
+      "name": "inverse_residual_torch.float32",
+      "status": "passed",
+      "seconds": 0.004649996990337968
+    },
+    {
+      "name": "qr_residual_torch.float32",
+      "status": "passed",
+      "seconds": 0.055782365991035476
+    },
+    {
+      "name": "solve_backward_torch.float32",
+      "status": "passed",
+      "seconds": 0.0462596410070546
+    },
+    {
+      "name": "solve_torch.float64",
+      "status": "passed",
+      "seconds": 0.02768584099248983
+    },
+    {
+      "name": "cholesky_torch.float64",
+      "status": "passed",
+      "seconds": 0.006184047000715509
+    },
+    {
+      "name": "eigvalsh_torch.float64",
+      "status": "passed",
+      "seconds": 0.0008358089835382998
+    },
+    {
+      "name": "svdvals_torch.float64",
+      "status": "passed",
+      "seconds": 0.0023229739745147526
+    },
+    {
+      "name": "inverse_residual_torch.float64",
+      "status": "passed",
+      "seconds": 0.001981172012165189
+    },
+    {
+      "name": "qr_residual_torch.float64",
+      "status": "passed",
+      "seconds": 0.005350404011551291
+    },
+    {
+      "name": "solve_backward_torch.float64",
+      "status": "passed",
+      "seconds": 0.006911453005159274
+    },
+    {
+      "name": "solve_torch.complex64",
+      "status": "passed",
+      "seconds": 0.034045987005811185
+    },
+    {
+      "name": "cholesky_torch.complex64",
+      "status": "passed",
+      "seconds": 0.006365445005940273
+    },
+    {
+      "name": "eigvalsh_torch.complex64",
+      "status": "passed",
+      "seconds": 0.052919451001798734
+    },
+    {
+      "name": "svdvals_torch.complex64",
+      "status": "passed",
+      "seconds": 0.0033563559991307557
+    },
+    {
+      "name": "inverse_residual_torch.complex64",
+      "status": "passed",
+      "seconds": 0.002330755000002682
+    },
+    {
+      "name": "qr_residual_torch.complex64",
+      "status": "passed",
+      "seconds": 0.013015773001825437
+    },
+    {
+      "name": "solve_backward_torch.complex64",
+      "status": "passed",
+      "seconds": 0.008575558982556686
+    },
+    {
+      "name": "solve_torch.complex128",
+      "status": "passed",
+      "seconds": 0.036677267984487116
+    },
+    {
+      "name": "cholesky_torch.complex128",
+      "status": "passed",
+      "seconds": 0.006535761000122875
+    },
+    {
+      "name": "eigvalsh_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0016606769931968302
+    },
+    {
+      "name": "svdvals_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0033879789989441633
+    },
+    {
+      "name": "inverse_residual_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0023159970005508512
+    },
+    {
+      "name": "qr_residual_torch.complex128",
+      "status": "passed",
+      "seconds": 0.005828896013554186
+    },
+    {
+      "name": "solve_backward_torch.complex128",
+      "status": "passed",
+      "seconds": 0.008429951005382463
+    },
+    {
+      "name": "solve_condition_1e4_torch.float32",
+      "status": "passed",
+      "seconds": 0.02691291499650106
+    },
+    {
+      "name": "solve_condition_1e4_residual_torch.float32",
+      "status": "passed",
+      "seconds": 0.02567976899445057
+    },
+    {
+      "name": "solve_condition_1e4_torch.float64",
+      "status": "passed",
+      "seconds": 0.02155953098554164
+    },
+    {
+      "name": "solve_condition_1e4_residual_torch.float64",
+      "status": "passed",
+      "seconds": 0.000824165006633848
+    },
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.024848750996170565
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0005452389887068421
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.19972157999291085
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0004216450033709407
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.00043284500134177506
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.16789127001538873
+    },
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00045816399506293237
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0004645329900085926
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0019747800251934677
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00038630299968644977
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0004175689828116447
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0018947439966723323
+    },
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.00047034499584697187
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0004562410176731646
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0018034999957308173
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.00039601800381205976
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0004173489869572222
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0018455979879945517
+    },
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0004312249948270619
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00045265600783750415
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0017653010145295411
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00038571699406020343
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00042309900163672864
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0018259419884998351
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.1602606330125127
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.01163157299743034
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004360065009677783
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.00446373299928382
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004481105017475784
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.011174665007274598
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004380916012451053
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004423916980158538
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004329694987973198
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004396997013827786
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004288773983716965
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004428865999216214
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.00434312698780559
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004425361024914309
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004406432010000572
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.0043954040156677365
+    },
+    {
+      "name": "sparse_duplicate_coo_value_backward",
+      "status": "passed",
+      "seconds": 0.03657659501186572
+    }
+  ],
+  "seconds": 5.128400496003451,
+  "passed": 149,
+  "failed": 0
+}

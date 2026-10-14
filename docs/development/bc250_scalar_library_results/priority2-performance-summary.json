@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "comparison": "same seeded CPU-checked inputs; GPU event medians of five bounded samples; no end-to-end Torch speedup claim",
+  "hipblaslt_gemm_speedups": {
+    "gemm_32x32x32_torch.float32_hipblaslt": 0.9597275644965131,
+    "gemm_32x32x32_torch.float16_hipblaslt": 0.9355488197972783,
+    "gemm_32x32x32_torch.bfloat16_hipblaslt": 0.9434010083309188,
+    "gemm_127x65x131_torch.float32_hipblaslt": 0.8995218834038768,
+    "gemm_127x65x131_torch.float16_hipblaslt": 1.0155078500009287,
+    "gemm_127x65x131_torch.bfloat16_hipblaslt": 0.9143088730763703,
+    "gemm_256x256x256_torch.float32_hipblaslt": 2.1747853718637744,
+    "gemm_256x256x256_torch.float16_hipblaslt": 2.207511115584327,
+    "gemm_256x256x256_torch.bfloat16_hipblaslt": 2.1387745625353465,
+    "gemm_512x512x512_torch.float32_hipblaslt": 2.4386641987430697,
+    "gemm_512x512x512_torch.float16_hipblaslt": 2.2693567495719953,
+    "gemm_512x512x512_torch.bfloat16_hipblaslt": 2.2685246417644183,
+    "gemm_1024x1024x1024_torch.float32_hipblaslt": 2.436398189633767,
+    "gemm_1024x1024x1024_torch.float16_hipblaslt": 2.414115986378527,
+    "gemm_1024x1024x1024_torch.bfloat16_hipblaslt": 2.4015431333099007,
+    "gemm_64x1024x256_torch.float32_hipblaslt": 1.18448826245781,
+    "gemm_64x1024x256_torch.float16_hipblaslt": 1.1498361649886701,
+    "gemm_64x1024x256_torch.bfloat16_hipblaslt": 1.1469287745404833
+  },
+  "compiled_hipgraph_vs_eager": {
+    "sum_65537": 1.0849835845782596,
+    "sum_1048576": 1.3980647664167365,
+    "dot_65537": 1.1946903354294998,
+    "dot_1048576": 1.3474018010926554,
+    "fused_silu_square_sum_65537": 0.9267181100799174,
+    "fused_silu_square_sum_1048576": 3.980857466069074
+  },
+  "note": "Small shapes preserve original load geometry; timing variation remains. Plain compiled reductions were often slower. BLAS preference defaults unchanged."
+}

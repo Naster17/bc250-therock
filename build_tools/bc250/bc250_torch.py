@@ -5,6 +5,9 @@
 """Run Python or a shell with persistent host paths in the BC-250 Torch release."""
 
 import argparse
+from contextlib import contextmanager
+from collections.abc import Iterator
+import fcntl
 from dataclasses import dataclass, field
 import json
 import os
@@ -386,6 +389,30 @@ def run_process(command: list[str]) -> int:
                 signal.signal(signal.SIGTERM, previous)
 
 
+@contextmanager
+def runtime_lock(path: Path, *, exclusive: bool = False) -> Iterator[None]:
+    """Serialize developer-prefix updates against launcher processes.
+
+    Every updater must cooperate; this cannot protect arbitrary manual writes.
+    """
+    descriptor = os.open(path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
+    try:
+        info = os.fstat(descriptor)
+        if not stat.S_ISREG(info.st_mode) or info.st_uid != os.geteuid():
+            raise ValueError("Invalid runtime lock ownership or file type")
+        mode = fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH
+        try:
+            fcntl.flock(descriptor, mode | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print(
+                "bc250-torch: waiting for the developer runtime lock", file=sys.stderr
+            )
+            fcntl.flock(descriptor, mode)
+        yield
+    finally:
+        os.close(descriptor)
+
+
 def main() -> None:
     arguments = sys.argv[1:]
     if "--launcher-help" in arguments[:1]:
@@ -434,6 +461,9 @@ def main() -> None:
         command = build_command(
             release, manifest, workspace, home, options, groups, path
         )
+        if manifest.get("mutable", False):
+            with runtime_lock(release / ".runtime.lock"):
+                raise SystemExit(exit_status(run_process(command)))
         raise SystemExit(exit_status(run_process(command)))
 
 

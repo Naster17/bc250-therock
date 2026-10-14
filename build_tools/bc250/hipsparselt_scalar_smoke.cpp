@@ -109,7 +109,8 @@ const std::vector<unsigned> &tile_masks() {
 template <class T>
 void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
          hipsparseOrder_t order, bool ta, bool tb, int batches,
-         bool tile_mode = false, bool partial_tile = false) {
+         bool tile_mode = false, bool partial_tile = false,
+         int activation = -1) {
   std::fprintf(stderr,
                "CASE type=%d sparse_a=%d order=%d ta=%d tb=%d batches=%d "
                "tile=%d partial=%d\n",
@@ -234,9 +235,69 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   hipsparseLtMatmulPlan_t plan{};
   LT(hipsparseLtMatmulDescriptorInit(&handle, &mm, opa, opb, &da, &db, &dc, &dd,
                                      HIPSPARSELT_COMPUTE_32F));
+  if (activation >= 0) {
+    int enable = 1;
+    auto attr = static_cast<hipsparseLtMatmulDescAttribute_t>(activation);
+    LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm, attr, &enable,
+                                         sizeof(enable)));
+    int observed = 0;
+    LT(hipsparseLtMatmulDescGetAttribute(&handle, &mm, attr, &observed,
+                                         sizeof(observed)));
+    expect(observed == 1, "activation attribute roundtrip");
+    auto parameter = [&](hipsparseLtMatmulDescAttribute_t attribute,
+                         float value) {
+      LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm, attribute, &value,
+                                           sizeof(value)));
+      float observed = 0;
+      LT(hipsparseLtMatmulDescGetAttribute(&handle, &mm, attribute, &observed,
+                                           sizeof(observed)));
+      expect(observed == value, "activation parameter roundtrip");
+    };
+    if (activation == HIPSPARSELT_MATMUL_ACTIVATION_RELU) {
+      parameter(HIPSPARSELT_MATMUL_ACTIVATION_RELU_THRESHOLD, 0.25f);
+      parameter(HIPSPARSELT_MATMUL_ACTIVATION_RELU_UPPERBOUND, 0.75f);
+    }
+    if (activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH) {
+      parameter(HIPSPARSELT_MATMUL_ACTIVATION_TANH_ALPHA, 0.5f);
+      parameter(HIPSPARSELT_MATMUL_ACTIVATION_TANH_BETA, 1.25f);
+    }
+    if (activation == HIPSPARSELT_MATMUL_ACTIVATION_GELU) {
+      // The scaling attribute itself enables GELU, as the public HIP backend
+      // does.
+      int disable = 0;
+      LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm, attr, &disable,
+                                           sizeof(disable)));
+      parameter(HIPSPARSELT_MATMUL_ACTIVATION_GELU_SCALING, 0.75f);
+      int enabled = 0;
+      LT(hipsparseLtMatmulDescGetAttribute(&handle, &mm, attr, &enabled,
+                                           sizeof(enabled)));
+      expect(enabled == 1, "GELU scaling enables activation");
+    }
+    float slope = 0.125f;
+    LT(hipsparseLtMatmulDescSetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_ACTIVATION_LEAKYRELU_ALPHA, &slope,
+        sizeof(slope)));
+    float observedSlope = 0;
+    LT(hipsparseLtMatmulDescGetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_ACTIVATION_LEAKYRELU_ALPHA,
+        &observedSlope, sizeof(observedSlope)));
+    expect(observedSlope == slope, "slope roundtrip");
+  }
   LT(hipsparseLtMatmulAlgSelectionInit(&handle, &alg, &mm,
                                        HIPSPARSELT_MATMUL_ALG_DEFAULT));
   LT(hipsparseLtMatmulPlanInit(&handle, &plan, &mm, &alg));
+  if (activation >= 0) {
+    // The plan owns a snapshot: later descriptor mutations must not change it.
+    int disable = 0;
+    LT(hipsparseLtMatmulDescSetAttribute(
+        &handle, &mm, static_cast<hipsparseLtMatmulDescAttribute_t>(activation),
+        &disable, sizeof(disable)));
+    int observed = 1;
+    LT(hipsparseLtMatmulDescGetAttribute(
+        &handle, &mm, static_cast<hipsparseLtMatmulDescAttribute_t>(activation),
+        &observed, sizeof(observed)));
+    expect(observed == 0, "descriptor mutation after plan creation");
+  }
   int max_id = 0;
   LT(hipsparseLtMatmulAlgGetAttribute(&handle, &alg,
                                       HIPSPARSELT_MATMUL_ALG_CONFIG_MAX_ID,
@@ -249,8 +310,8 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
          "split K rejection");
   expect(hipsparseLtMatmulDescSetAttribute(
              &handle, &mm, HIPSPARSELT_MATMUL_ACTIVATION_RELU, &unsupported,
-             sizeof(unsupported)) == HIPSPARSE_STATUS_NOT_SUPPORTED,
-         "fusion rejection");
+             sizeof(unsupported)) == HIPSPARSE_STATUS_INVALID_VALUE,
+         "invalid activation boolean rejection");
   size_t size = 0, workspace = 123;
   LT(hipsparseLtMatmulGetWorkspace(&handle, &plan, &workspace));
   expect(workspace == 0, "zero workspace");
@@ -396,16 +457,58 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                                         : a)[la.index(batch, row, kk, ta)])) *
                  double(float(
                      (sparse_a ? b : reference)[lb.index(batch, kk, col, tb)]));
-        expected[ld.index(batch, row, col)] =
-            T(float(alpha * sum + beta * float(c[lc.index(batch, row, col)])));
+        float value =
+            float(alpha * sum + beta * float(c[lc.index(batch, row, col)]));
+        if (activation == HIPSPARSELT_MATMUL_ACTIVATION_RELU)
+          value = value > 0.25f ? std::min(value, 0.75f) : 0.0f;
+        if (activation == HIPSPARSELT_MATMUL_ACTIVATION_ABS)
+          value = std::abs(value);
+        if (activation == HIPSPARSELT_MATMUL_ACTIVATION_LEAKYRELU && value < 0)
+          value *= 0.125f;
+        if (activation == HIPSPARSELT_MATMUL_ACTIVATION_GELU)
+          value = float(0.75 * 0.5 * double(value) *
+                        (1.0 + std::tanh(0.7978845608028654 * double(value) *
+                                         (1.0 + 0.044715 * double(value) *
+                                                    double(value)))));
+        if (activation == HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID)
+          value = float(1.0 / (1.0 + std::exp(-double(value))));
+        if (activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH)
+          value = float(std::tanh(double(value) * 0.5) * 1.25);
+        expected[ld.index(batch, row, col)] = T(value);
       }
   // Inputs are powers of two with small K, so FP32 accumulation and CPU double
   // reference are exact; any conversion difference or padding write is a
   // failure.
-  expect(std::memcmp(expected.data(), output.data(),
-                     output.size() * sizeof(T)) == 0,
-         "CPU dense double reference and D padding");
-  if (sparse_a && order == HIPSPARSE_ORDER_ROW && !ta && !tb && batches == 1) {
+  bool nonlinear = activation == HIPSPARSELT_MATMUL_ACTIVATION_GELU ||
+                   activation == HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID ||
+                   activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH;
+  if (!nonlinear)
+    expect(std::memcmp(expected.data(), output.data(),
+                       output.size() * sizeof(T)) == 0,
+           "CPU dense double reference and D padding");
+  else {
+    // Transcendentals are checked against independent double math; storage
+    // rounding is bounded by approximately one low-precision ULP. Padding stays
+    // exact.
+    double tolerance = type == HIP_R_32F   ? 1e-5
+                       : type == HIP_R_16F ? 0.001
+                                           : 0.008;
+    std::vector<bool> written(output.size(), false);
+    for (int batch = 0; batch < batches; ++batch)
+      for (int row = 0; row < m; ++row)
+        for (int col = 0; col < n; ++col)
+          written[ld.index(batch, row, col)] = true;
+    for (size_t i = 0; i < output.size(); ++i) {
+      double got = float(output[i]), ref = float(expected[i]);
+      expect(std::isfinite(got) &&
+                 (written[i]
+                      ? std::abs(got - ref) <= tolerance * (1 + std::abs(ref))
+                      : got == ref),
+             "nonlinear CPU-double reference and exact padding");
+    }
+  }
+  if (activation < 0 && sparse_a && order == HIPSPARSE_ORDER_ROW && !ta &&
+      !tb && batches == 1) {
     int repetitions = 2;
     expect(hipsparseLtMatmulAlgSetAttribute(
                &handle, &alg, HIPSPARSELT_MATMUL_SEARCH_ITERATIONS,
@@ -505,6 +608,24 @@ int main() {
     run<hip_bfloat16>(handle, HIP_R_16BF, false, HIPSPARSE_ORDER_ROW, false,
                       true, 1, true, true);
     ++cases;
+    for (int activation :
+         {HIPSPARSELT_MATMUL_ACTIVATION_RELU, HIPSPARSELT_MATMUL_ACTIVATION_ABS,
+          HIPSPARSELT_MATMUL_ACTIVATION_LEAKYRELU,
+          HIPSPARSELT_MATMUL_ACTIVATION_GELU,
+          HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID,
+          HIPSPARSELT_MATMUL_ACTIVATION_TANH})
+      for (bool sparseA : {false, true})
+        for (auto order : {HIPSPARSE_ORDER_ROW, HIPSPARSE_ORDER_COL}) {
+          run<float>(handle, HIP_R_32F, sparseA, order, true, false, 2, false,
+                     false, activation);
+          ++cases;
+          run<__half>(handle, HIP_R_16F, sparseA, order, false, true, 2, false,
+                      false, activation);
+          ++cases;
+          run<hip_bfloat16>(handle, HIP_R_16BF, sparseA, order, true, true, 2,
+                            false, false, activation);
+          ++cases;
+        }
     LT(hipsparseLtDestroy(&handle));
     std::printf("HIPSPARSELT_SCALAR_PASS cases=%d prune=strip,tile "
                 "compressed=independently-decoded reference=dense-double\n",

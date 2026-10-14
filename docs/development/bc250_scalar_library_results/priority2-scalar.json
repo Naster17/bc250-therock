@@ -1,0 +1,36 @@
+{
+  "group": "scalar",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-hipblaslt_scalar_smoke",
+      "executed_tests": 1,
+      "seconds": 4.169123261992354
+    },
+    {
+      "name": "hipblaslt_scalar_smoke",
+      "executed_tests": 403,
+      "seconds": 2.1175251529784873
+    },
+    {
+      "name": "compile-hiptensor_scalar_smoke",
+      "executed_tests": 1,
+      "seconds": 5.4215325039986055
+    },
+    {
+      "name": "hiptensor_scalar_smoke",
+      "executed_tests": 166,
+      "seconds": 1.2663207450241316
+    },
+    {
+      "name": "compile-hipsparselt_scalar_smoke",
+      "executed_tests": 1,
+      "seconds": 5.971038388990564
+    },
+    {
+      "name": "hipsparselt_scalar_smoke",
+      "executed_tests": 234,
+      "seconds": 1.6677170179900713
+    }
+  ]
+}

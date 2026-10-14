@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "cycles": 20,
+  "sparse_matmuls": 40,
+  "compiled_forward_backward": 20,
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "torch_file": "/workspace/pytorch-work/torch/__init__.py",
+  "seconds": 6.315772298024967,
+  "note": "No concurrent prefix writes; does not establish the historical crash root cause."
+}
