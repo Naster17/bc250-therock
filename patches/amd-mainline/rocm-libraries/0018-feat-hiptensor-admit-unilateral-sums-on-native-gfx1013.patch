@@ -1,0 +1,38 @@
+From 681d2f8a25d83db3ef99140461600883f7b71dba Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 16:03:06 +0200
+Subject: [PATCH] feat(hiptensor): admit unilateral sums on native gfx1013
+
+---
+ .../library/src/contraction/contraction_scalar.cpp        | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+index cf3dcfcd75d..8457c8b0f6b 100644
+--- a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
++++ b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+@@ -129,8 +129,10 @@ namespace hiptensor
+             if(lengths.size() > MaxModes)
+                 return HIPTENSOR_STATUS_NOT_SUPPORTED;
+ 
+-            // Each non-output mode must belong to both multiplicands. Output modes may
+-            // be shared (batch), or occur in either multiplicand (free/outer product).
++            // Sum every non-output mode in either multiplicand, including unilateral
++            // reductions. An absent mode has stride zero in that operand, so both
++            // kernel mappings broadcast it without changing unary-op semantics.
++            // Output modes may be shared (batch), or free in either multiplicand.
+             auto contains = [](std::vector<int32_t> const& modes, int32_t mode) {
+                 return std::find(modes.begin(), modes.end(), mode) != modes.end();
+             };
+@@ -140,7 +142,7 @@ namespace hiptensor
+                 bool a = contains(desc->mModeA, item.first);
+                 bool b = contains(desc->mModeB, item.first);
+                 bool d = contains(desc->mModeD, item.first);
+-                if((d && !a && !b) || (!d && (!a || !b)))
++                if(!a && !b)
+                     return HIPTENSOR_STATUS_NOT_SUPPORTED;
+                 if(!d)
+                     ordered.push_back(item.first);
+-- 
+2.56.0
+
