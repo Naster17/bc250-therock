@@ -1,0 +1,186 @@
+[
+  {
+    "task": "N1.6",
+    "status": "failed",
+    "checks": [
+      {
+        "name": "compile-probe",
+        "exit": 0,
+        "seconds": 12.477472852002393
+      },
+      {
+        "name": "baseline-alpha-vector",
+        "exit": 0,
+        "seconds": 0.3150891400000546
+      },
+      {
+        "name": "targeted-build",
+        "exit": 0,
+        "seconds": 6.6236661020011525
+      },
+      {
+        "name": "gpu-correctness",
+        "exit": 1,
+        "seconds": 0.66547585599983
+      }
+    ],
+    "before_library_sha256": "36b6de6b47f4c7410c08ea97a474dd35a78917b15cf77bedb9de6aff4f07a4dc",
+    "source_delta_sha256": "2c1d009ce005ce63ea724778ccf13488ab27b1599df9742e8a0d51257e005dc2",
+    "test_source_sha256": "9fc5acb02c7bb02cda0e79880346eb50dd45e9313e91ba702950571378b73750",
+    "resources": {
+      "jobs": 16,
+      "ccache": "20G",
+      "sdma": false
+    },
+    "phase": "gpu-correctness",
+    "after_source_sha256": "529760c23860a11b22d3349173ebbbef93bc1b3c41c94ce2355c90f90303bae5",
+    "after_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+    "error": "gpu-correctness: exit 1; see /home/nik/bc250work/rocm-10.2-gfx1013/logs/n16-sparselt",
+    "prefix_restored": true,
+    "attempt": "n16-sparselt",
+    "diagnostics": [
+      "FAIL CPU dense double reference and D padding"
+    ]
+  },
+  {
+    "task": "N1.6",
+    "status": "failed",
+    "checks": [
+      {
+        "name": "compile-probe",
+        "exit": 0,
+        "seconds": 12.527064948997577
+      },
+      {
+        "name": "baseline-alpha-vector",
+        "exit": 0,
+        "seconds": 0.3150866029973258
+      },
+      {
+        "name": "targeted-build",
+        "exit": 0,
+        "seconds": 2.8183908960018016
+      },
+      {
+        "name": "gpu-correctness",
+        "exit": 1,
+        "seconds": 0.6654637510000612
+      }
+    ],
+    "before_library_sha256": "36b6de6b47f4c7410c08ea97a474dd35a78917b15cf77bedb9de6aff4f07a4dc",
+    "source_delta_sha256": "2c1d009ce005ce63ea724778ccf13488ab27b1599df9742e8a0d51257e005dc2",
+    "test_source_sha256": "9fc5acb02c7bb02cda0e79880346eb50dd45e9313e91ba702950571378b73750",
+    "resources": {
+      "jobs": 16,
+      "ccache": "20G",
+      "sdma": false
+    },
+    "phase": "gpu-correctness",
+    "after_source_sha256": "529760c23860a11b22d3349173ebbbef93bc1b3c41c94ce2355c90f90303bae5",
+    "after_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+    "error": "gpu-correctness: exit 1; see /home/nik/bc250work/rocm-10.2-gfx1013/logs/n16-sparselt-r2",
+    "prefix_restored": true,
+    "attempt": "n16-sparselt-r2",
+    "diagnostics": [
+      "MISMATCH index=0 got=0x0p+0 expected=-0x0p+0 got_sign=0 expected_sign=1",
+      "MISMATCH index=69 got=0x0p+0 expected=-0x0p+0 got_sign=0 expected_sign=1",
+      "MISMATCH index=138 got=0x0p+0 expected=-0x0p+0 got_sign=0 expected_sign=1",
+      "FAIL CPU dense double reference and D padding"
+    ]
+  },
+  {
+    "task": "N1.6",
+    "status": "failed",
+    "checks": [
+      {
+        "name": "compile-probe",
+        "exit": 0,
+        "seconds": 12.528191826000693
+      },
+      {
+        "name": "baseline-alpha-vector",
+        "exit": 0,
+        "seconds": 0.31491152299713576
+      },
+      {
+        "name": "targeted-build",
+        "exit": 0,
+        "seconds": 2.818948560998251
+      },
+      {
+        "name": "gpu-correctness",
+        "exit": 1,
+        "seconds": 0.6653898280019348
+      }
+    ],
+    "before_library_sha256": "36b6de6b47f4c7410c08ea97a474dd35a78917b15cf77bedb9de6aff4f07a4dc",
+    "source_delta_sha256": "2c1d009ce005ce63ea724778ccf13488ab27b1599df9742e8a0d51257e005dc2",
+    "test_source_sha256": "9fc5acb02c7bb02cda0e79880346eb50dd45e9313e91ba702950571378b73750",
+    "resources": {
+      "jobs": 16,
+      "ccache": "20G",
+      "sdma": false
+    },
+    "phase": "gpu-correctness",
+    "after_source_sha256": "529760c23860a11b22d3349173ebbbef93bc1b3c41c94ce2355c90f90303bae5",
+    "after_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+    "error": "gpu-correctness: exit 1; see /home/nik/bc250work/rocm-10.2-gfx1013/logs/n16-sparselt-r3",
+    "prefix_restored": true,
+    "attempt": "n16-sparselt-r3",
+    "diagnostics": [
+      "MISMATCH index=0 got=0x0p+0 expected=-0x0p+0 got_sign=0 expected_sign=1",
+      "MISMATCH index=69 got=0x0p+0 expected=-0x0p+0 got_sign=0 expected_sign=1",
+      "MISMATCH index=138 got=0x0p+0 expected=-0x0p+0 got_sign=0 expected_sign=1",
+      "FAIL CPU dense double reference and D padding"
+    ]
+  },
+  {
+    "task": "N1.6",
+    "status": "failed",
+    "checks": [
+      {
+        "name": "compile-probe",
+        "exit": 0,
+        "seconds": 12.526799107999977
+      },
+      {
+        "name": "baseline-alpha-vector",
+        "exit": 0,
+        "seconds": 0.31504822600254556
+      },
+      {
+        "name": "targeted-build",
+        "exit": 0,
+        "seconds": 2.818799083997874
+      },
+      {
+        "name": "gpu-correctness",
+        "exit": 1,
+        "seconds": 2.067577452002297
+      }
+    ],
+    "before_library_sha256": "36b6de6b47f4c7410c08ea97a474dd35a78917b15cf77bedb9de6aff4f07a4dc",
+    "source_delta_sha256": "2c1d009ce005ce63ea724778ccf13488ab27b1599df9742e8a0d51257e005dc2",
+    "test_source_sha256": "cb01afa3d2d3280f42ba2ca13379a11209f9a1d863233f85fa77289ab510e263",
+    "resources": {
+      "jobs": 16,
+      "ccache": "20G",
+      "sdma": false
+    },
+    "phase": "gpu-correctness",
+    "after_source_sha256": "529760c23860a11b22d3349173ebbbef93bc1b3c41c94ce2355c90f90303bae5",
+    "after_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+    "error": "gpu-correctness: exit 1; see /home/nik/bc250work/rocm-10.2-gfx1013/logs/n16-sparselt-r4",
+    "prefix_restored": true,
+    "attempt": "n16-sparselt-r4",
+    "diagnostics": [
+      "MISMATCH index=13 got=-0x0p+0 expected=0x0p+0 got_sign=1 expected_sign=0",
+      "MISMATCH index=43 got=-0x0p+0 expected=0x0p+0 got_sign=1 expected_sign=0",
+      "MISMATCH index=68 got=-0x0p+0 expected=0x0p+0 got_sign=1 expected_sign=0",
+      "MISMATCH index=98 got=-0x0p+0 expected=0x0p+0 got_sign=1 expected_sign=0",
+      "MISMATCH index=123 got=-0x0p+0 expected=0x0p+0 got_sign=1 expected_sign=0",
+      "MISMATCH index=153 got=-0x0p+0 expected=0x0p+0 got_sign=1 expected_sign=0",
+      "FAIL CPU dense double reference and D padding"
+    ]
+  }
+]

@@ -115,7 +115,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
          hipsparseOrder_t order, bool ta, bool tb, int batches,
          bool tile_mode = false, bool partial_tile = false, int activation = -1,
          int broadcast_mask = 0, int bias_mode = 0, int scalar_mode = 0,
-         bool inplace_cd = false) {
+         bool inplace_cd = false, int vector_mode = 0) {
   std::fprintf(stderr,
                "CASE type=%d sparse_a=%d order=%d ta=%d tb=%d batches=%d "
                "tile=%d partial=%d\n",
@@ -267,11 +267,35 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
     bias_pointer =
         static_cast<const unsigned char *>(gpu_bias->data) + 4 * element_size;
   }
+  std::vector<float> host_alpha(m + 8, -17.0f);
+  for (int row = 0; row < m; ++row)
+    host_alpha[row + 4] = row % 3 == 0 ? (row % 2 ? -0.0f : 0.0f)
+                                       : (row % 3 == 1 ? -0.75f : 1.25f);
+  if (vector_mode == 2)
+    std::fill(host_alpha.begin() + 4, host_alpha.end() - 4, 0.0f);
+  std::unique_ptr<Device> gpu_alpha;
+  const void *alpha_pointer = nullptr;
+  if (vector_mode) {
+    gpu_alpha = std::make_unique<Device>(host_alpha.size() * sizeof(float));
+    HIP(hipMemcpy(gpu_alpha->data, host_alpha.data(),
+                  host_alpha.size() * sizeof(float), hipMemcpyHostToDevice));
+    alpha_pointer = static_cast<const float *>(gpu_alpha->data) + 4;
+  }
   hipsparseLtMatmulDescriptor_t mm{};
   hipsparseLtMatmulAlgSelection_t alg{};
   hipsparseLtMatmulPlan_t plan{};
   LT(hipsparseLtMatmulDescriptorInit(&handle, &mm, opa, opb, &da, &db, &dc, &dd,
                                      HIPSPARSELT_COMPUTE_32F));
+  if (vector_mode) {
+    int enabled = 1, observed = 0;
+    LT(hipsparseLtMatmulDescSetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_ALPHA_VECTOR_SCALING, &enabled,
+        sizeof(enabled)));
+    LT(hipsparseLtMatmulDescGetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_ALPHA_VECTOR_SCALING, &observed,
+        sizeof(observed)));
+    expect(observed == 1, "alpha vector attribute roundtrip");
+  }
   if (bias_mode) {
     LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
                                          HIPSPARSELT_MATMUL_BIAS_POINTER,
@@ -358,6 +382,12 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   LT(hipsparseLtMatmulAlgSelectionInit(&handle, &alg, &mm,
                                        HIPSPARSELT_MATMUL_ALG_DEFAULT));
   LT(hipsparseLtMatmulPlanInit(&handle, &plan, &mm, &alg));
+  if (vector_mode) {
+    int disabled = 0;
+    LT(hipsparseLtMatmulDescSetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_ALPHA_VECTOR_SCALING, &disabled,
+        sizeof(disabled)));
+  }
   if (bias_mode && bias_mode != 5) {
     const void *cleared = nullptr;
     LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
@@ -535,7 +565,7 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                 input.size() * sizeof(T)));
   HIP(hipMemset(gpu_sparse.data, 0xFF, pruned.size() * sizeof(T)));
   float alpha = 1.25f, beta = -0.375f;
-  if (scalar_mode & 1) {
+  if ((scalar_mode & 1) || vector_mode == 2) {
     alpha = 0;
     HIP(hipMemset(compressed.data, 0xFF, size));
     HIP(hipMemset(sparse_a ? gpu_b.data : gpu_a.data, 0xFF,
@@ -549,30 +579,50 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
     HIP(hipMemcpy(gpu_d.data, c.data(), c.size() * sizeof(T),
                   hipMemcpyHostToDevice));
 
+  if (vector_mode) {
+    expect(
+        hipsparseLtMatmul(&handle, &plan,
+                          static_cast<const unsigned char *>(alpha_pointer) + 1,
+                          sparse_a ? compressed.data : gpu_a.data,
+                          sparse_a ? gpu_b.data : compressed.data, &beta,
+                          gpu_c.data, gpu_d.data, nullptr, &stream,
+                          1) == HIPSPARSE_STATUS_INVALID_VALUE,
+        "unaligned alpha vector rejects");
+    for (int shift : {0, 4})
+      expect(hipsparseLtMatmul(&handle, &plan,
+                               static_cast<unsigned char *>(gpu_d.data) + shift,
+                               sparse_a ? compressed.data : gpu_a.data,
+                               sparse_a ? gpu_b.data : compressed.data, &beta,
+                               gpu_c.data, gpu_d.data, nullptr, &stream,
+                               1) == HIPSPARSE_STATUS_INVALID_VALUE,
+             "D/alpha vector exact or partial overlap rejects");
+  }
+  const void *actual_alpha =
+      vector_mode ? alpha_pointer : static_cast<const void *>(&alpha);
   if (broadcast_mask) {
     const void *pa = sparse_a ? compressed.data : gpu_a.data;
     const void *pb = sparse_a ? gpu_b.data : compressed.data;
     for (const void *input : {pa, pb})
       expect(hipsparseLtMatmul(
-                 &handle, &plan, &alpha, pa, pb, &beta, gpu_c.data,
+                 &handle, &plan, actual_alpha, pa, pb, &beta, gpu_c.data,
                  const_cast<unsigned char *>(
                      static_cast<const unsigned char *>(input)) +
                      sizeof(T),
                  nullptr, &stream, 1) == HIPSPARSE_STATUS_INVALID_VALUE,
              "partial input/output overlap rejected");
     expect(hipsparseLtMatmul(
-               &handle, &plan, &alpha, pa, pb, &beta,
+               &handle, &plan, actual_alpha, pa, pb, &beta,
                static_cast<unsigned char *>(gpu_d.data) + sizeof(T), gpu_d.data,
                nullptr, &stream, 1) == HIPSPARSE_STATUS_NOT_SUPPORTED,
            "partial C/D overlap rejected");
     if (lc.stride == 0)
-      expect(hipsparseLtMatmul(&handle, &plan, &alpha, pa, pb, &beta,
+      expect(hipsparseLtMatmul(&handle, &plan, actual_alpha, pa, pb, &beta,
                                gpu_c.data, gpu_c.data, nullptr, &stream,
                                1) == HIPSPARSE_STATUS_NOT_SUPPORTED,
              "broadcast C cannot alias batched D");
   }
   LT(hipsparseLtMatmul(
-      &handle, &plan, &alpha, sparse_a ? compressed.data : gpu_a.data,
+      &handle, &plan, actual_alpha, sparse_a ? compressed.data : gpu_a.data,
       sparse_a ? gpu_b.data : compressed.data, &beta,
       inplace_cd ? gpu_d.data : gpu_c.data, gpu_d.data, nullptr, &stream, 1));
   HIP(hipStreamSynchronize(stream));
@@ -582,14 +632,19 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   for (int batch = 0; batch < batches; ++batch)
     for (int row = 0; row < m; ++row)
       for (int col = 0; col < n; ++col) {
+        float row_alpha = vector_mode ? host_alpha[row + 4] : alpha;
         double sum = 0;
-        for (int kk = 0; kk < k; ++kk)
+        // Zero alpha ignores A/B, including their NaNs and signs; leave the
+        // unused reference product term at positive zero, as in the API gate.
+        for (int kk = 0; row_alpha != 0 && kk < k; ++kk)
           sum += double(float((sparse_a ? reference
                                         : a)[la.index(batch, row, kk, ta)])) *
                  double(float(
                      (sparse_a ? b : reference)[lb.index(batch, kk, col, tb)]));
-        float value =
-            float(alpha * sum + beta * float(c[lc.index(batch, row, col)]));
+        float value = float(row_alpha * sum);
+        // beta==0 contributes no C term, including any unused sign or NaN.
+        if (beta != 0)
+          value += beta * float(c[lc.index(batch, row, col)]);
         if (bias_mode && bias_mode != 5) {
           auto index = 4 + batch * bias_stride + row;
           value += float_bias ? host_bias[index] : float(typed_bias[index]);
@@ -617,6 +672,20 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   bool nonlinear = activation == HIPSPARSELT_MATMUL_ACTIVATION_GELU ||
                    activation == HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID ||
                    activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH;
+  if (!nonlinear &&
+      std::memcmp(expected.data(), output.data(), output.size() * sizeof(T))) {
+    int printed = 0;
+    for (size_t i = 0; i < output.size() && printed < 8; ++i)
+      if (std::memcmp(&expected[i], &output[i], sizeof(T))) {
+        std::fprintf(stderr,
+                     "MISMATCH index=%zu got=%a expected=%a got_sign=%d "
+                     "expected_sign=%d\n",
+                     i, double(float(output[i])), double(float(expected[i])),
+                     int(std::signbit(float(output[i]))),
+                     int(std::signbit(float(expected[i]))));
+        ++printed;
+      }
+  }
   if (!nonlinear)
     expect(std::memcmp(expected.data(), output.data(),
                        output.size() * sizeof(T)) == 0,
@@ -654,7 +723,13 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                        observed.size()) == 0,
            "bias input and boundary guards unchanged");
   }
-  if (bias_mode == 0 && activation < 0 && sparse_a &&
+  if (vector_mode) {
+    std::vector<float> observed(host_alpha.size());
+    HIP(hipMemcpy(observed.data(), gpu_alpha->data,
+                  observed.size() * sizeof(float), hipMemcpyDeviceToHost));
+    expect(observed == host_alpha, "alpha vector input/guard bytes unchanged");
+  }
+  if (vector_mode == 0 && bias_mode == 0 && activation < 0 && sparse_a &&
       order == HIPSPARSE_ORDER_ROW && !ta && !tb && batches == 1) {
     int repetitions = 2;
     expect(hipsparseLtMatmulAlgSetAttribute(

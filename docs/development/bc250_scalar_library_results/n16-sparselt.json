@@ -1,0 +1,92 @@
+{
+  "task": "N1.6",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 12.527368390001357
+    },
+    {
+      "name": "baseline-alpha-vector",
+      "exit": 0,
+      "seconds": 0.3156183589999273
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 2.8185433110011218
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 2.168902331002755
+    },
+    {
+      "name": "scalar-regression",
+      "exit": 0,
+      "seconds": 1.666531615999702
+    },
+    {
+      "name": "broadcast-regression",
+      "exit": 0,
+      "seconds": 3.017883308999444
+    },
+    {
+      "name": "bias-regression",
+      "exit": 0,
+      "seconds": 2.6684095810014696
+    }
+  ],
+  "before_library_sha256": "36b6de6b47f4c7410c08ea97a474dd35a78917b15cf77bedb9de6aff4f07a4dc",
+  "source_delta_sha256": "2c1d009ce005ce63ea724778ccf13488ab27b1599df9742e8a0d51257e005dc2",
+  "test_source_sha256": "cb01afa3d2d3280f42ba2ca13379a11209f9a1d863233f85fa77289ab510e263",
+  "resources": {
+    "jobs": 16,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "bias-regression",
+  "after_source_sha256": "529760c23860a11b22d3349173ebbbef93bc1b3c41c94ce2355c90f90303bae5",
+  "after_library_sha256": "66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b",
+  "executed_cases": 438,
+  "timings": [],
+  "scalar_regression_cases": 234,
+  "broadcast_regression_cases": 609,
+  "bias_regression_cases": 567,
+  "rocm_libraries_revision": "a9a1ace297cf78ff7e6fcf897bf17fbcdaeb9cf2",
+  "scope": {
+    "native_arch": "gfx1013",
+    "numerical_vector_cases": 404,
+    "vector_api_checks": 34,
+    "regressions": {
+      "scalar": 234,
+      "broadcast": 609,
+      "bias": 567
+    },
+    "alpha_contract": "Flag int32 0/1 captured in plan. Disabled: host FP32 scalar alpha; enabled: Matmul alpha argument is borrowed device-accessible FP32 vector[M], indexed by logical output row, shared across batches. GPU loads vector; host never dereferences it.",
+    "beta_contract": "Scalar host FP32 beta retained. Beta-vector getter returns0; disabling succeeds; enabling returns NOT_SUPPORTED; invalid flags/sizes rejected. Pinned upstream enum exists but implementation/client vector contract absent.",
+    "coverage": "sparse A/B, row/column orders and all transposes, f32/f16/bf16, strip/TILE/partial tiles, zero-stride input masks, same-type/FP32 row bias, six activations, signed zero/negative/positive alpha rows, all-zero vector with NaN-poisoned operands, zero-beta poisoned C, exact in-place C/D, source flag mutation after plan creation, immutable vector/pack/D guards and exact/partial D-vector overlap/alignment rejection",
+    "reference_boundary": "Dense-double reference honors zero-alpha/zero-beta skip semantics for unused terms, including sign-of-zero; bitwise linear/padding checks and existing nonlinear tolerances unchanged.",
+    "not_qualified": [
+      "beta vector enabling",
+      "independent per-batch alpha vectors",
+      "new matrix types",
+      "multi-stream/split-K",
+      "hardware sparse acceleration/general performance/long stability"
+    ]
+  },
+  "post_run_review": {
+    "kernel_log": "identical1009 lines, no new messages",
+    "kernel_before_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "kernel_after_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "qualified_log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n16-sparselt-r5",
+    "prior_prefix_backup": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/n16-sparselt-before.so.0.2",
+    "upstream_contract_evidence": [
+      "clients/include/spmm/testing_spmm.hpp: device Talpha vector size M and pointer passed as alpha; host scalar otherwise",
+      "rocsparselt/src/tensile_host.cpp: vector supplied as scaleAlphaVec, scalar multiplier1; beta still host scalar",
+      "rocsparselt/src/rocsparselt_auxiliary.cpp: alpha flag handled; no beta flag handler"
+    ],
+    "initial_attempts": "First/r2/r3 compared GPU+0 with reference-0 because reference computed unused zero-alpha dot. r3 unintentionally repeated old reference after a local edit helper failed. r4 reached zero-beta fixtures and compared GPU-0/reference+0 because reference added an unused beta*C term. Diagnostics prove zero-sign-only differences. Reference now skips both unused terms; production GPU code/source hash identical throughout. All failed attempts restored N1.5 before unlocking."
+  }
+}

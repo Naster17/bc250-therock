@@ -1,0 +1,150 @@
+From a9a1ace297cf78ff7e6fcf897bf17fbcdaeb9cf2 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 21:03:47 +0200
+Subject: [PATCH] feat(hipsparselt): add native gfx1013 device alpha vector
+ scaling
+
+---
+ .../library/src/hcc_detail/gfx1013_scalar.hip | 72 ++++++++++++++++---
+ 1 file changed, 61 insertions(+), 11 deletions(-)
+
+diff --git a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+index 654f9539dac..24c66e68717 100644
+--- a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
++++ b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+@@ -46,9 +46,10 @@ namespace
+         float                leakyAlpha = 0.01f;
+         float       reluThreshold = 0.0f, reluUpper = std::numeric_limits<float>::infinity();
+         float       geluScale = 1.0f, tanhAlpha = 1.0f, tanhBeta = 1.0f;
+-        const void* bias        = nullptr;
+-        int64_t     bias_stride = 0;
+-        hipDataType bias_type   = HIP_R_32F;
++        const void* bias         = nullptr;
++        int64_t     bias_stride  = 0;
++        hipDataType bias_type    = HIP_R_32F;
++        int         alpha_vector = 0;
+     };
+     struct Algorithm
+     {
+@@ -422,15 +423,23 @@ namespace
+     }
+ 
+     template <class T>
+-    __global__ void multiply_kernel(
+-        Multiply mm, float alpha, float beta, const T* a, const T* b, const T* c, T* d)
++    __global__ void multiply_kernel(Multiply     mm,
++                                    float        alpha,
++                                    float        beta,
++                                    const float* alpha_vec,
++                                    const T*     a,
++                                    const T*     b,
++                                    const T*     c,
++                                    T*           d)
+     {
+         int64_t m = rows(mm.a, mm.opa), n = cols(mm.b, mm.opb), k = cols(mm.a, mm.opa);
+         int64_t element = int64_t(blockIdx.x) * blockDim.x + threadIdx.x;
+         if(element >= m * n * mm.d.batches)
+             return;
+-        int      batch = element / (m * n);
+-        int64_t  row = (element % (m * n)) / n, col = element % n;
++        int     batch = element / (m * n);
++        int64_t row = (element % (m * n)) / n, col = element % n;
++        if(mm.alpha_vector)
++            alpha = alpha_vec[row];
+         Matrix   sm         = mm.a.sparse ? mm.a : mm.b;
+         const T* compressed = mm.a.sparse ? a : b;
+         int      size = sm.type == HIP_R_32F ? 2 : 4, kept = size / 2;
+@@ -794,7 +803,25 @@ hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*
+     Multiply mm{};
+     if(!valid(h) || !read(d, mm, multiply_tag) || !value)
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+-    if(attr == HIPSPARSELT_MATMUL_BIAS_POINTER)
++    if(attr == HIPSPARSELT_MATMUL_BETA_VECTOR_SCALING)
++    {
++        if(bytes != sizeof(int))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        int enabled;
++        std::memcpy(&enabled, value, bytes);
++        if(enabled != 0 && enabled != 1)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        return enabled ? HIPSPARSE_STATUS_NOT_SUPPORTED : HIPSPARSE_STATUS_SUCCESS;
++    }
++    if(attr == HIPSPARSELT_MATMUL_ALPHA_VECTOR_SCALING)
++    {
++        if(bytes != sizeof(int))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(&mm.alpha_vector, value, bytes);
++        if(mm.alpha_vector != 0 && mm.alpha_vector != 1)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++    }
++    else if(attr == HIPSPARSELT_MATMUL_BIAS_POINTER)
+     {
+         if(bytes != sizeof(mm.bias))
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+@@ -858,7 +885,21 @@ hipsparseStatus_t hipsparseLtMatmulDescGetAttribute(const hipsparseLtHandle_t*
+     Multiply mm{};
+     if(!valid(h) || !read(d, mm, multiply_tag) || !value)
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+-    if(attr == HIPSPARSELT_MATMUL_BIAS_POINTER)
++    if(attr == HIPSPARSELT_MATMUL_BETA_VECTOR_SCALING)
++    {
++        if(bytes != sizeof(int))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        int disabled = 0;
++        std::memcpy(value, &disabled, bytes);
++        return HIPSPARSE_STATUS_SUCCESS;
++    }
++    if(attr == HIPSPARSELT_MATMUL_ALPHA_VECTOR_SCALING)
++    {
++        if(bytes != sizeof(int))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(value, &mm.alpha_vector, bytes);
++    }
++    else if(attr == HIPSPARSELT_MATMUL_BIAS_POINTER)
+     {
+         if(bytes != sizeof(mm.bias))
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+@@ -1020,8 +1061,14 @@ hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
+        && (d != c || plan.mm.c.order != plan.mm.d.order || plan.mm.c.ld != plan.mm.d.ld
+            || plan.mm.c.batch_stride != plan.mm.d.batch_stride))
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+-    float av, bv;
+-    std::memcpy(&av, alpha, sizeof(float));
++    if(plan.mm.alpha_vector
++       && (reinterpret_cast<uintptr_t>(alpha) % sizeof(float)
++           || overlaps(d, dense_bytes(plan.mm.d), alpha, plan.mm.d.rows * sizeof(float))))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    float av = 1, bv;
++    // Device vectors are read by the kernel; never dereference them on the host.
++    if(!plan.mm.alpha_vector)
++        std::memcpy(&av, alpha, sizeof(float));
+     std::memcpy(&bv, beta, sizeof(float));
+     hipStream_t stream = count ? streams[0] : nullptr;
+     int64_t     total  = plan.mm.d.rows * plan.mm.d.cols * plan.mm.d.batches;
+@@ -1035,6 +1082,7 @@ hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
+                            plan.mm,
+                            av,
+                            bv,
++                           plan.mm.alpha_vector ? static_cast<const float*>(alpha) : nullptr,
+                            (const float*)a,
+                            (const float*)b,
+                            (const float*)c,
+@@ -1048,6 +1096,7 @@ hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
+                            plan.mm,
+                            av,
+                            bv,
++                           plan.mm.alpha_vector ? static_cast<const float*>(alpha) : nullptr,
+                            (const __half*)a,
+                            (const __half*)b,
+                            (const __half*)c,
+@@ -1061,6 +1110,7 @@ hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
+                            plan.mm,
+                            av,
+                            bv,
++                           plan.mm.alpha_vector ? static_cast<const float*>(alpha) : nullptr,
+                            (const hip_bfloat16*)a,
+                            (const hip_bfloat16*)b,
+                            (const hip_bfloat16*)c,
+-- 
+2.56.0
+
