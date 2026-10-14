@@ -8,49 +8,57 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **Current task:** N1.7 native hipSPARSELt INT8→INT8 path implemented,
-  installed on .104 and bounded-qualified. N1.1–N1.6 remain qualified in their scopes.
-- **Last qualified code:** root `cf7de94ac1fe969917b907e7ac4bc76dd8259b2d`,
-  libraries `2fd5619d7c8ec6193eeb23077ea347887bdda77c` (patch0024).
-- **N1.7 contract:** signed INT8 A/B/C/D, COMPUTE_32I, exact INT32 retained-product
-  accumulation followed by FP32 epilogue and nearest-even saturating INT8 storage.
-  K multiple4 and <=262140 guarantees every partial sum fits INT32; larger K is
-  rejected. Host alpha/beta are FP32 despite integer compute; enabled alpha-vector
-  stays device FP32[M], shared across batches. Integer bias defaults to FP32 and
-  admits FP32 only. Strip and TILE 2:4, sparse A/B and existing layouts/broadcasts
-  retained. Sigmoid/tanh enabling rejected per pinned upstream; RELU/ABS/leakyRELU/
-  GELU admitted. Widened INT8 outputs remain unimplemented, not hardware-impossible.
-- **Passed:**134 CPU-exact-double-referenced native GPU numerical cases +16 API
-  checks, then234 scalar/609 broadcast/567 bias/438 alpha-vector regressions.
-  Includes ±INT8 extrema, signed nearest-even ties, saturation, K4096 sum above
-  exact incremental FP32 precision, K262140 execution/K262144 rejection,
-  orders/transposes, padded/broadcast inputs, strip/TILE/partial tiles, FP32 bias,
-  vector/zero scalars, plan snapshots, in-place C/D, pack decoding and immutable
-  guards. Kernel logs identical1009 lines. No performance/automatic Torch routing,
-  matrix-instruction or sustained-stability claim; nonfinite epilogues unqualified.
-- **Evidence/jobs:** `WS/logs/n17-sparselt-r4/result.json`, repository
-  `bc250_scalar_library_results/n17-{sparselt,reconstruction}.json` and attempts.
-  Targeted hipSPARSELt+dist,16jobs/20GiB ccache/exclusive lock; first build6.9s,
-  successful cached restage2.8s, integer1.6s/scalar1.6s/broadcast3.0s/bias2.7s/
-  vector2.2s gates. No running jobs/gates. Failed attempts preserved: initial
-  TILE fixture cast fractional values to zero, invalidating its nonzero-cardinality
-  assertion; r2 extra legacy CPU assertion truncated instead of round-even/saturate;
-  r3 numerical134/API16 passed but per-numerical PASS records were missing, causing
-  runner count rejection. Fixtures/reference/reporting corrected; production source
-  and library hash unchanged throughout. Each failed gate restored N1.6 before
-  unlocking. Do not reclassify these diagnosed test defects as GPU arithmetic bugs.
-- **Provenance/recovery:** `SOURCE_N17.json` verifies8 changed files on N1.6/P2;
-  active sparse library SHA256 `fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47`.
-  Prior independent library `WS/recovery/n17-sparselt-before.so.0.2` retained.
-  All24 patches reconstruct exact tree; .105/frozen candidates and kernel/boot/
-  Torch unchanged. No reboot or host configuration changes this batch.
-- **Next: N1.8, hipBLASLt small/skinny shapes and epilogues.** Read the existing
-  scalar/register-tile dispatch, P1/P2 shape/timing evidence and qualified Torch
-  BLAS consumer settings before editing. Select one measured small/skinny dispatch
-  improvement, use short CPU-referenced native GPU checks and compare both paths
-  on identical shapes under the prefix lock. Default Torch rocBLAS stays qualified;
-  do not claim a Torch speedup without a consumer measurement. Sparse widened INT8
-  outputs and beta-vector implementation remain separately open.
+- **Current task:** N1.8 hipBLASLt short small/skinny GEMM dispatch implemented,
+  installed on .104 and bounded-qualified. N1.1–N1.7 retained in their scopes.
+- **Last qualified code:** root `a8a241bcc88dc04b6c9ddcbed817b7c0b89e5a2c`,
+  libraries `48e1e564d6fd1f8baaff7fd8e60b35217aa425da` (patch0025).
+- **N1.8 contract:** K<=64 and either min(M,N)<=4 or both M,N<=32 with M*N<=512
+  use one32-lane scalar subgroup/output, eight outputs/block. Physical D order
+  guides output lanes; no LDS/barriers in this specialization. FP32 tree reduction
+  changes rounding from ascending-K FMA; same/mixed f32/f16/bf16 and existing
+  scalar/bias/activation/AUX/DGELU epilogues retained. Public algorithm unchanged;
+  remaining shapes keep tiled/register-tile dispatch. No matrix engine claim.
+- **Passed:**664 new CPU-double-referenced GPU cases +403 scalar/561 extended Lt
+  regressions. Orders/all transposes, padded/broadcast batches, host/device and
+  zero scalars, compatible in-place C/D, K0/1/15/16/17/63/64/65 and area512/544,
+  skinny tails/cross-batch blocks and immutable guards. Kernel logs identical1009
+  lines; no general bitwise/nonfinite or sustained qualification.
+- **Timings:**36 CPU-checked deterministic C++ fixtures ×A1/B1/B2/A2; five GPU-event
+  samples of32-launch HIP graphs/pass. Selected skinny ratios1.14–1.86x and
+  selected small1.21–1.61x; controls0.999–1.007x (roughly flat); max repeated-pass
+  median drift0.28%. Column-major NN, batch1, host scalars/default epilogue only.
+  These are graph-replay kernel costs, not uncaptured application or Torch speedups.
+  Clock telemetry remains untrusted; default Torch BLAS stays rocBLAS.
+- **Evidence/jobs:** `WS/logs/n18-lt-r3/result.json`, repository
+  `bc250_scalar_library_results/n18-{lt,lt-attempts,lt-performance,lt-pack,reconstruction}.json`.
+  Targeted hipBLASLt+dist,16jobs/20GiB ccache/exclusive lock; final build11.6s,
+  numerical3.5s/scalar2.0s/extended1.7s, each36-case timing pass~1s. No running
+  jobs/gates. Initial one-thread/output candidate passed504 cases but was slower
+  (0.46–0.76x selected ratios); rejected. Cooperative r2 passed504+964 checks,
+  but32x32 regressed0.91–0.96x: final area<=512 restriction retains its tiled path.
+- **Recovery finding:** BLAS DSO references external `.kpack/blas_lib_gfx1013.kpack`.
+  Initial attempt restored only DSO; A2 aborted134 on missing old GPU symbol.
+  Recovered exact baseline pair from immutable P2 candidate (DSO hash matched),
+  preserving experimental files. Runner now backs up/restores/hashes BOTH files;
+  successful A2 proves paired baseline execution before reinstating final pair.
+  Older N1.1–N1.7 failure reports validated DSO restoration only: do not claim
+  complete runtime rollback from those fields or reuse old runners unchanged.
+  Their successful final GPU gates remain evidence. This host-side code-object
+  mismatch is distinct from unresolved Python CPU segfault and fixed pool/VM issue.
+- **Provenance:** `SOURCE_N18.json` verifies11 source files on N1.7/P2 plus both
+  active BLAS hashes: DSO `2f559cb8d2ab85554432b779af22600b1cde28f02923042cef843bd97a844aeb`;
+  pack `a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5`.
+  Pack payload comparison:1 hipBLASLt entry changed,68 entries unchanged (including
+  all67 rocBLAS entries). Independent recovery DSO `WS/recovery/n18-lt-before.so.1.5`
+  and pack `WS/recovery/n18-blas_lib_gfx1013-before.kpack` retained. All25 patches
+  reconstruct exact tree; .105/frozen candidates/kernel/boot/Torch unchanged.
+- **Next: N2.1, solver difficult/complex coverage and selection audit.** Read the
+  existing32 P2 solver cases, residual/gradient/condition10,000 evidence, patched
+  Torch linalg consumer and rocSOLVER/hipSOLVER dispatch before choosing a missing
+  complex/difficult operation. Use short independent CPU/reference/residual gates;
+  implement only a demonstrated missing path/defect. Any prefix mutation needs
+  paired DSO/kernel-pack recovery. Sparse widened INT8 outputs/beta-vector and
+  other optional N1 extensions remain separately open, not hardware-impossible.
 
 At resume: read this file, inspect local Git status/log and `.104` runtime/source
 manifests, then read the inventory section for the selected task. Check evidence
@@ -90,17 +98,17 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 
 | Item                     | Current identity                                                                                                          |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Qualified root code      | `cf7de94ac1fe969917b907e7ac4bc76dd8259b2d`                                                                                |
-| rocm-libraries           | `2fd5619d7c8ec6193eeb23077ea347887bdda77c`, ordered patches0001–0024                                                      |
+| Qualified root code      | `a8a241bcc88dc04b6c9ddcbed817b7c0b89e5a2c`                                                                                |
+| rocm-libraries           | `48e1e564d6fd1f8baaff7fd8e60b35217aa425da`, ordered patches0001–0025                                                      |
 | rocm-systems             | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`, patches0001–0003                                                              |
 | Torch                    | `4f13bf86476252e3d57b17d1c72f8512814400e9`, patches0001–0002; editable pip                                                |
 | Triton                   | `ee65ff3b85f99d52e678b252a99c8425fa46e329`, patches0001–0004; qualified wheel retained                                    |
 | LLVM                     | Clean upstream `7667f52dd687899256a3285ab0bce3c53bc73394`                                                                 |
-| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1–N1.7 dev profile**                  |
+| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1–N1.8 dev profile**                  |
 | ROCm/Torch/cache         | `WS/build/dist/rocm`, `WS/pytorch-work`, `WS/cache/dev-user` (uid/gid1000)                                                |
 | Runtime image ID         | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                        |
 | Runtime/build tags       | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; `localhost/bc250-rocm-build:10.2-ccache`                        |
-| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N17.json` delta on N1.6/P2                |
+| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N18.json` delta on N1.7/P2                |
 | Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
 | Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
 | Kernel/boot              | `7.1.5-bc250rocm-r2`; live boot files in `/home/nik/bc250work/bc250-rocm-lab`, backups `WS/recovery/`                     |
@@ -110,7 +118,7 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 Manifests and immutable image IDs outrank mutable tag names. Component version
 strings differ legitimately (TheRock10.2, HIP7.17, Torch 2.13). Source archive names
 and generated Torch Git labels may retain older baselines; do not relabel them.
-The P2 source transfer verified51 files; N1.1 adds7; N1.2–N1.7 each add8 verified changed files. Candidate payload verified191
+The P2 source transfer verified51 files; N1.1 adds7; N1.2–N1.7 each add8 verified changed files; N1.8 adds11 and BLAS DSO/pack hashes. Candidate payload verified191
 independent shared-object/kernel-pack copies. Detailed hashes are in manifests.
 
 ## Unified local workspace
@@ -159,6 +167,7 @@ reads CPU Tctl, not GPU edge. Full measured hardware/recovery facts are in inven
 | N1.5 | Native GPU sparse Lt per-row bias: same-type/FP32, batch broadcast/strides, before activation, plan snapshots and size/type/span/alias guards.526 numerical +41 API checks,234 scalar/609 broadcast regressions; patch0022. |
 | N1.6 | Native device FP32 per-row alpha vector shared across batches, plan flag snapshots and span/alignment guards.404 numerical +34 API checks;234 scalar/609 broadcast/567 bias regressions. Beta-vector enable explicitly unsupported; patch0023. |
 | N1.7 | Native INT8 input/output, bounded INT32 accumulation, FP32 epilogue/bias, nearest-even saturation.134 numerical +16 API and234/609/567/438 regressions; K<=262140, widened outputs unimplemented; patch0024. |
+| N1.8 | Short small/skinny Lt subgroup dispatch:664 new +964 regression cases,36 A/B graph timing fixtures; selected1.14–1.86x, controls~flat; paired DSO/kpack recovery; patch0025. |
 | Performance               | Matched `.104`/`.105` comparisons already done: most GEMM/copy differences small, variable small-conv results. Separate same-board P2 large LtGEMM≈2.1–2.4x faster; selected large compiled HIP-graph fusion≈4x. No whole-Torch or universal speedup claim; default BLAS unchanged.             |
 
 Reports: `docs/development/bc250_scalar_library_results/priority{1,2}-*.json`,
@@ -179,6 +188,7 @@ index, training/model pins and old defects are in the inventory. Counts overlap.
   `python tools/amd_build/build_amd.py --out-of-place-only`, then
   `python -m pip install -e . -v --no-build-isolation`. Cached CMake can leave HIP
   sources stale; don't rebuild solely to change generated version metadata.
+- **Runtime rollback:** pair every changed DSO with its external kernel pack; back up independent copies and verify both hashes under the exclusive lock. DSO-only restoration is incomplete. N1.8 discovered this; older rollback helpers need this fix before reuse.
 - **Targeted builds:** prefer component+dist, including
   `hipBLASLt+dist hipTensor+dist hipSPARSELt+dist`. Global dist can rebuild unrelated
   MIOpen. Keep16 normal jobs, tensor12/providers6/Torch 12/link 1 and20GiB ccache.
@@ -210,7 +220,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N1.5 | Native hipSPARSELt row bias pointer/stride/type contracts and epilogue qualified above. Device bias memory remains caller-owned; plans capture settings. |
 | [x]   | N1.6 | Native alpha-vector path and explicit scalar-beta/unsupported beta-vector policy qualified within the bounded scope above. Beta-vector implementation remains separately open; no universal vector-mode claim. |
 | [x]   | N1.7 | Native signed INT8 input/output with bounded INT32 accumulation, FP32 scalar/vector/bias epilogue and nearest-even saturation qualified above. Widened outputs remain unimplemented. |
-| [ ]   | **N1 / N1.8 — next** | Inspect existing hipBLASLt scalar/register-tile dispatch and P1/P2 timing evidence; implement one measured small/skinny shape improvement with CPU-referenced GPU and epilogue/regression checks. No default Torch BLAS change without consumer evidence. |
+| [x]   | N1.8 | Short small/skinny Lt subgroup dispatch qualified above; tiled path retained outside measured selection. No default Torch BLAS change or whole-Torch speedup claim. |
+| [ ]   | **N2.1 — next** | Audit P2 solver32 cases and pinned Torch/rocSOLVER/hipSOLVER consumers; qualify one missing difficult/complex operation with CPU/residual references and fix only demonstrated defects. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |

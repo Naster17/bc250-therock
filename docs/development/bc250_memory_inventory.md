@@ -148,14 +148,14 @@ Important operational facts:
 | Item                   | Current code / location                                                                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Branch                 | `users/Naster17/rocm-10.2-gfx1013`                                                                                                                           |
-| Qualified TheRock code | `cf7de94ac1fe969917b907e7ac4bc76dd8259b2d` (N1.7); newer docs commits need no runtime rebuild                                                                       |
-| Libraries              | `2fd5619d7c8ec6193eeb23077ea347887bdda77c`                                                                                                                   |
+| Qualified TheRock code | `a8a241bcc88dc04b6c9ddcbed817b7c0b89e5a2c` (N1.8); newer docs commits need no runtime rebuild                                                                       |
+| Libraries              | `48e1e564d6fd1f8baaff7fd8e60b35217aa425da`                                                                                                                   |
 | Systems                | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`                                                                                                                   |
 | LLVM                   | Upstream `7667f52dd687899256a3285ab0bce3c53bc73394`; no custom LLVM architecture patch                                                                       |
 | Torch                  | `4f13bf86476252e3d57b17d1c72f8512814400e9`; release/2.13 baseline `c779020750d7dc99a39ea8c104ef8df1fc9d0755`                                                 |
 | Triton                 | `ee65ff3b85f99d52e678b252a99c8425fa46e329`; baseline `66b3f9ff575eb8db6adec658bbf0badd9a8d2e25`                                                              |
 | Distribution/version   | TheRock 10.2.0; HIP component reports 7.17.0; Torch 2.13.0a0+gfx1013, qualified Triton 3.8 wheel. Different component version strings are not a failed port. |
-| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n17-dev`                              |
+| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n18-dev`                              |
 | ROCm / Torch           | `WS/build/dist/rocm`, editable `WS/pytorch-work`                                                                                                             |
 | Runtime image ID       | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                                                           |
 | Runtime tag            | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; tag name predates P2, immutable ID above is authoritative                                          |
@@ -173,7 +173,7 @@ workspace-root/dev/candidate copies exist. `SOURCE_PRIORITY1.json` and
 not magically updated by patching extracted trees. Generated torch.version's
 Git label may retain the original export revision; use source manifests instead.
 
-Reconstruction: 24 patches in `patches/amd-mainline/rocm-libraries`, three in
+Reconstruction: 25 patches in `patches/amd-mainline/rocm-libraries`, three in
 `patches/amd-mainline/rocm-systems`, two in `patches/bc250-pytorch`, four in
 `patches/bc250-triton`. Apply in order. The P2 reconstruction helper verified
 exact library/system/Torch trees using private indexes; it did not recreate the
@@ -215,6 +215,7 @@ library reconstruction; retained earlier manifests keep their original meaning. 
 | 0022  | Sparse Lt native row bias pointer/stride/type and GPU epilogue: `11e165bd0bf` |
 | 0023  | Sparse Lt device FP32 per-row alpha-vector flag/indexing and guards: `a9a1ace297c` |
 | 0024  | Sparse Lt INT8 input/output, bounded INT32 accumulation, FP32 epilogue and saturating round-even conversion: `2fd5619d7c8` |
+| 0025  | Lt 32-lane subgroup short small/skinny GEMMs and bounded dispatch: `48e1e564d6f` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -232,7 +233,7 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 | ROCr/HIP/CLR                                | Native allocation/copy/stream/churn tests; safe pool default; VMM and async APIs retained                                                                                                                    | SDMA/reset/VM heap/fault migration are separate controlled experiments                                                                                      |
 | Low-precision atomic APIs                   | Existing HIP CAS fallback qualified by `hip_atomic_low_precision.cpp`, contention/returned values/neighbor guards                                                                                            | Do not patch working atomic headers or claim native low-precision atomic instructions                                                                       |
 | rocBLAS/Tensile + hipBLAS                   | Native identity and scalar capability/predicate patches, 570 fallback kernels; large SGEMM and four Torch precisions; P2 BLAS18                                                                              | No complete tuned database/BLAS suite. hipBLAS uses this backend, not custom new kernels.                                                                   |
-| hipBLASLt                                   | 964 C/C++ API cases: f32/f16/bf16 with f32 accumulation, layouts/transposes/batches, host/device scalars, bias/activation/AUX/DGELU, host grouped queries/events/lifetimes; register tile                    | No FP8/INT8/FP64, device user groups, arbitrary tuning or matrix engine. Default Torch BLAS remains rocBLAS.                                                |
+| hipBLASLt | Prior964 C/C++ cases +N1.8 new664,403/561 regressions; f32/f16/bf16 same/mixed output, layouts/transposes/broadcast batches, host/device scalars, bias/activation/AUX/DGELU, grouped lifetime/events; tiled/register and short subgroup paths.36 paired graph timing fixtures | Subgroup K<=64 and min(M,N)<=4 or both<=32/area<=512; FP32 tree order differs. Selected graph kernel ratios1.14–1.86x, controls~flat; no whole-Torch/uncaptured latency claim. FP8/INT8/FP64/device groups/tuning unsupported. Default Torch BLAS remains rocBLAS. |
 | hipTensor generic                           | Historical154 rank-two and23 higher-rank reduction/permutation/binary/trinary checks in generic-only profile                                                                                                 | Wider rank/layout/operators remain; these counts are separate from contractions                                                                             |
 | hipTensor contraction | N1.1 real273 API cases (253 numerical +20 descriptor); N1.2 complex450 (426 numerical +24 descriptor) and273 real regressions. Same-type C32F/C64F, identity/NEG/CONJ, public complex scalars, shared/unilateral sums, padded/permuted layouts, zero/imaginary scalars, span/alias/guard bytes, in-place conjugated C/D,16-mode union with unit axes, plan lifetime and3algorithms×3workspace preferences/type with JIT NONE | N1.3:304 plan API checks +12 numerical executions across four real/complex types; pointer/size/enum guards, atomic failed setters, owning plans, zero required workspace. Scalar cache NONE/JIT NONE/autotune NONE/count0/rank0; alternative requests explicitly unsupported. Broader cache/JIT implementations remain optional. Mixed/widened complex and other complex unary ops unsupported; small-fixture timing is not general performance. |
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
@@ -486,6 +487,43 @@ No performance/automatic Torch routing/new matrix-instruction/long-stability
 claim; .105/kernel/Torch unchanged. Next N1.8: inspect existing Lt scalar/register
 shape dispatch and timing evidence; select one measured small/skinny improvement.
 
+N1.8 `WS/logs/n18-lt-r3/result.json`, repository
+`bc250_scalar_library_results/n18-{lt,lt-attempts,lt-performance,lt-pack,reconstruction}.json`:
+664 CPU-double-referenced GPU cases plus403 scalar/561 extended Lt regressions.
+Native 32-lane scalar subgroup/output (eight/block) for K<=64 and either min(M,N)<=4
+or M,N<=32 with area<=512; no LDS/barriers, physical D-order output mapping. FP32
+tree reduction changes rounding from ascending-K FMA; shared existing epilogues
+retain scalar/bias/activation/AUX/DGELU. Same/mixed f32/f16/bf16, orders/transposes,
+padded/broadcast batches, host/device/zero scalars, compatible in-place C/D, tails,
+cross-batch blocks, K0/1/15/16/17/63/64/65, area512/544 and guard checks passed.
+Initial direct one-thread/output candidate passed504 cases but selected ratios
+0.46–0.76x; rejected. Its DSO-only restore left a mismatched external BLAS pack:
+A2 aborted134 on missing GPU symbol. Exact prior DSO SHA matched frozen P2, whose
+retained pack restored the baseline pair under lock. r2 cooperative path passed
+504+964 cases and paired A2 restoration, but32x32 ratios0.91–0.96x regressed; final
+area<=512 bound keeps32x32 tiled. Every attempt/log preserved; no GPU fault/reset
+or new kernel messages. N1.8 runner restores/hashes both DSO and pack on failures.
+**Correction to historical rollback wording:** N1.1–N1.7 reports only checked DSO
+restoration; they did not verify/restore external packs. Do not treat those fields
+as complete runtime-pair recovery. Their successful final GPU gates remain valid
+recorded evidence; old runners need paired recovery before reuse. This missing
+code-object-symbol abort is separate from unresolved Python CPU segfault0x3b3e6
+and the already fixed allocator corruption/default-pool issue.
+36 deterministic same-input C++ fixtures, column-major NN/batch1/host scalars/default
+epilogue, A1/B1/B2/A2 order; five GPU-event samples of32-launch HIP graph/pass.
+Selected skinny ratios1.14–1.86x, selected small1.21–1.61x; controls0.999–1.007x;
+max repeated-pass median drift0.28%. Kernel-focused graph replay, not uncaptured
+application latency or Torch speedup; clocks untrusted, no clock attribution.
+Final targeted16-job/20GiB ccache build11.6s, numerical3.5s/scalar2.0s/extended1.7s;
+timing passes~1s, all under exclusive lock. Kernel logs identical1009 lines.
+`SOURCE_N18.json` verifies11 source files plus BLAS DSO/pack hashes;25 patches
+reconstruct exact tree. Pack payload comparison:1 Lt entry changed,68 unchanged
+including all67 rocBLAS entries. Recovery DSO `WS/recovery/n18-lt-before.so.1.5`
+and pack `WS/recovery/n18-blas_lib_gfx1013-before.kpack` independent copies retained.
+No .105/kernel/Torch/frozen candidate changes, automatic consumer routing, universal
+bitwise/nonfinite or sustained qualification. N1 bounded roadmap items complete;
+optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit.
+
 ## Defects and traps already investigated: do not rediscover them
 
 | Issue                           | Finding / resolution                                                                                                                         | Evidence to preserve                                                                                                                           |
@@ -542,6 +580,10 @@ never silently assume all matrices are SPD. The benchmark source encodes exact c
 | P2 candidate                      | `candidates/priority2-20261014/runtime.json`,191 shared-object/kernel-pack hashes; validation/candidate.json                           |
 | P2 launcher                       | `/home/nik/bc250work/priority2-launcher.{json,pt}`,20 cycles/40 sparse matmuls, compiled gradients and checkpoint                      |
 | Kernel comparison                 | P2 report records82 new bridge/veth messages, no new fault/reset/OOM; logs are not byte-identical                                      |
+
+Always back up and restore changed DSOs together with the external `.kpack` files
+they reference, under the exclusive prefix lock. Verify both hashes; a DSO hash
+alone cannot establish runtime rollback. N1.8 paired A2 execution checks recovery.
 
 Build without mapped GPU devices; run bounded GPU gates serially after staging.
 Use existing objects/20 GiB ccache:16 normal jobs, hipTensor 12, hipDNN providers 6,
