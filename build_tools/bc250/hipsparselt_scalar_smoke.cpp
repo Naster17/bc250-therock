@@ -11,6 +11,7 @@
 #include <cstring>
 #include <hip/hip_runtime.h>
 #include <hipsparselt/hipsparselt.h>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <thread>
@@ -113,7 +114,8 @@ template <class T>
 void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
          hipsparseOrder_t order, bool ta, bool tb, int batches,
          bool tile_mode = false, bool partial_tile = false, int activation = -1,
-         int broadcast_mask = 0) {
+         int broadcast_mask = 0, int bias_mode = 0, int scalar_mode = 0,
+         bool inplace_cd = false) {
   std::fprintf(stderr,
                "CASE type=%d sparse_a=%d order=%d ta=%d tb=%d batches=%d "
                "tile=%d partial=%d\n",
@@ -132,6 +134,8 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                    order == HIPSPARSE_ORDER_ROW ? HIPSPARSE_ORDER_COL
                                                 : HIPSPARSE_ORDER_ROW,
                    batches);
+  if (inplace_cd)
+    lc = ld;
   if (broadcast_mask & 1)
     la.stride = 0;
   if (broadcast_mask & 2)
@@ -240,11 +244,69 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
       ta ? HIPSPARSE_OPERATION_TRANSPOSE : HIPSPARSE_OPERATION_NON_TRANSPOSE;
   auto opb =
       tb ? HIPSPARSE_OPERATION_TRANSPOSE : HIPSPARSE_OPERATION_NON_TRANSPOSE;
+  const bool float_bias = bias_mode == 3 || bias_mode == 4;
+  int64_t bias_stride = bias_mode == 2 || bias_mode == 4 ? m + 3 : 0;
+  size_t bias_elements = m + (batches - 1) * bias_stride + 8;
+  std::vector<float> host_bias(bias_elements, -17.0f);
+  std::vector<T> typed_bias(bias_elements, T(-17.0f));
+  for (int batch = 0; batch < (bias_stride ? batches : 1); ++batch)
+    for (int row = 0; row < m; ++row) {
+      auto index = 4 + batch * bias_stride + row;
+      host_bias[index] = float(row - 2 + batch * 3) * 0.125f + 0.00390625f;
+      typed_bias[index] = T(host_bias[index]);
+    }
+  std::unique_ptr<Device> gpu_bias;
+  const void *bias_pointer = nullptr;
+  if (bias_mode) {
+    size_t element_size = float_bias ? sizeof(float) : sizeof(T);
+    gpu_bias = std::make_unique<Device>(bias_elements * element_size);
+    HIP(hipMemcpy(gpu_bias->data,
+                  float_bias ? static_cast<const void *>(host_bias.data())
+                             : static_cast<const void *>(typed_bias.data()),
+                  bias_elements * element_size, hipMemcpyHostToDevice));
+    bias_pointer =
+        static_cast<const unsigned char *>(gpu_bias->data) + 4 * element_size;
+  }
   hipsparseLtMatmulDescriptor_t mm{};
   hipsparseLtMatmulAlgSelection_t alg{};
   hipsparseLtMatmulPlan_t plan{};
   LT(hipsparseLtMatmulDescriptorInit(&handle, &mm, opa, opb, &da, &db, &dc, &dd,
                                      HIPSPARSELT_COMPUTE_32F));
+  if (bias_mode) {
+    LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
+                                         HIPSPARSELT_MATMUL_BIAS_POINTER,
+                                         &bias_pointer, sizeof(bias_pointer)));
+    LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
+                                         HIPSPARSELT_MATMUL_BIAS_STRIDE,
+                                         &bias_stride, sizeof(bias_stride)));
+    if (float_bias) {
+      hipDataType bias_type = HIP_R_32F;
+      LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
+                                           HIPSPARSELT_MATMUL_BIAS_TYPE,
+                                           &bias_type, sizeof(bias_type)));
+    }
+    if (bias_mode == 5) {
+      bias_pointer = nullptr;
+      LT(hipsparseLtMatmulDescSetAttribute(
+          &handle, &mm, HIPSPARSELT_MATMUL_BIAS_POINTER, &bias_pointer,
+          sizeof(bias_pointer)));
+    }
+    const void *observed = nullptr;
+    int64_t observed_stride = -1;
+    hipDataType observed_type{};
+    LT(hipsparseLtMatmulDescGetAttribute(&handle, &mm,
+                                         HIPSPARSELT_MATMUL_BIAS_POINTER,
+                                         &observed, sizeof(observed)));
+    LT(hipsparseLtMatmulDescGetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_BIAS_STRIDE, &observed_stride,
+        sizeof(observed_stride)));
+    LT(hipsparseLtMatmulDescGetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_BIAS_TYPE, &observed_type,
+        sizeof(observed_type)));
+    expect(observed == bias_pointer && observed_stride == bias_stride &&
+               observed_type == (float_bias ? HIP_R_32F : type),
+           "bias attribute roundtrip");
+  }
   if (activation >= 0) {
     int enable = 1;
     auto attr = static_cast<hipsparseLtMatmulDescAttribute_t>(activation);
@@ -296,6 +358,22 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
   LT(hipsparseLtMatmulAlgSelectionInit(&handle, &alg, &mm,
                                        HIPSPARSELT_MATMUL_ALG_DEFAULT));
   LT(hipsparseLtMatmulPlanInit(&handle, &plan, &mm, &alg));
+  if (bias_mode && bias_mode != 5) {
+    const void *cleared = nullptr;
+    LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
+                                         HIPSPARSELT_MATMUL_BIAS_POINTER,
+                                         &cleared, sizeof(cleared)));
+    // Poison every descriptor bias field after creating the owning plan
+    // snapshot.
+    int64_t changed_stride = m + 9;
+    LT(hipsparseLtMatmulDescSetAttribute(
+        &handle, &mm, HIPSPARSELT_MATMUL_BIAS_STRIDE, &changed_stride,
+        sizeof(changed_stride)));
+    hipDataType changed_type = float_bias ? type : HIP_R_32F;
+    LT(hipsparseLtMatmulDescSetAttribute(&handle, &mm,
+                                         HIPSPARSELT_MATMUL_BIAS_TYPE,
+                                         &changed_type, sizeof(changed_type)));
+  }
   if (activation >= 0) {
     // The plan owns a snapshot: later descriptor mutations must not change it.
     int disable = 0;
@@ -457,6 +535,20 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                 input.size() * sizeof(T)));
   HIP(hipMemset(gpu_sparse.data, 0xFF, pruned.size() * sizeof(T)));
   float alpha = 1.25f, beta = -0.375f;
+  if (scalar_mode & 1) {
+    alpha = 0;
+    HIP(hipMemset(compressed.data, 0xFF, size));
+    HIP(hipMemset(sparse_a ? gpu_b.data : gpu_a.data, 0xFF,
+                  (sparse_a ? b.size() : a.size()) * sizeof(T)));
+  }
+  if (scalar_mode & 2) {
+    beta = 0;
+    HIP(hipMemset(gpu_c.data, 0xFF, c.size() * sizeof(T)));
+  }
+  if (inplace_cd)
+    HIP(hipMemcpy(gpu_d.data, c.data(), c.size() * sizeof(T),
+                  hipMemcpyHostToDevice));
+
   if (broadcast_mask) {
     const void *pa = sparse_a ? compressed.data : gpu_a.data;
     const void *pb = sparse_a ? gpu_b.data : compressed.data;
@@ -479,10 +571,10 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                                1) == HIPSPARSE_STATUS_NOT_SUPPORTED,
              "broadcast C cannot alias batched D");
   }
-  LT(hipsparseLtMatmul(&handle, &plan, &alpha,
-                       sparse_a ? compressed.data : gpu_a.data,
-                       sparse_a ? gpu_b.data : compressed.data, &beta,
-                       gpu_c.data, gpu_d.data, nullptr, &stream, 1));
+  LT(hipsparseLtMatmul(
+      &handle, &plan, &alpha, sparse_a ? compressed.data : gpu_a.data,
+      sparse_a ? gpu_b.data : compressed.data, &beta,
+      inplace_cd ? gpu_d.data : gpu_c.data, gpu_d.data, nullptr, &stream, 1));
   HIP(hipStreamSynchronize(stream));
   HIP(hipMemcpy(output.data(), gpu_d.data, output.size() * sizeof(T),
                 hipMemcpyDeviceToHost));
@@ -498,6 +590,10 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
                      (sparse_a ? b : reference)[lb.index(batch, kk, col, tb)]));
         float value =
             float(alpha * sum + beta * float(c[lc.index(batch, row, col)]));
+        if (bias_mode && bias_mode != 5) {
+          auto index = 4 + batch * bias_stride + row;
+          value += float_bias ? host_bias[index] : float(typed_bias[index]);
+        }
         if (activation == HIPSPARSELT_MATMUL_ACTIVATION_RELU)
           value = value > 0.25f ? std::min(value, 0.75f) : 0.0f;
         if (activation == HIPSPARSELT_MATMUL_ACTIVATION_ABS)
@@ -546,8 +642,20 @@ void run(hipsparseLtHandle_t &handle, hipDataType type, bool sparse_a,
              "nonlinear CPU-double reference and exact padding");
     }
   }
-  if (activation < 0 && sparse_a && order == HIPSPARSE_ORDER_ROW && !ta &&
-      !tb && batches == 1) {
+  if (bias_mode) {
+    size_t element_size = float_bias ? sizeof(float) : sizeof(T);
+    std::vector<unsigned char> observed(bias_elements * element_size);
+    HIP(hipMemcpy(observed.data(), gpu_bias->data, observed.size(),
+                  hipMemcpyDeviceToHost));
+    expect(std::memcmp(observed.data(),
+                       float_bias
+                           ? static_cast<const void *>(host_bias.data())
+                           : static_cast<const void *>(typed_bias.data()),
+                       observed.size()) == 0,
+           "bias input and boundary guards unchanged");
+  }
+  if (bias_mode == 0 && activation < 0 && sparse_a &&
+      order == HIPSPARSE_ORDER_ROW && !ta && !tb && batches == 1) {
     int repetitions = 2;
     expect(hipsparseLtMatmulAlgSetAttribute(
                &handle, &alg, HIPSPARSELT_MATMUL_SEARCH_ITERATIONS,

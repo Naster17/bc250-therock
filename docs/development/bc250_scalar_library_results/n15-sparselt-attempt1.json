@@ -1,0 +1,39 @@
+{
+  "task": "N1.5",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 10.67536758300048
+    },
+    {
+      "name": "baseline-bias",
+      "exit": 0,
+      "seconds": 0.3151648259990907
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 6.573133080000844
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 2.7199703700007376
+    }
+  ],
+  "before_library_sha256": "12c57c5ebd8b34cf973dcfb4bbe8f2d708c04a3b641dcde5a9e16d932c175b89",
+  "source_delta_sha256": "753b965a95a15830dff0eea2b1d85af8a3873aaa1db3ca98bdc715fde061b32e",
+  "test_source_sha256": "0e99969e46bf210f3a2815e31aebe04c43453c02b587655b9eda8684bb176dd9",
+  "resources": {
+    "jobs": 16,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "gpu-correctness",
+  "after_source_sha256": "5cb5e6b8b147c0a2b30f85a1b8de85e8c6da0ada3c23dd25dd465c55e3da073e",
+  "after_library_sha256": "36b6de6b47f4c7410c08ea97a474dd35a78917b15cf77bedb9de6aff4f07a4dc",
+  "error": "",
+  "prefix_restored": true
+}

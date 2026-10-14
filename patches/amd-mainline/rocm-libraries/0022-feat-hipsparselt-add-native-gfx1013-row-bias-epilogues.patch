@@ -1,0 +1,146 @@
+From 11e165bd0bfba8d88b83239646432e98f91b5a50 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 17:02:14 +0200
+Subject: [PATCH] feat(hipsparselt): add native gfx1013 row bias epilogues
+
+---
+ .../library/src/hcc_detail/gfx1013_scalar.hip | 74 +++++++++++++++++--
+ 1 file changed, 68 insertions(+), 6 deletions(-)
+
+diff --git a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+index 8a1f29cb55a..654f9539dac 100644
+--- a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
++++ b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+@@ -44,8 +44,11 @@ namespace
+         hipsparseOperation_t opa, opb;
+         int                  activation = -1;
+         float                leakyAlpha = 0.01f;
+-        float reluThreshold = 0.0f, reluUpper = std::numeric_limits<float>::infinity();
+-        float geluScale = 1.0f, tanhAlpha = 1.0f, tanhBeta = 1.0f;
++        float       reluThreshold = 0.0f, reluUpper = std::numeric_limits<float>::infinity();
++        float       geluScale = 1.0f, tanhAlpha = 1.0f, tanhBeta = 1.0f;
++        const void* bias        = nullptr;
++        int64_t     bias_stride = 0;
++        hipDataType bias_type   = HIP_R_32F;
+     };
+     struct Algorithm
+     {
+@@ -204,6 +207,10 @@ namespace
+         auto x = reinterpret_cast<uintptr_t>(a), y = reinterpret_cast<uintptr_t>(b);
+         return x < y ? y - x < a_bytes : x - y < b_bytes;
+     }
++    size_t bias_bytes(const Multiply& mm)
++    {
++        return (mm.d.rows + (mm.d.batches - 1) * mm.bias_stride) * width(mm.bias_type);
++    }
+ 
+     // A group owns all its dense output locations, allowing in-place strip pruning.
+     template <class T, bool Check, bool Compress>
+@@ -448,6 +455,12 @@ namespace
+         if(beta != 0)
+             value += beta
+                      * float(c[offset(mm.c, HIPSPARSE_OPERATION_NON_TRANSPOSE, row, col, batch)]);
++        if(mm.bias)
++        {
++            int64_t index = row + batch * mm.bias_stride;
++            value += mm.bias_type == HIP_R_32F ? static_cast<const float*>(mm.bias)[index]
++                                               : float(static_cast<const T*>(mm.bias)[index]);
++        }
+         if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_RELU)
+             value
+                 = value > mm.reluThreshold ? fminf(value, mm.reluUpper) : fminf(0.0f, mm.reluUpper);
+@@ -754,8 +767,9 @@ hipsparseStatus_t hipsparseLtMatmulDescriptorInit(const hipsparseLtHandle_t*
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+     if(!operation(opa) || !operation(opb) || compute != HIPSPARSELT_COMPUTE_32F)
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+-    mm.opa = opa;
+-    mm.opb = opb;
++    mm.opa       = opa;
++    mm.opb       = opb;
++    mm.bias_type = mm.a.type;
+     if(mm.a.sparse == mm.b.sparse || mm.c.sparse || mm.d.sparse || mm.a.type != mm.b.type
+        || mm.a.type != mm.c.type || mm.a.type != mm.d.type)
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
+@@ -780,7 +794,31 @@ hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*
+     Multiply mm{};
+     if(!valid(h) || !read(d, mm, multiply_tag) || !value)
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+-    if(activationAttribute(attr))
++    if(attr == HIPSPARSELT_MATMUL_BIAS_POINTER)
++    {
++        if(bytes != sizeof(mm.bias))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(&mm.bias, value, bytes);
++    }
++    else if(attr == HIPSPARSELT_MATMUL_BIAS_STRIDE)
++    {
++        if(bytes != sizeof(mm.bias_stride))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(&mm.bias_stride, value, bytes);
++        if(mm.bias_stride != 0 && mm.bias_stride < mm.d.rows)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        if(mm.bias_stride > (int64_t(1) << 40) / 65535)
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    }
++    else if(attr == HIPSPARSELT_MATMUL_BIAS_TYPE)
++    {
++        if(bytes != sizeof(mm.bias_type))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(&mm.bias_type, value, bytes);
++        if(mm.bias_type != mm.a.type && mm.bias_type != HIP_R_32F)
++            return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    }
++    else if(activationAttribute(attr))
+     {
+         if(bytes != sizeof(int))
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+@@ -806,6 +844,8 @@ hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*
+     }
+     else
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    if(mm.bias && reinterpret_cast<uintptr_t>(mm.bias) % width(mm.bias_type))
++        return HIPSPARSE_STATUS_INVALID_VALUE;
+     write(d, mm);
+     return HIPSPARSE_STATUS_SUCCESS;
+ }
+@@ -818,7 +858,25 @@ hipsparseStatus_t hipsparseLtMatmulDescGetAttribute(const hipsparseLtHandle_t*
+     Multiply mm{};
+     if(!valid(h) || !read(d, mm, multiply_tag) || !value)
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+-    if(activationAttribute(attr))
++    if(attr == HIPSPARSELT_MATMUL_BIAS_POINTER)
++    {
++        if(bytes != sizeof(mm.bias))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(value, &mm.bias, bytes);
++    }
++    else if(attr == HIPSPARSELT_MATMUL_BIAS_STRIDE)
++    {
++        if(bytes != sizeof(mm.bias_stride))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(value, &mm.bias_stride, bytes);
++    }
++    else if(attr == HIPSPARSELT_MATMUL_BIAS_TYPE)
++    {
++        if(bytes != sizeof(mm.bias_type))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(value, &mm.bias_type, bytes);
++    }
++    else if(activationAttribute(attr))
+     {
+         if(bytes != sizeof(int))
+             return HIPSPARSE_STATUS_INVALID_VALUE;
+@@ -945,6 +1003,10 @@ hipsparseStatus_t hipsparseLtMatmul(const hipsparseLtHandle_t*     h,
+         return HIPSPARSE_STATUS_INVALID_VALUE;
+     if(count > 1)
+         return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    if(plan.mm.bias
++       && (reinterpret_cast<uintptr_t>(plan.mm.bias) % width(plan.mm.bias_type)
++           || overlaps(d, dense_bytes(plan.mm.d), plan.mm.bias, bias_bytes(plan.mm))))
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
+     if(overlaps(d,
+                 dense_bytes(plan.mm.d),
+                 a,
+-- 
+2.56.0
+

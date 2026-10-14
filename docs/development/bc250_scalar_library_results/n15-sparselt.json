@@ -1,0 +1,78 @@
+{
+  "task": "N1.5",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 10.627440722999381
+    },
+    {
+      "name": "baseline-bias",
+      "exit": 0,
+      "seconds": 0.315017661998354
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 2.818229763001
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 2.667556529999274
+    },
+    {
+      "name": "scalar-regression",
+      "exit": 0,
+      "seconds": 1.616399389000435
+    },
+    {
+      "name": "broadcast-regression",
+      "exit": 0,
+      "seconds": 3.020186804000332
+    }
+  ],
+  "before_library_sha256": "12c57c5ebd8b34cf973dcfb4bbe8f2d708c04a3b641dcde5a9e16d932c175b89",
+  "source_delta_sha256": "753b965a95a15830dff0eea2b1d85af8a3873aaa1db3ca98bdc715fde061b32e",
+  "test_source_sha256": "6230e3c358c422916ad4fcf5da9c7a8451e6aba538586f1ff29d649ff4d42a7d",
+  "resources": {
+    "jobs": 16,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "broadcast-regression",
+  "after_source_sha256": "5cb5e6b8b147c0a2b30f85a1b8de85e8c6da0ada3c23dd25dd465c55e3da073e",
+  "after_library_sha256": "36b6de6b47f4c7410c08ea97a474dd35a78917b15cf77bedb9de6aff4f07a4dc",
+  "executed_cases": 567,
+  "timings": [],
+  "scalar_regression_cases": 234,
+  "broadcast_regression_cases": 609,
+  "rocm_libraries_revision": "11e165bd0bfba8d88b83239646432e98f91b5a50",
+  "scope": {
+    "native_arch": "gfx1013",
+    "numerical_bias_cases": 526,
+    "bias_api_checks": 41,
+    "scalar_regressions": 234,
+    "broadcast_regressions": 609,
+    "contract": "Per-output-row device bias added after alpha*AB+beta*C and before activation. Bias stride0 broadcasts across batches; padded positive stride selects per-batch row vectors. Null pointer disables bias. Default dtype matches f32/f16/bf16 matrices; low-precision matrices may use FP32 bias.",
+    "coverage": "sparse A/B, both orders/transposes, strip/TILE/partial tiles, three matrix types, default/explicit FP32 bias, bias broadcast/batched stride, A/B/C zero-stride broadcasts, six activations, NaN-poisoned zero-alpha/beta paths, valid in-place C/D, pointer/type/stride descriptor mutation after plan creation, immutable bias input/guards, independent compression decoding and CPU double GEMM reference",
+    "validation": "exact pointer/stride/type attribute sizes and getter guards; invalid stride/type/misaligned pointer preserves old state; D/bias exact or partial span aliases rejected; borrowed device bias pointer must remain alive until GPU work completes",
+    "not_qualified": [
+      "new matrix types",
+      "alpha/beta vector scaling",
+      "split-K or multi-stream",
+      "hardware sparse acceleration",
+      "general performance/long stability"
+    ]
+  },
+  "post_run_review": {
+    "kernel_log": "identical1009 lines, no new messages",
+    "kernel_before_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "kernel_after_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "qualified_log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n15-sparselt-r2",
+    "prior_prefix_backup": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/n15-sparselt-before.so.0.2",
+    "initial_attempt": "logs/n15-sparselt: probe passed567 checks; buffered stdout mixed PASS records with stderr CASE diagnostics, leaving565 parseable PASS lines. Runner failed accounting and restored prefix before unlock. Line-buffered stdout fixes reporting; production arithmetic unchanged.",
+    "upstream_contract_evidence": "rocsparselt_auxiliary.cpp initializes low-precision bias type to matrix type, copies pointer-sized bias pointer and int64 stride (0 or >= D rows); public header allows low-precision or FP32 bias. Pointer/stride header comments are swapped; implementation determines ABI."
+  }
+}
