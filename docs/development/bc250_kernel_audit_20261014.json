@@ -1,0 +1,251 @@
+{
+  "scope": "GPU AMD subtree only; local .105 archives linux-7.1 plus patch-7.1.5; cryptographic upstream signature verification not performed",
+  "archive_sha256": {
+    "linux-7.1.tar.xz": "691f44797fbe790dc8a321604c927087526ad27b6d649925d60f8eed0a2564a0",
+    "patch-7.1.5.xz": "02719bbfb0de85dfe6d7b9222ca5997fab35cf9588e9175bacbe257a461166f2"
+  },
+  "extracted_files": 2769,
+  "stable_patch_sections": 36,
+  "identical_files": 2762,
+  "changed": [
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c",
+      "pristine_sha256": "124767f2af7b5895ba8ffe1606691fd3a313083d1e7517bacb9fbdfb9b7a6e1e",
+      "import_sha256": "389cb7ffcd70255d16f9dd941cf61d01c3cb447f85a968a9ab6fa5174fd9b444",
+      "added_lines": 4,
+      "removed_lines": 2
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "124767f2af7b5895ba8ffe1606691fd3a313083d1e7517bacb9fbdfb9b7a6e1e",
+      "added_lines": 2922,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c",
+      "pristine_sha256": "2c899235de97677a69fe58c96450b4a6c7d97b39858de805883aab50f90e0a45",
+      "import_sha256": "fe44a207d763e99b0e4abe574e2a2e0d813c089d4c2e0210ea482a027bcd6898",
+      "added_lines": 41,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c",
+      "pristine_sha256": "e5fd625fda80620b93bd270537ad630f10776329241bdd9c2ddc97244c0093e2",
+      "import_sha256": "3dae1ae864e22826d719b066bb68230139da40ec58e8afb4ffa295e8a49840b7",
+      "added_lines": 12,
+      "removed_lines": 1
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "e5fd625fda80620b93bd270537ad630f10776329241bdd9c2ddc97244c0093e2",
+      "added_lines": 1138,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_chardev.c",
+      "pristine_sha256": "ed17d5f726afd2a89ed08ae41e1048be7137dd12554148a962a1e0dd1ae73aa6",
+      "import_sha256": "865365382150e369d962101d8d25bb1af317f097fdd990070a14a5ed02efb7e3",
+      "added_lines": 8,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_chardev.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "ed17d5f726afd2a89ed08ae41e1048be7137dd12554148a962a1e0dd1ae73aa6",
+      "added_lines": 3575,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c",
+      "pristine_sha256": "964cd96b261a721c1cf3f962bfb2ca91ed65cf41cb7d1a4fe3c245d4d7076436",
+      "import_sha256": "839b5203927f339db248df48b6a36bdcd12c218d1af2977a760ee4fb812da2c7",
+      "added_lines": 59,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "964cd96b261a721c1cf3f962bfb2ca91ed65cf41cb7d1a4fe3c245d4d7076436",
+      "added_lines": 3773,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h",
+      "pristine_sha256": "101933213c0dfac3743eaf428a729747e332ff8fcb3fc642613099202dbed6ff",
+      "import_sha256": "70857b9a14708341255c34a532daf34f71f8d266e3cd4f15fe5ffc81880aa842",
+      "added_lines": 7,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_svm.c",
+      "pristine_sha256": "d10f97565f6f7cfd42dadda5eb216f3499d058184428cd8b77615fd9c1e0d86e",
+      "import_sha256": "9c189c2875011f70e3f465d4ab3bfad309f739ef17179c1cda45eb5a19b8ed6a",
+      "added_lines": 5,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_svm.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "d10f97565f6f7cfd42dadda5eb216f3499d058184428cd8b77615fd9c1e0d86e",
+      "added_lines": 4352,
+      "removed_lines": 0
+    }
+  ],
+  "active_changes": [
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c",
+      "pristine_sha256": "124767f2af7b5895ba8ffe1606691fd3a313083d1e7517bacb9fbdfb9b7a6e1e",
+      "import_sha256": "389cb7ffcd70255d16f9dd941cf61d01c3cb447f85a968a9ab6fa5174fd9b444",
+      "added_lines": 4,
+      "removed_lines": 2
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c",
+      "pristine_sha256": "2c899235de97677a69fe58c96450b4a6c7d97b39858de805883aab50f90e0a45",
+      "import_sha256": "fe44a207d763e99b0e4abe574e2a2e0d813c089d4c2e0210ea482a027bcd6898",
+      "added_lines": 41,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c",
+      "pristine_sha256": "e5fd625fda80620b93bd270537ad630f10776329241bdd9c2ddc97244c0093e2",
+      "import_sha256": "3dae1ae864e22826d719b066bb68230139da40ec58e8afb4ffa295e8a49840b7",
+      "added_lines": 12,
+      "removed_lines": 1
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_chardev.c",
+      "pristine_sha256": "ed17d5f726afd2a89ed08ae41e1048be7137dd12554148a962a1e0dd1ae73aa6",
+      "import_sha256": "865365382150e369d962101d8d25bb1af317f097fdd990070a14a5ed02efb7e3",
+      "added_lines": 8,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c",
+      "pristine_sha256": "964cd96b261a721c1cf3f962bfb2ca91ed65cf41cb7d1a4fe3c245d4d7076436",
+      "import_sha256": "839b5203927f339db248df48b6a36bdcd12c218d1af2977a760ee4fb812da2c7",
+      "added_lines": 59,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h",
+      "pristine_sha256": "101933213c0dfac3743eaf428a729747e332ff8fcb3fc642613099202dbed6ff",
+      "import_sha256": "70857b9a14708341255c34a532daf34f71f8d266e3cd4f15fe5ffc81880aa842",
+      "added_lines": 7,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_svm.c",
+      "pristine_sha256": "d10f97565f6f7cfd42dadda5eb216f3499d058184428cd8b77615fd9c1e0d86e",
+      "import_sha256": "9c189c2875011f70e3f465d4ab3bfad309f739ef17179c1cda45eb5a19b8ed6a",
+      "added_lines": 5,
+      "removed_lines": 0
+    }
+  ],
+  "backup_files": [
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "124767f2af7b5895ba8ffe1606691fd3a313083d1e7517bacb9fbdfb9b7a6e1e",
+      "added_lines": 2922,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "e5fd625fda80620b93bd270537ad630f10776329241bdd9c2ddc97244c0093e2",
+      "added_lines": 1138,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_chardev.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "ed17d5f726afd2a89ed08ae41e1048be7137dd12554148a962a1e0dd1ae73aa6",
+      "added_lines": 3575,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "964cd96b261a721c1cf3f962bfb2ca91ed65cf41cb7d1a4fe3c245d4d7076436",
+      "added_lines": 3773,
+      "removed_lines": 0
+    },
+    {
+      "path": "drivers/gpu/drm/amd/amdkfd/kfd_svm.c.orig",
+      "pristine_sha256": null,
+      "import_sha256": "d10f97565f6f7cfd42dadda5eb216f3499d058184428cd8b77615fd9c1e0d86e",
+      "added_lines": 4352,
+      "removed_lines": 0
+    }
+  ],
+  "active_added_lines": 136,
+  "active_removed_lines": 3,
+  "kernel_source_revision": "6f57bb40d26d1cbec862807fc89a9c61af1b9a39",
+  "running_hosts": {
+    "192.168.1.104": {
+      "uname": "7.1.5-bc250rocm-r2 #2 SMP PREEMPT_DYNAMIC Wed Sep 16 13:02:12 UTC 2026",
+      "boot_file_sha256": "792f904835f27574b680d2fd5cfd7e42b348fb3a3d9b39d8e8c87348873c3b0d",
+      "installed_amdgpu_module_sha256": "88e9e465a0fb668075e10c83ccabf473d2482095cf7f27c7ee06b77f24cd2799",
+      "module_vermagic": "7.1.5-bc250rocm-r2 SMP preempt mod_unload modversions"
+    },
+    "192.168.1.105": {
+      "uname": "7.1.5-bc250rocm-r2 #2 SMP PREEMPT_DYNAMIC Wed Sep 16 13:02:12 UTC 2026",
+      "boot_file_sha256": "792f904835f27574b680d2fd5cfd7e42b348fb3a3d9b39d8e8c87348873c3b0d",
+      "installed_amdgpu_module_sha256": "88e9e465a0fb668075e10c83ccabf473d2482095cf7f27c7ee06b77f24cd2799",
+      "module_vermagic": "7.1.5-bc250rocm-r2 SMP preempt mod_unload modversions"
+    }
+  },
+  "findings": [
+    {
+      "id": "K-review-1",
+      "status": "confirmed source behavior; error path not reproduced",
+      "finding": "All four custom map/unmap/SVM call sites ignore kfd_bc250_flush_by_runlist() failure returns; helper logs and returns execute_queues_cpsch failures. Review transactional/error and TLB-ordering semantics before changing code.",
+      "locations": [
+        "drivers/gpu/drm/amd/amdkfd/kfd_chardev.c:1388",
+        "drivers/gpu/drm/amd/amdkfd/kfd_chardev.c:1488",
+        "drivers/gpu/drm/amd/amdkfd/kfd_svm.c:1430",
+        "drivers/gpu/drm/amd/amdkfd/kfd_svm.c:1579"
+      ]
+    },
+    {
+      "id": "K-review-2",
+      "status": "confirmed source behavior; diagnostic modes not exercised",
+      "finding": "CU probe modes1/4 restore CC/SPI but do not restore RLC_PG_ALWAYS_ON_WGP_MASK; mode1 also traverses all SE/SH despite probe-SE0SH0 description. Active boot uses mode3, so this does not establish a current workload cause.",
+      "locations": [
+        "drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c:10129"
+      ]
+    },
+    {
+      "id": "K-review-3",
+      "status": "confirmed absence in imported source",
+      "finding": "Retained packaging 0005 eight-core telemetry patch is absent: cyan_skillfish_ppt.c matches archive-derived upstream baseline. Existing GFXCLK reads firmware metrics.Current.GfxclkFrequency. Possible relevance to conflicting telemetry; not a proven root cause.",
+      "locations": [
+        "drivers/gpu/drm/amd/pm/swsmu/smu11/cyan_skillfish_ppt.c:146"
+      ]
+    },
+    {
+      "id": "K-review-4",
+      "status": "provenance limitation",
+      "finding": "Kernel is a single already-patched source import, without per-change Git history. Seven active AMD file deltas can now be reconstructed against local archived baseline; five .orig files are backups. Rest of Linux and module/initramfs build identity are not fully audited."
+    }
+  ],
+  "actions": "Read-only SSH inspection on .104/.105, local archive copies/extraction and source comparison only. No kernel/module/config/boot/firmware/runtime changes, builds, GPU tests or reboots.",
+  "remaining": "Verify upstream signatures/tag, full-tree delta and driver/module/initramfs identity; review seven active changes as minimal patches; propose clean side-by-side candidate and bounded memory/queue/TLB tests before any boot switch. Preserve current default and SSH fallback.",
+  "module_identity_limit": "Installed module files match; loaded/initramfs bytes and source-to-binary reproducibility not independently proved. Module srcversion unavailable.",
+  "retained_boot_log": {
+    "sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "lines": 1009,
+    "warnings": "Two pre-existing AMD Display Core IRQ init WARN traces around8.93s; not new N1.8 workload faults",
+    "current_104_taint": 12864,
+    "taint_flags": [
+      "USER",
+      "WARN",
+      "OUT_OF_TREE_MODULE",
+      "UNSIGNED_MODULE"
+    ],
+    "cause_limit": "Flags do not identify a responsible module or corruption cause."
+  }
+}

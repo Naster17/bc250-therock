@@ -8,6 +8,18 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Latest user-requested kernel review:** preliminary read-only r2 audit complete;
+  see `docs/development/bc250_kernel_audit_20261014.{md,json,patch}`. Both hosts run
+  the recorded7.1.5-r2 image; installed AMDGPU module hashes match. Archive-derived
+  AMD subtree comparison:7 active files/136 additions/3 removals,2762 identical
+  files and5 inactive `.orig` backups. Upstream signatures/full tree not audited.
+  Findings: four ignored runlist-flush error returns; CU probe modes leave RLC
+  changed; retained eight-core telemetry patch absent; two pre-existing Display
+  Core boot warnings. No kernel cause for unresolved Python fault established.
+  No kernel/module/boot/runtime changes, builds, GPU tests or running audit jobs.
+  Next kernel action: authenticate upstream base/full delta, review minimal patch
+  series and module/initramfs provenance before preparing a separate candidate;
+  retain r2/default/SSH fallback and .105 unchanged. N2.1 library cursor retained.
 - **Current task:** N1.8 hipBLASLt short small/skinny GEMM dispatch implemented,
   installed on .104 and bounded-qualified. N1.1–N1.7 retained in their scopes.
 - **Last qualified code:** root `0115c01f06f8654b26b5a665286069caf89eda2d`,

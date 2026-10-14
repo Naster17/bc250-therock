@@ -143,6 +143,20 @@ Important operational facts:
   `/home/nik/{bc250-40cu-unlock,bc250_smu_oc,rocm-systems}`. Older Vulkan7.0.10
   module/initramfs artifacts are distinct from the live r2 kernel.
 
+Read-only kernel review2026-10-14:
+[report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),
+[active AMD delta](bc250_kernel_audit_20261014.patch). Reconstructed AMD subtree
+from .105's archived7.1+7.1.5 patch:7 active changed files (+136/-3),2762 identical
+and5 inactive `.orig` backups. Archive signatures/rest of Linux remain unaudited.
+Installed AMDGPU modules match across hosts; loaded/initramfs identity not proved.
+Source concerns: ignored runlist-flush errors at all four custom call sites;
+probe modes1/4 fail to restore RLC (current boot uses3); retained eight-core
+telemetry patch0005 is absent. Existing boot log has two Display Core IRQ WARNs,
+so unchanged workload logs are not evidence of a warning-free boot. No kernel
+cause for Python segfault established; no live changes/build/reboot this review.
+Before a new kernel: verify upstream base/full delta, review minimal patches and
+prepare separately versioned candidate with one-shot boot/SSH fallback preserved.
+
 ## Installed stack and precise provenance
 
 | Item                   | Current code / location                                                                                                                                      |

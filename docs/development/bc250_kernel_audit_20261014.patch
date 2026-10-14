@@ -1,0 +1,246 @@
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -1260,8 +1260,10 @@
+ 	if (ttm->page_flags & TTM_TT_FLAG_EXTERNAL)
+ 		return;
+ 
+-	for (i = 0; i < ttm->num_pages; ++i)
+-		ttm->pages[i]->mapping = NULL;
++	for (i = 0; i < ttm->num_pages; ++i) {
++		if (ttm->pages[i])
++			ttm->pages[i]->mapping = NULL;
++	}
+ 
+ 	adev = amdgpu_ttm_adev(bdev);
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -26,6 +26,13 @@
+ #include <linux/firmware.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
++
++/* BC-250 40 CU unlock: clears harvest mask + enables SPI dispatch to all WGPs */
++static int bc250_cc_write_mode;
++module_param(bc250_cc_write_mode, int, 0444);
++MODULE_PARM_DESC(bc250_cc_write_mode,
++	"BC-250: 0=off 1=probe-SE0SH0 2=clear-SE0SH0 3=clear-all-SAs 4=probe-all-SAs");
++#define BC250_PCI_DEVICE_ID 0x13FE
+ #include "amdgpu.h"
+ #include "amdgpu_gfx.h"
+ #include "amdgpu_psp.h"
+@@ -10117,6 +10124,40 @@
+ 	amdgpu_gfx_parse_disable_cu(adev, disable_masks, 4, 2);
+ 
+ 	mutex_lock(&adev->grbm_idx_mutex);
++
++	/* BC-250: unlock harvested CUs -- CC (enumeration) + SPI (dispatch) + RLC (power) */
++	if (bc250_cc_write_mode > 0 && adev->pdev->device == BC250_PCI_DEVICE_ID) {
++		int bc_se, bc_sh;
++		for (bc_se = 0; bc_se < adev->gfx.config.max_shader_engines; bc_se++) {
++			for (bc_sh = 0; bc_sh < adev->gfx.config.max_sh_per_se; bc_sh++) {
++				u32 bc_cc_orig, bc_cc_after, bc_spi_orig, bc_spi_after;
++				if (bc250_cc_write_mode == 2 && (bc_se > 0 || bc_sh > 0))
++					continue;
++				gfx_v10_0_select_se_sh(adev, bc_se, bc_sh, 0xffffffff, 0);
++				bc_cc_orig = RREG32_SOC15(GC, 0, mmCC_GC_SHADER_ARRAY_CONFIG);
++				WREG32_SOC15(GC, 0, mmCC_GC_SHADER_ARRAY_CONFIG, 0);
++				bc_cc_after = RREG32_SOC15(GC, 0, mmCC_GC_SHADER_ARRAY_CONFIG);
++				bc_spi_orig = RREG32_SOC15(GC, 0, mmSPI_PG_ENABLE_STATIC_WGP_MASK);
++				WREG32_SOC15(GC, 0, mmSPI_PG_ENABLE_STATIC_WGP_MASK, 0x1f);
++				bc_spi_after = RREG32_SOC15(GC, 0, mmSPI_PG_ENABLE_STATIC_WGP_MASK);
++				WREG32_SOC15(GC, 0, mmRLC_PG_ALWAYS_ON_WGP_MASK, 0x1f);
++				if (bc250_cc_write_mode == 1 || bc250_cc_write_mode == 4) {
++					WREG32_SOC15(GC, 0, mmCC_GC_SHADER_ARRAY_CONFIG, bc_cc_orig);
++					WREG32_SOC15(GC, 0, mmSPI_PG_ENABLE_STATIC_WGP_MASK, bc_spi_orig);
++					dev_info(adev->dev,
++						"bc250-40cu-probe: se=%d sh=%d CC=0x%08x->0x%08x SPI=0x%08x->0x%08x (restored)",
++						bc_se, bc_sh, bc_cc_orig, bc_cc_after, bc_spi_orig, bc_spi_after);
++				} else {
++					dev_info(adev->dev,
++						"bc250-40cu-enable: mode=%d se=%d sh=%d CC=0x%08x->0x%08x SPI=0x%08x->0x%08x",
++						bc250_cc_write_mode, bc_se, bc_sh,
++						bc_cc_orig, bc_cc_after, bc_spi_orig, bc_spi_after);
++				}
++			}
++		}
++		gfx_v10_0_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff, 0);
++	}
++
+ 	for (i = 0; i < adev->gfx.config.max_shader_engines; i++) {
+ 		for (j = 0; j < adev->gfx.config.max_sh_per_se; j++) {
+ 			bitmap = i * adev->gfx.config.max_sh_per_se + j;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+@@ -22,6 +22,7 @@
+  */
+ #include <linux/firmware.h>
+ #include <linux/pci.h>
++#include <linux/module.h>
+ 
+ #include <drm/drm_cache.h>
+ 
+@@ -51,6 +52,13 @@
+ #include "athub_v2_0.h"
+ #include "athub_v2_1.h"
+ 
++static int bc250_flush_pasid_kiq = 1;
++module_param(bc250_flush_pasid_kiq, int, 0444);
++MODULE_PARM_DESC(bc250_flush_pasid_kiq,
++	"BC-250: 0=flush PASID TLB without KIQ (default 1)");
++
++#define BC250_PCI_DEVICE_ID 0x13FE
++
+ static int gmc_v10_0_ecc_interrupt_state(struct amdgpu_device *adev,
+ 					 struct amdgpu_irq_src *src,
+ 					 unsigned int type,
+@@ -968,7 +976,10 @@
+ 	struct amdgpu_device *adev = ip_block->adev;
+ 	int r;
+ 
+-	adev->gmc.flush_pasid_uses_kiq = !amdgpu_emu_mode;
++	adev->gmc.flush_pasid_uses_kiq =
++		adev->pdev->device == BC250_PCI_DEVICE_ID && !bc250_flush_pasid_kiq
++			? false
++			: !amdgpu_emu_mode;
+ 
+ 	/* The sequence of these two function calls matters.*/
+ 	gmc_v10_0_init_golden_registers(adev);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1383,6 +1383,9 @@
+ 		if (WARN_ON_ONCE(!peer_pdd))
+ 			continue;
+ 		kfd_flush_tlb(peer_pdd);
++		/* BC-250: stale invalid translations survive the broken PASID
++		 * sweep and fault on first touch of a fresh mapping (bc250 map-side flush (generic)) */
++		kfd_bc250_flush_by_runlist(peer_pdd->dev, 2);
+ 	}
+ 	kfree(devices_arr);
+ 
+@@ -1478,6 +1481,11 @@
+ 			continue;
+ 		if (flush_tlb)
+ 			kfd_flush_tlb(peer_pdd);
++		/* BC-250: rebuild the runlist so the firmware invalidates the
++		 * compute TLB (see kfd_device_queue_manager.c). Called here with
++		 * p->mutex held and dqm_lock free.
++		 */
++		kfd_bc250_flush_by_runlist(peer_pdd->dev, 1); /* bc250 map-side flush (generic) */
+ 
+ 		/* Remove dma mapping after tlb flush to avoid IO_PAGE_FAULT */
+ 		err = amdgpu_amdkfd_gpuvm_dmaunmap_mem(mem, peer_pdd->drm_priv);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -3771,3 +3771,62 @@
+ }
+ 
+ #endif
++
++/* BC-250/gfx1013: invalidate the compute TLB by rebuilding the runlist.
++ *
++ * On this board the compute TLB invalidation never happens: the PASID sweep
++ * in gmc_v10_0_flush_gpu_tlb_pasid() depends on mmATC_VMID*_PASID_MAPPING,
++ * which on gfx10 under HWS is never written, so it matches zero VMIDs.
++ * Forcing the invalidation via KIQ or direct MMIO is never acknowledged and
++ * stalls the translation unit. Consequence: hipFree unmaps, hipMalloc reuses
++ * the VA with a new physical address, the PTEs are correct in memory, and the
++ * GPU keeps translating through the previous mapping.
++ *
++ * An invalidation that works does exist: the hardware scheduler's runlist
++ * rebuild (queue preempt + VMID reassign) must invalidate, or a process would
++ * inherit the previous one's translations along with its VMID. This asks for
++ * that cycle on unmap so the stale entry never survives to be used.
++ *
++ * Port of GabriWar/bc250-rocm-working bc250-flush-tlb-by-runlist.patch for
++ * validation on kernel 7.1.5 (their measurement base was 7.0.12).
++ *
++ * Locking: takes dqm_lock. kfd_flush_tlb() must NOT call this --
++ * restore_process_queues_nocpsch() and allocate_vmid()/deallocate_vmid()
++ * already hold dqm_lock; a deadlock there hangs the machine. The only call
++ * site is the unmap ioctl (holds p->mutex, not dqm_lock; same order as
++ * pqm_create_queue).
++ */
++#define BC250_PCI_DEVICE_ID 0x13FE
++
++static int bc250_flush_by_runlist;
++module_param(bc250_flush_by_runlist, int, 0644);
++MODULE_PARM_DESC(bc250_flush_by_runlist,
++	"BC-250: bitmask, rebuild runlist to invalidate TLB: 1=on unmap, 2=on map (default 0)"); /* bc250 map-side flush (generic) */
++
++int kfd_bc250_flush_by_runlist(struct kfd_node *dev, int site)
++{
++	struct device_queue_manager *dqm;
++	int r;
++
++	if (!(bc250_flush_by_runlist & site) || !dev || !dev->adev || !dev->adev->pdev)
++		return 0;
++	if (dev->adev->pdev->device != BC250_PCI_DEVICE_ID)
++		return 0;
++
++	dqm = dev->dqm;
++	/* Only meaningful under hardware scheduling: the firmware reassigns
++	 * VMIDs when the runlist is rebuilt. Without HWS there is no runlist.
++	 */
++	if (!dqm || dqm->sched_policy == KFD_SCHED_POLICY_NO_HWS)
++		return 0;
++
++	dqm_lock(dqm);
++	r = execute_queues_cpsch(dqm, KFD_UNMAP_QUEUES_FILTER_DYNAMIC_QUEUES, 0,
++				 USE_DEFAULT_GRACE_PERIOD);
++	dqm_unlock(dqm);
++
++	if (r)
++		dev_err_ratelimited(dev->adev->dev,
++			"BC-250: runlist rebuild flush failed (%d)\n", r);
++	return r;
++}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
+@@ -371,4 +371,11 @@
+ }
+ 
+ 
++
++/* BC-250: rebuild the runlist so the firmware invalidates the compute TLB.
++ * Full documentation in kfd_device_queue_manager.c above
++ * bc250_flush_by_runlist. Takes dqm_lock -- never call with it held.
++ */
++int kfd_bc250_flush_by_runlist(struct kfd_node *dev, int site); /* bc250 map-side flush (generic) */
++
+ #endif /* KFD_DEVICE_QUEUE_MANAGER_H_ */
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -36,6 +36,7 @@
+ #include "amdgpu_reset.h"
+ #include "kfd_priv.h"
+ #include "kfd_svm.h"
++#include "kfd_device_queue_manager.h"
+ #include "kfd_migrate.h"
+ #include "kfd_smi_events.h"
+ 
+@@ -1425,6 +1426,8 @@
+ 				break;
+ 		}
+ 		kfd_flush_tlb(pdd);
++		/* BC-250: SVM unmap (bc250 map-side flush (generic)) */
++		kfd_bc250_flush_by_runlist(pdd->dev, 1);
+ 	}
+ 
+ 	return r;
+@@ -1572,6 +1575,8 @@
+ 		}
+ 
+ 		kfd_flush_tlb(pdd);
++		/* BC-250: rebuild on SVM map, the case that actually faults (bc250 map-side flush (generic)) */
++		kfd_bc250_flush_by_runlist(pdd->dev, 2);
+ 	}
+ 
+ 	return r;
