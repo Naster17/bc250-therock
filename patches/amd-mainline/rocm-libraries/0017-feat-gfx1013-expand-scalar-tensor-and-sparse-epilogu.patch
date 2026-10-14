@@ -1,0 +1,578 @@
+From 01566e3144d854944c7bb1f6b045e965ddb5aae9 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 11:00:33 +0200
+Subject: [PATCH] feat(gfx1013): expand scalar tensor and sparse epilogues and
+ tune GEMM
+
+---
+ .../library/src/amd_detail/gfx1013_scalar.cpp | 240 +++++++++++-------
+ .../docs/gfx1013-scalar-backend.rst           |   7 +-
+ .../library/src/hcc_detail/gfx1013_scalar.hip | 118 ++++++++-
+ .../src/contraction/contraction_scalar.cpp    |  57 ++++-
+ 4 files changed, 307 insertions(+), 115 deletions(-)
+
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+index f866d548e4d..6b260fb4838 100644
+--- a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+@@ -183,7 +183,7 @@ namespace gfx1013_scalar
+             return HIPBLAS_STATUS_SUCCESS;
+         }
+ 
+-        template <typename Input, typename Output>
++        template <typename Input, typename Output, unsigned Outputs = 1>
+         __global__ void gemm(Layout             a,
+                              Layout             b,
+                              Layout             c,
+@@ -210,111 +210,145 @@ namespace gfx1013_scalar
+                              float              act0,
+                              float              act1)
+         {
+-            __shared__ float left[tile][tile];
+-            __shared__ float right[tile][tile];
+-            const unsigned   x = threadIdx.x, y = threadIdx.y;
+-            const uint64_t   tiles_m  = (d.rows + tile - 1) / tile;
+-            const uint64_t   tiles_n  = (d.cols + tile - 1) / tile;
+-            const uint64_t   batch    = uint64_t(blockIdx.x) / (tiles_m * tiles_n);
+-            const uint64_t   position = uint64_t(blockIdx.x) % (tiles_m * tiles_n);
+-            const uint64_t   row      = (position % tiles_m) * tile + y;
+-            const uint64_t   col      = (position / tiles_m) * tile + x;
+-            const float      alpha    = alpha_device ? *alpha_device : alpha_host;
+-            const float      beta     = beta_device ? *beta_device : beta_host;
+-            float            acc      = 0;
+-            // Scalar arithmetic only: gfx1013 does not have MFMA or WMMA instructions.
++            // A register tile reuses each LDS load for Outputs rows and columns.
++            // Keep the original reduction order and FP32 FMA accumulation.
++            constexpr unsigned block_tile = tile * Outputs;
++            __shared__ float   left[block_tile][tile];
++            __shared__ float   right[tile][block_tile];
++            const unsigned     x = threadIdx.x, y = threadIdx.y;
++            const uint64_t     tiles_m                 = (d.rows + block_tile - 1) / block_tile;
++            const uint64_t     tiles_n                 = (d.cols + block_tile - 1) / block_tile;
++            const uint64_t     batch                   = uint64_t(blockIdx.x) / (tiles_m * tiles_n);
++            const uint64_t     position                = uint64_t(blockIdx.x) % (tiles_m * tiles_n);
++            const uint64_t     base_row                = (position % tiles_m) * block_tile;
++            const uint64_t     base_col                = (position / tiles_m) * block_tile;
++            const float        alpha                   = alpha_device ? *alpha_device : alpha_host;
++            const float        beta                    = beta_device ? *beta_device : beta_host;
++            float              accum[Outputs][Outputs] = {};
++            // Choose load lanes independently from output lanes so either storage
++            // order can read contiguous input values. All threads still reach barriers.
++            const bool a_rows = Outputs == 1 || a.row_major != trans_a;
++            const bool b_rows = Outputs == 1 || b.row_major != trans_b;
+             if(alpha != 0)
+                 for(uint64_t start = 0; start < k; start += tile)
+                 {
+-                    const uint64_t ak = start + x, bk = start + y;
+-                    left[y][x]
+-                        = row < d.rows && ak < k
+-                              ? float(A[a.index(trans_a ? ak : row, trans_a ? row : ak, batch)])
+-                              : 0;
+-                    right[y][x]
+-                        = col < d.cols && bk < k
+-                              ? float(B[b.index(trans_b ? col : bk, trans_b ? bk : col, batch)])
+-                              : 0;
++                    const unsigned ar = a_rows ? y : x, ac = a_rows ? x : y;
++                    const unsigned br = b_rows ? y : x, bc = b_rows ? x : y;
++#pragma unroll
++                    for(unsigned part = 0; part < Outputs; ++part)
++                    {
++                        const uint64_t row = base_row + part * tile + ar;
++                        const uint64_t col = base_col + part * tile + bc;
++                        const uint64_t ak = start + ac, bk = start + br;
++                        left[part * tile + ar][ac]
++                            = row < d.rows && ak < k
++                                  ? float(A[a.index(trans_a ? ak : row, trans_a ? row : ak, batch)])
++                                  : 0;
++                        right[br][part * tile + bc]
++                            = col < d.cols && bk < k
++                                  ? float(B[b.index(trans_b ? col : bk, trans_b ? bk : col, batch)])
++                                  : 0;
++                    }
+                     __syncthreads();
+                     for(unsigned i = 0; i < tile && start + i < k; ++i)
+-                        acc = __builtin_fmaf(left[y][i], right[i][x], acc);
++                    {
++#pragma unroll
++                        for(unsigned r = 0; r < Outputs; ++r)
++#pragma unroll
++                            for(unsigned c = 0; c < Outputs; ++c)
++                                accum[r][c] = __builtin_fmaf(
++                                    left[r * tile + y][i], right[i][c * tile + x], accum[r][c]);
++                    }
+                     __syncthreads();
+                 }
+-            if(row < d.rows && col < d.cols)
+-            {
+-                // BLAS beta=0 must not read C: uninitialised/NaN C is valid in this case.
+-                const float value_c = beta == 0 ? 0 : float(C[c.index(row, col, batch)]);
+-                float       value   = __builtin_fmaf(alpha, acc, beta * value_c);
+-                if(bias)
+-                {
+-                    // Bias is indexed by logical D row, independent of storage order.
+-                    const uint64_t index = batch * bias_stride + row;
+-                    if(bias_type == HIP_R_32F)
+-                        value += static_cast<const float*>(bias)[index];
+-                    else if(bias_type == HIP_R_16F)
+-                        value += float(static_cast<const __half*>(bias)[index]);
+-                    else
+-                        value += float(static_cast<const hip_bfloat16*>(bias)[index]);
+-                }
+-                const uint64_t aux_index = batch * aux_stride + col * aux_ld + row;
+-                if(epilogue == ROCBLASLT_EPILOGUE_GELU_AUX
+-                   || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS
+-                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_EXT
+-                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT)
+-                {
+-                    if(aux_type == HIP_R_32F)
+-                        static_cast<float*>(aux)[aux_index] = value;
+-                    else if(aux_type == HIP_R_16F)
+-                        static_cast<__half*>(aux)[aux_index] = __half(value);
+-                    else
+-                        static_cast<hip_bfloat16*>(aux)[aux_index] = hip_bfloat16(value);
+-                }
+-                if(epilogue == ROCBLASLT_EPILOGUE_CLAMP_EXT
+-                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_BIAS_EXT
+-                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_EXT
+-                   || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT)
+-                    value = fmaxf(act0, fminf(value, act1));
+-                else if(epilogue == ROCBLASLT_EPILOGUE_DGELU)
+-                {
+-                    const float x = aux_type == HIP_R_32F ? static_cast<float*>(aux)[aux_index]
+-                                    : aux_type == HIP_R_16F
+-                                        ? float(static_cast<__half*>(aux)[aux_index])
+-                                        : float(static_cast<hip_bfloat16*>(aux)[aux_index]);
+-                    const float t = tanhf(0.7978845608028654f * x * (1 + 0.044715f * x * x));
+-                    value *= 0.5f * (1 + t)
+-                             + 0.3989422804014327f * x * (1 + 0.134145f * x * x) * (1 - t * t);
+-                }
+-                else if(epilogue == ROCBLASLT_EPILOGUE_SIGMOID
+-                        || epilogue == ROCBLASLT_EPILOGUE_SWISH_EXT
+-                        || epilogue == ROCBLASLT_EPILOGUE_SWISH_BIAS_EXT)
+-                {
+-                    // Stable sigmoid avoids infinity/overflow for large negative inputs.
+-                    // The public SWISH_EXT epilogue is Swish(x, 1). Activation
+-                    // arguments parameterize CLAMP; they do not change this beta.
+-                    const float argument  = value;
+-                    const float exp_value = expf(-fabsf(argument));
+-                    const float sigmoid
+-                        = argument >= 0 ? 1 / (1 + exp_value) : exp_value / (1 + exp_value);
+-                    value = epilogue == ROCBLASLT_EPILOGUE_SIGMOID ? sigmoid : value * sigmoid;
+-                }
+-                else if(epilogue == ROCBLASLT_EPILOGUE_RELU
+-                        || epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS)
+-                    value = fmaxf(value, 0.0f);
+-                else if(epilogue == ROCBLASLT_EPILOGUE_GELU
+-                        || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS
+-                        || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX
+-                        || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS)
++#pragma unroll
++            for(unsigned r = 0; r < Outputs; ++r)
++#pragma unroll
++                for(unsigned cpart = 0; cpart < Outputs; ++cpart)
+                 {
+-                    // Match the tanh approximation used by upstream activation kernels.
+-                    const float inner
+-                        = 0.7978845608028654f * value * (1.0f + 0.044715f * value * value);
+-                    value = 0.5f * value * (1.0f + tanhf(inner));
++                    const uint64_t row = base_row + r * tile + y;
++                    const uint64_t col = base_col + cpart * tile + x;
++                    const float    acc = accum[r][cpart];
++                    if(row < d.rows && col < d.cols)
++                    {
++                        // BLAS beta=0 must not read C: uninitialised/NaN C is valid in this case.
++                        const float value_c = beta == 0 ? 0 : float(C[c.index(row, col, batch)]);
++                        float       value   = __builtin_fmaf(alpha, acc, beta * value_c);
++                        if(bias)
++                        {
++                            // Bias is indexed by logical D row, independent of storage order.
++                            const uint64_t index = batch * bias_stride + row;
++                            if(bias_type == HIP_R_32F)
++                                value += static_cast<const float*>(bias)[index];
++                            else if(bias_type == HIP_R_16F)
++                                value += float(static_cast<const __half*>(bias)[index]);
++                            else
++                                value += float(static_cast<const hip_bfloat16*>(bias)[index]);
++                        }
++                        const uint64_t aux_index = batch * aux_stride + col * aux_ld + row;
++                        if(epilogue == ROCBLASLT_EPILOGUE_GELU_AUX
++                           || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS
++                           || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_EXT
++                           || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT)
++                        {
++                            if(aux_type == HIP_R_32F)
++                                static_cast<float*>(aux)[aux_index] = value;
++                            else if(aux_type == HIP_R_16F)
++                                static_cast<__half*>(aux)[aux_index] = __half(value);
++                            else
++                                static_cast<hip_bfloat16*>(aux)[aux_index] = hip_bfloat16(value);
++                        }
++                        if(epilogue == ROCBLASLT_EPILOGUE_CLAMP_EXT
++                           || epilogue == ROCBLASLT_EPILOGUE_CLAMP_BIAS_EXT
++                           || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_EXT
++                           || epilogue == ROCBLASLT_EPILOGUE_CLAMP_AUX_BIAS_EXT)
++                            value = fmaxf(act0, fminf(value, act1));
++                        else if(epilogue == ROCBLASLT_EPILOGUE_DGELU)
++                        {
++                            const float x = aux_type == HIP_R_32F
++                                                ? static_cast<float*>(aux)[aux_index]
++                                            : aux_type == HIP_R_16F
++                                                ? float(static_cast<__half*>(aux)[aux_index])
++                                                : float(static_cast<hip_bfloat16*>(aux)[aux_index]);
++                            const float t
++                                = tanhf(0.7978845608028654f * x * (1 + 0.044715f * x * x));
++                            value *= 0.5f * (1 + t)
++                                     + 0.3989422804014327f * x * (1 + 0.134145f * x * x)
++                                           * (1 - t * t);
++                        }
++                        else if(epilogue == ROCBLASLT_EPILOGUE_SIGMOID
++                                || epilogue == ROCBLASLT_EPILOGUE_SWISH_EXT
++                                || epilogue == ROCBLASLT_EPILOGUE_SWISH_BIAS_EXT)
++                        {
++                            // Stable sigmoid avoids infinity/overflow for large negative inputs.
++                            // The public SWISH_EXT epilogue is Swish(x, 1). Activation
++                            // arguments parameterize CLAMP; they do not change this beta.
++                            const float argument  = value;
++                            const float exp_value = expf(-fabsf(argument));
++                            const float sigmoid
++                                = argument >= 0 ? 1 / (1 + exp_value) : exp_value / (1 + exp_value);
++                            value = epilogue == ROCBLASLT_EPILOGUE_SIGMOID ? sigmoid
++                                                                           : value * sigmoid;
++                        }
++                        else if(epilogue == ROCBLASLT_EPILOGUE_RELU
++                                || epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS)
++                            value = fmaxf(value, 0.0f);
++                        else if(epilogue == ROCBLASLT_EPILOGUE_GELU
++                                || epilogue == ROCBLASLT_EPILOGUE_GELU_BIAS
++                                || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX
++                                || epilogue == ROCBLASLT_EPILOGUE_GELU_AUX_BIAS)
++                        {
++                            // Match the tanh approximation used by upstream activation kernels.
++                            const float inner
++                                = 0.7978845608028654f * value * (1.0f + 0.044715f * value * value);
++                            value = 0.5f * value * (1.0f + tanhf(inner));
++                        }
++                        D[d.index(row, col, batch)] = Output(value);
++                    }
+                 }
+-                D[d.index(row, col, batch)] = Output(value);
+-            }
+         }
+ 
+-        template <typename Input, typename Output>
++        template <typename Input, typename Output, unsigned Outputs = 1>
+         hipblasStatus_t launch(rocblaslt_matmul_desc   op,
+                                rocblaslt_matrix_layout a,
+                                rocblaslt_matrix_layout b,
+@@ -346,11 +380,21 @@ namespace gfx1013_scalar
+                && (c->ld != d->ld || c->batch_stride != d->batch_stride
+                    || c->batch_offset != d->batch_offset))
+                 return HIPBLAS_STATUS_INVALID_VALUE;
+-            const uint64_t blocks = ((d->m + tile - 1) / tile) * ((d->n + tile - 1) / tile)
+-                                    * uint64_t(d->batch_count);
++            if constexpr(Outputs == 1)
++            {
++                // Small/skinny problems retain the finer grid; larger matrices reuse
++                // four outputs per thread without changing the public algorithm ID.
++                if(d->m >= 128 && d->n >= 128)
++                    return launch<Input, Output, 2>(
++                        op, a, b, c, d, alpha, A, B, beta, C, D, stream);
++            }
++            constexpr unsigned block_tile = tile * Outputs;
++            const uint64_t     blocks     = ((d->m + block_tile - 1) / block_tile)
++                                            * ((d->n + block_tile - 1) / block_tile)
++                                            * uint64_t(d->batch_count);
+             if(!blocks)
+                 return HIPBLAS_STATUS_SUCCESS;
+-            gemm<Input, Output><<<dim3(unsigned(blocks)), dim3(tile, tile), 0, stream>>>(
++            gemm<Input, Output, Outputs><<<dim3(unsigned(blocks)), dim3(tile, tile), 0, stream>>>(
+                 layout(*a),
+                 layout(*b),
+                 layout(*c),
+diff --git a/projects/hipsparselt/docs/gfx1013-scalar-backend.rst b/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
+index b0b9e7dae28..f89517ac580 100644
+--- a/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
++++ b/projects/hipsparselt/docs/gfx1013-scalar-backend.rst
+@@ -18,13 +18,16 @@ Implemented operations
+ * Positive, equal batch counts with explicit nonoverlapping padded batch strides.
+ * Host ``float`` alpha/beta, arbitrary valid leading dimensions, separate C/D
+   layouts, and C/D aliasing when their layouts and batch strides match.
++* ReLU (including threshold/upper bound), ABS, LeakyReLU, GELU, Sigmoid
++  and Tanh activation epilogues on FP32/FP16/BF16;
++  descriptor attribute round trips and plan snapshots preserve the selected activation.
+ * One algorithm (configuration 0), no workspace, and the caller's one HIP stream.
+   Search executes this sole algorithm and blocks until its selected/default
+   stream completes, without changing its configuration. Only one search
+   iteration is accepted. Matmul remains asynchronous.
+ 
+ The fallback rejects FP32 tile pruning, integer/FP8/TF32 compute modes, mixed matrix
+-storage types, bias/activation/vector scaling, split-K, multiple streams, batch
++storage types, bias and vector scaling, split-K, multiple streams, batch
+ broadcasting, multiple search iterations, and sparse/sparse multiplication. It does not silently ignore
+ unsupported attributes. Descriptors use bounded positive dimensions to keep
+ all index and launch products valid.
+@@ -51,7 +54,7 @@ Qualification
+ API against independent CPU magnitude pruning and double-precision dense GEMM,
+ independently decodes compressed values/metadata, destroys the original sparse
+ storage before GEMM, checks padding/buffer guards, and detects invalid sparsity.
+-Its 162 cases cover strip/TILE pruning, independent mask enumeration, partial
++Its 234 cases cover strip/TILE pruning, independent mask enumeration, partial
+ tiles, types, A/B sparsity, layouts, transposes and batches. GPU execution must be recorded separately from
+ host/device compilation; passing syntax checks alone does not qualify runtime
+ support.
+diff --git a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+index c1f65335aad..7dda9edada5 100644
+--- a/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
++++ b/projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip
+@@ -1,7 +1,7 @@
+ // Copyright Advanced Micro Devices, Inc., or its affiliates.
+ // SPDX-License-Identifier: MIT
+ // Native gfx1013 fallback: ordinary scalar HIP instructions, host FP32 scalars,
+-// strip/4x4 tile pruning, and no fusion. The compressed buffer is backend-specific:
++// strip/4x4 tile pruning, and scalar activation epilogues. The compressed buffer is backend-specific:
+ // tightly packed retained values for each logical contraction row followed by
+ // one byte per group containing two-bit indices. FP16/BF16 use 2:4, FP32 1:2.
+ // Its orientation follows sparse A's rows or sparse B's columns after op().
+@@ -42,6 +42,10 @@ namespace
+         uint64_t             tag = multiply_tag;
+         Matrix               a, b, c, d;
+         hipsparseOperation_t opa, opb;
++        int                  activation = -1;
++        float                leakyAlpha = 0.01f;
++        float reluThreshold = 0.0f, reluUpper = std::numeric_limits<float>::infinity();
++        float geluScale = 1.0f, tanhAlpha = 1.0f, tanhBeta = 1.0f;
+     };
+     struct Algorithm
+     {
+@@ -53,6 +57,35 @@ namespace
+         uint64_t tag = plan_tag;
+         Multiply mm;
+     };
++    bool activationAttribute(hipsparseLtMatmulDescAttribute_t attr)
++    {
++        return attr == HIPSPARSELT_MATMUL_ACTIVATION_RELU
++               || attr == HIPSPARSELT_MATMUL_ACTIVATION_ABS
++               || attr == HIPSPARSELT_MATMUL_ACTIVATION_LEAKYRELU
++               || attr == HIPSPARSELT_MATMUL_ACTIVATION_GELU
++               || attr == HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID
++               || attr == HIPSPARSELT_MATMUL_ACTIVATION_TANH;
++    }
++    float* activationParameter(Multiply& mm, hipsparseLtMatmulDescAttribute_t attr)
++    {
++        switch(attr)
++        {
++        case HIPSPARSELT_MATMUL_ACTIVATION_RELU_THRESHOLD:
++            return &mm.reluThreshold;
++        case HIPSPARSELT_MATMUL_ACTIVATION_RELU_UPPERBOUND:
++            return &mm.reluUpper;
++        case HIPSPARSELT_MATMUL_ACTIVATION_LEAKYRELU_ALPHA:
++            return &mm.leakyAlpha;
++        case HIPSPARSELT_MATMUL_ACTIVATION_GELU_SCALING:
++            return &mm.geluScale;
++        case HIPSPARSELT_MATMUL_ACTIVATION_TANH_ALPHA:
++            return &mm.tanhAlpha;
++        case HIPSPARSELT_MATMUL_ACTIVATION_TANH_BETA:
++            return &mm.tanhBeta;
++        default:
++            return nullptr;
++        }
++    }
+     static_assert(sizeof(Plan) <= sizeof(hipsparseLtMatmulPlan_t));
+     static_assert(sizeof(Multiply) <= sizeof(hipsparseLtMatmulDescriptor_t));
+     template <class T, class O>
+@@ -395,6 +428,21 @@ namespace
+         if(beta != 0)
+             value += beta
+                      * float(c[offset(mm.c, HIPSPARSE_OPERATION_NON_TRANSPOSE, row, col, batch)]);
++        if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_RELU)
++            value
++                = value > mm.reluThreshold ? fminf(value, mm.reluUpper) : fminf(0.0f, mm.reluUpper);
++        else if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_ABS)
++            value = fabsf(value);
++        else if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_LEAKYRELU && value < 0)
++            value *= mm.leakyAlpha;
++        else if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_GELU)
++            value = mm.geluScale * 0.5f * value
++                    * (1.0f
++                       + tanhf(0.7978845608028654f * value * (1.0f + 0.044715f * value * value)));
++        else if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_SIGMOID)
++            value = value >= 0 ? 1.0f / (1.0f + expf(-value)) : expf(value) / (1.0f + expf(value));
++        else if(mm.activation == HIPSPARSELT_MATMUL_ACTIVATION_TANH)
++            value = tanhf(value * mm.tanhAlpha) * mm.tanhBeta;
+         d[offset(mm.d, HIPSPARSE_OPERATION_NON_TRANSPOSE, row, col, batch)] = T(value);
+     }
+ 
+@@ -695,25 +743,69 @@ hipsparseStatus_t hipsparseLtMatmulDescriptorInit(const hipsparseLtHandle_t*
+     write(d, mm);
+     return HIPSPARSE_STATUS_SUCCESS;
+ }
+-hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*     h,
+-                                                    hipsparseLtMatmulDescriptor_t* d,
+-                                                    hipsparseLtMatmulDescAttribute_t,
+-                                                    const void*,
+-                                                    size_t)
++hipsparseStatus_t hipsparseLtMatmulDescSetAttribute(const hipsparseLtHandle_t*       h,
++                                                    hipsparseLtMatmulDescriptor_t*   d,
++                                                    hipsparseLtMatmulDescAttribute_t attr,
++                                                    const void*                      value,
++                                                    size_t                           bytes)
+ {
+     Multiply mm{};
+-    return valid(h) && read(d, mm, multiply_tag) ? HIPSPARSE_STATUS_NOT_SUPPORTED
+-                                                 : HIPSPARSE_STATUS_INVALID_VALUE;
++    if(!valid(h) || !read(d, mm, multiply_tag) || !value)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(activationAttribute(attr))
++    {
++        if(bytes != sizeof(int))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        int enabled;
++        std::memcpy(&enabled, value, bytes);
++        if(enabled != 0 && enabled != 1)
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        mm.activation = enabled ? int(attr) : -1;
++    }
++    else if(auto parameter = activationParameter(mm, attr))
++    {
++        if(bytes != sizeof(float))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        float alpha;
++        std::memcpy(&alpha, value, bytes);
++        if(!std::isfinite(alpha)
++           && !(attr == HIPSPARSELT_MATMUL_ACTIVATION_RELU_UPPERBOUND
++                && alpha == std::numeric_limits<float>::infinity()))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        *parameter = alpha;
++        if(attr == HIPSPARSELT_MATMUL_ACTIVATION_GELU_SCALING)
++            mm.activation = HIPSPARSELT_MATMUL_ACTIVATION_GELU;
++    }
++    else
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    write(d, mm);
++    return HIPSPARSE_STATUS_SUCCESS;
+ }
+ hipsparseStatus_t hipsparseLtMatmulDescGetAttribute(const hipsparseLtHandle_t*           h,
+                                                     const hipsparseLtMatmulDescriptor_t* d,
+-                                                    hipsparseLtMatmulDescAttribute_t,
+-                                                    void*,
+-                                                    size_t)
++                                                    hipsparseLtMatmulDescAttribute_t     attr,
++                                                    void*                                value,
++                                                    size_t                               bytes)
+ {
+     Multiply mm{};
+-    return valid(h) && read(d, mm, multiply_tag) ? HIPSPARSE_STATUS_NOT_SUPPORTED
+-                                                 : HIPSPARSE_STATUS_INVALID_VALUE;
++    if(!valid(h) || !read(d, mm, multiply_tag) || !value)
++        return HIPSPARSE_STATUS_INVALID_VALUE;
++    if(activationAttribute(attr))
++    {
++        if(bytes != sizeof(int))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        int enabled = mm.activation == int(attr);
++        std::memcpy(value, &enabled, bytes);
++    }
++    else if(auto parameter = activationParameter(mm, attr))
++    {
++        if(bytes != sizeof(float))
++            return HIPSPARSE_STATUS_INVALID_VALUE;
++        std::memcpy(value, parameter, bytes);
++    }
++    else
++        return HIPSPARSE_STATUS_NOT_SUPPORTED;
++    return HIPSPARSE_STATUS_SUCCESS;
+ }
+ hipsparseStatus_t hipsparseLtMatmulAlgSelectionInit(const hipsparseLtHandle_t*           h,
+                                                     hipsparseLtMatmulAlgSelection_t*     d,
+diff --git a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+index 6858f82ca69..cf3dcfcd75d 100644
+--- a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
++++ b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+@@ -26,6 +26,7 @@
+ #include "contraction_scalar.hpp"
+ 
+ #include <algorithm>
++#include <cmath>
+ #include <hip/hip_runtime.h>
+ #include <limits>
+ #include <map>
+@@ -61,7 +62,14 @@ namespace hiptensor
+         bool supportedOp(hiptensorOperator_t op)
+         {
+             return op == HIPTENSOR_OP_IDENTITY || op == HIPTENSOR_OP_NEG || op == HIPTENSOR_OP_ABS
+-                   || op == HIPTENSOR_OP_RELU;
++                   || op == HIPTENSOR_OP_RELU || op == HIPTENSOR_OP_SQRT || op == HIPTENSOR_OP_RCP
++                   || op == HIPTENSOR_OP_SIGMOID || op == HIPTENSOR_OP_TANH
++                   || op == HIPTENSOR_OP_EXP || op == HIPTENSOR_OP_LOG || op == HIPTENSOR_OP_SIN
++                   || op == HIPTENSOR_OP_COS || op == HIPTENSOR_OP_TAN || op == HIPTENSOR_OP_SINH
++                   || op == HIPTENSOR_OP_COSH || op == HIPTENSOR_OP_ASIN || op == HIPTENSOR_OP_ACOS
++                   || op == HIPTENSOR_OP_ATAN || op == HIPTENSOR_OP_ASINH
++                   || op == HIPTENSOR_OP_ACOSH || op == HIPTENSOR_OP_ATANH
++                   || op == HIPTENSOR_OP_CEIL || op == HIPTENSOR_OP_FLOOR;
+         }
+ 
+         hiptensorStatus_t makeProblem(hiptensorOperationDescriptor_t desc, ScalarProblem& problem)
+@@ -195,6 +203,45 @@ namespace hiptensor
+                 return value == Acc(0) ? Acc(0) : (value < Acc(0) ? -value : value);
+             if(op == HIPTENSOR_OP_RELU)
+                 return value < Acc(0) ? Acc(0) : value;
++            if(op == HIPTENSOR_OP_SQRT)
++                return sqrt(value);
++            if(op == HIPTENSOR_OP_RCP)
++                return Acc(1) / value;
++            if(op == HIPTENSOR_OP_SIGMOID)
++                return value >= Acc(0) ? Acc(1) / (Acc(1) + exp(-value))
++                                       : exp(value) / (Acc(1) + exp(value));
++            if(op == HIPTENSOR_OP_TANH)
++                return tanh(value);
++            if(op == HIPTENSOR_OP_EXP)
++                return exp(value);
++            if(op == HIPTENSOR_OP_LOG)
++                return log(value);
++            if(op == HIPTENSOR_OP_SIN)
++                return sin(value);
++            if(op == HIPTENSOR_OP_COS)
++                return cos(value);
++            if(op == HIPTENSOR_OP_TAN)
++                return tan(value);
++            if(op == HIPTENSOR_OP_SINH)
++                return sinh(value);
++            if(op == HIPTENSOR_OP_COSH)
++                return cosh(value);
++            if(op == HIPTENSOR_OP_ASIN)
++                return asin(value);
++            if(op == HIPTENSOR_OP_ACOS)
++                return acos(value);
++            if(op == HIPTENSOR_OP_ATAN)
++                return atan(value);
++            if(op == HIPTENSOR_OP_ASINH)
++                return asinh(value);
++            if(op == HIPTENSOR_OP_ACOSH)
++                return acosh(value);
++            if(op == HIPTENSOR_OP_ATANH)
++                return atanh(value);
++            if(op == HIPTENSOR_OP_CEIL)
++                return ceil(value);
++            if(op == HIPTENSOR_OP_FLOOR)
++                return floor(value);
+             return value;
+         }
+ 
+@@ -222,7 +269,13 @@ namespace hiptensor
+                     dOffset += coordinate * p.dStrides[i];
+                 }
+                 Acc sum = 0;
+-                if(alpha != Acc(0))
++                // Common GEMM/dot contractions need no mixed-radix division in
++                // the inner loop. Preserve the generic mapping for multiple sums.
++                if(alpha != Acc(0) && p.sumModes == 1)
++                    for(uint64_t k = 0; k < p.sumElements; ++k)
++                        sum += unary(Acc(a[aBase + k * p.aStrides[p.freeModes]]), p.opA)
++                               * unary(Acc(b[bBase + k * p.bStrides[p.freeModes]]), p.opB);
++                else if(alpha != Acc(0))
+                     for(uint64_t k = 0; k < p.sumElements; ++k)
+                     {
+                         uint64_t contracted = k, aOffset = aBase, bOffset = bBase;
+-- 
+2.56.0
+
