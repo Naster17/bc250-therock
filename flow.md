@@ -8,41 +8,43 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **Current task:** N1.3 hipTensor plan contracts implemented, installed on .104
-  and bounded-qualified. N1 remains open; next is sparse Lt batching coverage.
-- **Last qualified code:** root `04aac483823c682ba50b03cc6f55e19798d9e05d`,
-  libraries `18983cf7497cd7a54a454cd20748364d0ce3fc80` (patch0020).
-  N1.2 `3dae3539c`/`c6ac34f0ba3`, N1.1 and P2 remain prior evidence.
-- **N1.3 behavior:** plan API null/enum/exact attribute-size validation, atomic
-  failed setters, guarded workspace getters/queries, null failed plan outputs,
-  owning construction cleans failed initialization. Scalar defaults: cache NONE,
-  JIT NONE, autotune NONE, incremental count0 and rank0. Explicit PEDANTIC cache,
-  DEFAULT JIT, INCREMENTAL autotune and positive count/rank return NOT_SUPPORTED;
-  unknown enums/negative counts return INVALID_VALUE. Three algorithms remain
-  aliases for one deterministic scalar implementation, without tuning claims.
-- **Passed on .104:**304 API checks +12 CPU-referenced GPU executions across
-  R32F/R64F/C32F/C64F, three algorithms and workspace limits0/1/UINT64_MAX;
-  plans survive preference mutation/destruction and source descriptor destruction.
-  Then273 real and450 complex regressions passed. Kernel logs identical1009 lines.
-  Common API validation compiled; non-gfx1013 execution is not newly qualified.
-- **Evidence/jobs:** `WS/logs/n13-hiptensor-r2/result.json`, root reports
-  `bc250_scalar_library_results/n13-{hiptensor,reconstruction}.json`.
-  Targeted hipTensor+dist,12jobs/20GiB ccache under exclusive runtime lock:
-  initial build17.6s, cached restage4.9s, plan1.5s/real2.7s/complex2.3s gates.
-  No jobs or outstanding gates. Initial attempt `WS/logs/n13-hiptensor` passed
-  the probe but failed report accounting (API checks not printed individually);
-  prefix restored before unlock. Fixed test reporting; production code unchanged.
-- **Provenance/recovery:** `SOURCE_N13.json` verifies8 changed files on N1.2/N1.1/P2.
-  Active library SHA256 `d849ff7d982ea38c601dfcf742e146a13e7bc72edce7977d3a26372545d4d66a`;
-  prior independent library `WS/recovery/n13-hiptensor-before.so.0.1` retained.
-  All20 library patches reconstruct exact committed tree. .105, frozen candidates,
-  Torch/Triton and kernel/boot files unchanged; no reboot or host changes this batch.
-- **Next: N1.4, hipSPARSELt batching/broadcast contracts.** Read the P2 234-case
-  evidence and inspect batch-count/stride validation and indexing in
-  `projects/hipsparselt/library/src/hcc_detail/gfx1013_scalar.hip`. Identify the
-  first uncovered batch-one/zero-stride broadcast combination, implement only
-  that bounded gap with CPU references, compression/alias/guard checks. Do not
-  repeat the already-qualified padded batching sweep. Bias/types follow later.
+- **Current task:** N1.4 hipSPARSELt zero-stride broadcast contracts implemented,
+  installed on .104 and bounded-qualified. N1 remains open; bias is next.
+- **Last qualified code:** root `b823c390c5d1c8c1873fdd1fedfb33b0b93e40d2`,
+  libraries `40e2c04af95e6f9f95001aaec2a7e5b48b590924` (patch0021).
+  N1.3 `04aac4838`/`18983cf7497` and earlier milestones remain prior evidence.
+- **N1.4 behavior:** matching logical A/B/C/D batch counts retained (upstream
+  contract). Zero stride broadcasts any A/B/C combination from one physical
+  matrix; sparse pruning/compression processes it once and stores one values/
+  metadata pack reused by all output batches. This avoids repeated sparse writes
+  and incorrect per-batch compressed metadata indexing. Multi-batch zero-stride
+  D, incompatible counts, negative/overlapping positive strides remain rejected.
+  Partial compression, input/D and C/D span aliases are rejected; valid exact
+  in-place pruning retained. Compression remains backend-specific1:2/2:4.
+- **Passed:**604 CPU-double-referenced GPU cases +5 descriptor rejections, then
+  the existing234 sparse API regressions. All7 A/B/C broadcast masks, sparse A/B,
+  both orders/all transposes, f32/f16/bf16, strip/low-precision TILE and partial
+  tiles, six activations; independent packed decoding, descriptor/plan compression
+  equality, sparse dense buffers poisoned before GEMM, exact padding/pack guards.
+  Logical batches3 and selected batch1/stride0 cases executed. Kernel logs
+  identical1009 lines. No general performance or hardware sparse speedup claim.
+- **Evidence/jobs:** `WS/logs/n14-sparselt/result.json`, repository reports
+  `bc250_scalar_library_results/n14-{sparselt,reconstruction}.json`.
+  Targeted hipSPARSELt+dist,16jobs/20GiB ccache under exclusive runtime lock;
+  build6.9s, broadcast3.1s, sparse regression1.6s. First attempt passed all gates.
+  No running jobs or outstanding gates; no Torch/hipTensor rebuild required.
+- **Provenance/recovery:** `SOURCE_N14.json` verifies8 changed files on N1.3/P2;
+  active sparse library SHA256 `12c57c5ebd8b34cf973dcfb4bbe8f2d708c04a3b641dcde5a9e16d932c175b89`.
+  Independent prior sparse library `WS/recovery/n14-sparselt-before.so.0.1`
+  (backup filename; runtime SONAME file is libhipsparselt.so.0.2), SHA256
+  `b89043c024448068eb6137e223fbe68b738c0bd954593cb098d2a67adf8aa41f`.
+  All21 library patches reconstruct exact tree. .105/frozen candidates and
+  kernel/boot files unchanged; no reboot or host configuration changes this batch.
+- **Next: N1.5, hipSPARSELt bias.** Inspect public BIAS_POINTER/BIAS_STRIDE/BIAS_TYPE
+  contracts and upstream row/batch mapping (header comments alone are ambiguous),
+  then implement a bounded scalar bias epilogue with CPU references for the
+  supported real types/layouts/broadcasts and span/alias/lifetime guards. Do not
+  revive already-qualified batching or claim new types/scale/split-K support.
 
 At resume: read this file, inspect local Git status/log and `.104` runtime/source
 manifests, then read the inventory section for the selected task. Check evidence
@@ -82,17 +84,17 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 
 | Item                     | Current identity                                                                                                          |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Qualified root code      | `04aac483823c682ba50b03cc6f55e19798d9e05d`                                                                                |
-| rocm-libraries           | `18983cf7497cd7a54a454cd20748364d0ce3fc80`, ordered patches0001–0020                                                      |
+| Qualified root code      | `b823c390c5d1c8c1873fdd1fedfb33b0b93e40d2`                                                                                |
+| rocm-libraries           | `40e2c04af95e6f9f95001aaec2a7e5b48b590924`, ordered patches0001–0021                                                      |
 | rocm-systems             | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`, patches0001–0003                                                              |
 | Torch                    | `4f13bf86476252e3d57b17d1c72f8512814400e9`, patches0001–0002; editable pip                                                |
 | Triton                   | `ee65ff3b85f99d52e678b252a99c8425fa46e329`, patches0001–0004; qualified wheel retained                                    |
 | LLVM                     | Clean upstream `7667f52dd687899256a3285ab0bce3c53bc73394`                                                                 |
-| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1–N1.3 dev profile**                  |
+| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1–N1.4 dev profile**                  |
 | ROCm/Torch/cache         | `WS/build/dist/rocm`, `WS/pytorch-work`, `WS/cache/dev-user` (uid/gid1000)                                                |
 | Runtime image ID         | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                        |
 | Runtime/build tags       | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; `localhost/bc250-rocm-build:10.2-ccache`                        |
-| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N13.json` delta on N1.2/N1.1/P2                |
+| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N14.json` delta on N1.3/P2                |
 | Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
 | Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
 | Kernel/boot              | `7.1.5-bc250rocm-r2`; live boot files in `/home/nik/bc250work/bc250-rocm-lab`, backups `WS/recovery/`                     |
@@ -102,7 +104,7 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 Manifests and immutable image IDs outrank mutable tag names. Component version
 strings differ legitimately (TheRock10.2, HIP7.17, Torch 2.13). Source archive names
 and generated Torch Git labels may retain older baselines; do not relabel them.
-The P2 source transfer verified51 files; N1.1 adds7, N1.2 adds8 and N1.3 adds8 verified changed files. Candidate payload verified191
+The P2 source transfer verified51 files; N1.1 adds7; N1.2/N1.3/N1.4 each add8 verified changed files. Candidate payload verified191
 independent shared-object/kernel-pack copies. Detailed hashes are in manifests.
 
 ## Unified local workspace
@@ -147,6 +149,7 @@ reads CPU Tctl, not GPU edge. Full measured hardware/recovery facts are in inven
 | N1.1                      | hipTensor unilateral A/B sums and mixed shared reductions:253 numerical +20 descriptor cases; alias/zero-scalar/span guards,16-mode union, nine algorithm/workspace combinations, small-fixture timings. Patch00018; native scalar routing. |
 | N1.2 | Same-type C32F/C64F hipTensor contractions with identity/NEG/CONJ:426 numerical +24 descriptor cases,273 real regressions, scalar ABI/zero-scalars/alias/span/plan-lifetime guards; patch0019. |
 | N1.3 | hipTensor plan null/enum/attribute-size guards, atomic setters and owning failure cleanup; honest no-cache/JIT/autotune scalar policy.304 API +12 numerical checks,273 real/450 complex regressions; patch0020. |
+| N1.4 | Sparse Lt matching-count zero-stride broadcasts for A/B/C, one physical sparse pack, single-writer pruning/compression and span alias guards.604 numerical +5 descriptor cases,234 regressions; patch0021. |
 | Performance               | Matched `.104`/`.105` comparisons already done: most GEMM/copy differences small, variable small-conv results. Separate same-board P2 large LtGEMM≈2.1–2.4x faster; selected large compiled HIP-graph fusion≈4x. No whole-Torch or universal speedup claim; default BLAS unchanged.             |
 
 Reports: `docs/development/bc250_scalar_library_results/priority{1,2}-*.json`,
@@ -194,7 +197,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N1.1 | hipTensor unilateral contraction modes completed within the bounded scope above. Preserved zero-scalar, span and alias guards; CPU-referenced types/layouts/plan-lifetime gates and small-fixture timing passed. |
 | [x]   | N1.2 | Native same-type C32F/C64F hipTensor contractions, identity/NEG/CONJ, bounded numerical and real-regression gates completed as above; mixed/widened complex and other unary functions remain rejected. |
 | [x]   | N1.3 | hipTensor plan API validation, owning failure cleanup and supported scalar preference acceptance/rejection qualified in the bounded scope above. Scalar cache/JIT/autotuning/ranked alternatives remain explicitly unsupported. |
-| [ ]   | **N1 / N1.4 — next** | hipSPARSELt batching/broadcast contracts: inspect existing234-case coverage first, then implement the first uncovered batch-one/zero-stride broadcast combination. Bias/types and Lt small/skinny shapes/epilogues follow. CPU references and compression/alias/guard checks required. |
+| [x]   | N1.4 | hipSPARSELt matching-count zero-stride broadcast inputs, single physical sparse compression/pruning and span-alias guards qualified above. Incompatible counts/multi-batch zero-stride outputs remain rejected. |
+| [ ]   | **N1 / N1.5 — next** | hipSPARSELt bias pointer/stride/type contracts and bounded native bias epilogue, with CPU-reference layout/broadcast/alias tests. Remaining sparse types/vector scaling and Lt small/skinny shapes/epilogues follow. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |
