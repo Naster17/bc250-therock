@@ -621,6 +621,12 @@ if(_ck_enabled)
   )
   therock_cmake_subproject_provide_package(composable_kernel composable_kernel lib/cmake/composable_kernel)
 
+  # Public header changes must invalidate staging even when compiled instances
+  # do not use the changed CK Tile operation.
+  therock_cmake_subproject_glob_c_sources(composable_kernel
+    SUBDIRS
+      include
+  )
   therock_cmake_subproject_activate(composable_kernel)
 
   therock_provide_artifact(composable-kernel
