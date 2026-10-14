@@ -9,21 +9,36 @@ release claims must not override this cursor and current manifests.
 ## Resume cursor
 
 - **ACTIVE user priority: K1–K6, clean upstream BC-250 kernel workstream**
-  (authorized2026-10-14), alongside the existing ROCm/Torch port. Fetch and verify
-  latest stable Linux7.2.10 (kernel.org lists mainline7.3-rc7 separately), review
-  required gfx1013 changes, build/test a separately versioned r3 on .104. Preserve
-  r2 sources/modules/images/default entry, all ROCm artifacts and .105 unchanged.
-  No new kernel boot until SSH-only recovery/one-shot/panic/watchdog arrangements
-  are concrete and checked. A boot menu entry alone cannot recover a hung board.
-  Current .104 remains7.1.5-r2,32GiB-ish free disk; plan16 build jobs/20GiB ccache
-  with debug-symbol output disabled, preserving hardware config. No code/boot
-  changes yet. Local signed-tag clone running via exec session12215;
-  `kernel/verification/clone-7.2.10.log`, target`kernel/linux-r3`, source official
-  stable Git. Separate public-only GPG home`kernel/verification/gnupg`, WKD import
-  log`kernel/verification/key-import.log`; verify full signer fingerprint/tag.
-  Next immediate action: finish signature verification, inspect GRUB/watchdog and
-  latest driver APIs, then implement reviewed source changes. N2.1 remains the
-  next library item after the kernel batch; do not reconstruct N1/P0/P1/P2.
+  (authorized2026-10-14), alongside ROCm/Torch. K1 source fetched: signed stable
+  `v7.2.10`, base`7b20d05fd38de8e0be168956f6fd241d750c7d69`; Greg fingerprint
+  `647F28654894E3BD457199BE38DBBDC86092693E` verified via kernel.org WKD/published
+  fingerprint. Official tag/verification artifacts in `kernel/verification/`.
+  New separate repo`kernel/linux-r3`, branch`users/Naster17/bc250-r3-7.2.10`,
+  sourceHEAD`84995f1a85188cde56910729214b0a68a7e402da`; two reviewed patches under
+  `kernel/patches/r3/`: explicit CU/PASID/TTM quirks, full probe register restore,
+  runlist callers propagate errors through existing partial-operation error paths.
+  No failed-flush injection qualification. Eight-core telemetry remains separate.
+  Full93,517-file r2 comparison confirmed only7 active AMD changes +5 backups
+  against archived baseline; archive signatures not checked by that comparison.
+- **RUNNING native kernel build (.104):** root PID12625, command
+  `bash /home/nik/bc250work/kernel-r3-7.2.10/helpers/build-on-host.sh`, log
+  `/home/nik/bc250work/kernel-r3-7.2.10/logs/build-initial.log`, status JSON
+  `.../build-status.json`. O=`.../build`, private staging=`.../stage`, source
+  verified tar/hash in`kernel/r3/source-manifest.json`;16jobs/existing20GiB ccache.
+  r2-config seed, debug symbols disabled for31.6GiB disk budget; builtin SP5100,
+  nowayout,180s first-open bound and panic/lockup reboot policy for candidate.
+  Signing key is generated remotely in build/certs only; never copy private keys.
+  Local clone and full-source audit jobs finished; authenticated root SSH session
+  68487 remains open for orchestration. No GPU test, install or reboot yet.
+- **Immediate next:** finish build; rebuild retained NCT6687 cooling module from
+  .105 read-only source import`kernel/board-fan` against r3. Check source modules/
+  firmware/initramfs, prepare one-shot entry with persistent r2 default. First
+  boot should defer AMDGPU auto-loading until SSH, then controlled module/GPU
+  gates under watchdog/deadline recovery. Current SP5100 watchdog stops during
+  reboot: current daemon alone does not guard early boot; establish initramfs/
+  base-boot guard before boot test. Preserve all r2/ROCm files and .105 unchanged.
+  No blanket recovery guarantee without out-of-band access; no deliberate GPU
+  reset/SDMA/fault experiments. N2.1 remains next library item after kernel batch.
 - **Latest user-requested kernel review:** preliminary read-only r2 audit complete;
   see `docs/development/bc250_kernel_audit_20261014.{md,json,patch}`. Both hosts run
   the recorded7.1.5-r2 image; installed AMDGPU module hashes match. Archive-derived
