@@ -1,9 +1,9 @@
 {
   "status": "passed",
   "baseline": "3d8f334b9a72ad99a0ecd87552613970433e0500",
-  "expected_revision": "48e1e564d6fd1f8baaff7fd8e60b35217aa425da",
-  "expected_tree": "ac4e028f812b1f07d0e71f44163a591315018c6f",
-  "reconstructed_tree": "ac4e028f812b1f07d0e71f44163a591315018c6f",
+  "expected_revision": "a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8",
+  "expected_tree": "d3aab0a57a58ca91c2be8336cc401a7b17f6dc7f",
+  "reconstructed_tree": "d3aab0a57a58ca91c2be8336cc401a7b17f6dc7f",
   "patches": [
     {
       "name": "0001-feat-rocblas-recognize-native-gfx1013-and-scalar-Ten.patch",
@@ -104,6 +104,10 @@
     {
       "name": "0025-perf-hipblaslt-use-subgroups-for-short-small-and-skinny-gfx1013-GEMMs.patch",
       "sha256": "4beb553761b6328a7af14a1624ee02e85cee28d5cf56ea197fb2e7f8ffba9d73"
+    },
+    {
+      "name": "0026-fix-hipblaslt-retain-launch-grid-bound-for-subgroup-dispatch.patch",
+      "sha256": "303acf31637edc59788c85689efb3c399bf86b7fc2f30fc92f2ecc0a7320bcae"
     }
   ]
 }
