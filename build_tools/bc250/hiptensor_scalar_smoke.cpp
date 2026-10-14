@@ -48,7 +48,13 @@ struct Case {
   bool positiveInputs = false;
   hiptensorOperator_t opA = HIPTENSOR_OP_IDENTITY, opB = HIPTENSOR_OP_IDENTITY,
                       opC = HIPTENSOR_OP_IDENTITY;
+  hiptensorAlgo_t algo = HIPTENSOR_ALGO_DEFAULT;
+  hiptensorJitMode_t jit = HIPTENSOR_JIT_MODE_NONE;
+  hiptensorWorksizePreference_t workspacePreference =
+      HIPTENSOR_WORKSPACE_DEFAULT;
+  bool checkAliases = false, measure = false;
 };
+static int passedCases = 0;
 static double unary(double value, hiptensorOperator_t op) {
   if (op == HIPTENSOR_OP_NEG)
     return -value;
@@ -131,8 +137,10 @@ run(hiptensorHandle_t handle, Case const &test, hiptensorDataType_t dtype,
     for (auto &v : c)
       v = Output(std::abs(double(v)) + 1.125);
   }
-  if (test.alpha == 0)
+  if (test.alpha == 0) {
     std::fill(a.begin(), a.end(), T(std::numeric_limits<float>::quiet_NaN()));
+    std::fill(b.begin(), b.end(), T(std::numeric_limits<float>::quiet_NaN()));
+  }
   if (test.beta == 0)
     std::fill(c.begin(), c.end(),
               Output(std::numeric_limits<float>::quiet_NaN()));
@@ -187,11 +195,11 @@ run(hiptensorHandle_t handle, Case const &test, hiptensorDataType_t dtype,
       test.opB, dc, test.hasC ? test.c.modes.data() : nullptr, test.opC, dd,
       test.d.modes.data(), compute));
   hiptensorPlanPreference_t pref = nullptr;
-  tensorCheck(hiptensorCreatePlanPreference(
-      handle, &pref, HIPTENSOR_ALGO_DEFAULT, HIPTENSOR_JIT_MODE_NONE));
+  tensorCheck(
+      hiptensorCreatePlanPreference(handle, &pref, test.algo, test.jit));
   uint64_t workspace = 999;
   tensorCheck(hiptensorEstimateWorkspaceSize(
-      handle, op, pref, HIPTENSOR_WORKSPACE_DEFAULT, &workspace));
+      handle, op, pref, test.workspacePreference, &workspace));
   if (workspace != 0)
     throw std::runtime_error("scalar workspace must be zero");
   hiptensorPlan_t plan = nullptr;
@@ -224,6 +232,20 @@ run(hiptensorHandle_t handle, Case const &test, hiptensorDataType_t dtype,
   hipStream_t stream;
   hipCheck(hipStreamCreateWithFlags(&stream, hipStreamNonBlocking));
   Acc alpha = test.alpha, beta = test.beta;
+  if (test.checkAliases) {
+    for (void *alias : {static_cast<void *>(ga), static_cast<void *>(ga + 1),
+                        static_cast<void *>(gb)}) {
+      if (hiptensorContract(handle, plan, &alpha, ga, gb,
+                            test.hasC ? &beta : nullptr,
+                            test.hasC ? gc : nullptr, alias, nullptr, 0,
+                            stream) != HIPTENSOR_STATUS_NOT_SUPPORTED)
+        throw std::runtime_error(test.name + " accepted input/output alias");
+    }
+    if (test.hasC &&
+        hiptensorContract(handle, plan, &alpha, ga, gb, &beta, gd + 1, gd,
+                          nullptr, 0, stream) != HIPTENSOR_STATUS_NOT_SUPPORTED)
+      throw std::runtime_error(test.name + " accepted partial C/D alias");
+  }
   tensorCheck(hiptensorContract(
       handle, plan, &alpha, ga, gb, test.hasC ? &beta : nullptr,
       test.hasC ? gc : nullptr, gd, nullptr, 0, stream));
@@ -242,6 +264,25 @@ run(hiptensorHandle_t handle, Case const &test, hiptensorDataType_t dtype,
             tolerance * (1 + std::abs(double(expected[i]))))
       throw std::runtime_error(test.name + " mismatch at storage index " +
                                std::to_string(i));
+  if (test.measure) {
+    hipEvent_t start, stop;
+    hipCheck(hipEventCreate(&start));
+    hipCheck(hipEventCreate(&stop));
+    hipCheck(hipEventRecord(start, stream));
+    constexpr int repeats = 30;
+    for (int i = 0; i < repeats; ++i)
+      tensorCheck(hiptensorContract(handle, plan, &alpha, ga, gb, &beta, gc, gd,
+                                    nullptr, 0, stream));
+    hipCheck(hipEventRecord(stop, stream));
+    hipCheck(hipEventSynchronize(stop));
+    float milliseconds;
+    hipCheck(hipEventElapsedTime(&milliseconds, start, stop));
+    std::cout << "TIMING " << test.name << " dtype=" << int(dtype)
+              << " output=" << int(outputType) << " repeats=" << repeats
+              << " mean_us=" << milliseconds * 1000 / repeats << '\n';
+    hipCheck(hipEventDestroy(start));
+    hipCheck(hipEventDestroy(stop));
+  }
   tensorCheck(hiptensorDestroyPlan(plan));
   hipCheck(hipStreamDestroy(stream));
   hipCheck(hipFree(ga));
@@ -251,6 +292,7 @@ run(hiptensorHandle_t handle, Case const &test, hiptensorDataType_t dtype,
   hipCheck(hipFree(gd));
   std::cout << "PASS " << test.name << " dtype=" << int(dtype)
             << " output=" << int(outputType) << '\n';
+  ++passedCases;
 }
 
 static void
@@ -275,6 +317,7 @@ reject(hiptensorHandle_t handle, Case const &test, hiptensorStatus_t expected,
   for (auto desc : {da, db, dc, dd})
     tensorCheck(hiptensorDestroyTensorDescriptor(desc));
   std::cout << "PASS reject " << test.name << '\n';
+  ++passedCases;
 }
 int main() {
   try {
@@ -546,10 +589,121 @@ int main() {
     overlapping.name = "overlapping-output";
     overlapping.d.strides = {1, 1};
     reject(handle, overlapping, HIPTENSOR_STATUS_NOT_SUPPORTED);
-    auto unilateral = gemm;
-    unilateral.name = "unilateral-reduction";
-    unilateral.a.modes[0] = 'z';
-    reject(handle, unilateral, HIPTENSOR_STATUS_NOT_SUPPORTED);
+    // N1.1: exercise both the single-sum and mixed-radix paths. The reference
+    // enumerates the union of modes and naturally broadcasts absent axes.
+    auto aOnly = gemm;
+    aOnly.name = "unilateral-a-only";
+    aOnly.b = {{'n'}, {3}, {3}};
+    auto bOnly = gemm;
+    bOnly.name = "unilateral-b-only";
+    bOnly.a = {{'m'}, {5}, {2}};
+    auto separate = gemm;
+    separate.name = "unilateral-both-independent";
+    separate.a.modes[0] = 'z';
+    Case mixed{"unilateral-shared-sum-batch",
+               {{'z', 'k', 'm', 'b'}, {2, 3, 5, 2}, {1, 4, 17, 101}},
+               {{'n', 'b', 'k', 'r'}, {3, 2, 3, 2}, {1, 97, 5, 19}},
+               batch.c,
+               batch.d};
+    auto allShared = mixed;
+    allShared.name = "unilateral-shared-output";
+    allShared.b = {{'m', 'b', 'k', 'r'}, {5, 2, 3, 2}, {1, 101, 7, 31}};
+    allShared.c = {{'m', 'b'}, {5, 2}, {2, 17}};
+    allShared.d = {{'b', 'm'}, {2, 5}, {17, 2}};
+    auto unit = aOnly;
+    unit.name = "unilateral-unit-sum";
+    unit.a.lengths[0] = 1;
+    auto noC = mixed;
+    noC.name = "unilateral-no-c";
+    noC.hasC = false;
+    noC.beta = 0;
+    auto zeroA = mixed;
+    zeroA.name = "unilateral-alpha-zero-nan-a";
+    zeroA.alpha = 0;
+    auto zeroC = mixed;
+    zeroC.name = "unilateral-beta-zero-nan-c";
+    zeroC.beta = 0;
+    auto bothZero = zeroA;
+    bothZero.name = "unilateral-both-zero";
+    bothZero.beta = 0;
+    auto inplaceMixed = mixed;
+    inplaceMixed.name = "unilateral-in-place-c-d";
+    inplaceMixed.c = inplaceMixed.d;
+    inplaceMixed.inPlace = true;
+    auto nonlinear = mixed;
+    nonlinear.name = "unilateral-nonlinear-unary";
+    nonlinear.opA = HIPTENSOR_OP_ABS;
+    nonlinear.opB = HIPTENSOR_OP_SIGMOID;
+    nonlinear.opC = HIPTENSOR_OP_NEG;
+    auto manyModes = outer;
+    manyModes.name = "unilateral-16-modes";
+    for (int i = 0; i < 14; ++i) {
+      auto &layout = i < 7 ? manyModes.a : manyModes.b;
+      auto stride = layout.size() + 3;
+      layout.modes.push_back(1000 + i);
+      layout.lengths.push_back(2);
+      layout.strides.push_back(stride);
+    }
+    for (auto test :
+         {aOnly, bOnly, separate, mixed, allShared, unit, noC, zeroA, zeroC,
+          bothZero, inplaceMixed, nonlinear, manyModes}) {
+      test.checkAliases = true;
+      test.measure = test.name == mixed.name || test.name == aOnly.name;
+      run<float>(handle, test, HIPTENSOR_R_32F);
+      run<double>(handle, test, HIPTENSOR_R_64F);
+      run<__half>(handle, test, HIPTENSOR_R_16F);
+      run<hip_bfloat16>(handle, test, HIPTENSOR_R_16BF);
+      run<__half, float>(handle, test, HIPTENSOR_R_16F, HIPTENSOR_R_32F);
+      run<hip_bfloat16, float>(handle, test, HIPTENSOR_R_16BF, HIPTENSOR_R_32F);
+      run<float, double>(handle, test, HIPTENSOR_R_32F, HIPTENSOR_R_64F);
+    }
+    for (auto algo : {HIPTENSOR_ALGO_DEFAULT, HIPTENSOR_ALGO_DEFAULT_PATIENT,
+                      HIPTENSOR_ALGO_ACTOR_CRITIC})
+      for (auto preference :
+           {HIPTENSOR_WORKSPACE_MIN, HIPTENSOR_WORKSPACE_DEFAULT,
+            HIPTENSOR_WORKSPACE_MAX}) {
+        auto test = mixed;
+        test.name = "unilateral-plan-" + std::to_string(int(algo)) + "-" +
+                    std::to_string(int(preference));
+        test.algo = algo;
+        test.workspacePreference = preference;
+        run<float>(handle, test, HIPTENSOR_R_32F);
+      }
+    auto missingOutput = aOnly;
+    missingOutput.name = "unilateral-output-without-input";
+    missingOutput.c.modes[1] = missingOutput.d.modes[0] = 'x';
+    reject(handle, missingOutput, HIPTENSOR_STATUS_NOT_SUPPORTED);
+    auto extraC = mixed;
+    extraC.name = "unilateral-c-only-mode";
+    extraC.c.modes[0] = 'x';
+    reject(handle, extraC, HIPTENSOR_STATUS_NOT_SUPPORTED);
+    auto duplicateUnilateral = aOnly;
+    duplicateUnilateral.name = "unilateral-duplicate-mode";
+    duplicateUnilateral.a.modes[1] = 'k';
+    reject(handle, duplicateUnilateral, HIPTENSOR_STATUS_INVALID_VALUE);
+    auto badLength = mixed;
+    badLength.name = "unilateral-inconsistent-shared-length";
+    badLength.b.lengths[2] = 4;
+    reject(handle, badLength, HIPTENSOR_STATUS_INVALID_VALUE);
+    auto badStride = aOnly;
+    badStride.name = "unilateral-zero-input-stride";
+    badStride.a.strides[0] = 0;
+    reject(handle, badStride, HIPTENSOR_STATUS_INVALID_VALUE);
+    auto badSpan = aOnly;
+    badSpan.name = "unilateral-span-overflow";
+    badSpan.a.strides[0] = std::numeric_limits<int64_t>::max();
+    reject(handle, badSpan, HIPTENSOR_STATUS_INVALID_VALUE);
+    auto badOutput = mixed;
+    badOutput.name = "unilateral-overlapping-output";
+    badOutput.d.strides = {1, 1, 1};
+    reject(handle, badOutput, HIPTENSOR_STATUS_NOT_SUPPORTED);
+    auto tooMany = manyModes;
+    tooMany.name = "unilateral-17-modes";
+    auto nextStride = tooMany.a.size() + 3;
+    tooMany.a.modes.push_back(2000);
+    tooMany.a.lengths.push_back(2);
+    tooMany.a.strides.push_back(nextStride);
+    reject(handle, tooMany, HIPTENSOR_STATUS_NOT_SUPPORTED);
     auto unsupported = gemm;
     unsupported.name = "unsupported-unary-complex-conj";
     reject(handle, unsupported, HIPTENSOR_STATUS_NOT_SUPPORTED,
@@ -583,7 +737,7 @@ int main() {
     reject(handle, unsupported, HIPTENSOR_STATUS_NOT_SUPPORTED,
            HIPTENSOR_OP_IDENTITY, HIPTENSOR_R_32F, HIPTENSOR_COMPUTE_DESC_64F);
     tensorCheck(hiptensorDestroy(handle));
-    std::cout << "HIPTENSOR_SCALAR_PASS cases=166\n";
+    std::cout << "HIPTENSOR_SCALAR_PASS cases=" << passedCases << '\n';
   } catch (std::exception const &error) {
     std::cerr << "FAIL " << error.what() << '\n';
     return 1;

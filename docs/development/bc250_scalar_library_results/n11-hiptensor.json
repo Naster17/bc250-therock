@@ -1,0 +1,172 @@
+{
+  "task": "N1.1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 5.770521168999949
+    },
+    {
+      "name": "baseline-rejection",
+      "exit": 1,
+      "seconds": 1.3164898149998407
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 17.088535503000458
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 2.718829886999629
+    }
+  ],
+  "before_library_sha256": "1f5b1fea7850e21c7f3871829bad19cc9db0caaedc8d1aa56d901d9f49108e33",
+  "source_delta_sha256": "9fe60d61baa49384a46e1950d763ef34b5b7610cf19f4863a52373fd8a57334e",
+  "test_source_sha256": "189e056aacbe40908efbc29e9f99c8f75f9e6e6e9c69a3b57ee3958fe218bf20",
+  "resources": {
+    "jobs": 12,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "gpu-correctness",
+  "after_source_sha256": "d30179bbd7963ddd18a23936a4e25232db569c6988947d9632605b1dbc8ee98a",
+  "after_library_sha256": "ff481cfdfe245e6446e22b7c7e428392939c7bc41bf1c32434307a14deafa08a",
+  "executed_cases": 273,
+  "timings": [
+    {
+      "case": "unilateral-a-only",
+      "dtype": "0",
+      "output": "0",
+      "repeats": "30",
+      "mean_us": "12.6369"
+    },
+    {
+      "case": "unilateral-a-only",
+      "dtype": "1",
+      "output": "1",
+      "repeats": "30",
+      "mean_us": "12.9949"
+    },
+    {
+      "case": "unilateral-a-only",
+      "dtype": "2",
+      "output": "2",
+      "repeats": "30",
+      "mean_us": "13.1258"
+    },
+    {
+      "case": "unilateral-a-only",
+      "dtype": "14",
+      "output": "14",
+      "repeats": "30",
+      "mean_us": "13.1605"
+    },
+    {
+      "case": "unilateral-a-only",
+      "dtype": "2",
+      "output": "0",
+      "repeats": "30",
+      "mean_us": "13.1365"
+    },
+    {
+      "case": "unilateral-a-only",
+      "dtype": "14",
+      "output": "0",
+      "repeats": "30",
+      "mean_us": "13.1418"
+    },
+    {
+      "case": "unilateral-a-only",
+      "dtype": "0",
+      "output": "1",
+      "repeats": "30",
+      "mean_us": "13.4958"
+    },
+    {
+      "case": "unilateral-shared-sum-batch",
+      "dtype": "0",
+      "output": "0",
+      "repeats": "30",
+      "mean_us": "27.7183"
+    },
+    {
+      "case": "unilateral-shared-sum-batch",
+      "dtype": "1",
+      "output": "1",
+      "repeats": "30",
+      "mean_us": "28.3208"
+    },
+    {
+      "case": "unilateral-shared-sum-batch",
+      "dtype": "2",
+      "output": "2",
+      "repeats": "30",
+      "mean_us": "28.7643"
+    },
+    {
+      "case": "unilateral-shared-sum-batch",
+      "dtype": "14",
+      "output": "14",
+      "repeats": "30",
+      "mean_us": "28.835"
+    },
+    {
+      "case": "unilateral-shared-sum-batch",
+      "dtype": "2",
+      "output": "0",
+      "repeats": "30",
+      "mean_us": "28.9433"
+    },
+    {
+      "case": "unilateral-shared-sum-batch",
+      "dtype": "14",
+      "output": "0",
+      "repeats": "30",
+      "mean_us": "28.9299"
+    },
+    {
+      "case": "unilateral-shared-sum-batch",
+      "dtype": "0",
+      "output": "1",
+      "repeats": "30",
+      "mean_us": "29.316"
+    }
+  ],
+  "scope": {
+    "native_arch": "gfx1013",
+    "numerical_cases": 253,
+    "descriptor_rejections": 20,
+    "new_numerical_cases": 100,
+    "alias_checks": "A/D exact and partial, B/D exact, C/D partial on all 91 new type/layout cases (no C/D check for no-C cases)",
+    "plans": "three algorithms by three workspace preferences; NONE JIT; zero workspace; descriptors and preferences destroyed before execution",
+    "timing_boundary": "30 repetitions per small fixture/type; HIP-event stream elapsed time including submission gaps, no speedup comparison",
+    "not_qualified": [
+      "complex contractions",
+      "new tuning or JIT implementation",
+      "universal correctness/performance",
+      "long stability"
+    ]
+  },
+  "post_run_review": {
+    "kernel_log": "identical before/after; no new messages",
+    "kernel_before_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "kernel_after_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "initial_attempts": [
+      {
+        "path": "logs/n11-hiptensor",
+        "status": "failed before compilation: absent cgroup mount (OCI exit126)"
+      },
+      {
+        "path": "logs/n11-hiptensor-r2",
+        "status": "failed before compilation: runc rejects NoCgroups (exit125)"
+      }
+    ],
+    "host_fix": "Started existing cgroups service (unified cgroup2); enabled boot runlevel. No reboot/kernel changes.",
+    "qualified_log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n11-hiptensor-r3",
+    "prior_prefix_backup": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/n11-hiptensor-before.so.0.1"
+  },
+  "rocm_libraries_revision": "681d2f8a25d83db3ef99140461600883f7b71dba"
+}
