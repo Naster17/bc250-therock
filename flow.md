@@ -30,6 +30,14 @@ release claims must not override this cursor and current manifests.
   Native signing key permissions verified600/root, stays remote. CPU~62°C,
   fan~3500RPM during build. Memory checkpoint backed up on.104 at
   `WS/agent-memory/8c6efe00e-kernel-build` and`latest` points there; sources intact.
+  Follow-up review: temporary GRUB env proved consumed one-shot may remain as
+  empty`next_entry=`; installer/watchdog-test/base-ACK now reject nonempty values,
+  accept empty. Early init requires nowayout and real character device, creating
+  it from sysfs major/minor if devtmpfs falls back to tmpfs. Syntax passed.
+  SVM upper MMU-notifier/unmap callers still discard some existing helper returns
+  and pre-mark ranges unmapped: no end-to-end failed-flush lifetime containment
+  claim; investigate separately before fault/migration experiments. Latest build
+  check22:00UTC:~10,500 objects/1.3GiB output, phase build, no observed error.
 - **ACTIVE user priority: K1–K6, clean upstream BC-250 kernel workstream**
   (authorized2026-10-14), alongside ROCm/Torch. K1 source fetched: signed stable
   `v7.2.10`, base`7b20d05fd38de8e0be168956f6fd241d750c7d69`; Greg fingerprint
