@@ -1,0 +1,109 @@
+{
+  "task": "N1.2",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 6.371156126000642
+    },
+    {
+      "name": "baseline-rejection",
+      "exit": 1,
+      "seconds": 0.3649898180001401
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 4.876556269000503
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 0,
+      "seconds": 2.2674793340001997
+    },
+    {
+      "name": "real-regression",
+      "exit": 0,
+      "seconds": 2.8180236489997696
+    }
+  ],
+  "before_library_sha256": "ff481cfdfe245e6446e22b7c7e428392939c7bc41bf1c32434307a14deafa08a",
+  "source_delta_sha256": "0d29313f60e610f94824b066bacec3b2af0285c76118d889cd1db4a8eec0c952",
+  "test_source_sha256": "d906e943e99aae1b4d5403ba0b2f88aacbfc2a525a730d10a075d98c9bc19864",
+  "resources": {
+    "jobs": 12,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "real-regression",
+  "after_source_sha256": "d9ff0fdaf5ab5cb96badad1a347853ace6d6b31f3f01634ae3c04b810c0caf9e",
+  "after_library_sha256": "33a6ac9bf280a1ae5dedc883f68251b434a50134c0c6148014fea804e9305974",
+  "executed_cases": 450,
+  "timings": [
+    {
+      "case": "gemm-padded-permuted-timed",
+      "dtype": "4",
+      "output": "4",
+      "repeats": "30",
+      "mean_us": "8.65743"
+    },
+    {
+      "case": "gemm-padded-permuted-timed",
+      "dtype": "5",
+      "output": "5",
+      "repeats": "30",
+      "mean_us": "9.89307"
+    },
+    {
+      "case": "unilateral-shared-batch-timed",
+      "dtype": "4",
+      "output": "4",
+      "repeats": "30",
+      "mean_us": "21.5094"
+    },
+    {
+      "case": "unilateral-shared-batch-timed",
+      "dtype": "5",
+      "output": "5",
+      "repeats": "30",
+      "mean_us": "23.1858"
+    }
+  ],
+  "real_regression_cases": 273,
+  "rocm_libraries_revision": "c6ac34f0ba3c4de11a0aa7e21fc9ec19adc6ef9e",
+  "scope": {
+    "native_arch": "gfx1013",
+    "numerical_complex_cases": 426,
+    "descriptor_rejections": 24,
+    "real_regression_cases": 273,
+    "complex_type_compute_pairs": [
+      "C32F/C32F",
+      "C64F/C64F"
+    ],
+    "scalar_abi": "hipFloatComplex / hipDoubleComplex host scalars",
+    "unary_ops": [
+      "IDENTITY",
+      "NEG",
+      "CONJ"
+    ],
+    "layouts": "padded/permuted GEMM, mixed batch/shared/unilateral sums, independent sums, outer product, dot, 16-mode union with unit axes",
+    "safety": "NaN-poisoned zero-alpha A/B and zero-beta C; null C with zero beta; imaginary scalars; input and output guard bytes; exact and partial input/output aliases; partial C/D aliases for multi-element spans; valid in-place C/D conjugation; null A/nonzero-beta C rejected",
+    "plans": "nine algorithm/workspace combinations for both complex types; JIT NONE; zero workspace; source descriptors/preferences destroyed before execution",
+    "timing_boundary": "30 HIP stream-event repeats per tiny GEMM/mixed fixture/type, includes submission gaps; no speedup comparison",
+    "not_qualified": [
+      "mixed real/complex or widened/narrowed complex outputs",
+      "other complex unary ops",
+      "arbitrary plan/JIT/cache contracts",
+      "large complex performance or sustained stability"
+    ]
+  },
+  "post_run_review": {
+    "kernel_log": "identical before/after; no new messages",
+    "kernel_before_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "kernel_after_sha256": "778cd185eb921fd071d0eb60ef53a44205f1eba36e366b15fcbe1ea996da2035",
+    "initial_attempt": "logs/n12-hiptensor: test incorrectly expected partial C/D alias rejection for adjacent one-element dot tensors; prefix restored before releasing exclusive lock; corrected assertion requires multi-element output span",
+    "qualified_log_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/n12-hiptensor-r2",
+    "prior_prefix_backup": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/n12-hiptensor-before.so.0.1"
+  }
+}

@@ -1,0 +1,210 @@
+From c6ac34f0ba3c4de11a0aa7e21fc9ec19adc6ef9e Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 14 Oct 2026 16:17:45 +0200
+Subject: [PATCH] feat(hiptensor): add native gfx1013 complex scalar
+ contractions
+
+---
+ .../src/contraction/contraction_scalar.cpp    | 113 +++++++++++++++---
+ .../src/contraction/hiptensor_contraction.cpp |   6 +-
+ 2 files changed, 100 insertions(+), 19 deletions(-)
+
+diff --git a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+index 8457c8b0f6b..1510f734964 100644
+--- a/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
++++ b/projects/hiptensor/library/src/contraction/contraction_scalar.cpp
+@@ -27,6 +27,7 @@
+ 
+ #include <algorithm>
+ #include <cmath>
++#include <hip/hip_complex.h>
+ #include <hip/hip_runtime.h>
+ #include <limits>
+ #include <map>
+@@ -77,12 +78,17 @@ namespace hiptensor
+             if(!desc || desc->mOperationType != HIPTENSOR_CONTRACTION || !desc->mDescA
+                || !desc->mDescB || !desc->mDescD)
+                 return HIPTENSOR_STATUS_INVALID_VALUE;
+-            if(!supportedOp(desc->mOpA) || !supportedOp(desc->mOpB)
+-               || (desc->mDescC && !supportedOp(desc->mOpC)))
++            auto inputType    = desc->mDescA->mType;
++            auto outputType   = desc->mDescD->mType;
++            bool complexInput = inputType == HIPTENSOR_C_32F || inputType == HIPTENSOR_C_64F;
++            auto supported    = [complexInput](hiptensorOperator_t op) {
++                return complexInput ? (op == HIPTENSOR_OP_IDENTITY || op == HIPTENSOR_OP_NEG
++                                       || op == HIPTENSOR_OP_CONJ)
++                                    : supportedOp(op);
++            };
++            if(!supported(desc->mOpA) || !supported(desc->mOpB)
++               || (desc->mDescC && !supported(desc->mOpC)))
+                 return HIPTENSOR_STATUS_NOT_SUPPORTED;
+-
+-            auto inputType  = desc->mDescA->mType;
+-            auto outputType = desc->mDescD->mType;
+             // Keep the public C/D dtype contract while permitting useful widened
+             // outputs. Inputs are converted before multiplication and accumulation.
+             bool fp32Input = inputType == HIPTENSOR_R_16F || inputType == HIPTENSOR_R_16BF
+@@ -92,7 +98,12 @@ namespace hiptensor
+             bool fp64      = (inputType == HIPTENSOR_R_32F || inputType == HIPTENSOR_R_64F)
+                              && outputType == HIPTENSOR_R_64F
+                              && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_64F;
+-            if((!fp32 && !fp64) || desc->mDescB->mType != inputType
++            bool complex   = outputType == inputType
++                             && ((inputType == HIPTENSOR_C_32F
++                                  && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_C32F)
++                                 || (inputType == HIPTENSOR_C_64F
++                                     && desc->mDescCompute == HIPTENSOR_COMPUTE_DESC_C64F));
++            if((!fp32 && !fp64 && !complex) || desc->mDescB->mType != inputType
+                || (desc->mDescC && desc->mDescC->mType != outputType))
+                 return HIPTENSOR_STATUS_NOT_SUPPORTED;
+ 
+@@ -247,6 +258,64 @@ namespace hiptensor
+             return value;
+         }
+ 
++        template <>
++        __device__ hipFloatComplex unary(hipFloatComplex value, hiptensorOperator_t op)
++        {
++            if(op == HIPTENSOR_OP_NEG)
++                return make_hipFloatComplex(-value.x, -value.y);
++            return op == HIPTENSOR_OP_CONJ ? hipConjf(value) : value;
++        }
++
++        template <>
++        __device__ hipDoubleComplex unary(hipDoubleComplex value, hiptensorOperator_t op)
++        {
++            if(op == HIPTENSOR_OP_NEG)
++                return make_hipDoubleComplex(-value.x, -value.y);
++            return op == HIPTENSOR_OP_CONJ ? hipConj(value) : value;
++        }
++
++        // HIP complex values are vector pairs. Their vector multiplication is
++        // componentwise, so complex products must use the public HIP arithmetic.
++        template <class Acc>
++        __device__ Acc multiply(Acc lhs, Acc rhs)
++        {
++            return lhs * rhs;
++        }
++        __device__ hipFloatComplex multiply(hipFloatComplex lhs, hipFloatComplex rhs)
++        {
++            return hipCmulf(lhs, rhs);
++        }
++        __device__ hipDoubleComplex multiply(hipDoubleComplex lhs, hipDoubleComplex rhs)
++        {
++            return hipCmul(lhs, rhs);
++        }
++        template <class Acc>
++        __device__ Acc add(Acc lhs, Acc rhs)
++        {
++            return lhs + rhs;
++        }
++        __device__ hipFloatComplex add(hipFloatComplex lhs, hipFloatComplex rhs)
++        {
++            return hipCaddf(lhs, rhs);
++        }
++        __device__ hipDoubleComplex add(hipDoubleComplex lhs, hipDoubleComplex rhs)
++        {
++            return hipCadd(lhs, rhs);
++        }
++        template <class Acc>
++        __host__ __device__ bool nonzero(Acc value)
++        {
++            return value != Acc(0);
++        }
++        __host__ __device__ bool nonzero(hipFloatComplex value)
++        {
++            return value.x != 0.0f || value.y != 0.0f;
++        }
++        __host__ __device__ bool nonzero(hipDoubleComplex value)
++        {
++            return value.x != 0.0 || value.y != 0.0;
++        }
++
+         template <class Input, class Output, class Acc>
+         __global__ void scalarContraction(ScalarProblem p,
+                                           Acc           alpha,
+@@ -270,14 +339,16 @@ namespace hiptensor
+                     cOffset += coordinate * p.cStrides[i];
+                     dOffset += coordinate * p.dStrides[i];
+                 }
+-                Acc sum = 0;
++                Acc sum = {};
+                 // Common GEMM/dot contractions need no mixed-radix division in
+                 // the inner loop. Preserve the generic mapping for multiple sums.
+-                if(alpha != Acc(0) && p.sumModes == 1)
++                if(nonzero(alpha) && p.sumModes == 1)
+                     for(uint64_t k = 0; k < p.sumElements; ++k)
+-                        sum += unary(Acc(a[aBase + k * p.aStrides[p.freeModes]]), p.opA)
+-                               * unary(Acc(b[bBase + k * p.bStrides[p.freeModes]]), p.opB);
+-                else if(alpha != Acc(0))
++                        sum = add(
++                            sum,
++                            multiply(unary(Acc(a[aBase + k * p.aStrides[p.freeModes]]), p.opA),
++                                     unary(Acc(b[bBase + k * p.bStrides[p.freeModes]]), p.opB)));
++                else if(nonzero(alpha))
+                     for(uint64_t k = 0; k < p.sumElements; ++k)
+                     {
+                         uint64_t contracted = k, aOffset = aBase, bOffset = bBase;
+@@ -288,11 +359,13 @@ namespace hiptensor
+                             aOffset += coordinate * p.aStrides[i];
+                             bOffset += coordinate * p.bStrides[i];
+                         }
+-                        sum += unary(Acc(a[aOffset]), p.opA) * unary(Acc(b[bOffset]), p.opB);
++                        sum = add(
++                            sum,
++                            multiply(unary(Acc(a[aOffset]), p.opA), unary(Acc(b[bOffset]), p.opB)));
+                     }
+-                Acc value = alpha * sum;
+-                if(beta != Acc(0))
+-                    value += beta * unary(Acc(c[cOffset]), p.opC);
++                Acc value = multiply(alpha, sum);
++                if(nonzero(beta))
++                    value = add(value, multiply(beta, unary(Acc(c[cOffset]), p.opC)));
+                 d[dOffset] = Output(value);
+             }
+         }
+@@ -308,8 +381,8 @@ namespace hiptensor
+                                  hipStream_t          stream)
+         {
+             Acc alphaValue = *static_cast<const Acc*>(alpha);
+-            Acc betaValue  = beta ? *static_cast<const Acc*>(beta) : Acc(0);
+-            if(betaValue != Acc(0) && !c)
++            Acc betaValue  = beta ? *static_cast<const Acc*>(beta) : Acc{};
++            if(nonzero(betaValue) && !c)
+                 return HIPTENSOR_STATUS_INVALID_VALUE;
+             uint32_t blocks = std::min<uint64_t>(65535, 1 + (problem.outputElements - 1) / 256);
+             hipLaunchKernelGGL((scalarContraction<Input, Output, Acc>),
+@@ -385,6 +458,12 @@ namespace hiptensor
+             return launch<float, float, float>(problem, alpha, a, b, beta, c, d, stream);
+         case HIPTENSOR_R_64F:
+             return launch<double, double, double>(problem, alpha, a, b, beta, c, d, stream);
++        case HIPTENSOR_C_32F:
++            return launch<hipFloatComplex, hipFloatComplex, hipFloatComplex>(
++                problem, alpha, a, b, beta, c, d, stream);
++        case HIPTENSOR_C_64F:
++            return launch<hipDoubleComplex, hipDoubleComplex, hipDoubleComplex>(
++                problem, alpha, a, b, beta, c, d, stream);
+         default:
+             return HIPTENSOR_STATUS_NOT_SUPPORTED;
+         }
+diff --git a/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp b/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp
+index 156e1b2d376..57e71ec223c 100644
+--- a/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp
++++ b/projects/hiptensor/library/src/contraction/hiptensor_contraction.cpp
+@@ -211,9 +211,11 @@ hiptensorStatus_t hiptensorCreateContraction(const hiptensorHandle_t
+     bool scalar = handle->getDevice().getGcnArch() == hiptensor::HipDevice::GFX1013;
+     if(scalar)
+     {
+-        if(descCompute != HIPTENSOR_COMPUTE_DESC_32F && descCompute != HIPTENSOR_COMPUTE_DESC_64F)
++        if(descCompute != HIPTENSOR_COMPUTE_DESC_32F && descCompute != HIPTENSOR_COMPUTE_DESC_64F
++           && descCompute != HIPTENSOR_COMPUTE_DESC_C32F && descCompute != HIPTENSOR_COMPUTE_DESC_C64F)
+             return HIPTENSOR_STATUS_NOT_SUPPORTED;
+-        if(descCompute == HIPTENSOR_COMPUTE_DESC_64F && !handle->getDevice().supportsF64())
++        if((descCompute == HIPTENSOR_COMPUTE_DESC_64F || descCompute == HIPTENSOR_COMPUTE_DESC_C64F)
++           && !handle->getDevice().supportsF64())
+             return HIPTENSOR_STATUS_ARCH_MISMATCH;
+     }
+     else if(!handle->getDevice().matrixCoreSupport(descCompute))
+-- 
+2.56.0
+

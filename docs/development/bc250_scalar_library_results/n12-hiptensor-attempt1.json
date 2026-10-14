@@ -1,0 +1,39 @@
+{
+  "task": "N1.2",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "compile-probe",
+      "exit": 0,
+      "seconds": 6.272430064999753
+    },
+    {
+      "name": "baseline-rejection",
+      "exit": 1,
+      "seconds": 0.4152017970000088
+    },
+    {
+      "name": "targeted-build",
+      "exit": 0,
+      "seconds": 17.08674076599982
+    },
+    {
+      "name": "gpu-correctness",
+      "exit": 1,
+      "seconds": 0.8655598109999119
+    }
+  ],
+  "before_library_sha256": "ff481cfdfe245e6446e22b7c7e428392939c7bc41bf1c32434307a14deafa08a",
+  "source_delta_sha256": "0d29313f60e610f94824b066bacec3b2af0285c76118d889cd1db4a8eec0c952",
+  "test_source_sha256": "d5acc6ac389c97fd7fb0635005c0717c3de8d9a9ee6c2547232c2f798499573f",
+  "resources": {
+    "jobs": 12,
+    "ccache": "20G",
+    "sdma": false
+  },
+  "phase": "gpu-correctness",
+  "after_source_sha256": "d9ff0fdaf5ab5cb96badad1a347853ace6d6b31f3f01634ae3c04b810c0caf9e",
+  "after_library_sha256": "33a6ac9bf280a1ae5dedc883f68251b434a50134c0c6148014fea804e9305974",
+  "error": "gpu-correctness: exit 1; see /home/nik/bc250work/rocm-10.2-gfx1013/logs/n12-hiptensor",
+  "prefix_restored": true
+}
