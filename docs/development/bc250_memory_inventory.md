@@ -148,14 +148,14 @@ Important operational facts:
 | Item                   | Current code / location                                                                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Branch                 | `users/Naster17/rocm-10.2-gfx1013`                                                                                                                           |
-| Qualified TheRock code | `099083f49e28b8525aacbee8f3d6d8caf4f62297` (N1.6); newer docs commits need no runtime rebuild                                                                       |
-| Libraries              | `a9a1ace297cf78ff7e6fcf897bf17fbcdaeb9cf2`                                                                                                                   |
+| Qualified TheRock code | `cf7de94ac1fe969917b907e7ac4bc76dd8259b2d` (N1.7); newer docs commits need no runtime rebuild                                                                       |
+| Libraries              | `2fd5619d7c8ec6193eeb23077ea347887bdda77c`                                                                                                                   |
 | Systems                | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`                                                                                                                   |
 | LLVM                   | Upstream `7667f52dd687899256a3285ab0bce3c53bc73394`; no custom LLVM architecture patch                                                                       |
 | Torch                  | `4f13bf86476252e3d57b17d1c72f8512814400e9`; release/2.13 baseline `c779020750d7dc99a39ea8c104ef8df1fc9d0755`                                                 |
 | Triton                 | `ee65ff3b85f99d52e678b252a99c8425fa46e329`; baseline `66b3f9ff575eb8db6adec658bbf0badd9a8d2e25`                                                              |
 | Distribution/version   | TheRock 10.2.0; HIP component reports 7.17.0; Torch 2.13.0a0+gfx1013, qualified Triton 3.8 wheel. Different component version strings are not a failed port. |
-| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n16-dev`                              |
+| Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n17-dev`                              |
 | ROCm / Torch           | `WS/build/dist/rocm`, editable `WS/pytorch-work`                                                                                                             |
 | Runtime image ID       | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                                                           |
 | Runtime tag            | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; tag name predates P2, immutable ID above is authoritative                                          |
@@ -173,7 +173,7 @@ workspace-root/dev/candidate copies exist. `SOURCE_PRIORITY1.json` and
 not magically updated by patching extracted trees. Generated torch.version's
 Git label may retain the original export revision; use source manifests instead.
 
-Reconstruction: 23 patches in `patches/amd-mainline/rocm-libraries`, three in
+Reconstruction: 24 patches in `patches/amd-mainline/rocm-libraries`, three in
 `patches/amd-mainline/rocm-systems`, two in `patches/bc250-pytorch`, four in
 `patches/bc250-triton`. Apply in order. The P2 reconstruction helper verified
 exact library/system/Torch trees using private indexes; it did not recreate the
@@ -214,6 +214,7 @@ library reconstruction; retained earlier manifests keep their original meaning. 
 | 0021  | Sparse Lt zero-stride broadcast/physical compression and span guards: `40e2c04af95` |
 | 0022  | Sparse Lt native row bias pointer/stride/type and GPU epilogue: `11e165bd0bf` |
 | 0023  | Sparse Lt device FP32 per-row alpha-vector flag/indexing and guards: `a9a1ace297c` |
+| 0024  | Sparse Lt INT8 input/output, bounded INT32 accumulation, FP32 epilogue and saturating round-even conversion: `2fd5619d7c8` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -234,7 +235,7 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 | hipBLASLt                                   | 964 C/C++ API cases: f32/f16/bf16 with f32 accumulation, layouts/transposes/batches, host/device scalars, bias/activation/AUX/DGELU, host grouped queries/events/lifetimes; register tile                    | No FP8/INT8/FP64, device user groups, arbitrary tuning or matrix engine. Default Torch BLAS remains rocBLAS.                                                |
 | hipTensor generic                           | Historical154 rank-two and23 higher-rank reduction/permutation/binary/trinary checks in generic-only profile                                                                                                 | Wider rank/layout/operators remain; these counts are separate from contractions                                                                             |
 | hipTensor contraction | N1.1 real273 API cases (253 numerical +20 descriptor); N1.2 complex450 (426 numerical +24 descriptor) and273 real regressions. Same-type C32F/C64F, identity/NEG/CONJ, public complex scalars, shared/unilateral sums, padded/permuted layouts, zero/imaginary scalars, span/alias/guard bytes, in-place conjugated C/D,16-mode union with unit axes, plan lifetime and3algorithms×3workspace preferences/type with JIT NONE | N1.3:304 plan API checks +12 numerical executions across four real/complex types; pointer/size/enum guards, atomic failed setters, owning plans, zero required workspace. Scalar cache NONE/JIT NONE/autotune NONE/count0/rank0; alternative requests explicitly unsupported. Broader cache/JIT implementations remain optional. Mixed/widened complex and other complex unary ops unsupported; small-fixture timing is not general performance. |
-| hipSPARSELt | P2/native234 cases; N1.4 broadcast604 numerical +5 descriptor; N1.5 bias526 numerical +41 API; N1.6 alpha-vector404 numerical +34 API, plus234/609/567 scalar/broadcast/bias regressions. f32/f16/bf16, sparse A/B, orders/transposes, strip/TILE/partial tiles, six activations, zero-stride input broadcasts, per-row same-type/FP32 bias and device FP32 per-row alpha[M] shared across batches; plan/alias/span/alignment guards | Matching logical batch counts required. Next N1.7 integer-type feasibility. Beta-vector enabling, new types, split-K/multi-stream remain unimplemented/unqualified. Alpha vector/bias device data remain caller-owned until completion. Separate sparse pack; no hardware sparse speedup claim. |
+| hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL                                | CPU-checked FP32/FP16/signedINT8 GEMM examples; native architecture applicability changes                                                                                                                    | Admitted DL convolution/grouped classes are not automatically executed/qualified                                                                            |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
 | MIOpen                                      | CPU-reference f32/f16/bf16 convolution forward/dx/dw, groups1/2; native HIP-direct solvers; 3D/provider tests                                                                                                | No full neural operator/solver selection/tuning DB qualification; CK integration stays off in current profile                                               |
@@ -452,6 +453,38 @@ bias2.7s gates,16jobs/20GiB ccache. Kernel logs identical1009 lines.
 `SOURCE_N16.json` verifies8 changed files,23 patches reconstruct exact tree;
 prior library `WS/recovery/n16-sparselt-before.so.0.2`. No general performance,
 new-type or long-stability qualification; .105/kernel/Torch unchanged.
+
+N1.7 `WS/logs/n17-sparselt-r4/result.json`, repository
+`bc250_scalar_library_results/n17-{sparselt,reconstruction}.json`:134 native GPU
+INT8 numerical cases/16 API checks and234/609/567/438 scalar/broadcast/bias/vector
+regressions. Pinned upstream type table admits INT8 inputs with compute_i32;
+`spmm/rocsparselt_spmm.cpp` still instantiates FP32 scaling arguments. Integer
+bias defaults FP32; CPU GEMM/bias/activation clients round with nearbyint then
+saturate INT8. Native backend now implements signed INT8 input/output only, INT32
+retained-product accumulation, FP32 scaling/bias and nearest-even saturation.
+2:4 retains K/2 products, each <=16384 in magnitude: K<=262140 guarantees all
+partial sums fit INT32. Descriptor rejects K262144; K262140 GPU execution passed.
+K4096/-127 products and tailored FP32 scale/bias expose loss from incremental
+FP32 accumulation (>2^24), checking exact integer sum then one FP32 conversion.
+Signed half ties, ±128/127 extrema, saturation, orders/transposes, sparse A/B,
+padded/broadcast inputs, strip/TILE/partial tiles, row alpha vector, FP32 bias,
+RELU/ABS/leakyRELU/GELU, zero scalars, snapshot/alias/in-place/immutable guards and
+independent pack/prune references passed. Integer sigmoid/tanh enabling rejected
+per upstream; widened INT8→FP16/BF16/INT32 outputs remain unimplemented, not
+hardware-limited. Nonfinite epilogues/exhaustive conversion edges unqualified.
+Initial TILE fixture converted fractional entries to zero and violated its own
+nonzero-cardinality assertion. r2 extra legacy CPU assertion used a truncating
+cast; fixed nearest-even saturation. r3 passed all150 checks, then count parsing
+failed because numerical PASS lines were absent; reporting fixed. Failures and
+restorations retained in `n17-sparselt-attempts.json`; production source/library
+hash unchanged across all four attempts. Every failure restored N1.6 under lock.
+Initial build6.9s, successful cached restage2.8s, integer1.6s/scalar1.6s/broadcast3.0s/
+bias2.7s/vector2.2s gates,16jobs/20GiB ccache/exclusive lock. Kernel logs identical
+1009 lines. `SOURCE_N17.json` verifies8 changed files,24 patches reconstruct exact
+tree; prior independent library `WS/recovery/n17-sparselt-before.so.0.2` retained.
+No performance/automatic Torch routing/new matrix-instruction/long-stability
+claim; .105/kernel/Torch unchanged. Next N1.8: inspect existing Lt scalar/register
+shape dispatch and timing evidence; select one measured small/skinny improvement.
 
 ## Defects and traps already investigated: do not rediscover them
 

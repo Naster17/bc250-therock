@@ -8,49 +8,49 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **Current task:** N1.6 native hipSPARSELt alpha-vector path implemented,
-  installed on .104 and bounded-qualified. Beta-vector enabling remains unsupported.
-- **Last qualified code:** root `099083f49e28b8525aacbee8f3d6d8caf4f62297`,
-  libraries `a9a1ace297cf78ff7e6fcf897bf17fbcdaeb9cf2` (patch0023).
-  N1.5 `2e6641412`/`11e165bd0bf` and earlier milestones remain prior evidence.
-- **N1.6 contract:** int32 alpha-vector flag0/1 is captured by the plan. Disabled
-  uses host FP32 scalar alpha; enabled interprets the Matmul alpha argument as a
-  borrowed device-accessible FP32 vector[M], indexed by logical output row and
-  shared across all batches. GPU loads it; host never dereferences the vector.
-  Size/boolean/alignment/exact-and-partial D/vector span guards retained; source
-  flag mutation after plan creation does not alter the captured mode. Scalar
-  beta retained: beta-vector getter0/disable0 succeed, enabling1 is NOT_SUPPORTED.
-  Pinned upstream has alpha implementation/client evidence but no beta handler
-  or verified device-vector contract; this is an unimplemented API path, not a
-  claimed hardware limitation or newly implemented beta-vector operation.
-- **Passed:**404 CPU-double-referenced GPU vector cases +34 API checks, then234
-  scalar/609 broadcast/567 bias regressions. f32/f16/bf16, sparse A/B, orders/all
-  transposes, strip/TILE/partial tiles, input broadcasts, bias and six activations,
-  signed-zero/negative/positive alpha rows, all-zero vectors with poisoned inputs,
-  zero-beta poisoned C, in-place C/D, plan mode snapshots and immutable guards.
-  Kernel logs identical1009 lines; no new-type/general performance claim.
-- **Evidence/jobs:** `WS/logs/n16-sparselt-r5/result.json`, repository
-  `bc250_scalar_library_results/n16-{sparselt,reconstruction}.json` plus attempts
-  report. Targeted hipSPARSELt+dist,16jobs/20GiB ccache/exclusive lock; initial
-  build6.6s, successful cached restage2.8s, vector2.2s/scalar1.7s/broadcast3.0s/
-  bias2.7s gates. No running jobs/gates. Attempts1–3 exposed +0/-0 reference
-  differences from computing unused zero-alpha terms (r3 repeated after a failed
-  local edit helper); r4 exposed the analogous unused beta*C zero term. Hex
-  diagnostics preserved. Reference now skips both unused terms, including signs
-  and NaNs; bitwise/padding checks and nonlinear tolerances unchanged. GPU source
-  and library hash unchanged throughout; every failed gate restored N1.5 before
-  unlocking. Do not reclassify this as a GPU arithmetic defect or redo the gate.
-- **Provenance/recovery:** `SOURCE_N16.json` verifies8 changed files on N1.5/P2;
-  active sparse library SHA256 `66756eac6496c85e867e60b535ec28fccc67f78506939286369819cce976092b`.
-  Prior independent library `WS/recovery/n16-sparselt-before.so.0.2` retained.
-  All23 patches reconstruct exact tree; .105/frozen candidates and kernel/boot
-  files unchanged; no reboot, host configuration or Torch changes this batch.
-- **Next: N1.7, hipSPARSELt new-type feasibility/admission.** Inspect signed-INT8
-  matrix/output/compute combinations and alpha/beta/bias conversion contracts
-  in public APIs, upstream validators and clients. Implement the first bounded
-  hardware-feasible integer path only if its ABI/math contract is established;
-  otherwise record a concrete boundary and proceed to Lt small/skinny shapes.
-  No new matrix-instruction claim; beta-vector extensions remain separately open.
+- **Current task:** N1.7 native hipSPARSELt INT8→INT8 path implemented,
+  installed on .104 and bounded-qualified. N1.1–N1.6 remain qualified in their scopes.
+- **Last qualified code:** root `cf7de94ac1fe969917b907e7ac4bc76dd8259b2d`,
+  libraries `2fd5619d7c8ec6193eeb23077ea347887bdda77c` (patch0024).
+- **N1.7 contract:** signed INT8 A/B/C/D, COMPUTE_32I, exact INT32 retained-product
+  accumulation followed by FP32 epilogue and nearest-even saturating INT8 storage.
+  K multiple4 and <=262140 guarantees every partial sum fits INT32; larger K is
+  rejected. Host alpha/beta are FP32 despite integer compute; enabled alpha-vector
+  stays device FP32[M], shared across batches. Integer bias defaults to FP32 and
+  admits FP32 only. Strip and TILE 2:4, sparse A/B and existing layouts/broadcasts
+  retained. Sigmoid/tanh enabling rejected per pinned upstream; RELU/ABS/leakyRELU/
+  GELU admitted. Widened INT8 outputs remain unimplemented, not hardware-impossible.
+- **Passed:**134 CPU-exact-double-referenced native GPU numerical cases +16 API
+  checks, then234 scalar/609 broadcast/567 bias/438 alpha-vector regressions.
+  Includes ±INT8 extrema, signed nearest-even ties, saturation, K4096 sum above
+  exact incremental FP32 precision, K262140 execution/K262144 rejection,
+  orders/transposes, padded/broadcast inputs, strip/TILE/partial tiles, FP32 bias,
+  vector/zero scalars, plan snapshots, in-place C/D, pack decoding and immutable
+  guards. Kernel logs identical1009 lines. No performance/automatic Torch routing,
+  matrix-instruction or sustained-stability claim; nonfinite epilogues unqualified.
+- **Evidence/jobs:** `WS/logs/n17-sparselt-r4/result.json`, repository
+  `bc250_scalar_library_results/n17-{sparselt,reconstruction}.json` and attempts.
+  Targeted hipSPARSELt+dist,16jobs/20GiB ccache/exclusive lock; first build6.9s,
+  successful cached restage2.8s, integer1.6s/scalar1.6s/broadcast3.0s/bias2.7s/
+  vector2.2s gates. No running jobs/gates. Failed attempts preserved: initial
+  TILE fixture cast fractional values to zero, invalidating its nonzero-cardinality
+  assertion; r2 extra legacy CPU assertion truncated instead of round-even/saturate;
+  r3 numerical134/API16 passed but per-numerical PASS records were missing, causing
+  runner count rejection. Fixtures/reference/reporting corrected; production source
+  and library hash unchanged throughout. Each failed gate restored N1.6 before
+  unlocking. Do not reclassify these diagnosed test defects as GPU arithmetic bugs.
+- **Provenance/recovery:** `SOURCE_N17.json` verifies8 changed files on N1.6/P2;
+  active sparse library SHA256 `fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47`.
+  Prior independent library `WS/recovery/n17-sparselt-before.so.0.2` retained.
+  All24 patches reconstruct exact tree; .105/frozen candidates and kernel/boot/
+  Torch unchanged. No reboot or host configuration changes this batch.
+- **Next: N1.8, hipBLASLt small/skinny shapes and epilogues.** Read the existing
+  scalar/register-tile dispatch, P1/P2 shape/timing evidence and qualified Torch
+  BLAS consumer settings before editing. Select one measured small/skinny dispatch
+  improvement, use short CPU-referenced native GPU checks and compare both paths
+  on identical shapes under the prefix lock. Default Torch rocBLAS stays qualified;
+  do not claim a Torch speedup without a consumer measurement. Sparse widened INT8
+  outputs and beta-vector implementation remain separately open.
 
 At resume: read this file, inspect local Git status/log and `.104` runtime/source
 manifests, then read the inventory section for the selected task. Check evidence
@@ -90,17 +90,17 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 
 | Item                     | Current identity                                                                                                          |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Qualified root code      | `099083f49e28b8525aacbee8f3d6d8caf4f62297`                                                                                |
-| rocm-libraries           | `a9a1ace297cf78ff7e6fcf897bf17fbcdaeb9cf2`, ordered patches0001–0023                                                      |
+| Qualified root code      | `cf7de94ac1fe969917b907e7ac4bc76dd8259b2d`                                                                                |
+| rocm-libraries           | `2fd5619d7c8ec6193eeb23077ea347887bdda77c`, ordered patches0001–0024                                                      |
 | rocm-systems             | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`, patches0001–0003                                                              |
 | Torch                    | `4f13bf86476252e3d57b17d1c72f8512814400e9`, patches0001–0002; editable pip                                                |
 | Triton                   | `ee65ff3b85f99d52e678b252a99c8425fa46e329`, patches0001–0004; qualified wheel retained                                    |
 | LLVM                     | Clean upstream `7667f52dd687899256a3285ab0bce3c53bc73394`                                                                 |
-| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1–N1.6 dev profile**                  |
+| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1–N1.7 dev profile**                  |
 | ROCm/Torch/cache         | `WS/build/dist/rocm`, `WS/pytorch-work`, `WS/cache/dev-user` (uid/gid1000)                                                |
 | Runtime image ID         | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                        |
 | Runtime/build tags       | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; `localhost/bc250-rocm-build:10.2-ccache`                        |
-| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N16.json` delta on N1.5/P2                |
+| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N17.json` delta on N1.6/P2                |
 | Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
 | Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
 | Kernel/boot              | `7.1.5-bc250rocm-r2`; live boot files in `/home/nik/bc250work/bc250-rocm-lab`, backups `WS/recovery/`                     |
@@ -110,7 +110,7 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 Manifests and immutable image IDs outrank mutable tag names. Component version
 strings differ legitimately (TheRock10.2, HIP7.17, Torch 2.13). Source archive names
 and generated Torch Git labels may retain older baselines; do not relabel them.
-The P2 source transfer verified51 files; N1.1 adds7; N1.2–N1.6 each add8 verified changed files. Candidate payload verified191
+The P2 source transfer verified51 files; N1.1 adds7; N1.2–N1.7 each add8 verified changed files. Candidate payload verified191
 independent shared-object/kernel-pack copies. Detailed hashes are in manifests.
 
 ## Unified local workspace
@@ -158,6 +158,7 @@ reads CPU Tctl, not GPU edge. Full measured hardware/recovery facts are in inven
 | N1.4 | Sparse Lt matching-count zero-stride broadcasts for A/B/C, one physical sparse pack, single-writer pruning/compression and span alias guards.604 numerical +5 descriptor cases,234 regressions; patch0021. |
 | N1.5 | Native GPU sparse Lt per-row bias: same-type/FP32, batch broadcast/strides, before activation, plan snapshots and size/type/span/alias guards.526 numerical +41 API checks,234 scalar/609 broadcast regressions; patch0022. |
 | N1.6 | Native device FP32 per-row alpha vector shared across batches, plan flag snapshots and span/alignment guards.404 numerical +34 API checks;234 scalar/609 broadcast/567 bias regressions. Beta-vector enable explicitly unsupported; patch0023. |
+| N1.7 | Native INT8 input/output, bounded INT32 accumulation, FP32 epilogue/bias, nearest-even saturation.134 numerical +16 API and234/609/567/438 regressions; K<=262140, widened outputs unimplemented; patch0024. |
 | Performance               | Matched `.104`/`.105` comparisons already done: most GEMM/copy differences small, variable small-conv results. Separate same-board P2 large LtGEMM≈2.1–2.4x faster; selected large compiled HIP-graph fusion≈4x. No whole-Torch or universal speedup claim; default BLAS unchanged.             |
 
 Reports: `docs/development/bc250_scalar_library_results/priority{1,2}-*.json`,
@@ -208,7 +209,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N1.4 | hipSPARSELt matching-count zero-stride broadcast inputs, single physical sparse compression/pruning and span-alias guards qualified above. Incompatible counts/multi-batch zero-stride outputs remain rejected. |
 | [x]   | N1.5 | Native hipSPARSELt row bias pointer/stride/type contracts and epilogue qualified above. Device bias memory remains caller-owned; plans capture settings. |
 | [x]   | N1.6 | Native alpha-vector path and explicit scalar-beta/unsupported beta-vector policy qualified within the bounded scope above. Beta-vector implementation remains separately open; no universal vector-mode claim. |
-| [ ]   | **N1 / N1.7 — next** | Audit hipSPARSELt signed-INT8 input/output/compute and scalar/bias contracts; admit the first bounded feasible integer path with CPU references and overflow/conversion/alias/layout guards, or record the concrete limitation. Lt small/skinny shapes/epilogues follow. |
+| [x]   | N1.7 | Native signed INT8 input/output with bounded INT32 accumulation, FP32 scalar/vector/bias epilogue and nearest-even saturation qualified above. Widened outputs remain unimplemented. |
+| [ ]   | **N1 / N1.8 — next** | Inspect existing hipBLASLt scalar/register-tile dispatch and P1/P2 timing evidence; implement one measured small/skinny shape improvement with CPU-referenced GPU and epilogue/regression checks. No default Torch BLAS change without consumer evidence. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |
