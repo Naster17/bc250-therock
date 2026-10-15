@@ -493,6 +493,19 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+SDPA warning investigation2026-10-15 (source inspection only): qualified build
+script explicitly disables flash/memory-efficient attention and CK SDPA. Existing
+ROCm efficient dispatch requires compatible AOTriton/CK kernels; build-flag changes
+alone do not qualify gfx1013. Proposed native scalar tiled online-softmax forward
+and recomputing backward can avoid full quadratic attention storage, but remains
+unimplemented/unqualified for correctness, gradients, masks/GQA and performance.
+Current math SDPA remains the working path. User finetune-n7 train/chat scripts use
+deprecated cuda.sdp_kernel; training checkpoint recomputation occurs after leaving
+its forward-only context. Migrate to nn.attention.sdpa_kernel and cover backward
+when fixing callers; this does not add a memory-efficient backend. Preserve active
+user training and use the runtime lock for deployment/tests. No source/runtime
+change or GPU qualification was performed during this inspection.
+
 [Training evidence](bc250_training_memory.md), root `d744f0952`, proves real
 SmolLM2-135M full FP32 fine-tuning and FP16/BF16 AMP LoRA for a bounded example.
 Model revision `93efa2f097d58c2a74874c7e644dbc9b0cee75a2`, weights SHA256

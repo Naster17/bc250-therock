@@ -9,6 +9,23 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **User priority2026-10-15: investigate real memory-efficient SDPA for gfx1013.**
+  Warning source inspected in qualified Torch4f13bf8: build explicitly disables
+  USE_FLASH_ATTENTION/USE_MEM_EFF_ATTENTION and CK SDPA; existing ROCm efficient
+  dispatch depends on supported AOTriton/CK kernels. Enabling the flag alone is
+  not a qualified gfx1013 implementation. Scalar tiled online-softmax forward+
+  recomputing backward is a feasible proposed approach, not implemented/tested.
+  Native bounded optional kernel prototype and CPU/math-SDPA output+gradient,
+  mask/GQA and memory-scaling comparisons are the next attention action before
+  any default integration or speed claim. No production source/prefix change.
+  Deprecation traced to user /home/nik/finetune-n7/scripts/{train_lora,chat}.py;
+  train loss.backward() is outside math_ctx while activation checkpointing is on,
+  so recomputation can escape backend selection. Migration/context lifetime fix
+  remains pending; warning suppression would not implement efficient attention.
+  Active user Qwen3-1.7B training observed on .104: container65e346821439,
+  hostPID12457, script train_lora.py, output checkpoints/qwen17-smoke1,
+  --max-steps20/--max-seq1024; preserve job/checkpoints, inspect current state
+  before exclusive lock/tests/deployment. No agent build/test running. BIOS untouched.
 - **ACTIVE: K1–K6 kernel workstream; K5/SVM passed; HPD fixed; read-only telemetry audit complete; clock/provenance correction next.**
   2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after six one-shot boots;
   persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
