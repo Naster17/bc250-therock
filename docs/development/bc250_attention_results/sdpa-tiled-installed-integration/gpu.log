@@ -1,0 +1,8 @@
+[W1015 14:23:07.640792459 sdp_utils.cpp:976] Warning: Torch was not compiled with memory efficient attention. (function can_use_mem_efficient_attention)
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_tiled_sdpa_integration.py", line 166, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_tiled_sdpa_integration.py", line 46, in main
+    assert any('not compiled with memory efficient attention' in x for x in texts)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

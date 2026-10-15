@@ -493,18 +493,36 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
-SDPA warning investigation2026-10-15 (source inspection only): qualified build
-script explicitly disables flash/memory-efficient attention and CK SDPA. Existing
-ROCm efficient dispatch requires compatible AOTriton/CK kernels; build-flag changes
-alone do not qualify gfx1013. Proposed native scalar tiled online-softmax forward
-and recomputing backward can avoid full quadratic attention storage, but remains
-unimplemented/unqualified for correctness, gradients, masks/GQA and performance.
-Current math SDPA remains the working path. User finetune-n7 train/chat scripts use
-deprecated cuda.sdp_kernel; training checkpoint recomputation occurs after leaving
-its forward-only context. Migrate to nn.attention.sdpa_kernel and cover backward
-when fixing callers; this does not add a memory-efficient backend. Preserve active
-user training and use the runtime lock for deployment/tests. No source/runtime
-change or GPU qualification was performed during this inspection.
+Opt-in scalar tiled SDPA2026-10-15, Torch`bda0831ba49ef9d0ba2968a800642e5abaec5dd5`:
+three native Triton scalar kernels implement tiled online softmax and recomputed
+backward with FP32 accumulation and grouped KV gradients, without full score/
+probability storage. Built-in flash/efficient/CK flags stay off; ordinary functional
+SDPA remains math. Explicit Transformer attention+mask registry helper and user
+finetune-n7 --attention-backend tiled provide opt-in access. D<=128, sequence<=4096,
+finite FP32/FP16/BF16, broadcast boolean/additive masks, no dropout/mask gradients/
+higher-order/compiled/graph qualification. Dense masks still cost their input storage.
+
+18 independent CPU-float64/GPU-math output+gradient cases pass; small padded FP32
+Llama/checkpoint gradients pass. Installed7-group gate adds BF16 Qwen1.7B head128/
+16-to8GQA at65tokens, two updates of a **small random** Qwen3 BF16 LoRA model with
+CPU-float64 references and cached decode, streams and diagnostics. Unchanged eager
+Torch19-reference regression passes; all final gates exit0/dmesg unchanged/guards
+ACKed. Extra allocated FP32 B1/H2/D32 forward+backward peak at2048tokens2.52MiB vs
+math129.50MiB; tiled slower in measured single-event fixtures. No full Qwen1.7B,
+sustained stability, universal memory or speedup claim. Next: longer head128 and
+representative full-model training/memory/time qualification before default use.
+
+Exact warning bug repaired: !debug was passed as text to TORCH_WARN_ONCE, printing
+1Torch during successful fallback. Normal selection now quiet; explicit diagnostic
+checks still explain unavailable built-in kernels. User train/chat use new
+nn.attention.sdpa_kernel(MATH), backward included for checkpoint recomputation;
+broad warning filters removed. Math stays default. Targeted12-job/20GiB-ccache
+rebuild linked SDP-utils plus regenerated HIPHooks; loaded libtorch_hip SHA578a3583...
+Exclusive lock used for changes/tests. Existing source/build/cache/images/checkpoints,
+BIOS/kernel/governor/.105 preserved. Recovery WS/recovery/sdpa-{probe,callers,metadata}-before,
+SOURCE_SDPA metadata, and [full report/replay/evidence](bc250_attention_results/README.md).
+User training/chat finished before tests; no agent jobs remain. Earlier harness/
+reference/staging failures retained; unknown Python CPU segfault still separate.
 
 [Training evidence](bc250_training_memory.md), root `d744f0952`, proves real
 SmolLM2-135M full FP32 fine-tuning and FP16/BF16 AMP LoRA for a bounded example.

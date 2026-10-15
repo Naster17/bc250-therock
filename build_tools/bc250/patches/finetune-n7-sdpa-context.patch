@@ -1,0 +1,108 @@
+--- a/train_lora.py
++++ b/train_lora.py
+@@ -3,10 +3,10 @@
+ import math
+ import os
+ import random
+-import warnings
+ from pathlib import Path
+ 
+ import torch
++from torch.nn.attention import SDPBackend, sdpa_kernel
+ from transformers import AutoModelForCausalLM, AutoTokenizer
+ from peft import LoraConfig, get_peft_model, PeftModel
+ 
+@@ -74,12 +74,17 @@
+     ap.add_argument("--schedule", default="cosine", choices=["const", "cosine"])
+     ap.add_argument("--save-every", type=int, default=0)
+     ap.add_argument("--resume", default="")
++    ap.add_argument("--attention-backend", choices=("math", "tiled"), default="math",
++                    help="Opt-in BC-250 tiled attention; eager, no attention dropout, sequence <=4096")
+     a = ap.parse_args()
++    attention_implementation = "sdpa"
++    if a.attention_backend == "tiled":
++        from torch.nn.attention._gfx1013 import register_transformers_attention
++        register_transformers_attention()
++        attention_implementation = "bc250_tiled"
+ 
+     random.seed(a.seed)
+     torch.manual_seed(a.seed)
+-    warnings.filterwarnings("ignore", category=FutureWarning)
+-    warnings.filterwarnings("ignore", message=".*memory efficient attention.*")
+ 
+     out = Path(a.out)
+     out.mkdir(parents=True, exist_ok=True)
+@@ -112,7 +117,7 @@
+ 
+     def make_base():
+         m = AutoModelForCausalLM.from_pretrained(
+-            a.model, dtype=torch.bfloat16, attn_implementation="sdpa")
++            a.model, dtype=torch.bfloat16, attn_implementation=attention_implementation)
+         m.config.use_cache = False
+         m.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+         return m
+@@ -171,8 +176,7 @@
+     running = 0.0
+     model.zero_grad(set_to_none=True)
+     def math_ctx():
+-        return torch.backends.cuda.sdp_kernel(
+-            enable_flash=False, enable_mem_efficient=False, enable_math=True)
++        return sdpa_kernel(SDPBackend.MATH)
+ 
+     def run_eval():
+         model.eval()
+@@ -203,9 +207,10 @@
+     for idx in flat:
+         x = torch.tensor([tr_ids[idx]], device="cuda")
+         y = torch.tensor([tr_lbl[idx]], device="cuda")
++        # Checkpoint recomputation during backward must retain math SDPA too.
+         with math_ctx():
+-                loss = model(input_ids=x, labels=y).loss / (a.batch * a.accum)
+-        loss.backward()
++            loss = model(input_ids=x, labels=y).loss / (a.batch * a.accum)
++            loss.backward()
+         running += loss.item() * (a.batch * a.accum)
+         step += 1
+         if step % (a.batch * a.accum) == 0:
+--- a/chat.py
++++ b/chat.py
+@@ -1,6 +1,7 @@
+ import argparse
+ 
+ import torch
++from torch.nn.attention import SDPBackend, sdpa_kernel
+ from transformers import AutoModelForCausalLM, AutoTokenizer
+ 
+ try:
+@@ -39,22 +40,25 @@
+     ap.add_argument("--max-new", type=int, default=120)
+     ap.add_argument("--max-hist", type=int, default=1800)
+     ap.add_argument("--demo", action="store_true")
++    ap.add_argument("--attention-backend", choices=("math", "tiled"), default="math",
++                    help="Opt-in BC-250 tiled attention; eager, no attention dropout, sequence <=4096")
+     a = ap.parse_args()
++    attention_implementation = "sdpa"
++    if a.attention_backend == "tiled":
++        from torch.nn.attention._gfx1013 import register_transformers_attention
++        register_transformers_attention()
++        attention_implementation = "bc250_tiled"
+ 
+     tok = AutoTokenizer.from_pretrained(a.model, use_fast=True)
+     model = AutoModelForCausalLM.from_pretrained(
+-        a.model, dtype=torch.bfloat16, attn_implementation="sdpa")
++        a.model, dtype=torch.bfloat16, attn_implementation=attention_implementation)
+     if a.adapter:
+         assert PeftModel is not None, "peft not installed"
+         model = PeftModel.from_pretrained(model, a.adapter)
+         print("adapter:", a.adapter, flush=True)
+-    import warnings
+-    warnings.filterwarnings("ignore", category=FutureWarning)
+-    warnings.filterwarnings("ignore", message=".*memory efficient attention.*")
+     model = model.cuda().eval()
+     def math_ctx():
+-        return torch.backends.cuda.sdp_kernel(
+-            enable_flash=False, enable_mem_efficient=False, enable_math=True)
++        return sdpa_kernel(SDPBackend.MATH)
+     temp = a.temp
+     hist = DEMO if a.demo else ""
+     print("You are TOMA, model is N7. /reset /temp X /exit", flush=True)

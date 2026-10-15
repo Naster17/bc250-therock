@@ -1,0 +1,24 @@
+PASS bmm_torch.float32
+PASS bmm_torch.float16
+PASS bmm_torch.bfloat16
+PASS fft_c64
+PASS cholesky_residual
+/home/nik/bc250work/kernel-r3-7.2.10/helpers/torch-reference.py:33: UserWarning: Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at /workspace/pytorch-work/aten/src/ATen/Context.cpp:816.)
+  sparse=torch.sparse_coo_tensor(indices,values,(4,4)).coalesce()
+PASS coo_mm
+/home/nik/bc250work/kernel-r3-7.2.10/helpers/torch-reference.py:36: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/SparseCsrTensorImpl.cpp:49.)
+  check('csr_mm',torch.sparse.mm(sparse.to_sparse_csr().cuda(),vector.cuda()),sparse.to_dense().double()@vector.double(),2e-5,2e-5)
+PASS csr_mm
+PASS adam_loss_0
+PASS adam_loss_1
+PASS adam_loss_2
+PASS adam_loss_3
+PASS adam_loss_4
+PASS adam_loss_5
+PASS adam_loss_6
+PASS adam_loss_7
+PASS adam_parameter_0
+PASS adam_parameter_1
+PASS adam_parameter_2
+PASS adam_parameter_3
+KERNEL_TORCH_PASS {"checks": 19, "torch": "2.13.0a0+gfx1013", "scope": "eager CPU-reference correctness only"}

@@ -1,0 +1,13 @@
+{
+  "status": "running",
+  "checks": [
+    "quiet_normal_probe_and_retained_explicit_failure_diagnostics",
+    "default_functional_sdpa_remains_quiet_math_fallback",
+    "zero_scale_and_large_logits_output_and_gradients",
+    "nondefault_gpu_stream"
+  ],
+  "training": [],
+  "explicit_diagnostics": [
+    "[W1015 14:23:48.035485191 sdp_utils.cpp:976] Warning: Torch was not compiled with memory efficient attention. (function can_use_mem_efficient_attention)\n"
+  ]
+}

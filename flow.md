@@ -9,24 +9,45 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **User priority2026-10-15: investigate real memory-efficient SDPA for gfx1013.**
-  Warning source inspected in qualified Torch4f13bf8: build explicitly disables
-  USE_FLASH_ATTENTION/USE_MEM_EFF_ATTENTION and CK SDPA; existing ROCm efficient
-  dispatch depends on supported AOTriton/CK kernels. Enabling the flag alone is
-  not a qualified gfx1013 implementation. Scalar tiled online-softmax forward+
-  recomputing backward is a feasible proposed approach, not implemented/tested.
-  Native bounded optional kernel prototype and CPU/math-SDPA output+gradient,
-  mask/GQA and memory-scaling comparisons are the next attention action before
-  any default integration or speed claim. No production source/prefix change.
-  Deprecation traced to user /home/nik/finetune-n7/scripts/{train_lora,chat}.py;
-  train loss.backward() is outside math_ctx while activation checkpointing is on,
-  so recomputation can escape backend selection. Migration/context lifetime fix
-  remains pending; warning suppression would not implement efficient attention.
-  Active user Qwen3-1.7B training observed on .104: container65e346821439,
-  hostPID12457, script train_lora.py, output checkpoints/qwen17-smoke1,
-  --max-steps20/--max-seq1024; preserve job/checkpoints, inspect current state
-  before exclusive lock/tests/deployment. No agent build/test running. BIOS untouched.
-- **ACTIVE: K1–K6 kernel workstream; K5/SVM passed; HPD fixed; read-only telemetry audit complete; clock/provenance correction next.**
+- **CURRENT user-priority N3 attention batch2026-10-15 completed, bounded opt-in:**
+  patched Torch`bda0831ba49ef9d0ba2968a800642e5abaec5dd5`. Three native scalar
+  Triton kernels implement tiled online-softmax forward/recomputed backward;
+  no full score/probability matrix, matrix instructions or default SDPA override.
+  FP32/FP16/BF16, GQA, broadcast boolean/additive masks, zero fully masked rows,
+  finite Q/K/V, D<=128/L<=4096, eager first-order only. No dropout/mask gradients/
+  compile/graph or full-model qualification. Explicit Transformer attention+mask
+  registration and caller --attention-backend tiled; math remains default.
+- **Warning/caller corrections:** built-in C++ probe passed !debug as warning text,
+  producing1Torch during successful fallback. Now ordinary checks are quiet;
+  explicit unsupported-backend diagnostics and failure retained. This does not
+  enable built-in efficient/flash/CK backends. User finetune-n7 train/chat migrated
+  to nn.attention.sdpa_kernel(MATH), backward included for checkpoint recomputation,
+  broad warning filters removed. Reviewed caller patch/local helpers retained.
+- **Attention evidence:** `docs/development/bc250_attention_results/README.md`;
+  .104 WS/logs/sdpa-tiled-candidate-r5:18 CPU-float64/GPU-math output+QKV-gradient
+  cases, padded small Llama/checkpoint test. Installed integration-r4:7 groups,
+  actual Qwen1.7B head128/Hq16/Hkv8 geometry at65tokens; small random Qwen3 BF16
+  LoRA2updates/CPU gradients/cache decode; diagnostics/streams/caller checks.
+  Unchanged19-case eager Torch regression passes. Final batches exit0/dmesg
+  unchanged/600s guards ACKed. Earlier harness/reference/install failures preserved.
+  Extra allocated FP32 B1/H2/D32 forward+backward peak:512/1024/2048 tokens
+  tiled0.63/1.26/2.52MiB vs math8.38/32.75/129.50MiB. Tiled slower in these one-event
+  timings; no speedup/general memory/stability claim. Dense input masks can be quadratic.
+- **Attention deployment/job status:** exclusive update_dev_prefix lock used for
+  source/library/caller mutations and direct-Podman tests; ccache20GiB/12Torchjobs.
+  HIP SDP-utils+regenerated HIPHooks TUs and libtorch_hip rebuilt; installed DSO
+  SHA578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5.
+  New module SHA227a68174927397cf01132421f7d5c7dd7c2a65ba05bbc4babc651addde2bbc3.
+  Recovery WS/recovery/sdpa-{probe,callers,metadata}-before; SOURCE_SDPA records
+  source/revision hashes. Existing images/releases/checkpoints/caches retained.
+  User's training/chat exited normally before tests; no agent job/container/deadline
+  remains. Kernel0957f1aa4/r3/r2default/governor/BIOS/.105 unchanged.
+- **Exact next:** attention scope is opt-in only; qualify longer head128 references
+  and representative full-model memory/time/training before default integration,
+  then optimize the demonstrated scalar bottleneck. K6/N2.1 remain independent
+  roadmap items; telemetry correction optional for current use. Unresolved Python
+  CPU segfault remains separate from fixed VM-heap corruption and VMM/SVM repairs.
+- **ACTIVE: K1–K6 kernel workstream; K5/SVM passed; HPD fixed; K6 remains; telemetry correction optional.**
   2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after six one-shot boots;
   persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
   GPU loaded,40CU/80SIMD, wave32/KFD100103; live quirks3/0/3. No active build,

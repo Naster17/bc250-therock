@@ -1,0 +1,24 @@
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float32', 'shape': [2, 4, 2, 17, 19, 33], 'mode': 'none', 'scale': 0.17, 'max_abs_errors': [3.663063956604873e-07, 3.487472517438306e-07, 4.168359069023353e-07, 4.723435045317359e-07]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float32', 'shape': [1, 2, 2, 16, 16, 32], 'mode': 'causal', 'scale': 0.1767766952966369, 'max_abs_errors': [2.444310089888546e-07, 3.0999154798649897e-07, 2.903816544996829e-07, 4.75313301495639e-07]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float32', 'shape': [1, 2, 1, 3, 23, 64], 'mode': 'bool', 'scale': 0.125, 'max_abs_errors': [1.520233445795327e-07, 1.3442907770278012e-07, 1.323535613884097e-07, 1.0488978308131891e-07]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float32', 'shape': [1, 2, 1, 19, 7, 7], 'mode': 'additive', 'scale': -0.3, 'max_abs_errors': [2.6699150112996506e-07, 2.1701114372163488e-07, 5.107315281804858e-07, 4.955939729711645e-07]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float32', 'shape': [1, 2, 1, 1, 31, 128], 'mode': 'none', 'scale': 0.08838834764831845, 'max_abs_errors': [1.4048808649747002e-07, 1.7594254436703594e-07, 6.747095615544652e-08, 1.415932653348051e-07]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float32', 'shape': [1, 2, 1, 23, 5, 16], 'mode': 'causal', 'scale': 0.25, 'max_abs_errors': [1.5576107093018265e-07, 2.9672241308453806e-07, 7.635620253854114e-07, 6.155973109045476e-07]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float16', 'shape': [2, 4, 2, 17, 19, 33], 'mode': 'none', 'scale': 0.17, 'max_abs_errors': [0.000471138977291341, 0.00047817862814847345, 0.00041112954345923214, 0.00047853212996473715]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float16', 'shape': [1, 2, 2, 16, 16, 32], 'mode': 'causal', 'scale': 0.1767766952966369, 'max_abs_errors': [0.00048493582596154106, 0.0004834918837093305, 0.00046673964930499245, 0.000974775949771356]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float16', 'shape': [1, 2, 1, 3, 23, 64], 'mode': 'bool', 'scale': 0.125, 'max_abs_errors': [0.00042106126745400374, 0.0002320959072724671, 0.0002130022617607974, 0.00022034999400089017]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float16', 'shape': [1, 2, 1, 19, 7, 7], 'mode': 'additive', 'scale': -0.3, 'max_abs_errors': [0.00048141895833153647, 0.00047423160836190803, 0.00042252617248861313, 0.0007302988062041216]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float16', 'shape': [1, 2, 1, 1, 31, 128], 'mode': 'none', 'scale': 0.08838834764831845, 'max_abs_errors': [0.00021715893210405568, 0.00024344489174754624, 0.00011707178581077393, 0.00011910580414037364]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.float16', 'shape': [1, 2, 1, 23, 5, 16], 'mode': 'causal', 'scale': 0.25, 'max_abs_errors': [0.00048286104843553446, 0.00047518192515894064, 0.0008167259899982682, 0.0007845387806844073]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.bfloat16', 'shape': [2, 4, 2, 17, 19, 33], 'mode': 'none', 'scale': 0.17, 'max_abs_errors': [0.0038487979788597304, 0.003827336166211559, 0.005691584111168435, 0.003854115807250924]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.bfloat16', 'shape': [1, 2, 2, 16, 16, 32], 'mode': 'causal', 'scale': 0.1767766952966369, 'max_abs_errors': [0.00533476990063475, 0.0036963567253842644, 0.003549667805540224, 0.013243463146434209]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.bfloat16', 'shape': [1, 2, 1, 3, 23, 64], 'mode': 'bool', 'scale': 0.125, 'max_abs_errors': [0.0034898622190300266, 0.0028733699336838114, 0.0035575602139359397, 0.00409464795185821]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.bfloat16', 'shape': [1, 2, 1, 19, 7, 7], 'mode': 'additive', 'scale': -0.3, 'max_abs_errors': [0.0035036059495274774, 0.0031738482735950146, 0.004419654314934185, 0.003810281880527011]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.bfloat16', 'shape': [1, 2, 1, 1, 31, 128], 'mode': 'none', 'scale': 0.08838834764831845, 'max_abs_errors': [0.00355414887814276, 0.001902980524118969, 0.0014024425024947718, 0.0016963482268484986]}
+TILED_SDPA_CASE_PASS {'dtype': 'torch.bfloat16', 'shape': [1, 2, 1, 23, 5, 16], 'mode': 'causal', 'scale': 0.25, 'max_abs_errors': [0.0043602438470120575, 0.004699194911545579, 0.007204606869706254, 0.02513116611767785]}
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_tiled_sdpa.py", line 195, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_tiled_sdpa.py", line 138, in main
+    from transformers import LlamaConfig, LlamaForCausalLM
+ModuleNotFoundError: No module named 'transformers'
