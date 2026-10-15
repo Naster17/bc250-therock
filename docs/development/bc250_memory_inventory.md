@@ -167,6 +167,20 @@ Important operational facts:
   `/home/nik/{bc250-40cu-unlock,bc250_smu_oc,rocm-systems}`. Older Vulkan7.0.10
   module/initramfs artifacts are distinct from retained r2 and the new r3 candidate.
 
+K6 packaging/handoff complete2026-10-15: `bc250stack/kernel/r3/handoff/README.md`
+consolidates current scope, exact configs, source/signature provenance, build/sign/
+install and one-shot boot/recovery recipe. Image84995f1 and module0957f1 remain
+separate identities. A disposable Git index reconstructs both exact trees from
+signed base+six patches;21 source/fan/binary/config/firmware artifacts checksum-
+verified locally and on .104. Current source archive and binary snapshots remain
+in ignored `kernel/artifacts/k6-7.2.10/`; .104 KWS/handoff/k6 retains copies.
+No generated module signing private keys exported; no runtime/build/reboot/GPU requalification.
+Fresh read-only artifact and loaded identity checks pass; watchdog/SSH/cooling
+active, same boot a287fd16, r2 default and empty next_entry. Historical failures
+below are superseded only by their recorded later fixes. Telemetry fidelity,
+Python CPU crash and MIOpen timing/workspace defect remain unresolved; bounded
+kernel failure/recovery limits remain. Next N2.1 solver coverage audit.
+
 Clean-kernel workstream K1–K6, bounded outcome2026-10-15: fresh signed stable
 Linux7.2.10 base`7b20d05fd38de8e0be168956f6fd241d750c7d69`, Greg fingerprint
 `647F28654894E3BD457199BE38DBBDC86092693E`; separate source

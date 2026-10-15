@@ -9,7 +9,27 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **CURRENT user-priorities1–4 batch2026-10-15:** user explicitly deferred N2/K6.
+- **CURRENT K6 handoff2026-10-15:** user explicitly resumed K6, superseding the
+  earlier deferral below. K6 complete for the recorded bounded scope; no runtime,
+  kernel code, power-policy or boot change. `kernel/r3/handoff/README.md` contains
+  exact configs, reviewed six-patch series, build/sign/install safeguards and
+  one-shot SSH/watchdog/cooling/GPU/recovery procedure. Temporary-index replay
+  exactly matches image84995f1 tree after2 patches and module0957f1 tree after6.
+  Local/current source archive+fan source and21 artifacts have matching local/
+  .104 hashes; manifests/evidence under `kernel/r3/handoff/`, ignored artifacts
+  under `kernel/artifacts/k6-7.2.10/`, .104 KWS/handoff/k6/{artifacts,docs}.
+  Signed upstream verification retained; archive excludes generated module signing keys.
+  Read-only .104 audit and fresh loaded identity check pass; same boot
+  a287fd16-c97b-4d88-8055-b0553a2f7631, image84995f1/module0957f1, active watchdog/
+  SSH/cooling, empty next_entry, r2 default. No new build/GPU test/reboot; prior
+  bounded VMM/SVM/HPD/consumer evidence retained, no bit-identical build claim.
+  Telemetry/per-core fidelity, scheduler-stop/resume and hardware-hang limits
+  remain; Python CPU fault and separate MIOpen failure remain unresolved. SDMA/
+  experimental heap off, math attention default, BIOS/.105/fallback unchanged.
+  No active agent job/container/deadline. **Exact next: N2.1** audit existing32
+  solver cases and pinned Torch/rocSOLVER/hipSOLVER consumers; choose one missing
+  difficult/complex operation with CPU/residual references before implementing.
+- **Historical user-priorities1–4 batch2026-10-15:** user initially deferred N2/K6.
   Priorities1/2/4 bounded-qualified; priority3 investigated/instrumented, NOT fixed.
   Torch`4ee65717d69e9f51021272e3f37d0f342f68fc08` (optimization43cb299 ancestor).
   Longer CPU/GPU attention output+gradient references:11 cases through4096tokens,
@@ -606,7 +626,7 @@ Kernel workstream added at the user's request (2026-10-14):
 | [x] | K3 | Separate r3 image/modules/config built, signed/staged/installed and artifact-inspected on .104; r2 retained unchanged. |
 | [x] | K4 | Bounded r2 watchdog countdown/SSH return and r3 deadline fallback/SSH return exercised; two r3 base boots/cooling ACKs; early-hang/arbitrary GPU-hang recovery unqualified. |
 | [x] | K5 | GEM_VA runlist invalidation repaired; unchanged full GPU/Torch/VMM gate and independent HIP/ROCr references pass on signed r3 module8f3c0d3. Historical r2/r3 failures preserved; bounded scope only. |
-| [ ] | K6 | Record qualified scope/artifact hashes, source patch series and reproducible build/boot/recovery instructions; integrate only supported settings and retain r2 fallback. |
+| [x] | K6 | Record qualified scope/artifact hashes, source patch series and reproducible build/boot/recovery instructions; integrate only supported settings and retain r2 fallback. |
 
 Every component ultimately needs a documented disposition: qualified native path,
 qualified explicit fallback, or a concrete hardware/API limitation. Missing matrix
