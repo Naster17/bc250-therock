@@ -1,0 +1,397 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "backend": "_LinalgBackend.Default",
+  "checks": [
+    {
+      "name": "eigh_torch.complex64_n17_L_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.21907505099807167,
+      "residual": 5.118550839432117e-07,
+      "orthogonality": 5.99906353301652e-07,
+      "reconstruction": 7.683874063258682e-07,
+      "projector": 2.134851646931299e-06,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        17,
+        17
+      ],
+      "input_stride": [
+        703,
+        37,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex64_n17_U_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.013075735998427263,
+      "residual": 4.450647046289763e-07,
+      "orthogonality": 4.716572162655904e-07,
+      "reconstruction": 6.422890502617116e-07,
+      "projector": 3.344926838057142e-06,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        17,
+        17
+      ],
+      "input_stride": [
+        703,
+        37,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex64_n65_L_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.045448360997397685,
+      "residual": 6.623562138822377e-07,
+      "orthogonality": 6.876616484547301e-07,
+      "reconstruction": 8.788681701555686e-07,
+      "projector": 9.85257073660953e-06,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        65,
+        65
+      ],
+      "input_stride": [
+        8911,
+        133,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex64_n65_U_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.04255951099912636,
+      "residual": 6.305642219702874e-07,
+      "orthogonality": 6.901674995752754e-07,
+      "reconstruction": 8.337308356145157e-07,
+      "projector": 7.139835240656167e-06,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        65,
+        65
+      ],
+      "input_stride": [
+        8911,
+        133,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex64_n129_L_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.2759056920003786,
+      "residual": 1.0035193646726883e-06,
+      "orthogonality": 1.098777251938049e-06,
+      "reconstruction": 1.1644897337304458e-06,
+      "projector": 1.1649663987702416e-05,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        129,
+        129
+      ],
+      "input_stride": [
+        34191,
+        261,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex64_n129_U_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.16955890100143733,
+      "residual": 9.157748473241199e-07,
+      "orthogonality": 1.0290845854019297e-06,
+      "reconstruction": 1.104695014593477e-06,
+      "projector": 1.639734830298777e-05,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        129,
+        129
+      ],
+      "input_stride": [
+        34191,
+        261,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex64_n33_L_clusteredTrue",
+      "status": "passed",
+      "seconds": 0.009179658998618834,
+      "residual": 5.882496719795683e-07,
+      "orthogonality": 4.4672134603179373e-07,
+      "reconstruction": 6.935196228756316e-07,
+      "projector": 7.133341097276177e-07,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        33,
+        33
+      ],
+      "input_stride": [
+        2415,
+        69,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex64_n33_U_clusteredTrue",
+      "status": "passed",
+      "seconds": 0.010399373000836931,
+      "residual": 6.073652859904933e-07,
+      "orthogonality": 4.2631131697819734e-07,
+      "reconstruction": 7.890316314000094e-07,
+      "projector": 6.31600316912187e-07,
+      "tolerance": 8e-05,
+      "shape": [
+        2,
+        33,
+        33
+      ],
+      "input_stride": [
+        2415,
+        69,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_backward_torch.complex64",
+      "status": "passed",
+      "seconds": 0.16057013099998585,
+      "relative_gradient_error": 5.934682446221353e-07,
+      "tolerance": 0.001
+    },
+    {
+      "name": "eigh_torch.complex128_n17_L_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.015091830002347706,
+      "residual": 9.647151494948773e-16,
+      "orthogonality": 9.332669588218e-16,
+      "reconstruction": 1.1171750545932878e-15,
+      "projector": 6.5796246602111364e-15,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        17,
+        17
+      ],
+      "input_stride": [
+        703,
+        37,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex128_n17_U_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.008906989001843613,
+      "residual": 9.442610734689067e-16,
+      "orthogonality": 1.1309185222584698e-15,
+      "reconstruction": 1.5181467020327991e-15,
+      "projector": 6.649742225187071e-15,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        17,
+        17
+      ],
+      "input_stride": [
+        703,
+        37,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex128_n65_L_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.0454493530014588,
+      "residual": 1.2456574986832007e-15,
+      "orthogonality": 1.370656476872701e-15,
+      "reconstruction": 1.6448807519276685e-15,
+      "projector": 1.8954991481321892e-14,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        65,
+        65
+      ],
+      "input_stride": [
+        8911,
+        133,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex128_n65_U_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.045470499997463776,
+      "residual": 1.1263670008686993e-15,
+      "orthogonality": 1.3038525074598709e-15,
+      "reconstruction": 1.610174919601287e-15,
+      "projector": 1.866583808210681e-14,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        65,
+        65
+      ],
+      "input_stride": [
+        8911,
+        133,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex128_n129_L_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.18330729599983897,
+      "residual": 1.891021270265911e-15,
+      "orthogonality": 2.1366796973200674e-15,
+      "reconstruction": 2.197772157480705e-15,
+      "projector": 4.0554650916275236e-14,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        129,
+        129
+      ],
+      "input_stride": [
+        34191,
+        261,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex128_n129_U_clusteredFalse",
+      "status": "passed",
+      "seconds": 0.17801697100003366,
+      "residual": 1.7173532055608902e-15,
+      "orthogonality": 2.0296300529770114e-15,
+      "reconstruction": 2.08246524935291e-15,
+      "projector": 3.9868092110935005e-14,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        129,
+        129
+      ],
+      "input_stride": [
+        34191,
+        261,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex128_n33_L_clusteredTrue",
+      "status": "passed",
+      "seconds": 0.009598715998436091,
+      "residual": 1.3430538861341066e-15,
+      "orthogonality": 1.0125895062582113e-15,
+      "reconstruction": 1.7113603903438266e-15,
+      "projector": 2.0215771084657024e-15,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        33,
+        33
+      ],
+      "input_stride": [
+        2415,
+        69,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_torch.complex128_n33_U_clusteredTrue",
+      "status": "passed",
+      "seconds": 0.009434546998818405,
+      "residual": 1.2935187098809648e-15,
+      "orthogonality": 9.694132256680054e-16,
+      "reconstruction": 1.6376819861379558e-15,
+      "projector": 2.202008941750381e-15,
+      "tolerance": 2e-11,
+      "shape": [
+        2,
+        33,
+        33
+      ],
+      "input_stride": [
+        2415,
+        69,
+        2
+      ],
+      "ignored_triangle_nan": true,
+      "stream": "nondefault",
+      "input_and_guards_unchanged": true
+    },
+    {
+      "name": "eigh_backward_torch.complex128",
+      "status": "passed",
+      "seconds": 0.009711005001008743,
+      "relative_gradient_error": 1.98326292286158e-15,
+      "tolerance": 5e-10
+    }
+  ],
+  "mapped_solver_libraries": [
+    "/workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+    "/workspace/build/dist/rocm/lib/librocblas.so.5.8",
+    "/workspace/build/dist/rocm/lib/librocsolver.so.0.13"
+  ],
+  "passed": 18,
+  "limits": "Complex Hermitian eigh only, finite used triangle, two-matrix batches up to129; ignored triangle NaNs, first-order gradient only on separated spectrum; no non-Hermitian eig/SVD/large-scale/conditioning/performance claim"
+}

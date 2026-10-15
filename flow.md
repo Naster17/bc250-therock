@@ -9,6 +9,25 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT N2.1 completed2026-10-15:** audited existing P2 solver32 and pinned
+  Torch4ee6571/ROCm-libraries a6f7d3d consumers; qualified existing native complex
+  Hermitian eigh eigenvectors rather than adding a duplicate backend. New22
+  checks: complex64/128, batch2 sizes17/65/129/257, both triangles, padded strides/
+  guard preservation/ignored-triangle NaNs, nondefault stream, size33 repeated
+  eigenspace projectors and two separated-spectrum CPU gradient comparisons.
+  Source default HETRD blocked switch256;257 covered, two-stage11000 unqualified.
+  Max residual c64~1.15e-6/c128~2.16e-15; no speed/stability/universal claim.
+  Existing32 solver regression passes unchanged. Final labels solver-eigh-n21-blocked
+  and solver-p2-regression-n21 exit0/dmesg identical/600s guards ACKed under lock.
+  Earlier18-case gate passes too; initial reference-check broadcasting failure
+  retained, corrected without tolerance changes, not a backend defect. No native
+  implementation/selection/runtime change or rebuild. Report/evidence:
+  docs/development/bc250_solver_results/README.md; local helpers and matching
+  .104 WS/logs. Existing image/module/Torch/DSOs, SDMA/heap-off, math defaults,
+  r2 fallback/BIOS/.105 unchanged; Python CPU fault and MIOpen failure unresolved.
+  No active agent job/container/deadline. **Exact next N2.2:** audit nonsymmetric
+  eig coverage and pinned dispatch, qualify one bounded complex eigenpair gap
+  with CPU/residual references, and change backend only for demonstrated failure.
 - **CURRENT K6 handoff2026-10-15:** user explicitly resumed K6, superseding the
   earlier deferral below. K6 complete for the recorded bounded scope; no runtime,
   kernel code, power-policy or boot change. `kernel/r3/handoff/README.md` contains
@@ -608,7 +627,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N1.6 | Native alpha-vector path and explicit scalar-beta/unsupported beta-vector policy qualified within the bounded scope above. Beta-vector implementation remains separately open; no universal vector-mode claim. |
 | [x]   | N1.7 | Native signed INT8 input/output with bounded INT32 accumulation, FP32 scalar/vector/bias epilogue and nearest-even saturation qualified above. Widened outputs remain unimplemented. |
 | [x]   | N1.8 | Short small/skinny Lt subgroup dispatch qualified above; tiled path retained outside measured selection. No default Torch BLAS change or whole-Torch speedup claim. |
-| [ ]   | **N2.1 — next** | Audit P2 solver32 cases and pinned Torch/rocSOLVER/hipSOLVER consumers; qualify one missing difficult/complex operation with CPU/residual references and fix only demonstrated defects. |
+| [x]   | N2.1 | Audit P2 solver32 cases and pinned Torch/rocSOLVER/hipSOLVER consumers; qualify one missing difficult/complex operation with CPU/residual references and fix only demonstrated defects. |
+| [ ]   | **N2.2 — next** | Audit nonsymmetric eig coverage and pinned Torch/hipSOLVER dispatch; qualify one bounded complex eigenpair gap with CPU/residual references and fix only demonstrated defects. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |

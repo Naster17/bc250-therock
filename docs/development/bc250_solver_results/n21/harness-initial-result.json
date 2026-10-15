@@ -1,0 +1,109 @@
+{
+  "status": "failed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "backend": "_LinalgBackend.Default",
+  "checks": [
+    {
+      "name": "eigh_torch.complex64_n17_L_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex64_n17_U_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex64_n65_L_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex64_n65_U_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex64_n129_L_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex64_n129_U_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex64_n33_L_clusteredTrue",
+      "status": "failed",
+      "error": "The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex64_n33_U_clusteredTrue",
+      "status": "failed",
+      "error": "The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_backward_torch.complex64",
+      "status": "passed",
+      "seconds": 0.18102184500094154,
+      "relative_gradient_error": 5.919962337581513e-07,
+      "tolerance": 0.001
+    },
+    {
+      "name": "eigh_torch.complex128_n17_L_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex128_n17_U_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex128_n65_L_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex128_n65_U_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex128_n129_L_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex128_n129_U_clusteredFalse",
+      "status": "failed",
+      "error": "The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex128_n33_L_clusteredTrue",
+      "status": "failed",
+      "error": "The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_torch.complex128_n33_U_clusteredTrue",
+      "status": "failed",
+      "error": "The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1"
+    },
+    {
+      "name": "eigh_backward_torch.complex128",
+      "status": "passed",
+      "seconds": 0.012446823999198386,
+      "relative_gradient_error": 1.9895473194499946e-15,
+      "tolerance": 5e-10
+    }
+  ],
+  "mapped_solver_libraries": [
+    "/workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+    "/workspace/build/dist/rocm/lib/librocblas.so.5.8",
+    "/workspace/build/dist/rocm/lib/librocsolver.so.0.13"
+  ],
+  "passed": 2,
+  "limits": "Complex Hermitian eigh only, finite used triangle, two-matrix batches up to129; ignored triangle NaNs, first-order gradient only on separated spectrum; no non-Hermitian eig/SVD/large-scale/conditioning/performance claim"
+}

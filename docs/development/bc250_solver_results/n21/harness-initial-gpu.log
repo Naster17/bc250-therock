@@ -1,0 +1,19 @@
+time="2026-10-15T17:33:02+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+FAIL eigh_torch.complex64_n17_L_clusteredFalse The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex64_n17_U_clusteredFalse The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex64_n65_L_clusteredFalse The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex64_n65_U_clusteredFalse The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex64_n129_L_clusteredFalse The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex64_n129_U_clusteredFalse The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex64_n33_L_clusteredTrue The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex64_n33_U_clusteredTrue The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1
+PASS eigh_backward_torch.complex64 {'relative_gradient_error': 5.919962337581513e-07, 'tolerance': 0.001}
+FAIL eigh_torch.complex128_n17_L_clusteredFalse The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex128_n17_U_clusteredFalse The size of tensor a (17) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex128_n65_L_clusteredFalse The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex128_n65_U_clusteredFalse The size of tensor a (65) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex128_n129_L_clusteredFalse The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex128_n129_U_clusteredFalse The size of tensor a (129) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex128_n33_L_clusteredTrue The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1
+FAIL eigh_torch.complex128_n33_U_clusteredTrue The size of tensor a (33) must match the size of tensor b (2) at non-singleton dimension 1
+PASS eigh_backward_torch.complex128 {'relative_gradient_error': 1.9895473194499946e-15, 'tolerance': 5e-10}

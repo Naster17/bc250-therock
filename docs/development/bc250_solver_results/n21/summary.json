@@ -1,0 +1,24 @@
+{
+  "status": "bounded-qualified",
+  "new_cases": 22,
+  "existing_solver_regression": 32,
+  "implementation_changes": false,
+  "test_sha256": "57d0ba1a12f0b519278a2c91c08ef7fd972b1c7d324c838875dac91986744267",
+  "source_revisions": {
+    "torch": "4ee65717d69e9f51021272e3f37d0f342f68fc08",
+    "rocm_libraries": "a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8"
+  },
+  "labels": [
+    "solver-eigh-n21-blocked",
+    "solver-p2-regression-n21"
+  ],
+  "guards": "acknowledged",
+  "kernel_logs": "unchanged",
+  "running_jobs": [],
+  "next": "N2.2 nonsymmetric eig dispatch/coverage audit and bounded complex eigenpair gap",
+  "unresolved": [
+    "historical Python CPU segfault",
+    "separate MIOpen elapsed/workspace failure",
+    "extreme scaling/conditioning and two-stage eigensolver unqualified"
+  ]
+}

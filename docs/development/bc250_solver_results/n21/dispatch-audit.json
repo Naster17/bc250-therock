@@ -1,0 +1,19 @@
+{
+  "torch_versions": [
+    "hip: Optional[str] = '7.17.0'",
+    "rocm: Optional[str] = '10.2.0'"
+  ],
+  "eigensolver_build_defines": [
+    "DEFINES = -DGOOGLE_TEST -DHAVE_HIPSOLVER_FORTRAN_CLIENT -DHIPSOLVER_ENABLE_EIGENSOLVERS_64 -DUSE_PROF_API=1 -D__HIP_PLATFORM_AMD__=1",
+    "DEFINES = -DHAVE_HIPSOLVER_FORTRAN_CLIENT -DHIPSOLVER_BENCH -DHIPSOLVER_ENABLE_EIGENSOLVERS_64 -DROCM_USE_FLOAT16 -DUSE_PROF_API=1 -D__HIP_PLATFORM_AMD__=1",
+    "DEFINES = -DHIPSOLVER_ENABLE_EIGENSOLVERS_64 -DROCSOLVER_ENABLE_EIGENSOLVERS_64 -DUSE_PROF_API=1 -D__HIP_PLATFORM_AMD__=1 -Dhipsolver_EXPORTS -DHAVE_ROCSPARSE"
+  ],
+  "imported_heevd_symbols": [
+    "U rocsolver_cheevd",
+    "U rocsolver_cheevd_64",
+    "U rocsolver_cheevdx_inplace",
+    "U rocsolver_zheevd",
+    "U rocsolver_zheevd_64",
+    "U rocsolver_zheevdx_inplace"
+  ]
+}

@@ -470,7 +470,7 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | Historical reductions/scans and208 block-reduction tests; P2 int32 cases42/48/48 with guards/streams, signed stable sorts, selection, scans, blocks/wave32 and Thrust policies                               | Floating/custom/segmented algorithms and broader tuning remain. hipCCL is header packaging, not RCCL.                                                       |
 | rocFFT/hipFFT                               | Existing native backend, persistent 16-worker HIPRTC AOT cache; prime DFT andP2 FFT30                                                                                                                        | No custom rocFFT component architecture patch; more plans/types/layouts remain                                                                              |
-| rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; Cholesky andP2 solver32 with residuals, gradients and condition10,000                                                                                                          | Wider difficult/complex/blocked cases and policy/performance remain                                                                                         |
+| rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 bounded native eigh qualified; nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and policy/performance remain                                                                                         |
 | rocSPARSE/hipSPARSE                         | Existing backend, Torch COO/CSR25 anddirect triangular16 inP2                                                                                                                                                | More formats, analyses/solves/API contracts remain; old corruption fix was CLR, not sparse kernel rewriting                                                 |
 | rocALUTION                                  | CG40 ordinary cases andfive fresh-process200 passes after pool-default fix                                                                                                                                   | Larger systems, other solvers/preconditioners/concurrency remain                                                                                            |
 | rocRAND/hipRAND                             | Native dispatch patch; historical44 basic+6 dispatch; P2 direct22 acrosssix pseudo/four Sobol variants andTorch RNG6                                                                                         | More generator/distribution/type combinations remain                                                                                                        |
@@ -997,3 +997,20 @@ The workspace repository tracks coordination files; source changes stay in their
 component repositories. Board support copies retain driver and CU-unlock history.
 New session history may use the new workspace cwd; the earlier Codex thread-index
 lookup by the old therock cwd remains useful for archived sessions.
+
+## N2.1 complex Hermitian eigenvectors — 2026-10-15
+
+P2 solver32 audited and rerun unchanged. Native Torch4ee6571 complex eigh dispatch
+uses hipSOLVER generic64 DnXsyevd to rocSOLVER complex heevd; no backend
+code/selection change.
+New22 CPU-complex128/eigenpair/reconstruction/orthogonality/projector/gradient
+checks pass for complex64/128, batch2 at17/65/129/257, both triangles, padded
+inputs/guards/ignored-triangle NaNs/nondefault stream and repeated subspaces33.
+257 crosses source default blocked threshold256; two-stage11000 unqualified.
+Final22+32 processes exit0 with identical dmesg and acknowledged600s guards under
+runtime lock. Initial harness broadcast failure retained;18-case intermediate
+pass retained. Source, mapped-library hashes, dispatch audit and fixed tolerances:
+[solver results](bc250_solver_results/README.md). No native rebuild, prefix/boot/
+power-policy change or active job. Original CPU crash and separate MIOpen defect
+remain unresolved; no universal/performance claim. Next N2.2 nonsymmetric eig
+coverage/dispatch audit and one bounded complex eigenpair gap.

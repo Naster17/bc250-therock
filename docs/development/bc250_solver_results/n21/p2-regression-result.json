@@ -1,0 +1,170 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "checks": [
+    {
+      "name": "solve_torch.float32",
+      "status": "passed",
+      "seconds": 0.09620994399665506
+    },
+    {
+      "name": "cholesky_torch.float32",
+      "status": "passed",
+      "seconds": 0.02071661700028926
+    },
+    {
+      "name": "eigvalsh_torch.float32",
+      "status": "passed",
+      "seconds": 0.05932591099917772
+    },
+    {
+      "name": "svdvals_torch.float32",
+      "status": "passed",
+      "seconds": 0.061821503997634863
+    },
+    {
+      "name": "inverse_residual_torch.float32",
+      "status": "passed",
+      "seconds": 0.008656349000375485
+    },
+    {
+      "name": "qr_residual_torch.float32",
+      "status": "passed",
+      "seconds": 0.06816793200050597
+    },
+    {
+      "name": "solve_backward_torch.float32",
+      "status": "passed",
+      "seconds": 0.11613940700044623
+    },
+    {
+      "name": "solve_torch.float64",
+      "status": "passed",
+      "seconds": 0.025370401999680325
+    },
+    {
+      "name": "cholesky_torch.float64",
+      "status": "passed",
+      "seconds": 0.00550056399879395
+    },
+    {
+      "name": "eigvalsh_torch.float64",
+      "status": "passed",
+      "seconds": 0.002412516001641052
+    },
+    {
+      "name": "svdvals_torch.float64",
+      "status": "passed",
+      "seconds": 0.002767843998299213
+    },
+    {
+      "name": "inverse_residual_torch.float64",
+      "status": "passed",
+      "seconds": 0.002055433000350604
+    },
+    {
+      "name": "qr_residual_torch.float64",
+      "status": "passed",
+      "seconds": 0.004566407998936484
+    },
+    {
+      "name": "solve_backward_torch.float64",
+      "status": "passed",
+      "seconds": 0.006978608998906566
+    },
+    {
+      "name": "solve_torch.complex64",
+      "status": "passed",
+      "seconds": 0.02983818400025484
+    },
+    {
+      "name": "cholesky_torch.complex64",
+      "status": "passed",
+      "seconds": 0.005650248000165448
+    },
+    {
+      "name": "eigvalsh_torch.complex64",
+      "status": "passed",
+      "seconds": 0.04793737600266468
+    },
+    {
+      "name": "svdvals_torch.complex64",
+      "status": "passed",
+      "seconds": 0.003765551999094896
+    },
+    {
+      "name": "inverse_residual_torch.complex64",
+      "status": "passed",
+      "seconds": 0.0024989020021166652
+    },
+    {
+      "name": "qr_residual_torch.complex64",
+      "status": "passed",
+      "seconds": 0.011303831000986975
+    },
+    {
+      "name": "solve_backward_torch.complex64",
+      "status": "passed",
+      "seconds": 0.011990464998234529
+    },
+    {
+      "name": "solve_torch.complex128",
+      "status": "passed",
+      "seconds": 0.034070929999870714
+    },
+    {
+      "name": "cholesky_torch.complex128",
+      "status": "passed",
+      "seconds": 0.005858337000972824
+    },
+    {
+      "name": "eigvalsh_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0016629000019747764
+    },
+    {
+      "name": "svdvals_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0030687219987157732
+    },
+    {
+      "name": "inverse_residual_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0025139890021819156
+    },
+    {
+      "name": "qr_residual_torch.complex128",
+      "status": "passed",
+      "seconds": 0.007200110998383025
+    },
+    {
+      "name": "solve_backward_torch.complex128",
+      "status": "passed",
+      "seconds": 0.011815482001111377
+    },
+    {
+      "name": "solve_condition_1e4_torch.float32",
+      "status": "passed",
+      "seconds": 0.024214517998188967
+    },
+    {
+      "name": "solve_condition_1e4_residual_torch.float32",
+      "status": "passed",
+      "seconds": 0.026836404998903163
+    },
+    {
+      "name": "solve_condition_1e4_torch.float64",
+      "status": "passed",
+      "seconds": 0.019090448000497418
+    },
+    {
+      "name": "solve_condition_1e4_residual_torch.float64",
+      "status": "passed",
+      "seconds": 0.0007731370023975614
+    }
+  ],
+  "seconds": 0.7814968940001563,
+  "passed": 32,
+  "failed": 0
+}
