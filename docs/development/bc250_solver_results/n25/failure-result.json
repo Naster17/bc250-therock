@@ -1,0 +1,142 @@
+{
+  "status": "passed",
+  "group": "failure",
+  "checks": [
+    {
+      "name": "partial_torch.complex64_e-25_budget0",
+      "status": "passed",
+      "seconds": 0.38576893800200196,
+      "scale": 1e-25,
+      "budget": 0,
+      "info": 4,
+      "similarity": 1.622240092474094e-07
+    },
+    {
+      "name": "partial_torch.complex64_e-25_budget1",
+      "status": "passed",
+      "seconds": 0.1314256870027748,
+      "scale": 1e-25,
+      "budget": 1,
+      "info": 4,
+      "similarity": 2.41336092581036e-07
+    },
+    {
+      "name": "partial_torch.complex64_e25_budget0",
+      "status": "passed",
+      "seconds": 0.00642095700459322,
+      "scale": 1e+25,
+      "budget": 0,
+      "info": 4,
+      "similarity": 1.2717947995303064e-07
+    },
+    {
+      "name": "partial_torch.complex64_e25_budget1",
+      "status": "passed",
+      "seconds": 0.007425561001582537,
+      "scale": 1e+25,
+      "budget": 1,
+      "info": 4,
+      "similarity": 2.699918715024153e-07
+    },
+    {
+      "name": "rescale_overflow_torch.complex64",
+      "status": "passed",
+      "seconds": 0.006679181999061257,
+      "refused": "finite input has nonrepresentable Schur form",
+      "input_unchanged": true
+    },
+    {
+      "name": "subnormal_refusal_torch.complex64",
+      "status": "passed",
+      "seconds": 0.0010304879979230464,
+      "refused": "all-subnormal scale",
+      "input_bits_unchanged": true
+    },
+    {
+      "name": "zero_torch.complex64",
+      "status": "passed",
+      "seconds": 0.003082306997384876,
+      "schur_converged": true,
+      "eigenvectors_refused": true
+    },
+    {
+      "name": "view_controls_torch.complex64",
+      "status": "passed",
+      "seconds": 0.0680558120002388,
+      "conjugate_and_negative_views": true,
+      "residuals": [
+        1.3974567125284575e-07,
+        1.3974567125284575e-07
+      ]
+    },
+    {
+      "name": "partial_torch.complex128_e-200_budget0",
+      "status": "passed",
+      "seconds": 0.01259386300080223,
+      "scale": 1e-200,
+      "budget": 0,
+      "info": 4,
+      "similarity": 3.542123970150513e-16
+    },
+    {
+      "name": "partial_torch.complex128_e-200_budget1",
+      "status": "passed",
+      "seconds": 0.012470970999856945,
+      "scale": 1e-200,
+      "budget": 1,
+      "info": 4,
+      "similarity": 6.157159691069751e-16
+    },
+    {
+      "name": "partial_torch.complex128_e200_budget0",
+      "status": "passed",
+      "seconds": 0.0063887110009090975,
+      "scale": 1e+200,
+      "budget": 0,
+      "info": 4,
+      "similarity": 2.6777990555063206e-16
+    },
+    {
+      "name": "partial_torch.complex128_e200_budget1",
+      "status": "passed",
+      "seconds": 0.00911819799512159,
+      "scale": 1e+200,
+      "budget": 1,
+      "info": 4,
+      "similarity": 2.617501285166458e-16
+    },
+    {
+      "name": "rescale_overflow_torch.complex128",
+      "status": "passed",
+      "seconds": 0.006563148999703117,
+      "refused": "finite input has nonrepresentable Schur form",
+      "input_unchanged": true
+    },
+    {
+      "name": "subnormal_refusal_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0007338139985222369,
+      "refused": "all-subnormal scale",
+      "input_bits_unchanged": true
+    },
+    {
+      "name": "zero_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0028749630000675097,
+      "schur_converged": true,
+      "eigenvectors_refused": true
+    },
+    {
+      "name": "view_controls_torch.complex128",
+      "status": "passed",
+      "seconds": 0.04037053300271509,
+      "conjugate_and_negative_views": true,
+      "residuals": [
+        3.3365140439515377e-16,
+        3.3365140439515377e-16
+      ]
+    }
+  ],
+  "candidate_sha256": "776fa33dfec16f362c466839132f5b6354e98ecf996c390bfbeede53f9b2407f",
+  "passed": 16
+}

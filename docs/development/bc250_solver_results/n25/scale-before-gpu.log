@@ -1,0 +1,7 @@
+time="2026-10-15T21:42:46+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+FAIL scale_torch.complex64_n4_basis10_e-25 (4, 256)
+PASS scale_torch.complex64_n4_basis10_e0 {'scale': 1.0, 'order': 4, 'basis_condition': 10, 'iterations': 7, 'residual': 1.3759144392464914e-07, 'similarity': 4.894989008673563e-07, 'residual_bound': 8e-06, 'cpu_projector_error': 1.368387185661482e-06, 'analytic_projector_error': 1.5435130232712092e-06, 'direction_bound': 0.0008, 'guards_unchanged': True, 'stream': 'nondefault'}
+FAIL scale_torch.complex64_n4_basis10_e25 Nonfinite iterate or unexpected Hessenberg fill
+FAIL scale_torch.complex128_n4_basis10_e-200 (4, 256)
+PASS scale_torch.complex128_n4_basis10_e0 {'scale': 1.0, 'order': 4, 'basis_condition': 10, 'iterations': 9, 'residual': 2.216068298697846e-16, 'similarity': 6.670951928240038e-16, 'residual_bound': 4e-12, 'cpu_projector_error': 4.565838489571218e-15, 'analytic_projector_error': 3.4216698304230388e-15, 'direction_bound': 6e-10, 'guards_unchanged': True, 'stream': 'nondefault'}
+FAIL scale_torch.complex128_n4_basis10_e200 Nonfinite iterate or unexpected Hessenberg fill

@@ -1068,3 +1068,21 @@ native rebuild. General scaling/balancing/conditioning/repeated eigenvectors,
 batching/gradients/performance unqualified; CPU fault/MIOpen defect remain open.
 Next N2.5 bounded scale/separation ladder with nonnormal/refusal controls before
 any opt-in integration. Host-LAPACK default retained.
+
+## N2.5 native small candidate scaling — 2026-10-15
+
+Reproduced4/6 seeded baseline magnitude failures (tiny256-step exhaustion, large
+nonfinite/fill) with unit controls passing. Fixed isolated Schur driver by GPU
+component normalization before native GEHRD/QR, finite checked original-unit T
+restoration on success/partial results, and safe right-recovery normalization
+with unchanged8sqrt(eps) separation. Bitwise subnormal/zero distinction and
+nonrepresentable-output refusal tested; no tolerance/iteration changes.
+Seeded6 replay now6/6; scale40 (c64 1e-25..1e25, c128 1e-200..1e200,4/9 basis1/10),
+boundary30 (18accept/12refuse; passed before too), failure/control16 and N2.4
+regression21 pass. Final logs unchanged/guards acknowledged, no active jobs.
+[Source/evidence/limits](bc250_solver_results/N25.md); baseline helper retained
+at WS/recovery/solver-n25-before. Production Torch eig/DSOs/prefix/kernel/boot
+unchanged; no native rebuild or performance claim. General dynamic ranges,
+balancing/subnormals/conditioning/batching/gradients remain unqualified; original
+CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
+versus host eig and one measured overhead-reduction step before any integration.

@@ -39,6 +39,29 @@ def _status(code, operation):
         raise RuntimeError(f'{operation} returned rocBLAS status {code}')
 
 
+def _normal_scale(a):
+    """GPU component scaling avoids complex magnitude/division overflow.
+
+    All-subnormal input is outside this prototype's contract. Detect nonzero
+    subnormal bits even if hardware floating arithmetic flushes them to zero.
+    """
+    components = torch.view_as_real(a.resolve_conj().resolve_neg())
+    scale = components.abs().amax()
+    finfo = torch.finfo(a.real.dtype)
+    if not bool(scale > 0):
+        integer_dtype = torch.int32 if a.dtype == torch.complex64 else torch.int64
+        bits = components.view(integer_dtype)
+        if bool((bits & torch.iinfo(integer_dtype).max).any()):
+            raise RuntimeError('Subnormal input scale unsupported by candidate')
+        return a.clone(), scale
+    if not bool(torch.isfinite(scale)) or not bool(scale >= finfo.tiny):
+        raise RuntimeError('Subnormal or nonfinite input scale unsupported by candidate')
+    unit = torch.complex(a.real/scale, a.imag/scale)
+    if not bool(torch.isfinite(unit).all()):
+        raise RuntimeError('Matrix normalization produced a nonfinite result')
+    return unit, scale
+
+
 @torch.no_grad()
 def hessenberg(a):
     """Return H,Q with A=Q H Q^H using native rocSOLVER GEHRD reflectors."""
@@ -88,10 +111,22 @@ def schur(a, *, max_iterations=256):
     if isinstance(max_iterations, bool) or not isinstance(max_iterations, int) or not 0 <= max_iterations <= 4096:
         raise ValueError('Iteration budget must be an integer within0..4096')
     with torch.cuda.device(a.device):
-        t, q = hessenberg(a)
-        active = a.shape[0]
+        n = a.shape[0]
+        if n == 1:
+            return SchurResult(a.clone(), torch.eye(n, dtype=a.dtype, device=a.device), 0, 0, 0)
+        unit, scale = _normal_scale(a)
+        if not bool(scale > 0):
+            return SchurResult(a.clone(), torch.eye(n, dtype=a.dtype, device=a.device), 0, 0, n-1)
+        t, q = hessenberg(unit)
+        active = n
         iterations, deflations, since_deflation = 0, 0, 0
         finfo = torch.finfo(a.real.dtype)
+
+        def finish(info):
+            original_units = torch.complex(t.real*scale, t.imag*scale)
+            if not bool(torch.isfinite(original_units).all()):
+                raise RuntimeError('Schur rescaling is not representable in the input dtype')
+            return SchurResult(original_units, q, info, iterations, deflations)
         while active > 1:
             m = active
             threshold = finfo.eps*(t[m-2, m-2].abs()+t[m-1, m-1].abs())+finfo.tiny
@@ -102,7 +137,7 @@ def schur(a, *, max_iterations=256):
                 since_deflation = 0
                 continue
             if iterations == max_iterations:
-                return SchurResult(t, q, active, iterations, deflations)
+                return finish(active)
             aa, bb, cc, dd = t[m-2,m-2], t[m-2,m-1], t[m-1,m-2], t[m-1,m-1]
             middle = (aa+dd)/2
             root = torch.sqrt(((aa-dd)/2).square()+bb*cc)
@@ -125,7 +160,7 @@ def schur(a, *, max_iterations=256):
             t = torch.triu(updated, diagonal=-1)
             iterations += 1
             since_deflation += 1
-        return SchurResult(t, q, 0, iterations, deflations)
+        return finish(0)
 
 
 @dataclass
@@ -164,11 +199,12 @@ def right_eigenvectors(result):
         values = t.diag().clone()
         if n == 1:
             return EigenvectorResult(values, q/q.norm(), float('inf'), 0.)
-        scale = t.abs().amax()
-        if not bool(torch.isfinite(scale)) or not bool(scale >= finfo.tiny):
+        unit, scale = _normal_scale(t)
+        if not bool(scale > 0):
             raise RuntimeError('Spectrum not sufficiently separated or scale unsupported')
-        # Work in dimensionless coordinates to avoid multiplying large T entries.
-        scaled = t/scale
+        # Preserve the existing max-complex-magnitude separation policy, but only
+        # compute complex magnitudes/divisions once values are safely near unity.
+        scaled = unit/unit.abs().amax()
         diagonal = scaled.diag()
         gaps = (diagonal[:, None]-diagonal[None, :]).abs()
         gaps.fill_diagonal_(float('inf'))

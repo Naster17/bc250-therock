@@ -1,0 +1,24 @@
+{
+  "status": "bounded scale repair and spectral/refusal boundary qualified",
+  "implementation_sha256": "776fa33dfec16f362c466839132f5b6354e98ecf996c390bfbeede53f9b2407f",
+  "test_sha256": "a8d8a71e25e13fbbcb928aad919cec1436178115a09a54d1dc2ae041d8342511",
+  "baseline_before": {
+    "passed": 2,
+    "total": 6
+  },
+  "baseline_replay_after": {
+    "passed": 6,
+    "total": 6
+  },
+  "scale_cases": 40,
+  "boundary_cases": 30,
+  "boundary_accepted": 18,
+  "boundary_refused": 12,
+  "failure_groups": 16,
+  "n24_regression_groups": 21,
+  "default_dispatch_changed": false,
+  "kernel_logs_unchanged": true,
+  "guards": "acknowledged",
+  "running_jobs": [],
+  "next": "N2.6 bounded cost/profile versus host eig and one measured overhead-reduction step, retaining production dispatch"
+}

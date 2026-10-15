@@ -9,6 +9,29 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT N2.5 completed2026-10-15:** demonstrated candidate scale defect:
+  seeded baseline6 had2 unit passes, tiny c64/c128 positive info4 at256steps and
+  large c64/c128 nonfinite/fill errors. Added GPU component normalization before
+  GEHRD/QR; restore original-unit T on success/partial result with finite check.
+  Shared safe normalization preserves right-vector 8sqrt(eps) gap policy; integer
+  bit checks refuse all-subnormal inputs even if floating reductions flush zero.
+  Exact zero/scalar paths retained; nonrepresentable Schur output refused.
+  Same seeded baseline6 now6/6; new scale40 (c64 1e-25..1e25, c128 1e-200..1e200,
+  orders4/9 basis1/10), boundary30 (18accept/12refuse, also passed before), failure/
+  control16 and unchanged N2.4 regression21 all pass. Max original residual
+  ~4.00e-7/7.52e-16; no tolerance/iteration-limit changes or performance claim.
+  Final labels solver-{scale-n25-fixed,boundary-n25-fixed,failure-n25,
+  n24-regression-n25,scale-n25-replay} exit0/dmesg identical/600s guards ACKed under
+  lock; failed before baseline retained separately. Report/hashes/evidence:
+  docs/development/bc250_solver_results/N25.md and n25/, same .104 WS/logs labels;
+  prior helper WS/recovery/solver-n25-before. No native rebuild, default Torch/
+  DSO/prefix metadata/kernel/boot-policy change; no active agent job/container/
+  deadline. Production eig remains host, cap16 prototype uses GPU arithmetic/
+  host scalar control. General dynamic range/conditioning/balancing/subnormals/
+  batching/gradients/performance unqualified; CPU fault/MIOpen issue open, SDMA/
+  heap-off/math defaults/r2/BIOS/.105 unchanged. **Exact next N2.6:** bounded
+  end-to-end/component cost and host-sync profile versus host eig with correctness,
+  then one measured overhead-reduction step, keeping production dispatch unchanged.
 - **CURRENT N2.4 completed2026-10-15, isolated native right eigenvectors:** added
   right_eigenvectors(SchurResult) to gfx1013_schur_candidate.py. GPU dimensionless
   triangular back-substitution with homogeneous rescaling, pivot/finite/residual
@@ -695,7 +718,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.2 | Complex nonsymmetric eig16 groups qualified through existing host-LAPACK compatibility; native GPU eig remains missing. Pinned dispatch audited, no backend defect reproduced. |
 | [x]   | N2.3 | Isolated native small Schur prototype cap16: GEHRD plus bounded GPU shifted QR, host scalar control, explicit nonconvergence;21 groups pass. No right eigenvectors or production eig integration. |
 | [x]   | N2.4 | Isolated native GPU right eigenvectors from small Schur forms;21 groups pass including analytic/CPU residual/direction and repeated/close/nonconverged refusal. Production eig unchanged. |
-| [ ]   | **N2.5 — next** | Qualify bounded scale ladder and spectral-separation boundary for the small eigenpair candidate, including nonnormal/refusal controls; fix demonstrated scaling/residual defects before any opt-in integration. |
+| [x]   | N2.5 | Repair demonstrated tiny/large magnitude failures; seeded6 replay,40 scale,30 separation,16 failure/control and21 N2.4 groups pass. Experimental cap16/default eig unchanged. |
+| [ ]   | **N2.6 — next** | Bounded end-to-end/component cost and host-sync profile versus host eig with correctness; choose one measured overhead-reduction step, retain production dispatch. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |

@@ -130,3 +130,6 @@ right eigenvectors/default eig integration remain separate.
 
 N2.4 follow-up: [native small-Schur right eigenvectors](N24.md),21 groups with
 separated spectra and explicit refusal contracts; production eig remains host.
+
+N2.5 follow-up: [scale repair and separation boundaries](N25.md), with retained
+4-failure baseline and passing replay/scale/refusal/regression gates.

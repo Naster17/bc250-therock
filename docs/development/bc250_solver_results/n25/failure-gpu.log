@@ -1,0 +1,17 @@
+time="2026-10-15T21:46:10+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+PASS partial_torch.complex64_e-25_budget0 {'scale': 1e-25, 'budget': 0, 'info': 4, 'similarity': 1.622240092474094e-07}
+PASS partial_torch.complex64_e-25_budget1 {'scale': 1e-25, 'budget': 1, 'info': 4, 'similarity': 2.41336092581036e-07}
+PASS partial_torch.complex64_e25_budget0 {'scale': 1e+25, 'budget': 0, 'info': 4, 'similarity': 1.2717947995303064e-07}
+PASS partial_torch.complex64_e25_budget1 {'scale': 1e+25, 'budget': 1, 'info': 4, 'similarity': 2.699918715024153e-07}
+PASS rescale_overflow_torch.complex64 {'refused': 'finite input has nonrepresentable Schur form', 'input_unchanged': True}
+PASS subnormal_refusal_torch.complex64 {'refused': 'all-subnormal scale', 'input_bits_unchanged': True}
+PASS zero_torch.complex64 {'schur_converged': True, 'eigenvectors_refused': True}
+PASS view_controls_torch.complex64 {'conjugate_and_negative_views': True, 'residuals': [1.3974567125284575e-07, 1.3974567125284575e-07]}
+PASS partial_torch.complex128_e-200_budget0 {'scale': 1e-200, 'budget': 0, 'info': 4, 'similarity': 3.542123970150513e-16}
+PASS partial_torch.complex128_e-200_budget1 {'scale': 1e-200, 'budget': 1, 'info': 4, 'similarity': 6.157159691069751e-16}
+PASS partial_torch.complex128_e200_budget0 {'scale': 1e+200, 'budget': 0, 'info': 4, 'similarity': 2.6777990555063206e-16}
+PASS partial_torch.complex128_e200_budget1 {'scale': 1e+200, 'budget': 1, 'info': 4, 'similarity': 2.617501285166458e-16}
+PASS rescale_overflow_torch.complex128 {'refused': 'finite input has nonrepresentable Schur form', 'input_unchanged': True}
+PASS subnormal_refusal_torch.complex128 {'refused': 'all-subnormal scale', 'input_bits_unchanged': True}
+PASS zero_torch.complex128 {'schur_converged': True, 'eigenvectors_refused': True}
+PASS view_controls_torch.complex128 {'conjugate_and_negative_views': True, 'residuals': [3.3365140439515377e-16, 3.3365140439515377e-16]}

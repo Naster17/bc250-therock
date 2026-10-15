@@ -1,0 +1,62 @@
+{
+  "status": "failed",
+  "group": "baseline",
+  "checks": [
+    {
+      "name": "scale_torch.complex64_n4_basis10_e-25",
+      "status": "failed",
+      "error": "(4, 256)"
+    },
+    {
+      "name": "scale_torch.complex64_n4_basis10_e0",
+      "status": "passed",
+      "seconds": 0.047125003999099135,
+      "scale": 1.0,
+      "order": 4,
+      "basis_condition": 10,
+      "iterations": 7,
+      "residual": 1.3759144392464914e-07,
+      "similarity": 4.894989008673563e-07,
+      "residual_bound": 8e-06,
+      "cpu_projector_error": 1.368387185661482e-06,
+      "analytic_projector_error": 1.5435130232712092e-06,
+      "direction_bound": 0.0008,
+      "guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "scale_torch.complex64_n4_basis10_e25",
+      "status": "failed",
+      "error": "Nonfinite iterate or unexpected Hessenberg fill"
+    },
+    {
+      "name": "scale_torch.complex128_n4_basis10_e-200",
+      "status": "failed",
+      "error": "(4, 256)"
+    },
+    {
+      "name": "scale_torch.complex128_n4_basis10_e0",
+      "status": "passed",
+      "seconds": 0.028757539999787696,
+      "scale": 1.0,
+      "order": 4,
+      "basis_condition": 10,
+      "iterations": 9,
+      "residual": 2.216068298697846e-16,
+      "similarity": 6.670951928240038e-16,
+      "residual_bound": 4e-12,
+      "cpu_projector_error": 4.565838489571218e-15,
+      "analytic_projector_error": 3.4216698304230388e-15,
+      "direction_bound": 6e-10,
+      "guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "scale_torch.complex128_n4_basis10_e200",
+      "status": "failed",
+      "error": "Nonfinite iterate or unexpected Hessenberg fill"
+    }
+  ],
+  "candidate_sha256": "36f958c94ed8bd225d74df607f5948220f3b465adbf0723f7e2c16de587f6d81",
+  "passed": 2
+}
