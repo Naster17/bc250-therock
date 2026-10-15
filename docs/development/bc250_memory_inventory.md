@@ -1049,3 +1049,22 @@ Torch/DSO/prefix/boot policy change or native rebuild; no active jobs. Extreme
 scaling/balancing/general convergence/vectors/batching/gradients/performance not
 qualified. CPU fault/MIOpen defect remain open. Next N2.4 guarded small-Schur
 right eigenvector recovery and explicit spectrum/convergence refusal contracts.
+
+## N2.4 native small-Schur right eigenvectors — 2026-10-15
+
+Extended isolated cap16 candidate with GPU triangular back-substitution,
+dimensionless scaling/homogeneous rescaling, checked gap/pivots/residuals and GPU
+Q transform/unit norm. Positive Schur info and malformed/nonunitary T/Q refused;
+scaled pairwise gaps<=8sqrt(eps) reject repeated/close spectra without perturbation
+or host solve. All21 groups pass first run: complex64/128 orders4/9/16 basis1/10,
+CPU/analytic spectra and vector projectors, original residuals, stream/guard/
+Schur immutability, analytic nonnormal2x2, repeated/Jordan/close/zero refusals and
+above-floor control, budget0/1 refusal, scalar zero/nonzero and7 malformed cases.
+Max original residual3.84e-7/7.79e-16. Exit0/dmesg identical/600s guard ACKed;
+no active jobs. Source, hashes, report and evidence: [N2.4](bc250_solver_results/N24.md).
+Prior helper retained in WS/recovery/solver-n24-before. Native GPU arithmetic
+with Python scalar control, no production Torch eig/DSO/prefix/kernel change or
+native rebuild. General scaling/balancing/conditioning/repeated eigenvectors,
+batching/gradients/performance unqualified; CPU fault/MIOpen defect remain open.
+Next N2.5 bounded scale/separation ladder with nonnormal/refusal controls before
+any opt-in integration. Host-LAPACK default retained.

@@ -2,8 +2,9 @@
 """Experimental small complex GPU Schur prototype; never installed as eig dispatch.
 
 Matrix arithmetic stays on the current GPU stream. Python controls iterations and
-reads scalar convergence tests. No CPU eigensolver, balancing, eigenvector
-recovery, batching, gradients or performance contract. See N23.md.
+reads scalar convergence tests. Bounded separated-spectrum right-vector recovery
+is available; no CPU eigensolver, balancing, batching, gradients or performance
+contract. See N23.md and N24.md.
 """
 import ctypes
 from dataclasses import dataclass
@@ -125,3 +126,80 @@ def schur(a, *, max_iterations=256):
             iterations += 1
             since_deflation += 1
         return SchurResult(t, q, 0, iterations, deflations)
+
+
+@dataclass
+class EigenvectorResult:
+    values: torch.Tensor
+    vectors: torch.Tensor  # unit-norm right eigenvectors, in matching Schur order
+    relative_separation: float
+    triangular_residual: float
+
+
+@torch.no_grad()
+def right_eigenvectors(result):
+    """Recover separated-spectrum right vectors from a converged small Schur form.
+
+    Refuse unconverged/nontriangular forms, repeated or close eigenvalues,
+    nonunitary transforms and unstable recovery. No perturbing singular pivots,
+    hidden host solver, gradients or guarantee for ill-conditioned eigenbases.
+    """
+    if not isinstance(result, SchurResult):
+        raise ValueError('Expected a candidate SchurResult')
+    if result.info != 0:
+        raise RuntimeError('Cannot recover eigenvectors from an unconverged Schur result')
+    t, q = result.t, result.q
+    _validate(t)
+    _validate(q)
+    if q.shape != t.shape or q.dtype != t.dtype or q.device != t.device:
+        raise ValueError('Schur T and Q must have matching shape, dtype and device')
+    with torch.cuda.device(t.device):
+        n = t.shape[0]
+        finfo = torch.finfo(t.real.dtype)
+        eye = torch.eye(n, dtype=t.dtype, device=t.device)
+        if bool(torch.tril(t, diagonal=-1).abs().any()):
+            raise ValueError('Eigenvector recovery requires exactly upper triangular T')
+        if not bool((q.mH@q-eye).norm() <= 128*n*finfo.eps):
+            raise ValueError('Schur Q is not sufficiently unitary')
+        values = t.diag().clone()
+        if n == 1:
+            return EigenvectorResult(values, q/q.norm(), float('inf'), 0.)
+        scale = t.abs().amax()
+        if not bool(torch.isfinite(scale)) or not bool(scale >= finfo.tiny):
+            raise RuntimeError('Spectrum not sufficiently separated or scale unsupported')
+        # Work in dimensionless coordinates to avoid multiplying large T entries.
+        scaled = t/scale
+        diagonal = scaled.diag()
+        gaps = (diagonal[:, None]-diagonal[None, :]).abs()
+        gaps.fill_diagonal_(float('inf'))
+        separation = gaps.min()
+        floor = 8*finfo.eps**.5
+        if not bool(separation > floor):
+            raise RuntimeError('Spectrum not sufficiently separated for candidate recovery')
+        y = torch.zeros_like(t)
+        for j in range(n):
+            column = torch.zeros(n, dtype=t.dtype, device=t.device)
+            column[j] = 1
+            for i in range(j-1, -1, -1):
+                pivot = diagonal[i]-diagonal[j]
+                if not bool(pivot.abs() > floor):
+                    raise RuntimeError('Near-singular triangular recovery pivot')
+                column[i] = -(scaled[i, i+1:j+1]@column[i+1:j+1])/pivot
+                magnitude = column.abs().amax()
+                if not bool(torch.isfinite(column).all()) or not bool(magnitude > 0):
+                    raise RuntimeError('Unstable triangular eigenvector recovery')
+                # Scaling a homogeneous solution preserves its direction and
+                # bounds subsequent dot products; never perturb the pivot.
+                column = column/magnitude
+            y[:, j] = column/column.norm()
+        residuals = (scaled@y-y*diagonal[None, :]).norm(dim=0)
+        denominator = (scaled.norm()+diagonal.abs())*y.norm(dim=0)
+        residual = (residuals/denominator).amax()
+        if not bool(torch.isfinite(residual)) or not bool(residual <= 64*n*finfo.eps):
+            raise RuntimeError('Triangular eigenvector residual exceeds candidate bound')
+        vectors = q@y
+        norms = vectors.norm(dim=0)
+        if not bool(torch.isfinite(vectors).all()) or not bool((norms > finfo.tiny).all()):
+            raise RuntimeError('Unstable Schur-vector transform')
+        vectors = vectors/norms[None, :]
+        return EigenvectorResult(values, vectors, float(separation), float(residual))

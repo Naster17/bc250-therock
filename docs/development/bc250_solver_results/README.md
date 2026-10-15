@@ -127,3 +127,6 @@ inherit the native-GPU classification of Hermitian eigh above.
 N2.3 follow-up: [isolated native small Schur prototype](N23.md). GPU matrix
 arithmetic with host scalar control, explicit iteration failure and21 groups;
 right eigenvectors/default eig integration remain separate.
+
+N2.4 follow-up: [native small-Schur right eigenvectors](N24.md),21 groups with
+separated spectra and explicit refusal contracts; production eig remains host.

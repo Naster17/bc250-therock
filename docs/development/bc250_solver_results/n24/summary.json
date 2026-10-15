@@ -1,0 +1,15 @@
+{
+  "status": "isolated native GPU right-vector recovery bounded-qualified",
+  "checks": 21,
+  "order_cap": 16,
+  "implementation_sha256": "36f958c94ed8bd225d74df607f5948220f3b465adbf0723f7e2c16de587f6d81",
+  "test_sha256": "21d1caf5aaa87179fe495aab238bc8f62d211c91a6ba2d752db51a15e96a1a63",
+  "host_label": "solver-eigvectors-n24",
+  "default_dispatch_changed": false,
+  "native_matrix_vector_arithmetic": true,
+  "host_scalar_control": true,
+  "kernel_log_unchanged": true,
+  "guard": "acknowledged",
+  "running_jobs": [],
+  "next": "N2.5 bounded scale/separation boundary and refusal qualification before opt-in integration"
+}
