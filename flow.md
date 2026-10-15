@@ -9,14 +9,47 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **ACTIVE: K1–K6 kernel workstream; K5 and bounded SVM CPU-unmap/validation locking passed; Display Core warnings next.**
-  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after five one-shot boots;
+- **ACTIVE: K1–K6 kernel workstream; K5/SVM passed; HPD init errors and two IRQ WARNs fixed; telemetry next.**
+  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after six one-shot boots;
   persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
   GPU loaded,40CU/80SIMD, wave32/KFD100103; live quirks3/0/3. No active build,
   GPU gate, container or unacknowledged recovery deadline at batch end. User's
   training/download finished; user explicitly returned.104 to development use.
-  .105 unchanged. Root orchestration SSH session73077 is idle, not durable state.
-- **CURRENT SVM validation milestone2026-10-15:** source/module
+  .105 unchanged. Root orchestration SSH session9359 is idle, not durable state.
+- **CURRENT HPD/Display Core milestone2026-10-15:** module/source
+  `0957f1aa4717bb5ea19545bdcb01d6899e94bb9f`, patch0006. Init incorrectly called
+  all6 HPD+6 HPDRX enums, but active DCN201 table implements only two pairs. Query
+  active table before bulk clears; skip dummy/empty entries, retain actual clears,
+  connector enablement and invalid-call ASSERT/error diagnostics. No dc=0 or
+  guessed pin counts. Baseline8 dummy-ack+8 dummy-set+8 failed-clear errors and
+  two IRQ WARNs →0 each after guarded reboot/load. Temporary DRM KMS debug4
+  traced exactly sources1,2,7,8; restored0. DCN2.0.1 initialized, amdgpu.dc=-1,
+  same DP-1/DP-2 disconnected connectors, taint4160 with WARN bit clear. Physical
+  hotplug/scanout/audio/resume and other ASICs unqualified. Existing2 SDMA0 fence
+  fallback-expiry messages/workqueue-name truncation remain; no wholly clean-boot
+  or SDMA qualification claim.
+- **Current identity/evidence:** r3-only signed updates/amdgpu.ko.gz SHA
+  `6ebd8393a9c7d25cd810fd89d4ef5defa187980cae64da0d37ee0d975715e8d1`,
+  build/installed/loaded ID`b97bca56793aecea35967385d0c68d4186ecd121`.
+  Kernel image84995f1/buildID57f7c52/initramfs/firmware unchanged. Prior source/
+  module independent`KWS/recovery/hpd-before`; r2/default/.105 retained. Boot
+  `a287fd16-c97b-4d88-8055-b0553a2f7631`; base/cooling and360s GPU guard ACKed.
+  Unchanged Lt664/SparseLt150/hipTensor316/Torch19 and two fresh memory processes
+  each24 allocation+16 VMM rounds pass, workload dmesg delta0. Existing SVM source
+  hashes preserved. Host`SOURCE_HPD.json`, source/GIT_REVISION0957f1aa4;
+  repository`kernel/r3/evidence/hpd-capability/`, `hpd-*` helpers/manifest/README.
+  PID6463 modules build ended0,16jobs/20GiB ccache; public DC header dependency
+  rebuild,`logs/hpd-modules-build.log`, `hpd-module-install.log`. No active build,
+  test/container/GPU user or deadline. DRM debug/injection parameter both0.
+- **EXACT NEXT:** read-only telemetry audit before new patches/power policy:
+  compare `kernel/packaging/kernel-patches/0005-bc250-8core-telemetry.patch` with
+  current `cyan_skillfish_ppt.c`/SMU metrics layout/live-clock paths and k10temp;
+  sample pp_dpm_sclk, hwmon, ROCm/SMU values under one bounded reference load.
+  Explain mismatches from evidence; do not equate maxima with attained clocks or
+  apply legacy patch blindly. Then K6 integration; N2.1 next library item. Retain
+  r2 default/SDMA0/heap-off and existing SVM failure/lockdep/XNACK/multi-GPU limits.
+  Separate unknown Python CPU segfault remains unresolved; no performance claim.
+- **Historical SVM validation milestone2026-10-15:** source/module
   `41db89c103b183c82c05bbe099ea96ad1ddee8d1`, patch0005. Map AND validation-path
   unmap collect PT fences/site bits under BO reservations, then release reservations,
   wait and invalidate under notifier lock; caller-held mmap/SVM/migrate locks
@@ -26,7 +59,7 @@ release claims must not override this cursor and current manifests.
   Also fixed validation PROT_NONE byte/page bounds using each VMA's inclusive
   page indices: exact same probe traced0 target-page unmaps before,2 after;
   no GPU access to protected page attempted; restore references passed.
-- **Current identity/results:** r3-only signed updates/amdgpu.ko.gz SHA
+- **Previous SVM validation identity/results (superseded above):** r3-only signed updates/amdgpu.ko.gz SHA
   `d47974d6d7eef898b50a4fdf03edb716e8cd13dfd7f2373b495f273727e5f07f`,
   build/installed/loaded ID`7ee5573fc124ceb0edad1bc662feb44ebdbf129f`.
   Kernel IMAGE84995f1/buildID57f7c52, image/initramfs/firmware unchanged. Prior
@@ -39,7 +72,7 @@ release claims must not override this cursor and current manifests.
   SparseLt150/hipTensor316/Torch19 and two memory processes each24 allocation+
   16 VMM rounds pass, delta0. Two intentional trace+two injection lines accounted
   separately. Dynamic debug restored; one-shot injection parameter verified0.
-- **Jobs/evidence/EXACT NEXT:** PID7547 modules build ended0,16jobs/20GiB ccache;
+- **Previous validation jobs/evidence/next (HPD now fixed above):** PID7547 modules build ended0,16jobs/20GiB ccache;
   `logs/svm-map-modules-build.log`, `svm-map-module-install.log`. No active build,
   test/container/GPU user or deadline. Host`SOURCE_SVM_MAP.json`, source/GIT_REVISION
  41db89c10; helpers`svm-map-*`, repository`kernel/r3/evidence/svm-map-deferred/`,

@@ -84,9 +84,11 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 
 ## Kernel, unlock, cooling and recovery
 
-Active experimental .104 kernel: `7.2.10-bc250rocm-r3`, two one-shot boots and
-bounded ordinary GPU/Torch references passed2026-10-15; full VMM gate FAILED as
-on r2. Persistent default/retained fallback and .105 reference remain
+Active experimental .104 kernel: `7.2.10-bc250rocm-r3`, six guarded one-shot
+boots2026-10-15. Current module0957f1aa4: bounded GPU/Torch/VMM and prior SVM
+milestones pass; HPD init dummy errors and two IRQ ASSERT WARNs repaired below.
+Physical display/hotplug and broader failure/recovery remain unqualified.
+Persistent default/retained fallback and .105 reference remain
 `7.1.5-bc250rocm-r2 #2 SMP PREEMPT_DYNAMIC` (built2026-09-16). Its recovered
 original configuration is `bc250stack/kernel/configs/r2.config`; r3 migrated
 config/diff and evidence are in `bc250stack/kernel/r3/evidence/`. Do not infer
@@ -262,6 +264,31 @@ failed-stop/resume, XNACK/retry migration or multi-GPU qualification; no perform
 sustained claim. Next: analyze existing Display Core IRQ WARNs without blanket
 suppression, then telemetry/K6. r2/default/.105/runtime/SDMA0/heap-off preserved;
 unknown Python CPU segfault remains separate and unresolved.
+
+HPD/Display Core follow-up/source`0957f1aa4717bb5ea19545bdcb01d6899e94bb9f`
+(patch0006): bulk init iterated six HPD+six HPDRX enums despite DCN201 only
+implementing two pairs. New active-table capability query rejects dummy/empty
+entries before bulk clearing, preserving real set/ack operations, connector
+enabling and invalid-call diagnostics. Baseline8 dummy-ack+8 dummy-set+8 failed
+clear errors and2 IRQ ASSERT WARNs →0 each after guarded boot/load. Temporary
+DRM KMS debug4 traced clears1,2,7,8 and restored0. DCN2.0.1 still active with
+dc=-1; both DP connectors still enumerate disconnected; taint4160, WARN bit clear.
+No physical hotplug/scanout/audio/resume or other-ASIC qualification. Existing
+2 SDMA0 fence fallback-expiry and workqueue truncation messages remain; SDMA off.
+
+Current r3-only module SHA
+`6ebd8393a9c7d25cd810fd89d4ef5defa187980cae64da0d37ee0d975715e8d1`,
+loaded/build/installed ID`b97bca56793aecea35967385d0c68d4186ecd121`; image84995f1
+unchanged, previous module/source at`KWS/recovery/hpd-before`. Boot
+`a287fd16-c97b-4d88-8055-b0553a2f7631` base/cooling/GPU guard ACKed, no jobs.
+SOURCE_HPD.json/sourceGIT_REVISION0957f1aa4;16jobs/20GiB ccache dependency rebuild.
+Unchanged Lt664/SparseLt150/hipTensor316/Torch19 plus two processes each24 ordinary
+allocation+16 VMM rounds pass; workload dmesg delta0. Evidence
+`kernel/r3/evidence/hpd-capability/`, source/patch/helpers/README. r2/default/.105,
+userspace, SDMA0/heap-off and separate unknown Python CPU segfault preserved.
+Next: read-only eight-core SMU/live-clock/k10temp audit against retained packaging
+patch0005 before policy changes, then K6; N2.1 next library item. Prior SVM failure/
+lockdep/XNACK/multi-GPU limitations remain.
 
 Read-only kernel review2026-10-14:
 [report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),
@@ -672,6 +699,7 @@ optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit
 | Experimental VM heap            | Default bypass is a mitigation, not a repair. VMM/async pools retained; explicit opt-in remains experimental.                                | `rocdevice.cpp`, root `bd6e4c8a4`, release gates                                                                                               |
 | SVM CPU-unmap returned error | Patch0004 retains queue eviction after failed invalidation following confirmed stop; partial/full targeted -EIO tests and fresh GPU references pass. Failed stop/retry migration remain open; validation locking qualified separately below. | `bc250stack/kernel/r3/evidence/svm-cpu-unmap/` |
 | SVM validation invalidation | Patch0005 flushes validation map/unmap after BO unlock; PROT_NONE bounds fixed (trace0→2); two concurrent54-reference GPU processes and full regressions pass. No global lockdep/failure-path claim. | `bc250stack/kernel/r3/evidence/svm-map-deferred/` |
+| HPD IRQ initialization | Patch0006 queries active IRQ capability before bulk clear; dummy ack/set/clear errors8 each→0 and IRQ ASSERT WARNs2→0. Four real clears/DC/two disconnected DP connectors retained. Physical display/resume unqualified. | `bc250stack/kernel/r3/evidence/hpd-capability/` |
 | Explicit fixed-VA VMM remap | K5 GEM_VA runlist fix8f3c0d3: unchanged two-process VMM gate and HIP/ROCr26-check references pass; historical r2/r3 failures preserved. No broad/failure-path claim. Separate from VM-heap corruption. | `bc250stack/kernel/r3/evidence/k5-summary.json`, `k5-gem-va-full.json`, original/diagnostic failures |
 | Later Python CPU segfault       | Execution fault at0x3b3e6, no identified stack/operator; cause remains unknown. Stable-prefix sparse gates and independent candidate passed. | Older operator-candidate/kernel logs, P2 candidate/launcher20 cycles each; do not merge with the proven CSR defect                             |
 | Triton incorrect buffer reads   | Missing RDNA1 descriptor flag branch; globals passed while buffer path failed. Fixed.                                                        | Triton patch0004/root `9fdae0b5d`; both memory paths validated                                                                                 |
