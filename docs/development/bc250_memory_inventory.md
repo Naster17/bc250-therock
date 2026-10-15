@@ -493,6 +493,37 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+Current user-priorities1–4 follow-up2026-10-15, Torch4ee65717d69e9f51021272e3f37d0f342f68fc08:
+long head128/GQA references through4096tokens and real Qwen3-1.7B BF16 rank4 LoRA
+512/1024-token synthetic reference passes completed. Causal tile bounds/tile32
+selection improve paired BF16 head128 kernel fixtures1.67–2.05x versus the original;
+no broad/whole-model speed claim, math default retained. Qwen1024 whole-model
+allocated peak unchanged5,818,112,000 bytes: other allocations dominate. Autocast
+mixed-QKV conversion and gradients qualified; tiled compile/graphs/dropout remain open.
+
+Small full-parameter Qwen FP32/FP16/BF16 AMP, larger batch2/length128–256, CPU
+float64 gradients,2updates and fresh-process model/optimizer/scheduler/scaler and
+all RNG continuation passed. Six dynamic compiled/eager math-attention gradient
+cases at batch2/3 passed. Native TF32 capability API fixes a false Tensor Core
+warning. Actual user LoRA CLI resume defect reproduced (GPU RNG ByteTensor) and
+fixed, with is_trainable=True plus scheduler/Python/shuffle state persistence;
+new-format and legacy fixture resumes update adapters. Legacy missing state
+cannot provide exact replay; matching schedule arguments still matter.
+
+Python CPU IP0x3b3e6 remains **unresolved**. Recovered single historical event,
+no original core/stack;8 fresh allocator-instrumented solver/FFT/sparse/GEMM
+processes pass1920 references without reproduction. Launcher defaults Python
+faulthandler on (user override allowed); diagnostic-only bounded core capture.
+Separate retained failure: full mixed-operator attempt stops at MIOpen conv
+EvaluateInvokers elapsed<=0 and workspace480/provided0, exit1, not SIGSEGV.
+No false full55-operator pass or crash-repair claim. All final scoped gates
+exit0/dmesg unchanged/guards ACKed. Next isolate this convolution failure and
+capture crash evidence; N2/K6 deferred by user. Sources/builds/cache/user files/
+checkpoints/BIOS/kernel/governor/.105 preserved. [Full report and replay](bc250_training_expansion_results/README.md),
+SOURCE_TRAINING_EXPANSION and WS/recovery/*-before retain state/rollback identities.
+
+Historical first opt-in attention batch (superseded within the scopes above):
+
 Opt-in scalar tiled SDPA2026-10-15, Torch`bda0831ba49ef9d0ba2968a800642e5abaec5dd5`:
 three native Triton scalar kernels implement tiled online softmax and recomputed
 backward with FP32 accumulation and grouped KV gradients, without full score/

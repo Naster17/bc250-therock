@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "compiled-eager-torch.float32-batch2-length128",
+      "maximum_relative_l2": 2.948611381725641e-07
+    },
+    {
+      "name": "compiled-eager-torch.float32-batch3-length96",
+      "maximum_relative_l2": 2.942192338650784e-07
+    },
+    {
+      "name": "compiled-eager-torch.float16-batch2-length128",
+      "maximum_relative_l2": 0.000711581320501864
+    },
+    {
+      "name": "compiled-eager-torch.float16-batch3-length96",
+      "maximum_relative_l2": 0.0009567796951159835
+    },
+    {
+      "name": "compiled-eager-torch.bfloat16-batch2-length128",
+      "maximum_relative_l2": 0.0017830590950325131
+    },
+    {
+      "name": "compiled-eager-torch.bfloat16-batch3-length96",
+      "maximum_relative_l2": 0.0018856402020901442
+    }
+  ]
+}

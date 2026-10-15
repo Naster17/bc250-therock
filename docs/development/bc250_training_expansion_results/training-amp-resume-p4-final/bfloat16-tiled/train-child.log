@@ -1,0 +1,2 @@
+TRAINING_EXPANSION_PASS {'name': 'full-model-cpu-gradient-reference', 'relative_l2': 0.007273427521946694, 'batch': 2, 'length': 256}
+TRAINING_EXPANSION_PASS {'name': 'two-finite-full-model-updates', 'losses': [5.557626724243164, 5.157494068145752], 'scale': 1.0}

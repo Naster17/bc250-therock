@@ -1,0 +1,9 @@
+PYTHON_FAULT_PROBE {'iteration': 0, 'returncode': 1, 'seconds': 2.416496632002236, 'core_files': []}
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/diagnose_python_fault.py", line 50, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/diagnose_python_fault.py", line 45, in main
+    assert code == 0, 'Preserve logs/core; stop and analyze failure before continuing'
+           ^^^^^^^^^
+AssertionError: Preserve logs/core; stop and analyze failure before continuing

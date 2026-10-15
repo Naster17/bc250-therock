@@ -1,0 +1,2 @@
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/diagnose_python_fault.py:76: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/SparseCsrTensorImpl.cpp:49.)
+  sparse=dense.to_sparse(layout=layout)

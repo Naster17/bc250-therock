@@ -1,0 +1,14 @@
+{
+  "status": "running",
+  "checks": [
+    {
+      "name": "float32-math-full-model-amp-and-fresh-resume"
+    },
+    {
+      "name": "float16-math-full-model-amp-and-fresh-resume"
+    },
+    {
+      "name": "bfloat16-math-full-model-amp-and-fresh-resume"
+    }
+  ]
+}

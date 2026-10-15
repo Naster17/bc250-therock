@@ -1,0 +1,4 @@
+TRAINING_EXPANSION_PASS {'name': 'float32-math-full-model-amp-and-fresh-resume'}
+TRAINING_EXPANSION_PASS {'name': 'float16-math-full-model-amp-and-fresh-resume'}
+TRAINING_EXPANSION_PASS {'name': 'bfloat16-math-full-model-amp-and-fresh-resume'}
+TRAINING_EXPANSION_PASS {'name': 'bfloat16-tiled-full-model-amp-and-fresh-resume'}

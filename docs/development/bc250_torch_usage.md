@@ -53,10 +53,30 @@ This prototype supports eager first-order FP32/FP16/BF16 attention, grouped head
 head width up to128 and sequence length up to4096, with the documented mask
 contracts. Attention dropout, mask gradients, higher-order gradients and compiled/
 graph operation are unqualified or unsupported. Ordinary functional SDPA keeps its
-math fallback. Tiled attention saved auxiliary memory but ran slower in the
-measured fixtures; full Qwen3-1.7B training is not yet qualified. See the
+math fallback. Tiled attention supports CUDA autocast. Causal head128 kernel fixtures improved
+with tile skipping, but this is not a whole-model speed guarantee. Bounded real
+Qwen3-1.7B LoRA references at512/1024tokens passed; full training/convergence remains
+unqualified, and the whole-model1024-token peak stayed unchanged in our fixture.
+See the [training follow-up](bc250_training_expansion_results/README.md) and the
 [attention report](bc250_attention_results/README.md) for references, measurements,
 exact contracts and rollback information.
+
+## Resume state and crash diagnostics (updated 2026-10-15)
+
+The installed `train_lora.py --resume CHECKPOINT` keeps adapters trainable and
+restores GPU RNG from the required CPU byte tensor. New checkpoints also save
+scheduler, Python RNG and max-steps shuffle/remaining-index state. Existing
+old-format checkpoints remain usable, with warnings for unavailable exact replay
+state. Retain matching schedule arguments; restoring a completed cosine schedule
+does not create a new learning-rate plan. Bounded new/legacy fixture resumes and
+separate fresh-process AMP/optimizer/RNG continuation tests passed; this is not
+universal checkpoint/model compatibility qualification.
+
+The launcher defaults `PYTHONFAULTHANDLER=1` so future fatal Python faults produce
+tracebacks in your logs. Normal core-dump policy stays unchanged. To opt out
+explicitly, use launcher option `--env PYTHONFAULTHANDLER=` before the script path.
+The value `0` still enables Python's handler because it is a nonempty string.
+The historical CPU segfault remains unresolved; see the follow-up report above.
 
 ## Paths and persistence
 

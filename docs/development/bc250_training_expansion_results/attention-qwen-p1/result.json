@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "phase": "qwen",
+  "checks": [
+    {
+      "name": "qwen17-bf16-lora-length512",
+      "maximum_gradient_relative_l2": 0.037437889724969864,
+      "sampled_logit_relative_l2": 0.0032676211558282375,
+      "loss_delta": 0.00433349609375
+    },
+    {
+      "name": "qwen17-bf16-lora-length1024",
+      "maximum_gradient_relative_l2": 0.031082777306437492,
+      "sampled_logit_relative_l2": 0.003027405356988311,
+      "loss_delta": -0.000141143798828125
+    }
+  ],
+  "measurements": [
+    {
+      "length": 512,
+      "backend": "sdpa",
+      "loss": 11.378983497619629,
+      "seconds": 2.9908376530001988,
+      "peak_allocated": 4630720512,
+      "extra_peak_allocated": 1185815552
+    },
+    {
+      "length": 512,
+      "backend": "bc250_tiled",
+      "loss": 11.383316993713379,
+      "seconds": 2.040332798998861,
+      "peak_allocated": 4664274944,
+      "extra_peak_allocated": 1152261120
+    },
+    {
+      "length": 1024,
+      "backend": "sdpa",
+      "loss": 11.290903091430664,
+      "seconds": 3.7733737070011557,
+      "peak_allocated": 5818112000,
+      "extra_peak_allocated": 2306094080
+    },
+    {
+      "length": 1024,
+      "backend": "bc250_tiled",
+      "loss": 11.290761947631836,
+      "seconds": 4.144327426001837,
+      "peak_allocated": 5818112000,
+      "extra_peak_allocated": 2306094080
+    }
+  ],
+  "arch": "gfx1013:xnack-",
+  "model": "/home/nik/finetune-n7/models/Qwen3-1.7B-Base",
+  "config_sha256": "1bb33a92c3548fbc68b889b490e810440435253598835bd71dff0396060c12db",
+  "base_parameters": 1720574976,
+  "trainable_parameters": 802816
+}

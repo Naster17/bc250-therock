@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "full-model-cpu-gradient-reference",
+      "relative_l2": 0.0013789397458438058,
+      "batch": 2,
+      "length": 128
+    },
+    {
+      "name": "two-finite-full-model-updates",
+      "losses": [
+        5.568026542663574,
+        5.167868137359619
+      ],
+      "scale": 32.0
+    }
+  ]
+}

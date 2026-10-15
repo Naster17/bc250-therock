@@ -1,0 +1,13 @@
+{
+  "status": "resume defect reproduced; original fixture/log preserved",
+  "runs": [
+    {
+      "phase": "fresh",
+      "returncode": 0
+    },
+    {
+      "phase": "resume",
+      "returncode": 1
+    }
+  ]
+}

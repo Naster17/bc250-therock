@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "bfloat16-tiled-full-model-amp-and-fresh-resume"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+--- a/train_lora.py
++++ b/train_lora.py
+@@ -3,6 +3,7 @@
+ import math
+ import os
+ import random
++import warnings
+ from pathlib import Path
+ 
+ import torch
+@@ -124,9 +125,10 @@
+ 
+     step = 0
+     opt_step = 0
++    st = None
+     if a.resume:
+         st = torch.load(os.path.join(a.resume, "training-state.pt"), map_location="cpu")
+-        model = PeftModel.from_pretrained(make_base(), a.resume)
++        model = PeftModel.from_pretrained(make_base(), a.resume, is_trainable=True)
+         model.print_trainable_parameters()
+         model = model.cuda()
+         model.train()
+@@ -135,7 +137,11 @@
+         opt.load_state_dict(st["optimizer"])
+         torch.set_rng_state(st["rng"])
+         g = st["gpu_rng"]
+-        torch.cuda.set_rng_state(g.cuda() if g.device.type == "cpu" else g)
++        torch.cuda.set_rng_state(g.cpu())
++        if "python_rng" in st:
++            random.setstate(st["python_rng"])
++        else:
++            warnings.warn("Legacy checkpoint lacks Python/data-order state; exact sample-order replay is unavailable.")
+         step = st["step"]
+         opt_step = st.get("opt_step", 0)
+         print("resumed at sample step", step, flush=True)
+@@ -149,13 +155,15 @@
+         model.enable_input_require_grads()
+         opt = torch.optim.AdamW(model.parameters(), lr=a.lr)
+ 
+-    order = list(range(len(tr_ids)))
++    order = st.get("shuffle_order", list(range(len(tr_ids)))) if st else list(range(len(tr_ids)))
++    pending_tail = []
+     if a.max_steps > 0:
+         need = a.max_steps * a.batch * a.accum
+-        flat = []
++        flat = list(st.get("remaining_indices", [])) if st else []
+         while len(flat) < need:
+             random.shuffle(order)
+             flat += order
++        pending_tail = flat[need:]
+         flat = flat[:need]
+     else:
+         flat = []
+@@ -173,6 +181,20 @@
+         return 1.0
+ 
+     sched = torch.optim.lr_scheduler.LambdaLR(opt, lr_factor)
++    if st is not None:
++        if "scheduler" in st:
++            sched.load_state_dict(st["scheduler"])
++            for group, lr in zip(opt.param_groups, sched.get_last_lr()):
++                group["lr"] = lr
++        else:
++            # Old checkpoints remain usable, but cannot provide exact scheduler replay.
++            sched.last_epoch = opt_step
++            sched._step_count = opt_step + 1
++            for group, base_lr in zip(opt.param_groups, sched.base_lrs):
++                group["lr"] = base_lr * lr_factor(opt_step)
++            sched._last_lr = [group["lr"] for group in opt.param_groups]
++            warnings.warn("Legacy checkpoint lacks scheduler state; reconstructing from opt_step and current schedule arguments.")
++    flat_position = 0
+     running = 0.0
+     model.zero_grad(set_to_none=True)
+     def math_ctx():
+@@ -196,7 +218,12 @@
+         model.save_pretrained(str(ck))
+         tok.save_pretrained(str(ck))
+         torch.save({
++            "format_version": 2,
+             "optimizer": opt.state_dict(),
++            "scheduler": sched.state_dict(),
++            "python_rng": random.getstate(),
++            "shuffle_order": order,
++            "remaining_indices": flat[flat_position:] + pending_tail,
+             "step": step,
+             "opt_step": tag,
+             "rng": torch.get_rng_state(),
+@@ -204,7 +231,7 @@
+         }, ck / "training-state.pt")
+         print("saved", ck, flush=True)
+ 
+-    for idx in flat:
++    for flat_position, idx in enumerate(flat, 1):
+         x = torch.tensor([tr_ids[idx]], device="cuda")
+         y = torch.tensor([tr_lbl[idx]], device="cuda")
+         # Checkpoint recomputation during backward must retain math SDPA too.

@@ -1,0 +1,33 @@
+PASS strided_gemm_torch.float32_1_7_3
+PASS strided_gemm_torch.float32_19_23_11
+PASS reduce_transposed_torch.float32
+PASS softmax_offset_torch.float32
+PASS strided_gemm_torch.float64_1_7_3
+PASS strided_gemm_torch.float64_19_23_11
+PASS reduce_transposed_torch.float64
+PASS softmax_offset_torch.float64
+PASS strided_gemm_torch.float16_1_7_3
+PASS strided_gemm_torch.float16_19_23_11
+PASS reduce_transposed_torch.float16
+PASS softmax_offset_torch.float16
+PASS strided_gemm_torch.bfloat16_1_7_3
+PASS strided_gemm_torch.bfloat16_19_23_11
+PASS reduce_transposed_torch.bfloat16
+PASS softmax_offset_torch.bfloat16
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1013: libMIOpenCKGroupedConv_gfx1013.so: cannot open shared object file: No such file or directory
+MIOpen: Warning [ParseAndLoadDb] File is unreadable: "/workspace/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Warning [IsEnoughWorkspace] [EvaluateInvokers] Solver <GemmFwdRest>, workspace required: 480, provided ptr: 0 size: 0
+MIOpen: Error [EvaluateInvokers] bc250:/workspace/source/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:535: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+MIOpen Error: bc250:/workspace/source/rocm-libraries/projects/miopen/src/hip/convolutionocl.cpp:625: No suitable algorithm was found to execute the required convolution
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_operator_coverage.py", line 189, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_operator_coverage.py", line 95, in main
+    check(
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_operator_coverage.py", line 40, in check
+    result = operation(*gpu)
+             ^^^^^^^^^^^^^^^
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_operator_coverage.py", line 97, in <lambda>
+    lambda a, b, op=conv, g=groups: op(
+                                    ^^^
+RuntimeError: miopenStatusUnknownError

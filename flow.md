@@ -9,12 +9,56 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT user-priorities1–4 batch2026-10-15:** user explicitly deferred N2/K6.
+  Priorities1/2/4 bounded-qualified; priority3 investigated/instrumented, NOT fixed.
+  Torch`4ee65717d69e9f51021272e3f37d0f342f68fc08` (optimization43cb299 ancestor).
+  Longer CPU/GPU attention output+gradient references:11 cases through4096tokens,
+  head128/GQA. Real existing Qwen3-1.7B BF16 rank4 q/v LoRA reference passes at512/
+  1024 synthetic tokens; max per-adapter gradient relativeL2~0.041 versus math.
+  No user data/checkpoint changes or convergence/full-model fine-tuning claim.
+- **Priority2:** causal row/key bounds skip mathematically masked tiles; tile32
+  only causal heads>=64, other tile16 paths retained. Final same-input paired BF16
+  head128 causal kernel ratios1.67–2.05 versus prior implementation in measured
+  fixtures; FP32/control noise retained, no universal/whole-model speedup claim.
+  Real Qwen1024 whole-model peak remains5,818,112,000 allocated bytes for both;
+  isolated attention memory savings do not eliminate logits/loss-dominated peaks.
+  Math stays default. Autocast now handles eligible mixed Q/K/V dtypes with gradients.
+- **Priority3 unresolved:** recovered ONE historical Python IP0x3b3e6 event (many
+  later logs duplicate it), no retained original core/stack. Eight fresh debug-
+  allocator solver/FFT/CSR/COO/GEMM processes pass1920 checks; not a crash repair.
+  Launcher defaults PYTHONFAULTHANDLER=1; empty-value user opt-out checked. Diagnostic
+  core limit256MiB only, no global core-policy change. Distinct newly observed
+  mixed-operator failure: MIOpen EvaluateInvokers elapsed<=0 / GemmFwdRest workspace
+  480/provided0, before first conv/sparse; exit1, no segfault/dmesg delta. Retained
+  and unresolved; do not claim original full55 operator suite passed this batch.
+- **Priority4:** actual train_lora resume RNG ByteTensor failure reproduced and
+  repaired; adapters now trainable on resume, scheduler/Python/data-order state
+  saved, legacy format resumes/updates with missing-state replay warnings. New
+  matching-config tiny CLI fresh/resume passed, old-format fixture passed too.
+  Full-parameter small Qwen AMP batch2/length128 FP32/FP16 math and length256 BF16
+  math/tiled: CPU gradients,2updates/no scaler skips, fresh-process exact next
+  loss/model/optimizer/scheduler/scaler+CPU/GPU/Python RNG probes pass. Compiled
+  fullgraph/dynamic math-attention block:6 FP32/FP16/BF16 output/gradient cases at
+  batches2/3 lengths128/96 pass. Tiled compile/graphs/dropout remain unqualified.
+  False TF32 Tensor Core warning corrected using native is_tf32_supported API.
+- **Evidence/state/EXACT NEXT:** docs/development/bc250_training_expansion_results/README.md,
+  reports/logs and build_tools/bc250 helpers/caller patch; .104 WS/logs matching
+  labels. Final attention/AMP/compile/app/legacy/sparse labels exit0,600s guards
+  ACKed,dmesg identical; failed mixed/initial AMP/app attempts preserved. Python-only
+  changes reuse existing caches; no new native build. Recovery WS/recovery/
+  {attention-priorities,training-expansion,tf32-diagnostic,training-expansion-metadata}-before;
+  SOURCE_TRAINING_EXPANSION records revisions/hashes. No agent job/container/deadline
+  remains; source/kernel0957f1aa4, r3/r2fallback, BIOS/governor/.105 unchanged.
+  Next isolate the newly demonstrated small-convolution timing/workspace failure
+  and capture a real CPU crash/core/backtrace before proposing its fix. Keep
+  historical CPU fault separate from proven CSR corruption/safe-pool bypass and
+  kernel VMM/SVM repairs. N2/K6 remain deferred, not silently restarted.
 - **Usage-documentation follow-up2026-10-15:** added dated attention instructions
   to docs/development/bc250_torch_usage.md, including default warning/API fixes,
   math default, application-only --attention-backend tiled selection, Transformer
   registration and qualification limits. Linked detailed evidence; no code/runtime
   change or GPU rerun. No agent jobs; attention/K6/N2.1 next actions unchanged.
-- **CURRENT user-priority N3 attention batch2026-10-15 completed, bounded opt-in:**
+- **Previous N3 attention batch2026-10-15, bounded opt-in:**
   patched Torch`bda0831ba49ef9d0ba2968a800642e5abaec5dd5`. Three native scalar
   Triton kernels implement tiled online-softmax forward/recomputed backward;
   no full score/probability matrix, matrix instructions or default SDPA override.

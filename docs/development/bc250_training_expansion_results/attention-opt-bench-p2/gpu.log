@@ -1,0 +1,12 @@
+ATTENTION_BENCH {'dtype': 'torch.float32', 'head_dim': 32, 'heads': 2, 'kv_heads': 2, 'length': 512, 'causal': False, 'original_over_candidate': 0.893058557401425, 'original_drift': 1.2529530413682874}
+ATTENTION_BENCH {'dtype': 'torch.float32', 'head_dim': 128, 'heads': 16, 'kv_heads': 8, 'length': 257, 'causal': True, 'original_over_candidate': 1.3791465172630741, 'original_drift': 0.99795838235793}
+ATTENTION_BENCH {'dtype': 'torch.float32', 'head_dim': 128, 'heads': 16, 'kv_heads': 8, 'length': 512, 'causal': True, 'original_over_candidate': 1.6577743117883028, 'original_drift': 0.8790186823230944}
+ATTENTION_BENCH {'dtype': 'torch.float32', 'head_dim': 128, 'heads': 16, 'kv_heads': 8, 'length': 1024, 'causal': True, 'original_over_candidate': 2.001240499565598, 'original_drift': 0.9011088769335314}
+ATTENTION_BENCH {'dtype': 'torch.float32', 'head_dim': 128, 'heads': 2, 'kv_heads': 1, 'length': 2048, 'causal': True, 'original_over_candidate': 1.9116166708511682, 'original_drift': 0.9942904200352212}
+ATTENTION_BENCH {'dtype': 'torch.float32', 'head_dim': 128, 'heads': 4, 'kv_heads': 2, 'length': 513, 'causal': False, 'original_over_candidate': 0.9176505763019055, 'original_drift': 0.9893161289110389}
+ATTENTION_BENCH {'dtype': 'torch.bfloat16', 'head_dim': 32, 'heads': 2, 'kv_heads': 2, 'length': 512, 'causal': False, 'original_over_candidate': 0.9999842417626684, 'original_drift': 0.9386176048283866}
+ATTENTION_BENCH {'dtype': 'torch.bfloat16', 'head_dim': 128, 'heads': 16, 'kv_heads': 8, 'length': 257, 'causal': True, 'original_over_candidate': 1.684255686330224, 'original_drift': 1.0415976312663038}
+ATTENTION_BENCH {'dtype': 'torch.bfloat16', 'head_dim': 128, 'heads': 16, 'kv_heads': 8, 'length': 512, 'causal': True, 'original_over_candidate': 1.9510076205709066, 'original_drift': 1.0078278475359177}
+ATTENTION_BENCH {'dtype': 'torch.bfloat16', 'head_dim': 128, 'heads': 16, 'kv_heads': 8, 'length': 1024, 'causal': True, 'original_over_candidate': 2.1655246194290423, 'original_drift': 0.8116453984970349}
+ATTENTION_BENCH {'dtype': 'torch.bfloat16', 'head_dim': 128, 'heads': 2, 'kv_heads': 1, 'length': 2048, 'causal': True, 'original_over_candidate': 2.049232544259013, 'original_drift': 1.0003229871113404}
+ATTENTION_BENCH {'dtype': 'torch.bfloat16', 'head_dim': 128, 'heads': 4, 'kv_heads': 2, 'length': 513, 'causal': False, 'original_over_candidate': 1.0577503704413067, 'original_drift': 1.0168973250453703}

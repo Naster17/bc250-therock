@@ -20,6 +20,9 @@ def main():
     ap.add_argument("--installed", action="store_true")
     ap.add_argument("--integration", action="store_true")
     ap.add_argument("--regression", action="store_true")
+    ap.add_argument("--script", help="Test basename staged in WS/helpers")
+    ap.add_argument("--test-arg", action="append", default=[])
+    ap.add_argument("--capture-core", action="store_true")
     args = ap.parse_args()
     ws = Path('/home/nik/bc250work/rocm-10.2-gfx1013')
     kws = Path('/home/nik/bc250work/kernel-r3-7.2.10')
@@ -47,7 +50,11 @@ def main():
                                       '--output', str(logs/'result.json')])
     if args.regression:
         options.arguments = [str(kws/'helpers/torch-reference.py')]
-    if not args.installed and not args.integration and not args.regression:
+    if args.script:
+        assert Path(args.script).name == args.script
+        options.arguments = [str(ws/'helpers'/args.script), '--output', str(logs/'result.json'),
+                             *args.test_arg]
+    if not args.installed and not args.integration and not args.regression and not args.script:
         options.arguments += ['--candidate', str(ws/'helpers/gfx1013_attention_candidate.py')]
     if args.smoke: options.arguments += ['--smoke']
     # Preserve pinned consumers; do not install or modify any packages.
@@ -70,6 +77,8 @@ def main():
             envfile.write_text(''.join(f'{k}={v}\n' for k,v in options.environment.items()))
             command = build_command(release, manifest, ws, Path(account.pw_dir), options, groups, envfile)
             command[2:2] = ['--name', name]
+            if args.capture_core:
+                command[2:2] = ['--ulimit', 'core=268435456:268435456']
             (logs/'command.json').write_text(json.dumps(command, indent=2)+'\n')
             with (logs/'gpu.log').open('w') as output:
                 code = subprocess.call(command, stdin=subprocess.DEVNULL,

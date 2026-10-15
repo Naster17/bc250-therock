@@ -1,0 +1,2 @@
+ATTENTION_WORKLOAD_PASS {'name': 'qwen17-bf16-lora-length512', 'maximum_gradient_relative_l2': 0.04074244573712349, 'sampled_logit_relative_l2': 0.003083418821915984, 'loss_delta': 0.0021009445190429688}
+ATTENTION_WORKLOAD_PASS {'name': 'qwen17-bf16-lora-length1024', 'maximum_gradient_relative_l2': 0.03948355093598366, 'sampled_logit_relative_l2': 0.003040687646716833, 'loss_delta': 0.0006494522094726562}

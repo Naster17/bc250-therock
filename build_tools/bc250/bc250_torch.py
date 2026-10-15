@@ -61,6 +61,7 @@ INHERITED_NAMES = {
     "TORCHINDUCTOR_COMPILE_THREADS",
     "XDG_CACHE_HOME",
     "TORCH_HOME",
+    "PYTHONFAULTHANDLER",
 }
 PROTECTED_PATHS = (
     Path("/workspace"),
@@ -334,6 +335,8 @@ def build_command(
     }
     if "TORCHINDUCTOR_COMPILE_THREADS" not in options.environment:
         fixed["TORCHINDUCTOR_COMPILE_THREADS"] = "4"
+    if "PYTHONFAULTHANDLER" not in options.environment:
+        fixed["PYTHONFAULTHANDLER"] = "1"
     for name, value in fixed.items():
         command += ["-e", f"{name}={value}"]
     interpreter = ["bash", "--noprofile", "--norc"] if options.shell else ["python"]

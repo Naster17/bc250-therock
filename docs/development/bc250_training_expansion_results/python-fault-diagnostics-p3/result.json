@@ -1,0 +1,17 @@
+{
+  "status": "running",
+  "attempts": [
+    {
+      "iteration": 0,
+      "returncode": 1,
+      "seconds": 2.416496632002236,
+      "core_files": []
+    }
+  ],
+  "original_signature": "IP=0x3b3e6; no core/backtrace retained",
+  "core_pattern": "core",
+  "core_limit": [
+    268435456,
+    268435456
+  ]
+}

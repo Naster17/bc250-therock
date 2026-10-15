@@ -1,0 +1,67 @@
+{
+  "status": "not reproduced in bounded diagnostic run; historical cause unresolved",
+  "attempts": [
+    {
+      "iteration": 0,
+      "returncode": 0,
+      "seconds": 3.8186352240009,
+      "core_files": [],
+      "reference_checks": 240
+    },
+    {
+      "iteration": 1,
+      "returncode": 0,
+      "seconds": 2.6673027199976787,
+      "core_files": [],
+      "reference_checks": 240
+    },
+    {
+      "iteration": 2,
+      "returncode": 0,
+      "seconds": 2.6668383670003095,
+      "core_files": [],
+      "reference_checks": 240
+    },
+    {
+      "iteration": 3,
+      "returncode": 0,
+      "seconds": 2.617160210000293,
+      "core_files": [],
+      "reference_checks": 240
+    },
+    {
+      "iteration": 4,
+      "returncode": 0,
+      "seconds": 2.6168649030005326,
+      "core_files": [],
+      "reference_checks": 240
+    },
+    {
+      "iteration": 5,
+      "returncode": 0,
+      "seconds": 2.6670089139988704,
+      "core_files": [],
+      "reference_checks": 240
+    },
+    {
+      "iteration": 6,
+      "returncode": 0,
+      "seconds": 2.667371652001748,
+      "core_files": [],
+      "reference_checks": 240
+    },
+    {
+      "iteration": 7,
+      "returncode": 0,
+      "seconds": 2.6675631219986826,
+      "core_files": [],
+      "reference_checks": 240
+    }
+  ],
+  "original_signature": "IP=0x3b3e6; no core/backtrace retained",
+  "core_pattern": "core",
+  "core_limit": [
+    268435456,
+    268435456
+  ]
+}
