@@ -9,13 +9,56 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **ACTIVE: K1–K6 kernel workstream; K5 VMM repair passed; SVM containment next.**
-  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after three one-shot boots;
+- **ACTIVE: K1–K6 kernel workstream; K5 passed; bounded SVM CPU-unmap containment passed; map locking next.**
+  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after four one-shot boots;
   persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
   GPU loaded,40CU/80SIMD, wave32/KFD100103; live quirks3/0/3. No active build,
   GPU gate, container or unacknowledged recovery deadline at batch end. User's
   training/download finished; user explicitly returned.104 to development use.
-  .105 unchanged. Root orchestration SSH session63063 is idle, not durable state.
+  .105 unchanged. Root orchestration SSH session8231 is idle, not durable state.
+- **NEW SVM CPU-unmap milestone2026-10-15:** module/source
+  `67d0f189570c831efa17b524c080de07bbec485a`, patch0004. Single-device BC-250
+  CPU-unmap notifier acquires queue eviction BEFORE PT invalidation; successful
+  invalidation balances it, returned errors after a confirmed stop retain it
+  until process exit. Full-range mapped_to_gpu clears only after success. Existing
+  opt-in unmap bit controls this guard; other ASIC/multi-device behavior unchanged.
+  Root-only0600 one-shot`bc250_svm_unmap_fail_pid` defaults0; initial-namespace TGID
+  must match and queues must have successfully quiesced before consumption.
+- **Current module/boot:** signed r3-only updates/amdgpu.ko.gz SHA
+  `c1d0e5a887bc3d2019472b9758cf57c920e9ef9544b3b47f6ed1a2d620f5e868`,
+  build/installed/loaded ID`c99a2c6dc9074760efe06d074ec0248ce5e8739b`;
+  kernel image still84995f1/buildID57f7c52, image/initramfs unchanged. Previous
+  K5 module independent copy`KWS/recovery/svm-before/amdgpu.ko.gz`, original stock
+  r3 and r2/default retained. New boot`eb2cc9df-5df6-4250-a0ec-1af4de205f93`;
+  base/cooling ACK,360s SVM guard and180s full-injection guard ACKs completed.
+  Source/GIT_REVISION67d0f1895;`SOURCE_SVM.json` records image/module delta.
+  Pid7101 incremental modules build finished0,16jobs/20GiB ccache;
+  `logs/svm-modules-build.log`, `svm-module-install.log`. No active build/test/
+  container/GPU user or recovery deadline. Injection parameter verified0.
+- **SVM evidence:** initial six GPU CPU-reference checks passed on K5 module.
+  New module: partial AND full CPU-unmap injection gates passed. Each target
+  process completed five prior SVM references and a normal GPU-write control,
+  then received one modeled -EIO at the unmap runlist point; PID matched, hook
+  consumed, exactly one expected error log. Queued GPU write remained unexecuted
+  through200 one-millisecond host polling samples, process exited0; six-check
+  fresh-process SVM gates passed before/after each injection. No new ordinary
+  kernel lines. Unchanged full Lt664/SparseLt150/hipTensor316/Torch19 gate passed,
+  two memory processes each24 allocation/pinned/stream/event+16 VMM rounds,
+  workload dmesg delta0. Intentional error lines retained separately, not hidden.
+  Host`logs/svm-{baseline,cpu-unmap-gate,cpu-unmap-full-injection-gate,
+  cpu-unmap-full}`, repository`kernel/r3/evidence/svm-cpu-unmap/`; new
+  `svm-{reference.cpp,validate-on-host.py,module-on-host.sh,gpu-phase-on-host.sh,
+  identity-on-host.py,source-manifest.json}` provide replay/provenance.
+- **Scope/EXACT NEXT:** qualify only returned CPU-unmap errors AFTER confirmed
+  quiescence. Failed scheduler stops cannot veto blockable MMU reclamation by
+  returning false (core warns/continues); hardware HWS hangs, resume failures,
+  retry-fault migration/XNACK and multi-GPU remain unqualified. Audit SVM MAP
+  runlist flush under BO reservations and move post-PT invalidation outside those
+  reservations while preserving notifier/range lifetime ordering, then short
+  concurrent CPU-compared GPU gates. Existing SVM helper flush under reservations
+  is not certified lock-order safe. Follow with Display Core warning analysis,
+  telemetry and K6; N2.1 remains next library item. Keep r2 default, SDMA0 and
+  experimental heap off. Unknown Python CPU segfault remains separate/unresolved.
 - **NEW K5 milestone2026-10-15:** explicit fixed-VA VMM stale translations repaired
   on .104. Kernel source/module revision`8f3c0d352643378629e5a73f4b9df96b7d38d94a`,
   patch0003; kernel IMAGE remains84995f1, same config/image/initramfs/firmware.
@@ -27,11 +70,11 @@ release claims must not override this cursor and current manifests.
   Original failures preserved, not weakened/skipped. Upper SVM containment is
   still separate/unqualified; no injected-failure or raw concurrent DRM timeline
   ordering claim.
-- **Installed/loaded K5 module:** r3-only`updates/amdgpu.ko.gz`, compressed SHA
+- **Historical installed K5 module (retained; superseded by SVM module above):** r3-only`updates/amdgpu.ko.gz`, compressed SHA
   `451b8a3d05cdf494b67546f9074c86f4d931481a3efd7f7b64e7bad48611dadb`,
   build/installed/loaded ID`12ad61569200a95f1d626396fca3692753231707`.
   Original r3 stock module, image/initramfs, r2 artifacts/default and .105 retained.
-  Current boot`e2a06828-208c-47f7-9838-8a5be9f7bfd5`; base/cooling readiness ACK
+  K5 boot`e2a06828-208c-47f7-9838-8a5be9f7bfd5`; base/cooling readiness ACK
   and fresh360s GPU guard ACK completed. No active build/container/GPU gate/deadline.
   Single .ko build compiled both units but failed modpost on companion DRM symbols;
   incremental`make ... -j16 modules` succeeded using16jobs/20GiB ccache, only new
@@ -52,19 +95,16 @@ release claims must not override this cursor and current manifests.
   `k5-source-manifest.json`. Host`SOURCE_K5.json` records module delta;
   `source/GIT_REVISION`8f3c0d3, original image/source manifest84995f1 retained.
   `KWS/logs/k5-gem-va-{full,isolation}`, `k5-gem-va-console.log` and guard log.
-  **Exact next:** audit upper SVM notifier/unmap calls that discard flush errors
-  or pre-mark ranges unmapped; design lifetime-safe containment and bounded failure
-  injection under recovery guard/runtime lock before implementing. Then address
-  Display Core warnings, trusted telemetry and K6 integration. N2.1 remains next
-  library item. Keep r2 default; no daily promotion.
+  K5 follow-up CPU-unmap containment is now qualified in the bounded SVM scope
+  above; use that current cursor for remaining locking/failure limits and next work.
 - **Source/build:** signed stable`v7.2.10`, base
   `7b20d05fd38de8e0be168956f6fd241d750c7d69`, Greg fingerprint
   `647F28654894E3BD457199BE38DBBDC86092693E` verified. Separate repo
   `kernel/linux-r3`, original image source`84995f1a85188cde56910729214b0a68a7e402da`, initial two reviewed
   patches in`kernel/patches/r3/`: CU/PASID/TTM quirks, complete probe register
   restoration, runlist caller error propagation. SVM upper notifier/unmap paths
-  still discard some existing returns/pre-mark unmapped: failed-flush containment
-  and fault injection NOT qualified. Eight-core telemetry/clock trust still open.
+  still discard some existing returns/pre-mark unmapped: CPU-unmap returned-error containment now bounded-qualified above;
+  retry-fault/failed-stop handling remains unqualified. Eight-core telemetry/clock trust still open.
   .104`KWS=/home/nik/bc250work/kernel-r3-7.2.10`; native16jobs/20GiB ccache build
   finished22:26:33UTC Oct14. Original PIDs12625/25715 ended; source/build/stage,
   caches and logs retained. Fan source`kernel/board-fan` revision`9086701` imported
@@ -363,7 +403,7 @@ Kernel workstream added at the user's request (2026-10-14):
 | State | ID | Work and acceptance boundary |
 | ----- | -- | ---------------------------- |
 | [x] | K1 | Verified latest stable upstream Git tag/source and signing identity; compare legacy source/config/modules and retain provenance/fallbacks. |
-| [x] | K2 | Minimal series reviewed/implemented and normal paths bounded-tested; diagnostic register restore corrected; failed-flush/SVM containment and telemetry explicitly remain separate/unqualified. |
+| [x] | K2 | Minimal series reviewed/implemented and normal paths bounded-tested; diagnostic register restore corrected; CPU-unmap returned-error containment bounded-qualified by patch0004; failed-stop/map-locking/telemetry remain open. |
 | [x] | K3 | Separate r3 image/modules/config built, signed/staged/installed and artifact-inspected on .104; r2 retained unchanged. |
 | [x] | K4 | Bounded r2 watchdog countdown/SSH return and r3 deadline fallback/SSH return exercised; two r3 base boots/cooling ACKs; early-hang/arbitrary GPU-hang recovery unqualified. |
 | [x] | K5 | GEM_VA runlist invalidation repaired; unchanged full GPU/Torch/VMM gate and independent HIP/ROCr references pass on signed r3 module8f3c0d3. Historical r2/r3 failures preserved; bounded scope only. |

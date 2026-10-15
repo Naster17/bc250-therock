@@ -209,6 +209,33 @@ unknown Python CPU segfault remain separate; experimental heap/SDMA remain off.
 Next: upper SVM notifier/unmap failed-flush lifetime containment, then Display
 Core warning analysis, telemetry and K6 integration; N2.1 library cursor retained.
 
+SVM CPU-unmap follow-up/source`67d0f189570c831efa17b524c080de07bbec485a`
+(patch0004) now bounded-qualifies one returned-error path: single-device BC-250
+CPU unmap holds an independent queue eviction before PT invalidation and retains
+it on error after successful quiescence; successful invalidation balances it.
+Full-range mapped_to_gpu commits only after all invalidations succeed. Root-only
+one-shot injection targets an exact host TGID and only fires while queues are
+stopped; default/verified final value0. Initial scheduler-stop failure, retry-fault
+migration and map-side BO/DQM ordering are NOT thereby qualified.
+
+Current signed r3-only module SHA
+`c1d0e5a887bc3d2019472b9758cf57c920e9ef9544b3b47f6ed1a2d620f5e868`,
+loaded/build/installed ID`c99a2c6dc9074760efe06d074ec0248ce5e8739b`, image84995f1
+unchanged. K5 module retained independently at`KWS/recovery/svm-before`, stock
+r3/r2/default/.105 preserved. New boot`eb2cc9df-5df6-4250-a0ec-1af4de205f93` base/
+cooling/GPU guards ACKed, no active jobs. SOURCE_SVM.json separates image/module.
+
+Partial and full CPU-unmap injection each pass: five prior GPU references plus
+normal write control; -EIO consumed once, exactly one expected kernel error line;
+queued write unexecuted through200 one-millisecond host polling samples; process
+exit0 and six-reference fresh-process SVM gates before/after. Baseline six SVM
+checks had passed on K5 module. Unchanged full library/Torch/VMM regression gate
+passes counts above, no workload kernel-log delta. No performance, hardware-hang,
+scheduler-stop, retry-fault or universal SVM safety claim. Evidence
+`kernel/r3/evidence/svm-cpu-unmap/`, helpers/source manifest/README. Next audit:
+SVM map runlist flush under BO reservations; move with notifier/lifetime ordering
+preserved before concurrency qualification. Display warnings/telemetry follow.
+
 Read-only kernel review2026-10-14:
 [report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),
 [active AMD delta](bc250_kernel_audit_20261014.patch). Reconstructed AMD subtree
@@ -616,6 +643,7 @@ optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Intermittent CG/CSR zero output | Proven live CSR analysis metadata overwrite associated with experimental VM heap; compiled default now uses the established pool backend     | Root `47925cbd5`, systems patch0003, `rocalution-step-trace.log`, allocation/raw-metadata/first-kernel probes, 40 plus fresh-process200 checks |
 | Experimental VM heap            | Default bypass is a mitigation, not a repair. VMM/async pools retained; explicit opt-in remains experimental.                                | `rocdevice.cpp`, root `bd6e4c8a4`, release gates                                                                                               |
+| SVM CPU-unmap returned error | Patch0004 retains queue eviction after failed invalidation following confirmed stop; partial/full targeted -EIO tests and fresh GPU references pass. Failed stop/map-side locking/retry migration remain open. | `bc250stack/kernel/r3/evidence/svm-cpu-unmap/` |
 | Explicit fixed-VA VMM remap | K5 GEM_VA runlist fix8f3c0d3: unchanged two-process VMM gate and HIP/ROCr26-check references pass; historical r2/r3 failures preserved. No broad/failure-path claim. Separate from VM-heap corruption. | `bc250stack/kernel/r3/evidence/k5-summary.json`, `k5-gem-va-full.json`, original/diagnostic failures |
 | Later Python CPU segfault       | Execution fault at0x3b3e6, no identified stack/operator; cause remains unknown. Stable-prefix sparse gates and independent candidate passed. | Older operator-candidate/kernel logs, P2 candidate/launcher20 cycles each; do not merge with the proven CSR defect                             |
 | Triton incorrect buffer reads   | Missing RDNA1 descriptor flag branch; globals passed while buffer path failed. Fixed.                                                        | Triton patch0004/root `9fdae0b5d`; both memory paths validated                                                                                 |
