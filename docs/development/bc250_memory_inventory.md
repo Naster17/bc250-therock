@@ -139,8 +139,11 @@ Important operational facts:
 
 - No cpufreq policy or scaling_governor exists on `.104`; do not report a
   configured CPU performance governor.
-- GPU power policy is auto. `pp_dpm_sclk` and hwmon freq1_input disagree; clock
-  telemetry remains untrusted. Advertised maxima are not attained-clock proof.
+- Kernel GPU power policy is auto, but an external SMU governor is active on
+  .104 (observedPID5265). Its fix-metrics/fix-freq options bind tmpfs replacements
+  over `gpu_metrics` and hwmon freq1_input. Those views are governor-supplied;
+  DPM/DRM use the suspect original Current clock slot. True attained clocks
+  remain unqualified; auto does not mean stock clocks. Source/provenance below.
 - The SMU OC service requests CPU 3500 MHz, scale −19, max_temperature 90;
   these are settings, not verified operating frequency/voltage.
 - `/usr/local/bin/bc250-fan-curve` reads CPU k10temp/Tctl despite comments saying
@@ -289,6 +292,40 @@ userspace, SDMA0/heap-off and separate unknown Python CPU segfault preserved.
 Next: read-only eight-core SMU/live-clock/k10temp audit against retained packaging
 patch0005 before policy changes, then K6; N2.1 next library item. Prior SVM failure/
 lockdep/XNACK/multi-GPU limitations remain.
+
+Read-only telemetry audit2026-10-15 completed on0957f1aa4/same boot/prefix.
+Original sysfs metrics read through governor-held fd6 bypassed overlays without
+unmounting/stopping it. Device0:22 vs overlay0:25 verified; this is translated
+v2.2 data, not raw PMFW.84 sequential samples~5Hz around an8-second gfx1013
+integer workload;131,072 exact CPU references passed, kernel log identical,
+config/executable/fan-script hashes and mounts unchanged. Existing governor
+PID5265 preserved; no policy/source/prefix/boot changes. Guard ACKed, no own jobs.
+
+Governor clock reports1000MHz idle→2000MHz median during own load; original
+kernel/DPM/DRM mostly2–7MHz, max47; average kernel456–953MHz remains untrusted.
+Overlay views agree84/84, shared kernel views74/84 sequential samples; neither
+proves physical clock. Eight CPU core groups/16online threads confirmed, while
+kernel copies6 core slots: temperatures0/2 report0.63–1.88/0.62–3.56°C,1/3 zero,
+6/7 clock/temperature65535. GPU activity65535/DRM load errno22; overlay utilization
+is governor-derived. Legacy hybrid-layout claims fit these symptoms but full
+PMFW offsets/core identities were not qualified. No CPU-offline/raw-mailbox test.
+
+Reported edge51–68°C versus original GFX51.25–68.25°C; hwmon truncation gives
+−0.75..0°C difference in samples. CPU Tctl52.625–67.125°C; fan uses that CPU
+sensor, existing PWM90→175/RPM~2k→3.5k. Absolute calibration/maximum thermal or
+stability claim excluded. Installed governorSHA00cd65a6... and candidate built
+SHAe8028ca2... differ; reference repo240b0df/Cargo0.4.0 lacks observed freq-overlay
+code, so running executable/source identity unresolved. Local read-only archive
+`kernel/artifacts/telemetry-readonly/governor-reference-240b0df.tar` (SHA in report)
+preserves reference source, original repo/history untouched. Evidence/report:
+`kernel/r3/evidence/telemetry-readonly/`, `kernel/r3/telemetry/README.md`.
+
+Next pin active governor source/overlay behavior and kernel/daemon mailbox
+coordination before a minimal guarded live-clock getter. Retained packaging0005
+cannot be applied blindly: core count does not prove PMFW map; instantaneous
+power is labeled average, and live-query failure falls back to the suspect slot.
+Keep per-core/power semantics separate. K6/N2.1 retained; SDMA0/heap-off, prior
+SVM failure/lockdep/physical-display limits and Python CPU segfault remain open.
 
 Read-only kernel review2026-10-14:
 [report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),

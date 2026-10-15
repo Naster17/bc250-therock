@@ -9,7 +9,7 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **ACTIVE: K1–K6 kernel workstream; K5/SVM passed; HPD init errors and two IRQ WARNs fixed; telemetry next.**
+- **ACTIVE: K1–K6 kernel workstream; K5/SVM passed; HPD fixed; read-only telemetry audit complete; clock/provenance correction next.**
   2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after six one-shot boots;
   persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
   GPU loaded,40CU/80SIMD, wave32/KFD100103; live quirks3/0/3. No active build,
@@ -40,15 +40,48 @@ release claims must not override this cursor and current manifests.
   repository`kernel/r3/evidence/hpd-capability/`, `hpd-*` helpers/manifest/README.
   PID6463 modules build ended0,16jobs/20GiB ccache; public DC header dependency
   rebuild,`logs/hpd-modules-build.log`, `hpd-module-install.log`. No active build,
-  test/container/GPU user or deadline. DRM debug/injection parameter both0.
-- **EXACT NEXT:** read-only telemetry audit before new patches/power policy:
-  compare `kernel/packaging/kernel-patches/0005-bc250-8core-telemetry.patch` with
-  current `cyan_skillfish_ppt.c`/SMU metrics layout/live-clock paths and k10temp;
-  sample pp_dpm_sclk, hwmon, ROCm/SMU values under one bounded reference load.
-  Explain mismatches from evidence; do not equate maxima with attained clocks or
-  apply legacy patch blindly. Then K6 integration; N2.1 next library item. Retain
-  r2 default/SDMA0/heap-off and existing SVM failure/lockdep/XNACK/multi-GPU limits.
-  Separate unknown Python CPU segfault remains unresolved; no performance claim.
+  agent-owned test/container or deadline. DRM debug/injection parameter both0;
+  external governor now recorded in the read-only audit below.
+- **CURRENT read-only telemetry audit2026-10-15 completed:** production
+  kernel/module0957f1aa4/image84995f1/prefix/boot unchanged, same boot above.
+  Newly observed external governor PID5265 (`cyan-skillfish-governor-smu`) has
+  fix-metrics/fix-freq enabled and bind-mounts tmpfs over GPU metrics AND hwmon
+  freq1_input. Kernel policy auto does not imply stock clocks. Existing governor/
+  overlays/config/clock/voltage/fan policy untouched. amdgpu_top PID5728 was also
+  present initially, absent later; not stopped by this audit. No agent-owned jobs
+  remain. GuardPID7594 ACKed/ended; rootSSH9359 idle. No kernel build/reboot.
+- **Passed collection/reference:** original governor-held sysfs fd6 (device0:22,
+  overlay0:25) read without unmounting; kernel-translated v2.2, NOT raw PMFW.
+ 84 samples~5Hz:4s idle,8s native integer GPU workload plus startup,4s cooldown;
+ 131,072 exact CPU-reference checks, kernel logs byte-identical. During own load,
+  governor-supplied clock1000–2000MHz (median2000) versus original kernel/DRM/
+  DPM mostly2–7MHz, max47; average kernel456–953MHz also untrusted. Overlay
+  clock views agreed84/84; shared kernel clock views agreed74/84 sequential
+  samples, NOT independent clock validation. Actual attained clock unresolved.
+  Physical8core/16thread topology confirmed; per-core temperatures0/2 report
+ 0.63–1.88/0.62–3.56°C,1/3 zero,6/7 temperature/clock65535. Original GPU activity
+ 65535 and DRM load errno22; overlay utilization is governor-derived.
+- **Temperatures/provenance:** reported edge51→68°C, original GFX51.25→68.25°C,
+  CPU Tctl52.625→67.125°C in this short load. Hwmon edge truncates centidegrees
+  to integer°C (observed difference−0.75..0°C). Fan actually reads CPU Tctl;
+  existing automatic PWM90→175/RPM~2k→3.5k, remaining high during CPU cooldown.
+  No absolute calibration/max-thermal claim. Running governor binarySHA00cd65a6...
+  differs from retained target/releasee8028ca2...; reference Git240b0df/Cargo0.4.0
+  lacks observed frequency-overlay code. Running binary/source NOT qualified.
+  Reference archive`kernel/artifacts/telemetry-readonly/governor-reference-240b0df.tar`
+  retained locally (ignored artifact/SHA in evidence); original repo/history intact.
+- **Evidence/EXACT NEXT:** `kernel/r3/telemetry/README.md`, sampler/load/summarizer;
+  `kernel/r3/evidence/telemetry-readonly/` raw JSONL/config/script/identity/results.
+  Host`KWS/logs/telemetry-readonly`, `telemetry-compile.log`, `telemetry-guard.log`;
+  one-TU gfx1013 probe compiled with20GiB ccache, binary`KWS/telemetry-reference-load`.
+  Pin running governor source/overlay semantics and kernel/daemon SMU mailbox
+  coordination, THEN minimal guarded read-only GetGfxFrequency getter validation.
+  Do not blindly apply legacy packaging0005: physical core count alone does not
+  prove the hybrid map; instantaneous power is labeled average; query failure
+  falls back to the suspect clock slot. Keep per-core remapping/power semantics
+  separate until offsets/units proven. K6 then N2.1 remain; SDMA0/heap-off, r2/
+  .105 and prior SVM/fault/lockdep/physical-display limits retained. Python CPU
+  segfault separate/unresolved. No speedup/sustained claim from this8-second test.
 - **Historical SVM validation milestone2026-10-15:** source/module
   `41db89c103b183c82c05bbe099ea96ad1ddee8d1`, patch0005. Map AND validation-path
   unmap collect PT fences/site bits under BO reservations, then release reservations,
