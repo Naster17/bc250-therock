@@ -1,0 +1,8 @@
+{
+  "torch/aten/src/ATen/native/cuda/linalg/BatchLinearAlgebra.cpp": "a2c5782d63cc65c225683e040114ffa482af9a8ba6d561b1960c854ac1829b02",
+  "torch/aten/src/ATen/native/cuda/linalg/BatchLinearAlgebraLib.cpp": "fd08039e15e689585b2d266b9656de7cf4dfefa5fb1766a9355eda46a656e5a5",
+  "therock/rocm-libraries/projects/hipsolver/library/src/amd_detail/hipsolver_dense64.cpp": "34201e073cb8cb9399586b6dd9da2469b0f51321d12d5d88865d421dec646786",
+  "therock/rocm-libraries/projects/hipsolver/library/src/amd_detail/hipsolver.cpp": "850ec4e05c831d3b237eb805653b6ca918f83e6264b363eb6705c28f953c74e2",
+  "therock/rocm-libraries/projects/rocsolver/library/src/lapack/roclapack_gehrd.hpp": "bd48be9617fdea577ea4f75aba748ccf04379f51adb1384fa58e0a2abdd8c39a",
+  "therock/rocm-libraries/projects/rocsolver/library/src/include/ideal_sizes.hpp": "6cf7326be634ba499d6f97a2b429c67e6efad75cb5ab2466941b5805b3e62f4c"
+}

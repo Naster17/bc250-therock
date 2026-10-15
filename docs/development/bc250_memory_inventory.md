@@ -1030,3 +1030,22 @@ OpenBLAS hashes, dispatch audit/source/test/results:
 repeated/extreme-scale/convergence-failure/performance scope remain unqualified;
 Python CPU crash and MIOpen defect remain open. Next N2.3 native Hessenberg/QR/
 Schur feasibility and smallest reviewed implementation/convergence step.
+
+## N2.3 native small Schur prototype — 2026-10-15
+
+Audited native GEHRD/GEQRF/UNGQR pieces; no pinned native nonsymmetric Schur
+iteration found. Added isolated gfx1013_schur_candidate.py, cap16 complex64/128:
+owned native GEHRD copy/current-stream private handle, GPU reflector-Q formation,
+bounded explicit complex shifted GPU QR, similarity accumulation and checked
+roundoff deflation. Python loop/scalar checks synchronize host; no CPU matrix
+solve. Positive info on budget exhaustion retains partial T,Q. Schur vectors
+are not right eigenvectors. Native production eig remains unimplemented.
+Initial17/final21 groups pass with unchanged dmesg and acknowledged600s guards:
+orders4/9/16 basis1/10, CPU/analytic spectrum/Hessenberg/Schur invariants, guards/
+nondefault stream, zero/one-step exhaustion, repeated triangular, ±i rotation,
+scalar and9 argument rejections. Max Schur reconstruction1.35e-6/2.90e-15.
+Source/evidence/limits: [N2.3](bc250_solver_results/N23.md). No default dispatch/
+Torch/DSO/prefix/boot policy change or native rebuild; no active jobs. Extreme
+scaling/balancing/general convergence/vectors/batching/gradients/performance not
+qualified. CPU fault/MIOpen defect remain open. Next N2.4 guarded small-Schur
+right eigenvector recovery and explicit spectrum/convergence refusal contracts.

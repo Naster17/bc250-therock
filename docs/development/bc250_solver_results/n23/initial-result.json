@@ -1,0 +1,288 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "schur_torch.complex64_n4_basis1",
+      "status": "passed",
+      "seconds": 2.3651164149996475,
+      "hessenberg": {
+        "similarity": 1.0103513707952647e-07,
+        "orthogonality": 7.334362074206825e-08
+      },
+      "schur": {
+        "similarity": 8.96966614639231e-07,
+        "orthogonality": 3.9338963228583407e-07
+      },
+      "iterations": 6,
+      "deflations": 3,
+      "eigenvalue_error": 1.5299732600837347e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n4_basis10",
+      "status": "passed",
+      "seconds": 0.029085522997775115,
+      "hessenberg": {
+        "similarity": 9.990225306052533e-08,
+        "orthogonality": 6.53074246626266e-08
+      },
+      "schur": {
+        "similarity": 7.638200688094398e-07,
+        "orthogonality": 4.873382204924355e-07
+      },
+      "iterations": 8,
+      "deflations": 3,
+      "eigenvalue_error": 2.273560536228452e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n9_basis1",
+      "status": "passed",
+      "seconds": 0.0387596360014868,
+      "hessenberg": {
+        "similarity": 3.544035997521354e-07,
+        "orthogonality": 2.3010698255681958e-07
+      },
+      "schur": {
+        "similarity": 1.1648800702687343e-06,
+        "orthogonality": 6.327413401248777e-07
+      },
+      "iterations": 16,
+      "deflations": 8,
+      "eigenvalue_error": 2.2034955521611376e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n9_basis10",
+      "status": "passed",
+      "seconds": 0.03921548299695132,
+      "hessenberg": {
+        "similarity": 3.300261091474693e-07,
+        "orthogonality": 2.1785291325978462e-07
+      },
+      "schur": {
+        "similarity": 1.0716443105742873e-06,
+        "orthogonality": 6.89879667348443e-07
+      },
+      "iterations": 20,
+      "deflations": 8,
+      "eigenvalue_error": 2.536215095391809e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n16_basis1",
+      "status": "passed",
+      "seconds": 0.05346447100600926,
+      "hessenberg": {
+        "similarity": 3.5207019834844043e-07,
+        "orthogonality": 2.5038997123109447e-07
+      },
+      "schur": {
+        "similarity": 1.3493095450138373e-06,
+        "orthogonality": 7.707867301013954e-07
+      },
+      "iterations": 31,
+      "deflations": 15,
+      "eigenvalue_error": 1.91451089621889e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n16_basis10",
+      "status": "passed",
+      "seconds": 0.05491976800112752,
+      "hessenberg": {
+        "similarity": 3.2314252166830546e-07,
+        "orthogonality": 2.5181487760061226e-07
+      },
+      "schur": {
+        "similarity": 1.1930057480916006e-06,
+        "orthogonality": 7.396953319551227e-07
+      },
+      "iterations": 33,
+      "deflations": 15,
+      "eigenvalue_error": 4.009684569549307e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "nonconvergence_torch.complex64",
+      "status": "passed",
+      "seconds": 0.009937076996720862,
+      "info": 9,
+      "iterations": 0,
+      "partial_similarity": {
+        "similarity": 2.978122245670993e-07,
+        "orthogonality": 2.1203179986191456e-07
+      },
+      "hidden_host_fallback": false
+    },
+    {
+      "name": "triangular_torch.complex64",
+      "status": "passed",
+      "seconds": 0.005734238999139052,
+      "repeated_eigenvalues": true,
+      "iterations": 0,
+      "limits": "Already triangular; no defective eigvector claim"
+    },
+    {
+      "name": "schur_torch.complex128_n4_basis1",
+      "status": "passed",
+      "seconds": 1.92256039899803,
+      "hessenberg": {
+        "similarity": 3.662326364550058e-16,
+        "orthogonality": 2.9394222583710625e-16
+      },
+      "schur": {
+        "similarity": 8.906281781923613e-16,
+        "orthogonality": 6.055344357276439e-16
+      },
+      "iterations": 7,
+      "deflations": 3,
+      "eigenvalue_error": 3.0732328983132737e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n4_basis10",
+      "status": "passed",
+      "seconds": 0.027846979995956644,
+      "hessenberg": {
+        "similarity": 2.2683822354587763e-16,
+        "orthogonality": 2.751603441236969e-16
+      },
+      "schur": {
+        "similarity": 7.272277113721926e-16,
+        "orthogonality": 5.397764296744538e-16
+      },
+      "iterations": 10,
+      "deflations": 3,
+      "eigenvalue_error": 5.828406534472336e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n9_basis1",
+      "status": "passed",
+      "seconds": 0.03977397999551613,
+      "hessenberg": {
+        "similarity": 4.821749201416233e-16,
+        "orthogonality": 4.567250643639753e-16
+      },
+      "schur": {
+        "similarity": 1.5882551850615686e-15,
+        "orthogonality": 1.1252232117605906e-15
+      },
+      "iterations": 20,
+      "deflations": 8,
+      "eigenvalue_error": 3.580361673049448e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n9_basis10",
+      "status": "passed",
+      "seconds": 0.04398825200041756,
+      "hessenberg": {
+        "similarity": 5.088223833535365e-16,
+        "orthogonality": 3.7713790071887966e-16
+      },
+      "schur": {
+        "similarity": 2.1333248712573185e-15,
+        "orthogonality": 1.2586936614361188e-15
+      },
+      "iterations": 25,
+      "deflations": 8,
+      "eigenvalue_error": 6.866350197783356e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n16_basis1",
+      "status": "passed",
+      "seconds": 0.0664951100043254,
+      "hessenberg": {
+        "similarity": 7.982054922993782e-16,
+        "orthogonality": 6.356421328479698e-16
+      },
+      "schur": {
+        "similarity": 2.8946791643317497e-15,
+        "orthogonality": 1.6283418613592501e-15
+      },
+      "iterations": 36,
+      "deflations": 15,
+      "eigenvalue_error": 1.0559528401412792e-14,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n16_basis10",
+      "status": "passed",
+      "seconds": 0.07051242800662294,
+      "hessenberg": {
+        "similarity": 6.809338904719188e-16,
+        "orthogonality": 5.062634129852607e-16
+      },
+      "schur": {
+        "similarity": 2.6485175788076947e-15,
+        "orthogonality": 1.7367375562753411e-15
+      },
+      "iterations": 45,
+      "deflations": 15,
+      "eigenvalue_error": 4.6629367034256575e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "nonconvergence_torch.complex128",
+      "status": "passed",
+      "seconds": 0.006611190998228267,
+      "info": 9,
+      "iterations": 0,
+      "partial_similarity": {
+        "similarity": 4.565177232753226e-16,
+        "orthogonality": 2.988085462772126e-16
+      },
+      "hidden_host_fallback": false
+    },
+    {
+      "name": "triangular_torch.complex128",
+      "status": "passed",
+      "seconds": 0.005648991005728021,
+      "repeated_eigenvalues": true,
+      "iterations": 0,
+      "limits": "Already triangular; no defective eigvector claim"
+    },
+    {
+      "name": "argument_contract",
+      "status": "passed",
+      "seconds": 0.0010501780052436516,
+      "rejections": 9
+    }
+  ],
+  "candidate_sha256": "5affdbe85cf3cc42f5b6bb8570fa1481d61d7ea10224acc1baa2b9c35076fba1",
+  "execution": "GPU matrix arithmetic, host scalar convergence/control only",
+  "mapped_solver_libraries": [
+    "/workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+    "/workspace/build/dist/rocm/lib/librocblas.so.5.8",
+    "/workspace/build/dist/rocm/lib/librocsolver.so.0.13"
+  ],
+  "passed": 17
+}

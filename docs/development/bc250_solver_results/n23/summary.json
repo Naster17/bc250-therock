@@ -1,0 +1,21 @@
+{
+  "status": "bounded experimental native GPU matrix Schur prototype qualified",
+  "checks": 21,
+  "initial_checks": 17,
+  "implementation": "build_tools/bc250/gfx1013_schur_candidate.py",
+  "implementation_sha256": "5affdbe85cf3cc42f5b6bb8570fa1481d61d7ea10224acc1baa2b9c35076fba1",
+  "test_sha256": "51e09e836022c8549b3c481fef4bf37a1c5490099ea5d984ef52e0343773bff1",
+  "order_cap": 16,
+  "cpu_control": "Python iterations and scalar convergence tests only",
+  "cpu_eigensolver_in_candidate": false,
+  "default_dispatch_changed": false,
+  "right_eigenvectors": false,
+  "host_labels": [
+    "solver-schur-n23",
+    "solver-schur-n23-final"
+  ],
+  "kernel_logs_unchanged": true,
+  "guards": "acknowledged",
+  "running_jobs": [],
+  "next": "N2.4 guarded small-Schur right eigenvector recovery with separated-spectrum references and explicit failure contracts"
+}

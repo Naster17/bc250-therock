@@ -123,3 +123,7 @@ references and patch only a demonstrated failure.
 N2.2 follow-up: [nonsymmetric eig compatibility and native gap](N22.md). The
 non-Hermitian operation uses host LAPACK in the pinned hipSOLVER; it must not
 inherit the native-GPU classification of Hermitian eigh above.
+
+N2.3 follow-up: [isolated native small Schur prototype](N23.md). GPU matrix
+arithmetic with host scalar control, explicit iteration failure and21 groups;
+right eigenvectors/default eig integration remain separate.
