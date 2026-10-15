@@ -236,6 +236,33 @@ scheduler-stop, retry-fault or universal SVM safety claim. Evidence
 SVM map runlist flush under BO reservations; move with notifier/lifetime ordering
 preserved before concurrency qualification. Display warnings/telemetry follow.
 
+SVM validation locking follow-up/source`41db89c103b183c82c05bbe099ea96ad1ddee8d1`
+(patch0005): validation map/unmap now capture PT fences under BO reservations,
+release reservations, then wait and invalidate under notifier lock. Caller-held
+range/mmap/SVM lifetime locks retained; prior updates drain despite later VMA
+errors. Tracking-allocation failure falls back to an in-place fence wait; it does
+not invoke DQM with caller BO reservations held. Validation PROT_NONE bounds
+corrected from bytes/pages mismatch to current-VMA inclusive page indices.
+Same probe:0 target-page unmaps before,2 after; no GPU access while PROT_NONE,
+restoration references passed. Two concurrent processes each54 GPU references
+(24 multi-VMA attribute rounds+24 CPU discard/restores) pass, no workload dmesg
+change. Both prior partial/full error-containment gates and unchanged full
+Lt664/SparseLt150/hipTensor316/Torch19+two memory processes each24 allocation/
+16 VMM rounds pass again. Intentional2 trace+2 error lines retained separately.
+
+Current r3-only module SHA
+`d47974d6d7eef898b50a4fdf03edb716e8cd13dfd7f2373b495f273727e5f07f`,
+loaded/build/installed ID`7ee5573fc124ceb0edad1bc662feb44ebdbf129f`; image84995f1
+unchanged, previous module/source at`KWS/recovery/svm-map-before`. Boot
+`84debfc4-5f83-413b-9656-6a5fd3140a3a` base/cooling/GPU guard ACKed; no active
+jobs. Source/GIT_REVISION and SOURCE_SVM_MAP.json record41db89c10 module delta.
+Evidence`kernel/r3/evidence/svm-map-deferred/`, helpers/README/patch0005.
+No lockdep/universal deadlock, OOM/fence-error/partial-map failure-lifetime,
+failed-stop/resume, XNACK/retry migration or multi-GPU qualification; no performance/
+sustained claim. Next: analyze existing Display Core IRQ WARNs without blanket
+suppression, then telemetry/K6. r2/default/.105/runtime/SDMA0/heap-off preserved;
+unknown Python CPU segfault remains separate and unresolved.
+
 Read-only kernel review2026-10-14:
 [report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),
 [active AMD delta](bc250_kernel_audit_20261014.patch). Reconstructed AMD subtree
@@ -643,7 +670,8 @@ optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Intermittent CG/CSR zero output | Proven live CSR analysis metadata overwrite associated with experimental VM heap; compiled default now uses the established pool backend     | Root `47925cbd5`, systems patch0003, `rocalution-step-trace.log`, allocation/raw-metadata/first-kernel probes, 40 plus fresh-process200 checks |
 | Experimental VM heap            | Default bypass is a mitigation, not a repair. VMM/async pools retained; explicit opt-in remains experimental.                                | `rocdevice.cpp`, root `bd6e4c8a4`, release gates                                                                                               |
-| SVM CPU-unmap returned error | Patch0004 retains queue eviction after failed invalidation following confirmed stop; partial/full targeted -EIO tests and fresh GPU references pass. Failed stop/map-side locking/retry migration remain open. | `bc250stack/kernel/r3/evidence/svm-cpu-unmap/` |
+| SVM CPU-unmap returned error | Patch0004 retains queue eviction after failed invalidation following confirmed stop; partial/full targeted -EIO tests and fresh GPU references pass. Failed stop/retry migration remain open; validation locking qualified separately below. | `bc250stack/kernel/r3/evidence/svm-cpu-unmap/` |
+| SVM validation invalidation | Patch0005 flushes validation map/unmap after BO unlock; PROT_NONE bounds fixed (trace0→2); two concurrent54-reference GPU processes and full regressions pass. No global lockdep/failure-path claim. | `bc250stack/kernel/r3/evidence/svm-map-deferred/` |
 | Explicit fixed-VA VMM remap | K5 GEM_VA runlist fix8f3c0d3: unchanged two-process VMM gate and HIP/ROCr26-check references pass; historical r2/r3 failures preserved. No broad/failure-path claim. Separate from VM-heap corruption. | `bc250stack/kernel/r3/evidence/k5-summary.json`, `k5-gem-va-full.json`, original/diagnostic failures |
 | Later Python CPU segfault       | Execution fault at0x3b3e6, no identified stack/operator; cause remains unknown. Stable-prefix sparse gates and independent candidate passed. | Older operator-candidate/kernel logs, P2 candidate/launcher20 cycles each; do not merge with the proven CSR defect                             |
 | Triton incorrect buffer reads   | Missing RDNA1 descriptor flag branch; globals passed while buffer path failed. Fixed.                                                        | Triton patch0004/root `9fdae0b5d`; both memory paths validated                                                                                 |

@@ -9,14 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **ACTIVE: K1–K6 kernel workstream; K5 passed; bounded SVM CPU-unmap containment passed; map locking next.**
-  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after four one-shot boots;
+- **ACTIVE: K1–K6 kernel workstream; K5 and bounded SVM CPU-unmap/validation locking passed; Display Core warnings next.**
+  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after five one-shot boots;
   persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
   GPU loaded,40CU/80SIMD, wave32/KFD100103; live quirks3/0/3. No active build,
   GPU gate, container or unacknowledged recovery deadline at batch end. User's
   training/download finished; user explicitly returned.104 to development use.
-  .105 unchanged. Root orchestration SSH session8231 is idle, not durable state.
-- **NEW SVM CPU-unmap milestone2026-10-15:** module/source
+  .105 unchanged. Root orchestration SSH session73077 is idle, not durable state.
+- **CURRENT SVM validation milestone2026-10-15:** source/module
+  `41db89c103b183c82c05bbe099ea96ad1ddee8d1`, patch0005. Map AND validation-path
+  unmap collect PT fences/site bits under BO reservations, then release reservations,
+  wait and invalidate under notifier lock; caller-held mmap/SVM/migrate locks
+  preserve lifetime. Drain earlier completed work even when a later VMA fails.
+  Fence-tracking allocation failure falls back to the prior in-place wait, without
+  DQM invalidation under BO reservations. No OOM/fence-error injection claim.
+  Also fixed validation PROT_NONE byte/page bounds using each VMA's inclusive
+  page indices: exact same probe traced0 target-page unmaps before,2 after;
+  no GPU access to protected page attempted; restore references passed.
+- **Current identity/results:** r3-only signed updates/amdgpu.ko.gz SHA
+  `d47974d6d7eef898b50a4fdf03edb716e8cd13dfd7f2373b495f273727e5f07f`,
+  build/installed/loaded ID`7ee5573fc124ceb0edad1bc662feb44ebdbf129f`.
+  Kernel IMAGE84995f1/buildID57f7c52, image/initramfs/firmware unchanged. Prior
+  module/source independently retained`KWS/recovery/svm-map-before`; original
+  stock/K5/SVM modules and r2/default/.105 preserved. Boot
+  `84debfc4-5f83-413b-9656-6a5fd3140a3a`; base/cooling and360s GPU guard ACKed.
+  Two concurrent processes each54 GPU CPU-reference checks, including24 multi-VMA
+  updates+24 CPU discard/restores, passed with unchanged workload dmesg. Both
+  partial/full CPU-unmap -EIO regressions pass again; unchanged full Lt664/
+  SparseLt150/hipTensor316/Torch19 and two memory processes each24 allocation+
+  16 VMM rounds pass, delta0. Two intentional trace+two injection lines accounted
+  separately. Dynamic debug restored; one-shot injection parameter verified0.
+- **Jobs/evidence/EXACT NEXT:** PID7547 modules build ended0,16jobs/20GiB ccache;
+  `logs/svm-map-modules-build.log`, `svm-map-module-install.log`. No active build,
+  test/container/GPU user or deadline. Host`SOURCE_SVM_MAP.json`, source/GIT_REVISION
+ 41db89c10; helpers`svm-map-*`, repository`kernel/r3/evidence/svm-map-deferred/`,
+  patch0005 and source manifest record replay/identity. No lockdep/universal deadlock,
+  OOM/fence-error/partial-map-failure lifetime, failed scheduler-stop/resume,
+  XNACK/retry-fault or multi-GPU qualification; no performance/sustained claim.
+  Next analyze the two existing Display Core IRQ load WARN call chains/tables;
+  preserve warning evidence and avoid blindly suppressing WARNs/disabling display.
+  Then trusted telemetry/K6; N2.1 next library item. Retain r2 default, SDMA0 and
+  experimental heap off; separate Python CPU segfault remains unresolved.
+- **Historical SVM CPU-unmap milestone2026-10-15:** module/source
   `67d0f189570c831efa17b524c080de07bbec485a`, patch0004. Single-device BC-250
   CPU-unmap notifier acquires queue eviction BEFORE PT invalidation; successful
   invalidation balances it, returned errors after a confirmed stop retain it
@@ -24,7 +58,7 @@ release claims must not override this cursor and current manifests.
   opt-in unmap bit controls this guard; other ASIC/multi-device behavior unchanged.
   Root-only0600 one-shot`bc250_svm_unmap_fail_pid` defaults0; initial-namespace TGID
   must match and queues must have successfully quiesced before consumption.
-- **Current module/boot:** signed r3-only updates/amdgpu.ko.gz SHA
+- **Previous CPU-unmap module/boot (superseded above):** signed r3-only updates/amdgpu.ko.gz SHA
   `c1d0e5a887bc3d2019472b9758cf57c920e9ef9544b3b47f6ed1a2d620f5e868`,
   build/installed/loaded ID`c99a2c6dc9074760efe06d074ec0248ce5e8739b`;
   kernel image still84995f1/buildID57f7c52, image/initramfs unchanged. Previous
@@ -49,17 +83,17 @@ release claims must not override this cursor and current manifests.
   cpu-unmap-full}`, repository`kernel/r3/evidence/svm-cpu-unmap/`; new
   `svm-{reference.cpp,validate-on-host.py,module-on-host.sh,gpu-phase-on-host.sh,
   identity-on-host.py,source-manifest.json}` provide replay/provenance.
-- **Scope/EXACT NEXT:** qualify only returned CPU-unmap errors AFTER confirmed
+- **CPU-unmap scope/previous next (validation locking superseded above):** qualify only returned CPU-unmap errors AFTER confirmed
   quiescence. Failed scheduler stops cannot veto blockable MMU reclamation by
   returning false (core warns/continues); hardware HWS hangs, resume failures,
   retry-fault migration/XNACK and multi-GPU remain unqualified. Audit SVM MAP
   runlist flush under BO reservations and move post-PT invalidation outside those
   reservations while preserving notifier/range lifetime ordering, then short
-  concurrent CPU-compared GPU gates. Existing SVM helper flush under reservations
-  is not certified lock-order safe. Follow with Display Core warning analysis,
+  concurrent CPU-compared GPU gates. Validation-context flushing is now moved outside reservations above; other
+  SVM callers and failure paths are not universally certified lock-order safe. Follow with Display Core warning analysis,
   telemetry and K6; N2.1 remains next library item. Keep r2 default, SDMA0 and
   experimental heap off. Unknown Python CPU segfault remains separate/unresolved.
-- **NEW K5 milestone2026-10-15:** explicit fixed-VA VMM stale translations repaired
+- **Historical K5 milestone2026-10-15:** explicit fixed-VA VMM stale translations repaired
   on .104. Kernel source/module revision`8f3c0d352643378629e5a73f4b9df96b7d38d94a`,
   patch0003; kernel IMAGE remains84995f1, same config/image/initramfs/firmware.
   HIP and direct ROCr isolation each failed8/26 checks before repair, while
