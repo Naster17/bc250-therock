@@ -76,7 +76,7 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 | MFMA/WMMA                           | No usable native path. Never whitelist another architecture or enable matrix-only engines to bypass this. Scalar implementations of the mathematics remain possible.             |
 | Wave64 / XNACK+                     | Compiler/runtime registration exists; our board execution/fault migration is unqualified                                                                                         |
 | SDMA                                | Keep `HSA_ENABLE_SDMA=0`; ROCr also intentionally defaults gfx1013 user SDMA off. Explicit override is an experiment, not a supported default.                                   |
-| VMM / async pools                   | APIs retained. Only the experimental VM-heap default is disabled on gfx1013.                                                                                                     |
+| VMM / async pools                   | APIs retained; fixed-VA two-backing VMM remap fails on both r2/r3 (K5). Experimental VM heap default stays disabled.                                                                                                     |
 | GPU reset                           | Current boot and live parameter `amdgpu.gpu_recovery=0`; reset behavior unqualified                                                                                              |
 | Media                               | DRM VCN decode/encode, JPEG, UVD and VCE queries return −EINVAL with zero exposed rings. Current driver exposure is not proof silicon lacks every media block.                   |
 | Profiling                           | API/kernel/copy tracing works. Hardware counter tables, PC sampling, ATT and SPM are unqualified.                                                                                |
@@ -84,14 +84,18 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 
 ## Kernel, unlock, cooling and recovery
 
-Active kernel: `7.1.5-bc250rocm-r2 #2 SMP PREEMPT_DYNAMIC`, built 2026-09-16.
-The running kernel CONFIG was not available through `/proc/config.gz`. A later
-workspace-organization task recovered its original build-tree configuration from
-.105 at `bc250stack/kernel/configs/r2.config`; provenance records this distinction.
-Do not infer it from unrelated 7.0.10 headers.
+Active experimental .104 kernel: `7.2.10-bc250rocm-r3`, two one-shot boots and
+bounded ordinary GPU/Torch references passed2026-10-15; full VMM gate FAILED as
+on r2. Persistent default/retained fallback and .105 reference remain
+`7.1.5-bc250rocm-r2 #2 SMP PREEMPT_DYNAMIC` (built2026-09-16). Its recovered
+original configuration is `bc250stack/kernel/configs/r2.config`; r3 migrated
+config/diff and evidence are in `bc250stack/kernel/r3/evidence/`. Do not infer
+configuration from unrelated7.0.10 headers.
 
-Live boot files:
+Retained r2 fallback boot files:
 `/home/nik/bc250work/bc250-rocm-lab/{vmlinuz,initramfs}-7.1.5-bc250rocm-r2`.
+New r3 artifacts are `/home/nik/bc250work/kernel-r3-7.2.10/artifacts/`; entry
+`bc250-rocm-r3-7.2.10-trial` defers AMDGPU until base SSH/cooling ACK.
 GRUB persistent default is `bc250-rocm-r2-kernel`, timeout three seconds.
 `WS/recovery/` retains kernel/initramfs, grub.cfg, grubenv, grub and cmdline.txt.
 Additional lts6.18.52/n17/stable7.0.10 boot files are present, but their presence
@@ -111,10 +115,14 @@ The exact TTM arguments are `ttm.pages_limit=3891200` and
 `amdgpu.bc250_flush_pasid_kiq=0`, `amdgpu.bc250_flush_by_runlist=3`, and
 `bc250.vulkan_v33_r1=1`. Preserve this known profile when investigating changes.
 
-SP5100 TCO watchdog: OpenRC service active, `/dev/watchdog0`, 10-second
-keepalives/120-second timeout. Configuration lives in `/etc/conf.d/watchdog`.
-Activity is not proof of recovery from a CPU-responsive GPU hang. Deliberate
-traps/reset/SDMA experiments need independent SSH/boot recovery planning.
+SP5100 TCO watchdog: OpenRC feeder10s/120s, `/dev/watchdog0`, config
+`/etc/conf.d/watchdog`. r3 driver builtin/nowayout1, early initramfs arms180s
+until root feeder handoff; candidate-only post-sysctl guard restores panic60
+and oops/lockup panic. Actual r2 feeder-countdown/reset/SSH return observed
+(reset-cause flag0, not a cause confirmation). r3 idle-GPU15s deadline expiry
+emergency-restarted to r2; SSH/default/new boot ID verified, then r3 rechecked.
+These bounded gates do not qualify pre-watchdog hangs or arbitrary GPU hangs,
+AMD reset, SDMA or fault experiments. Persistent r2 default retained.
 
 CPU unlock service `/etc/init.d/bc250-8core-unlock` calls
 `/usr/local/bin/bc250-8core-unlock boot`. The script describes SMU mailbox 0x98,
@@ -141,25 +149,45 @@ Important operational facts:
   `/lib/firmware/amdgpu`; file presence is not verified runtime load identity.
 - Retain `/home/nik/bc250work/{bc250-rocm-lab,bc250-gfx1013-fix,bc250-vulkan-v33,strata-port}`,
   `/home/nik/{bc250-40cu-unlock,bc250_smu_oc,rocm-systems}`. Older Vulkan7.0.10
-  module/initramfs artifacts are distinct from the live r2 kernel.
+  module/initramfs artifacts are distinct from retained r2 and the new r3 candidate.
 
-Active user-authorized clean-kernel workstream K1–K6 (2026-10-14): fresh signed
-Linux7.2.10 Git base`7b20d05fd38de8e0be168956f6fd241d750c7d69`, Greg signer
-`647F28654894E3BD457199BE38DBBDC86092693E`; new repo`bc250stack/kernel/linux-r3`,
-reviewed code`84995f1a85188cde56910729214b0a68a7e402da`. Separate .104 native build
-workspace`/home/nik/bc250work/kernel-r3-7.2.10`,16jobs/20GiB ccache, stage only;
-no candidate boot/install qualification yet. Preserve r2/.105 and all ROCm state.
-Full93,517-file legacy-source comparison found only7 active AMD files +5 backups
-against local archived7.1+7.1.5 baseline (those archive signatures not checked).
-New patches retain explicit CU/PASID/TTM quirks, restore all probe registers and
-propagate runlist errors via existing partial-operation error paths; failure
-injection remains unqualified. Eight-core telemetry remains separate/open.
-The r2 retained/installed AMDGPU payloads match byte for byte and loaded build ID
-matches both (`4bbb2004029bff0b0e9f8e60185968ebd073c27e`); module identity gap from
-initial audit is now closed, without claiming reproducible compilation. Actual
-r2 initramfs has Navi12 SDMA firmware under cyan names; two entries differ from
-root cyan blobs. First r3 pins actual r2 bytes privately; SDMA stays off. See
-`bc250stack/kernel/r3/evidence/` and canonical flow for current jobs/recovery gate.
+Clean-kernel workstream K1–K6, bounded outcome2026-10-15: fresh signed stable
+Linux7.2.10 base`7b20d05fd38de8e0be168956f6fd241d750c7d69`, Greg fingerprint
+`647F28654894E3BD457199BE38DBBDC86092693E`; separate source
+`bc250stack/kernel/linux-r3` revision`84995f1a85188cde56910729214b0a68a7e402da`.
+Native .104 workspace`/home/nik/bc250work/kernel-r3-7.2.10`,16jobs/20GiB ccache;
+image/modules/fan driver built/signed/installed,499-entry initramfs inspected.
+Initial fan sign-file path failed, then repaired using O=build tool; logs/unsigned
+module retained, no kernel rebuild. Image SHA
+`4531223f35bd9f313a242c2aa5d7bece0b4ffd4161d28b41271914a9b54d4558`;
+initramfs SHA`0e8444c328d070e0f6d422514116e19ccb13feb9e44d0bb4b289f0d1ea3eeb11`.
+Loaded kernel/AMDGPU build IDs match build artifacts; signed NCT6687 works with
+existing cooling service. r2/default/artifacts/.105/ROCm/Torch preserved.
+
+Minimal series retains CU/PASID/TTM quirks, restores diagnostic probe registers
+and propagates runlist errors through existing partial-operation paths. Some
+upper SVM notifier/unmap callers still discard returns/pre-mark ranges unmapped;
+end-to-end failed-flush containment and failure injection remain unqualified.
+Full93,517-file r2 source comparison found7 active AMD changes+5 backups versus
+archived7.1+7.1.5 (archive signatures not verified). Retained/installed r2 module
+payload and loaded build ID match; not bit-reproducible proof. Actual r2 SDMA
+firmware bytes are Navi12 under cyan names, differing from root cyan files;
+r3 privately pins actual r2 bytes. Root firmware unchanged, ROCr SDMA off.
+
+Same N1.8 runtime/image/DSO+kpack/harness compared on r2 and r3: Lt664 references,
+SparseLt134 numerical+16 API, hipTensor304 API+12 GPU and19 eager Torch CPU
+references passed; workload kernel-log deltas0. Two existing Display Core IRQ
+WARNs persist at AMDGPU load. Malloc/free24 rounds+pinned GPU alias/streams/events
+passed, including another24-round smoke after actual recovery/second r3 boot.
+BOTH full gates fail explicit fixed-VA VMM: first rebind of handle0 reads handle1
+initializer01238878 instead of01234567 BEFORE update, independently confirmed by
+GPU→ordinary-buffer copy. Original/diagnostic failures preserved; layer/cause
+unisolated. This is separate from fixed CSR/VM-heap corruption and historical
+unknown Python CPU segfault. No general performance or sustained claim.
+Next K5: simultaneous distinct-VA backing control then direct ROCr VMM reference;
+retain failed full-gate status, isolate before production changes. K6 integration
+awaits this work; N2.1 library cursor retained. Evidence and exact runtime state:
+`bc250stack/kernel/r3/evidence/`, README and canonical flow. No running build/gate.
 
 Read-only kernel review2026-10-14:
 [report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),
@@ -568,6 +596,7 @@ optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Intermittent CG/CSR zero output | Proven live CSR analysis metadata overwrite associated with experimental VM heap; compiled default now uses the established pool backend     | Root `47925cbd5`, systems patch0003, `rocalution-step-trace.log`, allocation/raw-metadata/first-kernel probes, 40 plus fresh-process200 checks |
 | Experimental VM heap            | Default bypass is a mitigation, not a repair. VMM/async pools retained; explicit opt-in remains experimental.                                | `rocdevice.cpp`, root `bd6e4c8a4`, release gates                                                                                               |
+| Explicit fixed-VA VMM remap | New K5 GPU reference sees handle1 data after rebinding handle0 on BOTH r2/r3; cause/layer unisolated. Separate from VM-heap corruption; full gates remain failed. | `bc250stack/kernel/r3/evidence/kernel-comparison.json`, original/diagnostic failures |
 | Later Python CPU segfault       | Execution fault at0x3b3e6, no identified stack/operator; cause remains unknown. Stable-prefix sparse gates and independent candidate passed. | Older operator-candidate/kernel logs, P2 candidate/launcher20 cycles each; do not merge with the proven CSR defect                             |
 | Triton incorrect buffer reads   | Missing RDNA1 descriptor flag branch; globals passed while buffer path failed. Fixed.                                                        | Triton patch0004/root `9fdae0b5d`; both memory paths validated                                                                                 |
 | Triton low-precision lowering   | Unsupported gfx13 packed dot/BF16 multiply replaced by widened scalar arithmetic; signed limits and rounding-tie/NaN tests retained          | Four Triton patches and MLIR/LLVM/assembly/GPU gates                                                                                           |

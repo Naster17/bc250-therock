@@ -9,100 +9,80 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **Live checkpoint 2026-10-14 21:48 UTC (user requested before compaction):**
-  K3 build PID12625 alive after27min, phase`build`, fan waiter25715 alive;
-  log advancing through AMDGPU/network/USB/filesystem modules, no build failure
-  observed,28.3GiB free. Same command/log/status/stage paths below. No install,
-  reboot or GPU execution; running kernel remains r2, persistent default r2.
-  Next independent preparation: make GPU runner reject new kernel faults/WARNs
-  and validate early-init hook/installer guards locally. Then finish staged
-  kernel/fan, exercise hardware watchdog recovery on r2, guarded r2 references,
-  and only then one-shot candidate boot/base SSH and controlled GPU gates.
-  Preserve generated remote signing private key; never include it in evidence.
-- **Recovery preparation batch (build still running):** GPU runner now saves
-  durable phase checkpoints and rejects new kernel faults/WARNs or ring rotation;
-  existing boot warnings remain in before-log. Ten local log-review cases passed.
-  Actual host init copy passes generated-hook shell/order checks; three guard
-  dry-run cases recorded in`kernel/r3/evidence/recovery-preparation.json`.
-  Prepared/transferred`test-watchdog-on-host.py` (verified feeder SIGSTOP plus
-  detached165s same-boot/PID fail-safe CONT) and`ack-base-boot-on-host.py`
-  (root watchdog/nowayout, cooling/fan, NIC, consumed one-shot, AMDGPU deferred).
-  These live helpers NOT executed; recovery/boot/GPU still unqualified.
-  Native signing key permissions verified600/root, stays remote. CPU~62°C,
-  fan~3500RPM during build. Memory checkpoint backed up on.104 at
-  `WS/agent-memory/8c6efe00e-kernel-build` and`latest` points there; sources intact.
-  Follow-up review: temporary GRUB env proved consumed one-shot may remain as
-  empty`next_entry=`; installer/watchdog-test/base-ACK now reject nonempty values,
-  accept empty. Early init requires nowayout and real character device, creating
-  it from sysfs major/minor if devtmpfs falls back to tmpfs. Syntax passed.
-  SVM upper MMU-notifier/unmap callers still discard some existing helper returns
-  and pre-mark ranges unmapped: no end-to-end failed-flush lifetime containment
-  claim; investigate separately before fault/migration experiments. Latest build
-  check22:00UTC:~10,500 objects/1.3GiB output, phase build, no observed error.
-  Alpine `/usr/lib/sysctl.d/00-alpine.conf` overrides panic to120; candidate-only
-  OpenRC guard now starts after bootmisc/sysctl, arms its deadline FIRST, then
-  restores panic60/oops/softlockup/hardlockup policy for r3 only. Base ACK verifies
-  these live values. Existing r2 services/settings unchanged. GPU runner records
-  immutable image/source identities and BLAS DSO/kpack hashes, exact664/150/316
-  consumer markers and19 Torch references; VMM unsupported is explicitly
-  unqualified rather than counted as executed. Live GPU execution still pending.
-- **ACTIVE user priority: K1–K6, clean upstream BC-250 kernel workstream**
-  (authorized2026-10-14), alongside ROCm/Torch. K1 source fetched: signed stable
-  `v7.2.10`, base`7b20d05fd38de8e0be168956f6fd241d750c7d69`; Greg fingerprint
-  `647F28654894E3BD457199BE38DBBDC86092693E` verified via kernel.org WKD/published
-  fingerprint. Official tag/verification artifacts in `kernel/verification/`.
-  New separate repo`kernel/linux-r3`, branch`users/Naster17/bc250-r3-7.2.10`,
-  sourceHEAD`84995f1a85188cde56910729214b0a68a7e402da`; two reviewed patches under
-  `kernel/patches/r3/`: explicit CU/PASID/TTM quirks, full probe register restore,
-  runlist callers propagate errors through existing partial-operation error paths.
-  No failed-flush injection qualification. Eight-core telemetry remains separate.
-  Full93,517-file r2 comparison confirmed only7 active AMD changes +5 backups
-  against archived baseline; archive signatures not checked by that comparison.
-- **RUNNING native kernel build (.104):** root PID12625, command
-  `bash /home/nik/bc250work/kernel-r3-7.2.10/helpers/build-on-host.sh`, log
-  `/home/nik/bc250work/kernel-r3-7.2.10/logs/build-initial.log`, status JSON
-  `.../build-status.json`. O=`.../build`, private staging=`.../stage`, source
-  verified tar/hash in`kernel/r3/source-manifest.json`;16jobs/existing20GiB ccache.
-  r2-config seed, debug symbols disabled for31.6GiB disk budget; builtin SP5100,
-  nowayout,180s first-open bound and panic/lockup reboot policy for candidate.
-  Signing key is generated remotely in build/certs only; never copy private keys.
-  Local clone and full-source audit jobs finished; authenticated root SSH session
-  68487 remains open for orchestration. No GPU test, install or reboot yet.
-- **K3/K4 preparation checkpoint:** host fan-build waiter PID25715, log
-  `.../kernel-r3-7.2.10/logs/fan-build.log`; rebuild/sign separate nct6687 module
-  only after kernel phase`staged`, with the new build's private key kept remote.
-  Fan source imported read-only from.105 into new repo`kernel/board-fan`,
-  revision`9086701`; original fan Makefile install/uninstall recipes not executed.
-  R3 memory/reference probe compiled (initial void** API compile correction logged
-  separately); no GPU execution yet. Candidate-only boot guard dry-run checks
-  passed: valid ACK, stale ACK rejected/expiry, wrong release inactive. Hardware
-  watchdog expiry/SSH recovery NOT yet exercised; do not call recovery qualified.
-  Helpers under`kernel/r3/`: early initramfs watchdog handoff, boot ACK deadline,
-  inactive candidate installer and serial GPU/Torch runner; not installed yet.
-  Firmware snapshot: actual r2 initramfs contains8 cyan entries, of which the2
-  SDMA blobs exactly match root Navi12 firmware and differ from root cyan blobs.
-  Pinned selected bytes in host`.../firmware-from-r2`; initial candidate uses that
-  override to avoid changing kernel and firmware together. Root firmware untouched;
-  ROCr SDMA remains disabled. Inspection handled usr/lib→lib path normalization;
-  initial parser/compile failures retained in hostlogs, no GPU fault involved.
-- **R2 identity gap closed during K1:** retained initramfs and installed AMDGPU
-  payload SHA`cf6c4c0ec2bae53da7c5ad800719997deb9b2f1ccd90f1da882a76d35bd1e611`
-  match; loaded/installed/archive build ID all`4bbb2004029bff0b0e9f8e60185968ebd073c27e`.
-  Evidence`kernel/r3/evidence/r2-module-identity.json`; not a bit-reproducible build
-  proof. Firmware comparison now normalizes initramfs usr/lib to root/lib and
-  checks decompressed payloads; only2 SDMA entries differ, exactly Navi12 blobs.
-  `kernel/r3/evidence/r3.config` and config diff retain actual migrated settings.
-  Native build still PID12625, fan waiter25715; patched TTM compiled, other modules
-  still compiling. No install/boot/GPU test yet; no actual watchdog expiry gate.
-- **Immediate next:** finish build; rebuild retained NCT6687 cooling module from
-  .105 read-only source import`kernel/board-fan` against r3. Check source modules/
-  firmware/initramfs, prepare one-shot entry with persistent r2 default. First
-  boot should defer AMDGPU auto-loading until SSH, then controlled module/GPU
-  gates under watchdog/deadline recovery. Current SP5100 watchdog stops during
-  reboot: current daemon alone does not guard early boot; establish initramfs/
-  base-boot guard before boot test. Preserve all r2/ROCm files and .105 unchanged.
-  No blanket recovery guarantee without out-of-band access; no deliberate GPU
-  reset/SDMA/fault experiments. N2.1 remains next library item after kernel batch.
+- **ACTIVE: K1–K6 clean upstream kernel workstream; K5 VMM defect is next.**
+  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after two one-shot boots;
+  persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
+  GPU loaded,40CU/80SIMD, wave32/KFD100103; live quirks3/0/3. No active build,
+  GPU gate, container or unacknowledged recovery deadline at batch end. User's
+  training/download finished; user explicitly returned.104 to development use.
+  .105 unchanged. Root orchestration SSH session13345 is idle, not durable state.
+- **Source/build:** signed stable`v7.2.10`, base
+  `7b20d05fd38de8e0be168956f6fd241d750c7d69`, Greg fingerprint
+  `647F28654894E3BD457199BE38DBBDC86092693E` verified. Separate repo
+  `kernel/linux-r3`, source`84995f1a85188cde56910729214b0a68a7e402da`, two reviewed
+  patches in`kernel/patches/r3/`: CU/PASID/TTM quirks, complete probe register
+  restoration, runlist caller error propagation. SVM upper notifier/unmap paths
+  still discard some existing returns/pre-mark unmapped: failed-flush containment
+  and fault injection NOT qualified. Eight-core telemetry/clock trust still open.
+  .104`KWS=/home/nik/bc250work/kernel-r3-7.2.10`; native16jobs/20GiB ccache build
+  finished22:26:33UTC Oct14. Original PIDs12625/25715 ended; source/build/stage,
+  caches and logs retained. Fan source`kernel/board-fan` revision`9086701` imported
+  read-only from.105; ABI compiled/signed. Initial fan signing path failed; fixed
+  source/scripts/sign-file→build/scripts/sign-file, repaired without rebuilding
+  kernel; original failure/unsigned module retained,`logs/fan-sign-repair.log`.
+  Signing private key remains remote build/certs,600/root; never copy it.
+- **Artifacts/identity:** new image SHA
+  `4531223f35bd9f313a242c2aa5d7bece0b4ffd4161d28b41271914a9b54d4558`,
+  initramfs SHA`0e8444c328d070e0f6d422514116e19ccb13feb9e44d0bb4b289f0d1ea3eeb11`.
+  `kernel/r3/evidence/candidate-inspection.json`:499 initramfs entries, exact
+  watchdog hook, storage drivers, AMDGPU deferred, no private signing keys;
+  new modules have matching release/signing key. r2 image/initrd/module/default
+  hashes unchanged. Loaded kernel build ID`57f7c52d9c7ac0ac21c67d6e6efc3e08c12bbfde`
+  and AMDGPU`e2b6524374abbb8852759eb9c61857f56222793a` match new build; evidence
+  `running-identity.json`, not bit-reproducible-build proof. Actual r2 firmware
+  snapshot privately pinned via firmware_class.path; its2 SDMA entries are Navi12
+  bytes under cyan names, differing from root cyan files. Root firmware unchanged,
+  ROCr SDMA0 and experimental CLR VM heap default off. r2 loaded/initrd/installed
+  module identity already closed; do not repeat the initial provenance audit.
+- **K4 recovery exercised:** r2 feeder SIGSTOP under exclusive runtime lock,
+  countdown to19s observed, then SSH loss/new boot ID/r2 return; flag bootstatus0
+  does not confirm reset cause. Separate r3 idle-GPU guard deliberately expired
+  after15s and emergency-restarted to persistent r2; SSH/new boot ID/default and
+  consumed one-shot verified. Returned to r3, base/cooling ACK and24-round GPU
+  smoke passed again. Builtin SP5100 early init handoff, nowayout1, root feeder
+  120s, candidate panic60/oops/lockup policy confirmed. Candidate guard starts
+  after bootmisc/sysctl, reapplies policy after Alpine panic120 default. Empty
+  next_entry= is accepted; nonempty pending selection rejected. No guarantee for
+  pre-watchdog hangs or arbitrary wedged GPU/reset recovery. No daily default
+  promotion. Guard dry-runs alone were not treated as hardware qualification.
+- **K5 comparison: ordinary scope passed, BOTH full gates FAILED explicit VMM.**
+  Identical immutable runtime/N1.8 DSO+kpack/harness on r2/r3: Lt664 references,
+  SparseLt134 numerical+16 API, hipTensor304 API+12 GPU,19 eager CPU-compared Torch
+  checks (bmm/fp32/fp16/bf16, FFT, Cholesky residual, COO/CSR, Adam) passed. Each
+  workload kernel-log delta0; two pre-existing Display Core IRQ WARNs remain at
+  AMDGPU load on both kernels. Malloc/free24 rounds, pinned GPU alias, streams/
+  events/guards pass; post-recovery r3 basic smoke another24 rounds, delta0.
+  Full gate fails after those consumers: fixed VA rebound to handle0 reads exact
+  handle1 initializer BEFORE update (got01238878 vs01234567, round0/index0).
+  Independent diagnostic kernel→ordinary buffer copy reproduces on BOTH r2/r3;
+  cause/layer not isolated. Original/diagnostic failures preserved; not skipped
+  or labeled full pass. This VMM defect is distinct from fixed CSR/VM-heap
+  corruption AND unresolved historical Python CPU segfault; neither repaired
+  by the new kernel. No whole-Torch performance or sustained correctness claim.
+- **Evidence/next:** `kernel/r3/evidence/{kernel-comparison,r2-baseline-full,
+  r3-candidate-full,watchdog-r2-hardware,deadline-fallback,running-identity,
+  post-recovery-basic}.json`, diagnostic logs and README. Host`KWS/logs/` retains
+  all commands/results: build-initial,fan-build/install-inactive, r2-baseline,
+  r2-vmm-diagnostic,r2-baseline-full,r3-candidate-full,r3-vmm-diagnostic,
+  r3-deadline-practice,r3-post-recovery; candidate.json records booted bounded
+  scope/full VMM failure. Initial test queued behind user's training was canceled
+  BEFORE lock acquisition/feeder stop; restarted only after user finished jobs.
+  **Exact next:** K5 fixed-VA failure isolation: simultaneous distinct-VA backing
+  control, then equivalent direct ROCr VMM GPU reference to separate CLR mapping/
+  copy bookkeeping from ROCr/KFD/cache invalidation. Use fresh recovery deadline,
+  exclusive runtime lock, short CPU-compared diagnostics; preserve failed gate
+  status and change only demonstrated cause. Keep r2 fallback/SDMA0/heap-off.
+  K6 final integration awaits K5; N2.1 remains next library item after kernel batch.
 - **Historical initial kernel review (superseded by K1/K3 checkpoints above):**
   preliminary read-only r2 audit complete;
   see `docs/development/bc250_kernel_audit_20261014.{md,json,patch}`. Both hosts run
@@ -115,7 +95,7 @@ release claims must not override this cursor and current manifests.
   At that initial checkpoint there were no kernel/module/boot/runtime changes
   or builds. Upstream/full-tree and module identity work since completed above;
   use the current K3/K4 cursor, not this historical next step. N2.1 retained.
-- **Current task:** N1.8 hipBLASLt short small/skinny GEMM dispatch implemented,
+- **Latest completed library milestone:** N1.8 hipBLASLt short small/skinny GEMM dispatch implemented,
   installed on .104 and bounded-qualified. N1.1–N1.7 retained in their scopes.
 - **Last qualified code:** root `0115c01f06f8654b26b5a665286069caf89eda2d`,
   libraries `a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8` (patches0025–0026).
@@ -183,6 +163,8 @@ Do not spoof another GPU or pretend missing matrix instructions exist. A scalar
 implementation of a mathematical operation may be feasible even when an upstream
 matrix backend is not. CPU fallbacks must be labeled.
 
+- User preference2026-10-15: update/commit canonical flow once at final response
+  or meaningful handoff; use commentary for progress, avoid repeated routine doc commits.
 - English communication/code/docs. Work locally, transfer explicit changed files,
   build/test/install on `.104`. User authorizes development/kernel experiments;
   retain SSH/boot fallback. No push/publish without explicit instruction.
@@ -220,7 +202,7 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 | Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N18.json` delta on N1.7/P2                |
 | Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
 | Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
-| Kernel/boot              | `7.1.5-bc250rocm-r2`; live boot files in `/home/nik/bc250work/bc250-rocm-lab`, backups `WS/recovery/`                     |
+| Kernel/boot              | `.104` experimental `7.2.10-bc250rocm-r3`; persistent default/retained fallback r2; new artifacts `KWS/artifacts`, old files `bc250-rocm-lab` |
 | Memory backup            | `WS/agent-memory/latest` (documentation only; preserves qualified source snapshots)                                       |
 | Training artifacts       | `WS/training-model`, `training-env-stable`, `training-validation`, `logs/training-memory/`                                |
 
@@ -344,10 +326,10 @@ Kernel workstream added at the user's request (2026-10-14):
 | State | ID | Work and acceptance boundary |
 | ----- | -- | ---------------------------- |
 | [x] | K1 | Verified latest stable upstream Git tag/source and signing identity; compare legacy source/config/modules and retain provenance/fallbacks. |
-| [ ] | K2 | Review/reimplement only needed gfx1013 patches; correct diagnostic register restoration and analyze TLB error/locking/lifetime behavior; telemetry separately. |
-| [ ] | K3 | Build separate r3 image/modules/config with ccache/resource/disk bounds on .104; inspect artifacts and initramfs without replacing r2. |
-| [ ] | K4 | Establish and check one-shot boot, persistent r2 default, early panic/watchdog and SSH recovery; bounded candidate boot only after recovery readiness. |
-| [ ] | K5 | Bounded memory/remap/queue/process correctness and qualified ROCm/Torch references on the candidate; review kernel logs, preserve failures and compare r2. |
+| [x] | K2 | Minimal series reviewed/implemented and normal paths bounded-tested; diagnostic register restore corrected; failed-flush/SVM containment and telemetry explicitly remain separate/unqualified. |
+| [x] | K3 | Separate r3 image/modules/config built, signed/staged/installed and artifact-inspected on .104; r2 retained unchanged. |
+| [x] | K4 | Bounded r2 watchdog countdown/SSH return and r3 deadline fallback/SSH return exercised; two r3 base boots/cooling ACKs; early-hang/arbitrary GPU-hang recovery unqualified. |
+| [ ] | **K5 — next** | Ordinary GPU/Torch references pass on r2/r3; full gates fail fixed-VA two-backing VMM on BOTH. Isolate with distinct-VA control and direct ROCr reference before targeted repair. |
 | [ ] | K6 | Record qualified scope/artifact hashes, source patch series and reproducible build/boot/recovery instructions; integrate only supported settings and retain r2 fallback. |
 
 Every component ultimately needs a documented disposition: qualified native path,
@@ -357,8 +339,9 @@ completion percentage from boxes; an infinite API-combination sweep is not a pla
 
 ## Memory maintenance rule for every future agent
 
-At the end of each meaningful batch, and before handoff/compaction if work is
-still running, update this file once. Record: taskID/subtask, actual source and
+At final response or a meaningful handoff, update this file once (user preference
+2026-10-15: do not rewrite/commit flow for routine progress). Preserve durable
+job/status evidence if interrupted; use commentary during work. Record: taskID/subtask, actual source and
 installed revisions, exact changed behavior, passed/failed evidence andscope,
 unresolved failures, next concrete action, running container/PID/log/exit paths,
 resource settings andany user scope changes. Update the affected inventory row
