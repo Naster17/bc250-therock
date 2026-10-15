@@ -119,3 +119,7 @@ VM-heap corruption is a different defect.
 Next N2.2: audit existing nonsymmetric `torch.linalg.eig` coverage and pinned
 consumer dispatch; select a bounded complex eigenpair gap with CPU/residual
 references and patch only a demonstrated failure.
+
+N2.2 follow-up: [nonsymmetric eig compatibility and native gap](N22.md). The
+non-Hermitian operation uses host LAPACK in the pinned hipSOLVER; it must not
+inherit the native-GPU classification of Hermitian eigh above.

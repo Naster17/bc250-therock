@@ -1,0 +1,13 @@
+{
+  "status": "bounded host-LAPACK compatibility qualified",
+  "checks": 16,
+  "native_gpu_eigensolver": false,
+  "backend_changes": false,
+  "test_sha256": "9c30aef59d62cfea9db507c8b0ae3ce26d0ad413d98843f5e5fc8ecbdc5cf708",
+  "host_label": "solver-eig-n22",
+  "returncode": 0,
+  "kernel_log_unchanged": true,
+  "guard": "acknowledged",
+  "running_jobs": [],
+  "next": "N2.3 native nonsymmetric eig feasibility and smallest reviewed Hessenberg/QR/Schur step"
+}

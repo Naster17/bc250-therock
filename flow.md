@@ -9,6 +9,25 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT N2.2 completed2026-10-15, host compatibility ONLY:** pinned Torch
+  complex nonsymmetric eig selects hipSOLVER DnXgeev, whose implementation copies
+  to host and calls LAPACK cgeev/zgeev, then copies outputs to GPU. This is NOT a
+  native GPU eigensolver. Native N2.1 Hermitian eigh remains a separate result.
+  New16 groups pass first run: complex64/128 batch2 dimensions9/33/65, known
+  separated complex spectra with basis condition1/20, padded/transposed guards,
+  nondefault streams, eig/eigvals CPU+analytic spectra, residual/projector checks,
+  two eigenvalue-gradient groups and two empty-shape groups. Max residual
+  c64~3.17e-7/c128~6.72e-16. Label solver-eig-n22 exit0/dmesg identical/600s guard
+  ACKed under lock. Report: docs/development/bc250_solver_results/N22.md; mapped
+  hipSOLVER/OpenBLAS hashes, runtime identity, logs/results retained locally and
+  .104 WS/logs. No backend defect reproduced, code/selection/runtime patch or
+  native rebuild. Torch4ee6571, libraries a6f7d3d, kernel0957/image84995 unchanged.
+  No active agent job/container/deadline. Native nonsymmetric eig remains open;
+  no performance/universal correctness claim. Python CPU fault/MIOpen failure
+  unresolved; SDMA/heap off, math defaults, r2/BIOS/.105 unchanged.
+  **Exact next N2.3:** audit native Hessenberg/QR/Schur primitives and select the
+  smallest reviewed GPU implementation/convergence step; retain host compatibility
+  until independent native eigenpair and failure-contract gates pass.
 - **CURRENT N2.1 completed2026-10-15:** audited existing P2 solver32 and pinned
   Torch4ee6571/ROCm-libraries a6f7d3d consumers; qualified existing native complex
   Hermitian eigh eigenvectors rather than adding a duplicate backend. New22
@@ -628,7 +647,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N1.7 | Native signed INT8 input/output with bounded INT32 accumulation, FP32 scalar/vector/bias epilogue and nearest-even saturation qualified above. Widened outputs remain unimplemented. |
 | [x]   | N1.8 | Short small/skinny Lt subgroup dispatch qualified above; tiled path retained outside measured selection. No default Torch BLAS change or whole-Torch speedup claim. |
 | [x]   | N2.1 | Audit P2 solver32 cases and pinned Torch/rocSOLVER/hipSOLVER consumers; qualify one missing difficult/complex operation with CPU/residual references and fix only demonstrated defects. |
-| [ ]   | **N2.2 — next** | Audit nonsymmetric eig coverage and pinned Torch/hipSOLVER dispatch; qualify one bounded complex eigenpair gap with CPU/residual references and fix only demonstrated defects. |
+| [x]   | N2.2 | Complex nonsymmetric eig16 groups qualified through existing host-LAPACK compatibility; native GPU eig remains missing. Pinned dispatch audited, no backend defect reproduced. |
+| [ ]   | **N2.3 — next** | Audit native Hessenberg/QR/Schur primitives and define the smallest reviewed GPU nonsymmetric eig implementation/convergence step. Retain host compatibility until independent reference/failure gates pass. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |

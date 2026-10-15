@@ -1,0 +1,9 @@
+{
+  "prefix": "/opt/bc250-stack/dev/priority1",
+  "image": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59",
+  "torch": "4ee65717d69e9f51021272e3f37d0f342f68fc08",
+  "rocm_libraries": "a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8",
+  "kernel": "7.2.10-bc250rocm-r3",
+  "boot_id": "a287fd16-c97b-4d88-8055-b0553a2f7631",
+  "test_sha256": "9c30aef59d62cfea9db507c8b0ae3ce26d0ad413d98843f5e5fc8ecbdc5cf708"
+}

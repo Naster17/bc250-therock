@@ -470,7 +470,7 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | Historical reductions/scans and208 block-reduction tests; P2 int32 cases42/48/48 with guards/streams, signed stable sorts, selection, scans, blocks/wave32 and Thrust policies                               | Floating/custom/segmented algorithms and broader tuning remain. hipCCL is header packaging, not RCCL.                                                       |
 | rocFFT/hipFFT                               | Existing native backend, persistent 16-worker HIPRTC AOT cache; prime DFT andP2 FFT30                                                                                                                        | No custom rocFFT component architecture patch; more plans/types/layouts remain                                                                              |
-| rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 bounded native eigh qualified; nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and policy/performance remain                                                                                         |
+| rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 native eigh22; N2.2 nonsymmetric eig16 host-LAPACK compatibility only. Native nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and performance remain                                                                                         |
 | rocSPARSE/hipSPARSE                         | Existing backend, Torch COO/CSR25 anddirect triangular16 inP2                                                                                                                                                | More formats, analyses/solves/API contracts remain; old corruption fix was CLR, not sparse kernel rewriting                                                 |
 | rocALUTION                                  | CG40 ordinary cases andfive fresh-process200 passes after pool-default fix                                                                                                                                   | Larger systems, other solvers/preconditioners/concurrency remain                                                                                            |
 | rocRAND/hipRAND                             | Native dispatch patch; historical44 basic+6 dispatch; P2 direct22 acrosssix pseudo/four Sobol variants andTorch RNG6                                                                                         | More generator/distribution/type combinations remain                                                                                                        |
@@ -1014,3 +1014,19 @@ pass retained. Source, mapped-library hashes, dispatch audit and fixed tolerance
 power-policy change or active job. Original CPU crash and separate MIOpen defect
 remain unresolved; no universal/performance claim. Next N2.2 nonsymmetric eig
 coverage/dispatch audit and one bounded complex eigenpair gap.
+
+## N2.2 nonsymmetric eig compatibility — 2026-10-15
+
+Pinned Torch4ee6571 -> hipSOLVER DnXgeev -> host LAPACK cgeev/zgeev -> device
+outputs. This is a CPU compatibility eigensolve, not native GPU; N2.1 Hermitian
+eigh remains native separately. New16 groups pass: complex64/128 batch2 at9/33/65,
+normal/nonnormal known spectra with basis condition1/20, padded/transposed guards,
+nondefault streams, eig/eigvals CPU/analytic eigenvalues and residual/projectors,
+two eigenvalue-gradient and two grouped empty-input cases. Max residual3.17e-7/
+6.72e-16. First run exit0/dmesg identical/600s guard acknowledged under lock.
+No runtime/backend change or native build; no active job. Mapped hipSOLVER and
+OpenBLAS hashes, dispatch audit/source/test/results:
+[N2.2 report](bc250_solver_results/N22.md). Native non-Hermitian eig, defective/
+repeated/extreme-scale/convergence-failure/performance scope remain unqualified;
+Python CPU crash and MIOpen defect remain open. Next N2.3 native Hessenberg/QR/
+Schur feasibility and smallest reviewed implementation/convergence step.
