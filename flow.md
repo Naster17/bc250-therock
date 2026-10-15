@@ -50,8 +50,9 @@ release claims must not override this cursor and current manifests.
   volatile unlock and points to BIOS DXE for cold-boot persistence. No duplicate
   mailbox unlock, reboot, service/policy change or firmware flash; .105 unchanged.
   Evidence/local script+service snapshots `kernel/r3/evidence/core-unlock-audit/`.
-  BIOS mod deferred until exact firmware provenance/review and independent physical
-  recovery; r2/SSH cannot rescue pre-OS failure. DMI P3.00 does not prove stock BIOS.
+  User explicitly chose2026-10-15 to leave BIOS untouched and retain the existing
+  service/warm-reboot arrangement. Firmware modification is out of current scope;
+  r2/SSH cannot rescue pre-OS failure. DMI P3.00 does not prove stock BIOS.
   No active jobs. K6/N2.1 retained; telemetry correction is optional for current use.
 - **CURRENT read-only telemetry audit2026-10-15 completed:** production
   kernel/module0957f1aa4/image84995f1/prefix/boot unchanged, same boot above.

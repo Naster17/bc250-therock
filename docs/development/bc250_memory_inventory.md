@@ -137,7 +137,8 @@ that sequence was not newly tested. Evidence/script/service snapshots:
 `kernel/r3/evidence/core-unlock-audit/`. Requested upstream
 `rw-r-r-0644/bc250-core-unlock` is volatile too; its permanent option is a BIOS DXE
 mod. No firmware flash or duplicate unlock applied. BIOS-level persistence is
-deferred until exact firmware provenance and independent physical recovery exist;
+excluded from current scope by the user2026-10-15: leave BIOS untouched and
+retain the existing service/warm-reboot arrangement;
 r2/SSH fallback cannot recover a pre-OS firmware failure. DMI P3.00 alone is not
 proof of unmodified firmware or mod compatibility. The 40-CU
 patch is retained at
