@@ -179,15 +179,35 @@ SparseLt134 numerical+16 API, hipTensor304 API+12 GPU and19 eager Torch CPU
 references passed; workload kernel-log deltas0. Two existing Display Core IRQ
 WARNs persist at AMDGPU load. Malloc/free24 rounds+pinned GPU alias/streams/events
 passed, including another24-round smoke after actual recovery/second r3 boot.
-BOTH full gates fail explicit fixed-VA VMM: first rebind of handle0 reads handle1
-initializer01238878 instead of01234567 BEFORE update, independently confirmed by
-GPU→ordinary-buffer copy. Original/diagnostic failures preserved; layer/cause
-unisolated. This is separate from fixed CSR/VM-heap corruption and historical
-unknown Python CPU segfault. No general performance or sustained claim.
-Next K5: simultaneous distinct-VA backing control then direct ROCr VMM reference;
-retain failed full-gate status, isolate before production changes. K6 integration
-awaits this work; N2.1 library cursor retained. Evidence and exact runtime state:
-`bc250stack/kernel/r3/evidence/`, README and canonical flow. No running build/gate.
+Historical pre-fix full gates failed explicit fixed-VA VMM on both kernels:
+handle0 saw handle1 data before update; independent GPU copy confirmed it.
+K5 isolation: HIP and direct ROCr each8 mismatches/26 checks, distinct-VA anchors
+correct, ordinary KFD map/unmap churn restores26/26. This identifies stale compute
+translations on DRM GEM_VA, which bypassed the existing KFD runlist workaround.
+
+Patch0003/module source`8f3c0d352643378629e5a73f4b9df96b7d38d94a` waits for PT
+completion, drops BO reservations before DQM locking, flushes through the existing
+opt-in BC-250 runlist path and publishes timeline completion after success.
+Only AMDGPU rebuilt/installed; kernel IMAGE remains84995f1, same signed image and
+initramfs. New signed module is r3-only`updates/amdgpu.ko.gz`, build/installed/
+loaded ID`12ad61569200a95f1d626396fca3692753231707`, compressed SHA
+`451b8a3d05cdf494b67546f9074c86f4d931481a3efd7f7b64e7bad48611dadb`.
+Original r3 module and r2 artifacts/default retained; .105 unchanged.
+
+Original full gate now passes unchanged: library counts above, Torch19, two fresh
+memory processes each24 allocation/pinned/streams/events rounds+16 explicit VMM
+remaps. HIP/direct ROCr each26 checks pass without diagnostic churn; workload
+kernel logs identical. New boot`e2a06828-208c-47f7-9838-8a5be9f7bfd5` base/cooling
+and GPU guard acknowledged; no running jobs. Evidence`kernel/r3/evidence/k5-*.json`,
+pre/post isolation logs, patch and source manifest; host`SOURCE_K5.json` separates
+image/module provenance. Single .ko target failed modpost companion symbols;
+incremental modules target succeeded with16jobs/20GiB ccache, preserved logs.
+
+No universal VMM, concurrent raw DRM timeline ordering, injected-failure,
+performance or sustained claim. Fixed CSR/VM-heap corruption and historical
+unknown Python CPU segfault remain separate; experimental heap/SDMA remain off.
+Next: upper SVM notifier/unmap failed-flush lifetime containment, then Display
+Core warning analysis, telemetry and K6 integration; N2.1 library cursor retained.
 
 Read-only kernel review2026-10-14:
 [report](bc250_kernel_audit_20261014.md), [hash/file evidence](bc250_kernel_audit_20261014.json),
@@ -596,7 +616,7 @@ optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Intermittent CG/CSR zero output | Proven live CSR analysis metadata overwrite associated with experimental VM heap; compiled default now uses the established pool backend     | Root `47925cbd5`, systems patch0003, `rocalution-step-trace.log`, allocation/raw-metadata/first-kernel probes, 40 plus fresh-process200 checks |
 | Experimental VM heap            | Default bypass is a mitigation, not a repair. VMM/async pools retained; explicit opt-in remains experimental.                                | `rocdevice.cpp`, root `bd6e4c8a4`, release gates                                                                                               |
-| Explicit fixed-VA VMM remap | New K5 GPU reference sees handle1 data after rebinding handle0 on BOTH r2/r3; cause/layer unisolated. Separate from VM-heap corruption; full gates remain failed. | `bc250stack/kernel/r3/evidence/kernel-comparison.json`, original/diagnostic failures |
+| Explicit fixed-VA VMM remap | K5 GEM_VA runlist fix8f3c0d3: unchanged two-process VMM gate and HIP/ROCr26-check references pass; historical r2/r3 failures preserved. No broad/failure-path claim. Separate from VM-heap corruption. | `bc250stack/kernel/r3/evidence/k5-summary.json`, `k5-gem-va-full.json`, original/diagnostic failures |
 | Later Python CPU segfault       | Execution fault at0x3b3e6, no identified stack/operator; cause remains unknown. Stable-prefix sparse gates and independent candidate passed. | Older operator-candidate/kernel logs, P2 candidate/launcher20 cycles each; do not merge with the proven CSR defect                             |
 | Triton incorrect buffer reads   | Missing RDNA1 descriptor flag branch; globals passed while buffer path failed. Fixed.                                                        | Triton patch0004/root `9fdae0b5d`; both memory paths validated                                                                                 |
 | Triton low-precision lowering   | Unsupported gfx13 packed dot/BF16 multiply replaced by widened scalar arithmetic; signed limits and rounding-tie/NaN tests retained          | Four Triton patches and MLIR/LLVM/assembly/GPU gates                                                                                           |

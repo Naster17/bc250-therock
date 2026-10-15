@@ -9,17 +9,58 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **ACTIVE: K1–K6 clean upstream kernel workstream; K5 VMM defect is next.**
-  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after two one-shot boots;
+- **ACTIVE: K1–K6 kernel workstream; K5 VMM repair passed; SVM containment next.**
+  2026-10-15: .104 now runs`7.2.10-bc250rocm-r3` after three one-shot boots;
   persistent GRUB default remains`bc250-rocm-r2-kernel`, next_entry empty. Native
   GPU loaded,40CU/80SIMD, wave32/KFD100103; live quirks3/0/3. No active build,
   GPU gate, container or unacknowledged recovery deadline at batch end. User's
   training/download finished; user explicitly returned.104 to development use.
-  .105 unchanged. Root orchestration SSH session13345 is idle, not durable state.
+  .105 unchanged. Root orchestration SSH session63063 is idle, not durable state.
+- **NEW K5 milestone2026-10-15:** explicit fixed-VA VMM stale translations repaired
+  on .104. Kernel source/module revision`8f3c0d352643378629e5a73f4b9df96b7d38d94a`,
+  patch0003; kernel IMAGE remains84995f1, same config/image/initramfs/firmware.
+  HIP and direct ROCr isolation each failed8/26 checks before repair, while
+  distinct-VA anchors passed; ordinary KFD mapping churn made both26/26 pass.
+  GEM_VA bypassed existing KFD map/unmap runlist invalidation. New BC-250 compute
+  path waits PT completion, releases BO reservations before DQM lock, invokes
+  opt-in runlist flush, then publishes timeline completion/returns flush errors.
+  Original failures preserved, not weakened/skipped. Upper SVM containment is
+  still separate/unqualified; no injected-failure or raw concurrent DRM timeline
+  ordering claim.
+- **Installed/loaded K5 module:** r3-only`updates/amdgpu.ko.gz`, compressed SHA
+  `451b8a3d05cdf494b67546f9074c86f4d931481a3efd7f7b64e7bad48611dadb`,
+  build/installed/loaded ID`12ad61569200a95f1d626396fca3692753231707`.
+  Original r3 stock module, image/initramfs, r2 artifacts/default and .105 retained.
+  Current boot`e2a06828-208c-47f7-9838-8a5be9f7bfd5`; base/cooling readiness ACK
+  and fresh360s GPU guard ACK completed. No active build/container/GPU gate/deadline.
+  Single .ko build compiled both units but failed modpost on companion DRM symbols;
+  incremental`make ... -j16 modules` succeeded using16jobs/20GiB ccache, only new
+  AMDGPU installed. PIDs25806(failed)/26295(success) ended. Exact logs
+  `KWS/logs/k5-{amdgpu-build,modules-build,module-install}.log`.
+- **K5 passed unchanged full gate:** Lt664, SparseLt134 numerical+16 API,
+  hipTensor304 API+12 GPU, Torch19 CPU references; two fresh processes each
+  24 malloc/free+pinned alias/streams/events and16 explicit VMM remaps. Same
+  immutable runtime/DSO+kpack/harness and original memory binary. Separate HIP
+  and direct ROCr each26 GPU/CPU comparisons pass WITHOUT diagnostic churn;
+  workload dmesg byte-identical. Two old Display Core load WARNs remain. No
+  whole-Torch performance, sustained stability, universal VMM or arbitrary hang
+  recovery claim. Python CPU segfault and experimental VM-heap defect unresolved
+  and distinct. SDMA0/experimental heap off unchanged.
+- **Current evidence/replay:** `kernel/r3/evidence/k5-{summary,gem-va-full,
+  gem-va-isolation,running-identity}.json`, pre/post isolation logs; helpers
+  `k5-{build,module,gpu-phase,isolation,identity}-on-host.*`, patch0003 and
+  `k5-source-manifest.json`. Host`SOURCE_K5.json` records module delta;
+  `source/GIT_REVISION`8f3c0d3, original image/source manifest84995f1 retained.
+  `KWS/logs/k5-gem-va-{full,isolation}`, `k5-gem-va-console.log` and guard log.
+  **Exact next:** audit upper SVM notifier/unmap calls that discard flush errors
+  or pre-mark ranges unmapped; design lifetime-safe containment and bounded failure
+  injection under recovery guard/runtime lock before implementing. Then address
+  Display Core warnings, trusted telemetry and K6 integration. N2.1 remains next
+  library item. Keep r2 default; no daily promotion.
 - **Source/build:** signed stable`v7.2.10`, base
   `7b20d05fd38de8e0be168956f6fd241d750c7d69`, Greg fingerprint
   `647F28654894E3BD457199BE38DBBDC86092693E` verified. Separate repo
-  `kernel/linux-r3`, source`84995f1a85188cde56910729214b0a68a7e402da`, two reviewed
+  `kernel/linux-r3`, original image source`84995f1a85188cde56910729214b0a68a7e402da`, initial two reviewed
   patches in`kernel/patches/r3/`: CU/PASID/TTM quirks, complete probe register
   restoration, runlist caller error propagation. SVM upper notifier/unmap paths
   still discard some existing returns/pre-mark unmapped: failed-flush containment
@@ -38,7 +79,7 @@ release claims must not override this cursor and current manifests.
   watchdog hook, storage drivers, AMDGPU deferred, no private signing keys;
   new modules have matching release/signing key. r2 image/initrd/module/default
   hashes unchanged. Loaded kernel build ID`57f7c52d9c7ac0ac21c67d6e6efc3e08c12bbfde`
-  and AMDGPU`e2b6524374abbb8852759eb9c61857f56222793a` match new build; evidence
+  and ORIGINAL AMDGPU`e2b6524374abbb8852759eb9c61857f56222793a` matched initial build; superseded by K5 module above; evidence
   `running-identity.json`, not bit-reproducible-build proof. Actual r2 firmware
   snapshot privately pinned via firmware_class.path; its2 SDMA entries are Navi12
   bytes under cyan names, differing from root cyan files. Root firmware unchanged,
@@ -55,7 +96,7 @@ release claims must not override this cursor and current manifests.
   next_entry= is accepted; nonempty pending selection rejected. No guarantee for
   pre-watchdog hangs or arbitrary wedged GPU/reset recovery. No daily default
   promotion. Guard dry-runs alone were not treated as hardware qualification.
-- **K5 comparison: ordinary scope passed, BOTH full gates FAILED explicit VMM.**
+- **Historical pre-fix K5 comparison: BOTH full gates FAILED explicit VMM.**
   Identical immutable runtime/N1.8 DSO+kpack/harness on r2/r3: Lt664 references,
   SparseLt134 numerical+16 API, hipTensor304 API+12 GPU,19 eager CPU-compared Torch
   checks (bmm/fp32/fp16/bf16, FFT, Cholesky residual, COO/CSR, Adam) passed. Each
@@ -65,7 +106,7 @@ release claims must not override this cursor and current manifests.
   Full gate fails after those consumers: fixed VA rebound to handle0 reads exact
   handle1 initializer BEFORE update (got01238878 vs01234567, round0/index0).
   Independent diagnostic kernel→ordinary buffer copy reproduces on BOTH r2/r3;
-  cause/layer not isolated. Original/diagnostic failures preserved; not skipped
+  cause/layer subsequently isolated and repaired in K5 above. Original/diagnostic failures preserved; not skipped
   or labeled full pass. This VMM defect is distinct from fixed CSR/VM-heap
   corruption AND unresolved historical Python CPU segfault; neither repaired
   by the new kernel. No whole-Torch performance or sustained correctness claim.
@@ -75,14 +116,10 @@ release claims must not override this cursor and current manifests.
   all commands/results: build-initial,fan-build/install-inactive, r2-baseline,
   r2-vmm-diagnostic,r2-baseline-full,r3-candidate-full,r3-vmm-diagnostic,
   r3-deadline-practice,r3-post-recovery; candidate.json records booted bounded
-  scope/full VMM failure. Initial test queued behind user's training was canceled
+  scope/full VMM failure (superseded by SOURCE_K5.json and new candidate module fields). Initial test queued behind user's training was canceled
   BEFORE lock acquisition/feeder stop; restarted only after user finished jobs.
-  **Exact next:** K5 fixed-VA failure isolation: simultaneous distinct-VA backing
-  control, then equivalent direct ROCr VMM GPU reference to separate CLR mapping/
-  copy bookkeeping from ROCr/KFD/cache invalidation. Use fresh recovery deadline,
-  exclusive runtime lock, short CPU-compared diagnostics; preserve failed gate
-  status and change only demonstrated cause. Keep r2 fallback/SDMA0/heap-off.
-  K6 final integration awaits K5; N2.1 remains next library item after kernel batch.
+  Historical next isolation steps are completed by K5 above. The failed baseline
+  remains preserved; use the new cursor for current module status and next action.
 - **Historical initial kernel review (superseded by K1/K3 checkpoints above):**
   preliminary read-only r2 audit complete;
   see `docs/development/bc250_kernel_audit_20261014.{md,json,patch}`. Both hosts run
@@ -329,7 +366,7 @@ Kernel workstream added at the user's request (2026-10-14):
 | [x] | K2 | Minimal series reviewed/implemented and normal paths bounded-tested; diagnostic register restore corrected; failed-flush/SVM containment and telemetry explicitly remain separate/unqualified. |
 | [x] | K3 | Separate r3 image/modules/config built, signed/staged/installed and artifact-inspected on .104; r2 retained unchanged. |
 | [x] | K4 | Bounded r2 watchdog countdown/SSH return and r3 deadline fallback/SSH return exercised; two r3 base boots/cooling ACKs; early-hang/arbitrary GPU-hang recovery unqualified. |
-| [ ] | **K5 — next** | Ordinary GPU/Torch references pass on r2/r3; full gates fail fixed-VA two-backing VMM on BOTH. Isolate with distinct-VA control and direct ROCr reference before targeted repair. |
+| [x] | K5 | GEM_VA runlist invalidation repaired; unchanged full GPU/Torch/VMM gate and independent HIP/ROCr references pass on signed r3 module8f3c0d3. Historical r2/r3 failures preserved; bounded scope only. |
 | [ ] | K6 | Record qualified scope/artifact hashes, source patch series and reproducible build/boot/recovery instructions; integrate only supported settings and retain r2 fallback. |
 
 Every component ultimately needs a documented disposition: qualified native path,
