@@ -14,6 +14,50 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Attention selection on .104 (updated 2026-10-15)
+
+The incorrect `1Torch was not compiled with memory efficient attention` warning
+is fixed in the current development runtime. The installed `finetune-n7`
+`train_lora.py` and `chat.py` also use the supported `sdpa_kernel` API; training
+backward stays inside the context for checkpoint recomputation. These corrections
+apply by default. They do not require enabling the new tiled backend.
+
+**Math attention remains the default.** The memory-saving GPU tiled backend is
+opt-in. For those two installed scripts, append `--attention-backend tiled` to
+your existing command, **after the script path**, keeping all model/data/output
+arguments. For example, to start chat with the optional backend:
+
+```sh
+bc250-train /home/nik/finetune-n7/scripts/chat.py \
+    --model /home/nik/finetune-n7/models/Qwen3-1.7B-Base \
+    --attention-backend tiled
+```
+
+Use `--attention-backend math` or omit the flag to retain the default. The flag
+belongs to these application scripts, not the `bc250-torch`/`bc250-train` launcher;
+it does not automatically work in arbitrary third-party scripts.
+
+For your own Transformers application, explicitly register the backend before
+loading the model:
+
+```python
+from torch.nn.attention._gfx1013 import register_transformers_attention
+
+register_transformers_attention()
+model = AutoModelForCausalLM.from_pretrained(
+    model_path, attn_implementation="bc250_tiled", dtype=torch.bfloat16
+)
+```
+
+This prototype supports eager first-order FP32/FP16/BF16 attention, grouped heads,
+head width up to128 and sequence length up to4096, with the documented mask
+contracts. Attention dropout, mask gradients, higher-order gradients and compiled/
+graph operation are unqualified or unsupported. Ordinary functional SDPA keeps its
+math fallback. Tiled attention saved auxiliary memory but ran slower in the
+measured fixtures; full Qwen3-1.7B training is not yet qualified. See the
+[attention report](bc250_attention_results/README.md) for references, measurements,
+exact contracts and rollback information.
+
 ## Paths and persistence
 
 Host paths retain their names inside the container. Your home directory, current

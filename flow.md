@@ -9,6 +9,11 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Usage-documentation follow-up2026-10-15:** added dated attention instructions
+  to docs/development/bc250_torch_usage.md, including default warning/API fixes,
+  math default, application-only --attention-backend tiled selection, Transformer
+  registration and qualification limits. Linked detailed evidence; no code/runtime
+  change or GPU rerun. No agent jobs; attention/K6/N2.1 next actions unchanged.
 - **CURRENT user-priority N3 attention batch2026-10-15 completed, bounded opt-in:**
   patched Torch`bda0831ba49ef9d0ba2968a800642e5abaec5dd5`. Three native scalar
   Triton kernels implement tiled online-softmax forward/recomputed backward;
