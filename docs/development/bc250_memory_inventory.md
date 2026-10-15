@@ -129,7 +129,17 @@ AMD reset, SDMA or fault experiments. Persistent r2 default retained.
 CPU unlock service `/etc/init.d/bc250-8core-unlock` calls
 `/usr/local/bin/bc250-8core-unlock boot`. The script describes SMU mailbox 0x98,
 mask register 0x0115A870, stock mask 0x77→0xff and warm-reset persistence;
-these descriptions are not newly executed register experiments. The 40-CU
+these descriptions are not newly executed register experiments. Read-only
+recheck2026-10-15: service enabled in OpenRC default/started; eight cores/16threads
+online. Installed boot path never reboots (comments retain an earlier bootloop).
+Cold-start mask reapplication needs a subsequent warm reboot for enumeration;
+that sequence was not newly tested. Evidence/script/service snapshots:
+`kernel/r3/evidence/core-unlock-audit/`. Requested upstream
+`rw-r-r-0644/bc250-core-unlock` is volatile too; its permanent option is a BIOS DXE
+mod. No firmware flash or duplicate unlock applied. BIOS-level persistence is
+deferred until exact firmware provenance and independent physical recovery exist;
+r2/SSH fallback cannot recover a pre-OS firmware failure. DMI P3.00 alone is not
+proof of unmodified firmware or mod compatibility. The 40-CU
 patch is retained at
 `/home/nik/bc250work/bc250-gfx1013-fix/patches/kernel/40cu-bc250-unlock.patch`,
 with older work under `/home/nik/bc250-40cu-unlock`. Imported performance claims

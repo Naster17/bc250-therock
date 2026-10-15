@@ -42,6 +42,17 @@ release claims must not override this cursor and current manifests.
   rebuild,`logs/hpd-modules-build.log`, `hpd-module-install.log`. No active build,
   agent-owned test/container or deadline. DRM debug/injection parameter both0;
   external governor now recorded in the read-only audit below.
+- **CPU unlock persistence request2026-10-15:** read-only .104 check confirms
+  eight cores/16threads online and OpenRC default unlock service enabled/started.
+  Existing script reapplies volatile mask, deliberately never auto-reboots (prior
+  bootloop described in its comments); cold-start enumeration needs a later warm
+  reboot, not newly cold-cycle-tested. Requested upstream uses same class of
+  volatile unlock and points to BIOS DXE for cold-boot persistence. No duplicate
+  mailbox unlock, reboot, service/policy change or firmware flash; .105 unchanged.
+  Evidence/local script+service snapshots `kernel/r3/evidence/core-unlock-audit/`.
+  BIOS mod deferred until exact firmware provenance/review and independent physical
+  recovery; r2/SSH cannot rescue pre-OS failure. DMI P3.00 does not prove stock BIOS.
+  No active jobs. K6/N2.1 retained; telemetry correction is optional for current use.
 - **CURRENT read-only telemetry audit2026-10-15 completed:** production
   kernel/module0957f1aa4/image84995f1/prefix/boot unchanged, same boot above.
   Newly observed external governor PID5265 (`cyan-skillfish-governor-smu`) has
