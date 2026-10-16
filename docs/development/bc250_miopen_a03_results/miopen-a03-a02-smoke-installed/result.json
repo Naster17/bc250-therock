@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "results": [
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 3,
+      "gradient_tensors": 7,
+      "status": "passed"
+    }
+  ],
+  "loaded_libraries": [
+    "/workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+    "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+    "/workspace/pytorch-work/torch/lib/libtorch_hip.so"
+  ]
+}

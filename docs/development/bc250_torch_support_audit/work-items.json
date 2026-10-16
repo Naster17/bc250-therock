@@ -27,10 +27,10 @@
     },
     {
       "id": "A03",
-      "feature": "No gfx1013 system FindDb/PerfDb/KDB; optional loader probes unsupported CK plugin",
-      "evidence": "Installed db contains only lgbm metadata/rank/pcfg files; no gfx1013 assets. User ufdb/ukdb exist. Upstream data install filters match no gfx1013 files; CK plugin target list excludes gfx1013.",
-      "next": "After A01/A02, collect genuine bounded tuning/cache entries, validate/replay and package with version/device/shape scope. Review capability-aware optional-plugin probing. Never create empty/fake databases or rename another GPU's data.",
-      "status": "queued"
+      "feature": "Bounded native MIOpen seed databases and capability-aware optional plugin probing",
+      "evidence": "Installed libraries fcf7a714: optional CK probing respects build/device capability; explicit path diagnostics retained. Genuine gfx1013_20 system FindDb16 keys/58 CPU-checked immediate solutions, one searched PerfDb record and41 kernel-cache records. Read-only default-path replay uses empty user caches with zero new kernels; unseen-shape fallback and Torch/A02/core regressions pass. See ../bc250_miopen_a03_results/README.md.",
+      "next": "A04: Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS. Broader MIOpen tuning/coverage and modern CK plugin remain unqualified/optional B07.",
+      "status": "completed_bounded"
     },
     {
       "id": "A04",
@@ -119,7 +119,7 @@
     {
       "id": "B07",
       "feature": "MIOpen CK grouped-convolution plugin",
-      "evidence": "libMIOpenCKGroupedConv_gfx1013.so absent by architecture build filter; source probes plugin unconditionally",
+      "evidence": "libMIOpenCKGroupedConv_gfx1013.so still absent; A03 skips default loader probe when build/solver capability excludes it, retaining explicit-path diagnostics. HIP-direct and legacy CK reduction routes are separate.",
       "next": "Optional substantial scalar/generic plugin port or retain working HIP-direct alternatives. Merely enabling CK flag cannot supply kernels; lower priority than A01/A02.",
       "status": "queued"
     },
@@ -131,11 +131,12 @@
       "status": "queued"
     }
   ],
-  "next": "A03 genuine gfx1013_20 tuning/cache provenance, bounded collection/replay/packaging and capability-aware optional CK plugin probing",
+  "next": "A04: Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS.",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
     "A01",
-    "A02"
+    "A02",
+    "A03"
   ],
-  "next_primary_item": "A03"
+  "next_primary_item": "A04"
 }

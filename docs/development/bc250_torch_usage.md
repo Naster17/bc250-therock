@@ -27,9 +27,25 @@ A02 also corrects the bundled legacy CK target rejection and BF16 reduction
 conversions/scaling. The installed runtime passes54 direct numerical reduction
 cases, three unsupported-compute refusal checks and12 FP32/FP16 LSTM/GRU/RNN
 output/gradient cases. This applies automatically to callers loading this MIOpen;
-BF16 RNN remains unsupported. Missing optional CK plugin/system database warnings
-remain A03/B07. See [A02 results and limits](bc250_miopen_a02_results/README.md)
+BF16 RNN remains unsupported. A03 now supplies the bounded system database seed
+and capability-aware optional-plugin probing described below. See [A02 results and limits](bc250_miopen_a02_results/README.md)
 and [A01 convolution limits](bc250_miopen_a01_results/README.md).
+
+## MIOpen databases and optional plugin (updated 2026-10-16)
+
+A03 installs a genuine gfx1013_20 seed database in the current development prefix:
+16 convolution keys/58 checked solutions, one searched performance configuration
+and41 compiled kernel records. `bc250-torch`/`bc250-train` use it automatically.
+This covers the listed small FP32/FP16/BF16 NCHW fixtures; other shapes retain
+normal search/compilation and user-cache updates. It is not global tuning.
+
+The default loader now skips the modern CK plugin when build/device capability
+disables it, so its expected absence no longer produces a warning. This adds no
+CK grouped-convolution kernels. An explicit `MIOPEN_CK_LIB_PATH` still diagnoses
+missing or incompatible experimental plugins. Source/payload scope and hashes:
+[A03 report](bc250_miopen_a03_results/README.md). Other ROCm prefixes and the
+frozen fallback remain unchanged. Missing causal-conv/FLA packages are separate
+A05/A06 work; this does not change their warnings.
 
 ## Storage and software fallback (updated 2026-10-16)
 

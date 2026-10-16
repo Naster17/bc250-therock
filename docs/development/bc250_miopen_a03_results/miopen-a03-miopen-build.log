@@ -1,0 +1,23 @@
+[setup_ccache] Config preset: local
+[setup_ccache] Platform: POSIX
+[setup_ccache] Cache mode: release_type=(unset) preset=local remote=disabled local=/workspace/cache/data
+[setup_ccache] Generated ccache config:
+[setup_ccache]   max_size = 10G
+[setup_ccache]   cache_dir = /workspace/cache/data
+[setup_ccache]   compiler_check = /opt/build-venv/bin/python3 /workspace/cache/compiler_check.py /workspace/cache/compiler_check_cache %compiler%
+[setup_ccache]   sloppiness = include_file_ctime,pch_defines,time_macros
+[0/2] Re-checking globbed directories...
+[1/4] Building CXX object src/CMakeFiles/MIOpen.dir/solver/ck_impl_lib_loader.cpp.o
+[2/4] Linking CXX shared library lib/libMIOpen.so.1.0
+[3/4] Creating library symlink lib/libMIOpen.so.1 lib/libMIOpen.so
+Cacheable calls:   98976 / 103885 (95.27%)
+  Hits:            31243 /  98976 (31.57%)
+    Direct:        26415 /  31243 (84.55%)
+    Preprocessed:   4828 /  31243 (15.45%)
+  Misses:          67733 /  98976 (68.43%)
+Uncacheable calls:  4884 / 103885 ( 4.70%)
+Errors:               25 / 103885 ( 0.02%)
+Local storage:
+  Cache size (GB):   4.0 /   20.0 (20.18%)
+  Hits:            31243 /  98976 (31.57%)
+  Misses:          67733 /  98976 (68.43%)

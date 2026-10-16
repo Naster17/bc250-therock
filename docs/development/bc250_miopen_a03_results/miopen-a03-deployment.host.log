@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/deploy_miopen_a03_on_host.py", line 310, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/deploy_miopen_a03_on_host.py", line 77, in main
+    assert warning not in log and "File is unreadable" not in log
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

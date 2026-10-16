@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "multiprocessors": 20,
+  "phase": "collect",
+  "results": [
+    {
+      "stream": "default",
+      "profiling": false,
+      "workspace": "queried",
+      "phase": "reference_passed",
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "name": "tune",
+      "input": [
+        1,
+        2,
+        5,
+        5
+      ],
+      "weight": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "dtype": "f32",
+      "direction": "fwd",
+      "queried_workspace": 0,
+      "provided_workspace": 0,
+      "algorithms": [
+        {
+          "algorithm": 1,
+          "time_ms": 0.007602428551763296,
+          "workspace": 0
+        }
+      ],
+      "solutions": [
+        {
+          "id": 218,
+          "algorithm": 1,
+          "time_ms": 0.007602429948747158,
+          "workspace": 0,
+          "max_abs_error": 1.8462864292967396e-08,
+          "status": "passed"
+        }
+      ],
+      "status": "passed",
+      "loaded_libraries": [
+        "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+        "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+        "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+      ]
+    }
+  ],
+  "environment": {
+    "MIOPEN_USER_DB_PATH": "/home/nik/bc250work/rocm-10.2-gfx1013/cache/a03-collect/db",
+    "MIOPEN_FIND_ENFORCE": "SEARCH_DB_UPDATE",
+    "MIOPEN_DEBUG_FIND_ONLY_SOLVER": "ConvHipDirectFwd",
+    "MIOPEN_ENABLE_LOGGING": "1",
+    "MIOPEN_LOG_LEVEL": "6",
+    "MIOPEN_CUSTOM_CACHE_DIR": "/home/nik/bc250work/rocm-10.2-gfx1013/cache/a03-collect/kernels"
+  },
+  "loaded_libraries": [
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+    "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+    "/workspace/pytorch-work/torch/lib/libtorch_hip.so"
+  ]
+}

@@ -1,0 +1,139 @@
+MIOpen: Info [get_device_name] Raw device name: gfx1013:xnack-
+MIOpen: Info2 [OpenRuntimeLibraryForDevice] CK grouped conv is not enabled for device gfx1013
+MIOpen: Info [Handle] stream: 0, device_id: 0
+MIOpen: Info [get_device_name] Raw device name: gfx1013:xnack-
+MIOpen: Info [SetStream] stream: 0, device_id: 0
+MIOpen: miopenStatus_t miopenCreateTensorDescriptor(miopenTensorDescriptor_t *){
+MIOpen: 	tensorDesc = 0
+MIOpen: }
+MIOpen: miopenStatus_t miopenSet4dTensorDescriptor(miopenTensorDescriptor_t, miopenDataType_t, int, int, int, int){
+MIOpen: 	tensorDesc = {}, {}, packed, 
+MIOpen: 	dataType = 1
+MIOpen: 	n = 2
+MIOpen: 	c = 4
+MIOpen: 	h = 13
+MIOpen: 	w = 11
+MIOpen: }
+MIOpen: miopenStatus_t miopenCreateTensorDescriptor(miopenTensorDescriptor_t *){
+MIOpen: 	tensorDesc = 0
+MIOpen: }
+MIOpen: miopenStatus_t miopenSet4dTensorDescriptor(miopenTensorDescriptor_t, miopenDataType_t, int, int, int, int){
+MIOpen: 	tensorDesc = {}, {}, packed, 
+MIOpen: 	dataType = 1
+MIOpen: 	n = 8
+MIOpen: 	c = 4
+MIOpen: 	h = 3
+MIOpen: 	w = 3
+MIOpen: }
+MIOpen: miopenStatus_t miopenCreateTensorDescriptor(miopenTensorDescriptor_t *){
+MIOpen: 	tensorDesc = 0
+MIOpen: }
+MIOpen: miopenStatus_t miopenSet4dTensorDescriptor(miopenTensorDescriptor_t, miopenDataType_t, int, int, int, int){
+MIOpen: 	tensorDesc = {}, {}, packed, 
+MIOpen: 	dataType = 1
+MIOpen: 	n = 2
+MIOpen: 	c = 8
+MIOpen: 	h = 13
+MIOpen: 	w = 11
+MIOpen: }
+MIOpen: miopenStatus_t miopenCreateConvolutionDescriptor(miopenConvolutionDescriptor_t *){
+MIOpen: 	convDesc = 0
+MIOpen: }
+MIOpen: Info [] MIOPEN_FIND_MODE = DYNAMIC_HYBRID(5)
+MIOpen: miopenStatus_t miopenInitConvolutionDescriptor(miopenConvolutionDescriptor_t, miopenConvolutionMode_t, int, int, int, int, int, int){
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {0, 0}, {1, 1}, {1, 1}, 
+MIOpen: 	c_mode = 0
+MIOpen: 	pad_h = 1
+MIOpen: 	pad_w = 1
+MIOpen: 	stride_h = 1
+MIOpen: 	stride_w = 1
+MIOpen: 	dilation_h = 1
+MIOpen: 	dilation_w = 1
+MIOpen: }
+MIOpen: miopenStatus_t miopenSetConvolutionGroupCount(miopenConvolutionDescriptor_t, int){
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {1, 1}, {1, 1}, {1, 1}, 
+MIOpen: 	groupCount = 1
+MIOpen: }
+MIOpen: miopenStatus_t miopenConvolutionForwardGetWorkSpaceSize(miopenHandle_t, const miopenTensorDescriptor_t, const miopenTensorDescriptor_t, const miopenConvolutionDescriptor_t, const miopenTensorDescriptor_t, size_t *){
+MIOpen: 	handle = stream: 0, device_id: 0
+MIOpen: 	wDesc = {8, 4, 3, 3}, {36, 9, 3, 1}, packed, 
+MIOpen: 	xDesc = {2, 4, 13, 11}, {572, 143, 11, 1}, packed, 
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {1, 1}, {1, 1}, {1, 1}, 
+MIOpen: 	yDesc = {2, 8, 13, 11}, {1144, 143, 11, 1}, packed, 
+MIOpen: }
+MIOpen: Info [AmdRocmMetadataVersionDetect] ROCm MD version AMDHSA_COv3, HIP version 7.17.0, MIOpen version 3.6.2.
+MIOpen: Info2 [GetWorkSpaceSize] 
+MIOpen: Info [GetSolutions] 
+MIOpen: Info2 [GetInstalledPathFile] Found exact find database file: "/home/nik/bc250work/rocm-10.2-gfx1013/build/bc250-a03-db-package/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Info [Measure] ReadonlyRamDb::Prefetch time: 0.042078 ms
+MIOpen: Info [Prefetch] File is unreadable: "/home/nik/bc250work/rocm-10.2-gfx1013/cache/a03-replay/db/gfx1013_20.HIP.3_6_2_.ufdb.txt"
+MIOpen: Info [Measure] RamDb::Prefetch time: 0.012871 ms
+MIOpen: Info2 [FindRecordUnsafe] Looking for key 4-13-11-3x3-8-13-11-2-1x1-1x1-1x1-0-NCHW-FP32-F in cache for file "/home/nik/bc250work/rocm-10.2-gfx1013/cache/a03-replay/db/gfx1013_20.HIP.3_6_2_.ufdb.txt"
+MIOpen: Info2 [FindRecord] Looking for key 4-13-11-3x3-8-13-11-2-1x1-1x1-1x1-0-NCHW-FP32-F in file "/home/nik/bc250work/rocm-10.2-gfx1013/build/bc250-a03-db-package/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Info2 [FindRecord] Key match: 4-13-11-3x3-8-13-11-2-1x1-1x1-1x1-0-NCHW-FP32-F
+MIOpen: Info2 [FindRecord] Contents found: ConvDirectNaiveConvFwd:0.0174267,0,miopenConvolutionFwdAlgoDirect;ConvHipDirectFwd:0.0295863,0,miopenConvolutionFwdAlgoDirect;ConvBinWinogradRxSf2x3g1:0.0197911,0,miopenConvolutionFwdAlgoWinograd;ConvBinWinogradRxSf3x2:0.02918,0,miopenConvolutionFwdAlgoWinograd;GemmFwdRest:0.0723478,20592,miopenConvolutionFwdAlgoGEMM
+MIOpen: Info2 [Measure] Db::FindRecord time: 0.065151 ms
+MIOpen: Info2 [GetSolutions] ConvDirectNaiveConvFwd
+MIOpen: Info [GetWorkSpaceSize] 0
+MIOpen: miopenStatus_t miopenConvolutionForwardGetSolution(miopenHandle_t, const miopenTensorDescriptor_t, const miopenTensorDescriptor_t, const miopenConvolutionDescriptor_t, const miopenTensorDescriptor_t, const size_t, size_t *, miopenConvSolution_t *){
+MIOpen: 	handle = stream: 0, device_id: 0
+MIOpen: 	wDesc = {8, 4, 3, 3}, {36, 9, 3, 1}, packed, 
+MIOpen: 	xDesc = {2, 4, 13, 11}, {572, 143, 11, 1}, packed, 
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {1, 1}, {1, 1}, {1, 1}, 
+MIOpen: 	yDesc = {2, 8, 13, 11}, {1144, 143, 11, 1}, packed, 
+MIOpen: 	maxSolutionCount = 128
+MIOpen: }
+MIOpen: Info [GetSolutions] 
+MIOpen: Info2 [FindRecordUnsafe] Looking for key 4-13-11-3x3-8-13-11-2-1x1-1x1-1x1-0-NCHW-FP32-F in cache for file "/home/nik/bc250work/rocm-10.2-gfx1013/cache/a03-replay/db/gfx1013_20.HIP.3_6_2_.ufdb.txt"
+MIOpen: Info2 [FindRecord] Looking for key 4-13-11-3x3-8-13-11-2-1x1-1x1-1x1-0-NCHW-FP32-F in file "/home/nik/bc250work/rocm-10.2-gfx1013/build/bc250-a03-db-package/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Info2 [FindRecord] Key match: 4-13-11-3x3-8-13-11-2-1x1-1x1-1x1-0-NCHW-FP32-F
+MIOpen: Info2 [FindRecord] Contents found: ConvDirectNaiveConvFwd:0.0174267,0,miopenConvolutionFwdAlgoDirect;ConvHipDirectFwd:0.0295863,0,miopenConvolutionFwdAlgoDirect;ConvBinWinogradRxSf2x3g1:0.0197911,0,miopenConvolutionFwdAlgoWinograd;ConvBinWinogradRxSf3x2:0.02918,0,miopenConvolutionFwdAlgoWinograd;GemmFwdRest:0.0723478,20592,miopenConvolutionFwdAlgoGEMM
+MIOpen: Info2 [Measure] Db::FindRecord time: 0.026829 ms
+MIOpen: Info2 [GetDefaultPerformanceConfig] Returns: 8,8,16,16,2,2,8,2,1
+MIOpen: Info2 [GetSolutions] ConvDirectNaiveConvFwd
+MIOpen: Info2 [GetSolutions] ConvBinWinogradRxSf2x3g1
+MIOpen: Info2 [GetSolutions] ConvBinWinogradRxSf3x2
+MIOpen: Info2 [GetSolutions] ConvHipDirectFwd
+MIOpen: Info2 [GetSolutions] GemmFwdRest
+MIOpen: miopenStatus_t miopenConvolutionForwardImmediate(miopenHandle_t, const miopenTensorDescriptor_t, const void *, const miopenTensorDescriptor_t, const void *, const miopenConvolutionDescriptor_t, const miopenTensorDescriptor_t, void *, void *, size_t, const uint64_t){
+MIOpen: 	handle = stream: 0, device_id: 0
+MIOpen: 	wDesc = {8, 4, 3, 3}, {36, 9, 3, 1}, packed, 
+MIOpen: 	w = 0x7fc259201200
+MIOpen: 	xDesc = {2, 4, 13, 11}, {572, 143, 11, 1}, packed, 
+MIOpen: 	x = 0x7fc259200000
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {1, 1}, {1, 1}, {1, 1}, 
+MIOpen: 	yDesc = {2, 8, 13, 11}, {1144, 143, 11, 1}, packed, 
+MIOpen: 	y = 0x7fc259203c00
+MIOpen: 	workSpace = 0x7fc259206000
+MIOpen: 	workSpaceSize = 0
+MIOpen: 	solution_id = 85
+MIOpen: }
+MIOpen: Info [ConvolutionForwardImmediate] solver_id = ConvDirectNaiveConvFwd, workspace = 0
+MIOpen: Info2 [GetInvoker] Returning an invoker for problem 4x13x11x3x3x8x13x11x2xNCHWxFP32x1x1x1x1x1x1x1xFxDefault and solver ConvDirectNaiveConvFwd
+MIOpen: Info [FindSolutionImpl] ConvDirectNaiveConvFwd (not searchable)
+MIOpen: Info2 [PrepareInvoker] Preparing kernel: naive_conv_ab_nonpacked_fwd_nchw_float_float_float_0
+MIOpen: Info2 [IsNetworkedFilesystem] Path does not exist: '"/home/nik/bc250work/rocm-10.2-gfx1013/cache/a03-replay/kernels/3.6.2."'
+MIOpen: Info [IsNetworkedFilesystem] Filesystem type at '"/home/nik/bc250work/rocm-10.2-gfx1013/cache/a03-replay/kernels"' is: 0xef53 'EXT2/3/4_SUPER_MAGIC'
+MIOpen: Info2 [SQLiteBase] Initializing system database file "/home/nik/bc250work/rocm-10.2-gfx1013/build/bc250-a03-db-package/db/gfx1013_20.kdb"
+MIOpen: Info2 [Exec] PRAGMA table_info(kern_db);
+MIOpen Error: bc250:/workspace/source/rocm-libraries/projects/miopen/src/sqlite_db.cpp:224: Internal error while accessing SQLite database: attempt to write a readonly database
+MIOpen: miopenStatus_t miopenDestroyConvolutionDescriptor(miopenConvolutionDescriptor_t){
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {1, 1}, {1, 1}, {1, 1}, 
+MIOpen: }
+MIOpen: miopenStatus_t miopenDestroyTensorDescriptor(miopenTensorDescriptor_t){
+MIOpen: 	tensorDesc = {2, 4, 13, 11}, {572, 143, 11, 1}, packed, 
+MIOpen: }
+MIOpen: miopenStatus_t miopenDestroyTensorDescriptor(miopenTensorDescriptor_t){
+MIOpen: 	tensorDesc = {8, 4, 3, 3}, {36, 9, 3, 1}, packed, 
+MIOpen: }
+MIOpen: miopenStatus_t miopenDestroyTensorDescriptor(miopenTensorDescriptor_t){
+MIOpen: 	tensorDesc = {2, 8, 13, 11}, {1144, 143, 11, 1}, packed, 
+MIOpen: }
+{"stream": "default", "profiling": false, "workspace": "queried", "phase": "replay", "stride": [1, 1], "padding": [1, 1], "dilation": [1, 1], "groups": 1, "name": "basic-f32", "input": [2, 4, 13, 11], "weight": [8, 4, 3, 3], "dtype": "f32", "direction": "fwd", "queried_workspace": 0, "provided_workspace": 0, "solutions": [], "status": "failed", "error": "miopenConvolutionForwardImmediate: status 5", "loaded_libraries": ["/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0", "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000", "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"]}
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_miopen_a03.py", line 339, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_miopen_a03.py", line 335, in main
+    assert result["status"] == "passed"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

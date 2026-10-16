@@ -27,7 +27,7 @@ Installed15 direct API configurations and30 Torch convolution output/gradient
 cases pass, plus event/shader-counter and core regressions. See the
 [A01 report and limits](bc250_miopen_a01_results/README.md).
 A02 is now completed within its recorded reduction/recurrent scope (see below);
-missing plugin/database warnings remain A03/B07. Prior GPU-event speed ratios
+A03 now supplies the bounded database seed and capability-aware probe below; modern plugin kernels remain absent B07. Prior GPU-event speed ratios
 need requalification; no new performance claim. Baseline audit counts below
 remain historical, rather than being silently recomputed from overlapping tests.
 
@@ -38,7 +38,17 @@ and corrected BF16 storage/compute epilogues, with a versioned reduction cache k
 Installed54 numerical reductions,3 refusal contracts and12 recurrent output/all-
 gradient configurations pass, plus convolution/event/core regressions. The
 [A02 report](bc250_miopen_a02_results/README.md) retains failures and scope limits.
-BF16 RNN is unsupported. Exact next A03; optional plugin/system DB warnings remain.
+BF16 RNN is unsupported. A03 is completed below; exact next A04.
+
+## A03 update — 2026-10-16
+
+The current prefix contains genuine gfx1013_20 system FindDb16 keys/58 checked
+immediate solutions, one searched PerfDb record and41 compiled kernel records.
+Read-only replay with empty user caches passes, as does an unseen-shape fallback.
+Default CK plugin probing respects build/device capability; explicit development
+paths retain warnings. The modern plugin is still absent. These are bounded seed
+assets, not full architecture tuning. [A03 evidence and limits](bc250_miopen_a03_results/README.md).
+Exact next A04, Torch hipSPARSELt discovery/integration.
 
 ## What the current audit established
 
@@ -101,9 +111,9 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 
 | ID | Missing feature or defect | Evidence / current impact | Hardware-feasible next action |
 | --- | --- | --- | --- |
-| **A01 — completed** | Convolution timing and dilated workspace | Native gfx1013 shader/KFD epoch mismatch caused unstable/negative HIP event times; MIOpen query excluded dilated GEMM. ROCr329eaf7/libraries08ba6f3 installed;15 direct API +30 Torch convolution configurations pass CPU references,32 stable event pairs and six raw-counter timing references. | Bounded current-prefix fix; see [report](bc250_miopen_a01_results/README.md). Absolute trace alignment, opposite epoch offsets/reset/reboot and universal convolution/performance remain unqualified. A02 completed below; continue A03. |
-| **A02 — completed** | Native MIOpen legacy CK reductions and recurrent backward | Libraries d375d8a2: native wave32/RDNA1 scalar profile; BF16 mapping/raw transfers/conversions and compute-precision scaling; versioned cache key. Installed54 numerical reductions +3 unsupported-compute refusals and12 FP32/FP16 LSTM/GRU/RNN output/all-gradient fixtures pass. | Applies to current-prefix MIOpen callers; BF16 RNN and wider NaN/index/compute/recurrent contracts unqualified. [Report](bc250_miopen_a02_results/README.md). Missing plugin/DB remains A03/B07; no general speedup claim. |
-| **A03** | No gfx1013 system FindDb/PerfDb/KDB; optional loader probes unsupported CK plugin | Installed db contains only lgbm metadata/rank/pcfg files; no gfx1013 assets. User ufdb/ukdb exist. Upstream data install filters match no gfx1013 files; CK plugin target list excludes gfx1013. | After A01/A02, collect genuine bounded tuning/cache entries, validate/replay and package with version/device/shape scope. Review capability-aware optional-plugin probing. Never create empty/fake databases or rename another GPU's data. |
+| **A01 — completed** | Convolution timing and dilated workspace | Native gfx1013 shader/KFD epoch mismatch caused unstable/negative HIP event times; MIOpen query excluded dilated GEMM. ROCr329eaf7/libraries08ba6f3 installed;15 direct API +30 Torch convolution configurations pass CPU references,32 stable event pairs and six raw-counter timing references. | Bounded current-prefix fix; see [report](bc250_miopen_a01_results/README.md). Absolute trace alignment, opposite epoch offsets/reset/reboot and universal convolution/performance remain unqualified. A02 completed below; continue A04. |
+| **A02 — completed** | Native MIOpen legacy CK reductions and recurrent backward | Libraries d375d8a2: native wave32/RDNA1 scalar profile; BF16 mapping/raw transfers/conversions and compute-precision scaling; versioned cache key. Installed54 numerical reductions +3 unsupported-compute refusals and12 FP32/FP16 LSTM/GRU/RNN output/all-gradient fixtures pass. | Applies to current-prefix MIOpen callers; BF16 RNN and wider NaN/index/compute/recurrent contracts unqualified. [Report](bc250_miopen_a02_results/README.md). A03 supplies a bounded DB seed/probe correction; modern plugin remains absent B07; no general speedup claim. |
+| **A03 — completed** | Genuine native MIOpen seed databases and capability-aware plugin probing | Libraries fcf7a714 installed:16 FindDb keys/58 checked solutions, one searched PerfDb record and41 KDB records; normal-path read-only replay has zero new user kernels. Unseen fallback and regressions pass. | Small geometry/version/device scope only; wider tuning and modern CK plugin B07 remain unqualified. [Report](bc250_miopen_a03_results/README.md). Continue A04. |
 | **A04** | Torch hipSPARSELt integration disabled/unfound despite installed port | `_cslt_compress` rejects; Torch CMake `hipsparselt_DIR-NOTFOUND`; current package files and DSO exist. hipSPARSELt N1.4–7 direct API qualification does not imply Torch support. | Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS. |
 | **A05** | Latest causal conv/loss improvements are not reusable general Torch defaults | Only finetune-n7 Qwen3.5 hook; conv has no weight/bias gradients, loss is eager first-order and retains low-precision logits | Expose a reviewed reusable opt-in API, add trainable conv gradients and model/shape dispatch gates. Expand CPU/checkpoint/AMP refs before considering broader selection. Keep old behavior for unsupported calls. |
 | **A06** | Native gated-delta / FLA training kernels missing | Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification | Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support. |
@@ -116,10 +126,10 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B04** | torchvision / torchaudio not installed in reviewed runtime | Package discovery absent, not a core Torch loader failure; RPP/FFTS are separate libraries | Build matching pinned extensions, test needed scalar ATen/C++ ops; keep optional codecs/CPU paths explicit. No assumption that RPP/media blocks automatically accelerate them. |
 | **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; scalar dense INT8 route also missing A08 | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
 | **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |
-| **B07** | MIOpen CK grouped-convolution plugin | libMIOpenCKGroupedConv_gfx1013.so absent by architecture build filter; source probes plugin unconditionally | Optional substantial scalar/generic plugin port or retain working HIP-direct alternatives. Merely enabling CK flag cannot supply kernels; lower priority than A01/A02. |
+| **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
-A01/A02 are completed within their recorded scopes. A03–A09 are the remaining primary
+A01/A02/A03 are completed within their recorded scopes. A04–A09 are the remaining primary
 queue, in this order. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did

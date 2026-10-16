@@ -1,0 +1,163 @@
+[
+  {
+    "label": "miopen-a03-a02-smoke-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 3,
+    "passed": 3,
+    "immediate_solutions": 0
+  },
+  {
+    "label": "miopen-a03-collect",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 15,
+    "passed": 15,
+    "immediate_solutions": 55
+  },
+  {
+    "label": "miopen-a03-conv-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 30,
+    "passed": 30,
+    "immediate_solutions": 0
+  },
+  {
+    "label": "miopen-a03-core-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 0,
+    "passed": 0,
+    "immediate_solutions": 0,
+    "checks": 7
+  },
+  {
+    "label": "miopen-a03-final-replay",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 15,
+    "passed": 15,
+    "immediate_solutions": 55
+  },
+  {
+    "label": "miopen-a03-final-tune-replay",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 1,
+    "passed": 1,
+    "immediate_solutions": 3
+  },
+  {
+    "label": "miopen-a03-handle-before",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 1,
+    "passed": 1,
+    "immediate_solutions": 0
+  },
+  {
+    "label": "miopen-a03-handle-candidate",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 1,
+    "passed": 1,
+    "immediate_solutions": 0
+  },
+  {
+    "label": "miopen-a03-handle-explicit-missing",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 1,
+    "passed": 1,
+    "immediate_solutions": 0
+  },
+  {
+    "label": "miopen-a03-replay",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "failed",
+    "cases": 1,
+    "passed": 0,
+    "immediate_solutions": 0
+  },
+  {
+    "label": "miopen-a03-replay-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 15,
+    "passed": 15,
+    "immediate_solutions": 55
+  },
+  {
+    "label": "miopen-a03-replay-r2",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 15,
+    "passed": 15,
+    "immediate_solutions": 55
+  },
+  {
+    "label": "miopen-a03-tune",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 1,
+    "passed": 1,
+    "immediate_solutions": 1
+  },
+  {
+    "label": "miopen-a03-tune-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 1,
+    "passed": 1,
+    "immediate_solutions": 3
+  },
+  {
+    "label": "miopen-a03-tune-normal",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 1,
+    "passed": 1,
+    "immediate_solutions": 3
+  },
+  {
+    "label": "miopen-a03-unseen-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 3,
+    "passed": 3,
+    "immediate_solutions": 13
+  }
+]

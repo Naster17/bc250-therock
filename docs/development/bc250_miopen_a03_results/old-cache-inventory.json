@@ -1,0 +1,29 @@
+[
+  {
+    "path": "/home/nik/.config/miopen/gfx1013_20.HIP.3_6_2_.ufdb.txt",
+    "keys": 1804,
+    "entries": 3615,
+    "nonpositive_or_nonfinite": 0,
+    "sha256": "a20396ddffe06c4845bd2833173069246d7d3f4cdc1efe071e5ee7c7e27b6551",
+    "promoted": false,
+    "qualification": "Historical private records not CPU-requalified in A03; preserved, not packaged"
+  },
+  {
+    "path": "/home/nik/bc250work/rocm-10.2-gfx1013/cache/candidate-runtime/.config/miopen/gfx1013_20.HIP.3_6_2_.ufdb.txt",
+    "keys": 6,
+    "entries": 25,
+    "nonpositive_or_nonfinite": 0,
+    "sha256": "9bc70d2357c856f6bbe46892495fb923522e76f0947c6e50c9d9d2c2a279cc0f",
+    "promoted": false,
+    "qualification": "Historical private records not CPU-requalified in A03; preserved, not packaged"
+  },
+  {
+    "path": "/home/nik/bc250work/rocm-10.2-gfx1013/cache/a01-direct-fresh/miopen-a01-direct-installed/gfx1013_20.HIP.3_6_2_.ufdb.txt",
+    "keys": 3,
+    "entries": 6,
+    "nonpositive_or_nonfinite": 0,
+    "sha256": "4c8264e7b487e4eb52070cd251a696e142b160797285c726c0fbad2f8da458b7",
+    "promoted": false,
+    "qualification": "Historical private records not CPU-requalified in A03; preserved, not packaged"
+  }
+]

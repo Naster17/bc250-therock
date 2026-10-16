@@ -1,0 +1,1787 @@
+{
+  "status": "passed",
+  "source": {
+    "therock_port_revision": "7d9176a45a2ae40766290b0a440c468cfcb3a164",
+    "rocm_libraries_revision": "fcf7a7142af8c258164e106e66bf893c7f563d15",
+    "rocm_systems_revision": "329eaf726632ab0136924804cbc1321ae09fc126",
+    "sources_sha256": {
+      "rocm-libraries/projects/miopen/src/solver/ck_impl_lib_loader.cpp": "0c08297e35bfd8a15c6106d1aee9f7d99bafa803633f43e11b851e2565ea71f3"
+    },
+    "helper_sha256": {
+      "validate_miopen_a03.py": "37500b24b3a85c701e43e2f30d6706634a3a794e9e009564e623101ea0c1aaf0",
+      "package_miopen_a03.py": "3a7ac84e84d92c8e88c563ea7496c968ea9602f509ec13026252c14a782e10e7",
+      "deploy_miopen_a03_on_host.py": "c1e4934f7107d9b4b480800b2964feddf1a58400aa43b9ee676536589a3ed1c8"
+    },
+    "candidate_gates": {
+      "miopen-a03-handle-before": 1,
+      "miopen-a03-handle-candidate": 1,
+      "miopen-a03-handle-explicit-missing": 1,
+      "miopen-a03-collect": 15,
+      "miopen-a03-tune": 1,
+      "miopen-a03-tune-normal": 1,
+      "miopen-a03-final-replay": 15,
+      "miopen-a03-final-tune-replay": 1
+    }
+  },
+  "protected_before": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0": "1e4c4d58f4e2424ebb013238896ad024355727e720e4b44619fb11ef1d5cd228",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libamdhip64.so": "e9878e9fc4efaa8dd443709a3321ffe7c07a68e090b7dc7eb6e2ec6a91290d50",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/librocblas.so": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipblaslt.so": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/.kpack/blas_lib_gfx1013.kpack": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-work/torch/lib/libtorch_hip.so": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+    "/opt/bc250-stack/previous/rocm/lib/libhsa-runtime64.so.1.21.0": "bda3dc8f8dc7d406b7e77a0d9953ef5af3ec826d01ddea58b757f9ac505f1748",
+    "/opt/bc250-stack/previous/rocm/lib/libMIOpen.so.1.0": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_model_meta.json": "c996291cd2cab13c70fcbce8b69f8d39d1cbd1c65b880628b86bccdbcca224f3",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_pcfg.bin": "0fdd9e3f8fb4f1621ba87e821dfe9c78e4552fcc54b8781d44e887de0594dcb6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_rank.bin": "727ecf84aff7397b010e454a76dcb4d88aea8dfd3fbb24ef97aa4ae099f1106e"
+  },
+  "installed_gates": [
+    "miopen-a03-replay-installed",
+    "miopen-a03-tune-installed",
+    "miopen-a03-unseen-installed",
+    "miopen-a03-conv-installed",
+    "miopen-a03-a02-smoke-installed",
+    "miopen-a03-core-installed"
+  ],
+  "database_package": {
+    "status": "collected_cpu_checked",
+    "source": {
+      "rocm_libraries_revision": "fcf7a7142af8c258164e106e66bf893c7f563d15",
+      "sources_sha256": {
+        "rocm-libraries/projects/miopen/src/solver/ck_impl_lib_loader.cpp": "0c08297e35bfd8a15c6106d1aee9f7d99bafa803633f43e11b851e2565ea71f3"
+      }
+    },
+    "device": "gfx1013:xnack-",
+    "db_key": "gfx1013_20",
+    "wave_size": 32,
+    "physical_cu": 40,
+    "hip_wgp_count": 20,
+    "miopen_version": "3.6.2",
+    "dtype_compute_scope": "Recorded NCHW FP32/FP16/BF16 convolution fixtures only",
+    "finddb_keys": 16,
+    "cpu_checked_immediate_solutions": 58,
+    "perfdb_records": 1,
+    "kernel_records": 41,
+    "files": {
+      "gfx1013_20.HIP.fdb.txt": "d43be1cc2c94054f430527a777b03a0dcbbb012841fb4a0446ffd09f2aa3db28",
+      "gfx1013_20.db.txt": "1a3e9e5a2df4fa31a52956fb49fe0dc7df3b1da53dbee861e2a1e8d6daf48f5b",
+      "gfx1013_20.kdb": "024f809cdc4a416e77aa7bfa0dfc4fa9cddfdc62a3856e9cdd99d1951fbd09ca"
+    },
+    "shared_heuristics": {
+      "lgbm_model_meta.json": "c996291cd2cab13c70fcbce8b69f8d39d1cbd1c65b880628b86bccdbcca224f3",
+      "lgbm_pcfg.bin": "0fdd9e3f8fb4f1621ba87e821dfe9c78e4552fcc54b8781d44e887de0594dcb6",
+      "lgbm_rank.bin": "727ecf84aff7397b010e454a76dcb4d88aea8dfd3fbb24ef97aa4ae099f1106e"
+    },
+    "collection_labels": [
+      "miopen-a03-collect",
+      "miopen-a03-tune",
+      "miopen-a03-tune-normal"
+    ],
+    "searched_case": {
+      "stream": "default",
+      "profiling": false,
+      "workspace": "queried",
+      "phase": "reference_passed",
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "name": "tune",
+      "input": [
+        1,
+        2,
+        5,
+        5
+      ],
+      "weight": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "dtype": "f32",
+      "direction": "fwd",
+      "queried_workspace": 0,
+      "provided_workspace": 0,
+      "algorithms": [
+        {
+          "algorithm": 1,
+          "time_ms": 0.007602428551763296,
+          "workspace": 0
+        }
+      ],
+      "solutions": [
+        {
+          "id": 218,
+          "algorithm": 1,
+          "time_ms": 0.007602429948747158,
+          "workspace": 0,
+          "max_abs_error": 1.8462864292967396e-08,
+          "status": "passed"
+        }
+      ],
+      "status": "passed",
+      "loaded_libraries": [
+        "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+        "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+        "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+      ]
+    },
+    "tested_cases": [
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-f32",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "fwd",
+        "queried_workspace": 20592,
+        "provided_workspace": 20592,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.017426714301109314,
+            "workspace": 0
+          },
+          {
+            "algorithm": 3,
+            "time_ms": 0.019791143015027046,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.07234782725572586,
+            "workspace": 20592
+          }
+        ],
+        "solutions": [
+          {
+            "id": 85,
+            "algorithm": 1,
+            "time_ms": 0.01742669939994812,
+            "workspace": 0,
+            "max_abs_error": 1.928879185819632e-07,
+            "status": "passed"
+          },
+          {
+            "id": 84,
+            "algorithm": 3,
+            "time_ms": 0.019791100174188614,
+            "workspace": 0,
+            "max_abs_error": 1.1691999812768472e-07,
+            "status": "passed"
+          },
+          {
+            "id": 37,
+            "algorithm": 3,
+            "time_ms": 0.029179999604821205,
+            "workspace": 0,
+            "max_abs_error": 1.7578431221743074e-07,
+            "status": "passed"
+          },
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.029586300253868103,
+            "workspace": 0,
+            "max_abs_error": 9.977088966106606e-08,
+            "status": "passed"
+          },
+          {
+            "id": 91,
+            "algorithm": 0,
+            "time_ms": 0.07234779745340347,
+            "workspace": 20592,
+            "max_abs_error": 1.928879185819632e-07,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-f32",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "dx",
+        "queried_workspace": 20592,
+        "provided_workspace": 20592,
+        "algorithms": [
+          {
+            "algorithm": 3,
+            "time_ms": 0.021016141399741173,
+            "workspace": 0
+          },
+          {
+            "algorithm": 1,
+            "time_ms": 0.02649499848484993,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.07358499616384506,
+            "workspace": 20592
+          }
+        ],
+        "solutions": [
+          {
+            "id": 84,
+            "algorithm": 3,
+            "time_ms": 0.02101610042154789,
+            "workspace": 0,
+            "max_abs_error": 2.1161477747888569e-07,
+            "status": "passed"
+          },
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.02649500034749508,
+            "workspace": 0,
+            "max_abs_error": 3.057315083321299e-07,
+            "status": "passed"
+          },
+          {
+            "id": 86,
+            "algorithm": 1,
+            "time_ms": 0.03249049931764603,
+            "workspace": 0,
+            "max_abs_error": 2.5046597024180883e-07,
+            "status": "passed"
+          },
+          {
+            "id": 37,
+            "algorithm": 3,
+            "time_ms": 0.03410330042243004,
+            "workspace": 0,
+            "max_abs_error": 2.6715502365881605e-07,
+            "status": "passed"
+          },
+          {
+            "id": 97,
+            "algorithm": 0,
+            "time_ms": 0.07358500361442566,
+            "workspace": 20592,
+            "max_abs_error": 2.1486917267665717e-07,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-f32",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "dw",
+        "queried_workspace": 20592,
+        "provided_workspace": 20592,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.02562457136809826,
+            "workspace": 2304
+          },
+          {
+            "algorithm": 3,
+            "time_ms": 0.03782457113265991,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.1167108342051506,
+            "workspace": 20592
+          }
+        ],
+        "solutions": [
+          {
+            "id": 24,
+            "algorithm": 1,
+            "time_ms": 0.025624599307775497,
+            "workspace": 2304,
+            "max_abs_error": 2.595022364770827e-07,
+            "status": "passed"
+          },
+          {
+            "id": 87,
+            "algorithm": 1,
+            "time_ms": 0.0342102013528347,
+            "workspace": 0,
+            "max_abs_error": 3.3180276592936764e-07,
+            "status": "passed"
+          },
+          {
+            "id": 53,
+            "algorithm": 3,
+            "time_ms": 0.0378246009349823,
+            "workspace": 0,
+            "max_abs_error": 8.562347173501905e-07,
+            "status": "passed"
+          },
+          {
+            "id": 84,
+            "algorithm": 3,
+            "time_ms": 0.03792190179228783,
+            "workspace": 0,
+            "max_abs_error": 8.562347173501905e-07,
+            "status": "passed"
+          },
+          {
+            "id": 37,
+            "algorithm": 3,
+            "time_ms": 0.06384439766407013,
+            "workspace": 0,
+            "max_abs_error": 5.285794042464431e-07,
+            "status": "passed"
+          },
+          {
+            "id": 102,
+            "algorithm": 0,
+            "time_ms": 0.11671099811792374,
+            "workspace": 20592,
+            "max_abs_error": 9.019320703629319e-07,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-f16",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f16",
+        "direction": "fwd",
+        "queried_workspace": 10296,
+        "provided_workspace": 10296,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.016858166083693504,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.07210220396518707,
+            "workspace": 10296
+          }
+        ],
+        "solutions": [
+          {
+            "id": 85,
+            "algorithm": 1,
+            "time_ms": 0.01685819961130619,
+            "workspace": 0,
+            "max_abs_error": 0.00024364585988223553,
+            "status": "passed"
+          },
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.03027929924428463,
+            "workspace": 0,
+            "max_abs_error": 0.0008339306805282831,
+            "status": "passed"
+          },
+          {
+            "id": 91,
+            "algorithm": 0,
+            "time_ms": 0.07210219651460648,
+            "workspace": 10296,
+            "max_abs_error": 0.00024364585988223553,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-f16",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f16",
+        "direction": "dx",
+        "queried_workspace": 10296,
+        "provided_workspace": 10296,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.025596141815185547,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.06657160073518753,
+            "workspace": 10296
+          }
+        ],
+        "solutions": [
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.025596100836992264,
+            "workspace": 0,
+            "max_abs_error": 0.0029525980353355408,
+            "status": "passed"
+          },
+          {
+            "id": 86,
+            "algorithm": 1,
+            "time_ms": 0.03134850040078163,
+            "workspace": 0,
+            "max_abs_error": 0.00048625655472278595,
+            "status": "passed"
+          },
+          {
+            "id": 97,
+            "algorithm": 0,
+            "time_ms": 0.06657160073518753,
+            "workspace": 10296,
+            "max_abs_error": 0.0006882548332214355,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-f16",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f16",
+        "direction": "dw",
+        "queried_workspace": 10296,
+        "provided_workspace": 10296,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.03388720005750656,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.1320921778678894,
+            "workspace": 10296
+          }
+        ],
+        "solutions": [
+          {
+            "id": 87,
+            "algorithm": 1,
+            "time_ms": 0.03388720005750656,
+            "workspace": 0,
+            "max_abs_error": 0.0004843420574616175,
+            "status": "passed"
+          },
+          {
+            "id": 24,
+            "algorithm": 1,
+            "time_ms": 0.03612399846315384,
+            "workspace": 1152,
+            "max_abs_error": 0.0012298092478886247,
+            "status": "passed"
+          },
+          {
+            "id": 102,
+            "algorithm": 0,
+            "time_ms": 0.13209199905395508,
+            "workspace": 10296,
+            "max_abs_error": 0.0008022170513868332,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-bf16",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "bf16",
+        "direction": "fwd",
+        "queried_workspace": 10296,
+        "provided_workspace": 10296,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.01714516617357731,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.06415919959545135,
+            "workspace": 10296
+          }
+        ],
+        "solutions": [
+          {
+            "id": 85,
+            "algorithm": 1,
+            "time_ms": 0.017145199701189995,
+            "workspace": 0,
+            "max_abs_error": 0.0018430203199386597,
+            "status": "passed"
+          },
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.029346099123358727,
+            "workspace": 0,
+            "max_abs_error": 0.0018430203199386597,
+            "status": "passed"
+          },
+          {
+            "id": 91,
+            "algorithm": 0,
+            "time_ms": 0.06415919959545135,
+            "workspace": 10296,
+            "max_abs_error": 0.0018430203199386597,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-bf16",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "bf16",
+        "direction": "dx",
+        "queried_workspace": 10296,
+        "provided_workspace": 10296,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.0318792499601841,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.05694575235247612,
+            "workspace": 10296
+          }
+        ],
+        "solutions": [
+          {
+            "id": 86,
+            "algorithm": 1,
+            "time_ms": 0.03187920153141022,
+            "workspace": 0,
+            "max_abs_error": 0.0038809776306152344,
+            "status": "passed"
+          },
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.03203269839286804,
+            "workspace": 0,
+            "max_abs_error": 0.0038809776306152344,
+            "status": "passed"
+          },
+          {
+            "id": 97,
+            "algorithm": 0,
+            "time_ms": 0.05694580078125,
+            "workspace": 10296,
+            "max_abs_error": 0.005555242300033569,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "basic-bf16",
+        "input": [
+          2,
+          4,
+          13,
+          11
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "bf16",
+        "direction": "dw",
+        "queried_workspace": 11648,
+        "provided_workspace": 11648,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.03366275131702423,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.10184966772794724,
+            "workspace": 11648
+          }
+        ],
+        "solutions": [
+          {
+            "id": 87,
+            "algorithm": 1,
+            "time_ms": 0.03366279974579811,
+            "workspace": 0,
+            "max_abs_error": 0.0038838908076286316,
+            "status": "passed"
+          },
+          {
+            "id": 24,
+            "algorithm": 1,
+            "time_ms": 0.03498530015349388,
+            "workspace": 1152,
+            "max_abs_error": 0.009165763854980469,
+            "status": "passed"
+          },
+          {
+            "id": 102,
+            "algorithm": 0,
+            "time_ms": 0.1018500030040741,
+            "workspace": 11648,
+            "max_abs_error": 0.0038838908076286316,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 2,
+        "name": "group2",
+        "input": [
+          2,
+          8,
+          9,
+          7
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "fwd",
+        "queried_workspace": 18144,
+        "provided_workspace": 18144,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.01240585744380951,
+            "workspace": 0
+          },
+          {
+            "algorithm": 3,
+            "time_ms": 0.024834712967276573,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.07346300035715103,
+            "workspace": 18144
+          }
+        ],
+        "solutions": [
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.012405900284647942,
+            "workspace": 0,
+            "max_abs_error": 8.902610437733216e-08,
+            "status": "passed"
+          },
+          {
+            "id": 85,
+            "algorithm": 1,
+            "time_ms": 0.01605680026113987,
+            "workspace": 0,
+            "max_abs_error": 1.3007748489446413e-07,
+            "status": "passed"
+          },
+          {
+            "id": 53,
+            "algorithm": 3,
+            "time_ms": 0.02483469992876053,
+            "workspace": 0,
+            "max_abs_error": 1.1603731576992349e-07,
+            "status": "passed"
+          },
+          {
+            "id": 37,
+            "algorithm": 3,
+            "time_ms": 0.041694700717926025,
+            "workspace": 0,
+            "max_abs_error": 1.8125795041290527e-07,
+            "status": "passed"
+          },
+          {
+            "id": 91,
+            "algorithm": 0,
+            "time_ms": 0.07346300035715103,
+            "workspace": 18144,
+            "max_abs_error": 1.3007748489446413e-07,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 2,
+        "name": "group2",
+        "input": [
+          2,
+          8,
+          9,
+          7
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "dx",
+        "queried_workspace": 18144,
+        "provided_workspace": 18144,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.012051000259816647,
+            "workspace": 0
+          },
+          {
+            "algorithm": 3,
+            "time_ms": 0.024868998676538467,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.06185140088200569,
+            "workspace": 18144
+          }
+        ],
+        "solutions": [
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.012051000259816647,
+            "workspace": 0,
+            "max_abs_error": 1.0745044232152168e-07,
+            "status": "passed"
+          },
+          {
+            "id": 86,
+            "algorithm": 1,
+            "time_ms": 0.019860999658703804,
+            "workspace": 0,
+            "max_abs_error": 1.3448624269774e-07,
+            "status": "passed"
+          },
+          {
+            "id": 53,
+            "algorithm": 3,
+            "time_ms": 0.024869000539183617,
+            "workspace": 0,
+            "max_abs_error": 1.5716857468262013e-07,
+            "status": "passed"
+          },
+          {
+            "id": 37,
+            "algorithm": 3,
+            "time_ms": 0.04159159958362579,
+            "workspace": 0,
+            "max_abs_error": 1.3162138612354823e-07,
+            "status": "passed"
+          },
+          {
+            "id": 97,
+            "algorithm": 0,
+            "time_ms": 0.06185140088200569,
+            "workspace": 18144,
+            "max_abs_error": 1.0011029127898752e-07,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 2,
+        "name": "group2",
+        "input": [
+          2,
+          8,
+          9,
+          7
+        ],
+        "weight": [
+          8,
+          4,
+          3,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "dw",
+        "queried_workspace": 18144,
+        "provided_workspace": 18144,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.019044999033212662,
+            "workspace": 0
+          },
+          {
+            "algorithm": 3,
+            "time_ms": 0.03941043093800545,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.09008800238370895,
+            "workspace": 18144
+          }
+        ],
+        "solutions": [
+          {
+            "id": 87,
+            "algorithm": 1,
+            "time_ms": 0.01904500089585781,
+            "workspace": 0,
+            "max_abs_error": 1.844911676762706e-07,
+            "status": "passed"
+          },
+          {
+            "id": 24,
+            "algorithm": 1,
+            "time_ms": 0.01966880075633526,
+            "workspace": 2304,
+            "max_abs_error": 1.52795650965043e-07,
+            "status": "passed"
+          },
+          {
+            "id": 53,
+            "algorithm": 3,
+            "time_ms": 0.03941040113568306,
+            "workspace": 0,
+            "max_abs_error": 3.2891044798866176e-07,
+            "status": "passed"
+          },
+          {
+            "id": 37,
+            "algorithm": 3,
+            "time_ms": 0.05555669963359833,
+            "workspace": 0,
+            "max_abs_error": 2.8359340253913956e-07,
+            "status": "passed"
+          },
+          {
+            "id": 102,
+            "algorithm": 0,
+            "time_ms": 0.09008800238370895,
+            "workspace": 18144,
+            "max_abs_error": 2.623132286383445e-07,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          2
+        ],
+        "padding": [
+          0,
+          2
+        ],
+        "dilation": [
+          1,
+          2
+        ],
+        "groups": 1,
+        "name": "dilated",
+        "input": [
+          2,
+          4,
+          1,
+          19
+        ],
+        "weight": [
+          6,
+          4,
+          1,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "fwd",
+        "queried_workspace": 480,
+        "provided_workspace": 480,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.01027500070631504,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.05084679648280144,
+            "workspace": 480
+          }
+        ],
+        "solutions": [
+          {
+            "id": 85,
+            "algorithm": 1,
+            "time_ms": 0.010274999774992466,
+            "workspace": 0,
+            "max_abs_error": 2.6940648878426288e-08,
+            "status": "passed"
+          },
+          {
+            "id": 91,
+            "algorithm": 0,
+            "time_ms": 0.050846800208091736,
+            "workspace": 480,
+            "max_abs_error": 2.6940648878426288e-08,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          2
+        ],
+        "padding": [
+          0,
+          2
+        ],
+        "dilation": [
+          1,
+          2
+        ],
+        "groups": 1,
+        "name": "dilated",
+        "input": [
+          2,
+          4,
+          1,
+          19
+        ],
+        "weight": [
+          6,
+          4,
+          1,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "dx",
+        "queried_workspace": 480,
+        "provided_workspace": 480,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.014216500334441662,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.06132528558373451,
+            "workspace": 480
+          }
+        ],
+        "solutions": [
+          {
+            "id": 86,
+            "algorithm": 1,
+            "time_ms": 0.014216500334441662,
+            "workspace": 0,
+            "max_abs_error": 7.129426049523602e-08,
+            "status": "passed"
+          },
+          {
+            "id": 97,
+            "algorithm": 0,
+            "time_ms": 0.061325300484895706,
+            "workspace": 480,
+            "max_abs_error": 5.5872544590940265e-08,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          2
+        ],
+        "padding": [
+          0,
+          2
+        ],
+        "dilation": [
+          1,
+          2
+        ],
+        "groups": 1,
+        "name": "dilated",
+        "input": [
+          2,
+          4,
+          1,
+          19
+        ],
+        "weight": [
+          6,
+          4,
+          1,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "dw",
+        "queried_workspace": 480,
+        "provided_workspace": 480,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.011014571413397789,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.06725100427865982,
+            "workspace": 480
+          }
+        ],
+        "solutions": [
+          {
+            "id": 87,
+            "algorithm": 1,
+            "time_ms": 0.011014600284397602,
+            "workspace": 0,
+            "max_abs_error": 2.7493975290893147e-08,
+            "status": "passed"
+          },
+          {
+            "id": 102,
+            "algorithm": 0,
+            "time_ms": 0.06725099682807922,
+            "workspace": 480,
+            "max_abs_error": 3.5949829724213345e-08,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      },
+      {
+        "stream": "default",
+        "profiling": false,
+        "workspace": "queried",
+        "phase": "reference_passed",
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "dilation": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "name": "tune",
+        "input": [
+          1,
+          2,
+          5,
+          5
+        ],
+        "weight": [
+          2,
+          2,
+          3,
+          3
+        ],
+        "dtype": "f32",
+        "direction": "fwd",
+        "queried_workspace": 1800,
+        "provided_workspace": 1800,
+        "algorithms": [
+          {
+            "algorithm": 1,
+            "time_ms": 0.007574428338557482,
+            "workspace": 0
+          },
+          {
+            "algorithm": 0,
+            "time_ms": 0.04417566582560539,
+            "workspace": 1800
+          }
+        ],
+        "solutions": [
+          {
+            "id": 218,
+            "algorithm": 1,
+            "time_ms": 0.007574430201202631,
+            "workspace": 0,
+            "max_abs_error": 1.8462864292967396e-08,
+            "status": "passed"
+          },
+          {
+            "id": 85,
+            "algorithm": 1,
+            "time_ms": 0.012884000316262245,
+            "workspace": 0,
+            "max_abs_error": 2.948838220828698e-08,
+            "status": "passed"
+          },
+          {
+            "id": 91,
+            "algorithm": 0,
+            "time_ms": 0.04417569935321808,
+            "workspace": 1800,
+            "max_abs_error": 2.948838220828698e-08,
+            "status": "passed"
+          }
+        ],
+        "status": "passed",
+        "loaded_libraries": [
+          "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+          "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+          "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0"
+        ]
+      }
+    ],
+    "kernel_index": [
+      {
+        "name": "Conv_Winograd_v30_3_1_fp32_f3x2_stride1.s.o",
+        "args_sha256": "e171e76ee699229c781ae66bc97c068159ba32e583ceded5c662ab25d40a7a53",
+        "hash": "a86afb15c5e917a6a8fa2b7e26ffcdbf",
+        "uncompressed_size": 40992
+      },
+      {
+        "name": "Conv_Winograd_v30_3_1_fp32_f2x3_stride1.s.o",
+        "args_sha256": "e171e76ee699229c781ae66bc97c068159ba32e583ceded5c662ab25d40a7a53",
+        "hash": "2bdb1091fa9fd57f8c16a0a37a79dfac",
+        "uncompressed_size": 33056
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "72f4a3461d1180b3c437661f3076c5ab35ac93344ad1dcfaeab8b23f0e383a7e",
+        "hash": "53f40e9b007bfdc599f8d93a04cb704f",
+        "uncompressed_size": 12344
+      },
+      {
+        "name": "naive_conv_fwd.cpp.o",
+        "args_sha256": "04c4169885973395c009ef9326e87728da219a7cda1e5b0541d6ea24689ed181",
+        "hash": "bf162e8e36e5745d14dd9ba8d00488c5",
+        "uncompressed_size": 482160
+      },
+      {
+        "name": "MIOpenIm2d2Col.cpp.o",
+        "args_sha256": "8a7e18f0b2258686505068a308958a2873db1c35cfa1d9b72b1e474b3bf191f1",
+        "hash": "dd8286dac89620ec0e58cec46b12364b",
+        "uncompressed_size": 5744
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "6d8b24b20a458d8e2cf9c53a0367d1915fb5c10abf4b6b328fa8c427726c4730",
+        "hash": "9b3b1cf204e9c5c1dc71b3a57173e0cc",
+        "uncompressed_size": 8120
+      },
+      {
+        "name": "naive_conv_bwd.cpp.o",
+        "args_sha256": "04c4169885973395c009ef9326e87728da219a7cda1e5b0541d6ea24689ed181",
+        "hash": "167e6b80bc0f52c56d9b96b875a3c478",
+        "uncompressed_size": 547304
+      },
+      {
+        "name": "MIOpenCol2Im2d.cpp.o",
+        "args_sha256": "9aac789d2d12086b5934c5ae8b8a2ae240978e762b50326d58ae893b84257541",
+        "hash": "74ee3a4d70dd1a66ec357314cccc67a2",
+        "uncompressed_size": 6576
+      },
+      {
+        "name": "MIOpenConvBwdWrW_LxG_P53Hip.cpp.o",
+        "args_sha256": "1b20f1728c3a4211e39e6b47bbcdd986583050e7dca17f22ce7b0e7991e22813",
+        "hash": "f6ae2e674a869a2d681a3d56e3a3d53c",
+        "uncompressed_size": 12752
+      },
+      {
+        "name": "naive_conv_wrw.cpp.o",
+        "args_sha256": "04c4169885973395c009ef9326e87728da219a7cda1e5b0541d6ea24689ed181",
+        "hash": "e04f23742477b717768bb6c34c3ee0c4",
+        "uncompressed_size": 654568
+      },
+      {
+        "name": "MIOpenSubTensorOpWithScalarKernel.cpp.o",
+        "args_sha256": "032f159f7f1fd24e9d3a2a02eea3e83c9ce3a1255cd12a6b25c653e97c44bdc7",
+        "hash": "af84df489a8dcf39dc970215aded59f6",
+        "uncompressed_size": 9624
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "143686c87782e10059ce7b719bb4060b02a022fa745bd7b74232c6cbaa07ac4c",
+        "hash": "11a4fbe4e2ad5d49af5811379c4168c5",
+        "uncompressed_size": 12664
+      },
+      {
+        "name": "naive_conv_fwd.cpp.o",
+        "args_sha256": "f250970dfcfa9e391607333211c0dab5c633849ccab44fa2dd420657fc6cae22",
+        "hash": "bf162e8e36e5745d14dd9ba8d00488c5",
+        "uncompressed_size": 482160
+      },
+      {
+        "name": "MIOpenIm2d2Col.cpp.o",
+        "args_sha256": "be2ee62615857fc3e91f54475add35a86566e2cf52e3473a71976abc819574ae",
+        "hash": "59ff52783525df72a48d058a5843858e",
+        "uncompressed_size": 6000
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "8b9c026d80ef2db758bd7235d2237685cd4d038441add4c48990511150462ec1",
+        "hash": "914e3dc3f94c991bbfe12ead51df5420",
+        "uncompressed_size": 8248
+      },
+      {
+        "name": "naive_conv_bwd.cpp.o",
+        "args_sha256": "f250970dfcfa9e391607333211c0dab5c633849ccab44fa2dd420657fc6cae22",
+        "hash": "167e6b80bc0f52c56d9b96b875a3c478",
+        "uncompressed_size": 547304
+      },
+      {
+        "name": "MIOpenCol2Im2d.cpp.o",
+        "args_sha256": "e4c5a02d3bb3e10c23af96be5980b4400512eaea9b86bfe141a85e4b77cde172",
+        "hash": "3b24a981a4a02534d45b43eae707c8d3",
+        "uncompressed_size": 6640
+      },
+      {
+        "name": "MIOpenConvBwdWrW_LxG_P53Hip.cpp.o",
+        "args_sha256": "4c0b7528f611b2276878e7e4b048843cfc007e62b0329119e3fa09ebe994a450",
+        "hash": "391db171f64ae817679acb5c575ab602",
+        "uncompressed_size": 15312
+      },
+      {
+        "name": "naive_conv_wrw.cpp.o",
+        "args_sha256": "f250970dfcfa9e391607333211c0dab5c633849ccab44fa2dd420657fc6cae22",
+        "hash": "e04f23742477b717768bb6c34c3ee0c4",
+        "uncompressed_size": 654568
+      },
+      {
+        "name": "MIOpenSubTensorOpWithScalarKernel.cpp.o",
+        "args_sha256": "4de6edacd8321d0055af7762b8debf8375f6bccd7b93066fe50dd0d56199e8c8",
+        "hash": "a4290387d11dc67e8a1bed4f6a29156d",
+        "uncompressed_size": 10904
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "49dd4f97b3b367c5a7bb3066c9c20efbc5c23c1881226116ae610d7e6de7e12b",
+        "hash": "05e09b5dadd06a1b0ca888f2dc0341eb",
+        "uncompressed_size": 15800
+      },
+      {
+        "name": "naive_conv_fwd.cpp.o",
+        "args_sha256": "bcff87e9420d8a5dfc703a5ddf23db49f1ef3b520883c0378dd00942a8aca0d2",
+        "hash": "bf162e8e36e5745d14dd9ba8d00488c5",
+        "uncompressed_size": 482160
+      },
+      {
+        "name": "MIOpenIm2d2Col.cpp.o",
+        "args_sha256": "013f6368d3f0c1de4963401bf97668b8e952845725a924a278526a4470fd9376",
+        "hash": "59ff52783525df72a48d058a5843858e",
+        "uncompressed_size": 6000
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "dddcacc56e173bee21024b8e1534d4ec2e971df60de4ef8b01c33f593a7abfed",
+        "hash": "b6265857ed3315d333ab987a664c0bea",
+        "uncompressed_size": 10232
+      },
+      {
+        "name": "naive_conv_bwd.cpp.o",
+        "args_sha256": "bcff87e9420d8a5dfc703a5ddf23db49f1ef3b520883c0378dd00942a8aca0d2",
+        "hash": "167e6b80bc0f52c56d9b96b875a3c478",
+        "uncompressed_size": 547304
+      },
+      {
+        "name": "MIOpenCol2Im2d.cpp.o",
+        "args_sha256": "1fb351d3868dbcf179296d3f4be705c747c7df442b7500e74713762667944627",
+        "hash": "f64d94c856654b8e346f94bba6182b5e",
+        "uncompressed_size": 6704
+      },
+      {
+        "name": "MIOpenConvBwdWrW_LxG_P53Hip.cpp.o",
+        "args_sha256": "cfeb8cf615f009db3567fe59b2cc108f64627d7e4b2451520d0dbf05ec853c50",
+        "hash": "236f4ed77963a56acbb8b4b4c6eefea0",
+        "uncompressed_size": 22800
+      },
+      {
+        "name": "naive_conv_wrw.cpp.o",
+        "args_sha256": "bcff87e9420d8a5dfc703a5ddf23db49f1ef3b520883c0378dd00942a8aca0d2",
+        "hash": "e04f23742477b717768bb6c34c3ee0c4",
+        "uncompressed_size": 654568
+      },
+      {
+        "name": "MIOpenSubTensorOpWithCastTensorKernel.cpp.o",
+        "args_sha256": "7312d98dc8c1d75978137222fc24962f44a2a8717d9964e3ecdcd4e6497eb28f",
+        "hash": "177238aa85c32b7c93890fb60886cbb5",
+        "uncompressed_size": 12736
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "1a63a183624f1166b0fa3d784ceeaf2a7452c0602cd0d66a2d27c029a203d875",
+        "hash": "08480dda36c77500250cdadec50fc2ac",
+        "uncompressed_size": 7096
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "94c46be7fe01f1d77936f033ba1f08ca73d9523df37a8c05cad4746d52340a28",
+        "hash": "f0c8fb76c4f8a80f40483d2570ea84cf",
+        "uncompressed_size": 6840
+      },
+      {
+        "name": "MIOpenCol2Im2d.cpp.o",
+        "args_sha256": "f28755f92d398ed1c7f360653f20e6801dbf0a9f574ecdcfe7c956afa5614936",
+        "hash": "74ee3a4d70dd1a66ec357314cccc67a2",
+        "uncompressed_size": 6576
+      },
+      {
+        "name": "MIOpenGroupConvBwdWrW_LxG_P53Hip.cpp.o",
+        "args_sha256": "cfcaeadcf8cd353290097f9895c1e2ba0fe23596c57885985e73239f95a848a7",
+        "hash": "8cf825d2b153aa1a29f8dc05926417fe",
+        "uncompressed_size": 11216
+      },
+      {
+        "name": "MIOpenConvBwdWrW_LxG_P53Hip.cpp.o",
+        "args_sha256": "cfcaeadcf8cd353290097f9895c1e2ba0fe23596c57885985e73239f95a848a7",
+        "hash": "bd6c4cb073220bb271afa4c38b179567",
+        "uncompressed_size": 11216
+      },
+      {
+        "name": "MIOpenIm2d2Col.cpp.o",
+        "args_sha256": "7392eb759a617c79990bd2ff47d80d6b3c057a53e5b8b6b805a557ce358d0b27",
+        "hash": "fb578aeb267c76e58b61d955e895b11b",
+        "uncompressed_size": 5744
+      },
+      {
+        "name": "MIOpenSubTensorOpWithScalarKernel.cpp.o",
+        "args_sha256": "a5badea1dffc4298710a49ffb6bea26e90a6385131518fee1e9c2628e24e6999",
+        "hash": "e9e9997ba138efb64b603b072e043320",
+        "uncompressed_size": 9624
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "db5555bfd6dfd68c2dd85dedbf37266eaf2018d7bf96b46a45f1434d1b706ef5",
+        "hash": "c9ee28c71e9651313381b88800d0cfe1",
+        "uncompressed_size": 5176
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "2127d5f9abe04a414b5b376d08109fb8f54ce641025e49faba1366181b78fcc7",
+        "hash": "971fa7b0ade60a48dc948d3852592a25",
+        "uncompressed_size": 4984
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "07ec24aa27c880fca34ff1f4c5d6d7de3ddf4971516e73dc3ebe7d098de0491a",
+        "hash": "3febeda86ac160e3702ae4e30a15fe84",
+        "uncompressed_size": 5368
+      },
+      {
+        "name": "MIOpenConvDirUniHip.cpp.o",
+        "args_sha256": "928d3d418edae455d020beaab0f4278a9f091de2828672fd359d6f6e68f88f99",
+        "hash": "9cd57a68d35fb626311b35a70d26626d",
+        "uncompressed_size": 5176
+      },
+      {
+        "name": "MIOpenIm2d2Col.cpp.o",
+        "args_sha256": "6b62040d371e25e0f9a26d786174e3f33f42f8fb696ad464332e253013fbddcb",
+        "hash": "637f93345a9fb7af78d1642ffacd0d35",
+        "uncompressed_size": 6064
+      }
+    ],
+    "limitations": "One genuinely searched native ConvHipDirectFwd performance record; not global tuning. Kernel cache includes compiled search candidates, not a claim that every blob/configuration was numerically checked. Only listed immediate API executions were CPU checked. No cross-board, compiler-version or universal performance qualification. No empty/fabricated DB or architecture renaming."
+  },
+  "before_library_sha256": "f4b1a10ce20bdbdf0e6ac90168fb50945b35cf8e26385b66f3ee387aa4507b3c",
+  "phase": "miopen-a03-core-installed",
+  "after_library_sha256": "3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce",
+  "protected_unchanged": true,
+  "running_agent_jobs": []
+}

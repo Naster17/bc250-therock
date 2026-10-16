@@ -9,6 +9,41 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT A03 completed2026-10-16:** TheRock source/helpers
+  7d9176a45a2ae40766290b0a440c468cfcb3a164, libraries
+  fcf7a7142af8c258164e106e66bf893c7f563d15, installed .104. Optional modern CK
+  loader respects build flag/existing device whitelist; explicit plugin path still
+  warns on missing library. No plugin kernels added (optional B07 remains).
+  Genuine gfx1013_20 system FindDb16 keys/58 CPU-checked immediate solutions,
+  one searched ConvHipDirectFwd PerfDb record and41 compiled kernel records with
+  exact geometry/type/source/hash provenance. Unforced normal alternatives checked
+  after isolated search. Read-only default-path replay15+1 configurations/58
+  solutions passes with empty user FindDb/PerfDb and zero new user kernels; logged
+  searched-parameter load. Unseen geometry fwd/dx/dw passes and creates3 user
+  records; system payload hashes unchanged.30 Torch conv +A02 smoke3 +seven core
+  groups pass; all16 GPU guards ACK/600s/dmesg same53f83f7b, including retained
+  initial WAL/read-only failure. Packaging now consistent SQLite backup/DELETE
+  journal; original caches/packages retained. Initial deployment precheck rejected
+  Info-level empty-user-cache notices before mutation; warning-severity check fixed.
+  Under exclusive runtime lock, only MIOpen DSO and3 native DBs/manifest added;
+  installed SHA3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce.
+  11 protected HSA/HIP/Torch/BLAS/kpack/frozen/shared-heuristic hashes unchanged.
+  Recovery WS/recovery/miopen-a03-before, SOURCE_MIOPEN_A03.json in WS/current.
+  Report docs/development/bc250_miopen_a03_results/README.md; raw WS/logs/miopen-a03-*
+  and local ignored kernel/artifacts/miopen-a03/. Bundle WS/build/bc250-a03-db-package-r3
+  and local ignored copy preserved; text assets/manifest/hashes committed.30 library
+  patches exact reconstruction. Restored historical MIOpen bias/fusion inventory
+  row accidentally overwritten by A02 doc edit. Prior Torch SDPA3-file patch-bundle
+  gap retained; full sources/Git preserved. Small seed, no universal tuning/speedup/
+  cross-board/compiler/coverage claim; not all compiled search candidates CPU checked.
+  A01 clock/trace/reset/reboot and event-speed-ratio limits retained. Python CPU
+  fault remains unresolved/distinct from fixed VM-heap/CSR. Torch4ee6571/Triton
+  ee65ff3b/ROCr329eaf7/image5df0/kernel0957/image84995/boot a287fd16/SDMA0/heap-off/
+  math/r2fallback/BIOS/.105/user src/data unchanged. No active build/test/container/
+  recovery deadline. **Exact next A04:** inspect patched Torch hipSPARSELt CMake
+  package discovery/version gates, targeted ccache build (12 jobs/link1), then real
+  compress/sparse-mm metadata/bias/scalar/stream CPU-reference contracts. Keep
+  default dense BLAS. A04–A09 before N2.7; K6 completed; don't repeat earlier work.
 - **CURRENT A02 completed2026-10-16:** TheRock source/helpers
   d17427bfeff6ab7204855a753a883c9a66fbf51b; libraries
   d375d8a2ea7280170455d133058c3cf8e16f58b6 (native-profile2093090048f), installed .104.

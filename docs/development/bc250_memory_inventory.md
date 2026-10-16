@@ -461,6 +461,7 @@ library reconstruction; retained earlier manifests keep their original meaning. 
 | 0027 | A01 MIOpen dilated GEMM workspace query: `08ba6f386ff` |
 | 0028 | A02 native gfx1013 bundled legacy CK scalar profile: `2093090048f` |
 | 0029 | A02 BF16 reduction conversions/scaling and cache-key isolation: `d375d8a2ea7` |
+| 0030 | A03 capability-aware optional CK plugin probing: `fcf7a7142af` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -471,6 +472,35 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 (`270bfb9d`), RDNA1 buffer flags (`ee65ff3b`).
 
 ## Component coverage: implemented versus existing native backend
+
+**A03 completed20261016:** libraries fcf7a7142af8c258164e106e66bf893c7f563d15,
+source/helpers7d9176a45 (initial452ac72e7); installed .104. Optional CK probe now
+respects build flag/existing solver whitelist, explicit path retains diagnostics.
+No modern plugin kernels added; B07 remains optional. Genuine native gfx1013_20
+system FindDb16 keys/58 CPU-checked immediate solutions, one searched HIP-direct
+PerfDb record and41 compiled kernel records installed with provenance. Normal
+unforced alternatives checked after the isolated search. Read-only installed
+replay uses empty user FindDb/PerfDb and zero new user kernels; searched config
+load logged. Unseen geometry fwd/dx/dw falls back and writes three user records.
+30 Torch convolutions, A02 smoke3 and seven core groups pass. All16 GPU guards
+ACK/600s and dmesg identical. Initial WAL-mode package failed readonly replay;
+consistent SQLite backup now uses DELETE journal mode; prior cache/package kept.
+Initial deployment precheck mistook expected Info-level empty-user notices for
+system warnings and stopped before mutation; severity check corrected. No global
+warning suppression. Source/DSO and three native DBs plus manifest installed under
+exclusive runtime lock; rollback WS/recovery/miopen-a03-before prepared/not used.
+DSO SHA3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce,
+11 protected runtime/fallback/shared-heuristic hashes unchanged. Exact payloads:
+[report/manifest](bc250_miopen_a03_results/README.md); raw WS/logs/miopen-a03-* and
+local ignored kernel/artifacts/miopen-a03/. Binary bundle retained locally/.104;
+text assets and hashes committed.30 library patches reconstruct exactly. Existing
+historical private caches preserved, not promoted. No universal tuning/speedup/
+coverage or cross-board/compiler qualification; compiled search candidates are
+not all numerically checked. Python CPU fault separate from fixed VM-heap/CSR;
+A01 clock/reboot/trace and Torch SDPA patch-bundle limits retained. No active agent
+build/test/container/deadline. Exact next A04: inspect patched Torch hipSPARSELt
+CMake discovery/version gates and qualify real compress/sparse-mm integration.
+A04–A09 before N2.7; K6 completed. Kernel/BIOS/.105/user files unchanged.
 
 **A02 completed20261016:** libraries d375d8a2ea7280170455d133058c3cf8e16f58b6,
 TheRock source/helpers d17427bfeff6ab7204855a753a883c9a66fbf51b; installed .104.
@@ -553,7 +583,7 @@ is A03 database/cache qualification; selected Torch/library queue precedes N2.7.
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL                                | CPU-checked FP32/FP16/signedINT8 GEMM examples; native architecture applicability changes                                                                                                                    | Admitted DL convolution/grouped classes are not automatically executed/qualified                                                                            |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen | CPU-reference f32/f16/bf16 convolution fwd/dx/dw; A02 native legacy CK reduction54 numerical +3 refusal contracts and12 f32/f16 recurrent output/all-gradient cases | Modern optional CK grouped-conv plugin/system DB absent; BF16 RNN and wider solver/type/NaN/index/recurrent contracts unqualified |
+| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | Historical reductions/scans and208 block-reduction tests; P2 int32 cases42/48/48 with guards/streams, signed stable sorts, selection, scans, blocks/wave32 and Thrust policies                               | Floating/custom/segmented algorithms and broader tuning remain. hipCCL is header packaging, not RCCL.                                                       |
@@ -942,7 +972,7 @@ optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit
 | Triton incorrect buffer reads   | Missing RDNA1 descriptor flag branch; globals passed while buffer path failed. Fixed.                                                        | Triton patch0004/root `9fdae0b5d`; both memory paths validated                                                                                 |
 | Triton low-precision lowering   | Unsupported gfx13 packed dot/BF16 multiply replaced by widened scalar arithmetic; signed limits and rounding-tie/NaN tests retained          | Four Triton patches and MLIR/LLVM/assembly/GPU gates                                                                                           |
 | NHWC avgpool backward           | Padding correction in Torch source                                                                                                           | Torch patch0001, operator coverage                                                                                                             |
-| MIOpen | CPU-reference f32/f16/bf16 convolution fwd/dx/dw; A02 native legacy CK reduction54 numerical +3 refusal contracts and12 f32/f16 recurrent output/all-gradient cases | Modern optional CK grouped-conv plugin/system DB absent; BF16 RNN and wider solver/type/NaN/index/recurrent contracts unqualified |
+| MIOpen bias/fusion              | Legacy bias beta1 doubles output; beta0 is correct. BF16 and FP16 NHWC pointwise required private scalar HIP fallback; output routing fixed. | Library patch0016, provider CPU references; mixed-intermediate rejection                                                                       |
 | Lt SWISH                        | Public beta is fixed1; activation arg0 is not Swish beta                                                                                     | 465 then561 extended consumer cases; hipDNN Lt48                                                                                               |
 | RPP audio                       | Spectrogram destination stride and decibel reduction/reference/zero handling fixed; FFTS dependencies/linking fixed                          | Patches0010/0013/0015 and audio26                                                                                                              |
 | Source generation               | Torch CMake cache can leave HIPHooks stale even after pip; explicitly hipify before editable rebuild                                         | `build_torch.sh`, `rebuild_torch_pooling.sh`                                                                                                   |
