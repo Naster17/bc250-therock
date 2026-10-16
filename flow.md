@@ -9,6 +9,37 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT storage cleanup completed 2026-10-16**, implementation/evidence
+  `a26b5621b666d08dc18257208a6a68d21b7bb21e`. User explicitly authorized obsolete
+  project artifact removal; this supersedes blanket retention only for inspected
+  retired items. .104 recovered31,282,634,752bytes (29.13GiB): free12.2->41.3GiB,
+  used97->91%. Retired candidate priority2-20261014 and initial20261012 rocm/torch/
+  cache payloads (6dirs),56 stopped project containers,2 obsolete images,33
+  synthetic validation file entries and2 orphan private launcher contexts. No
+  global prune/volume/package removal. Runtime metadata renamed runtime.retired.json
+  beside RETIRED.json; numerical reports/logs retained, deleted test checkpoints
+  require regeneration under a new helper label. User data/checkpoints untouched.
+  `current` unchanged ->dev/priority1; `previous` atomically consolidated to tested
+  frozen20261013-4b000d542, same as before-dev-current. This independent payload/
+  image and current/python-consumers dependency remain. No active links into
+  retired payloads.14 core runtime/config/DSO hashes unchanged; external .kpack
+  hashes separately match N1.8/frozen sealed manifests (executed helper initially
+  omitted packs via wrong relative path; retained source corrected, see report).
+  Three GPU gates cleanup-{fallback-before,current-after,fallback-after}:exit0,
+  seven bounded CPU-reference/contract groups each,21 group executions total;
+  600s guards ACKed, dmesg byte-identical across entire cleanup. No universal
+  correctness/stability claim. Source/plan/journal/results and scope exclusions:
+  docs/development/bc250_storage_cleanup_20261016/README.md, matching WS/logs.
+  User neural-p1 container/image unchanged. Sources/builds/ccache/real models,
+  compatibility installs/links, user src/, .105, r2 boot fallback/BIOS retained.
+  Local Alpine build belongs to separate gfx1103 setup with running container:
+  excluded; initial unprivileged attempt failed before deleting local build files.
+  Torch4ee6571/libraries a6f7d3d/Triton ee65ff3b/kernel0957/image84995/boot a287fd16,
+  SDMA/heap-off/math defaults unchanged. No running agent build/test/container or
+  recovery deadline. MIOpen A01/A02 and historical Python CPU fault remain open,
+  distinct from fixed VM-heap/CSR. **Exact next A01:** minimal direct-MIOpen C-API
+  workspace-query/invocation versus handle/stream profiling isolation, CPU fwd/dx/dw
+  references; fix only demonstrated cause. Audit primary queue before N2.7.
 - **CURRENT Torch support audit completed 2026-10-16**, source/evidence revision
   `7e39ed699289a60d6a9605ed22ff4493446540f2`. User asks to audit Torch/dependencies,
   identify hardware-feasible gaps and follow a shared table BEFORE N2.7. Latest

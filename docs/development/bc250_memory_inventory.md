@@ -386,9 +386,20 @@ prepare separately versioned candidate with one-shot boot/SSH fallback preserved
 | Runtime tag            | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; tag name predates P2, immutable ID above is authoritative                                          |
 | Build image            | `localhost/bc250-rocm-build:10.2-ccache`; Ubuntu24.04/glibc inside Alpine host                                                                               |
 | Triton wheel SHA256    | `2d65d6fefe359116521640e3cc2257bd03b4b24f6877fc8e28946ee9c57544d8`                                                                                           |
-| Candidate              | Independent `/opt/bc250-stack/candidates/priority2-20261014`, bounded-qualified, not activated as a daily release                                            |
+| Candidate              | `priority2-20261014` payload retired20261016; `runtime.retired.json` and validation retained as historical evidence, no longer executable                     |
 | Recovery link          | `/opt/bc250-stack/before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542` release                                                                   |
-| Initial release        | Retained `10.2-gfx1013-20261012-a640c9296`; `/opt/bc250-stack/previous` records prior deployment                                                             |
+| Software fallback      | `previous` and `before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542`; initial20261012 payload retired20261016                                       |
+
+Storage cleanup20261016 (implementation/evidence `a26b5621b666d08dc18257208a6a68d21b7bb21e`)
+recovered29.13GiB on .104; available12.2->41.3GiB. User explicitly authorized
+retiring inspected obsolete payloads,56 stopped containers,2 image records and
+our synthetic test binaries/2 orphan contexts. Runtime hashes stayed unchanged;
+the active runtime and retained frozen fallback passed bounded GPU gates; `previous` now selects that
+newer fallback. All sources/incremental builds/caches, genuine user checkpoints,
+user neural container, boot fallback, .105 and `src/` remain. Local Alpine/gfx1103
+artifacts belong to a separate project and were excluded. Full deletion journal,
+protected scope, limitations and test evidence:
+[storage cleanup report](bc250_storage_cleanup_20261016/README.md).
 
 `.104` exported source trees are gitless. Inspect `WS/source/GIT_REVISION`,
 `WS/source/rocm-libraries/GIT_REVISION`, and both Torch GIT_REVISION files.
@@ -636,8 +647,11 @@ This respects shared memory; near-OOM/hang recovery was not established.
 No CPU/RAM cgroup cap is imposed by the normal launcher; its default 1 GiB shared
 memory mount is separately configurable. GPU use still competes with host RAM.
 
-Retain `WS/{training-model,training-env-stable,training-validation}` and
-`WS/logs/training-memory/`. Qualified consumer pins are Transformers 5.2.0,
+Retain `WS/{training-model,training-env-stable}`, validation configs/reports and
+`WS/logs/training-memory/`. Obsolete generated validation checkpoint weights/state
+and duplicate tokenizer files were retired20261016; regenerate synthetic fixtures
+under new helper labels when needed. Genuine user checkpoints were untouched.
+Qualified consumer pins are Transformers 5.2.0,
 PEFT 0.18.1, Accelerate 1.12.0. `bc250-train` mounts the frozen consumer bundle
 through `current/python-consumers`; it does not replace our custom Torch.
 Do not redownload or recreate these because conversation context was compacted.
@@ -916,7 +930,7 @@ never silently assume all matrices are SPD. The benchmark source encodes exact c
 | Matched old/new/model performance | `bc250_performance_results/*.json`; `/home/nik/bc250work/rocm-performance-20261013` on both hosts                                      |
 | P1/P2 numerical evidence          | `bc250_scalar_library_results/priority1-*.json` and `priority2-*.json`; host logs                                                      |
 | Independent frozen release        | 600-second soak40,339 cycles; prior candidate39,657; review46,378 file hashes. These do not qualify current mutable P2 long stability. |
-| P2 candidate                      | `candidates/priority2-20261014/runtime.json`,191 shared-object/kernel-pack hashes; validation/candidate.json                           |
+| P2 candidate (retired payload)    | `candidates/priority2-20261014/runtime.retired.json`,191 historical DSO/pack hashes; validation/candidate.json retained after20261016 retirement |
 | P2 launcher                       | `/home/nik/bc250work/priority2-launcher.{json,pt}`,20 cycles/40 sparse matmuls, compiled gradients and checkpoint                      |
 | Kernel comparison                 | P2 report records82 new bridge/veth messages, no new fault/reset/OOM; logs are not byte-identical                                      |
 
