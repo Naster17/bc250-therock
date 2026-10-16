@@ -1,0 +1,52 @@
+{
+  "samples": [
+    {
+      "custom": 0,
+      "target_ms": 1,
+      "raw_ms": 1,
+      "event_ms": 1.01288497,
+      "repeated_ms": 1.01288497,
+      "khz": 100000
+    },
+    {
+      "custom": 0,
+      "target_ms": 2,
+      "raw_ms": 2,
+      "event_ms": 2.01220202,
+      "repeated_ms": 2.01220202,
+      "khz": 100000
+    },
+    {
+      "custom": 0,
+      "target_ms": 5,
+      "raw_ms": 5.00004,
+      "event_ms": 5.01787519,
+      "repeated_ms": 5.01787519,
+      "khz": 100000
+    },
+    {
+      "custom": 1,
+      "target_ms": 1,
+      "raw_ms": 1,
+      "event_ms": 1.01052296,
+      "repeated_ms": 1.01052296,
+      "khz": 100000
+    },
+    {
+      "custom": 1,
+      "target_ms": 2,
+      "raw_ms": 2.00004,
+      "event_ms": 2.01247001,
+      "repeated_ms": 2.01247001,
+      "khz": 100000
+    },
+    {
+      "custom": 1,
+      "target_ms": 5,
+      "raw_ms": 5,
+      "event_ms": 5.0178299,
+      "repeated_ms": 5.0178299,
+      "khz": 100000
+    }
+  ]
+}

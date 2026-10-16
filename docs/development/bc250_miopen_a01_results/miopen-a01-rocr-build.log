@@ -1,0 +1,410 @@
+[setup_ccache] Config preset: local
+[setup_ccache] Platform: POSIX
+[setup_ccache] Cache mode: release_type=(unset) preset=local remote=disabled local=/workspace/cache/data
+[setup_ccache] Generated ccache config:
+[setup_ccache]   max_size = 10G
+[setup_ccache]   cache_dir = /workspace/cache/data
+[setup_ccache]   compiler_check = /opt/build-venv/bin/python3 /workspace/cache/compiler_check.py /workspace/cache/compiler_check_cache %compiler%
+[setup_ccache]   sloppiness = include_file_ctime,pch_defines,time_macros
+[1/40] Extracting binary for kCodeTrapHandlerV2_1010...
+[2/40] Extracting binary for kCodeTrapHandlerV2_12...
+[3/40] Extracting binary for kCodeCopyAligned10...
+[4/40] Extracting binary for kCodeCopyAligned1250...
+[5/40] Extracting binary for kCodeTrapHandlerV2_10...
+[6/40] Extracting binary for kCodeTrapHandlerV2_9...
+[7/40] Extracting binary for kCodeTrapHandlerV2_942...
+[8/40] Extracting binary for kCodeCopyAligned1010...
+[9/40] Extracting binary for kCodeCopyAligned11...
+[10/40] Extracting binary for kCodeCopyAligned12...
+[11/40] Extracting binary for kCodeCopyAligned9...
+[12/40] Extracting binary for kCodeCopyMisaligned10...
+[13/40] Extracting binary for kCodeCopyMisaligned12...
+[14/40] Extracting binary for kCodeCopyMisaligned1250...
+[15/40] Extracting binary for kCodeFill1010...
+[16/40] Extracting binary for kCodeFill10...
+[17/40] Extracting binary for kCodeFill11...
+[18/40] Extracting binary for kCodeFill9...
+[19/40] Collating trap handlers...
+[20/40] Collating blit shaders...
+[21/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/hsa_ven_amd_loader.cpp.o
+[22/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_sdma_queue.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_sdma_queue.cpp:10:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_sdma_queue.cpp:10:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_sdma_queue.cpp:10:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_sdma_queue.cpp:10:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+4 warnings generated.
+[23/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_loader_context.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_loader_context.cpp:50:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_loader_context.cpp:50:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_loader_context.cpp:50:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_loader_context.cpp:50:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+4 warnings generated.
+[24/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_blit_kernel.cpp.o
+[25/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/intercept_queue.cpp.o
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/intercept_queue.cpp:435:11: warning: 11 enumeration values not handled in switch: 'HSA_AMD_QUEUE_INFO_PREFETCH_METADATA_DISPATCH_PKT_VERSION_MAJOR', 'HSA_AMD_QUEUE_INFO_PREFETCH_METADATA_DISPATCH_PKT_VERSION_MINOR', 'HSA_AMD_QUEUE_INFO_PREFETCH_METADATA_BARRIER_PKT_VERSION_MAJOR'... [-Wswitch]
+  435 |   switch (attribute) {
+      |           ^~~~~~~~~
+1 warning generated.
+[26/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_filter_device.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_filter_device.cpp:59:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_filter_device.cpp:59:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_filter_device.cpp:59:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_filter_device.cpp:59:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+4 warnings generated.
+[27/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/driver/kfd/amd_kfd_driver.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/driver/kfd/amd_kfd_driver.cpp:57:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/driver/kfd/amd_kfd_driver.cpp:57:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/driver/kfd/amd_kfd_driver.cpp:57:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/driver/kfd/amd_kfd_driver.cpp:57:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+4 warnings generated.
+[28/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_memory_region.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_memory_region.cpp:48:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_memory_region.cpp:48:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_memory_region.cpp:48:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_memory_region.cpp:48:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+4 warnings generated.
+[29/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/svm_profiler.cpp.o
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/svm_profiler.cpp:155:10: warning: unused variable 'err' [-Wunused-variable]
+  155 |     auto err = gpu_agent->driver().OpenSMI(gpu_agent->node_id(), &files[i + 1].fd);
+      |          ^~~
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/svm_profiler.cpp:160:10: warning: unused variable 'wrote' [-Wunused-variable]
+  160 |     auto wrote = write(files[i + 1].fd, &events, sizeof(events));
+      |          ^~~~~
+2 warnings generated.
+[30/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_topology.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_topology.cpp:66:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_topology.cpp:66:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_topology.cpp:66:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_topology.cpp:66:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+4 warnings generated.
+[31/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_aql_queue.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_aql_queue.cpp:64:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_aql_queue.cpp:64:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_aql_queue.cpp:64:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_aql_queue.cpp:64:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_aql_queue.cpp:503:8: warning: unused variable 'setFlag' [-Wunused-variable]
+  503 |   auto setFlag = [&](uint32_t bit) {
+      |        ^~~~~~~
+5 warnings generated.
+[32/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/libamdhsacode/lnx/amd_core_dump.cpp.o
+[33/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/hsa_ext_amd.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/hsa_ext_amd.cpp:60:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/hsa_ext_amd.cpp:60:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/hsa_ext_amd.cpp:60:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/hsa_ext_amd.cpp:60:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/hsa_ext_amd.cpp:631:28: warning: result of comparison of constant 65536 with expression of type 'const uint16_t' (aka 'const unsigned short') is always false [-Wtautological-constant-out-of-range-compare]
+  631 |             op.num_entries > 65536 || op.reserved0 != 0)
+      |             ~~~~~~~~~~~~~~ ^ ~~~~~
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/hsa_ext_amd.cpp:685:49: warning: result of comparison of constant 65536 with expression of type 'const uint16_t' (aka 'const unsigned short') is always false [-Wtautological-constant-out-of-range-compare]
+  685 |           op.num_entries == 0 || op.num_entries > 65536 || op.unused_size != 0)
+      |                                  ~~~~~~~~~~~~~~ ^ ~~~~~
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/hsa_ext_amd.cpp:697:28: warning: result of comparison of constant 65536 with expression of type 'const uint16_t' (aka 'const unsigned short') is always false [-Wtautological-constant-out-of-range-compare]
+  697 |             op.num_entries > 65536 || op.reserved0 != 0)
+      |             ~~~~~~~~~~~~~~ ^ ~~~~~
+7 warnings generated.
+[34/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_blit_sdma.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_blit_sdma.cpp:53:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_blit_sdma.cpp:53:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_blit_sdma.cpp:53:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_blit_sdma.cpp:53:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_blit_sdma.cpp:2388:16: warning: unused variable 'kAlign' [-Wunused-variable]
+ 2388 |   const size_t kAlign = use_gfx1250 ? SDMA_PKT_COPY_LINEAR_SWAP_GFX1250::kAlignment_
+      |                ^~~~~~
+5 warnings generated.
+[35/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/pcs/hsa_ven_amd_pc_sampling.cpp.o
+[36/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/pcs/pcs_runtime.cpp.o
+[37/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/amd_gpu_agent.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_gpu_agent.cpp:65:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_gpu_agent.cpp:65:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_gpu_agent.cpp:65:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_gpu_agent.cpp:65:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_gpu_agent.cpp:4436:17: warning: unused variable 'written' [-Wunused-variable]
+ 4436 |             int written = snprintf(thread_name, sizeof(thread_name), "%s_XCC%u",
+      |                 ^~~~~~~
+5 warnings generated.
+[38/40] Building CXX object runtime/hsa-runtime/CMakeFiles/hsa-runtime64.dir/core/runtime/runtime.cpp.o
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/runtime.cpp:82:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:90:16: warning: 'IPCFragmentExport' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   90 |   hsa_status_t IPCFragmentExport(void* address) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:125:24: note: overridden virtual function is here
+  125 |   virtual hsa_status_t IPCFragmentExport(void* address) const = 0;
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/runtime.cpp:82:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:92:16: warning: 'GetInfo' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+   92 |   hsa_status_t GetInfo(hsa_region_info_t attribute, void* value) const;
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:128:24: note: overridden virtual function is here
+  128 |   virtual hsa_status_t GetInfo(hsa_region_info_t attribute,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/runtime.cpp:82:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:120:16: warning: 'AssignAgent' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  120 |   hsa_status_t AssignAgent(void* ptr, size_t size, const core::Agent& agent,
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:131:24: note: overridden virtual function is here
+  131 |   virtual hsa_status_t AssignAgent(void* ptr, size_t size, const Agent& agent,
+      |                        ^
+In file included from /workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/runtime.cpp:82:
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_memory_region.h:123:8: warning: 'Trim' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+  123 |   void Trim() const;
+      |        ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/memory_region.h:135:16: note: overridden virtual function is here
+  135 |   virtual void Trim() const {}
+      |                ^
+/workspace/source/rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/runtime.cpp:3014:14: warning: variable 'fn_amdgpu_device_get_fd' set but not used [-Wunused-but-set-global]
+ 3014 | static int (*fn_amdgpu_device_get_fd)(HsaAMDGPUDeviceHandle device_handle) = NULL;
+      |              ^
+5 warnings generated.
+[39/40] Linking CXX shared library rocr/lib/libhsa-runtime64.so.1.21.0
+[40/40] Creating library symlink rocr/lib/libhsa-runtime64.so.1 rocr/lib/libhsa-runtime64.so
+Cacheable calls:   98327 / 103234 (95.25%)
+  Hits:            30733 /  98327 (31.26%)
+    Direct:        25905 /  30733 (84.29%)
+    Preprocessed:   4828 /  30733 (15.71%)
+  Misses:          67594 /  98327 (68.74%)
+Uncacheable calls:  4882 / 103234 ( 4.73%)
+Errors:               25 / 103234 ( 0.02%)
+Local storage:
+  Cache size (GB):   4.0 /   20.0 (20.09%)
+  Hits:            30733 /  98327 (31.26%)
+  Misses:          67594 /  98327 (68.74%)

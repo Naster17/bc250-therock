@@ -14,9 +14,9 @@
     {
       "id": "A01",
       "feature": "General MIOpen convolution selection/profiling/workspace defect",
-      "evidence": "FP32 group1 B2/C4/L19, W6x4x3, stride2/pad2/dilation2: inference fwd passes; combined training fails backward. Input-only/weight-only gradient configurations fail already in forward. Zero480-byte workspace and elapsed<=0 recur. Disabling GEMM removes workspace warning but still fails.",
-      "next": "**First correctness priority.** Reproduce through direct MIOpen C API, separate workspace-size contract from profiler/handle/stream timing, check CPU fwd/dx/dw. Fix demonstrated library/frontend cause; do not silence errors or globally force a guessed solver.",
-      "status": "queued"
+      "evidence": "Installed ROCr329eaf7 and libraries08ba6f3: native gfx1013 shader/KFD epoch alignment and dilated GEMM workspace query correction.15 direct API and30 Torch output/gradient configurations,32 stable event pairs, six shader-counter timing references and seven core groups pass. See ../bc250_miopen_a01_results/README.md; original baseline failures retained.",
+      "next": "A02 legacy CK reduction configuration and LSTM backward references; absolute trace alignment, opposite epoch/reset/reboot and universal performance remain unqualified.",
+      "status": "completed_bounded"
     },
     {
       "id": "A02",
@@ -132,5 +132,9 @@
     }
   ],
   "next": "A01 direct-MIOpen workspace/profiling isolation",
-  "N2.7": "queued behind selected Torch/library primary items"
+  "N2.7": "queued behind selected Torch/library primary items",
+  "completed_primary_items": [
+    "A01"
+  ],
+  "next_primary_item": "A02"
 }

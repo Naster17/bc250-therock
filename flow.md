@@ -9,6 +9,43 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT A01 completed2026-10-16:** source/helper380a403a1bc17fa561345846fb4d92a6f57c3237,
+  systems329eaf726632ab0136924804cbc1321ae09fc126,
+  libraries08ba6f386ff661e720873779fc417b4246787d9c; installed on .104.
+  Direct C API reproduced failure independent of Torch.32/32 retained HIP event
+  pairs unstable/nonpositive before; KFD GOLDEN_TSC and shader s_memrealtime
+  measured approximately100MHz but ~14,360s epoch offset on this boot. ROCr's
+  existing Windows offset correction extended only to native gfx1013 on Linux,
+  detected when a completed timestamp lies >1s in future; mutex/other GPU paths
+  preserved. Absolute CPU/GPU trace alignment, opposite epoch/reset/reboot and
+  other boards unqualified. No time clamp/solver force/architecture spoof.
+  Separate MIOpen obsolete dilated-GEMM workspace exclusion removed; cold query
+  480bytes, warm hybrid zero-workspace solution remains valid. Candidate15 direct
+  API +30 Torch conv configurations pass, installed same15+30 with fresh private
+  DBs pass; f32/f16/bf16 ranks1–3/groups1–2/layout/gradient/transpose/control scopes.
+  Installed32 event pairs stable/positive, six1/2/5ms raw shader-clock references
+  ~10–18us event overhead/stable after100ms, seven core groups pass. No universal
+  correctness/performance claim; earlier GPU-event speed ratios including N1.8
+  need remeasurement, numerical and host-wall-time evidence remain separate.
+  All21 diagnostic/GPU guards ACKed/600s/dmesg identical, including retained
+  defect/loader/DB-permission failures and terminated extra-completion diagnostic
+  137. Qualified HIP source restored/rebuilt; only HSA/MIOpen DSOs installed with
+  proper RPATHs, seven protected HIP/Torch/BLAS/kpack/fallback hashes unchanged.
+  Under exclusive prefix lock; rollback WS/recovery/miopen-a01-before, installed
+  SOURCE_MIOPEN_A01.json; source export component revision labels updated,
+  superbuild baseline7f73 retained/effective port380a recorded separately.
+  Report docs/development/bc250_miopen_a01_results/README.md, raw WS/logs/miopen-a01-*
+  and local ignored kernel/artifacts/miopen-a01/host-logs.27 library/four system
+  patches reconstruct exactly; legacy P2 Torch patch bundle still lacks three
+  later SDPA file deltas (separate packaging gap; full Torch Git/source preserved).
+  Torch4ee6571/Triton ee65ff3b/image5df0/kernel0957/image84995/boot a287fd16,
+  SDMA/heap-off/math/r2fallback/BIOS/.105/user src/data unchanged. No active agent
+  build/test/container/deadline. Python CPU fault remains unresolved, distinct
+  from fixed VM-heap/CSR and A01. Missing plugin/system DB warnings remain A03/B07.
+  **Exact next A02:** inspect MIOpen bundled legacy CK reduction configuration/
+  wave32 feature gates, reproduce direct reduction and LSTM backward; implement
+  native gfx1013-safe plumbing or portable fallback, CPU fwd/gradient comparisons.
+  A02–A09 primary queue before N2.7; do not repeat N2.1–6 or A01 baseline work.
 - **CURRENT storage cleanup completed 2026-10-16**, implementation/evidence
   `a26b5621b666d08dc18257208a6a68d21b7bb21e`. User explicitly authorized obsolete
   project artifact removal; this supersedes blanket retention only for inspected

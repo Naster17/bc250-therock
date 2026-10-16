@@ -1,0 +1,11 @@
+{
+  "direction": "dx",
+  "workspace": "queried",
+  "stream": "default",
+  "profiling": false,
+  "queried_workspace": 0,
+  "provided_workspace": 0,
+  "phase": "find",
+  "status": "failed",
+  "error": "miopenFindConvolutionBackwardDataAlgorithm: status 7"
+}

@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "source": {
+    "task": "A01",
+    "therock_revision": "380a403a1bc17fa561345846fb4d92a6f57c3237",
+    "rocm_systems_revision": "329eaf726632ab0136924804cbc1321ae09fc126",
+    "rocm_libraries_revision": "08ba6f386ff661e720873779fc417b4246787d9c",
+    "torch_revision": "4ee65717d69e9f51021272e3f37d0f342f68fc08",
+    "sources_sha256": {
+      "rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/runtime/amd_gpu_agent.cpp": "b0728f238c33bad6384eb6c8aa72d8e6aeaab8d5a8c520823260067f6033fecf",
+      "rocm-systems/projects/rocr-runtime/runtime/hsa-runtime/core/inc/amd_gpu_agent.h": "bac774f76b849b1feb22d7a535528184b9024d0ee417668744dd4a67a4711f7f",
+      "rocm-libraries/projects/miopen/src/convolution.cpp": "1a4a7d43ae34db31986ac4d1720ead685acffb173add3bd99fec5f97a11b4fc7"
+    }
+  },
+  "protected_before": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libamdhip64.so": "e9878e9fc4efaa8dd443709a3321ffe7c07a68e090b7dc7eb6e2ec6a91290d50",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/librocblas.so": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipblaslt.so": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/.kpack/blas_lib_gfx1013.kpack": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-work/torch/lib/libtorch_hip.so": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+    "/opt/bc250-stack/previous/rocm/lib/libhsa-runtime64.so.1.21.0": "bda3dc8f8dc7d406b7e77a0d9953ef5af3ec826d01ddea58b757f9ac505f1748",
+    "/opt/bc250-stack/previous/rocm/lib/libMIOpen.so.1.0": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11"
+  },
+  "installed_gates": [
+    "miopen-a01-events-installed",
+    "miopen-a01-event-reference-installed",
+    "miopen-a01-direct-installed",
+    "miopen-a01-torch-installed",
+    "miopen-a01-core-installed"
+  ],
+  "phase": "miopen-a01-core-installed",
+  "before_library_sha256": {
+    "libhsa-runtime64.so.1.21.0": "bda3dc8f8dc7d406b7e77a0d9953ef5af3ec826d01ddea58b757f9ac505f1748",
+    "libMIOpen.so.1.0": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11"
+  },
+  "after_library_sha256": {
+    "libhsa-runtime64.so.1.21.0": "1e4c4d58f4e2424ebb013238896ad024355727e720e4b44619fb11ef1d5cd228",
+    "libMIOpen.so.1.0": "85a41de0c8cda754340f037bf978ef72067047e25a70c3be3217ed6c04dd83ab"
+  },
+  "protected_unchanged": true,
+  "running_agent_jobs": []
+}

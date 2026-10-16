@@ -1,0 +1,17 @@
+{
+  "operation": "Finalize A01 export revision labels and source manifest; no DSO change",
+  "source_revision_labels": {
+    "rocm-systems": {
+      "before": "dbdb7b8d1c56316d873a9b90e548e5a72853496d\n",
+      "after": "329eaf726632ab0136924804cbc1321ae09fc126"
+    },
+    "rocm-libraries": {
+      "before": "a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8\n",
+      "after": "08ba6f386ff661e720873779fc417b4246787d9c"
+    }
+  },
+  "previous_source_manifest": "/opt/bc250-stack/dev/priority1/SOURCE_TRAINING_EXPANSION.json",
+  "superbuild_revision_label_retained": "7f73d25f25c96d40f8768ddcbbc1cb2ad43ed50d",
+  "effective_therock_port_revision": "380a403a1bc17fa561345846fb4d92a6f57c3237",
+  "note": "TheRock GIT_REVISION/runtime therock_revision retain the unchanged build-configuration baseline; effective port source and exact component revisions are recorded separately."
+}

@@ -1,0 +1,17 @@
+{
+  "direction": "dx",
+  "workspace": "queried",
+  "stream": "default",
+  "profiling": false,
+  "queried_workspace": 480,
+  "provided_workspace": 480,
+  "phase": "reference_passed",
+  "algorithms": [
+    {
+      "algorithm": 0,
+      "time_ms": 0.19408400356769562,
+      "workspace": 480
+    }
+  ],
+  "status": "passed"
+}

@@ -374,10 +374,10 @@ prepare separately versioned candidate with one-shot boot/SSH fallback preserved
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Branch                 | `users/Naster17/rocm-10.2-gfx1013`                                                                                                                           |
 | Qualified TheRock code | `0115c01f06f8654b26b5a665286069caf89eda2d` (N1.8); newer docs commits need no runtime rebuild                                                                       |
-| Libraries              | `a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8`                                                                                                                   |
-| Systems                | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`                                                                                                                   |
+| Libraries              | `08ba6f386ff661e720873779fc417b4246787d9c`                                                                                                                   |
+| Systems                | `329eaf726632ab0136924804cbc1321ae09fc126`                                                                                                                   |
 | LLVM                   | Upstream `7667f52dd687899256a3285ab0bce3c53bc73394`; no custom LLVM architecture patch                                                                       |
-| Torch                  | `4f13bf86476252e3d57b17d1c72f8512814400e9`; release/2.13 baseline `c779020750d7dc99a39ea8c104ef8df1fc9d0755`                                                 |
+| Torch                  | `4ee65717d69e9f51021272e3f37d0f342f68fc08`; release/2.13 baseline `c779020750d7dc99a39ea8c104ef8df1fc9d0755`                                                 |
 | Triton                 | `ee65ff3b85f99d52e678b252a99c8425fa46e329`; baseline `66b3f9ff575eb8db6adec658bbf0badd9a8d2e25`                                                              |
 | Distribution/version   | TheRock 10.2.0; HIP component reports 7.17.0; Torch 2.13.0a0+gfx1013, qualified Triton 3.8 wheel. Different component version strings are not a failed port. |
 | Active link            | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; directory name retained, runtime profile `gfx1013-priority2-n18-dev`                              |
@@ -409,9 +409,14 @@ workspace-root/dev/candidate copies exist. `SOURCE_PRIORITY1.json` and
 not magically updated by patching extracted trees. Generated torch.version's
 Git label may retain the original export revision; use source manifests instead.
 
-Reconstruction: 26 patches in `patches/amd-mainline/rocm-libraries`, three in
-`patches/amd-mainline/rocm-systems`, two in `patches/bc250-pytorch`, four in
-`patches/bc250-triton`. Apply in order. The P2 reconstruction helper verified
+Reconstruction:27 library patches and four system patches in
+`patches/amd-mainline/{rocm-libraries,rocm-systems}` reconstruct the exact A01
+component trees. Two base Torch patches and four Triton patches remain in
+`patches/{bc250-pytorch,bc250-triton}`. The legacy P2 helper does not include three
+later SDPA file deltas in Torch4ee6571; its current overall mismatch is retained
+in the A01 reconstruction report as a separate packaging gap. Use the complete
+qualified patched Torch Git history/source, not that incomplete patch subset.
+Apply each recorded component series in order. The P2 reconstruction helper verified
 exact library/system/Torch trees using private indexes; it did not recreate the
 entire compiler or claim a clean-room full rebuild. Nested committed branches
 and `.smrev` metadata preserve the port independently from root submodule pins.
@@ -464,7 +469,29 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 
 ## Component coverage: implemented versus existing native backend
 
-**Current Torch dependency/dispatch audit2026-10-16**, source7e39ed699:
+**A01 completed20261016:** source/helper380a403a1, systems329eaf7266,
+libraries08ba6f386ff installed in current development prefix. Direct C API and
+retained events isolated an approximately14,360s shader/KFD counter epoch offset,
+not a Torch dispatch fault. ROCr's existing epoch correction now applies to native
+gfx1013, with Linux detection requiring a completed timestamp >1s in the future.
+MIOpen's obsolete dilated-GEMM workspace exclusion removed; cold query480 bytes,
+warm hybrid zero-workspace selection remains valid. Installed15 direct CPU fwd/
+dx/dw configurations,30 Torch convolutions,32 stable event pairs/six raw-counter
+references and seven core groups pass;21 total diagnostic/GPU guards ACKed and
+dmesg identical. Failed attempts retained. No kernel/boot change; old DSOs and
+metadata in WS/recovery/miopen-a01-before, active SOURCE_MIOPEN_A01.json records
+exact hashes/revisions. Frozen fallback/HIP/Torch/BLAS/kpack hashes unchanged.
+[Report, source, failures and limits](bc250_miopen_a01_results/README.md).
+Absolute CPU/GPU trace correlation, opposite epoch/reset/reboot unqualified;
+earlier GPU-event speed ratios (including N1.8) require remeasurement. Numerical
+qualification and host-wall-time results remain separate. A02 legacy CK reduction/
+LSTM backward remains next; A03/B07 plugin/DB gaps and Python CPU fault remain
+open, distinct from fixed VM-heap/CSR. Source export component GIT_REVISION labels
+updated; the unchanged superbuild baseline label remains7f73 with effective port
+source380a403a1 recorded separately. No active agent job/deadline; N2.7 queued.
+
+**Baseline Torch dependency/dispatch audit2026-10-16**, source7e39ed699
+(A01 update above supersedes its convolution/timing failure status):
 [support matrix and ordered A01–A09/B01–B07 queue](bc250_torch_support_matrix.md),
 [raw evidence](bc250_torch_support_audit/README.md).21 DSOs examined,19 load;
 RCCL/gfx1013 CK grouped-conv plugin absent. All3520 dispatcher names recorded,
@@ -483,8 +510,8 @@ distributed/Kineto gaps retained. FP16 power-of-two FFT, CSC/BSR, fused AdamW,
 AMP/compile/graph and ordinary operators pass bounded probes. Existing Qwen
 conv/loss/resume changes remain app scoped. No runtime/source-library/kernel
 change or native rebuild; guards ACKed/dmesg identical/no active agent job.
-Exact next A01 direct-MIOpen size-query/invocation/profiling isolation, then A02
-legacy reduction. User requests selected Torch/library queue before N2.7.
+Baseline A01 reproduction was followed by the correction above. Exact next is
+A02 legacy reduction; selected Torch/library queue remains ahead of N2.7.
 
 | Component                                   | What exists and was executed                                                                                                                                                                                 | Boundary / where to continue                                                                                                                                |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |

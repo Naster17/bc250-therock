@@ -1,0 +1,11 @@
+{
+  "direction": "fwd",
+  "workspace": "queried",
+  "stream": "custom",
+  "profiling": false,
+  "queried_workspace": 0,
+  "provided_workspace": 0,
+  "phase": "find",
+  "status": "failed",
+  "error": "miopenFindConvolutionForwardAlgorithm: status 7"
+}

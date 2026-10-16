@@ -1,0 +1,30 @@
+{
+  "boot_id": "a287fd16-c97b-4d88-8055-b0553a2f7631",
+  "kernel": "7.2.10-bc250rocm-r3",
+  "kernel_log_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+  "watchdog": "active",
+  "available_bytes": 42768912384,
+  "links": {
+    "current": "/opt/bc250-stack/dev/priority1",
+    "previous": "/opt/bc250-stack/releases/10.2-gfx1013-20261013-4b000d542",
+    "before-dev-current": "/opt/bc250-stack/releases/10.2-gfx1013-20261013-4b000d542"
+  },
+  "library_sha256": {
+    "libhsa-runtime64.so.1.21.0": "1e4c4d58f4e2424ebb013238896ad024355727e720e4b44619fb11ef1d5cd228",
+    "libMIOpen.so.1.0": "85a41de0c8cda754340f037bf978ef72067047e25a70c3be3217ed6c04dd83ab"
+  },
+  "source_revision_labels": {
+    "rocm-systems": "329eaf726632ab0136924804cbc1321ae09fc126",
+    "rocm-libraries": "08ba6f386ff661e720873779fc417b4246787d9c"
+  },
+  "containers": [
+    {
+      "id": "0b8dc15bb3684044cda3542967ba01787d141d34174159046e34237e4ca0780d",
+      "names": [
+        "neural-p1"
+      ],
+      "state": "exited"
+    }
+  ],
+  "running_agent_jobs": []
+}

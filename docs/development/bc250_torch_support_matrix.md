@@ -18,6 +18,19 @@ automatic general Torch routing and trainable-convolution-weight gradients are
 not implemented. The earlier C++ `1Torch` diagnostic fix does apply to all callers
 using the patched .104 Torch runtime. None of these changes updates .105.
 
+## A01 update — 2026-10-16
+
+A01 is implemented and installed in the current development prefix. ROCr329eaf7
+corrects the demonstrated native gfx1013 shader/KFD clock epoch mismatch;
+MIOpen/libraries08ba6f3 includes applicable dilated GEMM workspace in size queries.
+Installed15 direct API configurations and30 Torch convolution output/gradient
+cases pass, plus event/shader-counter and core regressions. See the
+[A01 report and limits](bc250_miopen_a01_results/README.md).
+A02 legacy CK reduction/LSTM backward remains the next correctness priority;
+missing plugin/database warnings remain A03/B07. Prior GPU-event speed ratios
+need requalification; no new performance claim. Baseline audit counts below
+remain historical, rather than being silently recomputed from overlapping tests.
+
 ## What the current audit established
 
 - Active Torch4ee6571, ROCm libraries a6f7d3d, Triton ee65ff3b, immutable image5df0a58,
@@ -79,7 +92,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 
 | ID | Missing feature or defect | Evidence / current impact | Hardware-feasible next action |
 | --- | --- | --- | --- |
-| **A01** | General MIOpen convolution selection/profiling/workspace defect | FP32 group1 B2/C4/L19, W6x4x3, stride2/pad2/dilation2: inference fwd passes; combined training fails backward. Input-only/weight-only gradient configurations fail already in forward. Zero480-byte workspace and elapsed<=0 recur. Disabling GEMM removes workspace warning but still fails. | **First correctness priority.** Reproduce through direct MIOpen C API, separate workspace-size contract from profiler/handle/stream timing, check CPU fwd/dx/dw. Fix demonstrated library/frontend cause; do not silence errors or globally force a guessed solver. |
+| **A01 — completed** | Convolution timing and dilated workspace | Native gfx1013 shader/KFD epoch mismatch caused unstable/negative HIP event times; MIOpen query excluded dilated GEMM. ROCr329eaf7/libraries08ba6f3 installed;15 direct API +30 Torch convolution configurations pass CPU references,32 stable event pairs and six raw-counter timing references. | Bounded current-prefix fix; see [report](bc250_miopen_a01_results/README.md). Absolute trace alignment, opposite epoch offsets/reset/reboot and universal convolution/performance remain unqualified. Continue A02. |
 | **A02** | MIOpen legacy CK reduction cannot compile gfx1013; LSTM backward broken | Tiny nn.LSTM fwd matches CPU; backward HIPRTC fails `No CK_AMD_GPU_GFX* macro defined` in bundled legacy CK config.hpp. This is independent of the optional CK grouped-conv plugin and separate CK Tile port. | Add reviewed native gfx1013 target/feature plumbing or portable scalar reduction fallback. Check wave32, buffer descriptors and unsafe dot/asm gates; reduction and LSTM CPU gradients. No gfx1030 spoof. |
 | **A03** | No gfx1013 system FindDb/PerfDb/KDB; optional loader probes unsupported CK plugin | Installed db contains only lgbm metadata/rank/pcfg files; no gfx1013 assets. User ufdb/ukdb exist. Upstream data install filters match no gfx1013 files; CK plugin target list excludes gfx1013. | After A01/A02, collect genuine bounded tuning/cache entries, validate/replay and package with version/device/shape scope. Review capability-aware optional-plugin probing. Never create empty/fake databases or rename another GPU's data. |
 | **A04** | Torch hipSPARSELt integration disabled/unfound despite installed port | `_cslt_compress` rejects; Torch CMake `hipsparselt_DIR-NOTFOUND`; current package files and DSO exist. hipSPARSELt N1.4–7 direct API qualification does not imply Torch support. | Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS. |
@@ -97,7 +110,8 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B07** | MIOpen CK grouped-convolution plugin | libMIOpenCKGroupedConv_gfx1013.so absent by architecture build filter; source probes plugin unconditionally | Optional substantial scalar/generic plugin port or retain working HIP-direct alternatives. Merely enabling CK flag cannot supply kernels; lower priority than A01/A02. |
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
-A01–A09 are the proposed primary queue, in this order. B-items are optional
+A01 is completed within its recorded scope. A02–A09 are the remaining primary
+queue, in this order. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did
 not silently begin their implementation. Small targeted tests cannot prove that
@@ -111,7 +125,8 @@ conversion/dequantized computation may be possible, but enabling a newer GPU nam
 or matrix-only package would be incorrect. SDMA remains off and experimental VM
 heap disabled; GPU reset/fault migration/media exposure/counters remain separately
 unqualified. The unknown Python CPU segfault remains open and distinct from the
-already-fixed CSR/VM-heap corruption and the reproduced MIOpen failures.
+already-fixed CSR/VM-heap corruption, the bounded A01 corrections and the
+remaining A02 legacy-reduction failure.
 
 MIOpen's database roles are separate: FindDb saves algorithm-search outcomes,
 PerfDb stores tuned parameters, and KDB/user kernel cache stores compiled kernels.

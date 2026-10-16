@@ -1,0 +1,328 @@
+MIOpen: Info [get_device_name] Raw device name: gfx1013:xnack-
+MIOpen: Info [OpenDynamicLibrary] Loading Composable Kernel dynamic library: /workspace/build/dist/rocm/lib/libMIOpenCKGroupedConv_gfx1013.so
+MIOpen: Info [OpenDynamicLibrary] Loading Composable Kernel dynamic library: libMIOpenCKGroupedConv_gfx1013.so
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1013: libMIOpenCKGroupedConv_gfx1013.so: cannot open shared object file: No such file or directory
+MIOpen: Info [Handle] stream: 0, device_id: 0
+MIOpen: Info [get_device_name] Raw device name: gfx1013:xnack-
+MIOpen: Info [SetStream] stream: 0, device_id: 0
+MIOpen: miopenStatus_t miopenCreateTensorDescriptor(miopenTensorDescriptor_t *){
+MIOpen: 	tensorDesc = 0
+MIOpen: }
+MIOpen: miopenStatus_t miopenSet4dTensorDescriptor(miopenTensorDescriptor_t, miopenDataType_t, int, int, int, int){
+MIOpen: 	tensorDesc = {}, {}, packed, 
+MIOpen: 	dataType = 1
+MIOpen: 	n = 2
+MIOpen: 	c = 6
+MIOpen: 	h = 1
+MIOpen: 	w = 10
+MIOpen: }
+MIOpen: miopenStatus_t miopenCreateTensorDescriptor(miopenTensorDescriptor_t *){
+MIOpen: 	tensorDesc = 0
+MIOpen: }
+MIOpen: miopenStatus_t miopenSet4dTensorDescriptor(miopenTensorDescriptor_t, miopenDataType_t, int, int, int, int){
+MIOpen: 	tensorDesc = {}, {}, packed, 
+MIOpen: 	dataType = 1
+MIOpen: 	n = 6
+MIOpen: 	c = 4
+MIOpen: 	h = 1
+MIOpen: 	w = 3
+MIOpen: }
+MIOpen: miopenStatus_t miopenCreateTensorDescriptor(miopenTensorDescriptor_t *){
+MIOpen: 	tensorDesc = 0
+MIOpen: }
+MIOpen: miopenStatus_t miopenSet4dTensorDescriptor(miopenTensorDescriptor_t, miopenDataType_t, int, int, int, int){
+MIOpen: 	tensorDesc = {}, {}, packed, 
+MIOpen: 	dataType = 1
+MIOpen: 	n = 2
+MIOpen: 	c = 4
+MIOpen: 	h = 1
+MIOpen: 	w = 19
+MIOpen: }
+MIOpen: miopenStatus_t miopenCreateConvolutionDescriptor(miopenConvolutionDescriptor_t *){
+MIOpen: 	convDesc = 0
+MIOpen: }
+MIOpen: Info [] MIOPEN_FIND_MODE = DYNAMIC_HYBRID(5)
+MIOpen: miopenStatus_t miopenInitConvolutionDescriptor(miopenConvolutionDescriptor_t, miopenConvolutionMode_t, int, int, int, int, int, int){
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {0, 0}, {1, 1}, {1, 1}, 
+MIOpen: 	c_mode = 0
+MIOpen: 	pad_h = 0
+MIOpen: 	pad_w = 2
+MIOpen: 	stride_h = 1
+MIOpen: 	stride_w = 2
+MIOpen: 	dilation_h = 1
+MIOpen: 	dilation_w = 2
+MIOpen: }
+MIOpen: miopenStatus_t miopenConvolutionBackwardDataGetWorkSpaceSize(miopenHandle_t, const miopenTensorDescriptor_t, const miopenTensorDescriptor_t, const miopenConvolutionDescriptor_t, const miopenTensorDescriptor_t, size_t *){
+MIOpen: 	handle = stream: 0, device_id: 0
+MIOpen: 	dyDesc = {2, 6, 1, 10}, {60, 10, 10, 1}, packed, 
+MIOpen: 	wDesc = {6, 4, 1, 3}, {12, 3, 3, 1}, packed, 
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {0, 2}, {1, 2}, {1, 2}, 
+MIOpen: 	dxDesc = {2, 4, 1, 19}, {76, 19, 19, 1}, packed, 
+MIOpen: }
+MIOpen: Info [AmdRocmMetadataVersionDetect] ROCm MD version AMDHSA_COv3, HIP version 7.17.0, MIOpen version 3.6.2.
+MIOpen: Info2 [GetWorkSpaceSize] 
+MIOpen: Info [GetSolutions] 
+MIOpen: Info [IsNetworkedFilesystem] Filesystem type at '"/home/nik/.config/miopen/"' is: 0xef53 'EXT2/3/4_SUPER_MAGIC'
+MIOpen: Info2 [GetLibPath] Lib Path: "/workspace/build/dist/rocm/lib/libMIOpen.so.1.0"
+MIOpen: Info2 [GetInstalledPathFile] inexact find database search
+MIOpen: Info2 [GetInstalledPathFile] Iterating over find db directory "/workspace/build/dist/rocm/share/miopen/db"
+MIOpen: Warning [ParseAndLoadDb] File is unreadable: "/workspace/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Info [Measure] ReadonlyRamDb::Prefetch time: 0.009537 ms
+MIOpen: Info [Measure] RamDb::Prefetch time: 0.808507 ms
+MIOpen: Info2 [ValidateUnsafe] DB file is older than cache: 4bffa6b0e549, 4c002a19ee27
+MIOpen: Info2 [FindRecordUnsafe] Looking for key 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B in cache for file "/home/nik/.config/miopen/gfx1013_20.HIP.3_6_2_.ufdb.txt"
+MIOpen: Info2 [FindRecord] Looking for key 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B in file "/workspace/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Info2 [Measure] Db::FindRecord time: 0.041907 ms
+MIOpen: Info2 [GetSolutionsFallback] AI fallback: predicting for arch "gfx1013"
+MIOpen: Info2 [FindRecordUnsafe] Looking for key 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B in cache for file ":memory:gfx1013"
+MIOpen: Info2 [LgbmMetadata] LGBM metadata loaded: 4d solvers
+MIOpen: Info2 [PickSolverRanked] lgbm: engaged for gfx_id="gfx1013" (vocab code ffffffff), groups=1
+MIOpen: Info2 [PickSolverRanked] lgbm: unseen arch "gfx1013"; scoring via gfx_id missing branch
+MIOpen: Info2 [LgbmForest] LGBM forest loaded: 258 trees (binary)
+MIOpen: Info2 [PickSolverRanked] lgbm: scored 4d solvers, 40 valid in this build, d dropped (unknown name)
+MIOpen: Info2 [PredictSolver] lgbm: returning 40 ranked solvers
+MIOpen: Info2 [GetSolutionsFallback] Using AI Fallback (40 ranked candidates)
+MIOpen: Info2 [~ScopedTimeLogger] [find-timing] GrpConvFwdXdlops::IsApplicable: 0.001015 ms
+MIOpen: Info2 [GetSolutionsFallback] AI Fallback: 2 applicable, 1f inapplicable of 40 ranked
+MIOpen: Info2 [GetSolutionsFallback] maxSolutionCount = 1, available = 2
+MIOpen: Info2 [GetSolutionsFallback] id: 56, algo: 1, time: 10, ws: 0, name: ConvDirectNaiveConvBwd
+MIOpen: Info2 [GetSolutionsFallback] id: 61, algo: 0, time: 20, ws: 1e0, name: GemmBwdRest
+MIOpen: Info2 [GetWorkspaceSizes] fft: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsm3x3U: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsm1x1U: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsm1x1UV2: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsm5x10u2v2f1: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsm7x7c3h224w224k64u2v2p3q3f1: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsm5x10u2v2b1: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipDirectFwd11x11: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipDirectFwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvDirectNaiveConvFwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvDirectNaiveConvBwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvDirectNaiveConvWrw: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvDepthwiseFwd2D: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvDepthwiseBwdData2D: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvDepthwiseFwd3D: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipConv: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmForwardV4R5Xdlops: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmForwardV4R4Xdlops: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmForwardV4R4Xdlops_Padded_Gemm: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmBwdDataV4R1Xdlops: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmV4R1Fwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmV4R4Fwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMlirIgemmFwdXdlops: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMlirIgemmFwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMlirIgemmBwdXdlops: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMlirIgemmBwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmBwdDataV1R1: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmV4R1DynamicFwd_1x1: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmV4R1DynamicFwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmV4R1DynamicBwd: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmGTCDynamicFwdXdlops: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmGTCDynamicBwdXdlops: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmGTCDynamicFwdXdlopsNHWC: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmGTCDynamicBwdXdlopsNHWC: Not applicable
+MIOpen: Info2 [~ScopedTimeLogger] [find-timing] GrpConvFwdXdlops::IsApplicable: 0.000231 ms
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmGroupFwdXdlops: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemmGroupBwdXdlops: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemm3DGroupFwdXdlops: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvHipImplicitGemm3DGroupBwdXdlops: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvAsmImplicitGemmGTCDynamicFwdDlopsNCHWC: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvBinWinograd3x3U: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvBinWinogradRxSf3x2: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvBinWinogradRxSf2x3: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvBinWinogradRxSf2x3g1: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvBinWinogradRxS: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd<2-3>: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd<3-3>: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd<4-3>: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd<5-3>: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd<6-3>: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd_xdlops<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd_xdlops<3-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd_xdlops<4-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd_xdlops<5-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvMPBidirectWinograd_xdlops<6-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] ConvWinoFuryRxS<2-3>: Not applicable
+MIOpen: Info2 [GetWorkspaceSizes] ConvWinoRageRxS<2-3>: Skipped (no workspace required)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvBinWinograd3x3U: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvBinWinogradRxS: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvBinWinogradRxSf2x3g1: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvWinoFuryRxS<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvWinoRageRxS<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd<3-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd<4-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd<5-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd<6-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvBinWinoRxS<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvBinWinoRxS<3-2>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd_xdlops<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd_xdlops<3-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd_xdlops<4-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd_xdlops<5-3>: Skipped (non-dynamic)
+MIOpen: Info2 [GetWorkspaceSizes] TransposedConvMPBidirectWinograd_xdlops<6-3>: Skipped (non-dynamic)
+MIOpen: Info [GetWorkSpaceSize] 0
+MIOpen: miopenStatus_t miopenFindConvolutionBackwardDataAlgorithm(miopenHandle_t, const miopenTensorDescriptor_t, const void *, const miopenTensorDescriptor_t, const void *, const miopenConvolutionDescriptor_t, const miopenTensorDescriptor_t, void *, const int, int *, miopenConvAlgoPerf_t *, void *, size_t, bool){
+MIOpen: 	handle = stream: 0, device_id: 0
+MIOpen: 	dyDesc = {2, 6, 1, 10}, {60, 10, 10, 1}, packed, 
+MIOpen: 	dy = 0x7fd56f000600
+MIOpen: 	wDesc = {6, 4, 1, 3}, {12, 3, 3, 1}, packed, 
+MIOpen: 	w = 0x7fd56f000400
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {0, 2}, {1, 2}, {1, 2}, 
+MIOpen: 	dxDesc = {2, 4, 1, 19}, {76, 19, 19, 1}, packed, 
+MIOpen: 	dx = 0x7fd56f000800
+MIOpen: 	requestAlgoCount = 8
+MIOpen: 	returnedAlgoCount = 0
+MIOpen: 	perfResults = 
+MIOpen: 	workSpace = nullptr
+MIOpen: 	workSpaceSize = 0
+MIOpen: 	exhaustiveSearch = 0
+MIOpen: }
+MIOpen: Info [FindConvBwdDataAlgorithm] requestAlgoCount = 8, workspace = 0
+MIOpen: Info [GetSolutions] 
+MIOpen: Info2 [ValidateUnsafe] DB file is older than cache: 4bffa6b0e549, 4c002a19ee27
+MIOpen: Info2 [FindRecordUnsafe] Looking for key 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B in cache for file "/home/nik/.config/miopen/gfx1013_20.HIP.3_6_2_.ufdb.txt"
+MIOpen: Info2 [FindRecord] Looking for key 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B in file "/workspace/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Info2 [Measure] Db::FindRecord time: 0.068078 ms
+MIOpen: Info2 [GetSolutionsFallback] AI fallback: predicting for arch "gfx1013"
+MIOpen: Info2 [FindRecordUnsafe] Looking for key 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B in cache for file ":memory:gfx1013"
+MIOpen: Info2 [GetCachedPrediction] Cached heuristic (TunaNet) result found
+MIOpen: Info2 [GetCachedPrediction] Cached solvers: ConvDepthwiseBwdData2D ID:186, ConvAsmBwdWrW1x1 ID:17, ConvOclBwdWrW53 ID:24, ConvMlirIgemmFwdXdlops ID:103, ConvDepthwiseFwd2D ID:185, ConvMlirIgemmWrWXdlops ID:105, ConvDirectNaiveConvWrw ID:87, ConvDirectNaiveConvBwd ID:86, ConvAsm1x1U ID:2, ConvBinWinogradRxSf2x3g1 ID:84, ConvHipImplicitGemmForwardV4R5Xdlops ID:80, ConvMlirIgemmBwdXdlops ID:104, ConvAsm3x3U ID:1, ConvHipImplicitGemmForwardV4R4Xdlops ID:64, ConvHipImplicitGemmWrwV4R4Xdlops_Padded_Gemm ID:83, ConvHipImplicitGemmForwardV4R4Xdlops_Padded_Gemm ID:81, ConvBinWinogradRxSf2x3 ID:53, ConvWinoFuryRxS<2-3> ID:139, ConvHipImplicitGemmWrwV4R4Xdlops ID:73, ConvDirectNaiveConvFwd ID:85, ConvHipImplicitGemmV4R4WrW ID:61, ConvHipDirectFwd ID:218, ConvHipImplicitGemmV4R4Fwd ID:54, ConvHipImplicitGemmV4R1WrW ID:31, ConvHipImplicitGemmBwdDataV1R1 ID:55, ConvWinograd3x3MultipassWrW<3-3> ID:41, TransposedConvWinograd3x3MultipassWrW<3-2> ID:197, TransposedConvWinograd3x3MultipassWrW<3-3> ID:198, ConvWinograd3x3MultipassWrW<3-5> ID:38, ConvWinograd3x3MultipassWrW<3-2> ID:40, ConvAsmImplicitGemmGTCDynamicWrwXdlopsNHWC ID:110, ConvHipDirectFwd11x11 ID:8, ConvWinograd3x3MultipassWrW<3-4> ID:35, ConvAsm1x1UV2 ID:3, ConvHipImplicitGemmV4R1Fwd ID:26, ConvWinograd3x3MultipassWrW<3-6> ID:39, TransposedConvBinWinoRxS<2-3> ID:210, ConvBinWinogradRxSf3x2 ID:37, ConvWinoRageRxS<2-3> ID:180, TransposedConvBinWinoRxS<3-2> ID:211, ConvAsmImplicitGemmGTCDynamicFwdXdlopsNHWC ID:107, fft ID:34, ConvHipImplicitGemm3DGroupFwdXdlops ID:138, GemmFwd1x1_0_1 ID:88, ConvAsmImplicitGemmGTCDynamicBwdXdlopsNHWC ID:108, ConvHipImplicitGemm3DGroupWrwXdlops ID:140, TransposedConvWinoFuryRxS<2-3> ID:190, GemmBwdRest ID:97, GemmFwd1x1_0_2 ID:90, TransposedConvWinoRageRxS<2-3> ID:191, ConvHipImplicitGemmGroupBwdXdlops ID:155, TransposedConvWinograd3x3MultipassWrW<3-4> ID:199, GemmBwd1x1_stride1 ID:96, TransposedConvWinograd3x3MultipassWrW<3-6> ID:201, TransposedConvWinograd3x3MultipassWrW<3-5> ID:200, GemmBwd1x1_stride2 ID:95, ConvHipImplicitGemmGroupFwdXdlops ID:137, ConvHipImplicitGemmGroupWrwXdlops ID:156, ConvHipImplicitGemm3DGroupBwdXdlops ID:141, GemmWrw1x1_stride1 ID:101, GemmFwdRest ID:91, GemmWrwUniversal ID:102, TransposedConvBinWinogradRxSf2x3g1 ID:189, ConvHipConv ID:220, 
+MIOpen: Info2 [PredictSolver] AI predict: cache hit for gfx1013 (40 solvers); TunaNet/lgbm not re-run
+MIOpen: Info2 [GetSolutionsFallback] Using AI Fallback (40 ranked candidates)
+MIOpen: Info2 [~ScopedTimeLogger] [find-timing] GrpConvFwdXdlops::IsApplicable: 0.00045 ms
+MIOpen: Info2 [GetSolutionsFallback] AI Fallback: 2 applicable, 1f inapplicable of 40 ranked
+MIOpen: Info2 [GetSolutionsFallback] maxSolutionCount = 1, available = 2
+MIOpen: Info2 [GetSolutionsFallback] id: 56, algo: 1, time: 10, ws: 0, name: ConvDirectNaiveConvBwd
+MIOpen: Info2 [GetSolutionsFallback] id: 61, algo: 0, time: 20, ws: 1e0, name: GemmBwdRest
+MIOpen: Info2 [ValidateUnsafe] DB file is older than cache: 4bffa6b0e549, 4c002a19ee27
+MIOpen: Info2 [FindRecordUnsafe] Looking for key 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B in cache for file "/home/nik/.config/miopen/gfx1013_20.HIP.3_6_2_.ufdb.txt"
+MIOpen: Info2 [Measure] Db::FindRecord time: 0.0158 ms
+MIOpen: Info [TryLoad] Find-db regenerating.
+MIOpen: Info [FindConvolution] Find Start: 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B, findMode: DYNAMIC_HYBRID(5)
+MIOpen: Info2 [Find] Starting find for miopenConvolutionBwdDataAlgoImplicitGEMM
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmForwardV4R5Xdlops: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmForwardV4R4Xdlops: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmForwardV4R4Xdlops_Padded_Gemm: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmBwdDataV4R1Xdlops: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmV4R1Fwd: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmV4R4Fwd: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMlirIgemmFwdXdlops: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMlirIgemmFwd: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMlirIgemmBwdXdlops: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMlirIgemmBwd: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmBwdDataV1R1: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmV4R1DynamicFwd_1x1: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmV4R1DynamicFwd: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmV4R1DynamicBwd: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmGTCDynamicFwdXdlops: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmGTCDynamicBwdXdlops: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmGTCDynamicFwdXdlopsNHWC: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmGTCDynamicBwdXdlopsNHWC: Not applicable
+MIOpen: Info2 [~ScopedTimeLogger] [find-timing] GrpConvFwdXdlops::IsApplicable: 0.0002 ms
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmGroupFwdXdlops: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemmGroupBwdXdlops: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemm3DGroupFwdXdlops: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvHipImplicitGemm3DGroupBwdXdlops: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvAsmImplicitGemmGTCDynamicFwdDlopsNCHWC: Not applicable
+MIOpen: Info2 [Find] Starting find for miopenConvolutionBwdDataAlgoGEMM
+MIOpen: Info2 [SearchForAllSolutions] GemmFwd1x1_0_1: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] GemmFwd1x1_0_1_int8: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] GemmFwd1x1_0_2: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] GemmFwdRest: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] GemmBwd1x1_stride1: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] GemmBwd1x1_stride2: Not applicable
+MIOpen: Info [FindSolutionImpl] GemmBwdRest (not searchable)
+MIOpen: Info2 [SearchForAllSolutions] GemmBwdRest: Success.
+MIOpen: Info2 [SearchForAllSolutions] GemmWrw1x1_stride1: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] GemmWrwUniversal: Not applicable
+MIOpen: Info2 [Find] Starting find for miopenConvolutionBwdDataAlgoWinograd
+MIOpen: Info2 [SearchForAllSolutions] ConvBinWinograd3x3U: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvBinWinogradRxSf3x2: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvBinWinogradRxSf2x3: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvBinWinogradRxSf2x3g1: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvBinWinogradRxS: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd<2-3>: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd<3-3>: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd<4-3>: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd<5-3>: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd<6-3>: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd_xdlops<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd_xdlops<3-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd_xdlops<4-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd_xdlops<5-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvMPBidirectWinograd_xdlops<6-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvWinoFuryRxS<2-3>: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvWinoRageRxS<2-3>: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvBinWinograd3x3U: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvBinWinogradRxS: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvBinWinogradRxSf2x3g1: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvWinoFuryRxS<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvWinoRageRxS<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd<3-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd<4-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd<5-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd<6-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvBinWinoRxS<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvBinWinoRxS<3-2>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd_xdlops<2-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd_xdlops<3-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd_xdlops<4-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd_xdlops<5-3>: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] TransposedConvMPBidirectWinograd_xdlops<6-3>: Skipped (non-dynamic)
+MIOpen: Info2 [Find] Starting find for miopenConvolutionBwdDataAlgoFFT
+MIOpen: Info2 [SearchForAllSolutions] fft: Skipped (non-dynamic)
+MIOpen: Info2 [Find] Starting find for miopenConvolutionBwdDataAlgoDirect
+MIOpen: Info2 [SearchForAllSolutions] ConvAsm3x3U: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvAsm1x1U: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvAsm1x1UV2: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvAsm5x10u2v2f1: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvAsm7x7c3h224w224k64u2v2p3q3f1: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvAsm5x10u2v2b1: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipDirectFwd11x11: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipDirectFwd: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvDirectNaiveConvFwd: Not applicable
+MIOpen: Info [FindSolutionImpl] ConvDirectNaiveConvBwd (not searchable)
+MIOpen: Info2 [SearchForAllSolutions] ConvDirectNaiveConvBwd: Success.
+MIOpen: Info2 [SearchForAllSolutions] ConvDirectNaiveConvWrw: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvDepthwiseFwd2D: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvDepthwiseBwdData2D: Not applicable
+MIOpen: Info2 [SearchForAllSolutions] ConvDepthwiseFwd3D: Skipped (non-dynamic)
+MIOpen: Info2 [SearchForAllSolutions] ConvHipConv: Not applicable
+MIOpen: Info [IsNetworkedFilesystem] Filesystem type at '"/home/nik/.cache/miopen/3.6.2."' is: 0xef53 'EXT2/3/4_SUPER_MAGIC'
+MIOpen: Info2 [SQLiteBase] Initializing system database file ""
+MIOpen: Info [KernDb] database not present
+MIOpen: Info2 [SQLiteBase] Initializing user database file "/home/nik/.cache/miopen/3.6.2./gfx1013_20.ukdb"
+MIOpen: Info2 [KernDb] Database created successfully
+MIOpen: Info2 [LoadBinary] Loading binary for: "naive_conv_bwd.cpp.o"; args:  -DMIOPEN_USE_FP16=0 -DMIOPEN_USE_FP16x4=0 -DMIOPEN_USE_FP16x8=0 -DMIOPEN_USE_FP32=1 -DMIOPEN_USE_INT8=0 -DMIOPEN_USE_BFP16=0 -DMIOPEN_USE_INT32=0 -DMIOPEN_USE_RNE_BFLOAT16=1 -DMIOPEN_FP8_IEEE_EXPONENT_BIAS=0 -DMIOPEN_FP8_CLIPPING=1 -DNAIVE_CONV_BLOCK_SIZE=256 -mcpu=gfx1013
+MIOpen: Info2 [Prepare] SELECT kernel_blob, kernel_hash, uncompressed_size FROM kern_db WHERE (kernel_name = 'naive_conv_bwd.cpp.o') AND (kernel_args = ' -DMIOPEN_USE_FP16=0 -DMIOPEN_USE_FP16x4=0 -DMIOPEN_USE_FP16x8=0 -DMIOPEN_USE_FP32=1 -DMIOPEN_USE_INT8=0 -DMIOPEN_USE_BFP16=0 -DMIOPEN_USE_INT32=0 -DMIOPEN_USE_RNE_BFLOAT16=1 -DMIOPEN_FP8_IEEE_EXPONENT_BIAS=0 -DMIOPEN_FP8_CLIPPING=1 -DNAIVE_CONV_BLOCK_SIZE=256 -mcpu=gfx1013');
+MIOpen: Info2 [Measure] Db::FindRecord time: 12.5593 ms
+MIOpen: Info2 [LoadBinary] Successfully loaded binary for: "naive_conv_bwd.cpp.o"; args:  -DMIOPEN_USE_FP16=0 -DMIOPEN_USE_FP16x4=0 -DMIOPEN_USE_FP16x8=0 -DMIOPEN_USE_FP32=1 -DMIOPEN_USE_INT8=0 -DMIOPEN_USE_BFP16=0 -DMIOPEN_USE_INT32=0 -DMIOPEN_USE_RNE_BFLOAT16=1 -DMIOPEN_FP8_IEEE_EXPONENT_BIAS=0 -DMIOPEN_FP8_CLIPPING=1 -DNAIVE_CONV_BLOCK_SIZE=256 -mcpu=gfx1013
+MIOpen: Warning [IsEnoughWorkspace] [EvaluateInvokers] Solver <GemmBwdRest>, workspace required: 480, provided ptr: 0 size: 0
+MIOpen: Info [EvaluateInvokers] Evaluating Solver: miopenConvolutionBwdDataAlgoDirect:ConvDirectNaiveConvBwd
+MIOpen: Info2 [PrepareInvoker] Preparing kernel: naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Info2 [run] kernel_name = naive_conv_ab_nonpacked_bwd_nchw_float_float_float_0, global_work_dim = { 2048, 1, 1 }, local_work_dim = { 256, 1, 1 }
+MIOpen: Error [EvaluateInvokers] bc250:/workspace/source/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:535: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+MIOpen: Info [FindConvolution] Find Ended: 6-1-10-1x3-4-1-19-2-0x2-1x2-1x2-0-NCHW-FP32-B
+MIOpen Error: bc250:/workspace/source/rocm-libraries/projects/miopen/src/hip/convolutionocl.cpp:1228: No suitable algorithm was found to execute the required convolution
+MIOpen: miopenStatus_t miopenDestroyConvolutionDescriptor(miopenConvolutionDescriptor_t){
+MIOpen: 	convDesc = conv2d, miopenConvolution, miopenPaddingDefault, {0, 2}, {1, 2}, {1, 2}, 
+MIOpen: }
+MIOpen: miopenStatus_t miopenDestroyTensorDescriptor(miopenTensorDescriptor_t){
+MIOpen: 	tensorDesc = {2, 6, 1, 10}, {60, 10, 10, 1}, packed, 
+MIOpen: }
+MIOpen: miopenStatus_t miopenDestroyTensorDescriptor(miopenTensorDescriptor_t){
+MIOpen: 	tensorDesc = {6, 4, 1, 3}, {12, 3, 3, 1}, packed, 
+MIOpen: }
+MIOpen: miopenStatus_t miopenDestroyTensorDescriptor(miopenTensorDescriptor_t){
+MIOpen: 	tensorDesc = {2, 4, 1, 19}, {76, 19, 19, 1}, packed, 
+MIOpen: }
+{"direction": "dx", "workspace": "queried", "stream": "default", "profiling": false, "queried_workspace": 0, "provided_workspace": 0, "phase": "find", "status": "failed", "error": "miopenFindConvolutionBackwardDataAlgorithm: status 7"}

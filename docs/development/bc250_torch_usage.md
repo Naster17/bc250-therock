@@ -14,6 +14,19 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Convolution correction (updated 2026-10-16)
+
+The current development prefix now includes the A01 ROCr clock-epoch and MIOpen
+dilated-workspace corrections. Programs launched through `bc250-torch` or
+`bc250-train` use them automatically; no training-script flag is required.
+Fifteen direct API and30 Torch convolution output/gradient configurations passed.
+Other installations/venvs are outside this deployment, and these bounded checks
+do not qualify every convolution or establish a speedup.
+
+The legacy CK reduction/LSTM backward failure and missing optional CK plugin/
+system database warnings remain separate queued items. See the
+[A01 results and limits](bc250_miopen_a01_results/README.md).
+
 ## Storage and software fallback (updated 2026-10-16)
 
 The active development runtime is unchanged by the storage cleanup. Both
@@ -34,8 +47,9 @@ See the [cleanup journal and scope](bc250_storage_cleanup_20261016/README.md).
 For stack-wide availability, reproduced defects, missing optional packages and
 the ordered work queue, see the [Torch support matrix](bc250_torch_support_matrix.md).
 The Qwen3.5 helpers below are application scoped; they do not replace ordinary
-Torch convolution or loss globally. General MIOpen convolution and LSTM backward
-have separate reproduced failures recorded in that matrix.
+Torch convolution or loss globally. A01 corrects the reproduced general-convolution
+timing/workspace failures; LSTM backward still has a separate legacy CK reduction
+failure in that matrix.
 
 The current `finetune-n7/scripts/train_bc250.py` launcher uses `replica/train.py`
 with the project's Transformers5.19.0 overlay. It now enables native gfx1013
@@ -47,7 +61,8 @@ equivalent shortened target names while requiring the exact resolved modules,
 rank and alpha. Bounded fresh/resume continuation passed.
 
 Gated-delta attention still uses the GPU PyTorch reference; its FLA warning is
-valid. General MIOpen timing/workspace faults remain unresolved. Qwen3.5 uses
+valid. A01 corrects the reproduced MIOpen timing/workspace faults within its
+recorded convolution scope; it does not qualify all MIOpen operations. Qwen3.5 uses
 math SDPA: its head width256 exceeds the separate tiled backend's128 limit.
 The older Qwen3-1.7B tiled examples below do not describe this trainer's options.
 See [usage and opt-out](../../build_tools/bc250/qwen35_training_usage.md), also

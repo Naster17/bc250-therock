@@ -1,0 +1,170 @@
+[
+  {
+    "label": "miopen-a01-bracket-isolation",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-combined-direct-candidate",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-combined-direct-candidate-r2",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-core-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-direct-before",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-direct-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-event-clock-diagnostic",
+    "returncode": 137,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-event-clock-diagnostic-r2",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-event-reference-candidate",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-event-reference-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-events-before",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-events-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-events-retained-before",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-kfd-shader-clock",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-no-direct-dispatch",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-rocr-direct-candidate",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-rocr-events-candidate",
+    "returncode": 127,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-rocr-events-candidate-r2",
+    "returncode": 127,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-rocr-events-candidate-r3",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-torch-candidate",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  },
+  {
+    "label": "miopen-a01-torch-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "kernel_sha256": "53f83f7bbee6c060e3153e7ae95a4ff069bf9627113591c39cdddb9ab5f4b973",
+    "raw_kernel_logs_equal": true
+  }
+]

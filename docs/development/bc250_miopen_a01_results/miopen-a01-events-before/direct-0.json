@@ -1,0 +1,17 @@
+{
+  "direction": "fwd",
+  "workspace": "queried",
+  "stream": "default",
+  "profiling": false,
+  "queried_workspace": 0,
+  "provided_workspace": 0,
+  "phase": "reference_passed",
+  "algorithms": [
+    {
+      "algorithm": 1,
+      "time_ms": 1.0195033550262451,
+      "workspace": 0
+    }
+  ],
+  "status": "passed"
+}

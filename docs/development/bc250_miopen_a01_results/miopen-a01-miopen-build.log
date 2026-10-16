@@ -1,0 +1,47 @@
+[setup_ccache] Config preset: local
+[setup_ccache] Platform: POSIX
+[setup_ccache] Cache mode: release_type=(unset) preset=local remote=disabled local=/workspace/cache/data
+[setup_ccache] Generated ccache config:
+[setup_ccache]   max_size = 10G
+[setup_ccache]   cache_dir = /workspace/cache/data
+[setup_ccache]   compiler_check = /opt/build-venv/bin/python3 /workspace/cache/compiler_check.py /workspace/cache/compiler_check_cache %compiler%
+[setup_ccache]   sloppiness = include_file_ctime,pch_defines,time_macros
+[0/2] Re-checking globbed directories...
+[1/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_109.cpp.o
+[2/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_110.cpp.o
+[3/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_111.cpp.o
+[4/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_107.cpp.o
+[5/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_108.cpp.o
+[6/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_106.cpp.o
+[7/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_119.cpp.o
+[8/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_114.cpp.o
+[9/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_117.cpp.o
+[10/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_118.cpp.o
+[11/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_112.cpp.o
+[12/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_116.cpp.o
+[13/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_120.cpp.o
+[14/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_113.cpp.o
+[15/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_115.cpp.o
+[16/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_124.cpp.o
+[17/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_123.cpp.o
+[18/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_125.cpp.o
+[19/28] Building CXX object src/CMakeFiles/MIOpen.dir/convolution.cpp.o
+[20/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_121.cpp.o
+[21/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_96.cpp.o
+[22/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_128.cpp.o
+[23/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_126.cpp.o
+[24/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_127.cpp.o
+[25/28] Building CXX object src/CMakeFiles/MIOpen.dir/__/inlined_kernels/batch_122.cpp.o
+[26/28] Linking CXX shared library lib/libMIOpen.so.1.0
+[27/28] Creating library symlink lib/libMIOpen.so.1 lib/libMIOpen.so
+Cacheable calls:   98352 / 103259 (95.25%)
+  Hits:            30733 /  98352 (31.25%)
+    Direct:        25905 /  30733 (84.29%)
+    Preprocessed:   4828 /  30733 (15.71%)
+  Misses:          67619 /  98352 (68.75%)
+Uncacheable calls:  4882 / 103259 ( 4.73%)
+Errors:               25 / 103259 ( 0.02%)
+Local storage:
+  Cache size (GB):   4.0 /   20.0 (20.11%)
+  Hits:            30733 /  98352 (31.25%)
+  Misses:          67619 /  98352 (68.75%)

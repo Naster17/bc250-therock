@@ -1,0 +1,22 @@
+{
+  "direction": "dw",
+  "workspace": "queried",
+  "stream": "default",
+  "profiling": true,
+  "queried_workspace": 0,
+  "provided_workspace": 0,
+  "phase": "reference_passed",
+  "algorithms": [
+    {
+      "algorithm": 1,
+      "time_ms": 0.01084890030324459,
+      "workspace": 0
+    }
+  ],
+  "status": "passed",
+  "loaded_libraries": [
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/ROCR-Runtime/build/rocr/lib/libhsa-runtime64.so.1.21.0",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+    "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000"
+  ]
+}
