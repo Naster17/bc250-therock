@@ -453,6 +453,28 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 
 ## Component coverage: implemented versus existing native backend
 
+**Current Torch dependency/dispatch audit2026-10-16**, source7e39ed699:
+[support matrix and ordered A01–A09/B01–B07 queue](bc250_torch_support_matrix.md),
+[raw evidence](bc250_torch_support_audit/README.md).21 DSOs examined,19 load;
+RCCL/gfx1013 CK grouped-conv plugin absent. All3520 dispatcher names recorded,
+not a coverage percentage.51 unique targeted configurations:35 bounded passes,
+6 reproduced MIOpen failure variants across two families,10 unavailable/refused.
+Group1 convolution needs grad: missing workspace/elapsed<=0/no suitable solver;
+GEMM-off diagnostic still fails. LSTM backward separately fails HIPRTC because
+MIOpen's bundled legacy CK reduction config has no gfx1013 macro. This is not the
+standalone CK Tile port or optional CK grouped-conv plugin. No gfx1013 system
+FindDb/PerfDb/KDB; only three shared heuristic files, user ufdb/ukdb exist.
+HIP20 multiprocessors reflects40-CU WGP mode; gfx1013_20 db key is correct.
+Torch hipsparselt_DIR-NOTFOUND despite installed CMake package/DSO; direct N1
+qualification does not imply Torch integration. Valid dense INT8 reaches Lt but
+is unsupported; BF16 FFT/general sparse solve/efficient-flash/head256 attention/
+distributed/Kineto gaps retained. FP16 power-of-two FFT, CSC/BSR, fused AdamW,
+AMP/compile/graph and ordinary operators pass bounded probes. Existing Qwen
+conv/loss/resume changes remain app scoped. No runtime/source-library/kernel
+change or native rebuild; guards ACKed/dmesg identical/no active agent job.
+Exact next A01 direct-MIOpen size-query/invocation/profiling isolation, then A02
+legacy reduction. User requests selected Torch/library queue before N2.7.
+
 | Component                                   | What exists and was executed                                                                                                                                                                                 | Boundary / where to continue                                                                                                                                |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | LLVM/Clang/device libs/COMGR/HIPRTC         | Existing upstream gfx1013 support; native compile/runtime compile, builtin probes, Triton instruction-selection checks and GPU kernels                                                                       | Not a newly written compiler target; wider builtin/debug/offload suites remain                                                                              |

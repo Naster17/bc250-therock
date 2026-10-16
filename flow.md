@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT Torch support audit completed 2026-10-16**, source/evidence revision
+  `7e39ed699289a60d6a9605ed22ff4493446540f2`. User asks to audit Torch/dependencies,
+  identify hardware-feasible gaps and follow a shared table BEFORE N2.7. Latest
+  Qwen3.5 conv/loss/resume fixes are app scoped; earlier C++1Torch diagnostic fix
+  remains runtime-wide. No production dispatch/DSO/prefix/build/boot changes here.
+  Canonical table docs/development/bc250_torch_support_matrix.md has stable primary
+  A01–A09, optional B01–B07 IDs; work-items.json and raw evidence in
+  docs/development/bc250_torch_support_audit/. All3520 dispatcher names recorded,
+  registration is not support proof.21 DSOs examined/19 load; RCCL and gfx1013 CK
+  grouped-conv plugin absent. No observed missing mandatory loader dependency.
+ 51 unique targeted configurations after retained harness corrections:35 bounded
+  passes,6 reproduced MIOpen failure variants across two defect families,10
+  unavailable/configured-off/refused paths. Collector exit0 is NOT all-probes-pass.
+  A01 group1 FP32 conv B2/C4/L19,W6x4x3,stride2,pad2,dilation2: inference fwd passes;
+  combined grad-input/weight fwd passes then bwd fails. Input-only/weight-only
+  requires-grad variants fail already in fwd.480-byte workspace/provided0 and
+  elapsed<=0 recur; scoped GEMM-off removes workspace warning but does NOT fix.
+  A02 NEW separate LSTM fwd CPU match/bwd HIPRTC failure: bundled legacy CK
+  reduction config lacks gfx1013 macro. Standalone CK Tile/optional modern CK
+  grouped-conv plugin are different copies; no architecture spoof/blanket flag.
+  A03 no gfx1013 FindDb/PerfDb/KDB, only3 shared heuristic files; user ufdb/ukdb
+  exist. HIP20 WGP multiprocessors matches40 physical CUs; gfx1013_20 key correct.
+  A04 Torch cached hipsparselt_DIR-NOTFOUND although package/DSO now installed;
+  direct N1 API pass does not mean Torch integration. A05 reusable conv/loss API,
+  A06 gated-delta port, A07 head256/attention contracts, A08 denseINT8 Lt (valid
+ 32x32x32 NOT_SUPPORTED), A09 Kineto; optional FFT BF16/sparse solve/distributed/
+  ecosystem packages below. FP16 power-of-two FFT/CSC/BSR/fused AdamW/AMP/compile/
+  graph pass bounded gates; ordinary native operations retained. No blanket
+  all-operators/all-hidden-defects or performance claim. Harness M16 INT8, AMP
+  loss dtype, CPU tiled-oracle and one syntax failure retained, not platform bugs.
+  Labels torch-support-{audit,refined,conv-isolation-r2} completed with findings;
+  all four batch guards ACKed/600s/dmesg identical under runtime lock, including
+  syntax-failed conv-isolation. No crash/core, first batch diagnostic core cap only.
+  SOURCE_TORCH_SUPPORT_AUDIT.json retains source/runtime identities. Torch4ee6571/
+  libraries a6f7d3d/Triton ee65ff3b/kernel0957/image84995/boot a287fd16 retained;
+  SDMA/heap-off/math defaults/r2fallback/BIOS/.105/user src/ unchanged. No active
+  agent build, test, container or recovery deadline. **Exact next A01:** direct
+  MIOpen C-API minimal reproduction; separate workspace size-query/invocation from
+  handle/stream profiler timing, CPU fwd/dx/dw references, fix only demonstrated
+  cause. A02 legacy reduction follows separately; selected primary queue before
+  N2.7. Historical Python CPU fault remains distinct from fixed VM-heap/CSR and
+  both reproduced MIOpen failures.
 - **CURRENT Qwen3.5 training follow-up completed 2026-10-16:** user supplied an
   old log and freed .104; this supersedes the N2.7 cursor until training follow-up
   is done. Implementation `690042b55f33b4a6fd67c4c48d54ff8d7313b64a` adds scalar

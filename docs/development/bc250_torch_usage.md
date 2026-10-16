@@ -16,6 +16,12 @@ files are read-only; your project and data files use host bind mounts.
 
 ## Qwen3.5 training on .104 (updated 2026-10-16)
 
+For stack-wide availability, reproduced defects, missing optional packages and
+the ordered work queue, see the [Torch support matrix](bc250_torch_support_matrix.md).
+The Qwen3.5 helpers below are application scoped; they do not replace ordinary
+Torch convolution or loss globally. General MIOpen convolution and LSTM backward
+have separate reproduced failures recorded in that matrix.
+
 The current `finetune-n7/scripts/train_bc250.py` launcher uses `replica/train.py`
 with the project's Transformers5.19.0 overlay. It now enables native gfx1013
 frozen causal convolution and chunk64 FP32 loss by default. The source hash is

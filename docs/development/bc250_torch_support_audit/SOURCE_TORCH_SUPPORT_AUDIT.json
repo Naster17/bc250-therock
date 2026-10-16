@@ -1,0 +1,27 @@
+{
+  "audit_revision": "7e39ed699289a60d6a9605ed22ff4493446540f2",
+  "helper_sha256": "32f35ea4b0ab4bbfc294b7149dd9374e7787691df4e5d16da17323e51fd416f5",
+  "torch_revision": "4ee65717d69e9f51021272e3f37d0f342f68fc08",
+  "rocm_libraries_revision": "a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8",
+  "triton_revision": "ee65ff3b85f99d52e678b252a99c8425fa46e329",
+  "kernel_revision": "0957f1aa4717bb5ea19545bdcb01d6899e94bb9f",
+  "image": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59",
+  "boot_id": "a287fd16-c97b-4d88-8055-b0553a2f7631",
+  "libtorch_hip_sha256": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+  "counts": {
+    "passed_bounded": 35,
+    "reproduced_defect": 6,
+    "unavailable_or_refused": 10
+  },
+  "unique_configurations": 51,
+  "runtime_changed": false,
+  "running_agent_jobs": [],
+  "labels": [
+    "torch-support-audit",
+    "torch-support-refined",
+    "torch-support-conv-isolation-r2"
+  ],
+  "retained_harness_failure": "torch-support-conv-isolation",
+  "matrix": "docs/development/bc250_torch_support_matrix.md",
+  "next": "A01 direct-MIOpen workspace-size/invocation/profiling isolation; A02 legacy reduction separate; N2.7 queued"
+}
