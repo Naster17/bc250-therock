@@ -1,0 +1,24 @@
+--- a/replica/train.py
++++ b/replica/train.py
+@@ -231,10 +231,20 @@
+                                                target_modules=targets, bias="none", task_type="CAUSAL_LM"))
+     else:
+         adapter_config = LoraConfig.from_pretrained(args.resume, local_files_only=True)
+-        if set(adapter_config.target_modules) != set(targets) or adapter_config.r != args.rank or adapter_config.lora_alpha != args.alpha:
++        from peft.tuners.tuners_utils import check_target_module_exists
++        resolved_targets = {name for name, _ in model.named_modules()
++                            if check_target_module_exists(adapter_config, name)}
++        if resolved_targets != set(targets) or adapter_config.r != args.rank or adapter_config.lora_alpha != args.alpha:
+             parser.error("Checkpoint adapter target/rank/alpha mismatch")
+         model = PeftModel.from_pretrained(model, args.resume, is_trainable=True, local_files_only=True)
+     model.to(args.device)
++    if text_config.model_type == "qwen3_5_text" and args.device == "cuda":
++        enabled = os.environ.get("BC250_QWEN35_TRAINING_OPS", "1")
++        if enabled not in {"0", "1"}:
++            raise ValueError("BC250_QWEN35_TRAINING_OPS must be 0 or 1")
++        if enabled == "1":
++            from .bc250_ops import install
++            install(model)
+     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+     model.enable_input_require_grads()
+     model.print_trainable_parameters()
