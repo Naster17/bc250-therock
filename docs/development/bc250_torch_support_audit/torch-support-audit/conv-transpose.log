@@ -1,0 +1,11 @@
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1013: libMIOpenCKGroupedConv_gfx1013.so: cannot open shared object file: No such file or directory
+MIOpen: Warning [ParseAndLoadDb] File is unreadable: "/workspace/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Error [EvaluateInvokers] bc250:/workspace/source/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:535: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+MIOpen: Error [EvaluateInvokers] bc250:/workspace/source/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:535: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+MIOpen: Error [EvaluateInvokers] bc250:/workspace/source/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:535: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:286: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /workspace/pytorch-work/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)
+  details["max_absolute_error"] = float(
+MIOpen: Error [EvaluateInvokers] bc250:/workspace/source/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:535: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+MIOpen: Error [EvaluateInvokers] bc250:/workspace/source/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:535: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+{"case": "conv-transpose", "status": "passed", "details": {"max_absolute_error": 2.1161319418983027e-08, "backward_reference": true}}

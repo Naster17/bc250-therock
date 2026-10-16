@@ -1,0 +1,8 @@
+{
+  "case": "depthwise-bf16",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 0.0009370831323824158,
+    "backward_reference": true
+  }
+}

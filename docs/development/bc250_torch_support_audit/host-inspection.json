@@ -1,0 +1,32 @@
+{
+  "prefix": "/opt/bc250-stack/dev/priority1",
+  "torch_cmake_discovery": [
+    "ROCM_VERSION_HEADER_PATH:FILEPATH=/workspace/build/dist/rocm/include/rocm-core/rocm_version.h",
+    "hipsparselt_DIR:PATH=hipsparselt_DIR-NOTFOUND"
+  ],
+  "hipsparselt_cmake_files": [
+    "/opt/bc250-stack/dev/priority1/rocm/lib/cmake/hipsparselt/hipsparselt-config.cmake",
+    "/opt/bc250-stack/dev/priority1/rocm/lib/cmake/hipsparselt/hipsparselt-config-version.cmake",
+    "/opt/bc250-stack/dev/priority1/rocm/lib/cmake/hipsparselt/hipsparselt-targets.cmake",
+    "/opt/bc250-stack/dev/priority1/rocm/lib/cmake/hipsparselt/hipsparselt-targets-release.cmake"
+  ],
+  "boot_id": "a287fd16-c97b-4d88-8055-b0553a2f7631",
+  "watchdog": "active",
+  "user_cache_inventory": {
+    ".config/miopen": {
+      "exists": true,
+      "file_count": 2,
+      "gfx1013_file_names": [
+        "gfx1013_20.HIP.3_6_2_.ufdb.txt",
+        "gfx1013_20.HIP.3_6_2_.ufdb.txt.time"
+      ]
+    },
+    ".cache/miopen": {
+      "exists": true,
+      "file_count": 1,
+      "gfx1013_file_names": [
+        "3.6.2./gfx1013_20.ukdb"
+      ]
+    }
+  }
+}

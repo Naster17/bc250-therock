@@ -1,0 +1,7 @@
+{
+  "case": "conv1d-g1-dw",
+  "status": "error",
+  "exception": "RuntimeError",
+  "error": "miopenStatusUnknownError",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 685, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 394, in probe\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 392, in <lambda>\n    op = lambda a, b: F.conv1d(a, b, stride=2, padding=2, dilation=2, groups=1)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n"
+}

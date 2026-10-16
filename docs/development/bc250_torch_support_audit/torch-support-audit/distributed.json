@@ -1,0 +1,7 @@
+{
+  "case": "distributed",
+  "status": "unsupported",
+  "exception": "NotImplementedError",
+  "error": "Torch USE_DISTRIBUTED=OFF; RCCL/Gloo not built into this runtime",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 577, in probe\n    raise NotImplementedError(\nNotImplementedError: Torch USE_DISTRIBUTED=OFF; RCCL/Gloo not built into this runtime\n"
+}

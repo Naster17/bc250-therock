@@ -1,0 +1,7 @@
+{
+  "case": "sdpa-tiled-head256",
+  "status": "error",
+  "exception": "ValueError",
+  "error": "Unsupported batch/head/dimension combination",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 544, in probe\n    actual = scaled_dot_product_attention(*gpu, is_causal=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pytorch-work/torch/nn/attention/_gfx1013.py\", line 226, in scaled_dot_product_attention\n    raise ValueError(\"Unsupported batch/head/dimension combination\")\nValueError: Unsupported batch/head/dimension combination\n"
+}

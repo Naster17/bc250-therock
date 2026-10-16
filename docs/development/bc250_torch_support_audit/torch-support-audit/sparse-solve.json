@@ -1,0 +1,7 @@
+{
+  "case": "sparse-solve",
+  "status": "error",
+  "exception": "RuntimeError",
+  "error": "Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build.",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 482, in probe\n    out = torch.sparse.spsolve(a.cuda().to_sparse_csr(), b[:, 0].cuda())\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build.\n"
+}

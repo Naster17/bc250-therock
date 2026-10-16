@@ -1,0 +1,8 @@
+{
+  "case": "fft-f64",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 0.0,
+    "backward_reference": true
+  }
+}

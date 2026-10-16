@@ -1,0 +1,7 @@
+{
+  "case": "conv1d-g1",
+  "status": "error",
+  "exception": "RuntimeError",
+  "error": "miopenStatusUnknownError",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 407, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 324, in check\n    actual.backward(grad.to(actual.device, actual.dtype))\n  File \"/workspace/pytorch-work/torch/_tensor.py\", line 623, in backward\n    torch.autograd.backward(\n  File \"/workspace/pytorch-work/torch/autograd/__init__.py\", line 395, in backward\n    _engine_run_backward(\n  File \"/workspace/pytorch-work/torch/autograd/graph.py\", line 979, in _engine_run_backward\n    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n"
+}

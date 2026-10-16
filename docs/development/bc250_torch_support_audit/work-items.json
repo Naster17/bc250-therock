@@ -1,0 +1,136 @@
+{
+  "primary_order": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09"
+  ],
+  "items": [
+    {
+      "id": "A01",
+      "feature": "General MIOpen convolution selection/profiling/workspace defect",
+      "evidence": "FP32 group1 B2/C4/L19, W6x4x3, stride2/pad2/dilation2: inference fwd passes; combined training fails backward. Input-only/weight-only gradient configurations fail already in forward. Zero480-byte workspace and elapsed<=0 recur. Disabling GEMM removes workspace warning but still fails.",
+      "next": "**First correctness priority.** Reproduce through direct MIOpen C API, separate workspace-size contract from profiler/handle/stream timing, check CPU fwd/dx/dw. Fix demonstrated library/frontend cause; do not silence errors or globally force a guessed solver.",
+      "status": "queued"
+    },
+    {
+      "id": "A02",
+      "feature": "MIOpen legacy CK reduction cannot compile gfx1013; LSTM backward broken",
+      "evidence": "Tiny nn.LSTM fwd matches CPU; backward HIPRTC fails `No CK_AMD_GPU_GFX* macro defined` in bundled legacy CK config.hpp. This is independent of the optional CK grouped-conv plugin and separate CK Tile port.",
+      "next": "Add reviewed native gfx1013 target/feature plumbing or portable scalar reduction fallback. Check wave32, buffer descriptors and unsafe dot/asm gates; reduction and LSTM CPU gradients. No gfx1030 spoof.",
+      "status": "queued"
+    },
+    {
+      "id": "A03",
+      "feature": "No gfx1013 system FindDb/PerfDb/KDB; optional loader probes unsupported CK plugin",
+      "evidence": "Installed db contains only lgbm metadata/rank/pcfg files; no gfx1013 assets. User ufdb/ukdb exist. Upstream data install filters match no gfx1013 files; CK plugin target list excludes gfx1013.",
+      "next": "After A01/A02, collect genuine bounded tuning/cache entries, validate/replay and package with version/device/shape scope. Review capability-aware optional-plugin probing. Never create empty/fake databases or rename another GPU's data.",
+      "status": "queued"
+    },
+    {
+      "id": "A04",
+      "feature": "Torch hipSPARSELt integration disabled/unfound despite installed port",
+      "evidence": "`_cslt_compress` rejects; Torch CMake `hipsparselt_DIR-NOTFOUND`; current package files and DSO exist. hipSPARSELt N1.4\u20137 direct API qualification does not imply Torch support.",
+      "next": "Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS.",
+      "status": "queued"
+    },
+    {
+      "id": "A05",
+      "feature": "Latest causal conv/loss improvements are not reusable general Torch defaults",
+      "evidence": "Only finetune-n7 Qwen3.5 hook; conv has no weight/bias gradients, loss is eager first-order and retains low-precision logits",
+      "next": "Expose a reviewed reusable opt-in API, add trainable conv gradients and model/shape dispatch gates. Expand CPU/checkpoint/AMP refs before considering broader selection. Keep old behavior for unsupported calls.",
+      "status": "queued"
+    },
+    {
+      "id": "A06",
+      "feature": "Native gated-delta / FLA training kernels missing",
+      "evidence": "Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification",
+      "next": "Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support.",
+      "status": "queued"
+    },
+    {
+      "id": "A07",
+      "feature": "Efficient attention gaps: head256, dropout, compile/graph support",
+      "evidence": "Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math",
+      "next": "Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled.",
+      "status": "queued"
+    },
+    {
+      "id": "A08",
+      "feature": "Dense INT8 -> INT32 `_int_mm`",
+      "evidence": "Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route.",
+      "next": "Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption.",
+      "status": "queued"
+    },
+    {
+      "id": "A09",
+      "feature": "Torch GPU profiler/Kineto disabled",
+      "evidence": "USE_KINETO=0; profiler records no GPU events. External rocprofiler is a separate working tool.",
+      "next": "Audit pinned Kineto ROCm tracing dependencies and enable a separately tested build. Qualify GPU event correlation, memory/CPU traces and overhead; hardware counters remain separate.",
+      "status": "queued"
+    },
+    {
+      "id": "B01",
+      "feature": "BF16 FFT API input rejected",
+      "evidence": "`torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works",
+      "next": "Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional.",
+      "status": "queued"
+    },
+    {
+      "id": "B02",
+      "feature": "Public general sparse linear solve unavailable on ROCm",
+      "evidence": "`torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver",
+      "next": "Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback.",
+      "status": "queued"
+    },
+    {
+      "id": "B03",
+      "feature": "Distributed build, Gloo/RCCL absent",
+      "evidence": "USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected.",
+      "next": "CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here.",
+      "status": "queued"
+    },
+    {
+      "id": "B04",
+      "feature": "torchvision / torchaudio not installed in reviewed runtime",
+      "evidence": "Package discovery absent, not a core Torch loader failure; RPP/FFTS are separate libraries",
+      "next": "Build matching pinned extensions, test needed scalar ATen/C++ ops; keep optional codecs/CPU paths explicit. No assumption that RPP/media blocks automatically accelerate them.",
+      "status": "queued"
+    },
+    {
+      "id": "B05",
+      "feature": "torchao / bitsandbytes / packed low-bit model kernels not qualified",
+      "evidence": "Packages absent from reviewed runtime; scalar dense INT8 route also missing A08",
+      "next": "Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable.",
+      "status": "queued"
+    },
+    {
+      "id": "B06",
+      "feature": "ONNX export/runtime packages absent",
+      "evidence": "onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability",
+      "next": "Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training.",
+      "status": "queued"
+    },
+    {
+      "id": "B07",
+      "feature": "MIOpen CK grouped-convolution plugin",
+      "evidence": "libMIOpenCKGroupedConv_gfx1013.so absent by architecture build filter; source probes plugin unconditionally",
+      "next": "Optional substantial scalar/generic plugin port or retain working HIP-direct alternatives. Merely enabling CK flag cannot supply kernels; lower priority than A01/A02.",
+      "status": "queued"
+    },
+    {
+      "id": "N2.7",
+      "feature": "Native nonsymmetric eig remains a bounded slow prototype",
+      "evidence": "N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control",
+      "next": "Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1\u20136.",
+      "status": "queued"
+    }
+  ],
+  "next": "A01 direct-MIOpen workspace/profiling isolation",
+  "N2.7": "queued behind selected Torch/library primary items"
+}

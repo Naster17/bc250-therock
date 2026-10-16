@@ -1,0 +1,8 @@
+time="2026-10-16T03:30:17+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+conv1d-g1-fwd passed 
+conv1d-g1-dx error miopenStatusUnknownError
+conv1d-g1-dw error miopenStatusUnknownError
+conv1d-g1-dx-direct error miopenStatusUnknownError
+conv1d-g1-dw-direct error miopenStatusUnknownError
+amp passed 
+{"error": 4, "passed": 2}

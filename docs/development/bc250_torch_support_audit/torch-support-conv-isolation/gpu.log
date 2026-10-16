@@ -1,0 +1,5 @@
+time="2026-10-16T03:30:04+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py", line 722
+    env=(
+    ^^^^^
+SyntaxError: keyword argument repeated: env

@@ -1,0 +1,13 @@
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:521: UserWarning: Memory efficient kernel not used because: (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:1107.)
+  lambda a, b, c: op(a, b, c, is_causal=True),
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:521: UserWarning: Torch was not compiled with memory efficient attention. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:976.)
+  lambda a, b, c: op(a, b, c, is_causal=True),
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:521: UserWarning: Flash attention kernel not used because: (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:1109.)
+  lambda a, b, c: op(a, b, c, is_causal=True),
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:521: UserWarning: Torch was not compiled with flash attention. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:924.)
+  lambda a, b, c: op(a, b, c, is_causal=True),
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:521: UserWarning: cuDNN attention kernel not used because: (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:1111.)
+  lambda a, b, c: op(a, b, c, is_causal=True),
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:521: UserWarning: Torch was not compiled with cuDNN attention. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:857.)
+  lambda a, b, c: op(a, b, c, is_causal=True),
+{"case": "sdpa-flash", "status": "error", "exception": "RuntimeError", "error": "No available kernel. Aborting execution.", "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 520, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 282, in check\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 521, in <lambda>\n    lambda a, b, c: op(a, b, c, is_causal=True),\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n"}

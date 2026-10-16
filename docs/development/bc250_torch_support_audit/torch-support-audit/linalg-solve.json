@@ -1,0 +1,8 @@
+{
+  "case": "linalg-solve",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 4.4924047759575814e-08,
+    "backward_reference": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "case": "conv2d",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 5.054454838004929e-08,
+    "backward_reference": true
+  }
+}

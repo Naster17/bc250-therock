@@ -1,0 +1,47 @@
+time="2026-10-16T03:24:35+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+gemm-f32 passed 
+gemm-f64 passed 
+gemm-f16 passed 
+gemm-bf16 passed 
+gemm-lt passed 
+gemm-int8 error self.size(0) needs to be greater than 16, but got 16
+scaled-fp8 error torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm MI300+
+sparse-lt error hipSPARSELt not supported on your machine.
+conv1d passed 
+conv2d passed 
+conv3d passed 
+conv2d-f16 passed 
+conv2d-bf16 passed 
+depthwise-bf16 passed 
+conv-transpose passed 
+batchnorm passed 
+layernorm passed 
+groupnorm passed 
+pool-resize passed 
+embedding passed 
+loss-ce passed 
+loss-ctc passed 
+lstm error miopenStatusUnknownError
+fft-f32 passed 
+fft-f64 passed 
+fft-f16 passed 
+fft-bf16 error Unsupported dtype BFloat16
+linalg-svd passed 
+linalg-lstsq passed 
+linalg-solve passed 
+sparse-csr passed 
+sparse-csc passed 
+sparse-bsr passed 
+sparse-solve error Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build.
+rng passed 
+sdpa-math passed 
+sdpa-efficient error No viable backend for scaled_dot_product_attention was found. This is likely due to turning off both the math kernel and the fused kernels.
+sdpa-flash error No available kernel. Aborting execution.
+sdpa-tiled-head256 error Only FP32/FP16/BF16 Q/K/V are supported
+adamw-fused passed 
+amp error 
+compile passed 
+graph passed 
+distributed unsupported Torch USE_DISTRIBUTED=OFF; RCCL/Gloo not built into this runtime
+profiler unsupported No GPU events: Torch USE_KINETO=OFF; independent rocprofiler is separate
+{"error": 10, "passed": 33, "unsupported": 2}

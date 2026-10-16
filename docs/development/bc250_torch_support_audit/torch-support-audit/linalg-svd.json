@@ -1,0 +1,8 @@
+{
+  "case": "linalg-svd",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 1.6861201546092275e-07,
+    "backward_reference": true
+  }
+}

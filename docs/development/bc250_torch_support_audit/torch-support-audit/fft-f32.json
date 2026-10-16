@@ -1,0 +1,8 @@
+{
+  "case": "fft-f32",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 9.647948684410323e-08,
+    "backward_reference": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "case": "conv-transpose",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 2.1161319418983027e-08,
+    "backward_reference": true
+  }
+}

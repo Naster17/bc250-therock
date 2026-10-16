@@ -1,0 +1,1675 @@
+{
+  "inventory": {
+    "torch": "2.13.0a0+gfx1013",
+    "hip": "7.17.0",
+    "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+    "architecture": "gfx1013:xnack-",
+    "hip_multiprocessors": 20,
+    "total_memory": 15938355200,
+    "config": "PyTorch built with:\n  - GCC 13.3\n  - C++ Version: 202002\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash N/A)\n  - OpenMP 201511 (a.k.a. OpenMP 4.5)\n  - LAPACK is enabled (usually provided by MKL)\n  - NNPACK is enabled\n  - CPU capability usage: AVX2\n  - HIP Runtime 7.17.0\n  - MIOpen 3.6.2\n  - Build settings: BLAS_INFO=open, BUILD_TYPE=Release, COMMIT_SHA=Unknown, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xfatbin -compress-all  -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -DC10_NODEPRECATED, CXX_COMPILER=/usr/bin/g++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=old-style-cast -faligned-new -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-dangling-reference -Wno-error=dangling-reference -Wno-stringop-overflow, LAPACK_INFO=open, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.13.0, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=OFF, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=ON, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n",
+    "environment": {
+      "HSA_ENABLE_SDMA": "0"
+    },
+    "library_loads": {
+      "amdhip64": {
+        "path": "/workspace/build/dist/rocm/lib/libamdhip64.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+        "size_bytes": 6526408,
+        "dlopen": "ok"
+      },
+      "hsa-runtime64": {
+        "path": "/workspace/build/dist/rocm/lib/libhsa-runtime64.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+        "size_bytes": 4993320,
+        "dlopen": "ok"
+      },
+      "amd_comgr": {
+        "path": "/workspace/build/dist/rocm/lib/libamd_comgr.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libamd_comgr.so.3.5.0",
+        "size_bytes": 12166424,
+        "dlopen": "ok"
+      },
+      "hiprtc": {
+        "path": "/workspace/build/dist/rocm/lib/libhiprtc.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhiprtc.so.7.17.0-0000000",
+        "size_bytes": 1112952,
+        "dlopen": "ok"
+      },
+      "rocblas": {
+        "path": "/workspace/build/dist/rocm/lib/librocblas.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/librocblas.so.5.8",
+        "size_bytes": 27075456,
+        "dlopen": "ok"
+      },
+      "hipblas": {
+        "path": "/workspace/build/dist/rocm/lib/libhipblas.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhipblas.so.3.8",
+        "size_bytes": 948288,
+        "dlopen": "ok"
+      },
+      "hipblaslt": {
+        "path": "/workspace/build/dist/rocm/lib/libhipblaslt.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+        "size_bytes": 1778560,
+        "dlopen": "ok"
+      },
+      "MIOpen": {
+        "path": "/workspace/build/dist/rocm/lib/libMIOpen.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+        "size_bytes": 484057984,
+        "dlopen": "ok"
+      },
+      "hipfft": {
+        "path": "/workspace/build/dist/rocm/lib/libhipfft.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhipfft.so.0.1",
+        "size_bytes": 155304,
+        "dlopen": "ok"
+      },
+      "rocfft": {
+        "path": "/workspace/build/dist/rocm/lib/librocfft.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/librocfft.so.0.1",
+        "size_bytes": 13124480,
+        "dlopen": "ok"
+      },
+      "hipsparse": {
+        "path": "/workspace/build/dist/rocm/lib/libhipsparse.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhipsparse.so.4.8.0",
+        "size_bytes": 311976,
+        "dlopen": "ok"
+      },
+      "rocsparse": {
+        "path": "/workspace/build/dist/rocm/lib/librocsparse.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+        "size_bytes": 96023424,
+        "dlopen": "ok"
+      },
+      "hipsolver": {
+        "path": "/workspace/build/dist/rocm/lib/libhipsolver.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+        "size_bytes": 1997568,
+        "dlopen": "ok"
+      },
+      "rocsolver": {
+        "path": "/workspace/build/dist/rocm/lib/librocsolver.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+        "size_bytes": 31445888,
+        "dlopen": "ok"
+      },
+      "hiprand": {
+        "path": "/workspace/build/dist/rocm/lib/libhiprand.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhiprand.so.1.1",
+        "size_bytes": 18584,
+        "dlopen": "ok"
+      },
+      "rocrand": {
+        "path": "/workspace/build/dist/rocm/lib/librocrand.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/librocrand.so.1.1",
+        "size_bytes": 57754496,
+        "dlopen": "ok"
+      },
+      "hipsparselt": {
+        "path": "/workspace/build/dist/rocm/lib/libhipsparselt.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+        "size_bytes": 111488,
+        "dlopen": "ok"
+      },
+      "hiptensor": {
+        "path": "/workspace/build/dist/rocm/lib/libhiptensor.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+        "size_bytes": 52224896,
+        "dlopen": "ok"
+      },
+      "hipdnn_backend": {
+        "path": "/workspace/build/dist/rocm/lib/libhipdnn_backend.so",
+        "exists": true,
+        "resolved": "/workspace/build/dist/rocm/lib/libhipdnn_backend.so",
+        "size_bytes": 2871776,
+        "dlopen": "ok"
+      },
+      "rccl": {
+        "path": "/workspace/build/dist/rocm/lib/librccl.so",
+        "exists": false
+      },
+      "MIOpenCKGroupedConv_gfx1013": {
+        "path": "/workspace/build/dist/rocm/lib/libMIOpenCKGroupedConv_gfx1013.so",
+        "exists": false
+      }
+    },
+    "build_flags": {
+      "/workspace/pytorch-work/build/CMakeCache.txt": {
+        "GPU_TARGETS": "gfx1013",
+        "USE_ASAN": "OFF",
+        "USE_CCACHE": "ON",
+        "USE_COLORIZE_OUTPUT": "ON",
+        "USE_COREML_DELEGATE": "OFF",
+        "USE_CPP_CODE_COVERAGE": "OFF",
+        "USE_CUDA": "0",
+        "USE_CUPTI_SO": "ON",
+        "USE_DISTRIBUTED": "0",
+        "USE_EIGEN_SPARSE": "OFF",
+        "USE_FBGEMM": "ON",
+        "USE_FLASH_ATTENTION": "0",
+        "USE_GFLAGS": "OFF",
+        "USE_GLOG": "OFF",
+        "USE_GOLD_LINKER": "OFF",
+        "USE_ITT": "ON",
+        "USE_KINETO": "0",
+        "USE_LIGHTWEIGHT_DISPATCH": "OFF",
+        "USE_LITE_INTERPRETER_PROFILER": "ON",
+        "USE_LITE_PROTO": "OFF",
+        "USE_LSAN": "OFF",
+        "USE_MAGMA": "0",
+        "USE_MEM_EFF_ATTENTION": "0",
+        "USE_MIMALLOC": "OFF",
+        "USE_MIMALLOC_ON_MKL": "OFF",
+        "USE_MKLDNN": "ON",
+        "USE_MKLDNN_CBLAS": "OFF",
+        "USE_MSLK": "0",
+        "USE_MTIA": "OFF",
+        "USE_NATIVE_ARCH": "OFF",
+        "USE_NNAPI": "OFF",
+        "USE_NNPACK": "ON",
+        "USE_NUMA": "ON",
+        "USE_NUMPY": "ON",
+        "USE_OBSERVERS": "ON",
+        "USE_OPENCL": "OFF",
+        "USE_OPENMP": "ON",
+        "USE_PER_OPERATOR_HEADERS": "ON",
+        "USE_PRECOMPILED_HEADERS": "OFF",
+        "USE_PRIORITIZED_TEXT_FOR_LD": "OFF",
+        "USE_PROF": "OFF",
+        "USE_PTHREADPOOL": "ON",
+        "USE_PYTORCH_METAL": "OFF",
+        "USE_PYTORCH_METAL_EXPORT": "OFF",
+        "USE_PYTORCH_QNNPACK": "ON",
+        "USE_ROCM": "ON",
+        "USE_ROCM_CK_GEMM": "0",
+        "USE_ROCM_CK_SDPA": "0",
+        "USE_ROCM_KERNEL_ASSERT": "OFF",
+        "USE_SNPE": "OFF",
+        "USE_SOURCE_DEBUG_ON_MOBILE": "ON",
+        "USE_STATIC_MKL": "OFF",
+        "USE_SYSTEM_BENCHMARK": "OFF",
+        "USE_SYSTEM_CPUINFO": "OFF",
+        "USE_SYSTEM_EIGEN_INSTALL": "OFF",
+        "USE_SYSTEM_FP16": "OFF",
+        "USE_SYSTEM_FXDIV": "OFF",
+        "USE_SYSTEM_GLOO": "OFF",
+        "USE_SYSTEM_GOOGLEBENCHMARK": "OFF",
+        "USE_SYSTEM_GOOGLETEST": "OFF",
+        "USE_SYSTEM_LIBS": "OFF",
+        "USE_SYSTEM_NVTX": "OFF",
+        "USE_SYSTEM_ONNX": "OFF",
+        "USE_SYSTEM_PSIMD": "OFF",
+        "USE_SYSTEM_PTHREADPOOL": "OFF",
+        "USE_SYSTEM_PYBIND11": "OFF",
+        "USE_SYSTEM_SLEEF": "OFF",
+        "USE_SYSTEM_XNNPACK": "OFF",
+        "USE_TSAN": "OFF",
+        "USE_VALGRIND": "ON",
+        "USE_VULKAN_FP16_INFERENCE": "OFF",
+        "USE_VULKAN_RELAXED_PRECISION": "OFF",
+        "USE_XNNPACK": "OFF",
+        "USE_XPU": "OFF",
+        "USE_CUDNN": "0",
+        "USE_CUSPARSELT": "0",
+        "USE_NCCL": "0",
+        "USE_XCCL": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/CMakeCache.txt": {
+        "THEROCK_AMDGPU_FAMILIES": "gfx1013",
+        "THEROCK_ENABLE_ALL": "OFF",
+        "THEROCK_ENABLE_AMD_DBGAPI": "OFF",
+        "THEROCK_ENABLE_AQLPROFILE": "OFF",
+        "THEROCK_ENABLE_BASE": "OFF",
+        "THEROCK_ENABLE_BLAS": "ON",
+        "THEROCK_ENABLE_COMM_LIBS": "OFF",
+        "THEROCK_ENABLE_COMPILER": "ON",
+        "THEROCK_ENABLE_COMPOSABLE_KERNEL": "ON",
+        "THEROCK_ENABLE_CORE": "OFF",
+        "THEROCK_ENABLE_CORE_AMDSMI": "ON",
+        "THEROCK_ENABLE_CORE_HIPINFO": "OFF",
+        "THEROCK_ENABLE_CORE_HIPTESTS": "OFF",
+        "THEROCK_ENABLE_CORE_KFDTESTS": "OFF",
+        "THEROCK_ENABLE_CORE_RUNTIME": "ON",
+        "THEROCK_ENABLE_CORE_RUNTIME_TESTS": "OFF",
+        "THEROCK_ENABLE_CV_LIBS": "OFF",
+        "THEROCK_ENABLE_DC_TOOLS": "OFF",
+        "THEROCK_ENABLE_DEBUG_TOOLS": "OFF",
+        "THEROCK_ENABLE_ELFIO": "OFF",
+        "THEROCK_ENABLE_EMULATION": "OFF",
+        "THEROCK_ENABLE_FFT": "ON",
+        "THEROCK_ENABLE_FFTW3": "OFF",
+        "THEROCK_ENABLE_FLATBUFFERS": "OFF",
+        "THEROCK_ENABLE_FMT": "OFF",
+        "THEROCK_ENABLE_GFX1013_SCALAR_BACKENDS": "OFF",
+        "THEROCK_ENABLE_GRPC": "OFF",
+        "THEROCK_ENABLE_HIPBLASLTPROVIDER": "ON",
+        "THEROCK_ENABLE_HIPDNN": "ON",
+        "THEROCK_ENABLE_HIPDNN_INTEGRATION_TESTS": "ON",
+        "THEROCK_ENABLE_HIPDNN_SAMPLES": "ON",
+        "THEROCK_ENABLE_HIPFILE": "ON",
+        "THEROCK_ENABLE_HIPIFY": "ON",
+        "THEROCK_ENABLE_HIPKERNELPROVIDER": "ON",
+        "THEROCK_ENABLE_HIPTENSOR": "ON",
+        "THEROCK_ENABLE_HIPTHREADS": "OFF",
+        "THEROCK_ENABLE_HIP_RUNTIME": "ON",
+        "THEROCK_ENABLE_HOST_BLAS": "OFF",
+        "THEROCK_ENABLE_HOST_MATH": "OFF",
+        "THEROCK_ENABLE_HOST_SUITE_SPARSE": "OFF",
+        "THEROCK_ENABLE_KPACK": "OFF",
+        "THEROCK_ENABLE_LIBHIPCXX": "ON",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "THEROCK_ENABLE_MATH_LIBS": "OFF",
+        "THEROCK_ENABLE_MEDIA_LIBS": "OFF",
+        "THEROCK_ENABLE_MIOPEN": "ON",
+        "THEROCK_ENABLE_MIOPENPROVIDER": "ON",
+        "THEROCK_ENABLE_MIRAGE": "OFF",
+        "THEROCK_ENABLE_ML_LIBS": "OFF",
+        "THEROCK_ENABLE_MPI": "OFF",
+        "THEROCK_ENABLE_NLOHMANN_JSON": "OFF",
+        "THEROCK_ENABLE_OCL_ICD": "ON",
+        "THEROCK_ENABLE_OCL_RUNTIME": "ON",
+        "THEROCK_ENABLE_OPENMPI": "OFF",
+        "THEROCK_ENABLE_PRIM": "ON",
+        "THEROCK_ENABLE_PROFILER": "OFF",
+        "THEROCK_ENABLE_PROFILER_ANNOTATIONS": "OFF",
+        "THEROCK_ENABLE_PROFILER_HUB": "OFF",
+        "THEROCK_ENABLE_RAND": "ON",
+        "THEROCK_ENABLE_RCCL": "OFF",
+        "THEROCK_ENABLE_RDC": "OFF",
+        "THEROCK_ENABLE_ROCALUTION": "ON",
+        "THEROCK_ENABLE_ROCDECODE": "OFF",
+        "THEROCK_ENABLE_ROCGDB": "OFF",
+        "THEROCK_ENABLE_ROCJITSU": "OFF",
+        "THEROCK_ENABLE_ROCJITSU_HOTSWAP": "OFF",
+        "THEROCK_ENABLE_ROCJPEG": "OFF",
+        "THEROCK_ENABLE_ROCPROFILER_COMPUTE": "OFF",
+        "THEROCK_ENABLE_ROCPROFILER_SYSTEMS_EXAMPLES": "OFF",
+        "THEROCK_ENABLE_ROCPROFSYS": "OFF",
+        "THEROCK_ENABLE_ROCPROFV3": "OFF",
+        "THEROCK_ENABLE_ROCR_DEBUG_AGENT": "OFF",
+        "THEROCK_ENABLE_ROCR_DEBUG_AGENT_TESTS": "OFF",
+        "THEROCK_ENABLE_ROCSHMEM": "OFF",
+        "THEROCK_ENABLE_ROCTX": "OFF",
+        "THEROCK_ENABLE_ROCWMMA": "OFF",
+        "THEROCK_ENABLE_RPP": "ON",
+        "THEROCK_ENABLE_SOLVER": "ON",
+        "THEROCK_ENABLE_SPARSE": "ON",
+        "THEROCK_ENABLE_SPARSELT": "ON",
+        "THEROCK_ENABLE_SPDLOG": "OFF",
+        "THEROCK_ENABLE_STORAGE_LIBS": "OFF",
+        "THEROCK_ENABLE_SUPPORT": "OFF",
+        "THEROCK_ENABLE_SYSDEPS": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_AMD_MESA": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_EXPAT": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_GMP": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_HWLOC": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_LIBMNL": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_LIBNL": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_LIBPCIACCESS": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_MPFR": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_NCURSES": "OFF",
+        "THEROCK_ENABLE_SYSDEPS_UTIL_LINUX": "OFF",
+        "THEROCK_ENABLE_WSL": "OFF",
+        "THEROCK_ENABLE_WSL_ROCDXG": "OFF",
+        "THEROCK_GFX1013_SCALAR_BACKENDS": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/base/rocm-core/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/base/rocm_smi_lib/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/base/rocprofiler-register/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/base/rocm-cmake/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/base/aux-overlay/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/base/half/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/hipRAND/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_SPARSE_CHECKOUT": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPRAND": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/composable_kernel/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "MIOPEN_REQ_LIBS_ONLY": "ON",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_BITINT_EXTENSION_INT4": "OFF",
+        "USE_GLIBCXX_ASSERTIONS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/hipFFT/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPRAND": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocPRIM/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPCXX": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/hipTensor/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocRAND/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_SYSTEM_LIB": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocPRIM_tests/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPCXX": "OFF",
+        "USE_SYSTEM_LIB": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocThrust/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPCXX": "OFF",
+        "USE_SYSTEM_LIB": "OFF",
+        "USE_SPARSE_CHECKOUT": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocALUTION/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPCXX": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/hipCUB/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPCXX": "OFF",
+        "USE_SYSTEM_LIB": "OFF",
+        "USE_SPARSE_CHECKOUT": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/libhipcxx/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/nlohmann-json/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/FunctionalPlus/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/spdlog/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/yaml-cpp/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/googletest/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/flatbuffers/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/Catch2/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/eigen/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/frugally-deep/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/msgpack-cxx/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/elfio/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/fmt/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/SuiteSparse/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/ffts/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/compiler/hipify/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/compiler/amd-llvm/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_DEPRECATED_GCC_INSTALL_PREFIX": "OFF",
+        "USE_NEW_HOSTCALL_IMPL": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/compiler/hipcc/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/compiler/amd-comgr/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/storage-libs/hipfile/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/hipdnn_integration_tests/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "MIOPEN_AMDGCN_ASSEMBLER": "/workspace/build/compiler/amd-llvm/dist/lib/llvm/bin/clang",
+        "MIOPEN_BACKEND": "HIP",
+        "MIOPEN_BUILD_CK": "OFF",
+        "MIOPEN_BUILD_DRIVER": "ON",
+        "MIOPEN_CK_BUILDER_EXPERIMENTAL": "OFF",
+        "MIOPEN_CK_UNBUNDLE_PER_ARCH": "OFF",
+        "MIOPEN_DEBUG_FIND_DB_CACHING": "ON",
+        "MIOPEN_DISABLE_SYSDB": "OFF",
+        "MIOPEN_DISABLE_USERDB": "OFF",
+        "MIOPEN_EMBED_BINCACHE": "OFF",
+        "MIOPEN_EMBED_BUILD": "OFF",
+        "MIOPEN_EMBED_DB": "",
+        "MIOPEN_ENABLE_AI_IMMED_MODE_FALLBACK": "On",
+        "MIOPEN_ENABLE_AI_KERNEL_TUNING": "On",
+        "MIOPEN_ENABLE_FIN": "OFF",
+        "MIOPEN_ENABLE_FIN_INTERFACE": "OFF",
+        "MIOPEN_ENABLE_HIPDNN_WRAPPER": "OFF",
+        "MIOPEN_ENABLE_SQLITE": "On",
+        "MIOPEN_ENABLE_SQLITE_BACKOFF": "On",
+        "MIOPEN_ENABLE_SQLITE_KERN_CACHE": "On",
+        "MIOPEN_FP8_CLIPPING": "ON",
+        "MIOPEN_FP8_IEEE_EXPONENT_BIAS": "OFF",
+        "MIOPEN_GPU_SYNC": "Off",
+        "MIOPEN_HIP_COMPILER": "/workspace/build/core/clr/dist/lib/llvm/bin/clang++",
+        "MIOPEN_INCBIN": "OFF",
+        "MIOPEN_INSTALL_CXX_HEADERS": "Off",
+        "MIOPEN_INSTALL_GPU_DATABASES": "gfx1013",
+        "MIOPEN_LIBMLIR_SUPPORTS_GFX103X": "OFF",
+        "MIOPEN_LOG_FUNC_TIME_ENABLE": "Off",
+        "MIOPEN_OFFLOADBUNDLER_BIN": "/workspace/build/compiler/amd-llvm/dist/lib/llvm/bin/clang-offload-bundler",
+        "MIOPEN_STANDALONE_BUILD": "OFF",
+        "MIOPEN_STRIP_SYMBOLS": "ON",
+        "MIOPEN_SYSTEM_FIND_DB_SUFFIX": "HIP",
+        "MIOPEN_TEST_ALL": "OFF",
+        "MIOPEN_TEST_BFLOAT16": "OFF",
+        "MIOPEN_TEST_COMPOSABLEKERNEL": "OFF",
+        "MIOPEN_TEST_CONV": "OFF",
+        "MIOPEN_TEST_DBSYNC": "OFF",
+        "MIOPEN_TEST_DEEPBENCH": "OFF",
+        "MIOPEN_TEST_DISCRETE": "OFF",
+        "MIOPEN_TEST_DRIVER_ITER_MODE": "OFF",
+        "MIOPEN_TEST_ENABLE_TEST_SQLITE_PERFDB": "OFF",
+        "MIOPEN_TEST_FLAGS": "",
+        "MIOPEN_TEST_GDB": "On",
+        "MIOPEN_TEST_GFX103X": "OFF",
+        "MIOPEN_TEST_GFX110X": "OFF",
+        "MIOPEN_TEST_GFX115X": "OFF",
+        "MIOPEN_TEST_GFX120X": "OFF",
+        "MIOPEN_TEST_GFX125X": "OFF",
+        "MIOPEN_TEST_GFX900": "OFF",
+        "MIOPEN_TEST_GFX906": "OFF",
+        "MIOPEN_TEST_GFX908": "OFF",
+        "MIOPEN_TEST_GFX90A": "OFF",
+        "MIOPEN_TEST_GFX94X": "OFF",
+        "MIOPEN_TEST_GFX95X": "OFF",
+        "MIOPEN_TEST_GPU_XNACK_ENABLED": "OFF",
+        "MIOPEN_TEST_HALF": "OFF",
+        "MIOPEN_TEST_INT8": "OFF",
+        "MIOPEN_TEST_LIMIT": "2",
+        "MIOPEN_TEST_MLIR": "OFF",
+        "MIOPEN_TEST_PERF": "OFF",
+        "MIOPEN_TEST_TF32": "OFF",
+        "MIOPEN_TEST_WITH_MIOPENDRIVER": "ON",
+        "MIOPEN_USER_DB_SUFFIX": "HIP.3_6_2_",
+        "MIOPEN_USE_COMGR": "ON",
+        "MIOPEN_USE_COMPOSABLEKERNEL": "OFF",
+        "MIOPEN_USE_HIPBLASLT": "ON",
+        "MIOPEN_USE_HIPCONV": "ON",
+        "MIOPEN_USE_HIPRTC": "ON",
+        "MIOPEN_USE_HIP_KERNELS": "ON",
+        "MIOPEN_USE_MLIR": "OFF",
+        "MIOPEN_USE_RNE_BFLOAT16": "ON",
+        "MIOPEN_USE_ROCBLAS": "ON",
+        "MIOPEN_USE_ROCTRACER": "ON",
+        "MIOPEN_USE_SQLITE_PERFDB": "Off",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "MIOPEN_HIP_COMPILER_HAS_OPTION_OFFLOAD_UNIFORM_BLOCK": "1"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/hipDNN/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/hipkernelprovider/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/hipblasltprovider/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/hipdnn_samples/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/miopenprovider/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/ROCR-Runtime/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/rocminfo/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/ocl-clr/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_NEW_HOSTCALL_IMPL": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/rocm-kpack/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/clr/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_NEW_HOSTCALL_IMPL": "ON",
+        "USE_PROF_API": "ON"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/amdsmi/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/ocl-icd/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/aqlprofile/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/roctracer/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprof-trace-decoder/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_LLVM_DISASM": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/cv-libs/rpp/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/hipSPARSELt/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/rocSPARSE/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/hipSOLVER/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/hipSPARSE/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/hipBLASLt/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/rocSOLVER/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_HIPCXX": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/origami/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/hipBLAS-common/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/rocBLAS/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/BLAS/hipBLAS/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/support/mxDataGenerator/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/fftw3/build_fftw3f/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/fftw3/build_fftw3/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/simde/build/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/host-blas/host-blas64/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_LOCKING": "OFF",
+        "USE_PERL": "OFF"
+      },
+      "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/host-blas/host-blas/build/CMakeCache.txt": {
+        "CMAKE_HIP_ARCHITECTURES": "gfx1013",
+        "GPU_TARGETS": "gfx1013",
+        "THEROCK_ENABLE_LLVM_TESTS": "OFF",
+        "USE_LOCKING": "OFF",
+        "USE_PERL": "OFF"
+      }
+    },
+    "databases": {
+      "directory": "/workspace/build/dist/rocm/share/miopen/db",
+      "exists": true,
+      "files": [
+        "lgbm_model_meta.json",
+        "lgbm_rank.bin",
+        "lgbm_pcfg.bin"
+      ],
+      "gfx1013_assets": []
+    },
+    "torch_flags": {
+      "_has_magma": false,
+      "_has_cusparselt": true,
+      "_has_hipsolver": null,
+      "_has_lapack": null,
+      "_has_mkldnn": true,
+      "_has_cuda": true
+    },
+    "backend_flags": {
+      "distributed": false,
+      "miopen_version": 3006002,
+      "builtin_flash": false,
+      "tf32": false,
+      "bf16": true,
+      "preferred_blas": "_BlasBackend.Cublas"
+    },
+    "elf_dependencies": {
+      "/workspace/pytorch-work/torch/lib/libtorch_hip.so": {
+        "returncode": 0,
+        "needed": [
+          "libc10_hip.so",
+          "libMIOpen.so.1",
+          "libhiprtc.so.7",
+          "libhipblas.so.3",
+          "libhipfft.so.0",
+          "libhiprand.so.1",
+          "libhipsparse.so.4",
+          "libhipsolver.so.1",
+          "libhipblaslt.so.1",
+          "librocsolver.so.0",
+          "libc10.so",
+          "libtorch_cpu.so",
+          "librocblas.so.5",
+          "libamdhip64.so.7",
+          "libstdc++.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "paths": [
+          "0x000000000000001d (RUNPATH)            Library runpath: [/workspace/pytorch-work/build/lib:/workspace/build/dist/rocm/lib:]"
+        ]
+      },
+      "/workspace/build/dist/rocm/lib/libMIOpen.so": {
+        "returncode": 0,
+        "needed": [
+          "librocm_sysdeps_zstd.so.1",
+          "librocm_sysdeps_bz2.so",
+          "libhiprtc.so.7",
+          "libamd_comgr.so.3",
+          "librocblas.so.5",
+          "libhipblaslt.so.1",
+          "librocm_sysdeps_sqlite3.so",
+          "libroctx64.so.4",
+          "libamdhip64.so.7",
+          "libstdc++.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "paths": [
+          "0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN/rocm_sysdeps/lib:$ORIGIN/llvm/lib:$ORIGIN/llvm/lib/x86_64-unknown-linux-gnu:$ORIGIN:$ORIGIN/host-math/lib]"
+        ]
+      },
+      "/workspace/build/dist/rocm/lib/libhipsparselt.so": {
+        "returncode": 0,
+        "needed": [
+          "libamdhip64.so.7",
+          "libstdc++.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "paths": [
+          "0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN/rocm_sysdeps/lib:$ORIGIN/llvm/lib:$ORIGIN/llvm/lib/x86_64-unknown-linux-gnu:$ORIGIN:$ORIGIN/host-math/lib]"
+        ]
+      },
+      "/workspace/build/dist/rocm/lib/libhiptensor.so": {
+        "returncode": 0,
+        "needed": [
+          "libamdhip64.so.7",
+          "libstdc++.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6"
+        ],
+        "paths": [
+          "0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN/rocm_sysdeps/lib:$ORIGIN/llvm/lib:$ORIGIN/llvm/lib/x86_64-unknown-linux-gnu:$ORIGIN]"
+        ]
+      },
+      "/workspace/build/dist/rocm/lib/libhipdnn_backend.so": {
+        "returncode": 0,
+        "needed": [
+          "libamdhip64.so.7",
+          "libstdc++.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "paths": [
+          "0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN/rocm_sysdeps/lib:$ORIGIN/llvm/lib:$ORIGIN/llvm/lib/x86_64-unknown-linux-gnu:$ORIGIN:/workspace/build/core/clr/dist/lib]"
+        ]
+      }
+    },
+    "libtorch_hip_sha256": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+    "registration_counts": {
+      "CUDA": 1276,
+      "SparseCUDA": 173,
+      "SparseCsrCUDA": 141,
+      "QuantizedCUDA": 40,
+      "CompositeImplicitAutograd": 787,
+      "CompositeExplicitAutograd": 1197
+    },
+    "registered_names": 3520,
+    "registration_warning": "Registration is not gfx1013 coverage; composite/shape/dtype/device checks happen later.",
+    "loaded_maps": [
+      "7f8f83c00000-7f8f83c81000 r--p 00000000 103:03 8298584                   /workspace/build/dist/rocm/lib/libhipdnn_backend.so",
+      "7f8f83c81000-7f8f83e22000 r-xp 00080000 103:03 8298584                   /workspace/build/dist/rocm/lib/libhipdnn_backend.so",
+      "7f8f83e22000-7f8f83e29000 r--p 00220000 103:03 8298584                   /workspace/build/dist/rocm/lib/libhipdnn_backend.so",
+      "7f8f83e29000-7f8f83e2a000 rw-p 00226000 103:03 8298584                   /workspace/build/dist/rocm/lib/libhipdnn_backend.so",
+      "7f8f88800000-7f8f89bf8000 r--p 00000000 103:03 6988892                   /workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+      "7f8f8a097000-7f8f8a241000 r--p 013f8000 103:03 6988892                   /workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+      "7f8f8a241000-7f8f8aef0000 r-xp 015a1000 103:03 6988892                   /workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+      "7f8f8aef0000-7f8f8af93000 r--p 0224f000 103:03 6988892                   /workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+      "7f8f8af93000-7f8f8afa7000 rw-p 022f1000 103:03 6988892                   /workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+      "7f8f8afa7000-7f8f8afa8000 r--p 02305000 103:03 6988892                   /workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+      "7f8f8afa8000-7f8f8afa9000 r--p 031ce000 103:03 6988892                   /workspace/build/dist/rocm/lib/libhiptensor.so.0.1",
+      "7f8fa2c00000-7f8fa2c40000 r-xp 00000000 00:24 16671760                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+      "7f8fa2c40000-7f8fa2e3f000 ---p 00040000 00:24 16671760                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+      "7f8fa2e3f000-7f8fa2e40000 r--p 0003f000 00:24 16671760                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+      "7f8fa2e40000-7f8fa2e41000 rw-p 00040000 00:24 16671760                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+      "7f8fa2e41000-7f8fa2e42000 rw-p 00042000 00:24 16671760                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+      "7f8fa2e42000-7f8fa2e43000 rw-p 00043000 00:24 16671760                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libquadmath-2284e583-a9307bba.so.0.0.0",
+      "7f8fa3000000-7f8fa327c000 r-xp 00000000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa327c000-7f8fa347c000 ---p 0027c000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa347c000-7f8fa347e000 r--p 0027c000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa347e000-7f8fa347f000 rw-p 0027e000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa347f000-7f8fa348b000 rw-p 00282000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa348b000-7f8fa3494000 rw-p 0028e000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa3494000-7f8fa349d000 rw-p 00297000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa349d000-7f8fa34a6000 rw-p 002a0000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa34a6000-7f8fa34af000 rw-p 002a9000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa34af000-7f8fa34b8000 rw-p 002b2000 00:24 16671759                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libgfortran-83c28eba-b4027c22.so.5.0.0",
+      "7f8fa3513000-7f8fa35e3000 r--p 00000000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa35e3000-7f8fa48f9000 r-xp 000d0000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa48f9000-7f8fa4ade000 r--p 013e6000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4ade000-7f8fa4ae6000 r--p 015ca000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4ae6000-7f8fa4af5000 rw-p 015d2000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4afa000-7f8fa4b02000 ---p 015e7000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4b02000-7f8fa4b52000 rw-p 016bd000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4b52000-7f8fa4b8d000 rw-p 0170d000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4b8d000-7f8fa4bc7000 rw-p 01748000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4bc7000-7f8fa4c02000 rw-p 01782000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4c02000-7f8fa4c3c000 rw-p 017bd000 00:24 16671761                   /opt/torch-venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-017048f4.so",
+      "7f8fa4c3c000-7f8fa4c67000 r--p 00000000 00:24 16670340                   /opt/torch-venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+      "7f8fa4c67000-7f8fa5427000 r-xp 0002b000 00:24 16670340                   /opt/torch-venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+      "7f8fa5427000-7f8fa55b8000 r--p 007eb000 00:24 16670340                   /opt/torch-venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+      "7f8fa55b8000-7f8fa55bb000 r--p 0097c000 00:24 16670340                   /opt/torch-venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+      "7f8fa55bb000-7f8fa55de000 rw-p 0097f000 00:24 16670340                   /opt/torch-venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+      "7f8fa55f5000-7f8fa55fb000 rw-p 00a25000 00:24 16670340                   /opt/torch-venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+      "7f8fa55fb000-7f8fa5600000 rw-p 00a2b000 00:24 16670340                   /opt/torch-venv/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+      "7f8fe1908000-7f8fe1a1c000 r--p 00000000 103:03 7117507                   /workspace/build/dist/rocm/lib/host-math/lib/librocm-openblas.so.0.3",
+      "7f8fe1a1c000-7f8fe1a2c000 r-xp 00114000 103:03 7117507                   /workspace/build/dist/rocm/lib/host-math/lib/librocm-openblas.so.0.3",
+      "7f8fe1a2c000-7f8fe1a30000 ---p 00124000 103:03 7117507                   /workspace/build/dist/rocm/lib/host-math/lib/librocm-openblas.so.0.3",
+      "7f8fe1a30000-7f8fe3a0a000 r-xp 00128000 103:03 7117507                   /workspace/build/dist/rocm/lib/host-math/lib/librocm-openblas.so.0.3",
+      "7f8fe3a0a000-7f8fe3bd1000 r--p 02102000 103:03 7117507                   /workspace/build/dist/rocm/lib/host-math/lib/librocm-openblas.so.0.3",
+      "7f8fe3bd1000-7f8fe3bd8000 r--p 022c9000 103:03 7117507                   /workspace/build/dist/rocm/lib/host-math/lib/librocm-openblas.so.0.3",
+      "7f8fe3bd8000-7f8fe3bf5000 rw-p 022d0000 103:03 7117507                   /workspace/build/dist/rocm/lib/host-math/lib/librocm-openblas.so.0.3",
+      "7f8fe3c00000-7f8fe40bf000 r--p 00000000 103:03 9310149                   /workspace/build/dist/rocm/lib/llvm/lib/libLLVM.so.24.0git",
+      "7f8fe40bf000-7f8fe7417000 r-xp 004bf000 103:03 9310149                   /workspace/build/dist/rocm/lib/llvm/lib/libLLVM.so.24.0git",
+      "7f8fe7417000-7f8fe9c85000 r--p 03817000 103:03 9310149                   /workspace/build/dist/rocm/lib/llvm/lib/libLLVM.so.24.0git",
+      "7f8fe9c85000-7f8fe9d3f000 r--p 06084000 103:03 9310149                   /workspace/build/dist/rocm/lib/llvm/lib/libLLVM.so.24.0git",
+      "7f8fe9d3f000-7f8fe9d42000 rw-p 0613e000 103:03 9310149                   /workspace/build/dist/rocm/lib/llvm/lib/libLLVM.so.24.0git",
+      "7f8fe9e00000-7f8fea3be000 r--p 00000000 103:03 9309736                   /workspace/build/dist/rocm/lib/llvm/lib/libclang-cpp.so.24.0git",
+      "7f8fea3be000-7f8fecb8e000 r-xp 005be000 103:03 9309736                   /workspace/build/dist/rocm/lib/llvm/lib/libclang-cpp.so.24.0git",
+      "7f8fecb8e000-7f8fed69a000 r--p 02d8e000 103:03 9309736                   /workspace/build/dist/rocm/lib/llvm/lib/libclang-cpp.so.24.0git",
+      "7f8fed69a000-7f8fed828000 r--p 0389a000 103:03 9309736                   /workspace/build/dist/rocm/lib/llvm/lib/libclang-cpp.so.24.0git",
+      "7f8fed828000-7f8fed835000 rw-p 03a28000 103:03 9309736                   /workspace/build/dist/rocm/lib/llvm/lib/libclang-cpp.so.24.0git",
+      "7f8feda00000-7f8fedb00000 r--p 00000000 103:03 7771546                   /workspace/build/dist/rocm/lib/libtensilelite-host.so.1.0",
+      "7f8fedb00000-7f8fede39000 r-xp 000ff000 103:03 7771546                   /workspace/build/dist/rocm/lib/libtensilelite-host.so.1.0",
+      "7f8fede39000-7f8fede4b000 r--p 00437000 103:03 7771546                   /workspace/build/dist/rocm/lib/libtensilelite-host.so.1.0",
+      "7f8fede4b000-7f8fede4d000 rw-p 00448000 103:03 7771546                   /workspace/build/dist/rocm/lib/libtensilelite-host.so.1.0",
+      "7f8fee000000-7f8fee012000 r--p 00000000 103:03 9319432                   /workspace/build/dist/rocm/lib/host-math/lib/libcholmod.so.5.3.0",
+      "7f8fee012000-7f8fee23b000 r-xp 00012000 103:03 9319432                   /workspace/build/dist/rocm/lib/host-math/lib/libcholmod.so.5.3.0",
+      "7f8fee23b000-7f8fee25f000 r--p 0023b000 103:03 9319432                   /workspace/build/dist/rocm/lib/host-math/lib/libcholmod.so.5.3.0",
+      "7f8fee25f000-7f8fee260000 r--p 0025e000 103:03 9319432                   /workspace/build/dist/rocm/lib/host-math/lib/libcholmod.so.5.3.0",
+      "7f8fee260000-7f8fee261000 rw-p 0025f000 103:03 9319432                   /workspace/build/dist/rocm/lib/host-math/lib/libcholmod.so.5.3.0",
+      "7f8fee400000-7f8feeea8000 r--p 00000000 103:03 7773190                   /workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+      "7f8fefdf3000-7f8ff0648000 r--p 00aa8000 103:03 7773190                   /workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+      "7f8ff0648000-7f8ff3f15000 r-xp 012fc000 103:03 7773190                   /workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+      "7f8ff3f15000-7f8ff3f51000 r--p 04bc8000 103:03 7773190                   /workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+      "7f8ff3f51000-7f8ff3f55000 rw-p 04c03000 103:03 7773190                   /workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+      "7f8ff3f58000-7f8ff3f59000 r--p 04c07000 103:03 7773190                   /workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+      "7f8ff3f59000-7f8ff3f5a000 r--p 05b93000 103:03 7773190                   /workspace/build/dist/rocm/lib/librocsparse.so.1.0",
+      "7f8ff4000000-7f8ff5eaa000 r--p 00000000 103:03 8167262                   /workspace/build/dist/rocm/lib/librocrand.so.1.1",
+      "7f8ff7aa0000-7f8ff7ba3000 r--p 01eaa000 103:03 8167262                   /workspace/build/dist/rocm/lib/librocrand.so.1.1",
+      "7f8ff7ba3000-7f8ff8aea000 r-xp 01fac000 103:03 8167262                   /workspace/build/dist/rocm/lib/librocrand.so.1.1",
+      "7f8ff8aea000-7f8ff8b09000 r--p 02ef2000 103:03 8167262                   /workspace/build/dist/rocm/lib/librocrand.so.1.1",
+      "7f8ff8b09000-7f8ff8b28000 rw-p 02f10000 103:03 8167262                   /workspace/build/dist/rocm/lib/librocrand.so.1.1",
+      "7f8ff8b29000-7f8ff8b2a000 r--p 02f2f000 103:03 8167262                   /workspace/build/dist/rocm/lib/librocrand.so.1.1",
+      "7f8ff8b2a000-7f8ff8b2b000 r--p 03714000 103:03 8167262                   /workspace/build/dist/rocm/lib/librocrand.so.1.1",
+      "7f8ff8c00000-7f8ff8ca4000 r--p 00000000 103:03 7379058                   /workspace/build/dist/rocm/lib/librocfft.so.0.1",
+      "7f8ff8ca7000-7f8ff8df7000 r--p 000a4000 103:03 7379058                   /workspace/build/dist/rocm/lib/librocfft.so.0.1",
+      "7f8ff8df7000-7f8ff9762000 r-xp 001f3000 103:03 7379058                   /workspace/build/dist/rocm/lib/librocfft.so.0.1",
+      "7f8ff9762000-7f8ff976c000 r--p 00b5e000 103:03 7379058                   /workspace/build/dist/rocm/lib/librocfft.so.0.1",
+      "7f8ff976c000-7f8ff9771000 rw-p 00b67000 103:03 7379058                   /workspace/build/dist/rocm/lib/librocfft.so.0.1",
+      "7f8ff9773000-7f8ff9774000 r--p 00b6c000 103:03 7379058                   /workspace/build/dist/rocm/lib/librocfft.so.0.1",
+      "7f8ff9774000-7f8ff9775000 r--p 00c84000 103:03 7379058                   /workspace/build/dist/rocm/lib/librocfft.so.0.1",
+      "7f8ff984a000-7f8ff9877000 r--p 00000000 103:03 7903160                   /workspace/build/dist/rocm/lib/libhsa-amd-aqlprofile64.so.1.0.0",
+      "7f8ff9877000-7f8ff98db000 r-xp 0002c000 103:03 7903160                   /workspace/build/dist/rocm/lib/libhsa-amd-aqlprofile64.so.1.0.0",
+      "7f8ff98db000-7f8ff98e0000 r--p 0008f000 103:03 7903160                   /workspace/build/dist/rocm/lib/libhsa-amd-aqlprofile64.so.1.0.0",
+      "7f8ff98e0000-7f8ff98e2000 rw-p 00093000 103:03 7903160                   /workspace/build/dist/rocm/lib/libhsa-amd-aqlprofile64.so.1.0.0",
+      "7f8ff9c00000-7f8ff9ca2000 r--p 00000000 103:03 7118440                   /workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+      "7f8ff9ca2000-7f8ff9df4000 r-xp 000a1000 103:03 7118440                   /workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+      "7f8ff9df4000-7f8ff9dfe000 r--p 001f2000 103:03 7118440                   /workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+      "7f8ff9dfe000-7f8ffa043000 rw-p 001fb000 103:03 7118440                   /workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+      "7f8ffa0c3000-7f8ffa0cf000 r--p 00000000 103:03 7379428                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_sqlite3.so",
+      "7f8ffa0cf000-7f8ffa1d2000 r-xp 0000c000 103:03 7379428                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_sqlite3.so",
+      "7f8ffa1d2000-7f8ffa1fa000 r--p 0010f000 103:03 7379428                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_sqlite3.so",
+      "7f8ffa1fa000-7f8ffa1fc000 r--p 00137000 103:03 7379428                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_sqlite3.so",
+      "7f8ffa1fc000-7f8ffa200000 rw-p 00139000 103:03 7379428                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_sqlite3.so",
+      "7f8ffa200000-7f8ffa2ba000 r--p 00000000 103:03 9328187                   /workspace/build/dist/rocm/lib/libamd_comgr.so.3.5.0",
+      "7f8ffa2ba000-7f8ffa7d5000 r-xp 000ba000 103:03 9328187                   /workspace/build/dist/rocm/lib/libamd_comgr.so.3.5.0",
+      "7f8ffa7d5000-7f8ffad5e000 r--p 005d5000 103:03 9328187                   /workspace/build/dist/rocm/lib/libamd_comgr.so.3.5.0",
+      "7f8ffad5e000-7f8ffad97000 r--p 00b5d000 103:03 9328187                   /workspace/build/dist/rocm/lib/libamd_comgr.so.3.5.0",
+      "7f8ffad97000-7f8ffad9b000 rw-p 00b96000 103:03 9328187                   /workspace/build/dist/rocm/lib/libamd_comgr.so.3.5.0",
+      "7f8ffada2000-7f8ffada9000 r--p 00000000 103:03 8419672                   /workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+      "7f8ffadcf000-7f8ffadd1000 r--p 00007000 103:03 8419672                   /workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+      "7f8ffadd1000-7f8ffaddb000 r-xp 00008000 103:03 8419672                   /workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+      "7f8ffaddb000-7f8ffaddc000 r--p 00011000 103:03 8419672                   /workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+      "7f8ffaddc000-7f8ffadde000 rw-p 00011000 103:03 8419672                   /workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+      "7f8ffadde000-7f8ffaddf000 r--p 00013000 103:03 8419672                   /workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+      "7f8ffaddf000-7f8ffade0000 r--p 0001b000 103:03 8419672                   /workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+      "7f8ffae00000-7f8ffafee000 r--p 00000000 103:03 7773189                   /workspace/build/dist/rocm/lib/librocblas.so.5.8",
+      "7f8ffb470000-7f8ffb6c0000 r--p 001ee000 103:03 7773189                   /workspace/build/dist/rocm/lib/librocblas.so.5.8",
+      "7f8ffb6c0000-7f8ffc68d000 r-xp 0043d000 103:03 7773189                   /workspace/build/dist/rocm/lib/librocblas.so.5.8",
+      "7f8ffc68d000-7f8ffc6ad000 r--p 01409000 103:03 7773189                   /workspace/build/dist/rocm/lib/librocblas.so.5.8",
+      "7f8ffc6ad000-7f8ffc6b2000 rw-p 01428000 103:03 7773189                   /workspace/build/dist/rocm/lib/librocblas.so.5.8",
+      "7f8ffc6d1000-7f8ffc6d2000 r--p 0142d000 103:03 7773189                   /workspace/build/dist/rocm/lib/librocblas.so.5.8",
+      "7f8ffc6d2000-7f8ffc6d3000 r--p 019d2000 103:03 7773189                   /workspace/build/dist/rocm/lib/librocblas.so.5.8",
+      "7f8ffc71a000-7f8ffc71e000 r--p 00000000 00:24 16671208                   /opt/torch-venv/lib/python3.12/site-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so",
+      "7f8ffc71e000-7f8ffc742000 r-xp 00004000 00:24 16671208                   /opt/torch-venv/lib/python3.12/site-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so",
+      "7f8ffc742000-7f8ffc747000 r--p 00028000 00:24 16671208                   /opt/torch-venv/lib/python3.12/site-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so",
+      "7f8ffc747000-7f8ffc748000 r--p 0002d000 00:24 16671208                   /opt/torch-venv/lib/python3.12/site-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so",
+      "7f8ffc748000-7f8ffc749000 rw-p 0002e000 00:24 16671208                   /opt/torch-venv/lib/python3.12/site-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so",
+      "7f8ffc749000-7f8ffc74b000 rw-p 00036000 00:24 16671208                   /opt/torch-venv/lib/python3.12/site-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so",
+      "7f8ffc74b000-7f8ffc74c000 rw-p 00038000 00:24 16671208                   /opt/torch-venv/lib/python3.12/site-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so",
+      "7f8ffc74c000-7f8ffc750000 r--p 00000000 103:03 7380673                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_zstd.so.1.5.7",
+      "7f8ffc750000-7f8ffc7ef000 r-xp 00004000 103:03 7380673                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_zstd.so.1.5.7",
+      "7f8ffc7ef000-7f8ffc7fe000 r--p 000a3000 103:03 7380673                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_zstd.so.1.5.7",
+      "7f8ffc7fe000-7f8ffc7ff000 r--p 000b1000 103:03 7380673                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_zstd.so.1.5.7",
+      "7f8ffc7ff000-7f8ffc800000 rw-p 000b2000 103:03 7380673                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_zstd.so.1.5.7",
+      "7f8ffc800000-7f8ffca31000 r--p 00000000 103:03 8164438                   /workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+      "7f8ffe0ab000-7f8ffe3be000 r--p 00231000 103:03 8164438                   /workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+      "7f8ffe3be000-7f8fff4d0000 r-xp 00543000 103:03 8164438                   /workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+      "7f8fff4d0000-7f8fff4f8000 r--p 01654000 103:03 8164438                   /workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+      "7f8fff4f8000-7f8fff4fd000 rw-p 0167b000 103:03 8164438                   /workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+      "7f8fff4fe000-7f8fff4ff000 r--p 01680000 103:03 8164438                   /workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+      "7f8fff4ff000-7f8fff500000 r--p 01dfd000 103:03 8164438                   /workspace/build/dist/rocm/lib/librocsolver.so.0.13",
+      "7f8fff503000-7f8fff507000 r--p 00000000 103:03 9308872                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libarcher.so",
+      "7f8fff507000-7f8fff50c000 r-xp 00003000 103:03 9308872                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libarcher.so",
+      "7f8fff50c000-7f8fff50d000 r--p 00007000 103:03 9308872                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libarcher.so",
+      "7f8fff50d000-7f8fff50e000 rw-p 00007000 103:03 9308872                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libarcher.so",
+      "7f8fff50f000-7f8fff510000 r--p 00000000 103:03 9319427                   /workspace/build/dist/rocm/lib/host-math/lib/libccolamd.so.3.3.4",
+      "7f8fff510000-7f8fff51a000 r-xp 00001000 103:03 9319427                   /workspace/build/dist/rocm/lib/host-math/lib/libccolamd.so.3.3.4",
+      "7f8fff51a000-7f8fff51c000 r--p 0000b000 103:03 9319427                   /workspace/build/dist/rocm/lib/host-math/lib/libccolamd.so.3.3.4",
+      "7f8fff51c000-7f8fff51d000 r--p 0000c000 103:03 9319427                   /workspace/build/dist/rocm/lib/host-math/lib/libccolamd.so.3.3.4",
+      "7f8fff51d000-7f8fff51e000 rw-p 0000d000 103:03 9319427                   /workspace/build/dist/rocm/lib/host-math/lib/libccolamd.so.3.3.4",
+      "7f8fff51e000-7f8fff51f000 r--p 00000000 103:03 9319437                   /workspace/build/dist/rocm/lib/host-math/lib/libcamd.so.3.3.3",
+      "7f8fff51f000-7f8fff528000 r-xp 00001000 103:03 9319437                   /workspace/build/dist/rocm/lib/host-math/lib/libcamd.so.3.3.3",
+      "7f8fff528000-7f8fff529000 r--p 0000a000 103:03 9319437                   /workspace/build/dist/rocm/lib/host-math/lib/libcamd.so.3.3.3",
+      "7f8fff529000-7f8fff52a000 r--p 0000b000 103:03 9319437                   /workspace/build/dist/rocm/lib/host-math/lib/libcamd.so.3.3.3",
+      "7f8fff52a000-7f8fff52b000 rw-p 0000c000 103:03 9319437                   /workspace/build/dist/rocm/lib/host-math/lib/libcamd.so.3.3.3",
+      "7f8fff52b000-7f8fff52c000 r--p 00000000 103:03 9319425                   /workspace/build/dist/rocm/lib/host-math/lib/libcolamd.so.3.3.4",
+      "7f8fff52c000-7f8fff532000 r-xp 00001000 103:03 9319425                   /workspace/build/dist/rocm/lib/host-math/lib/libcolamd.so.3.3.4",
+      "7f8fff532000-7f8fff533000 r--p 00007000 103:03 9319425                   /workspace/build/dist/rocm/lib/host-math/lib/libcolamd.so.3.3.4",
+      "7f8fff533000-7f8fff534000 r--p 00007000 103:03 9319425                   /workspace/build/dist/rocm/lib/host-math/lib/libcolamd.so.3.3.4",
+      "7f8fff534000-7f8fff535000 rw-p 00008000 103:03 9319425                   /workspace/build/dist/rocm/lib/host-math/lib/libcolamd.so.3.3.4",
+      "7f8fff535000-7f8fff546000 r--p 00000000 103:03 7771526                   /workspace/build/dist/rocm/lib/liborigami.so.1.0",
+      "7f8fff546000-7f8fff57f000 r-xp 00010000 103:03 7771526                   /workspace/build/dist/rocm/lib/liborigami.so.1.0",
+      "7f8fff57f000-7f8fff580000 r--p 00048000 103:03 7771526                   /workspace/build/dist/rocm/lib/liborigami.so.1.0",
+      "7f8fff580000-7f8fff582000 rw-p 00048000 103:03 7771526                   /workspace/build/dist/rocm/lib/liborigami.so.1.0",
+      "7f8fff582000-7f8fff5ad000 r--p 00000000 103:03 7773179                   /workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+      "7f8fff5e1000-7f8fff5f7000 r--p 0002b000 103:03 7773179                   /workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+      "7f8fff5f7000-7f8fff71b000 r-xp 00040000 103:03 7773179                   /workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+      "7f8fff71b000-7f8fff71d000 r--p 00163000 103:03 7773179                   /workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+      "7f8fff71d000-7f8fff71f000 rw-p 00164000 103:03 7773179                   /workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+      "7f8fff71f000-7f8fff720000 r--p 00166000 103:03 7773179                   /workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+      "7f8fff720000-7f8fff721000 r--p 001b2000 103:03 7773179                   /workspace/build/dist/rocm/lib/libhipblaslt.so.1.5",
+      "7f8fff721000-7f8fff75f000 r--p 00000000 103:03 8419671                   /workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+      "7f8fff75f000-7f8fff8e5000 r-xp 0003d000 103:03 8419671                   /workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+      "7f8fff8e5000-7f8fff8e7000 r--p 001c2000 103:03 8419671                   /workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+      "7f8fff8e7000-7f8fff8e9000 rw-p 001c3000 103:03 8419671                   /workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+      "7f8fff8eb000-7f8fff943000 r--p 00000000 103:03 7771536                   /workspace/build/dist/rocm/lib/libhipblas.so.3.8",
+      "7f8fff943000-7f8fff99b000 r-xp 00057000 103:03 7771536                   /workspace/build/dist/rocm/lib/libhipblas.so.3.8",
+      "7f8fff99b000-7f8fff99d000 r--p 000ae000 103:03 7771536                   /workspace/build/dist/rocm/lib/libhipblas.so.3.8",
+      "7f8fff99d000-7f8fff9a0000 rw-p 000af000 103:03 7771536                   /workspace/build/dist/rocm/lib/libhipblas.so.3.8",
+      "7f9002000000-7f9002121000 r--p 00000000 103:03 7903122                   /workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+      "7f9002121000-7f900262e000 r-xp 00120000 103:03 7903122                   /workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+      "7f900262e000-7f9002639000 r--p 0062c000 103:03 7903122                   /workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+      "7f9002639000-7f900263c000 rw-p 00636000 103:03 7903122                   /workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000",
+      "7f90026d1000-7f90026d2000 r--p 00000000 103:03 9319442                   /workspace/build/dist/rocm/lib/host-math/lib/libamd.so.3.3.3",
+      "7f90026d2000-7f90026da000 r-xp 00001000 103:03 9319442                   /workspace/build/dist/rocm/lib/host-math/lib/libamd.so.3.3.3",
+      "7f90026da000-7f90026db000 r--p 00009000 103:03 9319442                   /workspace/build/dist/rocm/lib/host-math/lib/libamd.so.3.3.3",
+      "7f90026db000-7f90026dc000 r--p 0000a000 103:03 9319442                   /workspace/build/dist/rocm/lib/host-math/lib/libamd.so.3.3.3",
+      "7f90026dc000-7f90026dd000 rw-p 0000b000 103:03 9319442                   /workspace/build/dist/rocm/lib/host-math/lib/libamd.so.3.3.3",
+      "7f90026dd000-7f90026e1000 r--p 00000000 103:03 7379141                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_numa.so.1",
+      "7f90026e1000-7f90026e8000 r-xp 00004000 103:03 7379141                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_numa.so.1",
+      "7f90026e8000-7f90026eb000 r--p 0000b000 103:03 7379141                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_numa.so.1",
+      "7f90026eb000-7f90026ec000 r--p 0000d000 103:03 7379141                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_numa.so.1",
+      "7f90026ec000-7f90026ed000 rw-p 0000e000 103:03 7379141                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_numa.so.1",
+      "7f90026ed000-7f90027da000 r--p 00000000 103:03 7903116                   /workspace/build/dist/rocm/lib/libhiprtc.so.7.17.0-0000000",
+      "7f90027da000-7f90027fc000 r-xp 000ec000 103:03 7903116                   /workspace/build/dist/rocm/lib/libhiprtc.so.7.17.0-0000000",
+      "7f90027fc000-7f90027fe000 r--p 0010d000 103:03 7903116                   /workspace/build/dist/rocm/lib/libhiprtc.so.7.17.0-0000000",
+      "7f90027fe000-7f9002800000 rw-p 0010e000 103:03 7903116                   /workspace/build/dist/rocm/lib/libhiprtc.so.7.17.0-0000000",
+      "7f9002800000-7f901dd05000 r--p 00000000 103:03 8036545                   /workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+      "7f901eab4000-7f901ecc3000 r--p 1b505000 103:03 8036545                   /workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+      "7f901ecc3000-7f902030b000 r-xp 1b713000 103:03 8036545                   /workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+      "7f902030b000-7f902033e000 r--p 1cd5a000 103:03 8036545                   /workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+      "7f902033e000-7f9020352000 rw-p 1cd8c000 103:03 8036545                   /workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+      "7f9020359000-7f902035a000 r--p 1cda0000 103:03 8036545                   /workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+      "7f902035a000-7f902035b000 r--p 1cda2000 103:03 8036545                   /workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+      "7f9020364000-7f902036b000 r--p 00000000 103:03 7250199                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm_amdgpu.so.1",
+      "7f902036b000-7f9020370000 r-xp 00007000 103:03 7250199                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm_amdgpu.so.1",
+      "7f9020370000-7f9020374000 r--p 0000c000 103:03 7250199                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm_amdgpu.so.1",
+      "7f9020374000-7f9020378000 r--p 0000f000 103:03 7250199                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm_amdgpu.so.1",
+      "7f9020378000-7f9020379000 rw-p 00013000 103:03 7250199                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm_amdgpu.so.1",
+      "7f9020379000-7f90203a4000 r--p 00000000 103:03 8953309                   /workspace/pytorch-work/torch/lib/libc10.so",
+      "7f90203a4000-7f902046e000 r-xp 0002b000 103:03 8953309                   /workspace/pytorch-work/torch/lib/libc10.so",
+      "7f902046e000-7f90204a3000 r--p 000f5000 103:03 8953309                   /workspace/pytorch-work/torch/lib/libc10.so",
+      "7f90204a3000-7f90204a6000 r--p 0012a000 103:03 8953309                   /workspace/pytorch-work/torch/lib/libc10.so",
+      "7f90204a6000-7f90204ad000 rw-p 0012d000 103:03 8953309                   /workspace/pytorch-work/torch/lib/libc10.so",
+      "7f90204af000-7f90204b9000 r--p 00000000 103:03 8953265                   /workspace/pytorch-work/torch/lib/libc10_hip.so",
+      "7f90204b9000-7f9020512000 r-xp 0000a000 103:03 8953265                   /workspace/pytorch-work/torch/lib/libc10_hip.so",
+      "7f9020512000-7f9020526000 r--p 00063000 103:03 8953265                   /workspace/pytorch-work/torch/lib/libc10_hip.so",
+      "7f9020526000-7f9020527000 r--p 00076000 103:03 8953265                   /workspace/pytorch-work/torch/lib/libc10_hip.so",
+      "7f9020527000-7f9020528000 rw-p 00077000 103:03 8953265                   /workspace/pytorch-work/torch/lib/libc10_hip.so",
+      "7f9020600000-7f9020dbf000 r--p 00000000 103:03 8956242                   /workspace/pytorch-work/torch/lib/libtorch_hip.so",
+      "7f9020dbf000-7f9023602000 r-xp 007bf000 103:03 8956242                   /workspace/pytorch-work/torch/lib/libtorch_hip.so",
+      "7f9023602000-7f90273bf000 r--p 03002000 103:03 8956242                   /workspace/pytorch-work/torch/lib/libtorch_hip.so",
+      "7f90273bf000-7f9027471000 r--p 06dbf000 103:03 8956242                   /workspace/pytorch-work/torch/lib/libtorch_hip.so",
+      "7f9027471000-7f902748b000 rw-p 06e71000 103:03 8956242                   /workspace/pytorch-work/torch/lib/libtorch_hip.so",
+      "7f90274e2000-7f90274e7000 r--p 00000000 103:03 7250188                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm.so.2",
+      "7f90274e7000-7f90274f4000 r-xp 00005000 103:03 7250188                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm.so.2",
+      "7f90274f4000-7f90274f9000 r--p 00012000 103:03 7250188                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm.so.2",
+      "7f90274f9000-7f90274fa000 r--p 00016000 103:03 7250188                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm.so.2",
+      "7f90274fa000-7f90274fb000 rw-p 00017000 103:03 7250188                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_drm.so.2",
+      "7f90274fb000-7f9027542000 r--p 00000000 103:03 9308827                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libomp.so",
+      "7f9027542000-7f90275ef000 r-xp 00046000 103:03 9308827                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libomp.so",
+      "7f90275ef000-7f90275f0000 r--p 000f2000 103:03 9308827                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libomp.so",
+      "7f90275f0000-7f90275f7000 rw-p 000f2000 103:03 9308827                   /workspace/build/dist/rocm/lib/llvm/lib/x86_64-unknown-linux-gnu/libomp.so",
+      "7f9027600000-7f9028226000 r--p 00000000 103:03 8953478                   /workspace/pytorch-work/torch/lib/libtorch_cpu.so",
+      "7f9028226000-7f9033537000 r-xp 00c26000 103:03 8953478                   /workspace/pytorch-work/torch/lib/libtorch_cpu.so",
+      "7f9033537000-7f90355dd000 r--p 0bf37000 103:03 8953478                   /workspace/pytorch-work/torch/lib/libtorch_cpu.so",
+      "7f90355dd000-7f9035836000 r--p 0dfdd000 103:03 8953478                   /workspace/pytorch-work/torch/lib/libtorch_cpu.so",
+      "7f9035836000-7f903586b000 rw-p 0e236000 103:03 8953478                   /workspace/pytorch-work/torch/lib/libtorch_cpu.so",
+      "7f903595c000-7f9035960000 r--p 00000000 103:03 7250152                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_elf.so.1",
+      "7f9035960000-7f9035972000 r-xp 00004000 103:03 7250152                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_elf.so.1",
+      "7f9035972000-7f9035977000 r--p 00016000 103:03 7250152                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_elf.so.1",
+      "7f9035977000-7f9035978000 r--p 0001a000 103:03 7250152                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_elf.so.1",
+      "7f9035978000-7f9035979000 rw-p 0001b000 103:03 7250152                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_elf.so.1",
+      "7f9035979000-7f9035987000 r--p 00000000 103:03 7379859                   /workspace/build/dist/rocm/lib/librocprofiler-register.so.0.6.0",
+      "7f9035987000-7f90359d1000 r-xp 0000e000 103:03 7379859                   /workspace/build/dist/rocm/lib/librocprofiler-register.so.0.6.0",
+      "7f90359d1000-7f90359e2000 r--p 00058000 103:03 7379859                   /workspace/build/dist/rocm/lib/librocprofiler-register.so.0.6.0",
+      "7f90359e2000-7f90359e3000 r--p 00069000 103:03 7379859                   /workspace/build/dist/rocm/lib/librocprofiler-register.so.0.6.0",
+      "7f90359e3000-7f90359e4000 rw-p 0006a000 103:03 7379859                   /workspace/build/dist/rocm/lib/librocprofiler-register.so.0.6.0",
+      "7f9035a00000-7f9035b7b000 r--p 00000000 103:03 8953462                   /workspace/pytorch-work/torch/lib/libtorch_python.so",
+      "7f9035b7b000-7f9036a1b000 r-xp 0017b000 103:03 8953462                   /workspace/pytorch-work/torch/lib/libtorch_python.so",
+      "7f9036a1b000-7f9036e39000 r--p 0101b000 103:03 8953462                   /workspace/pytorch-work/torch/lib/libtorch_python.so",
+      "7f9036e39000-7f9036e5a000 r--p 01438000 103:03 8953462                   /workspace/pytorch-work/torch/lib/libtorch_python.so",
+      "7f9036e5a000-7f9036ec1000 rw-p 01459000 103:03 8953462                   /workspace/pytorch-work/torch/lib/libtorch_python.so",
+      "7f9036f36000-7f9036f37000 r--p 00000000 103:03 9319440                   /workspace/build/dist/rocm/lib/host-math/lib/libsuitesparseconfig.so.7.8.3",
+      "7f9036f37000-7f9036f38000 r-xp 00001000 103:03 9319440                   /workspace/build/dist/rocm/lib/host-math/lib/libsuitesparseconfig.so.7.8.3",
+      "7f9036f38000-7f9036f39000 r--p 00002000 103:03 9319440                   /workspace/build/dist/rocm/lib/host-math/lib/libsuitesparseconfig.so.7.8.3",
+      "7f9036f39000-7f9036f3a000 r--p 00002000 103:03 9319440                   /workspace/build/dist/rocm/lib/host-math/lib/libsuitesparseconfig.so.7.8.3",
+      "7f9036f3a000-7f9036f3b000 rw-p 00003000 103:03 9319440                   /workspace/build/dist/rocm/lib/host-math/lib/libsuitesparseconfig.so.7.8.3",
+      "7f9036f3b000-7f9036f3d000 r--p 00000000 103:03 7380588                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_z.so.1.3.2",
+      "7f9036f3d000-7f9036f4e000 r-xp 00002000 103:03 7380588                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_z.so.1.3.2",
+      "7f9036f4e000-7f9036f54000 r--p 00013000 103:03 7380588                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_z.so.1.3.2",
+      "7f9036f54000-7f9036f55000 r--p 00018000 103:03 7380588                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_z.so.1.3.2",
+      "7f9036f55000-7f9036f56000 rw-p 00019000 103:03 7380588                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_z.so.1.3.2",
+      "7f9036f64000-7f9036f68000 r--p 00000000 103:03 6988148                   /workspace/build/dist/rocm/lib/librocm_kpack.so.0.1.0",
+      "7f9036f68000-7f9036f76000 r-xp 00004000 103:03 6988148                   /workspace/build/dist/rocm/lib/librocm_kpack.so.0.1.0",
+      "7f9036f76000-7f9036f7a000 r--p 00012000 103:03 6988148                   /workspace/build/dist/rocm/lib/librocm_kpack.so.0.1.0",
+      "7f9036f7a000-7f9036f7b000 r--p 00015000 103:03 6988148                   /workspace/build/dist/rocm/lib/librocm_kpack.so.0.1.0",
+      "7f9036f7b000-7f9036f7c000 rw-p 00016000 103:03 6988148                   /workspace/build/dist/rocm/lib/librocm_kpack.so.0.1.0",
+      "7f9036f7c000-7f9036f7e000 r--p 00000000 103:03 7250126                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_bz2.so",
+      "7f9036f7e000-7f9036f8f000 r-xp 00002000 103:03 7250126                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_bz2.so",
+      "7f9036f8f000-7f9036f91000 r--p 00013000 103:03 7250126                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_bz2.so",
+      "7f9036f91000-7f9036f92000 r--p 00014000 103:03 7250126                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_bz2.so",
+      "7f9036f92000-7f9036f93000 rw-p 00015000 103:03 7250126                   /workspace/build/dist/rocm/lib/rocm_sysdeps/lib/librocm_sysdeps_bz2.so",
+      "7f9036f93000-7f9036fb2000 r--p 00000000 103:03 7772129                   /workspace/build/dist/rocm/lib/libhipsparse.so.4.8.0",
+      "7f9036fb2000-7f9036fd1000 r-xp 0001e000 103:03 7772129                   /workspace/build/dist/rocm/lib/libhipsparse.so.4.8.0",
+      "7f9036fd1000-7f9036fd2000 r--p 0003c000 103:03 7772129                   /workspace/build/dist/rocm/lib/libhipsparse.so.4.8.0",
+      "7f9036fd2000-7f9036fd4000 rw-p 0003c000 103:03 7772129                   /workspace/build/dist/rocm/lib/libhipsparse.so.4.8.0",
+      "7f9037204000-7f9037206000 r--p 00000000 103:03 8165852                   /workspace/build/dist/rocm/lib/libhiprand.so.1.1",
+      "7f9037206000-7f9037207000 ---p 00002000 103:03 8165852                   /workspace/build/dist/rocm/lib/libhiprand.so.1.1",
+      "7f9037207000-7f9037208000 r-xp 00002000 103:03 8165852                   /workspace/build/dist/rocm/lib/libhiprand.so.1.1",
+      "7f9037208000-7f9037209000 r--p 00002000 103:03 8165852                   /workspace/build/dist/rocm/lib/libhiprand.so.1.1",
+      "7f9037209000-7f903720a000 rw-p 00002000 103:03 8165852                   /workspace/build/dist/rocm/lib/libhiprand.so.1.1",
+      "7f903720a000-7f9037214000 r--p 00000000 103:03 7379545                   /workspace/build/dist/rocm/lib/libhipfft.so.0.1",
+      "7f9037214000-7f9037228000 r-xp 00009000 103:03 7379545                   /workspace/build/dist/rocm/lib/libhipfft.so.0.1",
+      "7f9037228000-7f9037229000 r--p 0001c000 103:03 7379545                   /workspace/build/dist/rocm/lib/libhipfft.so.0.1",
+      "7f9037229000-7f903722a000 rw-p 0001c000 103:03 7379545                   /workspace/build/dist/rocm/lib/libhipfft.so.0.1",
+      "7f903732d000-7f903732e000 r--p 00000000 103:03 8953457                   /workspace/pytorch-work/torch/lib/libcaffe2_nvrtc.so",
+      "7f903732e000-7f903732f000 r-xp 00001000 103:03 8953457                   /workspace/pytorch-work/torch/lib/libcaffe2_nvrtc.so",
+      "7f903732f000-7f9037330000 r--p 00002000 103:03 8953457                   /workspace/pytorch-work/torch/lib/libcaffe2_nvrtc.so",
+      "7f9037330000-7f9037331000 r--p 00002000 103:03 8953457                   /workspace/pytorch-work/torch/lib/libcaffe2_nvrtc.so",
+      "7f9037331000-7f9037332000 rw-p 00003000 103:03 8953457                   /workspace/pytorch-work/torch/lib/libcaffe2_nvrtc.so",
+      "7f9037332000-7f9037335000 r--p 00000000 103:03 8953463                   /workspace/pytorch-work/torch/lib/libshm.so",
+      "7f9037335000-7f903733a000 r-xp 00003000 103:03 8953463                   /workspace/pytorch-work/torch/lib/libshm.so",
+      "7f903733a000-7f903733b000 r--p 00008000 103:03 8953463                   /workspace/pytorch-work/torch/lib/libshm.so",
+      "7f903733b000-7f903733c000 r--p 00009000 103:03 8953463                   /workspace/pytorch-work/torch/lib/libshm.so",
+      "7f903733c000-7f903733d000 rw-p 0000a000 103:03 8953463                   /workspace/pytorch-work/torch/lib/libshm.so",
+      "7f903733d000-7f903733e000 r--p 00000000 103:03 8953477                   /workspace/pytorch-work/torch/lib/libtorch.so",
+      "7f903733e000-7f903733f000 r-xp 00001000 103:03 8953477                   /workspace/pytorch-work/torch/lib/libtorch.so",
+      "7f903733f000-7f9037340000 r--p 00002000 103:03 8953477                   /workspace/pytorch-work/torch/lib/libtorch.so",
+      "7f9037340000-7f9037341000 r--p 00002000 103:03 8953477                   /workspace/pytorch-work/torch/lib/libtorch.so",
+      "7f9037341000-7f9037342000 rw-p 00003000 103:03 8953477                   /workspace/pytorch-work/torch/lib/libtorch.so",
+      "7f9037342000-7f9037343000 r--p 00000000 103:03 8953464                   /workspace/pytorch-work/torch/_C.cpython-312-x86_64-linux-gnu.so",
+      "7f9037343000-7f9037344000 r-xp 00001000 103:03 8953464                   /workspace/pytorch-work/torch/_C.cpython-312-x86_64-linux-gnu.so",
+      "7f9037344000-7f9037345000 r--p 00002000 103:03 8953464                   /workspace/pytorch-work/torch/_C.cpython-312-x86_64-linux-gnu.so",
+      "7f9037345000-7f9037346000 r--p 00002000 103:03 8953464                   /workspace/pytorch-work/torch/_C.cpython-312-x86_64-linux-gnu.so",
+      "7f9037346000-7f9037347000 rw-p 00003000 103:03 8953464                   /workspace/pytorch-work/torch/_C.cpython-312-x86_64-linux-gnu.so",
+      "7f9037347000-7f9037348000 r--p 00000000 103:03 8953486                   /workspace/pytorch-work/torch/lib/libtorch_global_deps.so",
+      "7f9037348000-7f9037349000 r-xp 00001000 103:03 8953486                   /workspace/pytorch-work/torch/lib/libtorch_global_deps.so",
+      "7f9037349000-7f903734a000 r--p 00002000 103:03 8953486                   /workspace/pytorch-work/torch/lib/libtorch_global_deps.so",
+      "7f903734a000-7f903734b000 r--p 00002000 103:03 8953486                   /workspace/pytorch-work/torch/lib/libtorch_global_deps.so",
+      "7f903734b000-7f903734c000 rw-p 00003000 103:03 8953486                   /workspace/pytorch-work/torch/lib/libtorch_global_deps.so",
+      "7f9037919000-7f903791a000 r--p 00000000 103:03 8036706                   /workspace/build/dist/rocm/lib/libroctx64.so.4.1.0",
+      "7f903791a000-7f903791b000 r-xp 00000000 103:03 8036706                   /workspace/build/dist/rocm/lib/libroctx64.so.4.1.0",
+      "7f903791b000-7f903791c000 r--p 00000000 103:03 8036706                   /workspace/build/dist/rocm/lib/libroctx64.so.4.1.0",
+      "7f903791c000-7f903791d000 rw-p 00000000 103:03 8036706                   /workspace/build/dist/rocm/lib/libroctx64.so.4.1.0"
+    ]
+  },
+  "probes": [
+    {
+      "case": "gemm-f32",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.366281924905735e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.266647650001687
+    },
+    {
+      "case": "gemm-f64",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 3.469446951953614e-17,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2167059070052346
+    },
+    {
+      "case": "gemm-f16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.00012028450146317482,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2165093530056765
+    },
+    {
+      "case": "gemm-bf16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0009437799453735352,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.216807639997569
+    },
+    {
+      "case": "gemm-lt",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.255429428279278e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2162345920005464
+    },
+    {
+      "case": "gemm-int8",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "self.size(0) needs to be greater than 16, but got 16",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 325, in probe\n    out = torch._int_mm(a.cuda(), b.cuda()).cpu()\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: self.size(0) needs to be greater than 16, but got 16\n",
+      "returncode": 0,
+      "seconds": 1.7656434450036613
+    },
+    {
+      "case": "scaled-fp8",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm MI300+",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 331, in probe\n    out = torch._scaled_mm(\n          ^^^^^^^^^^^^^^^^^\nRuntimeError: torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm MI300+\n",
+      "returncode": 0,
+      "seconds": 1.8159053880008287
+    },
+    {
+      "case": "sparse-lt",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "hipSPARSELt not supported on your machine.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 345, in probe\n    packed = torch._cslt_compress(a)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hipSPARSELt not supported on your machine.\n",
+      "returncode": 0,
+      "seconds": 1.7657067600011942
+    },
+    {
+      "case": "conv1d",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.3162307244130034e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2665927650014055
+    },
+    {
+      "case": "conv2d",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 5.054454838004929e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.266699909007002
+    },
+    {
+      "case": "conv3d",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.680449221996838e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.216390057001263
+    },
+    {
+      "case": "conv2d-f16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.00021951133385300636,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2673823129953234
+    },
+    {
+      "case": "conv2d-bf16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.00021951133385300636,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2668391999977757
+    },
+    {
+      "case": "depthwise-bf16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0009370831323824158,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 12.530814279001788
+    },
+    {
+      "case": "conv-transpose",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.1161319418983027e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 3.7687872999958927
+    },
+    {
+      "case": "batchnorm",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.8845607502603343e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.217089631994895
+    },
+    {
+      "case": "layernorm",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.5687755134693475e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2171423679974396
+    },
+    {
+      "case": "groupnorm",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.0367318898095732e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2170805080022546
+    },
+    {
+      "case": "pool-resize",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.7463903076729856e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.217342258998542
+    },
+    {
+      "case": "embedding",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.3674188579971087
+    },
+    {
+      "case": "loss-ce",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.023913957595937e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2672476189982262
+    },
+    {
+      "case": "loss-ctc",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.3836072909612085e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 3.5187596710020443
+    },
+    {
+      "case": "lstm",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "miopenStatusUnknownError",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 443, in probe\n    yg.sum().backward()\n  File \"/workspace/pytorch-work/torch/_tensor.py\", line 623, in backward\n    torch.autograd.backward(\n  File \"/workspace/pytorch-work/torch/autograd/__init__.py\", line 395, in backward\n    _engine_run_backward(\n  File \"/workspace/pytorch-work/torch/autograd/graph.py\", line 979, in _engine_run_backward\n    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n",
+      "returncode": 0,
+      "seconds": 7.62193426900194
+    },
+    {
+      "case": "fft-f32",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 9.647948684410323e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 6.671805885001959
+    },
+    {
+      "case": "fft-f64",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 6.672225384994817
+    },
+    {
+      "case": "fft-f16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0002944630705821183,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 9.1243542440061
+    },
+    {
+      "case": "fft-bf16",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "Unsupported dtype BFloat16",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 458, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 282, in check\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 459, in <lambda>\n    lambda a: torch.fft.rfft2(a).abs().square().mean(),\n              ^^^^^^^^^^^^^^^^^^\nRuntimeError: Unsupported dtype BFloat16\n",
+      "returncode": 0,
+      "seconds": 1.7659662920050323
+    },
+    {
+      "case": "linalg-svd",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.6861201546092275e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.4172017739983858
+    },
+    {
+      "case": "linalg-lstsq",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 1.9660808309999993
+    },
+    {
+      "case": "linalg-solve",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.4924047759575814e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.3166034019959625
+    },
+    {
+      "case": "sparse-csr",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.066758248001861
+    },
+    {
+      "case": "sparse-csc",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.3172389320025104
+    },
+    {
+      "case": "sparse-bsr",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.1167246859986335
+    },
+    {
+      "case": "sparse-solve",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 482, in probe\n    out = torch.sparse.spsolve(a.cuda().to_sparse_csr(), b[:, 0].cuda())\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build.\n",
+      "returncode": 0,
+      "seconds": 2.0169424310006434
+    },
+    {
+      "case": "rng",
+      "status": "passed",
+      "details": {
+        "exact_rng_replay": true
+      },
+      "returncode": 0,
+      "seconds": 1.8658677249986795
+    },
+    {
+      "case": "sdpa-math",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.3794457309757036e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.4167782009972143
+    },
+    {
+      "case": "sdpa-efficient",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "No viable backend for scaled_dot_product_attention was found. This is likely due to turning off both the math kernel and the fused kernels.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 520, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 281, in check\n    expected = op(*cpu)\n               ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 521, in <lambda>\n    lambda a, b, c: op(a, b, c, is_causal=True),\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No viable backend for scaled_dot_product_attention was found. This is likely due to turning off both the math kernel and the fused kernels.\n",
+      "returncode": 0,
+      "seconds": 1.7159734969973215
+    },
+    {
+      "case": "sdpa-flash",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "No available kernel. Aborting execution.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 520, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 282, in check\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 521, in <lambda>\n    lambda a, b, c: op(a, b, c, is_causal=True),\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n",
+      "returncode": 0,
+      "seconds": 1.766322477000358
+    },
+    {
+      "case": "sdpa-tiled-head256",
+      "status": "error",
+      "exception": "ValueError",
+      "error": "Only FP32/FP16/BF16 Q/K/V are supported",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 520, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 281, in check\n    expected = op(*cpu)\n               ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 521, in <lambda>\n    lambda a, b, c: op(a, b, c, is_causal=True),\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pytorch-work/torch/nn/attention/_gfx1013.py\", line 216, in scaled_dot_product_attention\n    raise ValueError(\"Only FP32/FP16/BF16 Q/K/V are supported\")\nValueError: Only FP32/FP16/BF16 Q/K/V are supported\n",
+      "returncode": 0,
+      "seconds": 1.8161172670006636
+    },
+    {
+      "case": "adamw-fused",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.8671751379952184
+    },
+    {
+      "case": "amp",
+      "status": "error",
+      "exception": "AssertionError",
+      "error": "",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 540, in probe\n    assert loss.dtype == torch.float16\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "returncode": 0,
+      "seconds": 2.9173539050025283
+    },
+    {
+      "case": "compile",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 10.177590220002457
+    },
+    {
+      "case": "graph",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 1.816459998000937
+    },
+    {
+      "case": "distributed",
+      "status": "unsupported",
+      "exception": "NotImplementedError",
+      "error": "Torch USE_DISTRIBUTED=OFF; RCCL/Gloo not built into this runtime",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 577, in probe\n    raise NotImplementedError(\nNotImplementedError: Torch USE_DISTRIBUTED=OFF; RCCL/Gloo not built into this runtime\n",
+      "returncode": 0,
+      "seconds": 1.716518362001807
+    },
+    {
+      "case": "profiler",
+      "status": "unsupported",
+      "exception": "NotImplementedError",
+      "error": "No GPU events: Torch USE_KINETO=OFF; independent rocprofiler is separate",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 598, in probe\n    raise NotImplementedError(\nNotImplementedError: No GPU events: Torch USE_KINETO=OFF; independent rocprofiler is separate\n",
+      "returncode": 0,
+      "seconds": 2.9184202719989116
+    }
+  ],
+  "status": "completed_with_findings",
+  "meaning": "Completion is an audit result, not universal support or an all-probes-pass assertion.",
+  "counts": {
+    "error": 10,
+    "passed": 33,
+    "unsupported": 2
+  }
+}

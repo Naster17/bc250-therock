@@ -1,0 +1,122 @@
+# Torch / ROCm gfx1013 support matrix — 2026-10-16
+
+This is the current capability audit and work queue requested before N2.7. It
+extends the [inventory](bc250_memory_inventory.md); it does not restart completed
+N1/N2 or imply that every Torch operation/shape/type was tested. Runtime evidence,
+exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
+[the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
+are not architecture coverage or a support percentage.
+
+## Scope of the latest fixes
+
+The Qwen3.5 helpers from implementation690042b55 are **application scoped**.
+`finetune-n7/replica/train.py` installs native frozen causal convolution in its
+Qwen3.5 module and chunk64 loss on its model instance. Other scripts/models and
+`torch.nn.functional.conv1d`/cross_entropy are unchanged. The PEFT target-resolution
+resume fix is in this trainer. Reuse is possible through explicit helper calls;
+automatic general Torch routing and trainable-convolution-weight gradients are
+not implemented. The earlier C++ `1Torch` diagnostic fix does apply to all callers
+using the patched .104 Torch runtime. None of these changes updates .105.
+
+## What the current audit established
+
+- Active Torch4ee6571, ROCm libraries a6f7d3d, Triton ee65ff3b, immutable image5df0a58,
+  kernel0957f1/image84995f1. TheRock10.2, HIP7.17.0, MIOpen3.6.2 and Torch2.13-dev
+  are different component version schemes, not evidence of an ABI mismatch.
+- 21 libraries examined:19 installed DSOs load successfully; RCCL and the gfx1013
+  MIOpen CK grouped-conv plugin are absent. No missing mandatory loader dependency
+  was observed. Loading a DSO does not establish operator correctness.
+- 51 unique targeted configuration probes after retaining/correcting harness
+  mistakes:35 bounded passes;6 reproduced MIOpen failure variants belonging to
+  two defect families;10 unavailable/configured-off/refused feature cases. These
+  include contract and availability probes, not51 independent numerical kernels.
+- Kernel logs unchanged in every batch;600s guards ACKed. Collector exit0 means
+  collection completed, not that all probes passed. No segfault/hardware fault,
+  runtime installation, source rebuild, prefix selection or boot change this audit.
+
+HIP reports20 multiprocessors because CLR's enabled WGP mode divides the40 physical
+CUs by2 (`rocdevice.cpp:1129`). MIOpen uses that HIP attribute in its database key.
+Thus `gfx1013_20` is the actual key; renaming another GPU's database or changing
+it to40 would not supply qualified tuning data.
+
+## Existing capabilities and integration boundaries
+
+**PASS** means the listed bounded evidence; **PARTIAL** requires the stated limits.
+The following rows are not an exhaustive API or dtype promise.
+
+| Area | Torch route / dependency | Current evidence | Boundary |
+| --- | --- | --- | --- |
+| HIP allocation/copy/stream | ROCr, CLR, amdhip64, c10_hip | Native gfx1013; prior allocation/stream/churn and current probes | SDMA/experimental heap off; VMM/reset/fault migration limits remain |
+| Pointwise/reductions/indexing | ATen HIP, rocPRIM/hipCUB/Thrust | Existing P1/P2 suites; current normalization/embedding/optimizer checks | Larger dtype/layout/indexing contracts unqualified |
+| Dense FP32/FP64/FP16/BF16 GEMM | hipBLAS/rocBLAS, default | All four current output/input-gradient references pass; earlier broad fixtures retained | Scalar backend, no Tensor Core throughput claim |
+| Optional dense Lt | hipBLASLt | Explicit hipblaslt selection output/gradients pass; N1.8 bounds retained | Remains opt-in; INT8/FP8 gaps below |
+| Conv1D/2D/3D | MIOpen | Group2 FP32 ranks1–3 and FP16/BF16 2D output/dx/dw pass | Group1 training defect A01; not blanket convolution support |
+| Depthwise / transpose conv | MIOpen or ATen selection | BF16 K4/C64/L65 depthwise and FP32 transpose-conv gradients pass | Does not qualify the missing CK plugin or all depths/layouts |
+| Norms | ATen/MIOpen by selection | Batch/layer/group norm output/input gradients pass | Some MIOpen internal reductions still fail A02 |
+| Pooling/resize/activations | ATen HIP | Current pool/resize backward and existing NHWC padding fix references | More shapes/types/antialias modes unqualified |
+| Embedding, cross entropy, CTC | ATen HIP | Current CPU-float64 forward/gradient references pass | Ordinary CE still materializes full FP32 logits in Transformers |
+| RNG | hipRAND/rocRAND + Torch | Current exact GPU RNG save/replay; P2 direct/RNG suites | Not all generators/distributions |
+| FFT | hipFFT/rocFFT | FP32/FP64 and FP16 power-of-two8x16 rfft2 output/backward pass | BF16 rejected B01; wider half plans not qualified |
+| Dense solve/SVD/lstsq | hipSOLVER/rocSOLVER/rocBLAS | Current solve, singular values+gradient, full-rank gels references pass | Rank-deficient drivers and every solver algorithm not qualified |
+| Hermitian eigenvectors | Native rocSOLVER | N2.1 retained22 cases through257 and gradients | Extreme/larger/two-stage cases unqualified |
+| Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–6 GPU prototype bounded | Production solve is host arithmetic; native N2.7 still queued |
+| Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | General sparse solve absent B02; not every format/dtype/backward |
+| SDPA math | ATen HIP + BLAS | Current forward/QKV gradients and prior long/model/AMP gates | Quadratic attention memory; default retained |
+| Optional tiled SDPA | Patched scalar Triton helper | Prior FP32/FP16/BF16/GQA/masks/LoRA gates, D<=128 | Head256/dropout/compile/graphs remain A07; not built-in flash |
+| Qwen3.5 frozen conv / loss | Application helper | Previous51 operator gates, real2B1024-token update and exact CLI resume | Only the inspected trainer by default; A05 |
+| AMP / fused AdamW | ATen HIP + generic optimizer kernels | Current finite FP16 scaled update and CPU-matched fused AdamW; prior full AMP/resume | Valid FP32 loss promotion; no universal optimizer qualification |
+| torch.compile | Dynamo/Inductor/patched Triton3.8 | Current fullgraph norm/GELU output/gradient ref; prior dynamic math attention | Fused SDPA/custom tiled graphs unqualified |
+| HIP graphs | Torch CUDA namespace -> HIP | Current fixed-buffer add capture/replay, previous direct graph fixtures | Does not qualify every op/allocation or custom attention |
+| ROCTX / external tracing | roctracer/rocprofiler | Prior API/kernel/copy correlation evidence | Torch profiler integration disabled A09; counters/PC sampling unqualified |
+| hipTensor / hipDNN / CK generic | Installed libraries, no pinned ATen integration found | DSOs load; prior direct native library/provider tests | Not mandatory dependencies for Torch einsum/convolution; installing them alone changes no Torch route |
+
+## Ordered work queue
+
+**Feasibility is an engineering assessment**, not an implemented or performance
+claim. A native scalar implementation can be feasible when a vendor matrix engine
+is unavailable. Each item needs its own bounded CPU/output-gradient gate before
+runtime deployment. Keep item IDs stable so subsequent requests can name them.
+
+| ID | Missing feature or defect | Evidence / current impact | Hardware-feasible next action |
+| --- | --- | --- | --- |
+| **A01** | General MIOpen convolution selection/profiling/workspace defect | FP32 group1 B2/C4/L19, W6x4x3, stride2/pad2/dilation2: inference fwd passes; combined training fails backward. Input-only/weight-only gradient configurations fail already in forward. Zero480-byte workspace and elapsed<=0 recur. Disabling GEMM removes workspace warning but still fails. | **First correctness priority.** Reproduce through direct MIOpen C API, separate workspace-size contract from profiler/handle/stream timing, check CPU fwd/dx/dw. Fix demonstrated library/frontend cause; do not silence errors or globally force a guessed solver. |
+| **A02** | MIOpen legacy CK reduction cannot compile gfx1013; LSTM backward broken | Tiny nn.LSTM fwd matches CPU; backward HIPRTC fails `No CK_AMD_GPU_GFX* macro defined` in bundled legacy CK config.hpp. This is independent of the optional CK grouped-conv plugin and separate CK Tile port. | Add reviewed native gfx1013 target/feature plumbing or portable scalar reduction fallback. Check wave32, buffer descriptors and unsafe dot/asm gates; reduction and LSTM CPU gradients. No gfx1030 spoof. |
+| **A03** | No gfx1013 system FindDb/PerfDb/KDB; optional loader probes unsupported CK plugin | Installed db contains only lgbm metadata/rank/pcfg files; no gfx1013 assets. User ufdb/ukdb exist. Upstream data install filters match no gfx1013 files; CK plugin target list excludes gfx1013. | After A01/A02, collect genuine bounded tuning/cache entries, validate/replay and package with version/device/shape scope. Review capability-aware optional-plugin probing. Never create empty/fake databases or rename another GPU's data. |
+| **A04** | Torch hipSPARSELt integration disabled/unfound despite installed port | `_cslt_compress` rejects; Torch CMake `hipsparselt_DIR-NOTFOUND`; current package files and DSO exist. hipSPARSELt N1.4–7 direct API qualification does not imply Torch support. | Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS. |
+| **A05** | Latest causal conv/loss improvements are not reusable general Torch defaults | Only finetune-n7 Qwen3.5 hook; conv has no weight/bias gradients, loss is eager first-order and retains low-precision logits | Expose a reviewed reusable opt-in API, add trainable conv gradients and model/shape dispatch gates. Expand CPU/checkpoint/AMP refs before considering broader selection. Keep old behavior for unsupported calls. |
+| **A06** | Native gated-delta / FLA training kernels missing | Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification | Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support. |
+| **A07** | Efficient attention gaps: head256, dropout, compile/graph support | Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math | Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled. |
+| **A08** | Dense INT8 -> INT32 `_int_mm` | Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route. | Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption. |
+| **A09** | Torch GPU profiler/Kineto disabled | USE_KINETO=0; profiler records no GPU events. External rocprofiler is a separate working tool. | Audit pinned Kineto ROCm tracing dependencies and enable a separately tested build. Qualify GPU event correlation, memory/CPU traces and overhead; hardware counters remain separate. |
+| **B01** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
+| **B02** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
+| **B03** | Distributed build, Gloo/RCCL absent | USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected. | CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here. |
+| **B04** | torchvision / torchaudio not installed in reviewed runtime | Package discovery absent, not a core Torch loader failure; RPP/FFTS are separate libraries | Build matching pinned extensions, test needed scalar ATen/C++ ops; keep optional codecs/CPU paths explicit. No assumption that RPP/media blocks automatically accelerate them. |
+| **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; scalar dense INT8 route also missing A08 | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
+| **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |
+| **B07** | MIOpen CK grouped-convolution plugin | libMIOpenCKGroupedConv_gfx1013.so absent by architecture build filter; source probes plugin unconditionally | Optional substantial scalar/generic plugin port or retain working HIP-direct alternatives. Merely enabling CK flag cannot supply kernels; lower priority than A01/A02. |
+| **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
+
+A01–A09 are the proposed primary queue, in this order. B-items are optional
+workloads/integration expansions rather than mandatory missing Torch dependencies.
+N2.7 stays queued while we work through the selected primary items; this audit did
+not silently begin their implementation. Small targeted tests cannot prove that
+no other hidden defects exist; the retained runner makes new probes reproducible.
+
+## Hardware limits and unresolved stability
+
+Native MFMA/WMMA/Tensor Cores cannot be added by a library. TF32 hardware support
+reports false; `_scaled_mm` FP8 is gated to other architectures. Scalar FP8
+conversion/dequantized computation may be possible, but enabling a newer GPU name
+or matrix-only package would be incorrect. SDMA remains off and experimental VM
+heap disabled; GPU reset/fault migration/media exposure/counters remain separately
+unqualified. The unknown Python CPU segfault remains open and distinct from the
+already-fixed CSR/VM-heap corruption and the reproduced MIOpen failures.
+
+MIOpen's database roles are separate: FindDb saves algorithm-search outcomes,
+PerfDb stores tuned parameters, and KDB/user kernel cache stores compiled kernels.
+Missing precompiled kernels can incur compilation rather than making all math
+unavailable. This distinction follows AMD's [FindDb documentation](https://rocm.docs.amd.com/projects/MIOpen/en/docs-7.2.1/conceptual/finddb.html),
+[performance database](https://rocm.docs.amd.com/projects/MIOpen/en/docs-6.4.1/conceptual/perfdb.html)
+and [kernel cache documentation](https://rocm.docs.amd.com/projects/MIOpen/en/docs-7.1.0/conceptual/cache.html).
+The local pinned source and installed audit remain authoritative for gfx1013.

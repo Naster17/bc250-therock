@@ -1,0 +1,8 @@
+time="2026-10-16T03:28:19+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+gemm-int8 error CUDA error: HIPBLAS_STATUS_NOT_SUPPORTED when calling `hipblasLtMatmulAlgoGetHeuristic( ltHandle, computeDesc.descriptor(), Adesc.descriptor(), Bdesc.descriptor(), Cdesc.descriptor
+conv1d-g1 error miopenStatusUnknownError
+sdpa-efficient error No available kernel. Aborting execution.
+sdpa-flash error No available kernel. Aborting execution.
+sdpa-tiled-head256 error Unsupported batch/head/dimension combination
+amp error 
+{"error": 6}

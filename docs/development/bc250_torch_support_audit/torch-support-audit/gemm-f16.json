@@ -1,0 +1,8 @@
+{
+  "case": "gemm-f16",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 0.00012028450146317482,
+    "backward_reference": true
+  }
+}

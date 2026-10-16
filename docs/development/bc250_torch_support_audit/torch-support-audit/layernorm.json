@@ -1,0 +1,8 @@
+{
+  "case": "layernorm",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 4.5687755134693475e-07,
+    "backward_reference": true
+  }
+}

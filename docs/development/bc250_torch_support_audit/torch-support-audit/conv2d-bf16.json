@@ -1,0 +1,8 @@
+{
+  "case": "conv2d-bf16",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 0.00021951133385300636,
+    "backward_reference": true
+  }
+}

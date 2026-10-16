@@ -1,0 +1,8 @@
+{
+  "case": "conv3d",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 1.680449221996838e-07,
+    "backward_reference": true
+  }
+}

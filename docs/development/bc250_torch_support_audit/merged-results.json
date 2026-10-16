@@ -1,0 +1,587 @@
+{
+  "meaning": "Targeted configuration probes, not an exhaustive Torch test or coverage percentage.",
+  "counts": {
+    "passed_bounded": 35,
+    "reproduced_defect": 6,
+    "unavailable_or_refused": 10
+  },
+  "unique_configurations": 51,
+  "probes": [
+    {
+      "case": "gemm-f32",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.366281924905735e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.266647650001687,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "gemm-f64",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 3.469446951953614e-17,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2167059070052346,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "gemm-f16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.00012028450146317482,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2165093530056765,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "gemm-bf16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0009437799453735352,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.216807639997569,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "gemm-lt",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.255429428279278e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2162345920005464,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "gemm-int8",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "CUDA error: HIPBLAS_STATUS_NOT_SUPPORTED when calling `hipblasLtMatmulAlgoGetHeuristic( ltHandle, computeDesc.descriptor(), Adesc.descriptor(), Bdesc.descriptor(), Cdesc.descriptor(), Cdesc.descriptor(), preference.descriptor(), 1, &heuristicResult, &returnedResult)`",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 353, in probe\n    out = torch._int_mm(a.cuda(), b.cuda()).cpu()\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: CUDA error: HIPBLAS_STATUS_NOT_SUPPORTED when calling `hipblasLtMatmulAlgoGetHeuristic( ltHandle, computeDesc.descriptor(), Adesc.descriptor(), Bdesc.descriptor(), Cdesc.descriptor(), Cdesc.descriptor(), preference.descriptor(), 1, &heuristicResult, &returnedResult)`\n",
+      "returncode": 0,
+      "seconds": 1.7666509320042678,
+      "evidence_label": "torch-support-refined",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "scaled-fp8",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm MI300+",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 331, in probe\n    out = torch._scaled_mm(\n          ^^^^^^^^^^^^^^^^^\nRuntimeError: torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm MI300+\n",
+      "returncode": 0,
+      "seconds": 1.8159053880008287,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "sparse-lt",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "hipSPARSELt not supported on your machine.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 345, in probe\n    packed = torch._cslt_compress(a)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hipSPARSELt not supported on your machine.\n",
+      "returncode": 0,
+      "seconds": 1.7657067600011942,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "conv1d",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.3162307244130034e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2665927650014055,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "conv2d",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 5.054454838004929e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.266699909007002,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "conv3d",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.680449221996838e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.216390057001263,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "conv2d-f16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.00021951133385300636,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2673823129953234,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "conv2d-bf16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.00021951133385300636,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2668391999977757,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "depthwise-bf16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0009370831323824158,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 12.530814279001788,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "conv-transpose",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.1161319418983027e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 3.7687872999958927,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "batchnorm",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.8845607502603343e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.217089631994895,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "layernorm",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.5687755134693475e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2171423679974396,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "groupnorm",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.0367318898095732e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2170805080022546,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "pool-resize",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 2.7463903076729856e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.217342258998542,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "embedding",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.3674188579971087,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "loss-ce",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.023913957595937e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.2672476189982262,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "loss-ctc",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.3836072909612085e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 3.5187596710020443,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "lstm",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "miopenStatusUnknownError",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 443, in probe\n    yg.sum().backward()\n  File \"/workspace/pytorch-work/torch/_tensor.py\", line 623, in backward\n    torch.autograd.backward(\n  File \"/workspace/pytorch-work/torch/autograd/__init__.py\", line 395, in backward\n    _engine_run_backward(\n  File \"/workspace/pytorch-work/torch/autograd/graph.py\", line 979, in _engine_run_backward\n    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n",
+      "returncode": 0,
+      "seconds": 7.62193426900194,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "reproduced_defect"
+    },
+    {
+      "case": "fft-f32",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 9.647948684410323e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 6.671805885001959,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "fft-f64",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 6.672225384994817,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "fft-f16",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 0.0002944630705821183,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 9.1243542440061,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "fft-bf16",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "Unsupported dtype BFloat16",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 458, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 282, in check\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 459, in <lambda>\n    lambda a: torch.fft.rfft2(a).abs().square().mean(),\n              ^^^^^^^^^^^^^^^^^^\nRuntimeError: Unsupported dtype BFloat16\n",
+      "returncode": 0,
+      "seconds": 1.7659662920050323,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "linalg-svd",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.6861201546092275e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.4172017739983858,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "linalg-lstsq",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 1.9660808309999993,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "linalg-solve",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 4.4924047759575814e-08,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.3166034019959625,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "sparse-csr",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.066758248001861,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "sparse-csc",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.3172389320025104,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "sparse-bsr",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.1167246859986335,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "sparse-solve",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 482, in probe\n    out = torch.sparse.spsolve(a.cuda().to_sparse_csr(), b[:, 0].cuda())\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build.\n",
+      "returncode": 0,
+      "seconds": 2.0169424310006434,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "rng",
+      "status": "passed",
+      "details": {
+        "exact_rng_replay": true
+      },
+      "returncode": 0,
+      "seconds": 1.8658677249986795,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "sdpa-math",
+      "status": "passed",
+      "details": {
+        "max_absolute_error": 1.3794457309757036e-07,
+        "backward_reference": true
+      },
+      "returncode": 0,
+      "seconds": 2.4167782009972143,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "sdpa-efficient",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "No available kernel. Aborting execution.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 552, in probe\n    actual = F.scaled_dot_product_attention(*gpu, is_causal=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n",
+      "returncode": 0,
+      "seconds": 1.766064407005615,
+      "evidence_label": "torch-support-refined",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "sdpa-flash",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "No available kernel. Aborting execution.",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 552, in probe\n    actual = F.scaled_dot_product_attention(*gpu, is_causal=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n",
+      "returncode": 0,
+      "seconds": 1.7662261219957145,
+      "evidence_label": "torch-support-refined",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "sdpa-tiled-head256",
+      "status": "error",
+      "exception": "ValueError",
+      "error": "Unsupported batch/head/dimension combination",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 544, in probe\n    actual = scaled_dot_product_attention(*gpu, is_causal=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pytorch-work/torch/nn/attention/_gfx1013.py\", line 226, in scaled_dot_product_attention\n    raise ValueError(\"Unsupported batch/head/dimension combination\")\nValueError: Unsupported batch/head/dimension combination\n",
+      "returncode": 0,
+      "seconds": 1.8168957620000583,
+      "evidence_label": "torch-support-refined",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "adamw-fused",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 2.8671751379952184,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "amp",
+      "status": "passed",
+      "details": {
+        "product_dtype": "torch.float16",
+        "loss_dtype": "torch.float32",
+        "contract_only": "finite AMP update; existing CPU-gradient AMP qualification retained"
+      },
+      "returncode": 0,
+      "seconds": 3.1175134090008214,
+      "evidence_label": "torch-support-conv-isolation-r2",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "compile",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 10.177590220002457,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "graph",
+      "status": "passed",
+      "details": {},
+      "returncode": 0,
+      "seconds": 1.816459998000937,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "distributed",
+      "status": "unsupported",
+      "exception": "NotImplementedError",
+      "error": "Torch USE_DISTRIBUTED=OFF; RCCL/Gloo not built into this runtime",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 577, in probe\n    raise NotImplementedError(\nNotImplementedError: Torch USE_DISTRIBUTED=OFF; RCCL/Gloo not built into this runtime\n",
+      "returncode": 0,
+      "seconds": 1.716518362001807,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "profiler",
+      "status": "unsupported",
+      "exception": "NotImplementedError",
+      "error": "No GPU events: Torch USE_KINETO=OFF; independent rocprofiler is separate",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 598, in probe\n    raise NotImplementedError(\nNotImplementedError: No GPU events: Torch USE_KINETO=OFF; independent rocprofiler is separate\n",
+      "returncode": 0,
+      "seconds": 2.9184202719989116,
+      "evidence_label": "torch-support-audit",
+      "audit_class": "unavailable_or_refused"
+    },
+    {
+      "case": "conv1d-g1",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "miopenStatusUnknownError",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 407, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 324, in check\n    actual.backward(grad.to(actual.device, actual.dtype))\n  File \"/workspace/pytorch-work/torch/_tensor.py\", line 623, in backward\n    torch.autograd.backward(\n  File \"/workspace/pytorch-work/torch/autograd/__init__.py\", line 395, in backward\n    _engine_run_backward(\n  File \"/workspace/pytorch-work/torch/autograd/graph.py\", line 979, in _engine_run_backward\n    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n",
+      "returncode": 0,
+      "seconds": 2.2172213640005793,
+      "evidence_label": "torch-support-refined",
+      "audit_class": "reproduced_defect"
+    },
+    {
+      "case": "conv1d-g1-fwd",
+      "status": "passed",
+      "details": {
+        "forward_reference": true,
+        "miopen_gemm_env": "unset"
+      },
+      "returncode": 0,
+      "seconds": 1.815983275999315,
+      "evidence_label": "torch-support-conv-isolation-r2",
+      "audit_class": "passed_bounded"
+    },
+    {
+      "case": "conv1d-g1-dx",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "miopenStatusUnknownError",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 685, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 394, in probe\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 392, in <lambda>\n    op = lambda a, b: F.conv1d(a, b, stride=2, padding=2, dilation=2, groups=1)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n",
+      "returncode": 0,
+      "seconds": 1.8159551930002635,
+      "evidence_label": "torch-support-conv-isolation-r2",
+      "audit_class": "reproduced_defect"
+    },
+    {
+      "case": "conv1d-g1-dw",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "miopenStatusUnknownError",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 685, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 394, in probe\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 392, in <lambda>\n    op = lambda a, b: F.conv1d(a, b, stride=2, padding=2, dilation=2, groups=1)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n",
+      "returncode": 0,
+      "seconds": 1.8161445559962885,
+      "evidence_label": "torch-support-conv-isolation-r2",
+      "audit_class": "reproduced_defect"
+    },
+    {
+      "case": "conv1d-g1-dx-direct",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "miopenStatusUnknownError",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 685, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 394, in probe\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 392, in <lambda>\n    op = lambda a, b: F.conv1d(a, b, stride=2, padding=2, dilation=2, groups=1)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n",
+      "returncode": 0,
+      "seconds": 1.8161300420033513,
+      "evidence_label": "torch-support-conv-isolation-r2",
+      "audit_class": "reproduced_defect"
+    },
+    {
+      "case": "conv1d-g1-dw-direct",
+      "status": "error",
+      "exception": "RuntimeError",
+      "error": "miopenStatusUnknownError",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 685, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 394, in probe\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 392, in <lambda>\n    op = lambda a, b: F.conv1d(a, b, stride=2, padding=2, dilation=2, groups=1)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: miopenStatusUnknownError\n",
+      "returncode": 0,
+      "seconds": 1.8162906440047664,
+      "evidence_label": "torch-support-conv-isolation-r2",
+      "audit_class": "reproduced_defect"
+    }
+  ],
+  "runtime_changed": false
+}

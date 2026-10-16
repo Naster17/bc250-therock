@@ -1,0 +1,4 @@
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:286: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /workspace/pytorch-work/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)
+  details["max_absolute_error"] = float(
+{"case": "gemm-f16", "status": "passed", "details": {"max_absolute_error": 0.00012028450146317482, "backward_reference": true}}

@@ -1,0 +1,7 @@
+{
+  "case": "sdpa-efficient",
+  "status": "error",
+  "exception": "RuntimeError",
+  "error": "No available kernel. Aborting execution.",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 552, in probe\n    actual = F.scaled_dot_product_attention(*gpu, is_causal=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n"
+}

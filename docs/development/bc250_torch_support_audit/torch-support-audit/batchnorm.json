@@ -1,0 +1,8 @@
+{
+  "case": "batchnorm",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 2.8845607502603343e-07,
+    "backward_reference": true
+  }
+}

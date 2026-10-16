@@ -1,0 +1,4 @@
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1013: libMIOpenCKGroupedConv_gfx1013.so: cannot open shared object file: No such file or directory
+MIOpen: Warning [ParseAndLoadDb] File is unreadable: "/workspace/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt"
+MIOpen: Warning [IsEnoughWorkspace] [EvaluateInvokers] Solver <GemmFwdRest>, workspace required: 480, provided ptr: 0 size: 0
+{"case": "conv1d-g1-fwd", "status": "passed", "details": {"forward_reference": true, "miopen_gemm_env": "unset"}}

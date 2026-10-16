@@ -1,0 +1,13 @@
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:552: UserWarning: Memory efficient kernel not used because: (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:1107.)
+  actual = F.scaled_dot_product_attention(*gpu, is_causal=True)
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:552: UserWarning: Torch was not compiled with memory efficient attention. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:976.)
+  actual = F.scaled_dot_product_attention(*gpu, is_causal=True)
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:552: UserWarning: Flash attention kernel not used because: (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:1109.)
+  actual = F.scaled_dot_product_attention(*gpu, is_causal=True)
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:552: UserWarning: Torch was not compiled with flash attention. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:924.)
+  actual = F.scaled_dot_product_attention(*gpu, is_causal=True)
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:552: UserWarning: cuDNN attention kernel not used because: (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:1111.)
+  actual = F.scaled_dot_product_attention(*gpu, is_causal=True)
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py:552: UserWarning: Torch was not compiled with cuDNN attention. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/native/transformers/hip/sdp_utils.cpp:857.)
+  actual = F.scaled_dot_product_attention(*gpu, is_causal=True)
+{"case": "sdpa-flash", "status": "error", "exception": "RuntimeError", "error": "No available kernel. Aborting execution.", "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 653, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 552, in probe\n    actual = F.scaled_dot_product_attention(*gpu, is_causal=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n"}

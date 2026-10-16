@@ -1,0 +1,9 @@
+{
+  "case": "amp",
+  "status": "passed",
+  "details": {
+    "product_dtype": "torch.float16",
+    "loss_dtype": "torch.float32",
+    "contract_only": "finite AMP update; existing CPU-gradient AMP qualification retained"
+  }
+}

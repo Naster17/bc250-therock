@@ -1,0 +1,7 @@
+{
+  "case": "amp",
+  "status": "error",
+  "exception": "AssertionError",
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 540, in probe\n    assert loss.dtype == torch.float16\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

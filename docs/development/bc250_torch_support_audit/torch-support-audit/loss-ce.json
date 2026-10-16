@@ -1,0 +1,8 @@
+{
+  "case": "loss-ce",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 4.023913957595937e-08,
+    "backward_reference": true
+  }
+}

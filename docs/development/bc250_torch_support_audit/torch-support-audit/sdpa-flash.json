@@ -1,0 +1,7 @@
+{
+  "case": "sdpa-flash",
+  "status": "error",
+  "exception": "RuntimeError",
+  "error": "No available kernel. Aborting execution.",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 616, in main\n    result.update(status=\"passed\", details=probe(args.case))\n                                           ^^^^^^^^^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 520, in probe\n    check(\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 282, in check\n    actual = op(*gpu)\n             ^^^^^^^^\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/audit_torch_support.py\", line 521, in <lambda>\n    lambda a, b, c: op(a, b, c, is_causal=True),\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n"
+}

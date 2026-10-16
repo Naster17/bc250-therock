@@ -1,0 +1,8 @@
+{
+  "case": "loss-ctc",
+  "status": "passed",
+  "details": {
+    "max_absolute_error": 1.3836072909612085e-07,
+    "backward_reference": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "case": "conv1d-g1-fwd",
+  "status": "passed",
+  "details": {
+    "forward_reference": true,
+    "miopen_gemm_env": "unset"
+  }
+}
