@@ -1,6 +1,11 @@
 # BC-250 PyTorch patches
 
-Current A05 source: `6181d00b5beb8cc9fd6800da7a19c8abf756b30d`. Patch0004
+Current sparse/lint follow-up source: `6ed3d12b184a27d21c0fa41d43269ff6bd17f1e0`.
+Patch0005 is incremental on A05 source6181d00. It adds native first-order sparse
+autograd and a source-only lint option. The older SDPA reconstruction gap remains.
+[Scope and evidence](../../docs/development/bc250_sparse_followup_results/README.md).
+
+Qualified A05 source: `6181d00b5beb8cc9fd6800da7a19c8abf756b30d`. Patch0004
 is incremental on the full A04 source8cdfcc8. It adds only the opt-in Python
 `torch.nn.bc250_training_ops` module; installed DSOs remain unchanged.
 [API, qualification and deployment](../../docs/development/bc250_training_a05_results/README.md).
