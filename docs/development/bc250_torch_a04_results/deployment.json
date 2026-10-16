@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "source": {
+    "torch_revision": "8cdfcc8e0feb3689a1ec1d292539af083b13ea94",
+    "previous_torch_revision": "4ee65717d69e9f51021272e3f37d0f342f68fc08",
+    "candidate_library_sha256": {
+      "libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+      "libtorch_cpu.so": "7c3edc7934dd2f67f02b3db8520448f13e483b8c643b1af4fdab6976b41454e7",
+      "libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+      "libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+      "libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+      "libtorch_python.so": "87a412d603de779a23771c66fcb612dec2f48c0e1f17667669be642bfad2512e",
+      "libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+      "libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+      "libtorch_hip.so": "112ad72045e01e1d86ace5283863af8d3fe0af961c139f41f5f214f05b4dd85d"
+    },
+    "helper_sha256": {
+      "deploy_torch_a04_on_host.py": "b470e6477f5a47d6b64e0e7427f30880738003d11426f2ccba65a1061470f618",
+      "validate_torch_sparse_a04.py": "7e7cabcd82cc3309fcd07b79d57b9e7da306f0ea99d8375596615e25812a983c",
+      "validate_torch_a04_on_host.py": "bc1f21eac14c35210675dea00872aea7b0ed15e03119af5bce6c3daaec24c96a",
+      "test_bc250_hipsparselt.py": "cd2e929001a06666d6b09ee33526f0e4d2167b59f814f3874d2430a2bf5528dc",
+      "build_torch_a04.sh": "e87a30b670b42d4c86da2b746c5cf07da55d9ed7d761b4fde14f0c1da320de1b"
+    },
+    "raw_patch_sha256": "873f43405f81a2b2097844441c5dfd0ccdd91a3bc1ed2a208c1301981e4ace29",
+    "git_bundle_sha256": "4e938a2811021691007b37cc7d7d5eebc6c25b2585931b56f07dc2d8dae1f988",
+    "build_log": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/torch-a04-build-r4.log",
+    "candidate_gate": "torch-a04-candidate-r3",
+    "lint": "spin initialization and lintrunner -a failed: missing offline lint environment; logs retained",
+    "therock_port_revision": "b5879aefa7990928270645676e66cc40d972de6b",
+    "reconstruction": "Full local Torch Git retained; A04 incremental patch/bundle based on 4ee6571. Older P2 patch directory still lacks three SDPA files; not a complete current-tree reconstruction."
+  },
+  "protected_before": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0": "1e4c4d58f4e2424ebb013238896ad024355727e720e4b44619fb11ef1d5cd228",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libamdhip64.so": "e9878e9fc4efaa8dd443709a3321ffe7c07a68e090b7dc7eb6e2ec6a91290d50",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libMIOpen.so.1.0": "3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/librocblas.so": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipblaslt.so": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipsparselt.so": "fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/.kpack/blas_lib_gfx1013.kpack": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_model_meta.json": "c996291cd2cab13c70fcbce8b69f8d39d1cbd1c65b880628b86bccdbcca224f3",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/gfx1013_20.kdb": "024f809cdc4a416e77aa7bfa0dfc4fa9cddfdc62a3856e9cdd99d1951fbd09ca",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt": "d43be1cc2c94054f430527a777b03a0dcbbb012841fb4a0446ffd09f2aa3db28",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/gfx1013_20.db.txt": "1a3e9e5a2df4fa31a52956fb49fe0dc7df3b1da53dbee861e2a1e8d6daf48f5b",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_rank.bin": "727ecf84aff7397b010e454a76dcb4d88aea8dfd3fbb24ef97aa4ae099f1106e",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_pcfg.bin": "0fdd9e3f8fb4f1621ba87e821dfe9c78e4552fcc54b8781d44e887de0594dcb6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/BC250_A03_MANIFEST.json": "cb3075e8a0bcf3a014a53a9e8e49782451597758fe03e7f86de6c5da68f1a4a6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-work/torch/lib/libtorch_hip.so": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+    "/opt/bc250-stack/previous/rocm/lib/libhsa-runtime64.so.1.21.0": "bda3dc8f8dc7d406b7e77a0d9953ef5af3ec826d01ddea58b757f9ac505f1748",
+    "/opt/bc250-stack/previous/rocm/lib/libMIOpen.so.1.0": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11",
+    "/opt/bc250-stack/previous/torch/torch/lib/libtorch_hip.so": "7493e3475d2ebbb7870a01510dfa5fb1c9a0b8ee91c7f4a6c2c24267274ad612"
+  },
+  "old_torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-work",
+  "new_torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04",
+  "installed_gates": [
+    "torch-a04-sparse-installed",
+    "torch-a04-conv-installed",
+    "torch-a04-core-installed",
+    "torch-a04-attention-installed"
+  ],
+  "phase": "torch-a04-attention-installed",
+  "protected_unchanged": true,
+  "running_agent_jobs": []
+}

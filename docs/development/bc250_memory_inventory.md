@@ -473,6 +473,35 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 
 ## Component coverage: implemented versus existing native backend
 
+**A04 completed2026-10-16:** Torch8cdfcc8e0feb3689a1ec1d292539af083b13ea94,
+TheRock helpers b5879aefa7990928270645676e66cc40d972de6b installed on .104.
+Fresh candidate configure finds the existing hipSPARSELt package; no discovery
+source workaround needed. Native gfx1013 gate/FP32, HIP Python version/search,
+truthful compiled availability, initialized search fields and pack/layout/device/
+bias/alpha guards implemented. Candidate and installed20 tests pass:120 small
+CPU-reference matmuls, independent pack decoding, FP16/BF16 public wrappers,
+search and14 refusals. Installed30 convolution cases, seven core groups and one
+tiled SDPA output/QKV-gradient smoke pass. Eight guards including retained test
+failures ACK/600s, dmesg unchanged53f83f7b.18 protected ROCm/DB/kpack/original-Torch/
+frozen-fallback hashes unchanged. Exclusive-lock atomic current/torch switch to
+WS/pytorch-a04; original WS/pytorch-work fully preserved. Recovery metadata in
+WS/recovery/torch-a04-before. SOURCE_TORCH_A04.json in WS/current; source/hash/log
+scope in [A04 report](bc250_torch_a04_results/README.md). Native scalar same-dtype
+FP32/FP16/BF16/INT8; valid1:2/2:4 inputs, compression is not pruning; GPU scalar/
+row-vector alpha, typed/FP32 bias. Default dense rocBLAS unchanged. No sparse
+hardware speedup, sparse-autograd/compile/graphs/large-shape/stability claim.
+Retained path/CPU-alpha/version assumptions and stale-HIPify/live-script build
+failures; final r4 pip build succeeded with ccache20GiB/jobs12/link1. Lint blocked
+by missing offline initialization; attempts logged, no lint pass. Full Torch Git,
+incremental A04 patch/bundle retained; old P2 SDPA3-file bundle gap remains.
+Historical Python CPU fault distinct from fixed VM-heap/CSR. No active jobs or
+guard deadline; retained build containers stopped. Disk16.1GiB free. Kernel/image/
+boot/SDMA0/heap-off/math defaults/r2fallback/BIOS/.105/user src/data unchanged.
+Exact next **A05**: inspect existing Qwen3.5 causal-conv/loss helpers and51 prior
+operator/model/resume gates; reusable opt-in API, trainable conv gradients and
+CPU/checkpoint/AMP references. A05–A09 before N2.7; K6 completed.
+
+
 **A03 completed20261016:** libraries fcf7a7142af8c258164e106e66bf893c7f563d15,
 source/helpers7d9176a45 (initial452ac72e7); installed .104. Optional CK probe now
 respects build flag/existing solver whitelist, explicit path retains diagnostics.
@@ -549,7 +578,7 @@ updated; the unchanged superbuild baseline label remains7f73 with effective port
 source380a403a1 recorded separately. No active agent job/deadline; N2.7 queued.
 
 **Baseline Torch dependency/dispatch audit2026-10-16**, source7e39ed699
-(A01/A02 updates above supersede its convolution/timing/reduction failure status):
+(A01–A04 updates above supersede its resolved failure/availability status):
 [support matrix and ordered A01–A09/B01–B07 queue](bc250_torch_support_matrix.md),
 [raw evidence](bc250_torch_support_audit/README.md).21 DSOs examined,19 load;
 RCCL/gfx1013 CK grouped-conv plugin absent. All3520 dispatcher names recorded,
@@ -568,8 +597,8 @@ distributed/Kineto gaps retained. FP16 power-of-two FFT, CSC/BSR, fused AdamW,
 AMP/compile/graph and ordinary operators pass bounded probes. Existing Qwen
 conv/loss/resume changes remain app scoped. No runtime/source-library/kernel
 change or native rebuild; guards ACKed/dmesg identical/no active agent job.
-Baseline A01/A02 reproduction was followed by the corrections above. Exact next
-is A03 database/cache qualification; selected Torch/library queue precedes N2.7.
+Baseline reproductions were followed by A01–A04 corrections above. These baseline
+counts remain historical; exact next A05. Selected Torch/library queue precedes N2.7.
 
 | Component                                   | What exists and was executed                                                                                                                                                                                 | Boundary / where to continue                                                                                                                                |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |

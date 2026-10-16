@@ -14,6 +14,25 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Structured sparse Torch operations (A04, updated 2026-10-16)
+
+The current development `bc250-torch`/`bc250-train` runtime supplies native scalar
+hipSPARSELt compression and sparse matmul. `torch.backends.cusparselt` is the
+shared Python namespace on HIP too; `is_available()` now reflects compiled
+support and `version()` returns209 (installed hipSPARSELt0.2.9).
+
+Explicit `_cslt_compress`/`_cslt_sparse_mm` calls support same-dtype FP32, FP16,
+BF16 and INT8 outputs. Inputs must already have valid structured sparsity:
+FP32 uses1:2, the other types2:4; compression does not magnitude-prune a dense
+matrix. FP16/BF16 public `torch.sparse.to_sparse_semi_structured` plus `torch.mm`
+were also checked. GPU scalar or contiguous FP32 per-row vector alpha and FP32/
+matching-floating-type bias are supported. Widened outputs/split-K are refused.
+See [tested contracts and limits](bc250_torch_a04_results/README.md).
+
+This is explicit sparse execution on the GPU; ordinary dense operators continue
+to use their existing backend. Sparse gradients, compilation/graphs and a sparse
+speedup are unqualified. Other prefixes/venvs and the frozen fallback are unchanged.
+
 ## Convolution correction (updated 2026-10-16)
 
 The current development prefix now includes the A01 ROCr clock-epoch and MIOpen

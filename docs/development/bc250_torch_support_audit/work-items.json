@@ -34,10 +34,10 @@
     },
     {
       "id": "A04",
-      "feature": "Torch hipSPARSELt integration disabled/unfound despite installed port",
-      "evidence": "`_cslt_compress` rejects; Torch CMake `hipsparselt_DIR-NOTFOUND`; current package files and DSO exist. hipSPARSELt N1.4\u20137 direct API qualification does not imply Torch support.",
-      "next": "Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS.",
-      "status": "queued"
+      "feature": "Native Torch hipSPARSELt integration",
+      "evidence": "Installed Torch8cdfcc8: fresh discovery, native gfx1013/FP32 enablement, HIP version/search bindings, truthful compile availability and native contracts.20 tests/120 small CPU-reference matmuls, pack decoding, public FP16/BF16 wrappers and14 refusals pass; convolution/core/attention smoke regressions pass. See ../bc250_torch_a04_results/README.md.",
+      "next": "A05 reusable causal-conv/loss opt-in API and trainable convolution gradients; preserve existing application gates. Sparse autograd/graphs/compile/performance remain unqualified.",
+      "status": "completed_bounded"
     },
     {
       "id": "A05",
@@ -131,12 +131,13 @@
       "status": "queued"
     }
   ],
-  "next": "A04: Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS.",
+  "next": "A05: inspect existing Qwen3.5 helpers and recorded51 operator/model/resume gates; reusable opt-in API, trainable conv gradients and CPU/checkpoint/AMP references. A05-A09 before N2.7; K6 completed.",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
     "A01",
     "A02",
-    "A03"
+    "A03",
+    "A04"
   ],
-  "next_primary_item": "A04"
+  "next_primary_item": "A05"
 }

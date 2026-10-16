@@ -50,9 +50,20 @@ paths retain warnings. The modern plugin is still absent. These are bounded seed
 assets, not full architecture tuning. [A03 evidence and limits](bc250_miopen_a03_results/README.md).
 Exact next A04, Torch hipSPARSELt discovery/integration.
 
+## A04 update — 2026-10-16
+
+Torch8cdfcc8 now finds the installed hipSPARSELt package and enables native scalar
+gfx1013 compress/matmul plus HIP Python version/search bindings. Availability now
+follows compiled support. Candidate/installed20 tests pass, including120 small
+CPU-reference matmuls, pack decoding, typed bias/alpha, layouts/custom streams,
+public FP16/BF16 wrappers and refusals. Installed convolution/core/attention smoke
+regressions pass; original Torch and frozen fallback preserved. Same-dtype
+FP32/FP16/BF16/INT8 only; sparse autograd/compile/graphs/performance unqualified.
+[A04 evidence, deployment and limits](bc250_torch_a04_results/README.md). Next A05.
+
 ## What the current audit established
 
-- Active Torch4ee6571, ROCm libraries a6f7d3d, Triton ee65ff3b, immutable image5df0a58,
+- Historical audit baseline Torch4ee6571, ROCm libraries a6f7d3d, Triton ee65ff3b, immutable image5df0a58,
   kernel0957f1/image84995f1. TheRock10.2, HIP7.17.0, MIOpen3.6.2 and Torch2.13-dev
   are different component version schemes, not evidence of an ABI mismatch.
 - 21 libraries examined:19 installed DSOs load successfully; RCCL and the gfx1013
@@ -92,6 +103,7 @@ The following rows are not an exhaustive API or dtype promise.
 | Dense solve/SVD/lstsq | hipSOLVER/rocSOLVER/rocBLAS | Current solve, singular values+gradient, full-rank gels references pass | Rank-deficient drivers and every solver algorithm not qualified |
 | Hermitian eigenvectors | Native rocSOLVER | N2.1 retained22 cases through257 and gradients | Extreme/larger/two-stage cases unqualified |
 | Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–6 GPU prototype bounded | Production solve is host arithmetic; native N2.7 still queued |
+| Structured sparse matmul | Torch hipSPARSELt | A04 pack/compress/120 small forward matmul references, public FP16/BF16 wrappers | Scalar same-dtype f32/f16/bf16/int8; valid1:2/2:4 inputs, no sparse acceleration or autograd qualification |
 | Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | General sparse solve absent B02; not every format/dtype/backward |
 | SDPA math | ATen HIP + BLAS | Current forward/QKV gradients and prior long/model/AMP gates | Quadratic attention memory; default retained |
 | Optional tiled SDPA | Patched scalar Triton helper | Prior FP32/FP16/BF16/GQA/masks/LoRA gates, D<=128 | Head256/dropout/compile/graphs remain A07; not built-in flash |
@@ -114,7 +126,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A01 — completed** | Convolution timing and dilated workspace | Native gfx1013 shader/KFD epoch mismatch caused unstable/negative HIP event times; MIOpen query excluded dilated GEMM. ROCr329eaf7/libraries08ba6f3 installed;15 direct API +30 Torch convolution configurations pass CPU references,32 stable event pairs and six raw-counter timing references. | Bounded current-prefix fix; see [report](bc250_miopen_a01_results/README.md). Absolute trace alignment, opposite epoch offsets/reset/reboot and universal convolution/performance remain unqualified. A02 completed below; continue A04. |
 | **A02 — completed** | Native MIOpen legacy CK reductions and recurrent backward | Libraries d375d8a2: native wave32/RDNA1 scalar profile; BF16 mapping/raw transfers/conversions and compute-precision scaling; versioned cache key. Installed54 numerical reductions +3 unsupported-compute refusals and12 FP32/FP16 LSTM/GRU/RNN output/all-gradient fixtures pass. | Applies to current-prefix MIOpen callers; BF16 RNN and wider NaN/index/compute/recurrent contracts unqualified. [Report](bc250_miopen_a02_results/README.md). A03 supplies a bounded DB seed/probe correction; modern plugin remains absent B07; no general speedup claim. |
 | **A03 — completed** | Genuine native MIOpen seed databases and capability-aware plugin probing | Libraries fcf7a714 installed:16 FindDb keys/58 checked solutions, one searched PerfDb record and41 KDB records; normal-path read-only replay has zero new user kernels. Unseen fallback and regressions pass. | Small geometry/version/device scope only; wider tuning and modern CK plugin B07 remain unqualified. [Report](bc250_miopen_a03_results/README.md). Continue A04. |
-| **A04** | Torch hipSPARSELt integration disabled/unfound despite installed port | `_cslt_compress` rejects; Torch CMake `hipsparselt_DIR-NOTFOUND`; current package files and DSO exist. hipSPARSELt N1.4–7 direct API qualification does not imply Torch support. | Re-evaluate CMake discovery/version gate, targeted Torch configure/build using ccache and12/link1 settings. Qualify actual Torch compress/sparse-mm, metadata/bias/scalars/streams; preserve default dense BLAS. |
+| **A04 — completed** | Native Torch hipSPARSELt integration | Installed Torch8cdfcc8; fresh discovery, gfx1013/FP32 enablement, HIP bindings and contract guards.20 tests/120 small matmuls plus pack/public-wrapper/search/refusal checks pass. | Same-dtype FP32/FP16/BF16/INT8 scalar GPU path only; sparse autograd/graphs/compile/performance unqualified. [Report](bc250_torch_a04_results/README.md). Next A05. |
 | **A05** | Latest causal conv/loss improvements are not reusable general Torch defaults | Only finetune-n7 Qwen3.5 hook; conv has no weight/bias gradients, loss is eager first-order and retains low-precision logits | Expose a reviewed reusable opt-in API, add trainable conv gradients and model/shape dispatch gates. Expand CPU/checkpoint/AMP refs before considering broader selection. Keep old behavior for unsupported calls. |
 | **A06** | Native gated-delta / FLA training kernels missing | Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification | Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support. |
 | **A07** | Efficient attention gaps: head256, dropout, compile/graph support | Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math | Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled. |
@@ -129,7 +141,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
-A01/A02/A03 are completed within their recorded scopes. A04–A09 are the remaining primary
+A01–A04 are completed within their recorded scopes. A05–A09 are the remaining primary
 queue, in this order. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did

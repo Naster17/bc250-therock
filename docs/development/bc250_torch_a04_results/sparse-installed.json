@@ -1,0 +1,240 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "results": [
+    {
+      "name": "test_contracts_cuda",
+      "status": "passed",
+      "refusal_contracts": 14
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_False_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": false,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_False_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": false,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_False_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": false,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_False_cuda_int8",
+      "status": "passed",
+      "dtype": "torch.int8",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": false,
+      "matmul_executions": 6,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_True_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": true,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_True_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": true,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_True_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": true,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry0_column_major_True_cuda_int8",
+      "status": "passed",
+      "dtype": "torch.int8",
+      "geometry": [
+        7,
+        9,
+        12
+      ],
+      "column_major": true,
+      "matmul_executions": 6,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_False_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": false,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_False_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": false,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_False_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": false,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_False_cuda_int8",
+      "status": "passed",
+      "dtype": "torch.int8",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": false,
+      "matmul_executions": 6,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_True_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": true,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_True_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": true,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_True_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": true,
+      "matmul_executions": 8,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_pack_mm_geometry1_column_major_True_cuda_int8",
+      "status": "passed",
+      "dtype": "torch.int8",
+      "geometry": [
+        32,
+        16,
+        32
+      ],
+      "column_major": true,
+      "matmul_executions": 6,
+      "metadata_roundtrip": true
+    },
+    {
+      "name": "test_public_wrapper_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "test_public_wrapper_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16"
+    },
+    {
+      "name": "test_search_cuda",
+      "status": "passed",
+      "algorithm": 0
+    }
+  ],
+  "arch": "gfx1013:xnack-",
+  "torch_version": "2.13.0a0+gfx1013",
+  "loaded_libraries": [
+    "/workspace/build/dist/rocm/lib/libhipsparselt.so.0.2",
+    "/workspace/pytorch-work/torch/lib/libtorch_hip.so"
+  ]
+}

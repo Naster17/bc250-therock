@@ -9,6 +9,33 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **A04 completed2026-10-16:** Torch8cdfcc8e0feb3689a1ec1d292539af083b13ea94,
+  TheRock helpers b5879aefa7990928270645676e66cc40d972de6b installed on .104.
+  Fresh candidate configure finds the existing hipSPARSELt package; no discovery
+  source workaround needed. Native gfx1013 gate/FP32, HIP Python version/search,
+  truthful compiled availability, initialized search fields and pack/layout/device/
+  bias/alpha guards implemented. Candidate and installed20 tests pass:120 small
+  CPU-reference matmuls, independent pack decoding, FP16/BF16 public wrappers,
+  search and14 refusals. Installed30 convolution cases, seven core groups and one
+  tiled SDPA output/QKV-gradient smoke pass. Eight guards including retained test
+  failures ACK/600s, dmesg unchanged53f83f7b.18 protected ROCm/DB/kpack/original-Torch/
+  frozen-fallback hashes unchanged. Exclusive-lock atomic current/torch switch to
+  WS/pytorch-a04; original WS/pytorch-work fully preserved. Recovery metadata in
+  WS/recovery/torch-a04-before. SOURCE_TORCH_A04.json in WS/current; source/hash/log
+  scope in [A04 report](docs/development/bc250_torch_a04_results/README.md). Native scalar same-dtype
+  FP32/FP16/BF16/INT8; valid1:2/2:4 inputs, compression is not pruning; GPU scalar/
+  row-vector alpha, typed/FP32 bias. Default dense rocBLAS unchanged. No sparse
+  hardware speedup, sparse-autograd/compile/graphs/large-shape/stability claim.
+  Retained path/CPU-alpha/version assumptions and stale-HIPify/live-script build
+  failures; final r4 pip build succeeded with ccache20GiB/jobs12/link1. Lint blocked
+  by missing offline initialization; attempts logged, no lint pass. Full Torch Git,
+  incremental A04 patch/bundle retained; old P2 SDPA3-file bundle gap remains.
+  Historical Python CPU fault distinct from fixed VM-heap/CSR. No active jobs or
+  guard deadline; retained build containers stopped. Disk16.1GiB free. Kernel/image/
+  boot/SDMA0/heap-off/math defaults/r2fallback/BIOS/.105/user src/data unchanged.
+  Exact next **A05**: inspect existing Qwen3.5 causal-conv/loss helpers and51 prior
+  operator/model/resume gates; reusable opt-in API, trainable conv gradients and
+  CPU/checkpoint/AMP references. A05–A09 before N2.7; K6 completed.
 - **CURRENT A03 completed2026-10-16:** TheRock source/helpers
   7d9176a45a2ae40766290b0a440c468cfcb3a164, libraries
   fcf7a7142af8c258164e106e66bf893c7f563d15, installed .104. Optional modern CK
