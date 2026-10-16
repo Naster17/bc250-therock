@@ -1,0 +1,10 @@
+No changes detected in lint configuration files. Skipping setup.
+Using existing generated files for linting.
+Done.
+$ uvx --python 3.10 lintrunner@0.12.7 list
+$ uvx --python 3.10 lintrunner@0.12.7 --take SET_LINTER,NEWLINE,RUFF,NATIVEFUNCTIONS,DOCSTRING_LINTER,TESTOWNERS,IMPORT_LINTER,INCLUDE torch/nn/bc250_training_ops.py test/test_bc250_hipsparselt.py test/test_bc250_sparse_autograd.py aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp aten/src/ATen/native/native_functions.yaml tools/autograd/derivatives.yaml torch/sparse/semi_structured.py .spin/cmds.py torch/CMakeLists.txt torch/csrc/Module.cpp torch/csrc/cuda/Module.cpp torch/csrc/cuda/shared/cusparselt.cpp
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.
+$ uvx --python 3.10 lintrunner@0.12.7 --take CLANGFORMAT,FLAKE8,PYFMT,TEST_HAS_MAIN torch/nn/bc250_training_ops.py test/test_bc250_hipsparselt.py test/test_bc250_sparse_autograd.py aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp aten/src/ATen/native/native_functions.yaml tools/autograd/derivatives.yaml torch/sparse/semi_structured.py .spin/cmds.py torch/CMakeLists.txt torch/csrc/Module.cpp torch/csrc/cuda/Module.cpp torch/csrc/cuda/shared/cusparselt.cpp
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.

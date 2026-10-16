@@ -1,5 +1,10 @@
 # A05: reusable opt-in training API — 2026-10-16
 
+**Later follow-up:** native first-order sparse backward and targeted lint
+initialization/checks are now qualified; bounded forward/training timings are
+recorded in the [current follow-up report](../bc250_sparse_followup_results/README.md).
+The original milestone evidence/limitations below remain historical.
+
 Installed .104 source: Torch `6181d00b5beb8cc9fd6800da7a19c8abf756b30d`,
 TheRock helpers `869463155599a1c836bef10fb6089cbaa511058c`.
 [Deployment/source/hashes](deployment.json), [69 installed tests](api-installed.json),

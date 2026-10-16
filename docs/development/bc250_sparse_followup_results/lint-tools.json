@@ -1,0 +1,19 @@
+{
+  "tools": {
+    "clang-format": {
+      "sha256": "bfa9ef6eccb372f79ffcb6196af966fd84519ea9567f5ae7b6ad30208cd82109",
+      "configured_url": "https://oss-clang-format.s3.us-east-2.amazonaws.com/linux64/19.1.4/clang-format"
+    },
+    "clang-tidy": {
+      "sha256": "5637bd0fca665d2797926fedf53ca5ad4655bb9dbed1e1c8654c8e032ce1e7a8",
+      "configured_url": "https://oss-clang-format.s3.us-east-2.amazonaws.com/linux64/19.1.4/clang-tidy"
+    },
+    "actionlint": {
+      "sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+      "configured_url": "https://oss-clang-format.s3.us-east-2.amazonaws.com/actionlint/1.7.7/Linux_x86_64/actionlint"
+    }
+  },
+  "spin": "0.18",
+  "lintrunner": "0.12.7",
+  "mode": "PYTORCH_LINT_SKIP_CODEGEN=1; targeted configured checks"
+}

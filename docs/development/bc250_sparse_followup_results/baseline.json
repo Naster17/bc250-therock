@@ -1,0 +1,22 @@
+{
+  "results": [
+    {
+      "mode": "raw_b",
+      "status": "failed",
+      "error": "derivative for aten::_cslt_sparse_mm is not implemented",
+      "trace": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/probe_sparse_grad.py\", line 12, in <module>\n    y.float().sum().backward()\n  File \"/workspace/pytorch-work/torch/_tensor.py\", line 623, in backward\n    torch.autograd.backward(\n  File \"/workspace/pytorch-work/torch/autograd/__init__.py\", line 395, in backward\n    _engine_run_backward(\n  File \"/workspace/pytorch-work/torch/autograd/graph.py\", line 979, in _engine_run_backward\n    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: derivative for aten::_cslt_sparse_mm is not implemented\n"
+    },
+    {
+      "mode": "public_b",
+      "status": "failed",
+      "error": "`SparseSemiStructuredTensorCUSPARSELT` matmul: operation is not supported",
+      "trace": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/probe_sparse_grad.py\", line 12, in <module>\n    y.float().sum().backward()\n  File \"/workspace/pytorch-work/torch/_tensor.py\", line 623, in backward\n    torch.autograd.backward(\n  File \"/workspace/pytorch-work/torch/autograd/__init__.py\", line 395, in backward\n    _engine_run_backward(\n  File \"/workspace/pytorch-work/torch/autograd/graph.py\", line 979, in _engine_run_backward\n    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pytorch-work/torch/sparse/semi_structured.py\", line 216, in __torch_dispatch__\n    return cls.SPARSE_DISPATCH[func._overloadpacket](func, types, args, kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pytorch-work/torch/sparse/_semi_structured_ops.py\", line 142, in semi_sparse_mm\n    return A._mm(B)\n           ^^^^^^^^\n  File \"/workspace/pytorch-work/torch/sparse/semi_structured.py\", line 689, in _mm\n    raise NotImplementedError(\nNotImplementedError: `SparseSemiStructuredTensorCUSPARSELT` matmul: operation is not supported\n"
+    },
+    {
+      "mode": "public_weight",
+      "status": "passed",
+      "b_grad": false,
+      "w_grad": false
+    }
+  ]
+}

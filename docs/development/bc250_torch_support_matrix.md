@@ -72,6 +72,20 @@ are unchanged. [A05 API/evidence/limits](bc250_training_a05_results/README.md).
 Eager first-order only; no global routing, large-model speedup or compile/graph
 qualification. Exact next A06, gated-delta reference profiling/native substage.
 
+## Sparse/lint follow-up — 2026-10-16
+
+Installed Torch6ed3d12 closes first-order native sparse backward and dense source-
+weight conversion gaps; public transpose backward reconstructs on GPU.38 CPU-
+reference tests pass plus A04/A05/core/conv regressions. Verified lint tooling
+initializes locally;12 targeted configured static/format checks pass, with an
+opt-in source-only spin flag. This does not claim full-project typing/CI.
+
+Paired12 eager forward and12 training fixtures are measured: some small prepacked
+forward wins, but packing adds cost and sparse training is1.92–3.36x slower here.
+Default dense routing stays unchanged. [Scope/results](bc250_sparse_followup_results/README.md).
+Higher-order/forward AD/compile/graphs/integer gradients/broad shapes remain unqualified.
+Exact next A06 stays unchanged.
+
 ## What the current audit established
 
 - Historical audit baseline Torch4ee6571, ROCm libraries a6f7d3d, Triton ee65ff3b, immutable image5df0a58,
@@ -114,7 +128,7 @@ The following rows are not an exhaustive API or dtype promise.
 | Dense solve/SVD/lstsq | hipSOLVER/rocSOLVER/rocBLAS | Current solve, singular values+gradient, full-rank gels references pass | Rank-deficient drivers and every solver algorithm not qualified |
 | Hermitian eigenvectors | Native rocSOLVER | N2.1 retained22 cases through257 and gradients | Extreme/larger/two-stage cases unqualified |
 | Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–6 GPU prototype bounded | Production solve is host arithmetic; native N2.7 still queued |
-| Structured sparse matmul | Torch hipSPARSELt | A04 pack/compress/120 small forward matmul references, public FP16/BF16 wrappers | Scalar same-dtype f32/f16/bf16/int8; valid1:2/2:4 inputs, no sparse acceleration or autograd qualification |
+| Structured sparse matmul | Torch hipSPARSELt | A04 forward plus follow-up38 floating first-order gradient tests; public FP16/BF16 matmul/linear source-weight/input/bias gradients | Scalar native packs; integer backward/higher-order/graphs/compile unqualified. Training slower in measured small fixtures; keep explicit |
 | Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | General sparse solve absent B02; not every format/dtype/backward |
 | SDPA math | ATen HIP + BLAS | Current forward/QKV gradients and prior long/model/AMP gates | Quadratic attention memory; default retained |
 | Optional tiled SDPA | Patched scalar Triton helper | Prior FP32/FP16/BF16/GQA/masks/LoRA gates, D<=128 | Head256/dropout/compile/graphs remain A07; not built-in flash |
@@ -137,7 +151,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A01 — completed** | Convolution timing and dilated workspace | Native gfx1013 shader/KFD epoch mismatch caused unstable/negative HIP event times; MIOpen query excluded dilated GEMM. ROCr329eaf7/libraries08ba6f3 installed;15 direct API +30 Torch convolution configurations pass CPU references,32 stable event pairs and six raw-counter timing references. | Bounded current-prefix fix; see [report](bc250_miopen_a01_results/README.md). Absolute trace alignment, opposite epoch offsets/reset/reboot and universal convolution/performance remain unqualified. A02 completed below; continue A04. |
 | **A02 — completed** | Native MIOpen legacy CK reductions and recurrent backward | Libraries d375d8a2: native wave32/RDNA1 scalar profile; BF16 mapping/raw transfers/conversions and compute-precision scaling; versioned cache key. Installed54 numerical reductions +3 unsupported-compute refusals and12 FP32/FP16 LSTM/GRU/RNN output/all-gradient fixtures pass. | Applies to current-prefix MIOpen callers; BF16 RNN and wider NaN/index/compute/recurrent contracts unqualified. [Report](bc250_miopen_a02_results/README.md). A03 supplies a bounded DB seed/probe correction; modern plugin remains absent B07; no general speedup claim. |
 | **A03 — completed** | Genuine native MIOpen seed databases and capability-aware plugin probing | Libraries fcf7a714 installed:16 FindDb keys/58 checked solutions, one searched PerfDb record and41 KDB records; normal-path read-only replay has zero new user kernels. Unseen fallback and regressions pass. | Small geometry/version/device scope only; wider tuning and modern CK plugin B07 remain unqualified. [Report](bc250_miopen_a03_results/README.md). Continue A04. |
-| **A04 — completed** | Native Torch hipSPARSELt integration | Installed Torch8cdfcc8; fresh discovery, gfx1013/FP32 enablement, HIP bindings and contract guards.20 tests/120 small matmuls plus pack/public-wrapper/search/refusal checks pass. | Same-dtype FP32/FP16/BF16/INT8 scalar GPU path only; sparse autograd/graphs/compile/performance unqualified. [Report](bc250_torch_a04_results/README.md). Next A05. |
+| **A04 — completed** | Native Torch hipSPARSELt integration and follow-up | Torch6ed3d12;20 forward tests plus38 first-order gradient tests, including dense source conversion/transpose/linear. Targeted lint passes;12 forward and12 training timings recorded. | Same-dtype native floating first-order training; integer/higher-order/compile/graphs unqualified. Sparse training slower in measured small fixtures; keep explicit. [Follow-up](bc250_sparse_followup_results/README.md). Next A06 after completed A05. |
 | **A05 — completed** | Reusable opt-in causal conv/loss | Torch6181d00;69 tests: CPU output/dx/dw/db/loss, AMP/checkpoint/update and exact tiny-model AdamW resume. | Explicit torch.nn.bc250_training_ops calls; original trainer unchanged. Higher-order/compile/graphs/large-model/performance unqualified. [Report](bc250_training_a05_results/README.md). Next A06. |
 | **A06** | Native gated-delta / FLA training kernels missing | Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification | Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support. |
 | **A07** | Efficient attention gaps: head256, dropout, compile/graph support | Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math | Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled. |

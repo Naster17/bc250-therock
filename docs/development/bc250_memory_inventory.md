@@ -473,6 +473,50 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 
 ## Component coverage: implemented versus existing native backend
 
+**Sparse/lint follow-up completed2026-10-16:** user-requested A04/A05 gap closure
+before A06; Torch6ed3d12b184a27d21c0fa41d43269ff6bd17f1e0 / TheRock runtime
+helpers4f478cc1d6acd9aa901f011a17d7c79856dccd36 installed .104. Raw native
+FP32/FP16/BF16 compress/mm first-order gradients now cover retained slots, dense
+input, bias and scalar/vector alpha. Public FP16/BF16 conversion preserves dense
+source-weight edge; transposed row-sparse weights reconstruct on GPU for dense
+GPU backward, avoiding incorrect transpose pruning. Retained zeros and absent/
+undefined optional tensors handled. Public wrapper initialized lazily to preserve
+Torch import order. Candidate/installed38 tests pass CPU references:18 raw,
+16 public/linear rectangular/frozen/trainable,3 gradient-subset groups(5 each),
+retained-zero group. Installed20 A04/120 matmuls,69 A05, seven core and30 conv
+regressions pass.12 forward +12 training fixtures also pass CPU references.
+15 guards including retained import/optional failures ACK/600s/dmesg identical
+53f83f7b. Reversible exclusive-lock current/torch switch to WS/pytorch-sparse-followup;
+full original A05 WS/pytorch-a04 and old WS/pytorch-work preserved.31 protected
+runtime/DB/kpack/original/frozen/trainer/consumer hashes unchanged. Recovery
+WS/recovery/sparse-followup-before; SOURCE_SPARSE_FOLLOWUP.json in WS/current.
+libtorch_hip SHA8ffd32eeaa6548ef896a5f56773255a26a985398a4a7bf811463bcb1dc043b90.
+Verified lint tools initialize locally in isolated uv caches;12 targeted configured
+static/format checks and required lintrunner -a pass. Spin0.18/lintrunner0.12.7;
+PYTORCH_LINT_SKIP_CODEGEN=1 avoids separate codegen. Not full-project type/CI claim.
+A05 function/class ASTs unchanged by formatting; import order canonicalized.
+Performance measured, not a blanket speedup: prepacked eager forward dense/sparse
+0.279–1.585 across12 fixtures, compression separate; forward+backward sparse
+1.92–3.36x slower than dense in12 small fixtures. Keep ordinary dense BLAS/training
+unchanged and structured sparse explicit. GPU backward uses dense intermediates
+and metadata sync; no hardware sparse accelerator or application speedup claim.
+Raw valid floating first-order scope only; integer/higher-order/forward AD/compile/
+export/graphs/broad shapes/concurrency/stability remain unqualified. Sources,
+exact lint/timing protocol, errors and evidence in [follow-up report](bc250_sparse_followup_results/README.md).
+Raw WS/logs/sparse-followup-* and local ignored kernel/artifacts/sparse-followup/.
+Build r1 concrete-size codegen and r2 C++ operator/ADL failures retained; r3/r4
+success, final bc250-sparse-followup-build-r4/image28ad36e6/pip-only/native/noGPU/
+ccache20GiB/jobs12/link1. Log WS/logs/sparse-followup-build-r4.log. No active agent
+build/test/container/guard deadline. Disk8.7GiB free; avoid unnecessary clones.
+Full local Git, patch0005/reverse-apply/verified bundle on6181d00 preserved; older
+SDPA3-file reconstruction gap remains. Kernel/image/boot/BIOS/.105/user src/data/
+SDMA0/heap-off/math/default rocBLAS/r2fallback unchanged. Historical Python CPU
+fault remains unresolved/distinct from fixed VM-heap/CSR. Exact next **A06**:
+inspect existing gated-delta/FLA reference/model shapes, profile bounded forward/
+backward substages, implement one scalar/wave32 stage with independent output and
+Q/K/V/gate gradients. A06–A09 before N2.7; K6 completed.
+
+
 **A05 completed2026-10-16:** Torch6181d00b5beb8cc9fd6800da7a19c8abf756b30d,
 TheRock helpers869463155599a1c836bef10fb6089cbaa511058c installed .104.
 New opt-in torch.nn.bc250_training_ops exports causal_conv and chunked_causal_loss,

@@ -35,8 +35,8 @@
     {
       "id": "A04",
       "feature": "Native Torch hipSPARSELt integration",
-      "evidence": "Installed Torch8cdfcc8: fresh discovery, native gfx1013/FP32 enablement, HIP version/search bindings, truthful compile availability and native contracts.20 tests/120 small CPU-reference matmuls, pack decoding, public FP16/BF16 wrappers and14 refusals pass; convolution/core/attention smoke regressions pass. See ../bc250_torch_a04_results/README.md.",
-      "next": "A05 reusable causal-conv/loss opt-in API and trainable convolution gradients; preserve existing application gates. Sparse autograd/graphs/compile/performance remain unqualified.",
+      "evidence": "Installed Torch8cdfcc8: fresh discovery, native gfx1013/FP32 enablement, HIP version/search bindings, truthful compile availability and native contracts.20 tests/120 small CPU-reference matmuls, pack decoding, public FP16/BF16 wrappers and14 refusals pass; convolution/core/attention smoke regressions pass. See ../bc250_torch_a04_results/README.md. Follow-up installed Torch6ed3d12:38 CPU-reference first-order backward cases (raw f32/f16/bf16, public half/BF16 source conversion and transpose/linear),12 forward and12 training timings. Targeted lint initialization/checks pass. Training1.92-3.36x slower in selected small cases; default dense preserved. See ../bc250_sparse_followup_results/README.md.",
+      "next": "A06 stays next after completed A05. Sparse higher-order/forward AD/compile/graphs/integer gradients, broad shapes and performance optimization remain unqualified; keep explicit.",
       "status": "completed_bounded"
     },
     {

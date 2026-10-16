@@ -1,5 +1,10 @@
 # A04: native Torch hipSPARSELt integration — 2026-10-16
 
+**Later follow-up:** native first-order sparse backward and targeted lint
+initialization/checks are now qualified; bounded forward/training timings are
+recorded in the [current follow-up report](../bc250_sparse_followup_results/README.md).
+The original milestone evidence/limitations below remain historical.
+
 Installed on .104: Torch `8cdfcc8e0feb3689a1ec1d292539af083b13ea94`,
 TheRock helpers `b5879aefa7990928270645676e66cc40d972de6b`.
 ROCm libraries remain `fcf7a7142af8c258164e106e66bf893c7f563d15`;

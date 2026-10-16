@@ -1,0 +1,112 @@
+{
+  "status": "passed",
+  "source": {
+    "torch_revision": "6ed3d12b184a27d21c0fa41d43269ff6bd17f1e0",
+    "therock_port_revision": "4f478cc1d6acd9aa901f011a17d7c79856dccd36",
+    "candidate_gates": {
+      "sparse-followup-grad-formatted": 38,
+      "sparse-followup-forward-candidate": 20,
+      "sparse-followup-core-candidate": null
+    },
+    "candidate_library_sha256": {
+      "libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+      "libtorch_cpu.so": "8ecbc22ddd056b40f30e580dbe1917904c24fe84dbbe51391b45e92f3e4f6b84",
+      "libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+      "libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+      "libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+      "libtorch_python.so": "06fd5d655dd5df2f0c16719c03338bdb7fea161540a98869695dd5eaa8c57d3e",
+      "libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+      "libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+      "libtorch_hip.so": "8ffd32eeaa6548ef896a5f56773255a26a985398a4a7bf811463bcb1dc043b90"
+    },
+    "helper_sha256": {
+      "deploy_sparse_followup_on_host.py": "770238b718a5a019657d265fac8a412e7f1c57a0ee54e705048bf733cd59916d",
+      "validate_sparse_followup.py": "c9019454ea7162c828b2a3005a259f6a6bd7ef2d95343bcc3453439c66c65c54",
+      "test_bc250_sparse_autograd.py": "1b338428991219c71253b5e221360f62c6cec87387bc299b8f30b2031a33518e",
+      "test_bc250_hipsparselt.py": "c9ea1851859950b22cdafc991153f2ef60954b74887ff07f636aef59df772229",
+      "validate_torch_a04_on_host.py": "bc1f21eac14c35210675dea00872aea7b0ed15e03119af5bce6c3daaec24c96a",
+      "benchmark_sparse_training.py": "626740b2989ff6feb4a22a2acf4116aec2816faa7357d495871583cfd94f7bc1"
+    },
+    "candidate_source_sha256": {
+      ".spin/cmds.py": "413c9d4039432c230b6d6910f0ac755fe4660081bc8e12fff97336be3e707514",
+      "aten/src/ATen/native/native_functions.yaml": "e721207b2901592203121128dee1fea7d5544f1727b0ba5abce943d833f2061a",
+      "aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp": "966d3500760e9ec19356af897feab59423873f27664883a703423e51826f3024",
+      "tools/autograd/derivatives.yaml": "5a0a7c7775fe801206fea8be5d7fb214756e817b880c68ba32f88dfa909a3cef",
+      "torch/sparse/semi_structured.py": "824d85d9c2e442916f37eed27fcc9b68d208ad93c0e2a3878a6c8900cb83a7ad",
+      "torch/nn/bc250_training_ops.py": "fe4724c1b3fb60372622d28b8feb2a9a718f906d4c574660727154edb914f938",
+      "torch/csrc/cuda/shared/cusparselt.cpp": "52079b3ed1e16d99cc7052d88b58f7aaa6954fa0c610ebadf024270154636330",
+      "test/test_bc250_hipsparselt.py": "c9ea1851859950b22cdafc991153f2ef60954b74887ff07f636aef59df772229",
+      "test/test_bc250_sparse_autograd.py": "1b338428991219c71253b5e221360f62c6cec87387bc299b8f30b2031a33518e"
+    },
+    "git_bundle_sha256": "9d4799e7a07015090bb81a9650eeee6de16c9c5db45a1496ccaed09d51047686",
+    "build_log": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/sparse-followup-build-r4.log",
+    "lint": {
+      "status": "targeted configured checks passed",
+      "log": "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/lint-final.log",
+      "sha256": "4d480de01f5d6ee1ebe068d0cddb34876116c8961b8fff2e3cb4d70c46a782bb",
+      "scope": "PYFMT,RUFF,FLAKE8,CLANGFORMAT,NEWLINE,INCLUDE,NATIVEFUNCTIONS,TESTOWNERS,TEST_HAS_MAIN,IMPORT_LINTER,SET_LINTER,DOCSTRING_LINTER; not full-project type analysis"
+    },
+    "reconstruction": "Incremental patch0005 and bundle on6181d00; full local Git retained; older SDPA3-file bundle gap remains"
+  },
+  "protected_before": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0": "1e4c4d58f4e2424ebb013238896ad024355727e720e4b44619fb11ef1d5cd228",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libamdhip64.so": "e9878e9fc4efaa8dd443709a3321ffe7c07a68e090b7dc7eb6e2ec6a91290d50",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libMIOpen.so.1.0": "3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/librocblas.so": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipblaslt.so": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipsparselt.so": "fa0a904c2493d06b4e0e0b9a45d51d495d48dd9c2be092173198f0e31650af47",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/.kpack/blas_lib_gfx1013.kpack": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_model_meta.json": "c996291cd2cab13c70fcbce8b69f8d39d1cbd1c65b880628b86bccdbcca224f3",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/gfx1013_20.kdb": "024f809cdc4a416e77aa7bfa0dfc4fa9cddfdc62a3856e9cdd99d1951fbd09ca",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/gfx1013_20.HIP.fdb.txt": "d43be1cc2c94054f430527a777b03a0dcbbb012841fb4a0446ffd09f2aa3db28",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/gfx1013_20.db.txt": "1a3e9e5a2df4fa31a52956fb49fe0dc7df3b1da53dbee861e2a1e8d6daf48f5b",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_rank.bin": "727ecf84aff7397b010e454a76dcb4d88aea8dfd3fbb24ef97aa4ae099f1106e",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/lgbm_pcfg.bin": "0fdd9e3f8fb4f1621ba87e821dfe9c78e4552fcc54b8781d44e887de0594dcb6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/share/miopen/db/BC250_A03_MANIFEST.json": "cb3075e8a0bcf3a014a53a9e8e49782451597758fe03e7f86de6c5da68f1a4a6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-work/torch/lib/libtorch_hip.so": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+    "/opt/bc250-stack/previous/rocm/lib/libhsa-runtime64.so.1.21.0": "bda3dc8f8dc7d406b7e77a0d9953ef5af3ec826d01ddea58b757f9ac505f1748",
+    "/opt/bc250-stack/previous/rocm/lib/libMIOpen.so.1.0": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11",
+    "/opt/bc250-stack/previous/torch/torch/lib/libtorch_hip.so": "7493e3475d2ebbb7870a01510dfa5fb1c9a0b8ee91c7f4a6c2c24267274ad612",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libtorch_cpu.so": "7c3edc7934dd2f67f02b3db8520448f13e483b8c643b1af4fdab6976b41454e7",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libtorch_python.so": "87a412d603de779a23771c66fcb612dec2f48c0e1f17667669be642bfad2512e",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/lib/libtorch_hip.so": "112ad72045e01e1d86ace5283863af8d3fe0af961c139f41f5f214f05b4dd85d",
+    "/home/nik/finetune-n7/replica/train.py": "03b0f285216ddd68a5948cbe21a759bb4fe78b9ab71d5ffda5725eb54d78f088",
+    "/home/nik/finetune-n7/replica/bc250_ops.py": "eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8",
+    "/opt/bc250-stack/dev/priority1/python-consumers/training.env": "29b3b9d188671278f4f55b8b5dffdbc884cfb357ada7317be25f1c735ca22acf",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04/torch/nn/bc250_training_ops.py": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+  },
+  "old_torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-a04",
+  "new_torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-sparse-followup",
+  "installed_gates": [
+    "sparse-followup-grad-installed",
+    "sparse-followup-forward-installed",
+    "sparse-followup-training-installed",
+    "sparse-followup-core-installed",
+    "sparse-followup-conv-installed",
+    "sparse-followup-bench-installed",
+    "sparse-followup-training-bench"
+  ],
+  "phase": "sparse-followup-bench-installed",
+  "protected_unchanged": true,
+  "running_agent_jobs": [],
+  "performance": {
+    "forward_dense_over_sparse_range": [
+      0.2790132688873821,
+      1.5848019704475378
+    ],
+    "training_dense_over_sparse_range": [
+      0.2976448450486809,
+      0.5220585164965855
+    ],
+    "decision": "Keep structured sparsity explicit and default dense BLAS unchanged; compression/backward cost can erase small forward wins",
+    "scope": "12 paired eager forward cases plus12 CPU-checked forward/backward cases, not application/kernel-only or universal speedup"
+  },
+  "boot_id": "a287fd16-c97b-4d88-8055-b0553a2f7631",
+  "kernel_log_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+}

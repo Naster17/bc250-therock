@@ -14,6 +14,21 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Sparse backward and measured cost (follow-up, updated 2026-10-16)
+
+The current development runtime now supports first-order FP32/FP16/BF16 raw
+structured-sparse gradients, including retained compression slots, dense operand,
+bias and scalar/row alpha. Public FP16/BF16 semi-structured conversion preserves
+the gradient to the original dense weight, projected onto the retained mask.
+Matmul/linear backward uses dense GPU reconstruction where the transpose has no
+valid row-sparse pack.38 CPU-reference tests and existing regressions pass.
+
+This is explicit functionality, not an automatic training optimization. In12
+small paired training fixtures, sparse forward/backward is1.92–3.36x slower than
+dense; prepacked forward wins only for some smaller tested cases and packing adds
+cost. Ordinary LoRA/dense behavior stays unchanged. Higher-order/compile/graph/
+integer backward is unqualified. [Exact API scope, timings and working lint workflow](bc250_sparse_followup_results/README.md).
+
 ## Opt-in causal convolution and loss API (A05, updated 2026-10-16)
 
 Scripts using the current `bc250-torch`/`bc250-train` can explicitly import
@@ -45,8 +60,8 @@ matching-floating-type bias are supported. Widened outputs/split-K are refused.
 See [tested contracts and limits](bc250_torch_a04_results/README.md).
 
 This is explicit sparse execution on the GPU; ordinary dense operators continue
-to use their existing backend. Sparse gradients, compilation/graphs and a sparse
-speedup are unqualified. Other prefixes/venvs and the frozen fallback are unchanged.
+to use their existing backend. The follow-up section above supersedes the original sparse-gradient gap.
+Compilation/graphs and universal sparse speedups remain unqualified. Other prefixes/venvs and the frozen fallback are unchanged.
 
 ## Convolution correction (updated 2026-10-16)
 
