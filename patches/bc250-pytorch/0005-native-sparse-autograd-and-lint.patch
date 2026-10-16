@@ -1,0 +1,876 @@
+From 6ed3d12b184a27d21c0fa41d43269ff6bd17f1e0 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Fri, 16 Oct 2026 19:41:49 +0200
+Subject: [PATCH] Implement native gfx1013 structured sparse first-order
+ backward
+
+Raw compression/matmul lacked derivatives. Public sparse backward also needed a
+transpose pack that is not generally a valid row-sparse matrix, and conversion
+severed the source dense weight's gradient edge. Add retained-slot GPU backward
+formulas, a dense GPU transpose fallback and lazy differentiable conversion.
+Handle absent saved optional tensors as undefined as well as nullopt.
+
+Enable source-only spin lint without standalone codegen using an opt-in environment
+flag, and apply the configured formatting checks to A04/A05 code. Existing default
+lint behavior is unchanged. Convolution/loss and A04 test formatting preserve ASTs.
+
+Test Plan:
+```text
+python -m pip install -e . -v --no-build-isolation
+python test_bc250_sparse_autograd.py -v
+PYTORCH_LINT_SKIP_CODEGEN=1 spin lint -- --take=PYFMT,RUFF,FLAKE8,CLANGFORMAT,NEWLINE,INCLUDE,NATIVEFUNCTIONS,TESTOWNERS,TEST_HAS_MAIN,IMPORT_LINTER,SET_LINTER,DOCSTRING_LINTER <affected-files>
+lintrunner -a --take=PYFMT,RUFF,FLAKE8,CLANGFORMAT,NEWLINE,INCLUDE,NATIVEFUNCTIONS,TESTOWNERS,TEST_HAS_MAIN,IMPORT_LINTER,SET_LINTER,DOCSTRING_LINTER <affected-files>
+```
+Separate candidate on native BC-250:38 GPU backward tests pass CPU references,
+including all gradients, retained zero slots and independent gradient subsets;
+20 A04 forward cases/120 matmuls and seven core groups pass. Guards acknowledged,
+dmesg unchanged. First import-order/undefined-optional failures and failed builds
+are retained. Targeted lint checks now pass after verified tool initialization.
+No integer/higher-order/compile/graph or universal sparse speedup claim. Dense
+GPU backward intermediates intentionally prioritize correctness.
+
+Authored with an AI assistant.
+---
+ .spin/cmds.py                                 |  12 +-
+ aten/src/ATen/native/native_functions.yaml    |  12 +
+ .../ATen/native/sparse/cuda/cuSPARSELtOps.cpp |  86 ++++++++
+ test/test_bc250_hipsparselt.py                |  70 ++++--
+ test/test_bc250_sparse_autograd.py            | 208 ++++++++++++++++++
+ tools/autograd/derivatives.yaml               |   6 +
+ torch/csrc/cuda/shared/cusparselt.cpp         |   3 +-
+ torch/nn/bc250_training_ops.py                | 101 ++++++---
+ torch/sparse/semi_structured.py               |  53 +++++
+ 9 files changed, 499 insertions(+), 52 deletions(-)
+ create mode 100644 test/test_bc250_sparse_autograd.py
+
+diff --git a/.spin/cmds.py b/.spin/cmds.py
+index b854532..8dbfd67 100644
+--- a/.spin/cmds.py
++++ b/.spin/cmds.py
+@@ -1,4 +1,5 @@
+ import hashlib
++import os
+ import re
+ import subprocess
+ import sys
+@@ -283,10 +284,13 @@ def lazy_setup_lint(ctx, parent_callback, **kwargs):
+         click.echo("Linting tools set up and hashes updated.")
+     else:
+         click.echo("No changes detected in lint configuration files. Skipping setup.")
+-    click.echo("Regenerating version...")
+-    ctx.invoke(regenerate_version)
+-    click.echo("Regenerating type stubs...")
+-    ctx.invoke(regenerate_type_stubs)
++    if os.environ.get("PYTORCH_LINT_SKIP_CODEGEN") == "1":
++        click.echo("Using existing generated files for linting.")
++    else:
++        click.echo("Regenerating version...")
++        ctx.invoke(regenerate_version)
++        click.echo("Regenerating type stubs...")
++        ctx.invoke(regenerate_type_stubs)
+     click.echo("Done.")
+     _check_linters()
+ 
+diff --git a/aten/src/ATen/native/native_functions.yaml b/aten/src/ATen/native/native_functions.yaml
+index 9ca22e7..f32a10b 100644
+--- a/aten/src/ATen/native/native_functions.yaml
++++ b/aten/src/ATen/native/native_functions.yaml
+@@ -3332,6 +3332,18 @@
+     CUDA: _cslt_sparse_mm
+   tags: needs_fixed_stride_order
+ 
++- func: _cslt_to_dense(Tensor packed, int k) -> Tensor
++  dispatch:
++    CUDA: _cslt_to_dense
++
++- func: _cslt_compress_backward(Tensor grad, Tensor packed, int k) -> Tensor
++  dispatch:
++    CUDA: _cslt_compress_backward
++
++- func: _cslt_sparse_mm_backward(Tensor grad, Tensor compressed_A, Tensor dense_B, Tensor? bias, Tensor? alpha, bool transpose_result, bool[4] output_mask) -> (Tensor, Tensor, Tensor, Tensor)
++  dispatch:
++    CUDA: _cslt_sparse_mm_backward
++
+ - func: _cslt_sparse_mm_search(Tensor compressed_A, Tensor dense_B, Tensor? bias=None, Tensor? alpha=None, ScalarType? out_dtype=None, bool transpose_result=False) -> int
+   dispatch:
+     CUDA: _cslt_sparse_mm_search
+diff --git a/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp b/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp
+index 2a41739..7972b86 100644
+--- a/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp
++++ b/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp
+@@ -82,6 +82,80 @@ static bool usesGfx1013ScalarSparseLt() {
+ #endif
+ }
+ 
++// Native packs store retained values followed by byte-sized 1:2/2:4 indices.
++static std::tuple<Tensor, Tensor> unpackGfx1013(const Tensor& packed, int64_t k) {
++  TORCH_CHECK(usesGfx1013ScalarSparseLt(), "Sparse Lt backward/unpacking requires gfx1013");
++  TORCH_CHECK(packed.dim() == 2 && packed.is_contiguous() && k > 0,
++      "Invalid native sparse pack");
++  const auto dtype = packed.scalar_type();
++  TORCH_CHECK(dtype == kFloat || dtype == kHalf || dtype == kBFloat16,
++      "Sparse Lt backward/unpacking requires floating-point storage");
++  const int64_t group = dtype == kFloat ? 2 : 4;
++  TORCH_CHECK(k % group == 0, "Invalid native sparse contraction size");
++  const auto m = packed.size(0), groups = k / group, kept = group / 2;
++  const auto value_count = m * k / 2;
++  auto raw = packed.view(kByte).flatten();
++  TORCH_CHECK(raw.numel() >= value_count * packed.itemsize() + m * groups,
++      "Native sparse pack is too small");
++  auto tags = raw.narrow(0, value_count * packed.itemsize(), m * groups)
++                  .to(kLong).view({m, groups, 1});
++  auto shifts = at::arange(kept, packed.options().dtype(kLong)).mul(2);
++  auto indices = at::bitwise_and(at::bitwise_right_shift(tags, shifts), 3);
++  TORCH_CHECK(indices.lt(group).all().item<bool>(), "Invalid native sparse metadata");
++  return {packed.flatten().narrow(0, 0, value_count).view({m, groups, kept}), indices};
++}
++
++Tensor _cslt_to_dense(const Tensor& packed, int64_t k) {
++  auto [values, indices] = unpackGfx1013(packed, k);
++  const int64_t m = packed.size(0), group = packed.scalar_type() == kFloat ? 2 : 4;
++  return at::zeros({m, k / group, group}, packed.options())
++      .scatter(2, indices, values).view({m, k});
++}
++
++Tensor _cslt_compress_backward(const Tensor& grad, const Tensor& packed, int64_t k) {
++  auto [values, indices] = unpackGfx1013(packed, k);
++  const int64_t m = packed.size(0), group = packed.scalar_type() == kFloat ? 2 : 4;
++  auto retained_grad = grad.flatten().narrow(0, 0, m * k / 2).view(values.sizes());
++  return at::zeros({m, k / group, group}, packed.options())
++      .scatter(2, indices, retained_grad).view({m, k});
++}
++
++std::tuple<Tensor, Tensor, Tensor, Tensor> _cslt_sparse_mm_backward(
++    const Tensor& grad, const Tensor& packed, const Tensor& dense,
++    const std::optional<Tensor>& bias, const std::optional<Tensor>& alpha,
++    bool transpose_result, std::array<bool, 4> output_mask) {
++  auto a = at::native::_cslt_to_dense(packed, dense.size(0)).to(kFloat);
++  auto b = dense.to(kFloat);
++  auto g = (transpose_result ? grad.t() : grad).to(kFloat);
++  const bool has_alpha = alpha.has_value() && alpha->defined();
++  const bool has_bias = bias.has_value() && bias->defined();
++  auto scaled = has_alpha
++      ? g.mul(alpha->numel() == 1 ? alpha->to(kFloat) : alpha->to(kFloat).view({-1, 1}))
++      : g;
++  Tensor dp, db, dbias, dalpha;
++  if (output_mask[0]) {
++    auto da = at::mm(scaled, b.t());
++    auto [values, indices] = unpackGfx1013(packed, dense.size(0));
++    const auto group = packed.scalar_type() == kFloat ? 2 : 4;
++    auto retained = da.view({packed.size(0), dense.size(0) / group, group})
++                        .gather(2, indices).to(packed.scalar_type());
++    dp = at::zeros_like(packed);
++    dp.flatten().narrow(0, 0, retained.numel()).copy_(retained.flatten());
++  }
++  if (output_mask[1]) {
++    db = at::mm(a.t(), scaled).to(dense.scalar_type());
++  }
++  if (output_mask[2] && has_bias) {
++    dbias = g.sum(1).to(bias->scalar_type());
++  }
++  if (output_mask[3] && has_alpha) {
++    auto product = g.mul(at::mm(a, b));
++    dalpha = (alpha->numel() == 1 ? product.sum() : product.sum(1))
++                 .to(alpha->scalar_type()).view(alpha->sizes());
++  }
++  return {dp, db, dbias, dalpha};
++}
++
+ at::Tensor _cslt_compress(const Tensor& sparse_input) {
+   const bool native_gfx1013 = usesGfx1013ScalarSparseLt();
+   if (native_gfx1013) {
+@@ -674,6 +748,18 @@ int64_t _cslt_sparse_mm_search(
+ 
+ namespace at::native {
+ 
++Tensor _cslt_to_dense(const Tensor&, int64_t) {
++  TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
++}
++Tensor _cslt_compress_backward(const Tensor&, const Tensor&, int64_t) {
++  TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
++}
++std::tuple<Tensor, Tensor, Tensor, Tensor> _cslt_sparse_mm_backward(
++    const Tensor&, const Tensor&, const Tensor&, const std::optional<Tensor>&,
++    const std::optional<Tensor>&, bool, std::array<bool, 4>) {
++  TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
++}
++
+ at::Tensor _cslt_compress(const Tensor& sparse_input) {
+   TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
+ }
+diff --git a/test/test_bc250_hipsparselt.py b/test/test_bc250_hipsparselt.py
+index b1f3915..1fc7289 100644
+--- a/test/test_bc250_hipsparselt.py
++++ b/test/test_bc250_hipsparselt.py
+@@ -1,12 +1,17 @@
++# Owner(s): ["module: sparse"]
+ # Native gfx1013 scalar hipSPARSELt integration contracts.
+ import json
+ import os
+ from pathlib import Path
+ 
+ import torch
+-from torch.testing._internal.common_device_type import dtypes, instantiate_device_type_tests
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
+ from torch.testing._internal.common_utils import parametrize, run_tests, TestCase
+ 
++
+ ROWS = []
+ 
+ 
+@@ -31,7 +36,9 @@ def sparse_input(m, k, dtype):
+ class TestBC250SparseLt(TestCase):
+     def setUp(self):
+         super().setUp()
+-        self.assertEqual(torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013")
++        self.assertEqual(
++            torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013"
++        )
+         torch.manual_seed(250404)
+ 
+     @dtypes(torch.float32, torch.float16, torch.bfloat16, torch.int8)
+@@ -54,12 +61,16 @@ class TestBC250SparseLt(TestCase):
+             kept = group // 2
+             value_bytes = m * k // 2 * a.element_size()
+             values = raw[:value_bytes].view(dtype).reshape(m, k // group, kept)
+-            metadata = raw[value_bytes:value_bytes + m * k // group].reshape(m, k // group).long()
++            metadata = (
++                raw[value_bytes : value_bytes + m * k // group]
++                .reshape(m, k // group)
++                .long()
++            )
+             decoded = torch.zeros(m, k // group, group, dtype=dtype)
+             for i in range(kept):
+                 index = (metadata >> (2 * i)) & 3
+                 self.assertTrue(bool((index < group).all()))
+-                decoded.scatter_(2, index.unsqueeze(-1), values[:, :, i:i + 1])
++                decoded.scatter_(2, index.unsqueeze(-1), values[:, :, i : i + 1])
+             self.assertEqual(decoded.reshape(m, k), cpu_a, atol=0, rtol=0)
+             product = cpu_a.double() @ cpu_b.double()
+             executions = 0
+@@ -70,12 +81,18 @@ class TestBC250SparseLt(TestCase):
+                 kwargs = {}
+                 expected = product
+                 if epilogue == "scalar_gpu":
+-                    kwargs = dict(alpha=torch.tensor(-0.75, device=device), bias=bias_cpu.to(device))
++                    kwargs = dict(
++                        alpha=torch.tensor(-0.75, device=device),
++                        bias=bias_cpu.to(device),
++                    )
+                     expected = -0.75 * product + bias_cpu.double()[:, None]
+                 elif epilogue == "vector":
+                     alpha_cpu = (torch.arange(m) % 4 + 1).float() / 4
+                     kwargs = dict(alpha=alpha_cpu.to(device), bias=bias_cpu.to(device))
+-                    expected = alpha_cpu.double()[:, None] * product + bias_cpu.double()[:, None]
++                    expected = (
++                        alpha_cpu.double()[:, None] * product
++                        + bias_cpu.double()[:, None]
++                    )
+                 elif epilogue == "typed_bias":
+                     typed_bias = bias_cpu.to(dtype)
+                     kwargs = dict(bias=typed_bias.to(device))
+@@ -85,13 +102,23 @@ class TestBC250SparseLt(TestCase):
+                 else:
+                     expected = expected.to(dtype)
+                 for transpose in [False, True]:
+-                    actual = torch._cslt_sparse_mm(packed, b, transpose_result=transpose, **kwargs)
+-                    self.assertEqual(actual.cpu(), expected.t() if transpose else expected)
++                    actual = torch._cslt_sparse_mm(
++                        packed, b, transpose_result=transpose, **kwargs
++                    )
++                    self.assertEqual(
++                        actual.cpu(), expected.t() if transpose else expected
++                    )
+                     executions += 1
+             self.assertEqual(a.cpu(), cpu_a, atol=0, rtol=0)
+             self.assertEqual(b.cpu(), cpu_b, atol=0, rtol=0)
+-        record(self._testMethodName, dtype=str(dtype), geometry=geometry,
+-               column_major=column_major, matmul_executions=executions, metadata_roundtrip=True)
++        record(
++            self._testMethodName,
++            dtype=str(dtype),
++            geometry=geometry,
++            column_major=column_major,
++            matmul_executions=executions,
++            metadata_roundtrip=True,
++        )
+ 
+     @dtypes(torch.float16, torch.bfloat16)
+     def test_public_wrapper(self, device, dtype):
+@@ -109,13 +136,16 @@ class TestBC250SparseLt(TestCase):
+         self.assertTrue(torch.backends.cusparselt.is_available())
+         self.assertEqual(torch.backends.cusparselt.version(), 209)
+         algorithm, split_k, split_mode, count = torch._C._cusparselt.mm_search(
+-            packed, b, None, None, None, False)
++            packed, b, None, None, None, False
++        )
+         self.assertEqual((algorithm, split_k, split_mode, count), (0, 1, 0, 1))
+         with self.assertWarnsRegex(UserWarning, "deprecated"):
+             algorithm = torch._cslt_sparse_mm_search(packed, b)
+         self.assertEqual(algorithm, 0)
+-        self.assertEqual(torch._cslt_sparse_mm(packed, b, alg_id=algorithm).cpu(),
+-                         (a.cpu().double() @ b.cpu().double()).float())
++        self.assertEqual(
++            torch._cslt_sparse_mm(packed, b, alg_id=algorithm).cpu(),
++            (a.cpu().double() @ b.cpu().double()).float(),
++        )
+         record(self._testMethodName, algorithm=algorithm)
+ 
+     def test_contracts(self, device):
+@@ -128,10 +158,14 @@ class TestBC250SparseLt(TestCase):
+             lambda: torch._cslt_sparse_mm(packed.flatten(), b),
+             lambda: torch._cslt_sparse_mm(packed, b.half()),
+             lambda: torch._cslt_sparse_mm(packed, torch.ones(14, 9, device=device)),
+-            lambda: torch._cslt_sparse_mm(packed, torch.ones(12, 18, device=device)[:, ::2]),
++            lambda: torch._cslt_sparse_mm(
++                packed, torch.ones(12, 18, device=device)[:, ::2]
++            ),
+             lambda: torch._cslt_sparse_mm(packed, b, alpha=torch.ones(7)),
+             lambda: torch._cslt_sparse_mm(packed, b, alpha=torch.tensor(1.0)),
+-            lambda: torch._cslt_sparse_mm(packed, b, alpha=torch.ones(7, device=device, dtype=torch.float16)),
++            lambda: torch._cslt_sparse_mm(
++                packed, b, alpha=torch.ones(7, device=device, dtype=torch.float16)
++            ),
+             lambda: torch._cslt_sparse_mm(packed, b, bias=torch.ones(6, device=device)),
+             lambda: torch._cslt_sparse_mm(packed, b, bias=torch.ones(7)),
+             lambda: torch._cslt_sparse_mm(packed, b, split_k=2),
+@@ -143,8 +177,10 @@ class TestBC250SparseLt(TestCase):
+         q = torch._cslt_compress(a.to(torch.int8))
+         with self.assertRaisesRegex(RuntimeError, "same-dtype"):
+             torch._cslt_sparse_mm(q, b.to(torch.int8), out_dtype=torch.int32)
+-        self.assertEqual(torch._cslt_sparse_mm(packed, b).cpu(),
+-                         (a.cpu().double() @ b.cpu().double()).float())
++        self.assertEqual(
++            torch._cslt_sparse_mm(packed, b).cpu(),
++            (a.cpu().double() @ b.cpu().double()).float(),
++        )
+         record(self._testMethodName, refusal_contracts=len(bad) + 1)
+ 
+ 
+diff --git a/test/test_bc250_sparse_autograd.py b/test/test_bc250_sparse_autograd.py
+new file mode 100644
+index 0000000..8248fc5
+--- /dev/null
++++ b/test/test_bc250_sparse_autograd.py
+@@ -0,0 +1,208 @@
++# Owner(s): ["module: sparse"]
++# Native gfx1013 first-order structured sparse gradients and bounded timings.
++import json
++import os
++from pathlib import Path
++
++import torch
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
++from torch.testing._internal.common_utils import parametrize, run_tests, TestCase
++
++
++ROWS = []
++
++
++def record(name, **data):
++    ROWS.append(dict(name=name, status="passed", **data))
++    Path(os.environ["BC250_SPARSE_ROWS"]).write_text(json.dumps(ROWS, indent=2) + "\n")
++
++
++def structured(m, k, dtype):
++    group = 2 if dtype == torch.float32 else 4
++    mask = torch.zeros(m, k // group, group, dtype=torch.bool)
++    start = torch.arange(m * (k // group)).view(m, k // group) % group
++    for i in range(group // 2):
++        mask.scatter_(2, ((start + i) % group).unsqueeze(-1), True)
++    mask = mask.view(m, k)
++    values = (torch.randint(1, 4, (m, k)) * 0.125).to(dtype)
++    return values * mask, mask
++
++
++class TestSparseAutograd(TestCase):
++    def setUp(self):
++        super().setUp()
++        torch.manual_seed(251016)
++        torch.set_num_threads(2)
++        self.assertEqual(
++            torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013"
++        )
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    @parametrize("transpose", [False, True])
++    @parametrize("alpha_mode", ["none", "scalar", "vector"])
++    def test_raw(self, device, dtype, transpose, alpha_mode):
++        a, mask = structured(7, 12, dtype)
++        b = (torch.randn(12, 9) * 0.2).to(dtype)
++        gpu_a = a.to(device).requires_grad_()
++        gpu_b = b.to(device).t().contiguous().t().detach().requires_grad_()
++        bias = torch.linspace(-0.2, 0.3, 7, device=device, requires_grad=True)
++        alpha = (
++            None
++            if alpha_mode == "none"
++            else torch.tensor(-0.75, device=device, requires_grad=True)
++            if alpha_mode == "scalar"
++            else torch.linspace(0.25, 1, 7, device=device, requires_grad=True)
++        )
++        kwargs = dict(bias=bias, transpose_result=transpose)
++        if alpha is not None:
++            kwargs["alpha"] = alpha
++        stream = torch.cuda.Stream()
++        stream.wait_stream(torch.cuda.current_stream())
++        with torch.cuda.stream(stream):
++            packed = torch._cslt_compress(gpu_a)
++            y = torch._cslt_sparse_mm(packed, gpu_b, **kwargs)
++            g = torch.linspace(
++                -0.25, 0.5, y.numel(), device=device, dtype=dtype
++            ).view_as(y)
++            inputs = [gpu_a, gpu_b, bias] + ([] if alpha is None else [alpha])
++            actual = torch.autograd.grad(y, inputs, g)
++        torch.cuda.current_stream().wait_stream(stream)
++        ca, cb = a.double().requires_grad_(), b.double().requires_grad_()
++        cbi = bias.detach().cpu().double().requires_grad_()
++        calpha = (
++            None if alpha is None else alpha.detach().cpu().double().requires_grad_()
++        )
++        ref = (ca * mask) @ cb
++        if calpha is not None:
++            ref = ref * (calpha if calpha.numel() == 1 else calpha[:, None])
++        ref = (ref + cbi[:, None]).to(dtype).double()
++        if transpose:
++            ref = ref.t()
++        refs = torch.autograd.grad(
++            ref, [ca, cb, cbi] + ([] if calpha is None else [calpha]), g.cpu().double()
++        )
++        tol = {
++            torch.float32: (2e-6, 4e-5),
++            torch.float16: (0.002, 0.006),
++            torch.bfloat16: (0.015, 0.04),
++        }[dtype]
++        self.assertEqual(y.cpu().double(), ref, atol=tol[0], rtol=tol[1])
++        for result, expected in zip(actual, refs):
++            self.assertEqual(result.cpu().double(), expected, atol=tol[0], rtol=tol[1])
++        self.assertEqual(gpu_a.grad, None)
++        record(self._testMethodName, dtype=str(dtype), all_gradients=True)
++
++    @dtypes(torch.float16, torch.bfloat16)
++    @parametrize("trainable_weight", [False, True])
++    @parametrize("linear", [False, True])
++    @parametrize("rows", [32, 64])
++    def test_public(self, device, dtype, trainable_weight, linear, rows):
++        a, mask = structured(rows, 32, dtype)
++        w = a.to(device).requires_grad_(trainable_weight)
++        x = (torch.randn(16, 32, device=device, dtype=dtype) * 0.2).requires_grad_()
++        sparse = torch.sparse.to_sparse_semi_structured(w)
++        bias = torch.linspace(
++            -0.2, 0.2, rows, device=device, dtype=dtype, requires_grad=True
++        )
++        y = (
++            torch.nn.functional.linear(x, sparse, bias)
++            if linear
++            else torch.mm(sparse, x.t()).t()
++        )
++        y.square().float().mean().backward()
++        cw = a.double().requires_grad_(trainable_weight)
++        cx = x.detach().cpu().double().requires_grad_()
++        cbias = bias.detach().cpu().double().requires_grad_()
++        ref = cx @ (cw * mask).t()
++        if linear:
++            ref = ref + cbias
++        ref = ref.to(dtype)
++        ref.square().float().mean().backward()
++        tol = 0.003 if dtype == torch.bfloat16 else 0.0005
++        self.assertEqual(y.cpu(), ref, atol=tol, rtol=0.04)
++        self.assertEqual(x.grad.cpu().double(), cx.grad, atol=tol, rtol=0.04)
++        if linear:
++            self.assertEqual(bias.grad.cpu().double(), cbias.grad, atol=tol, rtol=0.04)
++        if trainable_weight:
++            self.assertIsNotNone(w.grad)
++            self.assertEqual(w.grad.cpu().double(), cw.grad, atol=tol, rtol=0.04)
++            self.assertEqual(
++                w.grad.cpu()[~mask],
++                torch.zeros_like(w.grad.cpu()[~mask]),
++                atol=0,
++                rtol=0,
++            )
++        record(self._testMethodName, source_weight_gradient=trainable_weight)
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    def test_gradient_subsets(self, device, dtype):
++        a, mask = structured(7, 12, dtype)
++        b = (torch.randn(12, 9) * 0.2).to(dtype)
++        for requested in ["a", "b", "bias", "alpha", "ab"]:
++            ga = a.to(device).requires_grad_(
++                "a" in requested and requested != "bias" and requested != "alpha"
++            )
++            gb = b.to(device).requires_grad_(requested in ("b", "ab"))
++            bias = (
++                torch.zeros(7, device=device, requires_grad=True)
++                if requested == "bias"
++                else None
++            )
++            alpha = (
++                torch.tensor(0.5, device=device, requires_grad=True)
++                if requested == "alpha"
++                else None
++            )
++            actual = torch._cslt_sparse_mm(
++                torch._cslt_compress(ga), gb, bias=bias, alpha=alpha
++            )
++            actual.sum().backward()
++            ca = a.double().requires_grad_(ga.requires_grad)
++            cb = b.double().requires_grad_(gb.requires_grad)
++            cbi = (
++                None if bias is None else bias.detach().cpu().double().requires_grad_()
++            )
++            calpha = (
++                None
++                if alpha is None
++                else alpha.detach().cpu().double().requires_grad_()
++            )
++            expected = (ca * mask) @ cb
++            if calpha is not None:
++                expected = expected * calpha
++            if cbi is not None:
++                expected = expected + cbi[:, None]
++            expected.to(dtype).sum().backward()
++            tol = (
++                0.02
++                if dtype == torch.bfloat16
++                else 0.003
++                if dtype == torch.float16
++                else 3e-6
++            )
++            for gpu, cpu in zip([ga, gb, bias, alpha], [ca, cb, cbi, calpha]):
++                if gpu is not None and gpu.requires_grad:
++                    self.assertEqual(
++                        gpu.grad.cpu().double(), cpu.grad, atol=tol, rtol=0.04
++                    )
++        record(self._testMethodName, independent_gradient_subsets=5)
++
++    def test_retained_zero(self, device):
++        # Empty groups still retain deterministic slots; they must receive gradients.
++        a = torch.zeros(7, 12, device=device, requires_grad=True)
++        b = torch.ones(12, 9, device=device, requires_grad=True)
++        packed = torch._cslt_compress(a)
++        torch._cslt_sparse_mm(packed, b).sum().backward()
++        self.assertEqual(a.grad[:, ::2], torch.full((7, 6), 9.0, device=device))
++        self.assertEqual(a.grad[:, 1::2], torch.zeros(7, 6, device=device))
++        self.assertEqual(b.grad, torch.zeros_like(b))
++        record(self._testMethodName)
++
++
++instantiate_device_type_tests(TestSparseAutograd, globals(), only_for=("cuda",))
++
++if __name__ == "__main__":
++    run_tests()
+diff --git a/tools/autograd/derivatives.yaml b/tools/autograd/derivatives.yaml
+index 0bf6e80..4d454f3 100644
+--- a/tools/autograd/derivatives.yaml
++++ b/tools/autograd/derivatives.yaml
+@@ -3285,3 +3285,9 @@
+ - name: _foreach_mm(Tensor[] self, Tensor[] mat2) -> Tensor[]
+   self: mm_mat1_backward(grads[i], mat2[i], self[i].sym_sizes(), self[i].sym_strides(), self[i].layout(), 1)
+   mat2: mm_mat2_backward(grads[i], self[i], mat2[i].sym_sizes(), mat2[i].sym_strides(), mat2[i].layout(), 1)
++
++- name: _cslt_compress(Tensor input) -> Tensor
++  input: _cslt_compress_backward(grad, result, input.sym_size(1).expect_int())
++
++- name: _cslt_sparse_mm(Tensor compressed_A, Tensor dense_B, Tensor? bias=None, Tensor? alpha=None, ScalarType? out_dtype=None, bool transpose_result=False, int alg_id=0, int split_k=1, int split_k_mode=-1) -> Tensor
++  compressed_A, dense_B, bias, alpha: _cslt_sparse_mm_backward(grad, compressed_A, dense_B, bias, alpha, transpose_result, grad_input_mask)
+diff --git a/torch/csrc/cuda/shared/cusparselt.cpp b/torch/csrc/cuda/shared/cusparselt.cpp
+index 1d49994..be79065 100644
+--- a/torch/csrc/cuda/shared/cusparselt.cpp
++++ b/torch/csrc/cuda/shared/cusparselt.cpp
+@@ -7,7 +7,8 @@ namespace {
+ 
+ size_t getVersionInt() {
+ #ifdef USE_ROCM
+-  return hipsparseltVersionMajor * 100000 + hipsparseltVersionMinor * 100 + hipsparseltVersionPatch;
++  return hipsparseltVersionMajor * 100000 + hipsparseltVersionMinor * 100 +
++      hipsparseltVersionPatch;
+ #else
+   return CUSPARSELT_VERSION;
+ #endif
+diff --git a/torch/nn/bc250_training_ops.py b/torch/nn/bc250_training_ops.py
+index ba3b223..cd8c22d 100644
+--- a/torch/nn/bc250_training_ops.py
++++ b/torch/nn/bc250_training_ops.py
+@@ -8,17 +8,20 @@ No fused gated-delta/FLA implementation, graph or higher-order gradient contract
+ 
+ import functools
+ 
++import triton
++import triton.language as tl
++
+ import torch
+ import torch.nn.functional as F
+ from torch.autograd.function import once_differentiable
+-import triton
+-import triton.language as tl
+ 
+ 
+ @functools.lru_cache(None)
+ def _native(device: torch.device) -> bool:
+     return (
+-        getattr(torch.cuda.get_device_properties(device), "gcnArchName", "").split(":")[0]
++        getattr(torch.cuda.get_device_properties(device), "gcnArchName", "").split(":")[
++            0
++        ]
+         == "gfx1013"
+     )
+ 
+@@ -104,10 +107,22 @@ def _conv_dx(
+ 
+ 
+ @triton.jit
+-def _conv_dparams(X, G, Z, P, L: tl.constexpr, BL: tl.constexpr,
+-                  C: tl.constexpr, XB: tl.constexpr, XC: tl.constexpr,
+-                  XT: tl.constexpr, K: tl.constexpr, TILES: tl.constexpr,
+-                  ACT: tl.constexpr, BLOCK: tl.constexpr):
++def _conv_dparams(
++    X,
++    G,
++    Z,
++    P,
++    L: tl.constexpr,
++    BL: tl.constexpr,
++    C: tl.constexpr,
++    XB: tl.constexpr,
++    XC: tl.constexpr,
++    XT: tl.constexpr,
++    K: tl.constexpr,
++    TILES: tl.constexpr,
++    ACT: tl.constexpr,
++    BLOCK: tl.constexpr,
++):
+     c, tap, tile = tl.program_id(0), tl.program_id(1), tl.program_id(2)
+     index = tile * BLOCK + tl.arange(0, BLOCK)
+     b, t = index // L, index % L
+@@ -116,22 +131,27 @@ def _conv_dparams(X, G, Z, P, L: tl.constexpr, BL: tl.constexpr,
+     if ACT:
+         z = tl.load(Z + offset, index < BL, other=0).to(tl.float32)
+         sigmoid = tl.sigmoid(z)
+-        g = (g * sigmoid * (1 + z * (1 - sigmoid))).to(G.dtype.element_ty).to(tl.float32)
++        g = (
++            (g * sigmoid * (1 + z * (1 - sigmoid)))
++            .to(G.dtype.element_ty)
++            .to(tl.float32)
++        )
+     if tap < K:
+         source = t + tap - (K - 1)
+-        x = tl.load(X + b * XB + c * XC + source * XT,
+-                    (index < BL) & (source >= 0), other=0).to(tl.float32)
++        x = tl.load(
++            X + b * XB + c * XC + source * XT, (index < BL) & (source >= 0), other=0
++        ).to(tl.float32)
+         g = g * x
+     tl.store(P + (c * (K + 1) + tap) * TILES + tile, tl.sum(g, 0))
+ 
+ 
+ @triton.jit
+-def _conv_dparams_reduce(P, DW, DB, K: tl.constexpr, TILES: tl.constexpr,
+-                         BLOCK: tl.constexpr):
++def _conv_dparams_reduce(
++    P, DW, DB, K: tl.constexpr, TILES: tl.constexpr, BLOCK: tl.constexpr
++):
+     c, tap = tl.program_id(0), tl.program_id(1)
+     i = tl.arange(0, BLOCK)
+-    value = tl.sum(tl.load(P + (c * (K + 1) + tap) * TILES + i,
+-                           i < TILES, other=0), 0)
++    value = tl.sum(tl.load(P + (c * (K + 1) + tap) * TILES + i, i < TILES, other=0), 0)
+     if tap < K:
+         tl.store(DW + c * K + tap, value)
+     else:
+@@ -160,7 +180,7 @@ class _CausalConv(torch.autograd.Function):
+             activation,
+             256,
+             num_warps=4,
+-            enable_fp_fusion=False
++            enable_fp_fusion=False,
+         )
+         ctx.save_for_backward(x, w, z)
+         ctx.has_bias = b is not None
+@@ -188,7 +208,7 @@ class _CausalConv(torch.autograd.Function):
+                 ctx.activation,
+                 256,
+                 num_warps=4,
+-                enable_fp_fusion=False
++                enable_fp_fusion=False,
+             )
+         dw = db = None
+         if ctx.needs_input_grad[1] or (ctx.has_bias and ctx.needs_input_grad[2]):
+@@ -196,17 +216,36 @@ class _CausalConv(torch.autograd.Function):
+             # Fixed partial reductions avoid floating-point atomic accumulation.
+             partial = torch.empty(
+                 (w.shape[0], w.shape[1] + 1, tiles),
+-                device=x.device, dtype=torch.float32,
++                device=x.device,
++                dtype=torch.float32,
+             )
+             dw = torch.empty(w.shape, device=w.device, dtype=w.dtype)
+             db = torch.empty((w.shape[0],), device=w.device, dtype=w.dtype)
+             _conv_dparams[(w.shape[0], w.shape[1] + 1, tiles)](
+-                x, g, z, partial, x.shape[2], x.shape[0] * x.shape[2],
+-                x.shape[1], *x.stride(), w.shape[1], tiles, ctx.activation,
+-                512, num_warps=4, enable_fp_fusion=False)
++                x,
++                g,
++                z,
++                partial,
++                x.shape[2],
++                x.shape[0] * x.shape[2],
++                x.shape[1],
++                *x.stride(),
++                w.shape[1],
++                tiles,
++                ctx.activation,
++                512,
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
+             _conv_dparams_reduce[(w.shape[0], w.shape[1] + 1)](
+-                partial, dw, db, w.shape[1], tiles,
+-                triton.next_power_of_2(tiles), num_warps=4)
++                partial,
++                dw,
++                db,
++                w.shape[1],
++                tiles,
++                triton.next_power_of_2(tiles),
++                num_warps=4,
++            )
+         return dx, dw, db if ctx.has_bias else None, None
+ 
+ 
+@@ -229,9 +268,7 @@ def supports_causal_conv(
+         and (
+             b is None
+             or (
+-                b.device == x.device
+-                and b.dtype == x.dtype
+-                and b.shape == (x.shape[1],)
++                b.device == x.device and b.dtype == x.dtype and b.shape == (x.shape[1],)
+             )
+         )
+         and activation in (None, "silu", "swish")
+@@ -255,8 +292,9 @@ def causal_conv(x, w, b=None, activation=None):
+             b = b.to(dtype)
+     if supports_causal_conv(x, w, b, activation):
+         return _CausalConv.apply(x, w, b, activation is not None)
+-    y = F.conv1d(x, w.unsqueeze(1), b, padding=w.shape[1] - 1,
+-                 groups=x.shape[1])[..., :x.shape[2]]
++    y = F.conv1d(x, w.unsqueeze(1), b, padding=w.shape[1] - 1, groups=x.shape[1])[
++        ..., : x.shape[2]
++    ]
+     return F.silu(y) if activation is not None else y
+ 
+ 
+@@ -314,7 +352,9 @@ def chunked_causal_loss(
+     Full input logits and their gradient remain allocated.
+     """
+     if logits.ndim < 2 or logits.shape[-1] < 1 or not logits.is_contiguous():
+-        raise ValueError("Chunked loss requires contiguous logits with token and vocabulary dimensions")
++        raise ValueError(
++            "Chunked loss requires contiguous logits with token and vocabulary dimensions"
++        )
+     if (
+         logits.dtype not in (torch.float32, torch.float16, torch.bfloat16)
+         or ignore_index != -100
+@@ -335,7 +375,9 @@ def chunked_causal_loss(
+     target = shift_labels.to(logits.device)
+     if target.shape != logits.shape[:-1] or target.dtype != torch.long:
+         raise ValueError("Labels must match logit token shape and use int64")
+-    if not bool(((target == -100) | ((target >= 0) & (target < logits.shape[-1]))).all()):
++    if not bool(
++        ((target == -100) | ((target >= 0) & (target < logits.shape[-1]))).all()
++    ):
+         raise ValueError("Labels must be ignored or valid vocabulary indices")
+     if num_items_in_batch is None:
+         denominator = (target != -100).sum().float()
+@@ -350,4 +392,3 @@ def chunked_causal_loss(
+         ):
+             raise ValueError("Explicit item count must be a positive scalar")
+     return _ChunkCE.apply(logits, target, denominator, chunk_tokens)
+-
+diff --git a/torch/sparse/semi_structured.py b/torch/sparse/semi_structured.py
+index fd6ba17..bebf108 100644
+--- a/torch/sparse/semi_structured.py
++++ b/torch/sparse/semi_structured.py
+@@ -39,6 +39,36 @@ _SEMI_STRUCTURED_SPARSE_CONFIG = namedtuple(
+ )
+ 
+ 
++def _gfx1013_from_dense(original, alg_id):
++    # torch.sparse is imported before torch.autograd during extension setup.
++    class _Gfx1013FromDense(torch.autograd.Function):
++        @staticmethod
++        def forward(ctx, original, alg_id):
++            result = SparseSemiStructuredTensorCUSPARSELT.from_dense(
++                original.detach(), alg_id
++            )
++            ctx.save_for_backward(result.packed)
++            ctx.shape = original.shape
++            return result
++
++        @staticmethod
++        @torch.autograd.function.once_differentiable
++        def backward(ctx, grad):
++            (packed,) = ctx.saved_tensors
++            m, k = ctx.shape
++            tags = packed.view(torch.uint8).flatten()[
++                m * k // 2 * packed.element_size() :
++            ]
++            tags = tags[: m * k // 4].long().view(m, k // 4, 1)
++            shifts = torch.arange(2, device=packed.device) * 2
++            indices = (tags >> shifts) & 3
++            mask = torch.zeros((m, k // 4, 4), device=packed.device, dtype=torch.bool)
++            mask.scatter_(2, indices, True)
++            return grad * mask.view(m, k), None
++
++    return _Gfx1013FromDense.apply(original, alg_id)
++
++
+ class SparseSemiStructuredTensor(torch.Tensor):
+     """
+     This class implements semi-structured sparsity as a Tensor subclass.
+@@ -572,6 +602,16 @@ class SparseSemiStructuredTensorCUSPARSELT(SparseSemiStructuredTensor):
+         alg_id: int = SparseSemiStructuredTensor._DEFAULT_ALG_ID,
+     ) -> "SparseSemiStructuredTensorCUSPARSELT":
+         cls._validate_device_dim_dtype_shape(original_tensor)
++        if (
++            torch.is_grad_enabled()
++            and original_tensor.requires_grad
++            and torch.version.hip
++            and torch.cuda.get_device_properties(
++                original_tensor.device
++            ).gcnArchName.split(":")[0]
++            == "gfx1013"
++        ):
++            return _gfx1013_from_dense(original_tensor, alg_id)
+         # pyrefly: ignore [no-matching-overload]
+         return cls(
+             shape=original_tensor.shape,
+@@ -685,6 +725,19 @@ class SparseSemiStructuredTensorCUSPARSELT(SparseSemiStructuredTensor):
+                 f"with A.dtype=B.dtype={self.dtype}. "
+                 "mm is not supported for float8_e4m3fn, please use `torch._scaled_mm` instead."
+             )
++        if (
++            self.packed is None
++            and self.packed_t is not None
++            and torch.version.hip
++            and torch.cuda.get_device_properties(self.device).gcnArchName.split(":")[0]
++            == "gfx1013"
++        ):
++            # A row-sparse matrix need not be row-sparse after transposition.
++            dense = torch._cslt_to_dense(self.packed_t, self.shape[0]).t()
++            result = dense @ (B.t() if should_transpose_dense else B)
++            if bias is not None:
++                result = result + bias[:, None]
++            return result.t().contiguous() if should_transpose_dense else result
+         if self.packed is None:
+             raise NotImplementedError(
+                 f"`{self.__class__.__name__}` matmul: operation is not supported"
+-- 
+2.56.0
+
