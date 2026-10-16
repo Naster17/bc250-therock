@@ -1,0 +1,614 @@
+From ba6cbcd2fafac1a6503f1f580033fbf72ad2a4f9 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sat, 17 Oct 2026 01:59:30 +0200
+Subject: [PATCH] Add native gfx1013 gated-delta preparation and first-order
+ gradients
+
+Fuse Q/K normalization and scaling, beta gating, layout/padding and chunk-local
+log-decay scans with scalar wave32 Triton kernels. Compose the explicit API
+with existing ATen triangular solves and recurrent chunk matmuls. Keep model
+hooks and default training unchanged; no FLA backend or full fusion claim.
+
+Test Plan:
+```sh
+python3 helpers/update_dev_prefix.py -- python3 helpers/validate_torch_a04_on_host.py --label gated-delta-a06-candidate-final --script validate_gated_delta_a06.py
+python3 helpers/update_dev_prefix.py -- python3 helpers/validate_torch_a04_on_host.py --label gated-delta-a06-model-actual --script validate_gated_delta_model_a06.py --test-arg=--actual
+PYTORCH_LINT_SKIP_CODEGEN=1 uv run --no-project --python 3.12 --with spin==0.18 spin quicklint -- -a --take=PYFMT,RUFF,FLAKE8,NEWLINE,TESTOWNERS,TEST_HAS_MAIN,IMPORT_LINTER,SET_LINTER,DOCSTRING_LINTER torch/nn/bc250_gated_delta.py test/test_bc250_gated_delta.py
+```
+40 CPU-reference device tests; FP32/BF16 tiny LoRA with/without checkpointing;
+actual BF16 rank16 Qwen3.5-2B 65/1024 tokens,372 adapter gradients and paired
+memory/time measurements. Hardware commands ran from .104 workspace.
+
+Authored with an AI assistant.
+---
+ test/test_bc250_gated_delta.py | 236 +++++++++++++++++++++++
+ torch/nn/bc250_gated_delta.py  | 334 +++++++++++++++++++++++++++++++++
+ 2 files changed, 570 insertions(+)
+ create mode 100644 test/test_bc250_gated_delta.py
+ create mode 100644 torch/nn/bc250_gated_delta.py
+
+diff --git a/test/test_bc250_gated_delta.py b/test/test_bc250_gated_delta.py
+new file mode 100644
+index 0000000..7760fe2
+--- /dev/null
++++ b/test/test_bc250_gated_delta.py
+@@ -0,0 +1,236 @@
++# Owner(s): ["module: nn"]
++import hashlib
++import importlib.util
++import json
++import os
++from pathlib import Path
++
++import torch
++import torch.nn.functional as F
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
++from torch.testing._internal.common_utils import parametrize, run_tests, TestCase
++
++
++if os.environ.get("BC250_A06_INSTALLED"):
++    from torch.nn import bc250_gated_delta as ops
++else:
++    spec = importlib.util.spec_from_file_location(
++        "gated_delta_candidate", Path(__file__).with_name("bc250_gated_delta.py")
++    )
++    ops = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(ops)
++ROWS = []
++
++
++def record(name, **data):
++    ROWS.append(
++        dict(
++            name=name,
++            status="passed",
++            source_sha256=hashlib.sha256(Path(ops.__file__).read_bytes()).hexdigest(),
++            module=ops.__file__,
++            **data,
++        )
++    )
++    Path(os.environ["BC250_A06_ROWS"]).write_text(json.dumps(ROWS, indent=2) + "\n")
++
++
++def reference_prepare(q, k, v, g, beta, normalize):
++    b, t, h, dk = q.shape
++    q, k, v, g, beta = [x.transpose(1, 2).contiguous() for x in (q, k, v, g, beta)]
++    if normalize:
++        q = q * (q.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++        k = k * (k.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++    q = q * dk**-0.5
++    pad = (-t) % 64
++    q, k, v = [F.pad(x, (0, 0, 0, pad)) for x in (q, k, v)]
++    g, beta = [F.pad(x, (0, pad)) for x in (g, beta)]
++    shape = (b, h, -1, 64)
++    return (
++        q.reshape(*shape, dk),
++        k.reshape(*shape, dk),
++        (k * beta[..., None]).reshape(*shape, dk),
++        (v * beta[..., None]).reshape(*shape, v.shape[-1]),
++        g.reshape(shape).cumsum(-1),
++    )
++
++
++def recurrent_reference(q, k, v, g, beta, normalize, initial=None):
++    if normalize:
++        q = q * (q.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++        k = k * (k.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++    q = q * q.shape[-1] ** -0.5
++    b, t, h, dk = q.shape
++    state = (
++        torch.zeros((b, h, dk, v.shape[-1]), dtype=q.dtype, device=q.device)
++        if initial is None
++        else initial
++    )
++    outputs = []
++    for i in range(t):
++        state = state * g[:, i].exp()[..., None, None]
++        error = v[:, i] - (k[:, i, :, :, None] * state).sum(-2)
++        state = (
++            state + k[:, i, :, :, None] * (beta[:, i, :, None] * error)[..., None, :]
++        )
++        outputs.append((q[:, i, :, :, None] * state).sum(-2))
++    return torch.stack(outputs, 1), state
++
++
++def inputs(b, t, h, dk, dv, dtype, device):
++    q, k = [
++        torch.randn(b, t, h, dk, dtype=dtype, device=device) * 0.15 for _ in range(2)
++    ]
++    v = torch.randn(b, t, h, dv, dtype=dtype, device=device) * 0.2
++    g = -(torch.rand(b, t, h, device=device) * 0.15 + 0.01)
++    beta = torch.rand(b, t, h, device=device) * 0.8 + 0.1
++    return [x.detach().requires_grad_() for x in (q, k, v, g, beta)]
++
++
++class TestGatedDelta(TestCase):
++    def setUp(self):
++        super().setUp()
++        torch.manual_seed(171006)
++        torch.set_num_threads(2)
++        self.assertEqual(
++            torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013"
++        )
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    @parametrize("normalize", [False, True])
++    @parametrize(
++        "geometry", [(2, 7, 3, 7, 11), (1, 65, 2, 32, 16), (1, 129, 2, 128, 128)]
++    )
++    def test_prepare(self, device, dtype, normalize, geometry):
++        xs = inputs(*geometry, dtype, device)
++        # Noncontiguous BLHD/BLH inputs exercise GPU copy autograd edges.
++        xs = [
++            x.transpose(1, 2).contiguous().transpose(1, 2).detach().requires_grad_()
++            for x in xs
++        ]
++        refs = [x.detach().cpu().double().requires_grad_() for x in xs]
++        expected = reference_prepare(*refs, normalize)
++        stream = torch.cuda.Stream()
++        stream.wait_stream(torch.cuda.current_stream())
++        with torch.cuda.stream(stream):
++            ys = ops.prepare_gated_delta(*xs, normalize=normalize)
++            grads = [torch.randn_like(y) * 0.2 for y in ys]
++            actual = torch.autograd.grad(ys, xs, grads)
++        torch.cuda.current_stream().wait_stream(stream)
++        wanted = torch.autograd.grad(expected, refs, [g.cpu().double() for g in grads])
++        for y, ref in zip(ys, expected):
++            self.assertEqual(y.cpu().double(), ref, atol=2e-5, rtol=2e-5)
++        tol = {
++            torch.float32: (3e-5, 6e-5),
++            torch.float16: (0.003, 0.005),
++            torch.bfloat16: (0.025, 0.03),
++        }[dtype]
++        for grad, ref in zip(actual, wanted):
++            self.assertEqual(grad.cpu().double(), ref, atol=tol[0], rtol=tol[1])
++        record(self._testMethodName, all_five_gradients=True)
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    @parametrize("normalize", [False, True])
++    @parametrize("length", [1, 65, 129])
++    def test_recurrent(self, device, dtype, normalize, length):
++        xs = inputs(1, length, 2, 7, 9, dtype, device)
++        state = (torch.randn(1, 2, 7, 9, device=device) * 0.03).requires_grad_()
++        refs = [x.detach().cpu().double().requires_grad_() for x in (*xs, state)]
++        y, s = ops.chunk_gated_delta_rule(
++            *xs,
++            initial_state=state,
++            output_final_state=True,
++            use_qk_l2norm_in_kernel=normalize,
++        )
++        yr, sr = recurrent_reference(*refs[:5], normalize, refs[5])
++        gy, gs = torch.randn_like(y) * 0.1, torch.randn_like(s) * 0.1
++        actual = torch.autograd.grad((y, s), (*xs, state), (gy, gs))
++        expected = torch.autograd.grad(
++            (yr, sr), refs, (gy.cpu().double(), gs.cpu().double())
++        )
++        tol = {
++            torch.float32: (2e-5, 2e-4),
++            torch.float16: (0.001, 0.008),
++            torch.bfloat16: (0.006, 0.04),
++        }[dtype]
++        for a, r in [(y, yr), (s, sr), *zip(actual, expected)]:
++            self.assertEqual(a.cpu().double(), r, atol=tol[0], rtol=tol[1])
++        record(self._testMethodName, cpu_recurrent_reference=True, state_gradient=True)
++
++    @dtypes(torch.float32)
++    def test_zero_and_subsets(self, device, dtype):
++        for index in range(5):
++            xs = inputs(1, 7, 2, 7, 9, dtype, device)
++            with torch.no_grad():
++                xs[0].zero_()
++                xs[1].zero_()
++                xs[3].zero_()
++                xs[4].zero_()
++            refs = [x.detach().cpu().double().requires_grad_() for x in xs]
++            ys = ops.prepare_gated_delta(*xs, normalize=True)
++            expected = reference_prepare(*refs, True)
++            actual = torch.autograd.grad(ys[index].sum(), xs, allow_unused=True)
++            wanted = torch.autograd.grad(expected[index].sum(), refs, allow_unused=True)
++            for x, a, r in zip(xs, actual, wanted):
++                self.assertEqual(
++                    torch.zeros_like(x).cpu().double()
++                    if a is None
++                    else a.cpu().double(),
++                    torch.zeros_like(x).cpu().double() if r is None else r,
++                    atol=2e-5,
++                    rtol=2e-5,
++                )
++        record(
++            self._testMethodName, absent_output_grads=True, zero_norms_and_gates=True
++        )
++
++    @dtypes(torch.float16, torch.bfloat16)
++    def test_low_precision_gates(self, device, dtype):
++        xs = inputs(2, 64, 3, 32, 7, dtype, device)
++        xs = [x.detach().to(dtype).requires_grad_() for x in xs]
++        refs = [x.detach().cpu().double().requires_grad_() for x in xs]
++        ys = ops.prepare_gated_delta(*xs, normalize=True)
++        expected = reference_prepare(*refs, True)
++        grads = [torch.randn_like(y) * 0.1 for y in ys]
++        actual = torch.autograd.grad(ys, xs, grads)
++        wanted = torch.autograd.grad(expected, refs, [g.cpu().double() for g in grads])
++        for y, ref in zip(ys, expected):
++            self.assertEqual(y.cpu().double(), ref, atol=2e-5, rtol=2e-5)
++        tol = (0.003, 0.005) if dtype == torch.float16 else (0.025, 0.03)
++        for grad, ref in zip(actual, wanted):
++            self.assertEqual(grad.cpu().double(), ref, atol=tol[0], rtol=tol[1])
++        record(self._testMethodName, exact_chunk=True, low_precision_gates=True)
++
++    @dtypes(torch.float32)
++    def test_refusals(self, device, dtype):
++        xs = inputs(1, 7, 2, 7, 9, dtype, device)
++        cases = [
++            [xs[0].cpu(), *xs[1:]],
++            [xs[0].half(), *xs[1:]],
++            [xs[0], xs[1][:, :, :, :3], *xs[2:]],
++            [*xs[:3], xs[3].long(), xs[4]],
++            [*xs[:4], xs[4][:, :2]],
++        ]
++        for case in cases:
++            with self.assertRaises((ValueError, TypeError)):
++                ops.prepare_gated_delta(*case)
++        with self.assertRaises(ValueError):
++            ops.prepare_gated_delta(*inputs(1, 1, 1, 129, 8, dtype, device))
++        with self.assertRaises(ValueError):
++            ops.chunk_gated_delta_rule(*xs, chunk_size=32)
++        with self.assertRaises(ValueError):
++            ops.chunk_gated_delta_rule(
++                *xs,
++                initial_state=torch.zeros(
++                    1, 2, 7, 9, device=device, dtype=torch.float16
++                ),
++            )
++        record(self._testMethodName, refusals=8)
++
++
++instantiate_device_type_tests(TestGatedDelta, globals(), only_for="cuda")
++if __name__ == "__main__":
++    run_tests()
+diff --git a/torch/nn/bc250_gated_delta.py b/torch/nn/bc250_gated_delta.py
+new file mode 100644
+index 0000000..67bc4ec
+--- /dev/null
++++ b/torch/nn/bc250_gated_delta.py
+@@ -0,0 +1,334 @@
++# SPDX-License-Identifier: MIT
++"""Opt-in gfx1013 gated-delta preparation and eager chunked GPU attention.
++
++Preparation uses scalar Triton forward/backward kernels. Triangular solves,
++matmuls and the chunk scan use ATen. This is not the FLA package/backend.
++Only floating eager first-order training is supported; chunk size is 64.
++"""
++
++import triton
++import triton.language as tl
++
++import torch
++from torch.autograd.function import once_differentiable
++
++
++@triton.jit
++def _prepare(
++    Q,
++    K,
++    V,
++    BETA,
++    OQ,
++    OK,
++    KB,
++    VB,
++    T: tl.constexpr,
++    H: tl.constexpr,
++    DK: tl.constexpr,
++    DV: tl.constexpr,
++    TP: tl.constexpr,
++    NORM: tl.constexpr,
++    D: tl.constexpr,
++):
++    row = tl.program_id(0)
++    t = row % TP
++    h = (row // TP) % H
++    b = row // (TP * H)
++    token = (b * T + t) * H + h
++    d = tl.arange(0, D)
++    q = tl.load(Q + token * DK + d, (t < T) & (d < DK), 0).to(tl.float32)
++    k = tl.load(K + token * DK + d, (t < T) & (d < DK), 0).to(tl.float32)
++    v = tl.load(V + token * DV + d, (t < T) & (d < DV), 0).to(tl.float32)
++    beta = tl.load(BETA + token, t < T, 0).to(tl.float32)
++    if NORM:
++        q = q * tl.rsqrt(tl.sum(q * q, 0) + 1.0e-6)
++        k = k * tl.rsqrt(tl.sum(k * k, 0) + 1.0e-6)
++    tl.store(OQ + row * DK + d, q * DK**-0.5, d < DK)
++    tl.store(OK + row * DK + d, k, d < DK)
++    tl.store(KB + row * DK + d, k * beta, d < DK)
++    tl.store(VB + row * DV + d, v * beta, d < DV)
++
++
++@triton.jit
++def _prepare_backward(
++    Q,
++    K,
++    V,
++    BETA,
++    GQ,
++    GK,
++    GKB,
++    GVB,
++    DQ,
++    DKOUT,
++    DVOUT,
++    DB,
++    T: tl.constexpr,
++    H: tl.constexpr,
++    DK: tl.constexpr,
++    DV: tl.constexpr,
++    TP: tl.constexpr,
++    NORM: tl.constexpr,
++    D: tl.constexpr,
++):
++    row = tl.program_id(0)
++    t = row % T
++    h = (row // T) % H
++    b = row // (T * H)
++    token = (b * T + t) * H + h
++    padded = (b * H + h) * TP + t
++    d = tl.arange(0, D)
++    q = tl.load(Q + token * DK + d, d < DK, 0).to(tl.float32)
++    k = tl.load(K + token * DK + d, d < DK, 0).to(tl.float32)
++    v = tl.load(V + token * DV + d, d < DV, 0).to(tl.float32)
++    beta = tl.load(BETA + token).to(tl.float32)
++    gq = tl.load(GQ + padded * DK + d, d < DK, 0) * DK**-0.5
++    gkb = tl.load(GKB + padded * DK + d, d < DK, 0)
++    gvb = tl.load(GVB + padded * DV + d, d < DV, 0)
++    gk = tl.load(GK + padded * DK + d, d < DK, 0) + gkb * beta
++    kn = k
++    if NORM:
++        rq = tl.rsqrt(tl.sum(q * q, 0) + 1.0e-6)
++        rk = tl.rsqrt(tl.sum(k * k, 0) + 1.0e-6)
++        qn = q * rq
++        kn = k * rk
++        gq = (gq - qn * tl.sum(gq * qn, 0)) * rq
++        gk = (gk - kn * tl.sum(gk * kn, 0)) * rk
++    tl.store(DQ + token * DK + d, gq, d < DK)
++    tl.store(DKOUT + token * DK + d, gk, d < DK)
++    tl.store(DVOUT + token * DV + d, gvb * beta, d < DV)
++    tl.store(DB + token, tl.sum(gkb * kn, 0) + tl.sum(gvb * v, 0))
++
++
++@triton.jit
++def _decay(
++    G,
++    C,
++    T: tl.constexpr,
++    H: tl.constexpr,
++    TP: tl.constexpr,
++    BACKWARD: tl.constexpr,
++    CHUNK: tl.constexpr,
++):
++    block = tl.program_id(0)
++    chunks: tl.constexpr = TP // CHUNK
++    chunk = block % chunks
++    h = (block // chunks) % H
++    b = block // (chunks * H)
++    i = tl.arange(0, CHUNK)
++    if BACKWARD:
++        i = CHUNK - 1 - i
++        x = tl.load(G + block * CHUNK + i)
++        y = tl.cumsum(x, 0)
++        t = chunk * CHUNK + i
++        tl.store(C + (b * T + t) * H + h, y, t < T)
++    else:
++        t = chunk * CHUNK + i
++        x = tl.load(G + (b * T + t) * H + h, t < T, 0).to(tl.float32)
++        tl.store(C + block * CHUNK + i, tl.cumsum(x, 0))
++
++
++class _Preparation(torch.autograd.Function):
++    @staticmethod
++    def forward(ctx, q, k, v, g, beta, normalize):
++        b, t, h, dk = q.shape
++        dv = v.shape[-1]
++        tp = triton.cdiv(t, 64) * 64
++        shape = (b, h, tp // 64, 64)
++        oq = torch.empty((*shape, dk), device=q.device, dtype=torch.float32)
++        ok, kb = torch.empty_like(oq), torch.empty_like(oq)
++        vb = torch.empty((*shape, dv), device=q.device, dtype=torch.float32)
++        decay = torch.empty(shape, device=q.device, dtype=torch.float32)
++        with torch.cuda.device(q.device):
++            _prepare[(b * h * tp,)](
++                q,
++                k,
++                v,
++                beta,
++                oq,
++                ok,
++                kb,
++                vb,
++                t,
++                h,
++                dk,
++                dv,
++                tp,
++                normalize,
++                triton.next_power_of_2(max(dk, dv)),
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++            _decay[(b * h * (tp // 64),)](
++                g,
++                decay,
++                t,
++                h,
++                tp,
++                False,
++                64,
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++        ctx.save_for_backward(q, k, v, beta)
++        ctx.normalize, ctx.tp, ctx.g_dtype = normalize, tp, g.dtype
++        ctx.set_materialize_grads(False)
++        return oq, ok, kb, vb, decay
++
++    @staticmethod
++    @once_differentiable
++    def backward(ctx, gq, gk, gkb, gvb, gc):
++        q, k, v, beta = ctx.saved_tensors
++        b, t, h, dk = q.shape
++        dv, tp = v.shape[-1], ctx.tp
++        shape = (b, h, tp // 64, 64)
++        grads = []
++        for grad, width in ((gq, dk), (gk, dk), (gkb, dk), (gvb, dv)):
++            grads.append(
++                grad.contiguous()
++                if grad is not None
++                else torch.zeros((*shape, width), device=q.device, dtype=torch.float32)
++            )
++        dq, dkout, dvout, db = [torch.empty_like(x) for x in (q, k, v, beta)]
++        dg = None
++        with torch.cuda.device(q.device):
++            _prepare_backward[(b * h * t,)](
++                q,
++                k,
++                v,
++                beta,
++                *grads,
++                dq,
++                dkout,
++                dvout,
++                db,
++                t,
++                h,
++                dk,
++                dv,
++                tp,
++                ctx.normalize,
++                triton.next_power_of_2(max(dk, dv)),
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++            if gc is not None:
++                dg = torch.empty((b, t, h), device=q.device, dtype=ctx.g_dtype)
++                _decay[(b * h * (tp // 64),)](
++                    gc.contiguous(),
++                    dg,
++                    t,
++                    h,
++                    tp,
++                    True,
++                    64,
++                    num_warps=4,
++                    enable_fp_fusion=False,
++                )
++        return dq, dkout, dvout, dg, db, None
++
++
++def prepare_gated_delta(query, key, value, g, beta, *, normalize=True):
++    """Return FP32 padded/chunked (Q/sqrt(D), K, beta*K, beta*V, cumsum(g)).
++
++    Inputs are BLHD Q/K/V and BLH log-decay/beta on actual gfx1013; Q/K have
++    equal dimensions, all heads already expanded. Q/K normalization uses eps1e-6.
++    Valid strided tensors are copied on GPU. Chunk width is 64, Dk/Dv <=128.
++    Only eager first-order gradients are qualified, including both gates.
++    """
++    tensors = (query, key, value, g, beta)
++    if not all(isinstance(x, torch.Tensor) for x in tensors):
++        raise TypeError("Expected Q/K/V/log-decay/beta tensors")
++    if not all(x.is_cuda and x.device == query.device for x in tensors):
++        raise ValueError("All tensors must share one gfx1013 device")
++    if (
++        torch.cuda.get_device_properties(query.device).gcnArchName.split(":")[0]
++        != "gfx1013"
++    ):
++        raise ValueError("Native gfx1013 is required")
++    types = (torch.float32, torch.float16, torch.bfloat16)
++    if (
++        query.dtype not in types
++        or key.dtype != query.dtype
++        or value.dtype != query.dtype
++    ):
++        raise ValueError("Q/K/V must have the same FP32/FP16/BF16 dtype")
++    if g.dtype not in types or beta.dtype not in types:
++        raise ValueError("Log-decay and beta must be FP32/FP16/BF16")
++    if query.ndim != 4 or key.shape != query.shape or value.ndim != 4:
++        raise ValueError("Expected equal BLHD Q/K and BLHV values")
++    b, t, h, dk = query.shape
++    if value.shape[:3] != (b, t, h) or g.shape != (b, t, h) or beta.shape != g.shape:
++        raise ValueError("Batch, sequence and expanded heads must match")
++    if (
++        min(b, t, h, dk, value.shape[-1]) < 1
++        or max(dk, value.shape[-1]) > 128
++        or b * h * triton.cdiv(t, 64) * 64 > 1048576
++    ):
++        raise ValueError("Unsupported empty, head-width or padded token geometry")
++    if not isinstance(normalize, bool):
++        raise TypeError("normalize must be boolean")
++    return _Preparation.apply(*(x.contiguous() for x in tensors), normalize)
++
++
++def chunk_gated_delta_rule(
++    query,
++    key,
++    value,
++    g,
++    beta,
++    chunk_size=64,
++    initial_state=None,
++    output_final_state=False,
++    use_qk_l2norm_in_kernel=False,
++):
++    """Native preparation plus ATen triangular solves and sequential chunk scan.
++
++    Explicit API; does not install a Transformers hook or advertise FLA support.
++    Initial state is FP32 [B,H,Dk,Dv] on the same device. Output has query dtype;
++    returned final state is FP32. Log-decay is expected nonpositive, as in FLA.
++    """
++    if chunk_size != 64:
++        raise ValueError("Only chunk_size=64 is supported")
++    q, k, kb, vb, decay = prepare_gated_delta(
++        query, key, value, g, beta, normalize=use_qk_l2norm_in_kernel
++    )
++    b, t, h, dk = query.shape
++    dv = value.shape[-1]
++    if initial_state is not None and (
++        initial_state.shape != (b, h, dk, dv)
++        or initial_state.device != query.device
++        or initial_state.dtype != torch.float32
++    ):
++        raise ValueError("Initial state must be same-device FP32 [B,H,Dk,Dv]")
++    mask = torch.ones((64, 64), device=query.device, dtype=torch.bool).triu(1)
++    pair = (
++        (decay.unsqueeze(-1) - decay.unsqueeze(-2))
++        .masked_fill(mask, -float("inf"))
++        .exp()
++    )
++    system = (kb @ k.transpose(-1, -2)) * pair
++    attention = (q @ k.transpose(-1, -2)) * pair
++    exp_decay = decay.exp().unsqueeze(-1)
++    u = torch.linalg.solve_triangular(system, vb, upper=False, unitriangular=True)
++    w = torch.linalg.solve_triangular(
++        system, kb * exp_decay, upper=False, unitriangular=True
++    )
++    q = q * exp_decay
++    k = k * (decay[..., -1:] - decay).exp().unsqueeze(-1)
++    state = (
++        torch.zeros((b, h, dk, dv), device=query.device, dtype=torch.float32)
++        if initial_state is None
++        else initial_state
++    )
++    outputs = []
++    for i in range(q.shape[2]):
++        delta = u[:, :, i] - w[:, :, i] @ state
++        outputs.append(q[:, :, i] @ state + attention[:, :, i] @ delta)
++        state = (
++            state * decay[:, :, i, -1].exp()[..., None, None]
++            + k[:, :, i].transpose(-1, -2) @ delta
++        )
++    out = torch.stack(outputs, dim=2).flatten(2, 3)[:, :, :t].transpose(1, 2)
++    return out.to(query.dtype).contiguous(), state if output_final_state else None
+-- 
+2.56.0
+
