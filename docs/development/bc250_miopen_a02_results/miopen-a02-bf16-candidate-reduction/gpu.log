@@ -1,0 +1,84 @@
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1013: libMIOpenCKGroupedConv_gfx1013.so: cannot open shared object file: No such file or directory
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+MIOpen: Error [Compile] 'hiprtcCompileProgram(prog.get(), c_options.size(), c_options.data())' gridwise_generic_reduction_first_call_threadwise_reduce_partial_dims.cpp: HIPRTC_ERROR_COMPILATION (6)
+MIOpen: Error [BuildHip] HIPRTC status = HIPRTC_ERROR_COMPILATION (6), source file: gridwise_generic_reduction_first_call_threadwise_reduce_partial_dims.cpp
+MIOpen: Warning [BuildHip] In file included from /tmp/comgr-1-7-9912a8/input/gridwise_generic_reduction_first_call_threadwise_reduce_partial_dims.cpp:29:
+In file included from /tmp/comgr-1-7-9912a8/include/tensor_descriptor_helper.hpp:7:
+In file included from /tmp/comgr-1-7-9912a8/include/common_header.hpp:32:
+/tmp/comgr-1-7-9912a8/include/amd_buffer_addressing.hpp:227:9: error: static assertion failed due to requirement '(ck::is_same<unsigned short, double>::value && (1 == 1 || 1 == 2 || 1 == 4)) || (ck::is_same<unsigned short, float>::value && (1 == 1 || 1 == 2 || 1 == 4 || 1 == 8)) || (ck::is_same<unsigned short, _Float16>::value && (1 == 1 || 1 == 2 || 1 == 4 || 1 == 8)) || (ck::is_same<unsigned short, int>::value && (1 == 1 || 1 == 2 || 1 == 4 || 1 == 8)) || (ck::is_same<unsigned short, signed char>::value && (1 == 1 || 1 == 2 || 1 == 4 || 1 == 8 || 1 == 16))': wrong! not implemented
+  227 |         (is_same<T, double>::value && (N == 1 || N == 2 || N == 4)) ||
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  228 |             (is_same<T, float>::value && (N == 1 || N == 2 || N == 4 || N == 8)) ||
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  229 |             (is_same<T, half_t>::value && (N == 1 || N == 2 || N == 4 || N == 8)) ||
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  230 |             (is_same<T, int32_t>::value && (N == 1 || N == 2 || N == 4 || N == 8)) ||
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  231 |             (is_same<T, int8_t>::value && (N == 1 || N == 2 || N == 4 || N == 8 || N == 16)),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/comgr-1-7-9912a8/include/amd_buffer_addressing.hpp:698:20: note: in instantiation of function template specialization 'ck::amd_buffer_load_impl<unsigned short, 1>' requested here
+  698 |     vector_t tmp = amd_buffer_load_impl<scalar_t, vector_size>(
+      |                    ^
+/tmp/comgr-1-7-9912a8/include/dynamic_buffer.hpp:83:24: note: in instantiation of function template specialization 'ck::amd_buffer_load_invalid_element_return_customized_value<unsigned short, 1>' requested here
+   83 |                 return amd_buffer_load_invalid_element_return_customized_value<
+      |                        ^
+/tmp/comgr-1-7-9912a8/include/threadwise_tensor_slice_transfer.hpp:586:9: note: in instantiation of function template specialization 'ck::ThreadwiseTensorSliceTransfer_v2<unsigned short, float, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int, int>, ck::Tuple<int, int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>, ck::Sequence<4>>, ck::Tuple<ck::Sequence<1, 2>, ck::Sequence<3>, ck::Sequence<4>, ck::Sequence<5>, ck::Sequence<6>>, ck::Sequence<5, 6>, int>, const ck::TensorDescriptor<ck::Tuple<ck::UnMerge<ck::Tuple<ck::integral_constant<int, 1>, ck::integral_constant<int, 8>>, false>>, ck::Tuple<ck::Sequence<0>>, ck::Tuple<ck::Sequence<1, 2>>, ck::Sequence<1, 2>, ck::integral_constant<int, 8>>, ck::Sequence<1, 8>, ck::Sequence<0, 1>, 1, 1, 1, false>::Run<ck::DynamicBuffer<ck::Global, const unsigned short, int, false>, ck::StaticBuffer<ck::Vgpr, float, 8, true>, ck::Tuple<ck::integral_constant<int, 0>, ck::integral_constant<int, 0>>, ck::Tuple<ck::Tuple<ck::Sequence<0, 0, 0, 0, 0>, ck::Sequence<0, 0, 0, 0, 0>>, ck::Tuple<ck::Sequence<0, 0, 0, 0, 0>, ck::Sequence<0, 0, 0, 0, 0>>>>' requested here
+  586 |         Run(src_desc, src_buf, DstDesc{}, DstSliceOriginIdx{}, dst_buf, src_step_hacks);
+      |         ^
+/tmp/comgr-1-7-9912a8/include/gridwise_generic_2d_reduction_direct_threadwise.hpp:130:33: note: in instantiation of function template specialization 'ck::ThreadwiseTensorSliceTransfer_v2<unsigned short, float, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int, int>, ck::Tuple<int, int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>, ck::Sequence<4>>, ck::Tuple<ck::Sequence<1, 2>, ck::Sequence<3>, ck::Sequence<4>, ck::Sequence<5>, ck::Sequence<6>>, ck::Sequence<5, 6>, int>, const ck::TensorDescriptor<ck::Tuple<ck::UnMerge<ck::Tuple<ck::integral_constant<int, 1>, ck::integral_constant<int, 8>>, false>>, ck::Tuple<ck::Sequence<0>>, ck::Tuple<ck::Sequence<1, 2>>, ck::Sequence<1, 2>, ck::integral_constant<int, 8>>, ck::Sequence<1, 8>, ck::Sequence<0, 1>, 1, 1, 1, false>::Run<ck::DynamicBuffer<ck::Global, const unsigned short, int, false>, ck::StaticBuffer<ck::Vgpr, float, 8, true>, ck::Tuple<ck::integral_constant<int, 0>, ck::integral_constant<int, 0>>>' requested here
+  130 |             threadwise_src_load.Run(
+      |                                 ^
+/tmp/comgr-1-7-9912a8/input/gridwise_generic_reduction_first_call_threadwise_reduce_partial_dims.cpp:308:34: note: in instantiation of function template specialization 'ck::GridwiseReduction_xy_to_x_direct_threadwise<256, unsigned short, unsigned short, float, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int, int>, ck::Tuple<int, int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>, ck::Sequence<4>>, ck::Tuple<ck::Sequence<1, 2>, ck::Sequence<3>, ck::Sequence<4>, ck::Sequence<5>, ck::Sequence<6>>, ck::Sequence<5, 6>, int>, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int>, ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>>, ck::Tuple<ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>>, ck::Sequence<3>, int>, ck::ReduceTensorOp_t::ADD, ck::NanPropagation_t::NOT_PROPAGATE_NAN, ck::ReduceTensorIndices_t::NO_INDICES, true, true, 8>::Run<1>' requested here
+  308 |     gridwise_2d_reduce::template Run<RunId>(
+      |                                  ^
+In file included from /tmp/comgr-1-7-9912a8/input/gridwise_generic_reduction_first_call_threadwise_reduce_partial_dims.cpp:29:
+In file included from /tmp/comgr-1-7-9912a8/include/tensor_descriptor_helper.hpp:7:
+In file included from /tmp/comgr-1-7-9912a8/include/common_header.hpp:32:
+/tmp/comgr-1-7-9912a8/include/amd_buffer_addressing.hpp:457:9: error: static assertion failed due to requirement '(ck::is_same<unsigned short, double>::value && (1 == 1 || 1 == 2)) || (ck::is_same<unsigned short, float>::value && (1 == 1 || 1 == 2 || 1 == 4)) || (ck::is_same<unsigned short, _Float16>::value && (1 == 1 || 1 == 2 || 1 == 4 || 1 == 8)) || (ck::is_same<unsigned short, int>::value && (1 == 1 || 1 == 2 || 1 == 4)) || (ck::is_same<unsigned short, signed char>::value && (1 == 1 || 1 == 2 || 1 == 4 || 1 == 8 || 1 == 16))': wrong! not implemented
+  457 |         (is_same<T, double>::value && (N == 1 || N == 2)) ||
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  458 |             (is_same<T, float>::value && (N == 1 || N == 2 || N == 4)) ||
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  459 |             (is_same<T, half_t>::value && (N == 1 || N == 2 || N == 4 || N == 8)) ||
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  460 |             (is_same<T, int32_t>::value && (N == 1 || N == 2 || N == 4)) ||
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  461 |             (is_same<T, int8_t>::value && (N == 1 || N == 2 || N == 4 || N == 8 || N == 16)),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/comgr-1-7-9912a8/include/amd_buffer_addressing.hpp:727:5: note: in instantiation of function template specialization 'ck::amd_buffer_store_impl<unsigned short, 1>' requested here
+  727 |     amd_buffer_store_impl<scalar_t, vector_size>(
+      |     ^
+/tmp/comgr-1-7-9912a8/include/dynamic_buffer.hpp:125:13: note: in instantiation of function template specialization 'ck::amd_buffer_store<unsigned short, 1>' requested here
+  125 |             amd_buffer_store<remove_cv_t<remove_reference_t<T>>, t_per_x>(
+      |             ^
+/tmp/comgr-1-7-9912a8/include/threadwise_tensor_slice_transfer.hpp:214:30: note: in instantiation of function template specialization 'ck::DynamicBuffer<ck::Global, unsigned short, int, true>::Set<unsigned short, false>' requested here
+  214 |             dst_buf.template Set<dst_vector_t>(
+      |                              ^
+/tmp/comgr-1-7-9912a8/include/threadwise_tensor_slice_transfer.hpp:276:9: note: in instantiation of function template specialization 'ck::ThreadwiseTensorSliceTransfer_v1r3<float, unsigned short, const ck::TensorDescriptor<ck::Tuple<ck::UnMerge<ck::Tuple<ck::integral_constant<int, 1>>, false>>, ck::Tuple<ck::Sequence<0>>, ck::Tuple<ck::Sequence<1>>, ck::Sequence<1>, ck::integral_constant<int, 1>>, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int>, ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>>, ck::Tuple<ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>>, ck::Sequence<3>, int>, ck::Sequence<1>, ck::Sequence<0>, 0, 1, ck::Set, 1, true>::Run<ck::Tuple<ck::integral_constant<int, 0>>, ck::StaticBuffer<ck::Vgpr, float, 1, true>, ck::DynamicBuffer<ck::Global, unsigned short, int, true>, ck::Tuple<ck::Tuple<ck::Sequence<0, 0, 0>>, ck::Tuple<ck::Sequence<0, 0, 0>>>>' requested here
+  276 |         Run(SrcDesc{}, SrcSliceOriginIdx{}, src_buf, dst_desc, dst_buf, dst_step_hacks);
+      |         ^
+/tmp/comgr-1-7-9912a8/include/gridwise_generic_2d_reduction_direct_threadwise.hpp:191:30: note: in instantiation of function template specialization 'ck::ThreadwiseTensorSliceTransfer_v1r3<float, unsigned short, const ck::TensorDescriptor<ck::Tuple<ck::UnMerge<ck::Tuple<ck::integral_constant<int, 1>>, false>>, ck::Tuple<ck::Sequence<0>>, ck::Tuple<ck::Sequence<1>>, ck::Sequence<1>, ck::integral_constant<int, 1>>, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int>, ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>>, ck::Tuple<ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>>, ck::Sequence<3>, int>, ck::Sequence<1>, ck::Sequence<0>, 0, 1, ck::Set, 1, true>::Run<ck::Tuple<ck::integral_constant<int, 0>>, ck::StaticBuffer<ck::Vgpr, float, 1, true>, ck::DynamicBuffer<ck::Global, unsigned short, int, true>>' requested here
+  191 |         threadwise_dst_store.Run(
+      |                              ^
+/tmp/comgr-1-7-9912a8/input/gridwise_generic_reduction_first_call_threadwise_reduce_partial_dims.cpp:308:34: note: in instantiation of function template specialization 'ck::GridwiseReduction_xy_to_x_direct_threadwise<256, unsigned short, unsigned short, float, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int, int>, ck::Tuple<int, int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>, ck::Sequence<4>>, ck::Tuple<ck::Sequence<1, 2>, ck::Sequence<3>, ck::Sequence<4>, ck::Sequence<5>, ck::Sequence<6>>, ck::Sequence<5, 6>, int>, const ck::TensorDescriptor<ck::Tuple<ck::Embed<ck::Tuple<int>, ck::Tuple<int>>, ck::Merge_v1_carry_check<ck::Tuple<int>>, ck::Pad<int, int, int>>, ck::Tuple<ck::Sequence<0>, ck::Sequence<1>, ck::Sequence<2>>, ck::Tuple<ck::Sequence<1>, ck::Sequence<2>, ck::Sequence<3>>, ck::Sequence<3>, int>, ck::ReduceTensorOp_t::ADD, ck::NanPropagation_t::NOT_PROPAGATE_NAN, ck::ReduceTensorIndices_t::NO_INDICES, true, true, 8>::Run<1>' requested here
+  308 |     gridwise_2d_reduce::template Run<RunId>(
+      |                                  ^
+2 errors generated when compiling for gfx1013.
+MIOpen Error: bc250:/workspace/source/rocm-libraries/projects/miopen/src/hipoc/hipoc_program.cpp:204: Code object build failed. Source: gridwise_generic_reduction_first_call_threadwise_reduce_partial_dims.cpp
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_miopen_a02.py", line 335, in main
+    (reduction if config["suite"] == "reduction" else recurrent)(config)
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_miopen_a02.py", line 123, in reduction
+    api.call(
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_miopen_a02.py", line 25, in call
+    raise RuntimeError(f"miopen{name}: status {status}")
+RuntimeError: miopenReduceTensor: status 7
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "bf16", "status": "failed", "error": "miopenReduceTensor: status 7"}
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_miopen_a02.py", line 370, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_miopen_a02.py", line 366, in main
+    assert out["status"] == "passed"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

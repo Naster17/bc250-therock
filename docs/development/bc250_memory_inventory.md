@@ -458,6 +458,9 @@ library reconstruction; retained earlier manifests keep their original meaning. 
 | 0024  | Sparse Lt INT8 input/output, bounded INT32 accumulation, FP32 epilogue and saturating round-even conversion: `2fd5619d7c8` |
 | 0025  | Lt 32-lane subgroup short small/skinny GEMMs and bounded dispatch: `48e1e564d6f` |
 | 0026  | Preserve validated launch-grid bound for Lt subgroup dispatch: `a6f7d3d8ba7` |
+| 0027 | A01 MIOpen dilated GEMM workspace query: `08ba6f386ff` |
+| 0028 | A02 native gfx1013 bundled legacy CK scalar profile: `2093090048f` |
+| 0029 | A02 BF16 reduction conversions/scaling and cache-key isolation: `d375d8a2ea7` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -468,6 +471,31 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 (`270bfb9d`), RDNA1 buffer flags (`ee65ff3b`).
 
 ## Component coverage: implemented versus existing native backend
+
+**A02 completed20261016:** libraries d375d8a2ea7280170455d133058c3cf8e16f58b6,
+TheRock source/helpers d17427bfeff6ab7204855a753a883c9a66fbf51b; installed .104.
+Bundled legacy CK accepts the native gfx1013 target, uses RDNA1 descriptor0x31014000
+and scalar FMA, disables unsupported packed-dot asm defaults and rejects XDLOPS.
+Wave32 assembly checked. BF16 enum/raw-buffer/load conversions and compute-
+precision alpha/beta epilogues corrected. Reduction cache keys versioned because
+embedded header changes otherwise reuse older compiled kernels; caches preserved.
+Installed54 numerical FP32/FP16/BF16 reductions with FP32 compute,3 unsupported
+BF16 compute refusals and12 FP32/FP16 LSTM/GRU/tanh-RNN output/all-gradient cases
+pass. Thread/wave/block/multiblock, scales/beta, guards, one strided custom stream
+and FP32 min/max indices covered.30 convolution,32 stable event pairs and seven
+core reference groups pass. All14 diagnostic/GPU guards ACK/600s, dmesg identical,
+including retained baseline/intermediate failures. No general speedup/coverage
+claim; BF16 RNN, wider NaN/index/compute/recurrent contracts unqualified.
+Only versioned MIOpen DSO replaced under exclusive lock, installed SHA f4b1a10ce20b;
+eight protected HSA/HIP/Torch/BLAS/kpack/frozen-fallback hashes unchanged. Recovery
+WS/recovery/miopen-a02-before; installed WS/SOURCE_MIOPEN_A02.json.29 library
+patches reconstruct exactly. [Report and evidence](bc250_miopen_a02_results/README.md).
+No active agent build/test/container/deadline. Python CPU fault remains distinct
+from fixed VM-heap/CSR; prior Torch SDPA patch packaging gap retained. A01 clock
+limits and remeasurement caveat remain. Exact next A03: inspect actual gfx1013_20
+DB/cache records, bounded tuning/replay/package provenance and capability-aware
+optional plugin probing; missing system DB/plugin warnings remain A03/B07. No
+fabricated DBs/architecture renaming. A03–A09 before N2.7, K6 completed.
 
 **A01 completed20261016:** source/helper380a403a1, systems329eaf7266,
 libraries08ba6f386ff installed in current development prefix. Direct C API and
@@ -485,13 +513,13 @@ exact hashes/revisions. Frozen fallback/HIP/Torch/BLAS/kpack hashes unchanged.
 Absolute CPU/GPU trace correlation, opposite epoch/reset/reboot unqualified;
 earlier GPU-event speed ratios (including N1.8) require remeasurement. Numerical
 qualification and host-wall-time results remain separate. A02 legacy CK reduction/
-LSTM backward remains next; A03/B07 plugin/DB gaps and Python CPU fault remain
+LSTM backward is corrected above; A03/B07 plugin/DB gaps and Python CPU fault remain
 open, distinct from fixed VM-heap/CSR. Source export component GIT_REVISION labels
 updated; the unchanged superbuild baseline label remains7f73 with effective port
 source380a403a1 recorded separately. No active agent job/deadline; N2.7 queued.
 
 **Baseline Torch dependency/dispatch audit2026-10-16**, source7e39ed699
-(A01 update above supersedes its convolution/timing failure status):
+(A01/A02 updates above supersede its convolution/timing/reduction failure status):
 [support matrix and ordered A01–A09/B01–B07 queue](bc250_torch_support_matrix.md),
 [raw evidence](bc250_torch_support_audit/README.md).21 DSOs examined,19 load;
 RCCL/gfx1013 CK grouped-conv plugin absent. All3520 dispatcher names recorded,
@@ -510,8 +538,8 @@ distributed/Kineto gaps retained. FP16 power-of-two FFT, CSC/BSR, fused AdamW,
 AMP/compile/graph and ordinary operators pass bounded probes. Existing Qwen
 conv/loss/resume changes remain app scoped. No runtime/source-library/kernel
 change or native rebuild; guards ACKed/dmesg identical/no active agent job.
-Baseline A01 reproduction was followed by the correction above. Exact next is
-A02 legacy reduction; selected Torch/library queue remains ahead of N2.7.
+Baseline A01/A02 reproduction was followed by the corrections above. Exact next
+is A03 database/cache qualification; selected Torch/library queue precedes N2.7.
 
 | Component                                   | What exists and was executed                                                                                                                                                                                 | Boundary / where to continue                                                                                                                                |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -525,7 +553,7 @@ A02 legacy reduction; selected Torch/library queue remains ahead of N2.7.
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL                                | CPU-checked FP32/FP16/signedINT8 GEMM examples; native architecture applicability changes                                                                                                                    | Admitted DL convolution/grouped classes are not automatically executed/qualified                                                                            |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen                                      | CPU-reference f32/f16/bf16 convolution forward/dx/dw, groups1/2; native HIP-direct solvers; 3D/provider tests                                                                                                | No full neural operator/solver selection/tuning DB qualification; CK integration stays off in current profile                                               |
+| MIOpen | CPU-reference f32/f16/bf16 convolution fwd/dx/dw; A02 native legacy CK reduction54 numerical +3 refusal contracts and12 f32/f16 recurrent output/all-gradient cases | Modern optional CK grouped-conv plugin/system DB absent; BF16 RNN and wider solver/type/NaN/index/recurrent contracts unqualified |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | Historical reductions/scans and208 block-reduction tests; P2 int32 cases42/48/48 with guards/streams, signed stable sorts, selection, scans, blocks/wave32 and Thrust policies                               | Floating/custom/segmented algorithms and broader tuning remain. hipCCL is header packaging, not RCCL.                                                       |
@@ -914,7 +942,7 @@ optional widened INT8/beta-vector extensions remain open. Next N2.1 solver audit
 | Triton incorrect buffer reads   | Missing RDNA1 descriptor flag branch; globals passed while buffer path failed. Fixed.                                                        | Triton patch0004/root `9fdae0b5d`; both memory paths validated                                                                                 |
 | Triton low-precision lowering   | Unsupported gfx13 packed dot/BF16 multiply replaced by widened scalar arithmetic; signed limits and rounding-tie/NaN tests retained          | Four Triton patches and MLIR/LLVM/assembly/GPU gates                                                                                           |
 | NHWC avgpool backward           | Padding correction in Torch source                                                                                                           | Torch patch0001, operator coverage                                                                                                             |
-| MIOpen bias/fusion              | Legacy bias beta1 doubles output; beta0 is correct. BF16 and FP16 NHWC pointwise required private scalar HIP fallback; output routing fixed. | Library patch0016, provider CPU references; mixed-intermediate rejection                                                                       |
+| MIOpen | CPU-reference f32/f16/bf16 convolution fwd/dx/dw; A02 native legacy CK reduction54 numerical +3 refusal contracts and12 f32/f16 recurrent output/all-gradient cases | Modern optional CK grouped-conv plugin/system DB absent; BF16 RNN and wider solver/type/NaN/index/recurrent contracts unqualified |
 | Lt SWISH                        | Public beta is fixed1; activation arg0 is not Swish beta                                                                                     | 465 then561 extended consumer cases; hipDNN Lt48                                                                                               |
 | RPP audio                       | Spectrogram destination stride and decibel reduction/reference/zero handling fixed; FFTS dependencies/linking fixed                          | Patches0010/0013/0015 and audio26                                                                                                              |
 | Source generation               | Torch CMake cache can leave HIPHooks stale even after pip; explicitly hipify before editable rebuild                                         | `build_torch.sh`, `rebuild_torch_pooling.sh`                                                                                                   |

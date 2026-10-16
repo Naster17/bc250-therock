@@ -21,9 +21,9 @@
     {
       "id": "A02",
       "feature": "MIOpen legacy CK reduction cannot compile gfx1013; LSTM backward broken",
-      "evidence": "Tiny nn.LSTM fwd matches CPU; backward HIPRTC fails `No CK_AMD_GPU_GFX* macro defined` in bundled legacy CK config.hpp. This is independent of the optional CK grouped-conv plugin and separate CK Tile port.",
-      "next": "Add reviewed native gfx1013 target/feature plumbing or portable scalar reduction fallback. Check wave32, buffer descriptors and unsafe dot/asm gates; reduction and LSTM CPU gradients. No gfx1030 spoof.",
-      "status": "queued"
+      "evidence": "Installed libraries d375d8a2: native wave32/RDNA1 legacy CK profile and BF16 conversion/compute-precision epilogues with versioned kernel cache key.54 numerical reduction cases,3 unsupported-compute refusals and12 FP32/FP16 LSTM/GRU/RNN outputs/all gradients pass;30 convolution,32 event-pair and7 core regressions pass. See ../bc250_miopen_a02_results/README.md; original/intermediate failures retained.",
+      "next": "A03 genuine gfx1013_20 tuning/cache provenance, bounded replay/packaging and capability-aware optional plugin probing. BF16 RNN/wider contracts unqualified; no fabricated databases.",
+      "status": "completed_bounded"
     },
     {
       "id": "A03",
@@ -131,10 +131,11 @@
       "status": "queued"
     }
   ],
-  "next": "A01 direct-MIOpen workspace/profiling isolation",
+  "next": "A03 genuine gfx1013_20 tuning/cache provenance, bounded collection/replay/packaging and capability-aware optional CK plugin probing",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
-    "A01"
+    "A01",
+    "A02"
   ],
-  "next_primary_item": "A02"
+  "next_primary_item": "A03"
 }

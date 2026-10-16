@@ -1,0 +1,155 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "results": [
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 3,
+      "gradient_tensors": 7,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f32",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 3,
+      "gradient_tensors": 19,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f16",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 3,
+      "gradient_tensors": 7,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f16",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 3,
+      "gradient_tensors": 19,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f32",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f16",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f16",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f32",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f16",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f16",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    }
+  ],
+  "loaded_libraries": [
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+    "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+    "/workspace/pytorch-work/torch/lib/libtorch_hip.so"
+  ]
+}

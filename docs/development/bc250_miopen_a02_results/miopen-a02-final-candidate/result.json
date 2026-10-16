@@ -1,0 +1,1264 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "results": [
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4156,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "workspace": 4126,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "workspace": 4126,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        1,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        1,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        1,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        1,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        1,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        1,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        1,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "workspace": 4164,
+      "index_bytes": 0,
+      "output_shape": [
+        1,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        1,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "workspace": 4130,
+      "index_bytes": 0,
+      "output_shape": [
+        1,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        1,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "workspace": 4130,
+      "index_bytes": 0,
+      "output_shape": [
+        1,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 1,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 1,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 1,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 2,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 2,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 2,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 3,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 3,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 3,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 4,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 4,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 4,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 5,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 5,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 5,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 6,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 6,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 6,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 7,
+      "dtype": "f32",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 7,
+      "dtype": "f16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 7,
+      "dtype": "bf16",
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        513
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4156,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4126,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        4097
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "alpha": -0.73123,
+      "beta": 0.25123,
+      "workspace": 4126,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        17,
+        5
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "strided": true,
+      "custom_stream": true,
+      "alpha": -0.75,
+      "beta": 0.25,
+      "workspace": 4096,
+      "index_bytes": 0,
+      "output_shape": [
+        3,
+        1,
+        5
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 2,
+      "dtype": "f32",
+      "indices": true,
+      "workspace": 4228,
+      "index_bytes": 12,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 3,
+      "dtype": "f32",
+      "indices": true,
+      "workspace": 4228,
+      "index_bytes": 12,
+      "output_shape": [
+        3,
+        1
+      ],
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "compute": 0,
+      "expect_rejection": true,
+      "rejected_status": 6,
+      "output_unchanged": true,
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "compute": 5,
+      "expect_rejection": true,
+      "rejected_status": 6,
+      "output_unchanged": true,
+      "status": "passed"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "bf16",
+      "compute": 6,
+      "expect_rejection": true,
+      "rejected_status": 6,
+      "output_unchanged": true,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 3,
+      "gradient_tensors": 7,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f32",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 3,
+      "gradient_tensors": 19,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f16",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 3,
+      "gradient_tensors": 7,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f16",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 3,
+      "gradient_tensors": 19,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f32",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f16",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "GRU",
+      "dtype": "f16",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f32",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f16",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "forward_outputs": 2,
+      "gradient_tensors": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "rnn",
+      "kind": "RNN",
+      "dtype": "f16",
+      "layers": 2,
+      "bidirectional": true,
+      "hidden": 7,
+      "length": 9,
+      "forward_outputs": 2,
+      "gradient_tensors": 18,
+      "status": "passed"
+    }
+  ],
+  "loaded_libraries": [
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/ml-libs/MIOpen/build/lib/libMIOpen.so.1.0",
+    "/workspace/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0",
+    "/workspace/pytorch-work/torch/lib/libtorch_hip.so"
+  ]
+}

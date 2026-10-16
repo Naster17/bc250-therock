@@ -1,0 +1,45 @@
+{
+  "status": "failed",
+  "arch": "gfx1013:xnack-",
+  "results": [
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        7
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "status": "failed",
+      "error": "miopenReduceTensor: status 7"
+    },
+    {
+      "suite": "reduction",
+      "shape": [
+        3,
+        65
+      ],
+      "dims": [
+        1
+      ],
+      "op": 0,
+      "dtype": "f32",
+      "status": "failed",
+      "error": "miopenReduceTensor: status 7"
+    },
+    {
+      "suite": "rnn",
+      "kind": "LSTM",
+      "dtype": "f32",
+      "layers": 1,
+      "bidirectional": false,
+      "hidden": 4,
+      "length": 5,
+      "status": "failed",
+      "error": "miopenStatusUnknownError"
+    }
+  ]
+}

@@ -23,9 +23,13 @@ Fifteen direct API and30 Torch convolution output/gradient configurations passed
 Other installations/venvs are outside this deployment, and these bounded checks
 do not qualify every convolution or establish a speedup.
 
-The legacy CK reduction/LSTM backward failure and missing optional CK plugin/
-system database warnings remain separate queued items. See the
-[A01 results and limits](bc250_miopen_a01_results/README.md).
+A02 also corrects the bundled legacy CK target rejection and BF16 reduction
+conversions/scaling. The installed runtime passes54 direct numerical reduction
+cases, three unsupported-compute refusal checks and12 FP32/FP16 LSTM/GRU/RNN
+output/gradient cases. This applies automatically to callers loading this MIOpen;
+BF16 RNN remains unsupported. Missing optional CK plugin/system database warnings
+remain A03/B07. See [A02 results and limits](bc250_miopen_a02_results/README.md)
+and [A01 convolution limits](bc250_miopen_a01_results/README.md).
 
 ## Storage and software fallback (updated 2026-10-16)
 
@@ -48,8 +52,8 @@ For stack-wide availability, reproduced defects, missing optional packages and
 the ordered work queue, see the [Torch support matrix](bc250_torch_support_matrix.md).
 The Qwen3.5 helpers below are application scoped; they do not replace ordinary
 Torch convolution or loss globally. A01 corrects the reproduced general-convolution
-timing/workspace failures; LSTM backward still has a separate legacy CK reduction
-failure in that matrix.
+timing/workspace failures; A02 corrects the legacy CK reduction failure and
+qualifies the recorded FP32/FP16 recurrent output/backward fixtures.
 
 The current `finetune-n7/scripts/train_bc250.py` launcher uses `replica/train.py`
 with the project's Transformers5.19.0 overlay. It now enables native gfx1013

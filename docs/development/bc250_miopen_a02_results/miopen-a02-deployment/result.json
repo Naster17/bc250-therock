@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "source": {
+    "therock_port_revision": "d17427bfeff6ab7204855a753a883c9a66fbf51b",
+    "rocm_libraries_revision": "d375d8a2ea7280170455d133058c3cf8e16f58b6",
+    "rocm_systems_revision": "329eaf726632ab0136924804cbc1321ae09fc126",
+    "sources_sha256": {
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/tensor_operation/gridwise_generic_2d_reduction_blockwise.hpp": "b6f0f2188597d3929eb339a7cdf8ba5b9527e94dccb667f2d355090b66e654f4",
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/tensor_operation/gridwise_generic_2d_reduction_direct_threadwise.hpp": "40bd6deddddb856b8c4f420565ca8f32c8368caefeee797ffa1ef9e669fa1277",
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/tensor_operation/gridwise_generic_2d_reduction_direct_warpwise.hpp": "cf9d519ff8baaabd99ab648d80970a10dbf499a79cdc4d6cb0b841e10dc024c8",
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/tensor_operation/gridwise_generic_2d_reduction_multiblock.hpp": "c6459f77b2114041b5f0acbf3a48cc17c6e92dae38b8c26b0f4d305a8c5d4437",
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/tensor_operation/threadwise_tensor_slice_transfer.hpp": "fc2a3b415d6dcf39e9aab18f27dcccf37c91131215c1150d91031791bf33b9ab",
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/utility/amd_buffer_addressing.hpp": "2b3d40a2bf7aebf3422cf1fc550671a7ff880892739808afa9a92697052eeb00",
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/utility/config.hpp": "9c114a268f19c263151a860e881cb0fe9663b537aad045c0030cd2886df26338",
+      "rocm-libraries/projects/miopen/src/legacy_composable_kernel/composable_kernel/include/utility/data_type_enum_helper.hpp": "08868f8c03d4c0719ac6db9fdb0b27804ea1f78d5833188e05ba07978e3a0976",
+      "rocm-libraries/projects/miopen/src/reducetensor.cpp": "d01b335b76ececc4ff4478197fe8a5be11fc5c5ee9780cd5ac5e799aa1ed3b8a"
+    },
+    "helper_sha256": {
+      "build_miopen_a02_profile.sh": "036eff85497a003ca4a46da1bf68ca83774b2e55ea37e4ab86426eb34904e02a",
+      "miopen_a02_native_profile.cpp": "f22cc61ddd0dd026023748be5dc47d08d2ad9b1bb2b4dc9afc038599b31d7604",
+      "validate_miopen_a02.py": "18e378ae080cfdbe5b92afe059809deed6556542dc978b5a5b434889069ba458",
+      "deploy_miopen_a02_on_host.py": "0545ab5cdbe0cc716af4d0c393b34be3dc1baeb1f73bf526bab71cbb5579fe40"
+    },
+    "candidate_gates": {
+      "miopen-a02-final-candidate": 69
+    },
+    "limits": "Native gfx1013 wave32. FP32/FP16/BF16 storage with FP32 compute; FP32/FP16 RNN. Bounded CPU-reference correctness, not universal performance."
+  },
+  "protected_before": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhsa-runtime64.so.1.21.0": "1e4c4d58f4e2424ebb013238896ad024355727e720e4b44619fb11ef1d5cd228",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libamdhip64.so": "e9878e9fc4efaa8dd443709a3321ffe7c07a68e090b7dc7eb6e2ec6a91290d50",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/librocblas.so": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipblaslt.so": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/.kpack/blas_lib_gfx1013.kpack": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-work/torch/lib/libtorch_hip.so": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+    "/opt/bc250-stack/previous/rocm/lib/libhsa-runtime64.so.1.21.0": "bda3dc8f8dc7d406b7e77a0d9953ef5af3ec826d01ddea58b757f9ac505f1748",
+    "/opt/bc250-stack/previous/rocm/lib/libMIOpen.so.1.0": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11"
+  },
+  "installed_gates": [
+    "miopen-a02-reduction-installed",
+    "miopen-a02-rnn-installed",
+    "miopen-a02-conv-installed",
+    "miopen-a02-events-installed",
+    "miopen-a02-core-installed"
+  ],
+  "before_library_sha256": "85a41de0c8cda754340f037bf978ef72067047e25a70c3be3217ed6c04dd83ab",
+  "phase": "miopen-a02-core-installed",
+  "after_library_sha256": "f4b1a10ce20bdbdf0e6ac90168fb50945b35cf8e26385b66f3ee387aa4507b3c",
+  "protected_unchanged": true,
+  "running_agent_jobs": []
+}

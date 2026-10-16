@@ -1,0 +1,13 @@
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1013: libMIOpenCKGroupedConv_gfx1013.so: cannot open shared object file: No such file or directory
+{"suite": "rnn", "kind": "LSTM", "dtype": "f32", "layers": 1, "bidirectional": false, "hidden": 4, "length": 5, "forward_outputs": 3, "gradient_tensors": 7, "status": "passed"}
+{"suite": "rnn", "kind": "LSTM", "dtype": "f32", "layers": 2, "bidirectional": true, "hidden": 7, "length": 9, "forward_outputs": 3, "gradient_tensors": 19, "status": "passed"}
+{"suite": "rnn", "kind": "LSTM", "dtype": "f16", "layers": 1, "bidirectional": false, "hidden": 4, "length": 5, "forward_outputs": 3, "gradient_tensors": 7, "status": "passed"}
+{"suite": "rnn", "kind": "LSTM", "dtype": "f16", "layers": 2, "bidirectional": true, "hidden": 7, "length": 9, "forward_outputs": 3, "gradient_tensors": 19, "status": "passed"}
+{"suite": "rnn", "kind": "GRU", "dtype": "f32", "layers": 1, "bidirectional": false, "hidden": 4, "length": 5, "forward_outputs": 2, "gradient_tensors": 6, "status": "passed"}
+{"suite": "rnn", "kind": "GRU", "dtype": "f32", "layers": 2, "bidirectional": true, "hidden": 7, "length": 9, "forward_outputs": 2, "gradient_tensors": 18, "status": "passed"}
+{"suite": "rnn", "kind": "GRU", "dtype": "f16", "layers": 1, "bidirectional": false, "hidden": 4, "length": 5, "forward_outputs": 2, "gradient_tensors": 6, "status": "passed"}
+{"suite": "rnn", "kind": "GRU", "dtype": "f16", "layers": 2, "bidirectional": true, "hidden": 7, "length": 9, "forward_outputs": 2, "gradient_tensors": 18, "status": "passed"}
+{"suite": "rnn", "kind": "RNN", "dtype": "f32", "layers": 1, "bidirectional": false, "hidden": 4, "length": 5, "forward_outputs": 2, "gradient_tensors": 6, "status": "passed"}
+{"suite": "rnn", "kind": "RNN", "dtype": "f32", "layers": 2, "bidirectional": true, "hidden": 7, "length": 9, "forward_outputs": 2, "gradient_tensors": 18, "status": "passed"}
+{"suite": "rnn", "kind": "RNN", "dtype": "f16", "layers": 1, "bidirectional": false, "hidden": 4, "length": 5, "forward_outputs": 2, "gradient_tensors": 6, "status": "passed"}
+{"suite": "rnn", "kind": "RNN", "dtype": "f16", "layers": 2, "bidirectional": true, "hidden": 7, "length": 9, "forward_outputs": 2, "gradient_tensors": 18, "status": "passed"}

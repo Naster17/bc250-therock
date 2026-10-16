@@ -1,0 +1,61 @@
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1013: libMIOpenCKGroupedConv_gfx1013.so: cannot open shared object file: No such file or directory
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 0, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 0, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 0, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 513], "dims": [1], "op": 0, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 513], "dims": [1], "op": 0, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 513], "dims": [1], "op": 0, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 4097], "dims": [1], "op": 0, "dtype": "f32", "workspace": 4156, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 4097], "dims": [1], "op": 0, "dtype": "f16", "workspace": 4126, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 4097], "dims": [1], "op": 0, "dtype": "bf16", "workspace": 4126, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [1, 513], "dims": [1], "op": 0, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [1, 1], "status": "passed"}
+{"suite": "reduction", "shape": [1, 513], "dims": [1], "op": 0, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [1, 1], "status": "passed"}
+{"suite": "reduction", "shape": [1, 513], "dims": [1], "op": 0, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [1, 1], "status": "passed"}
+{"suite": "reduction", "shape": [1, 4097], "dims": [1], "op": 0, "dtype": "f32", "workspace": 4164, "index_bytes": 0, "output_shape": [1, 1], "status": "passed"}
+{"suite": "reduction", "shape": [1, 4097], "dims": [1], "op": 0, "dtype": "f16", "workspace": 4130, "index_bytes": 0, "output_shape": [1, 1], "status": "passed"}
+{"suite": "reduction", "shape": [1, 4097], "dims": [1], "op": 0, "dtype": "bf16", "workspace": 4130, "index_bytes": 0, "output_shape": [1, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 1, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 1, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 1, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 2, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 2, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 2, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 3, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 3, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 3, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 4, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 4, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 4, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 5, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 5, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 5, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 6, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 6, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 6, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 7, "dtype": "f32", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 7, "dtype": "f16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 7, "dtype": "bf16", "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "f32", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "f16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "bf16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 0, "dtype": "f32", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 0, "dtype": "f16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 0, "dtype": "bf16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 513], "dims": [1], "op": 0, "dtype": "f32", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 513], "dims": [1], "op": 0, "dtype": "f16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 513], "dims": [1], "op": 0, "dtype": "bf16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 4097], "dims": [1], "op": 0, "dtype": "f32", "alpha": -0.73123, "beta": 0.25123, "workspace": 4156, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 4097], "dims": [1], "op": 0, "dtype": "f16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4126, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 4097], "dims": [1], "op": 0, "dtype": "bf16", "alpha": -0.73123, "beta": 0.25123, "workspace": 4126, "index_bytes": 0, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 17, 5], "dims": [1], "op": 0, "dtype": "f32", "strided": true, "custom_stream": true, "alpha": -0.75, "beta": 0.25, "workspace": 4096, "index_bytes": 0, "output_shape": [3, 1, 5], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 2, "dtype": "f32", "indices": true, "workspace": 4228, "index_bytes": 12, "output_shape": [3, 1], "status": "passed"}
+{"suite": "reduction", "shape": [3, 65], "dims": [1], "op": 3, "dtype": "f32", "indices": true, "workspace": 4228, "index_bytes": 12, "output_shape": [3, 1], "status": "passed"}
+MIOpen Error: bc250:/workspace/source/rocm-libraries/projects/miopen/src/reducetensor.cpp:562: BF16 reductions require FP32 compute.
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "bf16", "compute": 0, "expect_rejection": true, "rejected_status": 6, "output_unchanged": true, "status": "passed"}
+MIOpen Error: bc250:/workspace/source/rocm-libraries/projects/miopen/src/reducetensor.cpp:562: BF16 reductions require FP32 compute.
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "bf16", "compute": 5, "expect_rejection": true, "rejected_status": 6, "output_unchanged": true, "status": "passed"}
+MIOpen Error: bc250:/workspace/source/rocm-libraries/projects/miopen/src/reducetensor.cpp:562: BF16 reductions require FP32 compute.
+{"suite": "reduction", "shape": [3, 7], "dims": [1], "op": 0, "dtype": "bf16", "compute": 6, "expect_rejection": true, "rejected_status": 6, "output_unchanged": true, "status": "passed"}

@@ -9,6 +9,39 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT A02 completed2026-10-16:** TheRock source/helpers
+  d17427bfeff6ab7204855a753a883c9a66fbf51b; libraries
+  d375d8a2ea7280170455d133058c3cf8e16f58b6 (native-profile2093090048f), installed .104.
+  Original direct sums/LSTM backward failure reproduced; native bundled legacy CK
+  target accepted with RDNA1 descriptor0x31014000/scalar FMA, packed-dot asm off,
+  explicit XDLOPS refusal; wave32 metadata verified. Additional BF16 mapping/raw
+  buffer/load conversion and compute-precision alpha/beta epilogues corrected.
+  Reduction cache key version2 prevents reuse of old embedded-header kernels;
+  preserves caches. Retained intermediate mapping/buffer/numeric/stale-cache
+  failures, no hidden tolerance change. Final candidate69/69; installed54 numerical
+  reduction cases +3 unsupported BF16 compute refusals and12 FP32/FP16 LSTM/GRU/
+  tanh-RNN outputs/all gradients pass. Thread/wave/block/multiblock/scales/beta/
+  guards/strided custom stream/FP32 min-max indices covered. Installed30 conv,
+  32 stable positive event pairs and seven core reference groups pass.14 total
+  GPU/diagnostic guards ACK/600s/dmesg identical; baseline collector0 had3 failures.
+  Only MIOpen DSO atomically replaced under exclusive prefix lock with installed
+  RPATH; SHA f4b1a10ce20bdbdf0e6ac90168fb50945b35cf8e26385b66f3ee387aa4507b3c.
+  Eight protected HSA/HIP/Torch/BLAS/kpack/frozen-fallback hashes unchanged.
+  Recovery WS/recovery/miopen-a02-before; SOURCE_MIOPEN_A02.json in WS/current.
+  Report docs/development/bc250_miopen_a02_results/README.md, raw WS/logs/miopen-a02-*
+  and ignored local kernel/artifacts/miopen-a02/host-logs.29 library patches exact
+  reconstruction; prior Torch3-file SDPA patch-bundle gap separate/preserved.
+  No performance/universal coverage claim; BF16 RNN and wider NaN/index/compute/
+  recurrent contracts unqualified. A01 clock/reset/absolute trace limits and event
+  speed-ratio remeasurement remain. Python CPU fault unresolved/distinct from fixed
+  VM-heap/CSR. Torch4ee6571/Triton ee65ff3b/ROCr329eaf7/image5df0/kernel0957/image84995/
+  boot a287fd16/SDMA0/heap-off/math/r2fallback/BIOS/.105/user src/data unchanged.
+  No active agent build/test/container/recovery deadline.
+  **Exact next A03:** inspect actual gfx1013_20 FindDb/PerfDb/kernel-cache records;
+  bounded genuine tuning entries with device/version/shape provenance, replay and
+  packaging; review capability-aware optional CK plugin probing. Missing system DB/
+  plugin warnings remain A03/B07. Never fabricate DBs or rename other-GPU records.
+  A03–A09 before N2.7; K6 completed; do not repeat earlier milestones.
 - **CURRENT A01 completed2026-10-16:** source/helper380a403a1bc17fa561345846fb4d92a6f57c3237,
   systems329eaf726632ab0136924804cbc1321ae09fc126,
   libraries08ba6f386ff661e720873779fc417b4246787d9c; installed on .104.

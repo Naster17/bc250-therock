@@ -1,0 +1,131 @@
+[
+  {
+    "label": "miopen-a02-before",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "failed",
+    "cases": 3,
+    "passed": 0
+  },
+  {
+    "label": "miopen-a02-bf16-candidate-reduction",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "failed",
+    "cases": 3,
+    "passed": 2
+  },
+  {
+    "label": "miopen-a02-bf16-candidate-reduction-r2",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "failed",
+    "cases": 3,
+    "passed": 2
+  },
+  {
+    "label": "miopen-a02-bf16-candidate-reduction-r3",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "failed",
+    "cases": 3,
+    "passed": 2
+  },
+  {
+    "label": "miopen-a02-bf16-candidate-reduction-r4",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 54,
+    "passed": 54
+  },
+  {
+    "label": "miopen-a02-candidate-reduction",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "failed",
+    "cases": 3,
+    "passed": 2
+  },
+  {
+    "label": "miopen-a02-candidate-rnn",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 12,
+    "passed": 12
+  },
+  {
+    "label": "miopen-a02-candidate-smoke",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 3,
+    "passed": 3
+  },
+  {
+    "label": "miopen-a02-conv-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 30,
+    "passed": 30
+  },
+  {
+    "label": "miopen-a02-core-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 0,
+    "passed": 0,
+    "checks": 7
+  },
+  {
+    "label": "miopen-a02-events-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": null,
+    "cases": 0,
+    "passed": 0,
+    "unstable_or_nonpositive": 0,
+    "event_pairs": 32
+  },
+  {
+    "label": "miopen-a02-final-candidate",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 69,
+    "passed": 69
+  },
+  {
+    "label": "miopen-a02-reduction-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 57,
+    "passed": 57
+  },
+  {
+    "label": "miopen-a02-rnn-installed",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "guard_acknowledged": true,
+    "status": "passed",
+    "cases": 12,
+    "passed": 12
+  }
+]
