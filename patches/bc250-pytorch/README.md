@@ -1,4 +1,19 @@
-# BC-250 PyTorch patch
+# BC-250 PyTorch patches
+
+Current qualified A04 source: `8cdfcc8e0feb3689a1ec1d292539af083b13ea94`.
+Patch0003 is an incremental export based on full patched Torch
+`4ee65717d69e9f51021272e3f37d0f342f68fc08`; it adds native scalar
+hipSPARSELt integration. The old0001/0002 reconstruction does **not** include
+three later SDPA source files. Preserve that known gap: this directory alone
+does not reconstruct the current tree. Full local Git sources and the A04
+incremental Git bundle on .104 retain the actual history.
+
+Build/codegen only through `python -m pip install -e . -v --no-build-isolation`.
+For raw CUDA-source updates, refresh the candidate CMake configuration so the
+existing toolchain performs HIPify inside that build; retain the prior cache.
+Do not invoke standalone codegen. See the [A04 report](../../docs/development/bc250_torch_a04_results/README.md).
+
+The following baseline description is historical.
 
 Baseline: `c779020750d7dc99a39ea8c104ef8df1fc9d0755` (ROCm PyTorch 2.13).
 Local patched source: `4f13bf86476252e3d57b17d1c72f8512814400e9`.
@@ -19,6 +34,5 @@ rebuild uses `pip install -e . -v --no-build-isolation`; original release copies
 and source archives are retained.
 
 The second patch permits explicit gfx1013 hipBLASLt selection after a real
-zero-workspace heuristic succeeds. Default rocBLAS remains unchanged. Incremental
-CUDA-source updates must run `tools/amd_build/build_amd.py --out-of-place-only`
-before editable pip; a cached CMake configure otherwise leaves HIP sources stale.
+zero-workspace heuristic succeeds. Default rocBLAS remains unchanged. The current pip-only build procedure above supersedes the historical standalone
+HIPify instruction; a stale CMake configure can otherwise leave HIP sources stale.
