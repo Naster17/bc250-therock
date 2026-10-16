@@ -14,8 +14,8 @@ The Qwen3.5 helpers from implementation690042b55 are **application scoped**.
 Qwen3.5 module and chunk64 loss on its model instance. Other scripts/models and
 `torch.nn.functional.conv1d`/cross_entropy are unchanged. The PEFT target-resolution
 resume fix is in this trainer. Reuse is possible through explicit helper calls;
-automatic general Torch routing and trainable-convolution-weight gradients are
-not implemented. The earlier C++ `1Torch` diagnostic fix does apply to all callers
+automatic general Torch routing is not implemented. A05 below adds trainable
+convolution gradients through a separate opt-in API; this older trainer is unchanged. The earlier C++ `1Torch` diagnostic fix does apply to all callers
 using the patched .104 Torch runtime. None of these changes updates .105.
 
 ## A01 update — 2026-10-16
@@ -60,6 +60,17 @@ public FP16/BF16 wrappers and refusals. Installed convolution/core/attention smo
 regressions pass; original Torch and frozen fallback preserved. Same-dtype
 FP32/FP16/BF16/INT8 only; sparse autograd/compile/graphs/performance unqualified.
 [A04 evidence, deployment and limits](bc250_torch_a04_results/README.md). Next A05.
+
+## A05 update — 2026-10-16
+
+Installed Torch6181d00 exposes `torch.nn.bc250_training_ops`: reusable explicit
+causal convolution with native dx/dw/db and chunked causal loss, without a model
+installer.69 installed tests pass CPU references, AMP casting/scaled update,
+checkpoint recomputation, exact tiny-model AdamW resume, fallbacks and guards.
+Core/A04 regressions pass; binaries, shared consumer bundle and original trainer
+are unchanged. [A05 API/evidence/limits](bc250_training_a05_results/README.md).
+Eager first-order only; no global routing, large-model speedup or compile/graph
+qualification. Exact next A06, gated-delta reference profiling/native substage.
 
 ## What the current audit established
 
@@ -127,7 +138,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A02 — completed** | Native MIOpen legacy CK reductions and recurrent backward | Libraries d375d8a2: native wave32/RDNA1 scalar profile; BF16 mapping/raw transfers/conversions and compute-precision scaling; versioned cache key. Installed54 numerical reductions +3 unsupported-compute refusals and12 FP32/FP16 LSTM/GRU/RNN output/all-gradient fixtures pass. | Applies to current-prefix MIOpen callers; BF16 RNN and wider NaN/index/compute/recurrent contracts unqualified. [Report](bc250_miopen_a02_results/README.md). A03 supplies a bounded DB seed/probe correction; modern plugin remains absent B07; no general speedup claim. |
 | **A03 — completed** | Genuine native MIOpen seed databases and capability-aware plugin probing | Libraries fcf7a714 installed:16 FindDb keys/58 checked solutions, one searched PerfDb record and41 KDB records; normal-path read-only replay has zero new user kernels. Unseen fallback and regressions pass. | Small geometry/version/device scope only; wider tuning and modern CK plugin B07 remain unqualified. [Report](bc250_miopen_a03_results/README.md). Continue A04. |
 | **A04 — completed** | Native Torch hipSPARSELt integration | Installed Torch8cdfcc8; fresh discovery, gfx1013/FP32 enablement, HIP bindings and contract guards.20 tests/120 small matmuls plus pack/public-wrapper/search/refusal checks pass. | Same-dtype FP32/FP16/BF16/INT8 scalar GPU path only; sparse autograd/graphs/compile/performance unqualified. [Report](bc250_torch_a04_results/README.md). Next A05. |
-| **A05** | Latest causal conv/loss improvements are not reusable general Torch defaults | Only finetune-n7 Qwen3.5 hook; conv has no weight/bias gradients, loss is eager first-order and retains low-precision logits | Expose a reviewed reusable opt-in API, add trainable conv gradients and model/shape dispatch gates. Expand CPU/checkpoint/AMP refs before considering broader selection. Keep old behavior for unsupported calls. |
+| **A05 — completed** | Reusable opt-in causal conv/loss | Torch6181d00;69 tests: CPU output/dx/dw/db/loss, AMP/checkpoint/update and exact tiny-model AdamW resume. | Explicit torch.nn.bc250_training_ops calls; original trainer unchanged. Higher-order/compile/graphs/large-model/performance unqualified. [Report](bc250_training_a05_results/README.md). Next A06. |
 | **A06** | Native gated-delta / FLA training kernels missing | Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification | Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support. |
 | **A07** | Efficient attention gaps: head256, dropout, compile/graph support | Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math | Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled. |
 | **A08** | Dense INT8 -> INT32 `_int_mm` | Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route. | Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption. |
@@ -141,7 +152,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
-A01–A04 are completed within their recorded scopes. A05–A09 are the remaining primary
+A01–A05 are completed within their recorded scopes. A06–A09 are the remaining primary
 queue, in this order. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did

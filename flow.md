@@ -9,6 +9,38 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **A05 completed2026-10-16:** Torch6181d00b5beb8cc9fd6800da7a19c8abf756b30d,
+  TheRock helpers869463155599a1c836bef10fb6089cbaa511058c installed .104.
+  New opt-in torch.nn.bc250_training_ops exports causal_conv and chunked_causal_loss,
+  without model/version hooks. Native gfx1013 K1–4 FP32/FP16/BF16 forward/dx plus
+  new deterministic FP32 partial-reduction dw/db; strided/custom-stream and autocast
+  handling; unsupported valid conv falls back to ATen. Chunked loss recomputes FP32
+  probabilities, validates labels/counts/kwargs; original low-precision logits remain.
+  Final candidate/installed69 TestCase tests pass:48 all-gradient conv,3 no-bias,
+  4 AMP/checkpoint/scaled-update,12 loss, dispatch/8-refusal group and tiny-model
+  CPU loss/all-gradient plus exact AdamW/parameter/GPU-RNG serialized resume.
+  Installed seven core groups and A04 sparse20/120-matmul regressions pass. Six
+  GPU guards all ACK/600s/dmesg identical53f83f7b;30 protected hashes unchanged.
+  Only one Python module atomically added to active WS/pytorch-a04 under exclusive
+  lock; Torch/ROCm DSOs and shared/frozen consumer bundle unchanged. Recovery
+  WS/recovery/training-a05-before; SOURCE_TRAINING_A05.json in WS/current.
+  Old finetune-n7 trainer/bc250_ops.py remain unchanged; new API requires explicit
+  import/calls. No automatic general conv/loss replacement, FLA, higher-order,
+  compile/graphs/export, large-model or performance/stability claim. Fixed8x AMP
+  scaling test does not qualify dynamic GradScaler overflow/growth. Existing real
+  Qwen/CLI51-gate evidence belongs to the old helper, not this module. Source/hash/
+  usage/evidence in [A05 report](docs/development/bc250_training_a05_results/README.md), raw logs
+  WS/logs/training-a05-* and local ignored kernel/artifacts/training-a05/.
+  Full Torch Git/incremental patch0004/verified bundle preserved; prior SDPA3-file
+  bundle gap remains. Lint initialization still blocked, attempts retained; syntax/
+  whitespace pass. No active jobs/container/guard deadline. Disk15.9GiB free.
+  Kernel/image/boot/BIOS/.105/user src/data/default dense BLAS/SDMA0/heap-off/math/r2
+  fallback unchanged. Historical Python CPU fault distinct from fixed VM-heap/CSR.
+  Exact next **A06**: inspect recorded Qwen3.5 gated-delta reference/model shapes,
+  profile bounded forward/backward substages; implement one scalar/wave32 substage
+  with independent output and Q/K/V/gate gradient refs before deployment.
+  A06–A09 before N2.7; K6 completed.
+
 - **A04 completed2026-10-16:** Torch8cdfcc8e0feb3689a1ec1d292539af083b13ea94,
   TheRock helpers b5879aefa7990928270645676e66cc40d972de6b installed on .104.
   Fresh candidate configure finds the existing hipSPARSELt package; no discovery

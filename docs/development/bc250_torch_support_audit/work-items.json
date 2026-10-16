@@ -41,10 +41,10 @@
     },
     {
       "id": "A05",
-      "feature": "Latest causal conv/loss improvements are not reusable general Torch defaults",
-      "evidence": "Only finetune-n7 Qwen3.5 hook; conv has no weight/bias gradients, loss is eager first-order and retains low-precision logits",
-      "next": "Expose a reviewed reusable opt-in API, add trainable conv gradients and model/shape dispatch gates. Expand CPU/checkpoint/AMP refs before considering broader selection. Keep old behavior for unsupported calls.",
-      "status": "queued"
+      "feature": "Reusable opt-in causal convolution and chunked-loss API",
+      "evidence": "Installed Torch6181d00 torch.nn.bc250_training_ops; native dx/dw/db, AMP cast, ATen fallback and validated chunked loss.69 tests pass including CPU references, checkpoint/scaled update and tiny-model exact AdamW resume; core/A04 regressions pass. Existing trainer unchanged. See ../bc250_training_a05_results/README.md.",
+      "next": "A06 gated-delta reference profiling and one native scalar/wave32 substage; higher-order/compile/graphs/large-model/performance remain unqualified.",
+      "status": "completed_bounded"
     },
     {
       "id": "A06",
@@ -131,13 +131,14 @@
       "status": "queued"
     }
   ],
-  "next": "A05: inspect existing Qwen3.5 helpers and recorded51 operator/model/resume gates; reusable opt-in API, trainable conv gradients and CPU/checkpoint/AMP references. A05-A09 before N2.7; K6 completed.",
+  "next": "A06: inspect existing gated-delta/FLA reference/model shapes; profile bounded forward/backward substages, then implement one scalar/wave32 substage with independent output and Q/K/V/gate gradient references. A06-A09 before N2.7; K6 completed.",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
     "A01",
     "A02",
     "A03",
-    "A04"
+    "A04",
+    "A05"
   ],
-  "next_primary_item": "A05"
+  "next_primary_item": "A06"
 }

@@ -14,6 +14,21 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Opt-in causal convolution and loss API (A05, updated 2026-10-16)
+
+Scripts using the current `bc250-torch`/`bc250-train` can explicitly import
+`causal_conv` and `chunked_causal_loss` from `torch.nn.bc250_training_ops`.
+Native depthwise causal convolution now supports trainable input/weight/bias,
+FP32/FP16/BF16, K1–4, SiLU, strided tensors and eager first-order autocast;
+other valid convolution calls use ATen. The chunked causal loss retains original
+logits and recomputes FP32 probabilities in backward. See the
+[A05 API example, normalization rules and tests](bc250_training_a05_results/README.md).
+
+This installs no global operator/model hooks. The existing LoRA trainer keeps
+its earlier qualified helper until explicitly migrated. Compile/graphs, higher-
+order gradients, dynamic scaler overflow and large-model speedups are unqualified.
+The shared frozen consumer bundle and fallback remain unchanged.
+
 ## Structured sparse Torch operations (A04, updated 2026-10-16)
 
 The current development `bc250-torch`/`bc250-train` runtime supplies native scalar

@@ -1,0 +1,819 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "results": [
+    {
+      "name": "test_amp_checkpoint_update_bfloat16_recompute_False_cuda",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "checkpoint": false,
+      "amp": "torch.bfloat16"
+    },
+    {
+      "name": "test_amp_checkpoint_update_bfloat16_recompute_True_cuda",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "checkpoint": true,
+      "amp": "torch.bfloat16"
+    },
+    {
+      "name": "test_amp_checkpoint_update_float16_recompute_False_cuda",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "checkpoint": false,
+      "amp": "torch.float16"
+    },
+    {
+      "name": "test_amp_checkpoint_update_float16_recompute_True_cuda",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "checkpoint": true,
+      "amp": "torch.float16"
+    },
+    {
+      "name": "test_conv_shape0_activation0_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation0_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation0_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation0_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation0_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation0_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation_silu_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation_silu_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation_silu_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation_silu_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation_silu_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape0_activation_silu_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation0_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation0_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation0_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation0_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation0_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation0_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation_silu_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation_silu_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation_silu_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation_silu_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation_silu_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape1_activation_silu_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        7,
+        7,
+        2
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation0_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation0_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation0_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation0_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation0_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation0_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation_silu_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation_silu_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation_silu_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation_silu_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation_silu_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape2_activation_silu_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        1,
+        9,
+        33,
+        3
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation0_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation0_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation0_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation0_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation0_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation0_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation_silu_strided_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation_silu_strided_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation_silu_strided_False_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation_silu_strided_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation_silu_strided_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_conv_shape3_activation_silu_strided_True_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "shape": [
+        2,
+        5,
+        1031,
+        4
+      ],
+      "all_gradients": true,
+      "custom_stream": true
+    },
+    {
+      "name": "test_dispatch_and_guards_cuda",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "independent_gradient_dispatches": 6,
+      "refusals": 8
+    },
+    {
+      "name": "test_loss_mode_count_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_count_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_count_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_ignored_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_ignored_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_ignored_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_mean_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_mean_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_mean_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_shift_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_shift_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_loss_mode_shift_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23"
+    },
+    {
+      "name": "test_model_resume_cuda",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "exact_resume": true,
+      "cpu_loss_all_parameter_gradients": true
+    },
+    {
+      "name": "test_no_bias_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "no_bias": true
+    },
+    {
+      "name": "test_no_bias_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "no_bias": true
+    },
+    {
+      "name": "test_no_bias_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_training_ops.py",
+      "source_sha256": "06da955bc31f2d458a4929b062ea0319e801e9bc71bcadee7be318d87ca39a23",
+      "no_bias": true
+    }
+  ]
+}
