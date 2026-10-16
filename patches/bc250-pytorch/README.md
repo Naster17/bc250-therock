@@ -1,6 +1,12 @@
 # BC-250 PyTorch patches
 
-Current qualified A04 source: `8cdfcc8e0feb3689a1ec1d292539af083b13ea94`.
+Current A05 source: `6181d00b5beb8cc9fd6800da7a19c8abf756b30d`. Patch0004
+is incremental on the full A04 source8cdfcc8. It adds only the opt-in Python
+`torch.nn.bc250_training_ops` module; installed DSOs remain unchanged.
+[API, qualification and deployment](../../docs/development/bc250_training_a05_results/README.md).
+The historical SDPA reconstruction gap described below remains.
+
+Qualified A04 source: `8cdfcc8e0feb3689a1ec1d292539af083b13ea94`.
 Patch0003 is an incremental export based on full patched Torch
 `4ee65717d69e9f51021272e3f37d0f342f68fc08`; it adds native scalar
 hipSPARSELt integration. The old0001/0002 reconstruction does **not** include
