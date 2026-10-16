@@ -1,0 +1,16 @@
+{
+  "source_sha256": "eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8",
+  "synthetic_root": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli",
+  "jobs": [
+    {
+      "mode": "fresh",
+      "returncode": 0,
+      "log": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh.log"
+    },
+    {
+      "mode": "resumed",
+      "returncode": 2,
+      "log": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/resumed.log"
+    }
+  ]
+}

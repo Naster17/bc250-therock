@@ -1,0 +1,27 @@
+time="2026-10-16T03:03:39+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+{
+  "torch": "2.13.0a0+gfx1013",
+  "source_sha256": "ba6c7de51cae1f2f91b63104ef3069b7c5d6c40cca4bc5168e1400e34074f1f9",
+  "mode": "memory",
+  "checks": [
+    {
+      "kind": "memory",
+      "mode": "reference",
+      "loss": 12.902922630310059,
+      "seconds": 0.4095529939950211,
+      "baseline_allocated": 509624832,
+      "peak_allocated": 3560982016,
+      "peak_extra": 3051357184
+    },
+    {
+      "kind": "memory",
+      "mode": "chunk64",
+      "loss": 12.902924537658691,
+      "seconds": 0.36737658199854195,
+      "baseline_allocated": 509633536,
+      "peak_allocated": 1209962496,
+      "peak_extra": 700328960
+    }
+  ],
+  "passed": true
+}

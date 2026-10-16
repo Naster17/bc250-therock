@@ -1,0 +1,597 @@
+{
+  "torch": "2.13.0a0+gfx1013",
+  "source_sha256": "ba6c7de51cae1f2f91b63104ef3069b7c5d6c40cca4bc5168e1400e34074f1f9",
+  "mode": "operators",
+  "checks": [
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 5.046519074676537e-09
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 3.0906330609425037e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 7.050045483141379e-08,
+      "gradient_l2": 1.1263774237311917e-07
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 1.2585842550288381e-08,
+      "gradient_l2": 8.58605670513706e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 4.751108482177641e-08,
+      "gradient_l2": 4.076114420046154e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 2.9883116873354696e-08,
+      "gradient_l2": 4.076087195506419e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 9.249539083959753e-08,
+      "gradient_l2": 6.470282273844738e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 5.5105441786118025e-08,
+      "gradient_l2": 9.003887359896646e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 5.6591089489218674e-08,
+      "gradient_l2": 4.596764396497515e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 5.349581212926944e-08,
+      "gradient_l2": 4.696115718946575e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 7.716194416095723e-08,
+      "gradient_l2": 8.013767732509555e-08
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 8.328218819530507e-08,
+      "gradient_l2": 8.182205876870366e-08
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float32",
+      "variant": "mean",
+      "gradient_l2": 5.370307577328657e-08
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float32",
+      "variant": "count",
+      "gradient_l2": 4.335234288293479e-08
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float32",
+      "variant": "shift",
+      "gradient_l2": 5.234558144891195e-08
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float32",
+      "variant": "ignore",
+      "gradient_l2": 0.0
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.00023294763655909271
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 7.902668103383928e-05
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 9.633575082365452e-05
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 9.910901003600792e-05
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0001932246068840448
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0001989088922332232
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.00018548855997528062
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0001372059546081623
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0002035121839316699
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.00021141211940331798
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.00021025826497123208
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.float16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0002142408065514944
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float16",
+      "variant": "mean",
+      "gradient_l2": 0.00020540739067656877
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float16",
+      "variant": "count",
+      "gradient_l2": 0.00017816754084879627
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float16",
+      "variant": "shift",
+      "gradient_l2": 0.0001850711695706946
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.float16",
+      "variant": "ignore",
+      "gradient_l2": 0.0
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0009415513437556815
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.001033091867611006
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.002846893404106163
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        3,
+        1
+      ],
+      "k": 1,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0022548850026010052
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.001542076974790564
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.001400545997270659
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0011970135402793382
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        2,
+        7,
+        7
+      ],
+      "k": 2,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0014412988852974841
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": null,
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0016646900651923458
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": null,
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0016322029146124985
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": "silu",
+      "layout": "contiguous",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0016370745516441406
+    },
+    {
+      "kind": "conv",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        32,
+        65
+      ],
+      "k": 4,
+      "activation": "silu",
+      "layout": "channel-last",
+      "output_l2": 0.0,
+      "gradient_l2": 0.0016201155240900046
+    },
+    {
+      "kind": "conv-real-geometry",
+      "shape": [
+        1,
+        6144,
+        1024
+      ],
+      "output_l2": 1.4818651950482433e-08,
+      "gradient_l2": 0.0016591454684489167
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.bfloat16",
+      "variant": "mean",
+      "gradient_l2": 0.002047431940332841
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.bfloat16",
+      "variant": "count",
+      "gradient_l2": 0.0013492208409605383
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.bfloat16",
+      "variant": "shift",
+      "gradient_l2": 0.0018305885425153917
+    },
+    {
+      "kind": "loss",
+      "dtype": "torch.bfloat16",
+      "variant": "ignore",
+      "gradient_l2": 0.0
+    },
+    {
+      "kind": "trainable-weight-refusal"
+    }
+  ],
+  "passed": true
+}

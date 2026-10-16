@@ -1,0 +1,27 @@
+{
+  "source_sha256": "eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8",
+  "synthetic_root": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli",
+  "jobs": [
+    {
+      "mode": "missing-target",
+      "returncode": 2,
+      "correctly_refused": true
+    },
+    {
+      "mode": "extra-target",
+      "returncode": 2,
+      "correctly_refused": true
+    },
+    {
+      "mode": "wrong-rank",
+      "returncode": 2,
+      "correctly_refused": true
+    },
+    {
+      "mode": "wrong-alpha",
+      "returncode": 2,
+      "correctly_refused": true
+    }
+  ],
+  "passed": true
+}

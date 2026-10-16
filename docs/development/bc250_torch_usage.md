@@ -14,6 +14,25 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Qwen3.5 training on .104 (updated 2026-10-16)
+
+The current `finetune-n7/scripts/train_bc250.py` launcher uses `replica/train.py`
+with the project's Transformers5.19.0 overlay. It now enables native gfx1013
+frozen causal convolution and chunk64 FP32 loss by default. The source hash is
+printed at startup. These operations avoid MIOpen search for this convolution
+and the loss's full FP32 logits copy; full BF16 logits still exist. No package
+installation or checkpoint migration is needed. Resume also accepts PEFT's
+equivalent shortened target names while requiring the exact resolved modules,
+rank and alpha. Bounded fresh/resume continuation passed.
+
+Gated-delta attention still uses the GPU PyTorch reference; its FLA warning is
+valid. General MIOpen timing/workspace faults remain unresolved. Qwen3.5 uses
+math SDPA: its head width256 exceeds the separate tiled backend's128 limit.
+The older Qwen3-1.7B tiled examples below do not describe this trainer's options.
+See [usage and opt-out](../../build_tools/bc250/qwen35_training_usage.md), also
+installed as `/home/nik/finetune-n7/BC250_TRAINING_OPS.md`, and the
+[qualification report](bc250_qwen35_training_results/README.md).
+
 ## Attention selection on .104 (updated 2026-10-15)
 
 The incorrect `1Torch was not compiled with memory efficient attention` warning

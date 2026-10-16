@@ -1,0 +1,27 @@
+{
+  "backup": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/qwen35-training-before",
+  "old_trainer_sha256": "5bd3579f70f8db67c24c65dfec08e41cfd90583ce45b7a99fe804a392a1d4ade",
+  "files": {
+    "/home/nik/finetune-n7/replica/bc250_ops.py": "eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8",
+    "/home/nik/finetune-n7/replica/train.py": "03b0f285216ddd68a5948cbe21a759bb4fe78b9ab71d5ffda5725eb54d78f088",
+    "/home/nik/finetune-n7/BC250_TRAINING_OPS.md": "9b61cb037454c4afc72ab94464a4b8a314f6e81b4e1e02a1656f615504cbd02f"
+  },
+  "implementation_revision": "690042b55f33b4a6fd67c4c48d54ff8d7313b64a",
+  "torch_revision": "4ee65717d69e9f51021272e3f37d0f342f68fc08",
+  "rocm_libraries_revision": "a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8",
+  "kernel_revision": "0957f1aa4717bb5ea19545bdcb01d6899e94bb9f",
+  "default_for_project": true,
+  "gated_delta_native": false,
+  "global_miopen_defect_fixed": false,
+  "python_cpu_segfault_fixed": false,
+  "running_agent_jobs": [],
+  "final_labels": [
+    "qwen35-ops-final",
+    "qwen35-loss-memory",
+    "qwen35-model-tiny",
+    "qwen35-model-actual",
+    "qwen35-cli-resume-fixed",
+    "qwen35-resume-guards"
+  ],
+  "retained_failed_label": "qwen35-cli-installed"
+}

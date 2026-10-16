@@ -507,6 +507,28 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**Current Qwen3.5 training follow-up2026-10-16**, implementation690042b55:
+application-scoped native scalar Triton frozen depthwise causal conv K<=4,
+FP32/FP16/BF16 forward/dx/SiLU; unsupported/trainable weights keep original.
+Chunk64 FP32 causal loss recomputes backward probabilities; full BF16 logits remain.
+Enabled by default only in .104 finetune-n7 replica/train.py, Transformers5.19.0,
+math SDPA/head256. New51 operator/reference/guard groups,4 small LoRA pairs and
+real Qwen3.5-2B BF16 rank16 geometry pass:372 adapter gradients max relativeL2~1.12%
+at65tokens,1024-token checkpointed backward/update. Isolated1024/vocab248320 loss
+extra peak2.84->0.65GiB, not whole-model savings/speed/convergence. PEFT shortened
+target names exposed a separate resume bug; compare exact resolved modules now.
+Synthetic deployed CLI fresh/resume gives372 exact adapter tensors plus exact
+optimizer/scheduler/RNG/progress;4 mismatches refused. Final logs have no causal
+fallback/MIOpen/OOM warnings; FLA reference warning retained. Original user log
+continued through251/saved250: allocator retries were not a proven fatal OOM.
+All final guards ACKed/exit0/dmesg identical; failed initial resume retained.
+Sources/patch/local caller copies, hashes and rollback:
+[report](bc250_qwen35_training_results/README.md), SOURCE_QWEN35_TRAINING_OPS.json,
+WS/recovery/qwen35-training-before. No native rebuild/DSO/prefix/boot change or
+active agent job. Global MIOpen timing/workspace and Python CPU fault remain open,
+distinct from fixed VM-heap/CSR corruption. Exact next: profile reference gated-
+delta forward/backward and choose one bounded native gfx1013 substage; N2.7 queued.
+
 Current user-priorities1–4 follow-up2026-10-15, Torch4ee65717d69e9f51021272e3f37d0f342f68fc08:
 long head128/GQA references through4096tokens and real Qwen3-1.7B BF16 rank4 LoRA
 512/1024-token synthetic reference passes completed. Causal tile bounds/tile32

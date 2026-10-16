@@ -9,6 +9,40 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT Qwen3.5 training follow-up completed 2026-10-16:** user supplied an
+  old log and freed .104; this supersedes the N2.7 cursor until training follow-up
+  is done. Implementation `690042b55f33b4a6fd67c4c48d54ff8d7313b64a` adds scalar
+  Triton frozen causal depthwise conv K<=4 (FP32/FP16/BF16 forward/dx/SiLU) and
+  chunk64 FP32 causal loss with backward recomputation. Full BF16 logits remain.
+  Default only in finetune-n7 replica/train.py / Transformers5.19.0 / native gfx1013;
+  unsupported/trainable conv weights retain original, math SDPA/head256 retained.
+  Source/patch/tests local build_tools/bc250/qwen35_training* + deploy/validate helpers;
+  deployed replica/bc250_ops.py SHA eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8.
+  51 final operator/reference/stream/storage/refusal checks pass;4 small LoRA pairs.
+  Real text-only Qwen3.5-2B BF16 rank16/alpha32:65-token loss match,372 adapter
+  gradients max relativeL2~1.12%;1024-token checkpointed backward/AdamW update pass,
+  whole peak~11.15GiB without a paired full-model baseline. Isolated1024/vocab248320
+  loss extra peak2.84->0.65GiB; no full-model speed/memory/convergence claim.
+  Fresh CLI exposed PEFT minimized suffix target names rejected by old raw string
+  comparison; now require exact resolved module set/rank/alpha.2 fresh synthetic
+  updates/eval plus checkpoint1 resume:372 exact saved tensors and exact optimizer/
+  scheduler/RNG/progress;4 mismatches refused. Initial CLI failure retained.
+  Final labels qwen35-{ops-final,loss-memory,model-tiny,model-actual,cli-resume-fixed,
+  resume-guards}:exit0/dmesg identical/600s guards ACKed under exclusive prefix lock.
+  Original user log continued251/saved250; allocator warnings were recoverable
+  attempts, not a demonstrated fatal OOM. Final CLI causal/MIOpen/OOM warnings absent;
+  gated-delta/FLA reference warning remains valid. Global MIOpen elapsed/workspace
+  defect NOT fixed; Python CPU fault unresolved, distinct from fixed VM-heap/CSR.
+  Evidence docs/development/bc250_qwen35_training_results/README.md + matching WS/logs;
+  SOURCE_QWEN35_TRAINING_OPS.json; WS/recovery/qwen35-training-before and local ignored
+  kernel/artifacts/qwen35-training-reference retain caller originals/final sources.
+  Usage updated, app opt-out documented. No native rebuild; existing Triton cache,
+  Torch4ee6571/libraries a6f7d3d/kernel0957/image84995, prefix/DSOs/boot unchanged.
+  SDMA/heap-off/r2 fallback/BIOS/.105/user src/ unchanged. No active agent build,
+  test, container or recovery deadline. **Exact next:** profile reference gated-
+  delta forward/backward at synthetic Qwen3.5 geometry and select one bounded native
+  gfx1013 substage with independent output/gradient references; isolate global
+  MIOpen root cause separately. N2.7 Schur iteration remains queued after this.
 - **CURRENT N2.6 completed2026-10-16:** measured small candidate before changing
   code. Order16 recovery~37ms/376 ATen scalar reads versus Schur41/52ms and host
   eig~0.35/0.41ms. Vectorized right recovery across all columns, n-1 row updates

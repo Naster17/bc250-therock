@@ -1,0 +1,92 @@
+{
+  "actual": false,
+  "source_sha256": "ba6c7de51cae1f2f91b63104ef3069b7c5d6c40cca4bc5168e1400e34074f1f9",
+  "checks": [
+    {
+      "checkpoint": false,
+      "length": 65,
+      "reference": {
+        "loss": 5.546911239624023,
+        "seconds": 0.7397672349979985,
+        "peak_allocated": 68928000,
+        "allocated": 67658752,
+        "reserved": 69206016
+      },
+      "native": {
+        "loss": 5.546911239624023,
+        "seconds": 0.9299808590003522,
+        "peak_allocated": 69048320,
+        "allocated": 67658752,
+        "reserved": 69206016
+      },
+      "gradient_count": 30,
+      "max_adapter_gradient_relative_l2": 1.4467535720541491e-06,
+      "dtype": "torch.float32"
+    },
+    {
+      "checkpoint": true,
+      "length": 65,
+      "reference": {
+        "loss": 5.56025505065918,
+        "seconds": 0.03401958500035107,
+        "peak_allocated": 68500992,
+        "allocated": 67658752,
+        "reserved": 69206016
+      },
+      "native": {
+        "loss": 5.56025505065918,
+        "seconds": 0.03737969599751523,
+        "peak_allocated": 68500992,
+        "allocated": 67658752,
+        "reserved": 69206016
+      },
+      "gradient_count": 30,
+      "max_adapter_gradient_relative_l2": 9.112310408454505e-07,
+      "dtype": "torch.float32"
+    },
+    {
+      "checkpoint": false,
+      "length": 65,
+      "reference": {
+        "loss": 5.556264877319336,
+        "seconds": 0.04079466099938145,
+        "peak_allocated": 68798976,
+        "allocated": 67424768,
+        "reserved": 69206016
+      },
+      "native": {
+        "loss": 5.556264877319336,
+        "seconds": 0.2457942870023544,
+        "peak_allocated": 68797440,
+        "allocated": 67424768,
+        "reserved": 69206016
+      },
+      "gradient_count": 30,
+      "max_adapter_gradient_relative_l2": 0.0,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "checkpoint": true,
+      "length": 65,
+      "reference": {
+        "loss": 5.597885608673096,
+        "seconds": 0.03747536800074158,
+        "peak_allocated": 68284416,
+        "allocated": 67424768,
+        "reserved": 69206016
+      },
+      "native": {
+        "loss": 5.597885608673096,
+        "seconds": 0.04119452599843498,
+        "peak_allocated": 68282368,
+        "allocated": 67424768,
+        "reserved": 69206016
+      },
+      "gradient_count": 30,
+      "max_adapter_gradient_relative_l2": 0.0,
+      "dtype": "torch.bfloat16"
+    }
+  ],
+  "reference": "independent ATen GPU convolution tap sum and original Transformers loss",
+  "passed": true
+}

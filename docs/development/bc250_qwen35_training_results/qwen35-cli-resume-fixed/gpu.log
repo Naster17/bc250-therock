@@ -1,0 +1,22 @@
+time="2026-10-16T03:11:58+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+{
+  "source_sha256": "eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8",
+  "synthetic_root": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli",
+  "jobs": [
+    {
+      "mode": "fresh",
+      "returncode": 0,
+      "log": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh.log"
+    },
+    {
+      "mode": "resumed",
+      "returncode": 0,
+      "log": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/resumed.log"
+    }
+  ],
+  "passed": true,
+  "exact_adapter_tensors": 372,
+  "exact_training_state": true,
+  "steps_fresh": 2,
+  "steps_resumed": 1
+}

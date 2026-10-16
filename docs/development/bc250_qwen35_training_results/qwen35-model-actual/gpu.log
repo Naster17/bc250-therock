@@ -1,0 +1,45 @@
+time="2026-10-16T03:05:42+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[bc250] Qwen3.5 training ops eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8: native frozen causal conv; chunk64 FP32 loss; gated-delta reference retained
+[bc250] Qwen3.5 training ops eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8: native frozen causal conv; chunk64 FP32 loss; gated-delta reference retained
+{
+  "actual": true,
+  "source_sha256": "eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8",
+  "checks": [
+    {
+      "checkpoint": true,
+      "length": 65,
+      "reference": {
+        "loss": 15.117077827453613,
+        "seconds": 1.3506459400014137,
+        "peak_allocated": 4623648256,
+        "allocated": 3965869568,
+        "reserved": 4747952128
+      },
+      "native": {
+        "loss": 15.117077827453613,
+        "seconds": 1.6056345859979047,
+        "peak_allocated": 4652103168,
+        "allocated": 3965869568,
+        "reserved": 4817158144
+      },
+      "gradient_count": 372,
+      "max_adapter_gradient_relative_l2": 0.011200698092579842,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "loss": 14.330718040466309,
+      "seconds": 7.251753345997713,
+      "peak_allocated": 11976679424,
+      "allocated": 3973863936,
+      "reserved": 12268339200,
+      "length": 1024,
+      "checkpoint": true,
+      "adapter_optimizer_update": true,
+      "gradient_count": 372
+    }
+  ],
+  "reference": "independent ATen GPU convolution tap sum and original Transformers loss",
+  "passed": true
+}
