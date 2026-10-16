@@ -1,0 +1,129 @@
+{
+  "status": "passed",
+  "baseline": "3d8f334b9a72ad99a0ecd87552613970433e0500",
+  "expected_revision": "fcf7a7142af8c258164e106e66bf893c7f563d15",
+  "expected_tree": "d542d09b1e172710a2f80035d20da728170c1c5a",
+  "reconstructed_tree": "d542d09b1e172710a2f80035d20da728170c1c5a",
+  "patches": [
+    {
+      "name": "0001-feat-rocblas-recognize-native-gfx1013-and-scalar-Ten.patch",
+      "sha256": "01beabb5df97c53feb75680b48fc99957d69d776c4cb069c0e4f6a4ce3c94048"
+    },
+    {
+      "name": "0002-feat-miopen-enable-gfx1013-HIP-direct-convolution-so.patch",
+      "sha256": "ac36abcc8657ebfb960fc9f2f6cf10e0b0a7602b98dce34f4906d0dda3e8fd79"
+    },
+    {
+      "name": "0003-feat-hipblaslt-provide-explicit-host-API-mode-withou.patch",
+      "sha256": "5d25623d4d5e3e1ef8617726189a21a9c6bf5bf2af369012ac97c124f7855267"
+    },
+    {
+      "name": "0004-feat-rocrand-recognize-gfx1013-in-host-and-device-di.patch",
+      "sha256": "25e9cea122f60f5f01e13b22f352b685f36ccbc913086a75cbf717736e842b9f"
+    },
+    {
+      "name": "0005-feat-ck-enable-native-gfx1013-scalar-DL-dispatch-and.patch",
+      "sha256": "c04dfc57747cda9a1249da67a38abaa1248f747eaec97979ae97792fa3e856a3"
+    },
+    {
+      "name": "0006-fix-tensile-validate-native-gfx1013-in-the-CMake-tar.patch",
+      "sha256": "ce045e9f283c6668c8de6a6164628dc2fb7090eec5b50c8d48b238fa48f3eb0f"
+    },
+    {
+      "name": "0007-fix-hipblaslt-omit-device-management-discovery-in-ho.patch",
+      "sha256": "258f3dd1dc8cefdd51f9fd0cfdcbc5e81e9652258fad49d91a87b1b7f379e6aa"
+    },
+    {
+      "name": "0008-hiptensor-add-native-gfx1013-generic-operation-profile.patch",
+      "sha256": "3e109f1bd406abad082b5628893efac2cf17d999d9f4e47d23441784fe1649b2"
+    },
+    {
+      "name": "0009-hiptensor-test-generic-arithmetic-on-native-gfx1013.patch",
+      "sha256": "7a6dc35f6ec418d3499fd4b16dc27e5c66b147d2d6135cc458e8ac7638d9dfe8"
+    },
+    {
+      "name": "0010-fix-rpp-give-audio-object-sources-their-FFTS-compile-dependency.patch",
+      "sha256": "53c1efa86b7e7b9d8783c37fb3ee18544d22e0da01b29e98ca78a9da0d15eb53"
+    },
+    {
+      "name": "0011-fix-hiptensor-isolate-generated-headers-and-generic-CK-package-requirements.patch",
+      "sha256": "5fe80326955e3cf412e5217bab979804c9efd25a8f14f10dc5c7e5d4d996b46c"
+    },
+    {
+      "name": "0012-fix-rocprim-recognize-native-gfx1013-in-architecture-dispatch-and-bundled-copies.patch",
+      "sha256": "0939bc65893b25ed45e27323903fc5c8f0ee6523b6c8c6f1b2a36589294bb193"
+    },
+    {
+      "name": "0013-fix-rpp-use-the-destination-row-stride-for-HIP-spectrogram-output.patch",
+      "sha256": "3000ab1c7521ba35d6a21557e2e904ac9f2d71e537aae78e5b30e23b4b6c8c43"
+    },
+    {
+      "name": "0014-feat-gfx1013-add-scalar-library-backends-and-generic.patch",
+      "sha256": "fd2c9bf23baa7b89e02ca6240c26f0406ead66574caa5b336b7e39ea49602f01"
+    },
+    {
+      "name": "0015-feat-gfx1013-expand-scalar-epilogues-types-pruning-a.patch",
+      "sha256": "ce88c4decc49f32fef99b2da3a81daa417459d28edf4039f3eedfc29bb358117"
+    },
+    {
+      "name": "0016-feat-gfx1013-integrate-scalar-GEMM-consumers-and-gen.patch",
+      "sha256": "d40314b08fef8d661c77007faddb8fd485c597ab942b971f3d63bffafc029f4a"
+    },
+    {
+      "name": "0017-feat-gfx1013-expand-scalar-tensor-and-sparse-epilogu.patch",
+      "sha256": "cf4f561efe33d9c55780e639f54daedfbea515047dbacfe8a3c13ba1e4020485"
+    },
+    {
+      "name": "0018-feat-hiptensor-admit-unilateral-sums-on-native-gfx1013.patch",
+      "sha256": "cebb0612cbb8a8acf992001bb809a9afeb53ea29a52d15acc0b03713c109737e"
+    },
+    {
+      "name": "0019-feat-hiptensor-add-native-gfx1013-complex-scalar-contractions.patch",
+      "sha256": "887bfe70c8d94555b7313c2c7f4b1c45295e255309f1d6baec9a35a6ae998b2a"
+    },
+    {
+      "name": "0020-fix-hiptensor-validate-plan-APIs-and-scalar-preference-contracts.patch",
+      "sha256": "2f6826172c93d5433a8d341d9ef7dc56dbae8136be2c1d19878ceb16f33e27a6"
+    },
+    {
+      "name": "0021-feat-hipsparselt-support-native-gfx1013-zero-stride-broadcasting.patch",
+      "sha256": "e5d568406dc4ba00f58b172b1960c6152b8f0ec347a256eb7dfeaa75d374007a"
+    },
+    {
+      "name": "0022-feat-hipsparselt-add-native-gfx1013-row-bias-epilogues.patch",
+      "sha256": "3bb1874782f6ca12f55290b77e1ad78af6bd0a18d0e853341c34783357734561"
+    },
+    {
+      "name": "0023-feat-hipsparselt-add-native-gfx1013-device-alpha-vector-scaling.patch",
+      "sha256": "8244f4ee095572b8320bd045a7ecc8203e4727946fe9fb69b4490bd71286e776"
+    },
+    {
+      "name": "0024-feat-hipsparselt-admit-bounded-native-gfx1013-INT8-contractions.patch",
+      "sha256": "76973f9d9cb922340a0f01da18f06e4e00f325a36701385db35bce6d2bb43560"
+    },
+    {
+      "name": "0025-perf-hipblaslt-use-subgroups-for-short-small-and-skinny-gfx1013-GEMMs.patch",
+      "sha256": "4beb553761b6328a7af14a1624ee02e85cee28d5cf56ea197fb2e7f8ffba9d73"
+    },
+    {
+      "name": "0026-fix-hipblaslt-retain-launch-grid-bound-for-subgroup-dispatch.patch",
+      "sha256": "303acf31637edc59788c85689efb3c399bf86b7fc2f30fc92f2ecc0a7320bcae"
+    },
+    {
+      "name": "0027-fix-miopen-query-dilated-GEMM-workspace.patch",
+      "sha256": "0ac2b54f87350c622586c7c31bb8aa5627658f71f16bf2586ba49a7c127d08dd"
+    },
+    {
+      "name": "0028-miopen-admit-native-gfx1013-legacy-CK-scalar-reductions.patch",
+      "sha256": "28ae30ae38ec68d97affb988632d19a131b01dfa66eee1600cf33ab3f7974b59"
+    },
+    {
+      "name": "0029-miopen-support-BF16-legacy-reductions-and-compute-scaling.patch",
+      "sha256": "ee791ea3458e17307aa121139ae42abdfa9d2f7a09c60ad9cef4ce40685d04e4"
+    },
+    {
+      "name": "0030-miopen-skip-disabled-or-unsupported-optional-CK-plugin-probes.patch",
+      "sha256": "081ea2e27dacafd419a228029d6e218e075240e294518eee57f3c9c63f54ea10"
+    }
+  ]
+}
