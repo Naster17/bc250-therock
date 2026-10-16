@@ -1,0 +1,119 @@
+{"kind": "container", "id": "257ff2b5806485be7d0ae7827412cc793a278a65e0781eaca86647d800e51e8a", "name": "bc250-pytorch-build"}
+{"kind": "container", "id": "3f6ea974d87fad33394aadaf22c8e1a517700e1de42c816b2de4505c3d260880", "name": "bc250-triton-build"}
+{"kind": "container", "id": "539f46d912ff41e8a827e20df02157082d3f58d30f3ad316ba5e306dc7c23e09", "name": "bc250-runtime-integration"}
+time="2026-10-16T08:38:54+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "31aefe766318ca49fad826aff42047d4e9057abcc4a4da33880339531ff6b1e3", "name": "bc250-release-review-1791851644"}
+{"kind": "container", "id": "8ead90d99f7c71e9d6d59d792570ce63704c7ed7d250d22f126f40967f5d517f", "name": "bc250-coverage-ck-build"}
+{"kind": "container", "id": "d2bef5b8302acfb20fd8557e62f025407cca12ccfc5c0b0d77c4231102a4f750", "name": "bc250-coverage-ck-build-r2"}
+{"kind": "container", "id": "cf52a6a3e269ee6bed050c4d17d47e888886707181444ae793f1574470bc5fea", "name": "bc250-scalar-backends-build"}
+{"kind": "container", "id": "af1249c6a2d09181c33d7222d5a082261f5ba79fea0960a080d2765c146bdb92", "name": "bc250-pooling-torch-build"}
+{"kind": "container", "id": "41a95092b10b65ada9b21ab00143fc6d022ee41d28b7cf0ff83deb251c833a20", "name": "bc250-scalar-backends-build-r2"}
+{"kind": "container", "id": "f686eb309fd845eefe0bdb0e26e1478afefb43fbb1a88673ed0d21518c157bc1", "name": "bc250-coverage-ck-build-r3"}
+{"kind": "container", "id": "2d302b78765789a3d4050569aa12108fa416e9dd99255c7193e684e8c7694745", "name": "bc250-scalar-backends-build-r3"}
+{"kind": "container", "id": "92efd3b889063738ec89034b7cde2df6b6b8d6b39e56e17d91716f94eac331ca", "name": "bc250-coverage-ck-build-r4"}
+{"kind": "container", "id": "3c43a1ccd284068fca02191d81b86d154b9abce2ee148c03d43082d72b8ea4a9", "name": "bc250-coverage-ck-build-r5"}
+{"kind": "container", "id": "39a5a958955a0b3835aa16c15fb2f2f2b9b0c2536430b2f097a3b0009867372f", "name": "bc250-coverage-ck-build-r6"}
+{"kind": "container", "id": "e40c4784af56f2c9e111d05334abd76308819c0c13f453676ae46842b4cbc12f", "name": "bc250-sparse-diag-build"}
+{"kind": "container", "id": "1aaa5eb83471acdf4c047cc7198c86c1f32639cefeb1d3df572da2b849b3b1b0", "name": "bc250-sparse-diag-build-r2"}
+{"kind": "container", "id": "4a075f53bc2de48ffab1166f4f5161083082a37a4f01b3082267d6f5715646da", "name": "bc250-sparse-diag-build-r3"}
+{"kind": "container", "id": "c0635ade747d828928fe886ec65e34988d5e04f5678e8344ac980e01ef70a124", "name": "bc250-scalar-pack-build"}
+{"kind": "container", "id": "9ba3235c20efa6c30ce0cba66d616a8d39a19aa3771aac6ee282adebe293e08f", "name": "bc250-coverage-ck-build-r7"}
+{"kind": "container", "id": "96f9daf1de4c5a49e5e929415cec431e61263a50ef87ae71554a12dda12ef434", "name": "bc250-scalar-pack-build-r2"}
+time="2026-10-16T08:38:55+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "3ea2f045e640c31e642bc76cad3c01b9576e5595703dd20d2215832f8ebcefd3", "name": "bc250-operator-coverage-candidate"}
+time="2026-10-16T08:38:56+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "0debec95771389f03772341a131ea5c9b4b4fbc4f0ec1af3651dc14f0910dc90", "name": "bc250-operator-sparse-diagnostic"}
+time="2026-10-16T08:38:56+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "13dc3cc8946d5ba4ce182c731d08a837c3687d16bf3acce23bed6ecc10ba5e95", "name": "bc250-operator-coverage-candidate-r2"}
+{"kind": "container", "id": "ad20c53fc885b873ef47bdd88f4ea1dce4bd60ec4f0f88690798b898dc20582b", "name": "bc250-scalar-candidate-triton-install"}
+time="2026-10-16T08:38:56+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "7c8d7f26a67e66d763c5962b6d545229fe83a82155995e5e653d1e433d2cac29", "name": "bc250-scalar-candidate-integration"}
+time="2026-10-16T08:38:56+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "81a3c491a22626a36c12cbf4e564f2a76e0b71ec769a26df9c8babfd59e96421", "name": "bc250-scalar-candidate-integration-r2"}
+{"kind": "container", "id": "7b26c8128b427a025674bfb270d0b2dede40a22b2bdf0927f254423fbdfe30ef", "name": "bc250-scalar-final-source-build"}
+{"kind": "container", "id": "ec8823ab55f6224d0053a83567fa89381aaf3c7b87ddabb90a56fb5a0a6b5df7", "name": "bc250-scalar-final-source-build-r2"}
+{"kind": "container", "id": "49e74f2e38e39e44577108ef71878fd8a6fea035fc090041ef273275c6121dbe", "name": "bc250-coverage-ck-rms-build"}
+{"kind": "container", "id": "babc867e89138151633d09caeaceaa488bc4f925da76416ad520d4dbfdb3f6b9", "name": "bc250-scalar-epilogue-mixed-build"}
+{"kind": "container", "id": "c89593374966f26a22e171a9b78393d8d43df5f888a76d87b5ae1eecac09a3c3", "name": "bc250-coverage-ck-rms-dtype-build"}
+{"kind": "container", "id": "62c86de74fc484d5f560f2d775d478f75dd21ccb9ea4c1fef377a28da9f28a47", "name": "bc250-rpp-decibels-build"}
+{"kind": "container", "id": "5982537bd4b6f270d570da867ea9a542d47f78b91241da919814d2ffd89f54d9", "name": "bc250-extra-ops-final-build"}
+{"kind": "container", "id": "820ed124d1727fb4bb1b31f3fab9be28204362455bf484533064353e3940e3c2", "name": "bc250-priority1-provider-build"}
+time="2026-10-16T08:38:57+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "74be380316158ece65675f1fc25054ac73323070cc020a40f5ca761c0f1ec3f9", "name": "bc250-priority1-torch-compiled-r1"}
+{"kind": "container", "id": "64c60d99b7384f8480f88126943b6f1d6b631c8b16f31356e3fdb69ec0162285", "name": "bc250-priority1-ck-build-r1"}
+{"kind": "container", "id": "15ea22ad703f428c3dbaec4e62f10a330b049f9913e7bdae0be9388e1d4c33a8", "name": "bc250-priority1-lt-build-r1"}
+{"kind": "container", "id": "7cb57813c334574db41307289ed55cc8baf2edec4e50b218f9508f7a53663288", "name": "bc250-priority1-torch-build-r1"}
+time="2026-10-16T08:38:57+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "6f64131ccbfdd6512a6897a4ecb4e98e42c2e9b2c19499fe3068b77ad277ac49", "name": "bc250-priority1-ck-test-r1"}
+{"kind": "container", "id": "eefa36c90d17fafef30f214b935749cc9038d8fffa0a17456edcb61262d6b660", "name": "bc250-priority1-lt-build-r2"}
+{"kind": "container", "id": "ad69d5584482d1d603722cbc03b29e3101ee586000433aa8c4976173563546e8", "name": "bc250-priority1-ck-build-r2"}
+{"kind": "container", "id": "764161ef2354fd6a6725b836ff026148317895653876d6fe67e2ed5cefe39637", "name": "bc250-priority1-lt-build-r3"}
+{"kind": "container", "id": "70c1b64a830f1edd66dc7e5f127a8fbbb538288f77fea5621a4d1cc62d5d4aac", "name": "bc250-priority1-ck-build-r3"}
+{"kind": "container", "id": "77751102d6bd12e85bdd467a97aa85abccd2e180e52632b3fcd68cccc88fa3c9", "name": "bc250-priority1-miopen-build-r1"}
+{"kind": "container", "id": "f167bbe67464a7769f92e4cbffaf171b9477681f2ba7be36b9c4ae2f8dd113df", "name": "bc250-priority1-miopen-build-r2"}
+{"kind": "container", "id": "ce84af2a8a0edce302cf78d1eb64c13167c779fba1fdc10b4139839a3c5473ff", "name": "bc250-priority1-final-build-r1"}
+{"kind": "container", "id": "5bb779cde8e9a9b192027353d9337a2206771cb063898ed737bc32fbd3b28de2", "name": "bc250-priority1-final-build-r2"}
+{"kind": "container", "id": "f1ad8b08309eaec01d38b093eb8bf64451e7c44ceef7780253ce673928560db3", "name": "bc250-priority1-final-build-r3"}
+{"kind": "container", "id": "ad6b60f2de608c3b8f215a285286b74302c0182bd73c93e65b006fc42706152b", "name": "bc250-priority1-final-build-r4"}
+time="2026-10-16T08:38:58+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "8cb95fbe5bf93c3bf4d50a07955b1889c7d8bc8be41c5bbda1b3d12583661b3e", "name": "bc250-priority1-torch-final-r2"}
+{"kind": "container", "id": "a88b453cd4fa33e588ff9ae90cced04b518d547977aff8afd991b7e16667ba09", "name": "bc250-priority1-final-build-r5"}
+{"kind": "container", "id": "391c0e369174daebafe1f01048db833bf1e2d4042ac48b191fdcc208927a0ab2", "name": "bc250-priority1-torch-build-r2"}
+time="2026-10-16T08:38:59+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "5db74a8cfdfdaf8b7435b4b6dc98dd10b99049bf7ada26851c925f988fe9b3f5", "name": "bc250-priority1-torch-final-r3"}
+{"kind": "container", "id": "36e47c04dd4455983835ae43a2614394153e97706d5b69babe1d49a67952ef72", "name": "bc250-priority1-final-build-r6-stage"}
+{"kind": "container", "id": "89753d8a9a36eb0f0d494be2e74bbd56f73c388d36d0fb33e2fdd1a5c2fdfa3b", "name": "bc250-priority1-final-flatten"}
+time="2026-10-16T08:38:59+02:00" level=warning msg="Could not locate device 239:0 on host"
+{"kind": "container", "id": "7cf31d3da60bc4c7133524d85380ca0f2a0da0d29018008ab764bf47089ce805", "name": "bc250-priority1-torch-final-r4"}
+{"kind": "retired_payload", "path": "/opt/bc250-stack/candidates/priority2-20261014/rocm"}
+{"kind": "retired_payload", "path": "/opt/bc250-stack/candidates/priority2-20261014/torch"}
+{"kind": "retired_payload", "path": "/opt/bc250-stack/candidates/priority2-20261014/cache"}
+{"kind": "retired_payload", "path": "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296/rocm"}
+{"kind": "retired_payload", "path": "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296/torch"}
+{"kind": "retired_payload", "path": "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296/cache"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-fp16/training-state.pt", "symlink": null, "bytes": 10088010, "sha256": "dd775d0a72b9a4253f7d6160040b635f7f5d4292af816375f4fec65e95f05d55"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/full/training-state.pt", "symlink": null, "bytes": 1082651890, "sha256": "4124cb4c8fcb157c75c6cbdf1315b0c40404ccffa74e2aae1bfb1937d0a278f4"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-bf16/training-state.pt", "symlink": null, "bytes": 10087882, "sha256": "e48f2c42a012eafe868713041290d938af06aa607974f73807a59c78dea3169d"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-fp16/adapter/adapter_model.safetensors", "symlink": null, "bytes": 1858776, "sha256": "855a9be73c914bb6f150e73c4ffcc2bb8ebdec13da7d8d4a924a83bd50ce8e94"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/full/model/model.safetensors", "symlink": null, "bytes": 538090408, "sha256": "4d4287a87230ba460d35c662d08c66bd7b2592ddf0a831001922c86c57c5b794"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-bf16/adapter/adapter_model.safetensors", "symlink": null, "bytes": 1858776, "sha256": "64fdee2dea70b63f7111a7467fc4cef1ac54672347ad92c540385719404e527b"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json", "symlink": null, "bytes": 19989339, "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors", "symlink": null, "bytes": 16868752, "sha256": "230cd08f9cf3c0af3b0f233d2dadcee550be8ba18c389d58fad374b65ab86a17"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000001/training.pt", "symlink": null, "bytes": 33959581, "sha256": "1333e67620fce9e963c8475b4f3b660134ebe5fee1a685c12773b21932b5cc7e"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000002/tokenizer.json", "symlink": null, "bytes": 19989339, "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000002/adapter_model.safetensors", "symlink": null, "bytes": 16868752, "sha256": "2bfce01dc98e2c05154811db30cf967f9085717ceb37a9002d918fa951941a37"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000002/training.pt", "symlink": null, "bytes": 33959581, "sha256": "97eb54144c0209de50c1d8e5f58cb4d13f0ada6c93a790ea1cad4db1c90055b1"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json", "symlink": null, "bytes": 19989339, "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors", "symlink": null, "bytes": 16868752, "sha256": "230cd08f9cf3c0af3b0f233d2dadcee550be8ba18c389d58fad374b65ab86a17"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt", "symlink": null, "bytes": 33959581, "sha256": "1333e67620fce9e963c8475b4f3b660134ebe5fee1a685c12773b21932b5cc7e"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000002/tokenizer.json", "symlink": null, "bytes": 19989339, "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000002/adapter_model.safetensors", "symlink": null, "bytes": 16868752, "sha256": "2bfce01dc98e2c05154811db30cf967f9085717ceb37a9002d918fa951941a37"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000002/training.pt", "symlink": null, "bytes": 33959581, "sha256": "97eb54144c0209de50c1d8e5f58cb4d13f0ada6c93a790ea1cad4db1c90055b1"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/resumed/checkpoint-00000002/tokenizer.json", "symlink": null, "bytes": 19989339, "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/resumed/checkpoint-00000002/adapter_model.safetensors", "symlink": null, "bytes": 16868752, "sha256": "2bfce01dc98e2c05154811db30cf967f9085717ceb37a9002d918fa951941a37"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/resumed/checkpoint-00000002/training.pt", "symlink": null, "bytes": 33959645, "sha256": "b7ca39f6f17ff666ce33b7a7af6e7f39a15f176e9656216f67afc716c15bde35"}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-alpha-fixture/tokenizer.json", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json", "bytes": 19989339}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-alpha-fixture/adapter_model.safetensors", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors", "bytes": 16868752}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-alpha-fixture/training.pt", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt", "bytes": 33959581}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/extra-target-fixture/tokenizer.json", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json", "bytes": 19989339}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/extra-target-fixture/adapter_model.safetensors", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors", "bytes": 16868752}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/extra-target-fixture/training.pt", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt", "bytes": 33959581}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/missing-target-fixture/tokenizer.json", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json", "bytes": 19989339}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/missing-target-fixture/adapter_model.safetensors", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors", "bytes": 16868752}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/missing-target-fixture/training.pt", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt", "bytes": 33959581}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-rank-fixture/tokenizer.json", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json", "bytes": 19989339}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-rank-fixture/adapter_model.safetensors", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors", "bytes": 16868752}
+{"kind": "synthetic_fixture", "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-rank-fixture/training.pt", "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt", "bytes": 33959581}
+{"kind": "image", "id": "4e305e1d63537ea9d51091058ede0f50912e21dbedc1ba3dbe6b7712ead9d88f", "tags": ["localhost/bc250-stack:10.2-gfx1013-20261012-a640c9296"]}
+{"kind": "image", "id": "cd9f0f9bd955236a8fd7d4095c6b256d2d688caf7d8b8c92314754037a51f634", "tags": ["localhost/bc250-rocm-runtime:7.2.4-gfx1013-r1.2"]}
+time="2026-10-16T08:39:09+02:00" level=warning msg="Could not locate device 239:0 on host"
+{
+  "available_before_bytes": 13082050560,
+  "previous_before": "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296",
+  "previous_after": "/opt/bc250-stack/releases/10.2-gfx1013-20261013-4b000d542",
+  "available_after_bytes": 44364726272,
+  "recovered_bytes": 31282634752,
+  "protected_sha256_unchanged": true,
+  "user_containers_unchanged": true,
+  "running_agent_jobs": []
+}

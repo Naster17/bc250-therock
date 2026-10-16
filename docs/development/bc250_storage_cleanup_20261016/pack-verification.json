@@ -1,0 +1,16 @@
+{
+  "current": {
+    "path": "/opt/bc250-stack/current/rocm/.kpack/blas_lib_gfx1013.kpack",
+    "sha256": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5",
+    "size": 4713658,
+    "qualified_manifest_match": true
+  },
+  "fallback": {
+    "path": "/opt/bc250-stack/previous/rocm/.kpack/blas_lib_gfx1013.kpack",
+    "sha256": "5b214f8305bb42c8eb763c1a9682b3b11aa550cc85610cf02b250bc81b7964f0",
+    "size": 4696252,
+    "historical_hash_evidence": [
+      "/opt/bc250-stack/previous/review-20261013/runtime-sha256.json"
+    ]
+  }
+}

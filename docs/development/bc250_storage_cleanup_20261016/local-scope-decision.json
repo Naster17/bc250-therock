@@ -1,0 +1,7 @@
+{
+  "deleted_local_build_files": false,
+  "reason": "Local Alpine build/images belong to separate gfx1103 environment, including running therock-alpine-rocm; excluded from BC250 scope.",
+  "permission_failure": "Initial unprivileged attempt stopped on first root-owned cmake entry; no removals completed.",
+  "preserved_git_repository": "build/alpine/compiler/amd-llvm/build/tools/spirv-llvm-translator/SPIRV-Headers",
+  "preserved_git_head": "575b6512579ebde466ed3dfc04e413439d14d95d"
+}

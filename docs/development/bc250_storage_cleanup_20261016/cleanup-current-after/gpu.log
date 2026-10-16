@@ -1,0 +1,23 @@
+time="2026-10-16T08:41:29+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    "gemm-output-grad-torch.float32",
+    "gemm-output-grad-torch.bfloat16",
+    "math-sdpa-output-qkv-grad-32",
+    "math-sdpa-output-qkv-grad-256",
+    "layernorm-output-grad",
+    "fft-output-grad",
+    "rng-exact-replay"
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "transformers_path": "/opt/bc250-stack/dev/priority1/python-consumers/site-packages/transformers/__init__.py",
+  "versions": {
+    "torch": "2.13.0a0+gfx1013",
+    "triton": "3.8.0",
+    "transformers": "5.2.0",
+    "peft": "0.18.1",
+    "accelerate": "1.12.0"
+  }
+}

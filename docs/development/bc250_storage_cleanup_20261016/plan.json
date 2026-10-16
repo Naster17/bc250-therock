@@ -1,0 +1,916 @@
+{
+  "created_unix": 1792132611.1449394,
+  "available_before_bytes": 13082091520,
+  "current": "/opt/bc250-stack/dev/priority1",
+  "fallback": "/opt/bc250-stack/releases/10.2-gfx1013-20261013-4b000d542",
+  "previous_before": "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296",
+  "remove_payloads": [
+    "/opt/bc250-stack/candidates/priority2-20261014/rocm",
+    "/opt/bc250-stack/candidates/priority2-20261014/torch",
+    "/opt/bc250-stack/candidates/priority2-20261014/cache",
+    "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296/rocm",
+    "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296/torch",
+    "/opt/bc250-stack/releases/10.2-gfx1013-20261012-a640c9296/cache"
+  ],
+  "generated_fixture_files": [
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-fp16/training-state.pt",
+      "symlink": null,
+      "bytes": 10088010
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/full/training-state.pt",
+      "symlink": null,
+      "bytes": 1082651890
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-bf16/training-state.pt",
+      "symlink": null,
+      "bytes": 10087882
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-fp16/adapter/adapter_model.safetensors",
+      "symlink": null,
+      "bytes": 1858776
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/full/model/model.safetensors",
+      "symlink": null,
+      "bytes": 538090408
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/training-validation/lora-bf16/adapter/adapter_model.safetensors",
+      "symlink": null,
+      "bytes": 1858776
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json",
+      "symlink": null,
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "symlink": null,
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000001/training.pt",
+      "symlink": null,
+      "bytes": 33959581
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000002/tokenizer.json",
+      "symlink": null,
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000002/adapter_model.safetensors",
+      "symlink": null,
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-installed/synthetic-cli/fresh/checkpoint-00000002/training.pt",
+      "symlink": null,
+      "bytes": 33959581
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json",
+      "symlink": null,
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "symlink": null,
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt",
+      "symlink": null,
+      "bytes": 33959581
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000002/tokenizer.json",
+      "symlink": null,
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000002/adapter_model.safetensors",
+      "symlink": null,
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000002/training.pt",
+      "symlink": null,
+      "bytes": 33959581
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/resumed/checkpoint-00000002/tokenizer.json",
+      "symlink": null,
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/resumed/checkpoint-00000002/adapter_model.safetensors",
+      "symlink": null,
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/resumed/checkpoint-00000002/training.pt",
+      "symlink": null,
+      "bytes": 33959645
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-alpha-fixture/tokenizer.json",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json",
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-alpha-fixture/adapter_model.safetensors",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-alpha-fixture/training.pt",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt",
+      "bytes": 33959581
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/extra-target-fixture/tokenizer.json",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json",
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/extra-target-fixture/adapter_model.safetensors",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/extra-target-fixture/training.pt",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt",
+      "bytes": 33959581
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/missing-target-fixture/tokenizer.json",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json",
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/missing-target-fixture/adapter_model.safetensors",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/missing-target-fixture/training.pt",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt",
+      "bytes": 33959581
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-rank-fixture/tokenizer.json",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/tokenizer.json",
+      "bytes": 19989339
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-rank-fixture/adapter_model.safetensors",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "bytes": 16868752
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-resume-guards/synthetic-cli/wrong-rank-fixture/training.pt",
+      "symlink": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/qwen35-cli-resume-fixed/synthetic-cli/fresh/checkpoint-00000001/training.pt",
+      "bytes": 33959581
+    }
+  ],
+  "remove_containers": [
+    {
+      "id": "257ff2b5806485be7d0ae7827412cc793a278a65e0781eaca86647d800e51e8a",
+      "name": "bc250-pytorch-build",
+      "status": "exited",
+      "image": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06"
+    },
+    {
+      "id": "3f6ea974d87fad33394aadaf22c8e1a517700e1de42c816b2de4505c3d260880",
+      "name": "bc250-triton-build",
+      "status": "exited",
+      "image": "3200f68bbb79f58903615f594e9b1b86f55bd65f3aa8729d781a112927e32029"
+    },
+    {
+      "id": "539f46d912ff41e8a827e20df02157082d3f58d30f3ad316ba5e306dc7c23e09",
+      "name": "bc250-runtime-integration",
+      "status": "exited",
+      "image": "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200"
+    },
+    {
+      "id": "31aefe766318ca49fad826aff42047d4e9057abcc4a4da33880339531ff6b1e3",
+      "name": "bc250-release-review-1791851644",
+      "status": "exited",
+      "image": "f460edb6e72ae084041a2a86129db6b48d90faf541b17d137fb98d319364e4d4"
+    },
+    {
+      "id": "8ead90d99f7c71e9d6d59d792570ce63704c7ed7d250d22f126f40967f5d517f",
+      "name": "bc250-coverage-ck-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "d2bef5b8302acfb20fd8557e62f025407cca12ccfc5c0b0d77c4231102a4f750",
+      "name": "bc250-coverage-ck-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "cf52a6a3e269ee6bed050c4d17d47e888886707181444ae793f1574470bc5fea",
+      "name": "bc250-scalar-backends-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "af1249c6a2d09181c33d7222d5a082261f5ba79fea0960a080d2765c146bdb92",
+      "name": "bc250-pooling-torch-build",
+      "status": "exited",
+      "image": "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200"
+    },
+    {
+      "id": "41a95092b10b65ada9b21ab00143fc6d022ee41d28b7cf0ff83deb251c833a20",
+      "name": "bc250-scalar-backends-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "f686eb309fd845eefe0bdb0e26e1478afefb43fbb1a88673ed0d21518c157bc1",
+      "name": "bc250-coverage-ck-build-r3",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "2d302b78765789a3d4050569aa12108fa416e9dd99255c7193e684e8c7694745",
+      "name": "bc250-scalar-backends-build-r3",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "92efd3b889063738ec89034b7cde2df6b6b8d6b39e56e17d91716f94eac331ca",
+      "name": "bc250-coverage-ck-build-r4",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "3c43a1ccd284068fca02191d81b86d154b9abce2ee148c03d43082d72b8ea4a9",
+      "name": "bc250-coverage-ck-build-r5",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "39a5a958955a0b3835aa16c15fb2f2f2b9b0c2536430b2f097a3b0009867372f",
+      "name": "bc250-coverage-ck-build-r6",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "e40c4784af56f2c9e111d05334abd76308819c0c13f453676ae46842b4cbc12f",
+      "name": "bc250-sparse-diag-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "1aaa5eb83471acdf4c047cc7198c86c1f32639cefeb1d3df572da2b849b3b1b0",
+      "name": "bc250-sparse-diag-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "4a075f53bc2de48ffab1166f4f5161083082a37a4f01b3082267d6f5715646da",
+      "name": "bc250-sparse-diag-build-r3",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "c0635ade747d828928fe886ec65e34988d5e04f5678e8344ac980e01ef70a124",
+      "name": "bc250-scalar-pack-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "9ba3235c20efa6c30ce0cba66d616a8d39a19aa3771aac6ee282adebe293e08f",
+      "name": "bc250-coverage-ck-build-r7",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "96f9daf1de4c5a49e5e929415cec431e61263a50ef87ae71554a12dda12ef434",
+      "name": "bc250-scalar-pack-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "3ea2f045e640c31e642bc76cad3c01b9576e5595703dd20d2215832f8ebcefd3",
+      "name": "bc250-operator-coverage-candidate",
+      "status": "exited",
+      "image": "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3"
+    },
+    {
+      "id": "0debec95771389f03772341a131ea5c9b4b4fbc4f0ec1af3651dc14f0910dc90",
+      "name": "bc250-operator-sparse-diagnostic",
+      "status": "exited",
+      "image": "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3"
+    },
+    {
+      "id": "13dc3cc8946d5ba4ce182c731d08a837c3687d16bf3acce23bed6ecc10ba5e95",
+      "name": "bc250-operator-coverage-candidate-r2",
+      "status": "exited",
+      "image": "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3"
+    },
+    {
+      "id": "ad20c53fc885b873ef47bdd88f4ea1dce4bd60ec4f0f88690798b898dc20582b",
+      "name": "bc250-scalar-candidate-triton-install",
+      "status": "exited",
+      "image": "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3"
+    },
+    {
+      "id": "7c8d7f26a67e66d763c5962b6d545229fe83a82155995e5e653d1e433d2cac29",
+      "name": "bc250-scalar-candidate-integration",
+      "status": "exited",
+      "image": "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14"
+    },
+    {
+      "id": "81a3c491a22626a36c12cbf4e564f2a76e0b71ec769a26df9c8babfd59e96421",
+      "name": "bc250-scalar-candidate-integration-r2",
+      "status": "exited",
+      "image": "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14"
+    },
+    {
+      "id": "7b26c8128b427a025674bfb270d0b2dede40a22b2bdf0927f254423fbdfe30ef",
+      "name": "bc250-scalar-final-source-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "ec8823ab55f6224d0053a83567fa89381aaf3c7b87ddabb90a56fb5a0a6b5df7",
+      "name": "bc250-scalar-final-source-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "49e74f2e38e39e44577108ef71878fd8a6fea035fc090041ef273275c6121dbe",
+      "name": "bc250-coverage-ck-rms-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "babc867e89138151633d09caeaceaa488bc4f925da76416ad520d4dbfdb3f6b9",
+      "name": "bc250-scalar-epilogue-mixed-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "c89593374966f26a22e171a9b78393d8d43df5f888a76d87b5ae1eecac09a3c3",
+      "name": "bc250-coverage-ck-rms-dtype-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "62c86de74fc484d5f560f2d775d478f75dd21ccb9ea4c1fef377a28da9f28a47",
+      "name": "bc250-rpp-decibels-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "5982537bd4b6f270d570da867ea9a542d47f78b91241da919814d2ffd89f54d9",
+      "name": "bc250-extra-ops-final-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "820ed124d1727fb4bb1b31f3fab9be28204362455bf484533064353e3940e3c2",
+      "name": "bc250-priority1-provider-build",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "74be380316158ece65675f1fc25054ac73323070cc020a40f5ca761c0f1ec3f9",
+      "name": "bc250-priority1-torch-compiled-r1",
+      "status": "exited",
+      "image": "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14"
+    },
+    {
+      "id": "64c60d99b7384f8480f88126943b6f1d6b631c8b16f31356e3fdb69ec0162285",
+      "name": "bc250-priority1-ck-build-r1",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "15ea22ad703f428c3dbaec4e62f10a330b049f9913e7bdae0be9388e1d4c33a8",
+      "name": "bc250-priority1-lt-build-r1",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "7cb57813c334574db41307289ed55cc8baf2edec4e50b218f9508f7a53663288",
+      "name": "bc250-priority1-torch-build-r1",
+      "status": "exited",
+      "image": "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14"
+    },
+    {
+      "id": "6f64131ccbfdd6512a6897a4ecb4e98e42c2e9b2c19499fe3068b77ad277ac49",
+      "name": "bc250-priority1-ck-test-r1",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "eefa36c90d17fafef30f214b935749cc9038d8fffa0a17456edcb61262d6b660",
+      "name": "bc250-priority1-lt-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "ad69d5584482d1d603722cbc03b29e3101ee586000433aa8c4976173563546e8",
+      "name": "bc250-priority1-ck-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "764161ef2354fd6a6725b836ff026148317895653876d6fe67e2ed5cefe39637",
+      "name": "bc250-priority1-lt-build-r3",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "70c1b64a830f1edd66dc7e5f127a8fbbb538288f77fea5621a4d1cc62d5d4aac",
+      "name": "bc250-priority1-ck-build-r3",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "77751102d6bd12e85bdd467a97aa85abccd2e180e52632b3fcd68cccc88fa3c9",
+      "name": "bc250-priority1-miopen-build-r1",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "f167bbe67464a7769f92e4cbffaf171b9477681f2ba7be36b9c4ae2f8dd113df",
+      "name": "bc250-priority1-miopen-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "ce84af2a8a0edce302cf78d1eb64c13167c779fba1fdc10b4139839a3c5473ff",
+      "name": "bc250-priority1-final-build-r1",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "5bb779cde8e9a9b192027353d9337a2206771cb063898ed737bc32fbd3b28de2",
+      "name": "bc250-priority1-final-build-r2",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "f1ad8b08309eaec01d38b093eb8bf64451e7c44ceef7780253ce673928560db3",
+      "name": "bc250-priority1-final-build-r3",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "ad6b60f2de608c3b8f215a285286b74302c0182bd73c93e65b006fc42706152b",
+      "name": "bc250-priority1-final-build-r4",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "8cb95fbe5bf93c3bf4d50a07955b1889c7d8bc8be41c5bbda1b3d12583661b3e",
+      "name": "bc250-priority1-torch-final-r2",
+      "status": "exited",
+      "image": "ad29fe03358b2acfd6a5ef6a6bdcacef36a92521a3d930e1968846fcd1efa491"
+    },
+    {
+      "id": "a88b453cd4fa33e588ff9ae90cced04b518d547977aff8afd991b7e16667ba09",
+      "name": "bc250-priority1-final-build-r5",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "391c0e369174daebafe1f01048db833bf1e2d4042ac48b191fdcc208927a0ab2",
+      "name": "bc250-priority1-torch-build-r2",
+      "status": "exited",
+      "image": "ad29fe03358b2acfd6a5ef6a6bdcacef36a92521a3d930e1968846fcd1efa491"
+    },
+    {
+      "id": "5db74a8cfdfdaf8b7435b4b6dc98dd10b99049bf7ada26851c925f988fe9b3f5",
+      "name": "bc250-priority1-torch-final-r3",
+      "status": "exited",
+      "image": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59"
+    },
+    {
+      "id": "36e47c04dd4455983835ae43a2614394153e97706d5b69babe1d49a67952ef72",
+      "name": "bc250-priority1-final-build-r6-stage",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "89753d8a9a36eb0f0d494be2e74bbd56f73c388d36d0fb33e2fdd1a5c2fdfa3b",
+      "name": "bc250-priority1-final-flatten",
+      "status": "exited",
+      "image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+    },
+    {
+      "id": "7cf31d3da60bc4c7133524d85380ca0f2a0da0d29018008ab764bf47089ce805",
+      "name": "bc250-priority1-torch-final-r4",
+      "status": "exited",
+      "image": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59"
+    }
+  ],
+  "protected_containers": [
+    {
+      "id": "0b8dc15bb3684044cda3542967ba01787d141d34174159046e34237e4ca0780d",
+      "name": "neural-p1",
+      "status": "exited",
+      "image": "6a30463535e5225d049d28759bab0b95d7bc3873bbaf33321ad15fd8ac711905"
+    }
+  ],
+  "remove_images": [
+    {
+      "id": "4e305e1d63537ea9d51091058ede0f50912e21dbedc1ba3dbe6b7712ead9d88f",
+      "tags": [
+        "localhost/bc250-stack:10.2-gfx1013-20261012-a640c9296"
+      ],
+      "parent": "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200",
+      "size": 2839582927,
+      "project": true
+    },
+    {
+      "id": "cd9f0f9bd955236a8fd7d4095c6b256d2d688caf7d8b8c92314754037a51f634",
+      "tags": [
+        "localhost/bc250-rocm-runtime:7.2.4-gfx1013-r1.2"
+      ],
+      "parent": "",
+      "size": 7062867393,
+      "project": true
+    }
+  ],
+  "keep_image_ids": [
+    "0ad571ea729908b15459e1a96b0106a48341c2991128b8112a5b8d3b1fbf02bf",
+    "0cbfedd5ca015e3ee6b6ce5430ed3c7d2f54d33377e7649d03701e350bde8360",
+    "0d7f7a72b4603e6b6a60388a1774d022267aba1e4253ac8f8a3cbf6901f89f88",
+    "257a57ddbeb312260a75fe8d090d274b07cfa36a9e2320d55088668801192fa8",
+    "276f8f0c42df1bbf5d288ee0e55ed366ce514e23f6eb3ca3984f510f7d544f1a",
+    "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+    "3200f68bbb79f58903615f594e9b1b86f55bd65f3aa8729d781a112927e32029",
+    "325601824e6920c5a9fbbb23e7a695aab958f8c2085e574b27cad7b24982eee2",
+    "3afb9ec68756fc6d49cd235ae49073d97f3f28364b87efe4cacf7393ff66441f",
+    "49f3941c37438e86572f6620c34c24dc5db2001571b019ec66c09d9fb2b853bd",
+    "5871a11e9296d48e8d2a741d79e5b26d4856ff04d97fb129400bdfc59c85d9d6",
+    "5cfd0fc1397115d671885dae45a9993ba3113328ef39f035ec370d1aafd65836",
+    "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59",
+    "5fad8a7dcd8b7f2d3f1e41f9a00fbccfb702b91eb31184636a2d14378fea1d7d",
+    "66e7f11bbe4bde52f37a3095b64f83875cf473e46b54f83ac1ec9cf238b85656",
+    "69f919497cada9a8611f3de61df902d9f94bf20f84552ef5bd93125c38608ef9",
+    "6a30463535e5225d049d28759bab0b95d7bc3873bbaf33321ad15fd8ac711905",
+    "6d069afe524392a1f0484a8fbe0467acb3e259cf375cc14fb932208d0d38cbed",
+    "77ec3d797a6c1416dacc443c794c0054ca5b80ca4e28380e934192dbbcbc136d",
+    "78c9268462ae0721f0bbc18d42f3047620c4fa0a58bb456fe40391e8382c7546",
+    "79838505b429aee0047e472a1d1efdf65838b941aaa34f18613099f27c89c7cb",
+    "8f58c97eb6c6ff3815565a1b3007d8d1786f5cab6577c5e52e46620e0a75e0bb",
+    "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200",
+    "9909d89a6286c4a25138920841a77054c3b2a0a53c3578a5a81b59409bcd4ed9",
+    "a1ab59dda620fed851d57cd3654c503dc38d18d7e06967e53ae5d0d31c2d5d8c",
+    "a3a3703cdec026b3f40d227aefbea66659a4f05b3f33d45c6dab7ae4e483d83d",
+    "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14",
+    "ad29fe03358b2acfd6a5ef6a6bdcacef36a92521a3d930e1968846fcd1efa491",
+    "bad2fd0ba5dbeb9dc305621c974a9bf673e17a9b3d1c04af8c97864ca16d9786",
+    "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3",
+    "c3fb467a261adbc859e7826be98d25760073b98008a5786533105a6d4f1f1c34",
+    "c87891e4986b6cad782f9a27ff01d8df95a1f486abf261d83ca2328c275bde8a",
+    "e33eea0875e6d77323cc40226d0c7e99a15f782aceb426be1112b5d9b9804a1d",
+    "e34d382f00233bd010b1a3e7fdc5680ef9eecdfdbcfbc22ab221170221987d54",
+    "e6dc2c519faed7dcea04ef40bc01d7d9d3fc30692fdfe7535515b39c2d560ce4",
+    "f460edb6e72ae084041a2a86129db6b48d90faf541b17d137fb98d319364e4d4",
+    "f591a3f739503ae5eb2f9c0e435df66fe86bba98c49c245ab1bd6481b978b669",
+    "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+  ],
+  "images_before": {
+    "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59": {
+      "id": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59",
+      "tags": [
+        "localhost/bc250-stack:10.2-gfx1013-priority1-candidate"
+      ],
+      "parent": "ad29fe03358b2acfd6a5ef6a6bdcacef36a92521a3d930e1968846fcd1efa491",
+      "size": 2841221893,
+      "project": true
+    },
+    "ad29fe03358b2acfd6a5ef6a6bdcacef36a92521a3d930e1968846fcd1efa491": {
+      "id": "ad29fe03358b2acfd6a5ef6a6bdcacef36a92521a3d930e1968846fcd1efa491",
+      "tags": [],
+      "parent": "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14",
+      "size": 2840675583,
+      "project": true
+    },
+    "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14": {
+      "id": "a637dfd8ae00f4e42329637699085600865265cdfb8abee7c84f8320e7a71d14",
+      "tags": [
+        "localhost/bc250-stack:10.2-gfx1013-scalar-candidate"
+      ],
+      "parent": "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3",
+      "size": 2840129244,
+      "project": true
+    },
+    "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3": {
+      "id": "c030c3ce260fd9d2c65d259cb0ff1c8ebb3b73c36d82094d1c752233427afdb3",
+      "tags": [
+        "localhost/bc250-pytorch-runtime:2.13-gfx1013-scalar-candidate"
+      ],
+      "parent": "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200",
+      "size": 1947628265,
+      "project": true
+    },
+    "f460edb6e72ae084041a2a86129db6b48d90faf541b17d137fb98d319364e4d4": {
+      "id": "f460edb6e72ae084041a2a86129db6b48d90faf541b17d137fb98d319364e4d4",
+      "tags": [
+        "localhost/bc250-stack:10.2-gfx1013-20261013-4b000d542"
+      ],
+      "parent": "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200",
+      "size": 2839582927,
+      "project": true
+    },
+    "4e305e1d63537ea9d51091058ede0f50912e21dbedc1ba3dbe6b7712ead9d88f": {
+      "id": "4e305e1d63537ea9d51091058ede0f50912e21dbedc1ba3dbe6b7712ead9d88f",
+      "tags": [
+        "localhost/bc250-stack:10.2-gfx1013-20261012-a640c9296"
+      ],
+      "parent": "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200",
+      "size": 2839582927,
+      "project": true
+    },
+    "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200": {
+      "id": "94c477afbfd4acc4d85f22469899a5c394b3a859fc72e8f33b24d0a0dde52200",
+      "tags": [
+        "localhost/bc250-pytorch-runtime:2.13-gfx1013"
+      ],
+      "parent": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+      "size": 1947081962,
+      "project": true
+    },
+    "5fad8a7dcd8b7f2d3f1e41f9a00fbccfb702b91eb31184636a2d14378fea1d7d": {
+      "id": "5fad8a7dcd8b7f2d3f1e41f9a00fbccfb702b91eb31184636a2d14378fea1d7d",
+      "tags": [
+        "localhost/bc250-triton-runtime:gfx1013"
+      ],
+      "parent": "3200f68bbb79f58903615f594e9b1b86f55bd65f3aa8729d781a112927e32029",
+      "size": 1600521472,
+      "project": true
+    },
+    "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06": {
+      "id": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+      "tags": [
+        "localhost/bc250-pytorch-build:2.13-gfx1013"
+      ],
+      "parent": "8f58c97eb6c6ff3815565a1b3007d8d1786f5cab6577c5e52e46620e0a75e0bb",
+      "size": 1946482726,
+      "project": true
+    },
+    "8f58c97eb6c6ff3815565a1b3007d8d1786f5cab6577c5e52e46620e0a75e0bb": {
+      "id": "8f58c97eb6c6ff3815565a1b3007d8d1786f5cab6577c5e52e46620e0a75e0bb",
+      "tags": [],
+      "parent": "c87891e4986b6cad782f9a27ff01d8df95a1f486abf261d83ca2328c275bde8a",
+      "size": 1946482574,
+      "project": true
+    },
+    "5cfd0fc1397115d671885dae45a9993ba3113328ef39f035ec370d1aafd65836": {
+      "id": "5cfd0fc1397115d671885dae45a9993ba3113328ef39f035ec370d1aafd65836",
+      "tags": [],
+      "parent": "3200f68bbb79f58903615f594e9b1b86f55bd65f3aa8729d781a112927e32029",
+      "size": 1600521473,
+      "project": false
+    },
+    "3200f68bbb79f58903615f594e9b1b86f55bd65f3aa8729d781a112927e32029": {
+      "id": "3200f68bbb79f58903615f594e9b1b86f55bd65f3aa8729d781a112927e32029",
+      "tags": [
+        "localhost/bc250-triton-build:gfx1013"
+      ],
+      "parent": "79838505b429aee0047e472a1d1efdf65838b941aaa34f18613099f27c89c7cb",
+      "size": 1600485433,
+      "project": true
+    },
+    "79838505b429aee0047e472a1d1efdf65838b941aaa34f18613099f27c89c7cb": {
+      "id": "79838505b429aee0047e472a1d1efdf65838b941aaa34f18613099f27c89c7cb",
+      "tags": [],
+      "parent": "0ad571ea729908b15459e1a96b0106a48341c2991128b8112a5b8d3b1fbf02bf",
+      "size": 1600485317,
+      "project": false
+    },
+    "0ad571ea729908b15459e1a96b0106a48341c2991128b8112a5b8d3b1fbf02bf": {
+      "id": "0ad571ea729908b15459e1a96b0106a48341c2991128b8112a5b8d3b1fbf02bf",
+      "tags": [],
+      "parent": "0d7f7a72b4603e6b6a60388a1774d022267aba1e4253ac8f8a3cbf6901f89f88",
+      "size": 1600485157,
+      "project": false
+    },
+    "0d7f7a72b4603e6b6a60388a1774d022267aba1e4253ac8f8a3cbf6901f89f88": {
+      "id": "0d7f7a72b4603e6b6a60388a1774d022267aba1e4253ac8f8a3cbf6901f89f88",
+      "tags": [],
+      "parent": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238",
+      "size": 1505431774,
+      "project": false
+    },
+    "c87891e4986b6cad782f9a27ff01d8df95a1f486abf261d83ca2328c275bde8a": {
+      "id": "c87891e4986b6cad782f9a27ff01d8df95a1f486abf261d83ca2328c275bde8a",
+      "tags": [],
+      "parent": "3afb9ec68756fc6d49cd235ae49073d97f3f28364b87efe4cacf7393ff66441f",
+      "size": 1946479402,
+      "project": false
+    },
+    "3afb9ec68756fc6d49cd235ae49073d97f3f28364b87efe4cacf7393ff66441f": {
+      "id": "3afb9ec68756fc6d49cd235ae49073d97f3f28364b87efe4cacf7393ff66441f",
+      "tags": [],
+      "parent": "e34d382f00233bd010b1a3e7fdc5680ef9eecdfdbcfbc22ab221170221987d54",
+      "size": 1837551267,
+      "project": false
+    },
+    "e34d382f00233bd010b1a3e7fdc5680ef9eecdfdbcfbc22ab221170221987d54": {
+      "id": "e34d382f00233bd010b1a3e7fdc5680ef9eecdfdbcfbc22ab221170221987d54",
+      "tags": [],
+      "parent": "9909d89a6286c4a25138920841a77054c3b2a0a53c3578a5a81b59409bcd4ed9",
+      "size": 1837551151,
+      "project": false
+    },
+    "9909d89a6286c4a25138920841a77054c3b2a0a53c3578a5a81b59409bcd4ed9": {
+      "id": "9909d89a6286c4a25138920841a77054c3b2a0a53c3578a5a81b59409bcd4ed9",
+      "tags": [],
+      "parent": "e33eea0875e6d77323cc40226d0c7e99a15f782aceb426be1112b5d9b9804a1d",
+      "size": 1837550993,
+      "project": false
+    },
+    "e33eea0875e6d77323cc40226d0c7e99a15f782aceb426be1112b5d9b9804a1d": {
+      "id": "e33eea0875e6d77323cc40226d0c7e99a15f782aceb426be1112b5d9b9804a1d",
+      "tags": [],
+      "parent": "0cbfedd5ca015e3ee6b6ce5430ed3c7d2f54d33377e7649d03701e350bde8360",
+      "size": 1505436469,
+      "project": false
+    },
+    "0cbfedd5ca015e3ee6b6ce5430ed3c7d2f54d33377e7649d03701e350bde8360": {
+      "id": "0cbfedd5ca015e3ee6b6ce5430ed3c7d2f54d33377e7649d03701e350bde8360",
+      "tags": [],
+      "parent": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238",
+      "size": 1505432818,
+      "project": false
+    },
+    "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238": {
+      "id": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238",
+      "tags": [
+        "localhost/bc250-rocm-build:10.2-ccache"
+      ],
+      "parent": "276f8f0c42df1bbf5d288ee0e55ed366ce514e23f6eb3ca3984f510f7d544f1a",
+      "size": 1505428579,
+      "project": true
+    },
+    "276f8f0c42df1bbf5d288ee0e55ed366ce514e23f6eb3ca3984f510f7d544f1a": {
+      "id": "276f8f0c42df1bbf5d288ee0e55ed366ce514e23f6eb3ca3984f510f7d544f1a",
+      "tags": [],
+      "parent": "5871a11e9296d48e8d2a741d79e5b26d4856ff04d97fb129400bdfc59c85d9d6",
+      "size": 1505428410,
+      "project": false
+    },
+    "5871a11e9296d48e8d2a741d79e5b26d4856ff04d97fb129400bdfc59c85d9d6": {
+      "id": "5871a11e9296d48e8d2a741d79e5b26d4856ff04d97fb129400bdfc59c85d9d6",
+      "tags": [
+        "localhost/bc250-rocm-build:10.2"
+      ],
+      "parent": "77ec3d797a6c1416dacc443c794c0054ca5b80ca4e28380e934192dbbcbc136d",
+      "size": 1505424129,
+      "project": true
+    },
+    "77ec3d797a6c1416dacc443c794c0054ca5b80ca4e28380e934192dbbcbc136d": {
+      "id": "77ec3d797a6c1416dacc443c794c0054ca5b80ca4e28380e934192dbbcbc136d",
+      "tags": [],
+      "parent": "a3a3703cdec026b3f40d227aefbea66659a4f05b3f33d45c6dab7ae4e483d83d",
+      "size": 1505423988,
+      "project": false
+    },
+    "f591a3f739503ae5eb2f9c0e435df66fe86bba98c49c245ab1bd6481b978b669": {
+      "id": "f591a3f739503ae5eb2f9c0e435df66fe86bba98c49c245ab1bd6481b978b669",
+      "tags": [],
+      "parent": "78c9268462ae0721f0bbc18d42f3047620c4fa0a58bb456fe40391e8382c7546",
+      "size": 1301659164,
+      "project": false
+    },
+    "78c9268462ae0721f0bbc18d42f3047620c4fa0a58bb456fe40391e8382c7546": {
+      "id": "78c9268462ae0721f0bbc18d42f3047620c4fa0a58bb456fe40391e8382c7546",
+      "tags": [],
+      "parent": "49f3941c37438e86572f6620c34c24dc5db2001571b019ec66c09d9fb2b853bd",
+      "size": 1301658995,
+      "project": false
+    },
+    "49f3941c37438e86572f6620c34c24dc5db2001571b019ec66c09d9fb2b853bd": {
+      "id": "49f3941c37438e86572f6620c34c24dc5db2001571b019ec66c09d9fb2b853bd",
+      "tags": [],
+      "parent": "a3a3703cdec026b3f40d227aefbea66659a4f05b3f33d45c6dab7ae4e483d83d",
+      "size": 1301654714,
+      "project": false
+    },
+    "a3a3703cdec026b3f40d227aefbea66659a4f05b3f33d45c6dab7ae4e483d83d": {
+      "id": "a3a3703cdec026b3f40d227aefbea66659a4f05b3f33d45c6dab7ae4e483d83d",
+      "tags": [],
+      "parent": "bad2fd0ba5dbeb9dc305621c974a9bf673e17a9b3d1c04af8c97864ca16d9786",
+      "size": 1301654569,
+      "project": false
+    },
+    "257a57ddbeb312260a75fe8d090d274b07cfa36a9e2320d55088668801192fa8": {
+      "id": "257a57ddbeb312260a75fe8d090d274b07cfa36a9e2320d55088668801192fa8",
+      "tags": [],
+      "parent": "bad2fd0ba5dbeb9dc305621c974a9bf673e17a9b3d1c04af8c97864ca16d9786",
+      "size": 1239971950,
+      "project": false
+    },
+    "bad2fd0ba5dbeb9dc305621c974a9bf673e17a9b3d1c04af8c97864ca16d9786": {
+      "id": "bad2fd0ba5dbeb9dc305621c974a9bf673e17a9b3d1c04af8c97864ca16d9786",
+      "tags": [],
+      "parent": "c3fb467a261adbc859e7826be98d25760073b98008a5786533105a6d4f1f1c34",
+      "size": 1239971808,
+      "project": false
+    },
+    "c3fb467a261adbc859e7826be98d25760073b98008a5786533105a6d4f1f1c34": {
+      "id": "c3fb467a261adbc859e7826be98d25760073b98008a5786533105a6d4f1f1c34",
+      "tags": [],
+      "parent": "66e7f11bbe4bde52f37a3095b64f83875cf473e46b54f83ac1ec9cf238b85656",
+      "size": 1082512308,
+      "project": false
+    },
+    "66e7f11bbe4bde52f37a3095b64f83875cf473e46b54f83ac1ec9cf238b85656": {
+      "id": "66e7f11bbe4bde52f37a3095b64f83875cf473e46b54f83ac1ec9cf238b85656",
+      "tags": [],
+      "parent": "e6dc2c519faed7dcea04ef40bc01d7d9d3fc30692fdfe7535515b39c2d560ce4",
+      "size": 1082508678,
+      "project": false
+    },
+    "e6dc2c519faed7dcea04ef40bc01d7d9d3fc30692fdfe7535515b39c2d560ce4": {
+      "id": "e6dc2c519faed7dcea04ef40bc01d7d9d3fc30692fdfe7535515b39c2d560ce4",
+      "tags": [],
+      "parent": "6d069afe524392a1f0484a8fbe0467acb3e259cf375cc14fb932208d0d38cbed",
+      "size": 1082508462,
+      "project": false
+    },
+    "6d069afe524392a1f0484a8fbe0467acb3e259cf375cc14fb932208d0d38cbed": {
+      "id": "6d069afe524392a1f0484a8fbe0467acb3e259cf375cc14fb932208d0d38cbed",
+      "tags": [],
+      "parent": "325601824e6920c5a9fbbb23e7a695aab958f8c2085e574b27cad7b24982eee2",
+      "size": 898791364,
+      "project": false
+    },
+    "325601824e6920c5a9fbbb23e7a695aab958f8c2085e574b27cad7b24982eee2": {
+      "id": "325601824e6920c5a9fbbb23e7a695aab958f8c2085e574b27cad7b24982eee2",
+      "tags": [],
+      "parent": "a1ab59dda620fed851d57cd3654c503dc38d18d7e06967e53ae5d0d31c2d5d8c",
+      "size": 898688912,
+      "project": false
+    },
+    "a1ab59dda620fed851d57cd3654c503dc38d18d7e06967e53ae5d0d31c2d5d8c": {
+      "id": "a1ab59dda620fed851d57cd3654c503dc38d18d7e06967e53ae5d0d31c2d5d8c",
+      "tags": [],
+      "parent": "69f919497cada9a8611f3de61df902d9f94bf20f84552ef5bd93125c38608ef9",
+      "size": 80694312,
+      "project": false
+    },
+    "69f919497cada9a8611f3de61df902d9f94bf20f84552ef5bd93125c38608ef9": {
+      "id": "69f919497cada9a8611f3de61df902d9f94bf20f84552ef5bd93125c38608ef9",
+      "tags": [
+        "docker.io/library/ubuntu:24.04"
+      ],
+      "parent": "",
+      "size": 80701300,
+      "project": false
+    },
+    "6a30463535e5225d049d28759bab0b95d7bc3873bbaf33321ad15fd8ac711905": {
+      "id": "6a30463535e5225d049d28759bab0b95d7bc3873bbaf33321ad15fd8ac711905",
+      "tags": [
+        "localhost/bc250-rocm-runtime:7.2.4-gfx1013-r1.4"
+      ],
+      "parent": "",
+      "size": 8352374323,
+      "project": true
+    },
+    "cd9f0f9bd955236a8fd7d4095c6b256d2d688caf7d8b8c92314754037a51f634": {
+      "id": "cd9f0f9bd955236a8fd7d4095c6b256d2d688caf7d8b8c92314754037a51f634",
+      "tags": [
+        "localhost/bc250-rocm-runtime:7.2.4-gfx1013-r1.2"
+      ],
+      "parent": "",
+      "size": 7062867393,
+      "project": true
+    }
+  },
+  "protected_sha256": {
+    "current/runtime.json": "9869af87515edec9623e3912185be5b0c8ef3f0bd3a310a1c019084ac6358332",
+    "current/rocm/lib/libMIOpen.so": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11",
+    "current/rocm/lib/librocblas.so": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "current/rocm/lib/libhipblaslt.so": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    "current/torch/torch/lib/libtorch_hip.so": "578a3583e78ad0009779d77bd65591fcf8119dec441ea81dde7be56d9b9c11d5",
+    "current/python-consumers/training.env": "29b3b9d188671278f4f55b8b5dffdbc884cfb357ada7317be25f1c735ca22acf",
+    "current/python-consumers/packages.json": "0749da54825ea22753754dc893228aeef14ad6dfec44df08608f976481d2f451",
+    "fallback/runtime.json": "95c519855450ad66a3f90132e02411d01a11b5c2103591c5b1c1a0059c49d084",
+    "fallback/rocm/lib/libMIOpen.so": "f64f76c962587e013983a02a447222afb231b56b423cb9bb660d995708f68e11",
+    "fallback/rocm/lib/librocblas.so": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "fallback/rocm/lib/libhipblaslt.so": "8eda55af99e90c515bab4cda402de347c7cfc5363d7abe10dadee46bafc0e787",
+    "fallback/torch/torch/lib/libtorch_hip.so": "7493e3475d2ebbb7870a01510dfa5fb1c9a0b8ee91c7f4a6c2c24267274ad612",
+    "fallback/python-consumers/training.env": "29b3b9d188671278f4f55b8b5dffdbc884cfb357ada7317be25f1c735ca22acf",
+    "fallback/python-consumers/packages.json": "0749da54825ea22753754dc893228aeef14ad6dfec44df08608f976481d2f451"
+  },
+  "process_references": [],
+  "user_scope": "Only explicit obsolete project payloads and synthetic fixtures; no global prune or package removal."
+}
