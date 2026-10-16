@@ -1,0 +1,33 @@
+From 08ba6f386ff661e720873779fc417b4246787d9c Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Fri, 16 Oct 2026 11:09:30 +0200
+Subject: [PATCH] fix(miopen): include applicable dilated GEMM solvers in
+ workspace queries
+
+---
+ projects/miopen/src/convolution.cpp | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/projects/miopen/src/convolution.cpp b/projects/miopen/src/convolution.cpp
+index fff1feeb7be..5ae83f5304e 100644
+--- a/projects/miopen/src/convolution.cpp
++++ b/projects/miopen/src/convolution.cpp
+@@ -59,10 +59,13 @@ std::size_t GetWorkSpaceSizeGEMM(const miopen::ExecutionContext& ctx,
+                                  const conv::ProblemDescription& problem)
+ {
+ #if MIOPEN_USE_GEMM
+-    if(env::disabled(MIOPEN_DEBUG_CONV_GEMM) ||
+-       miopen::any_of(problem.GetConv().GetConvDilations(), [](auto v) { return v > 1; }))
++    if(env::disabled(MIOPEN_DEBUG_CONV_GEMM))
+         return 0;
+ 
++    // Use the same solver applicability/workspace contracts as Find. The GEMM
++    // im2col/col2im paths support dilation; excluding it here under-allocates
++    // workspace for solvers that Find can legitimately evaluate.
++
+     return GetMaxWorkSpaceSize(AllGemmWorkspaceSize(ctx, problem));
+ #else
+     std::ignore = ctx;
+-- 
+2.56.0
+
