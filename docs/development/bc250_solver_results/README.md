@@ -133,3 +133,6 @@ separated spectra and explicit refusal contracts; production eig remains host.
 
 N2.5 follow-up: [scale repair and separation boundaries](N25.md), with retained
 4-failure baseline and passing replay/scale/refusal/regression gates.
+
+N2.6 follow-up: [profile and vectorized right recovery](N26.md),107 regression
+groups and six paired fixtures; native full pipeline remains slower than host.

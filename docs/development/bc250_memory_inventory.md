@@ -1086,3 +1086,19 @@ unchanged; no native rebuild or performance claim. General dynamic ranges,
 balancing/subnormals/conditioning/batching/gradients remain unqualified; original
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
+
+## N2.6 small native eig profile/recovery vectorization — 2026-10-16
+
+Initial order16 recovery~37ms/376 Torch scalar reads; chose all-column rowwise
+GPU back-substitution, n-1 instead quadratic row updates. Checked global gap
+covers active pivots, masked inactive pivots set1; homogeneous scaling/final
+finite/residual checks retained. Scalar reads4/9/16:34/124/376 ->18;107 unchanged
+N2.4/N2.5 groups pass. Six synchronized wall-clock A1/B1/B2/A2 fixtures with CPU
+references show recovery1.53–8.44x and whole1.07–1.72x improvements, raw3-sample
+passes/controls retained. Native whole16–55ms remains far slower than host0.20–
+0.40ms; no default integration/model/general speed claim. All logs identical,
+guards ACKed, no active jobs. [Report/source/evidence](bc250_solver_results/N26.md).
+No native compile, Torch/DSO/prefix/kernel/boot change; prior helper retained at
+WS/recovery/solver-n26-before. Existing CPU fault/MIOpen issue remain open. Next
+N2.7 split Schur preparation/QR-loop cost and bounded device-side iteration to
+reduce remaining measured launch/scalar synchronization overhead.

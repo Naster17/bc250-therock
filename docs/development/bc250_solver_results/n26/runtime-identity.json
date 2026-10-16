@@ -1,0 +1,16 @@
+{
+  "prefix": "/opt/bc250-stack/dev/priority1",
+  "image": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59",
+  "torch": "4ee65717d69e9f51021272e3f37d0f342f68fc08",
+  "rocm_libraries": "a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8",
+  "kernel": "7.2.10-bc250rocm-r3",
+  "boot_id": "a287fd16-c97b-4d88-8055-b0553a2f7631",
+  "files": {
+    "/opt/bc250-stack/dev/priority1/rocm/lib/libhipsolver.so.1.5": "eb6ef482a17c2c0efc8a16bd0819956be7145bca11f7a75a96355d48805599d3",
+    "/opt/bc250-stack/dev/priority1/rocm/lib/librocsolver.so.0.13": "b65b67b97696f9b24042f1e62aef6ed1b26e6bc2d980325070118c1675327c2c",
+    "/opt/bc250-stack/dev/priority1/rocm/lib/librocblas.so.5.8": "209d27c51fa9722d69c179d783f00a3084cb84538dff2c7abeccac3ee7081b37",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/gfx1013_schur_candidate.py": "cb6fe96f5a30c572bb8eba04cefaa172373fc8438cf2d75f49b7f780a3130c56",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/benchmark_solver_n26.py": "3a09d6f72af21d9ba15e72604fa7b43079ab73f9f1055a4c5e2df8431bd206f3",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/solver-n26-before/gfx1013_schur_candidate.py": "776fa33dfec16f362c466839132f5b6354e98ecf996c390bfbeede53f9b2407f"
+  }
+}

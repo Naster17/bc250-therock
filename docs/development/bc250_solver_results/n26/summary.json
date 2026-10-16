@@ -1,0 +1,26 @@
+{
+  "status": "bounded recovery optimization qualified; native full candidate still slower than host",
+  "implementation_sha256": "cb6fe96f5a30c572bb8eba04cefaa172373fc8438cf2d75f49b7f780a3130c56",
+  "benchmark_sha256": "3a09d6f72af21d9ba15e72604fa7b43079ab73f9f1055a4c5e2df8431bd206f3",
+  "correctness_groups": 107,
+  "paired_fixtures": 6,
+  "scalar_reads_before": {
+    "4": 34,
+    "9": 124,
+    "16": 376
+  },
+  "scalar_reads_after": 18,
+  "recovery_ratio_range": [
+    1.5338293047191185,
+    8.43571434601443
+  ],
+  "whole_ratio_range": [
+    1.0692429888419384,
+    1.719595623060457
+  ],
+  "default_dispatch_changed": false,
+  "kernel_logs_unchanged": true,
+  "guards": "acknowledged",
+  "running_jobs": [],
+  "next": "N2.7 split Schur preparation/QR-loop cost and prototype bounded device-side QR/similarity step; retain host default"
+}

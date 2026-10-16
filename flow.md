@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-15 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-16 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -9,6 +9,27 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **CURRENT N2.6 completed2026-10-16:** measured small candidate before changing
+  code. Order16 recovery~37ms/376 ATen scalar reads versus Schur41/52ms and host
+  eig~0.35/0.41ms. Vectorized right recovery across all columns, n-1 row updates
+  instead n(n-1)/2; global checked gap proves active pivots, inactive pivots set1,
+  per-column homogeneous scaling and final finite/norm/residual guards retained.
+  No tolerance/gap/iteration changes. Scalar reads34/124/376 ->18, ATen calls
+  377/1437/4349 ->226/331/478 at4/9/16. Same-input A1/B1/B2/A2,3 synchronized
+  wall samples/pass, six c64/c128 order4/9/16 basis10 fixtures: recovery1.53–8.44x,
+  whole1.07–1.72x; raw controls retained, no general/model speed claim. Native
+  whole still16–55ms versus host0.20–0.40ms, so production host dispatch unchanged.
+  Unchanged N2.4/N2.5 gates21+40+30+16=107 pass plus timing fixture CPU references.
+  Labels solver-{n24,scale,boundary,failure}-regression-n26 and solver-paired-n26
+  exit0/dmesg identical/600s guards ACKed under lock; initial profile-before retained.
+  Report docs/development/bc250_solver_results/N26.md and n26/, .104 same WS/logs.
+  Prior helper WS/recovery/solver-n26-before; no native compile or Torch/DSO/
+  prefix metadata/boot-policy change, no active agent job/container/deadline.
+  Torch4ee6571/libraries a6f7d3d/kernel0957/image84995; SDMA/heap-off, math defaults,
+  r2/BIOS/.105 unchanged. Python CPU fault/MIOpen issue remain open. **Exact next
+  N2.7:** split Schur preparation/QR-loop cost and prototype one bounded device-
+  side small QR/similarity iteration for remaining launch/scalar-sync overhead;
+  retain Python reference/failure gates and production host dispatch.
 - **CURRENT N2.5 completed2026-10-15:** demonstrated candidate scale defect:
   seeded baseline6 had2 unit passes, tiny c64/c128 positive info4 at256steps and
   large c64/c128 nonfinite/fill errors. Added GPU component normalization before
@@ -719,7 +740,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.3 | Isolated native small Schur prototype cap16: GEHRD plus bounded GPU shifted QR, host scalar control, explicit nonconvergence;21 groups pass. No right eigenvectors or production eig integration. |
 | [x]   | N2.4 | Isolated native GPU right eigenvectors from small Schur forms;21 groups pass including analytic/CPU residual/direction and repeated/close/nonconverged refusal. Production eig unchanged. |
 | [x]   | N2.5 | Repair demonstrated tiny/large magnitude failures; seeded6 replay,40 scale,30 separation,16 failure/control and21 N2.4 groups pass. Experimental cap16/default eig unchanged. |
-| [ ]   | **N2.6 — next** | Bounded end-to-end/component cost and host-sync profile versus host eig with correctness; choose one measured overhead-reduction step, retain production dispatch. |
+| [x]   | N2.6 | Profiled small native versus host, vectorized recovery;107 groups and6 paired fixtures pass, recovery1.53–8.44x/whole1.07–1.72x in fixtures. Native remains slower than host; default unchanged. |
+| [ ]   | **N2.7 — next** | Split Schur preparation/QR-loop cost; prototype one bounded device-side small QR/similarity iteration, retain reference/failure gates and default host dispatch. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |

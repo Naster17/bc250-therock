@@ -212,22 +212,27 @@ def right_eigenvectors(result):
         floor = 8*finfo.eps**.5
         if not bool(separation > floor):
             raise RuntimeError('Spectrum not sufficiently separated for candidate recovery')
-        y = torch.zeros_like(t)
-        for j in range(n):
-            column = torch.zeros(n, dtype=t.dtype, device=t.device)
-            column[j] = 1
-            for i in range(j-1, -1, -1):
-                pivot = diagonal[i]-diagonal[j]
-                if not bool(pivot.abs() > floor):
-                    raise RuntimeError('Near-singular triangular recovery pivot')
-                column[i] = -(scaled[i, i+1:j+1]@column[i+1:j+1])/pivot
-                magnitude = column.abs().amax()
-                if not bool(torch.isfinite(column).all()) or not bool(magnitude > 0):
-                    raise RuntimeError('Unstable triangular eigenvector recovery')
-                # Scaling a homogeneous solution preserves its direction and
-                # bounds subsequent dot products; never perturb the pivot.
-                column = column/magnitude
-            y[:, j] = column/column.norm()
+        # Solve all eigenvector columns together, one triangular row at a time.
+        # The checked global pairwise gap guarantees every active pivot exceeds
+        # floor. Inactive/diagonal pivots are replaced by1 before division.
+        y = torch.eye(n, dtype=t.dtype, device=t.device)
+        columns = torch.arange(n, device=t.device)
+        for i in range(n-2, -1, -1):
+            active_columns = columns > i
+            pivots = diagonal[i]-diagonal
+            safe_pivots = torch.where(active_columns, pivots, torch.ones_like(pivots))
+            rhs = scaled[i, i+1:]@y[i+1:, :]
+            y[i, :] = torch.where(active_columns, -rhs/safe_pivots, y[i, :])
+            # Homogeneous per-column rescaling preserves already solved rows.
+            # With scaled |T|<=1, |y|<=1 and the gap bound, active row values
+            # cannot overflow for this order<=16/dtype contract. Defer finite
+            # checks to the end instead of synchronizing the host per element.
+            magnitude = y.abs().amax(dim=0)
+            y = y/magnitude[None, :]
+        norms = y.norm(dim=0)
+        if not bool(torch.isfinite(y).all()) or not bool((norms > finfo.tiny).all()):
+            raise RuntimeError('Unstable triangular eigenvector recovery')
+        y = y/norms[None, :]
         residuals = (scaled@y-y*diagonal[None, :]).norm(dim=0)
         denominator = (scaled.norm()+diagonal.abs())*y.norm(dim=0)
         residual = (residuals/denominator).amax()

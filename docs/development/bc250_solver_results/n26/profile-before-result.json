@@ -1,0 +1,597 @@
+{
+  "status": "passed",
+  "fixtures": [
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "iterations": 9,
+      "correctness_before": {
+        "residual": 9.95620655162623e-08,
+        "projector_error": 1.0653525093214782e-06
+      },
+      "correctness_host": {
+        "residual": 1.9279680837469537e-07,
+        "projector_error": 9.293458857787581e-07
+      },
+      "components": {
+        "schur": {
+          "median_ms": 13.441275004879571,
+          "samples_ms": [
+            13.608109999040607,
+            13.441275004879571,
+            13.437920999422204
+          ]
+        },
+        "recovery": {
+          "median_ms": 3.663862000394147,
+          "samples_ms": [
+            3.679339999507647,
+            3.663862000394147,
+            3.6345090047689155
+          ]
+        },
+        "whole": {
+          "median_ms": 17.648824999923818,
+          "samples_ms": [
+            17.7460270060692,
+            17.648824999923818,
+            17.641637001361232
+          ]
+        },
+        "host_eig": {
+          "median_ms": 0.2152840024791658,
+          "samples_ms": [
+            0.21644699882017449,
+            0.2152840024791658,
+            0.20768299873452634
+          ]
+        }
+      },
+      "profile": {
+        "schur": {
+          "scalar_reads": 47,
+          "aten_calls": 903,
+          "operators": {
+            "aten.select.int": 188,
+            "aten.abs.default": 82,
+            "aten.mul.Tensor": 74,
+            "aten.add.Tensor": 51,
+            "aten.sub.Tensor": 48,
+            "aten._local_scalar_dense.default": 47,
+            "aten.slice.Tensor": 35,
+            "aten.view_as_real.default": 33,
+            "aten.le.Tensor": 30,
+            "aten.copy_.default": 30,
+            "aten.ne.Scalar": 27,
+            "aten.eq.Tensor": 27,
+            "aten.mm.default": 27,
+            "aten.div.Tensor": 20,
+            "aten.alias.default": 20
+          }
+        },
+        "recovery": {
+          "scalar_reads": 34,
+          "aten_calls": 377,
+          "operators": {
+            "aten.select.int": 56,
+            "aten.abs.default": 39,
+            "aten._local_scalar_dense.default": 34,
+            "aten.view_as_real.default": 25,
+            "aten.mul.Tensor": 24,
+            "aten.ne.Scalar": 22,
+            "aten.eq.Tensor": 22,
+            "aten.div.Tensor": 21,
+            "aten.gt.Scalar": 16,
+            "aten.copy_.default": 14,
+            "aten.slice.Tensor": 12,
+            "aten.all.default": 11,
+            "aten.bitwise_and_.Tensor": 10,
+            "aten.sub.Tensor": 9,
+            "aten.linalg_vector_norm.default": 9
+          }
+        },
+        "host_eig": {
+          "scalar_reads": 0,
+          "aten_calls": 1,
+          "operators": {
+            "aten.linalg_eig.default": 1
+          }
+        }
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 9,
+      "iterations": 19,
+      "correctness_before": {
+        "residual": 1.952155392586821e-07,
+        "projector_error": 3.094099575847911e-06
+      },
+      "correctness_host": {
+        "residual": 2.0903582807731114e-07,
+        "projector_error": 5.122662797121072e-06
+      },
+      "components": {
+        "schur": {
+          "median_ms": 25.026454000908416,
+          "samples_ms": [
+            25.026454000908416,
+            24.968865000118967,
+            25.59153900074307
+          ]
+        },
+        "recovery": {
+          "median_ms": 12.91795800352702,
+          "samples_ms": [
+            12.745205000101123,
+            12.91795800352702,
+            12.933516001794487
+          ]
+        },
+        "whole": {
+          "median_ms": 37.74346600403078,
+          "samples_ms": [
+            37.78114399756305,
+            37.66794099647086,
+            37.74346600403078
+          ]
+        },
+        "host_eig": {
+          "median_ms": 0.24996999854920432,
+          "samples_ms": [
+            0.2514529987820424,
+            0.24417100212303922,
+            0.24996999854920432
+          ]
+        }
+      },
+      "profile": {
+        "schur": {
+          "scalar_reads": 92,
+          "aten_calls": 1877,
+          "operators": {
+            "aten.select.int": 398,
+            "aten.abs.default": 167,
+            "aten.mul.Tensor": 149,
+            "aten.slice.Tensor": 128,
+            "aten.add.Tensor": 111,
+            "aten.sub.Tensor": 103,
+            "aten._local_scalar_dense.default": 92,
+            "aten.le.Tensor": 65,
+            "aten.copy_.default": 65,
+            "aten.mm.default": 57,
+            "aten.view_as_real.default": 53,
+            "aten.ne.Scalar": 47,
+            "aten.eq.Tensor": 47,
+            "aten.div.Tensor": 40,
+            "aten.linalg_vector_norm.default": 38
+          }
+        },
+        "recovery": {
+          "scalar_reads": 124,
+          "aten_calls": 1437,
+          "operators": {
+            "aten.select.int": 246,
+            "aten.abs.default": 159,
+            "aten._local_scalar_dense.default": 124,
+            "aten.div.Tensor": 86,
+            "aten.view_as_real.default": 85,
+            "aten.mul.Tensor": 84,
+            "aten.ne.Scalar": 82,
+            "aten.eq.Tensor": 82,
+            "aten.gt.Scalar": 76,
+            "aten.slice.Tensor": 72,
+            "aten.copy_.default": 54,
+            "aten.all.default": 41,
+            "aten.bitwise_and_.Tensor": 40,
+            "aten.sub.Tensor": 39,
+            "aten.amax.default": 39
+          }
+        },
+        "host_eig": {
+          "scalar_reads": 0,
+          "aten_calls": 1,
+          "operators": {
+            "aten.linalg_eig.default": 1
+          }
+        }
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "iterations": 33,
+      "correctness_before": {
+        "residual": 1.886809429328282e-07,
+        "projector_error": 6.70095385681009e-06
+      },
+      "correctness_host": {
+        "residual": 2.3403546723047075e-07,
+        "projector_error": 9.070181076950978e-06
+      },
+      "components": {
+        "schur": {
+          "median_ms": 40.966597000078764,
+          "samples_ms": [
+            41.11346999707166,
+            40.966597000078764,
+            40.81714300264139
+          ]
+        },
+        "recovery": {
+          "median_ms": 37.18906099675223,
+          "samples_ms": [
+            37.40133200335549,
+            37.18906099675223,
+            36.937299999408424
+          ]
+        },
+        "whole": {
+          "median_ms": 78.81539899972267,
+          "samples_ms": [
+            78.81539899972267,
+            77.90973300143378,
+            78.99359499424463
+          ]
+        },
+        "host_eig": {
+          "median_ms": 0.3453699973761104,
+          "samples_ms": [
+            0.3453699973761104,
+            0.3375960004632361,
+            0.351794995367527
+          ]
+        }
+      },
+      "profile": {
+        "schur": {
+          "scalar_reads": 155,
+          "aten_calls": 3239,
+          "operators": {
+            "aten.select.int": 692,
+            "aten.abs.default": 286,
+            "aten.slice.Tensor": 255,
+            "aten.mul.Tensor": 254,
+            "aten.add.Tensor": 195,
+            "aten.sub.Tensor": 180,
+            "aten._local_scalar_dense.default": 155,
+            "aten.le.Tensor": 114,
+            "aten.copy_.default": 114,
+            "aten.mm.default": 99,
+            "aten.view_as_real.default": 81,
+            "aten.ne.Scalar": 75,
+            "aten.eq.Tensor": 75,
+            "aten.div.Tensor": 68,
+            "aten.linalg_vector_norm.default": 66
+          }
+        },
+        "recovery": {
+          "scalar_reads": 376,
+          "aten_calls": 4349,
+          "operators": {
+            "aten.select.int": 764,
+            "aten.abs.default": 495,
+            "aten._local_scalar_dense.default": 376,
+            "aten.div.Tensor": 261,
+            "aten.view_as_real.default": 253,
+            "aten.mul.Tensor": 252,
+            "aten.ne.Scalar": 250,
+            "aten.eq.Tensor": 250,
+            "aten.gt.Scalar": 244,
+            "aten.slice.Tensor": 240,
+            "aten.copy_.default": 152,
+            "aten.all.default": 125,
+            "aten.bitwise_and_.Tensor": 124,
+            "aten.sub.Tensor": 123,
+            "aten.amax.default": 123
+          }
+        },
+        "host_eig": {
+          "scalar_reads": 0,
+          "aten_calls": 1,
+          "operators": {
+            "aten.linalg_eig.default": 1
+          }
+        }
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "iterations": 9,
+      "correctness_before": {
+        "residual": 3.704411019512065e-16,
+        "projector_error": 2.29188002413414e-15
+      },
+      "correctness_host": {
+        "residual": 3.601701908765216e-16,
+        "projector_error": 7.338778367672434e-15
+      },
+      "components": {
+        "schur": {
+          "median_ms": 13.941728997451719,
+          "samples_ms": [
+            14.047821001440752,
+            13.941728997451719,
+            13.893110997742042
+          ]
+        },
+        "recovery": {
+          "median_ms": 3.7499340032809414,
+          "samples_ms": [
+            3.784947002714034,
+            3.7499340032809414,
+            3.729634998308029
+          ]
+        },
+        "whole": {
+          "median_ms": 17.89688099961495,
+          "samples_ms": [
+            17.76012700429419,
+            17.89688099961495,
+            18.17670799937332
+          ]
+        },
+        "host_eig": {
+          "median_ms": 0.21462600125232711,
+          "samples_ms": [
+            0.22244000138016418,
+            0.21462600125232711,
+            0.20994499936932698
+          ]
+        }
+      },
+      "profile": {
+        "schur": {
+          "scalar_reads": 47,
+          "aten_calls": 907,
+          "operators": {
+            "aten.select.int": 188,
+            "aten.abs.default": 82,
+            "aten.mul.Tensor": 74,
+            "aten.add.Tensor": 51,
+            "aten.sub.Tensor": 48,
+            "aten._local_scalar_dense.default": 47,
+            "aten.slice.Tensor": 43,
+            "aten.view_as_real.default": 33,
+            "aten.le.Tensor": 30,
+            "aten.copy_.default": 30,
+            "aten.ne.Scalar": 27,
+            "aten.eq.Tensor": 27,
+            "aten.mm.default": 27,
+            "aten.div.Tensor": 20,
+            "aten.linalg_vector_norm.default": 18
+          }
+        },
+        "recovery": {
+          "scalar_reads": 34,
+          "aten_calls": 377,
+          "operators": {
+            "aten.select.int": 56,
+            "aten.abs.default": 39,
+            "aten._local_scalar_dense.default": 34,
+            "aten.view_as_real.default": 25,
+            "aten.mul.Tensor": 24,
+            "aten.ne.Scalar": 22,
+            "aten.eq.Tensor": 22,
+            "aten.div.Tensor": 21,
+            "aten.gt.Scalar": 16,
+            "aten.copy_.default": 14,
+            "aten.slice.Tensor": 12,
+            "aten.all.default": 11,
+            "aten.bitwise_and_.Tensor": 10,
+            "aten.sub.Tensor": 9,
+            "aten.linalg_vector_norm.default": 9
+          }
+        },
+        "host_eig": {
+          "scalar_reads": 0,
+          "aten_calls": 1,
+          "operators": {
+            "aten.linalg_eig.default": 1
+          }
+        }
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 9,
+      "iterations": 26,
+      "correctness_before": {
+        "residual": 3.78820887943921e-16,
+        "projector_error": 1.4256271718210096e-14
+      },
+      "correctness_host": {
+        "residual": 6.462641647367673e-16,
+        "projector_error": 1.3571500138505874e-14
+      },
+      "components": {
+        "schur": {
+          "median_ms": 31.616189997293986,
+          "samples_ms": [
+            31.164496998826507,
+            31.616189997293986,
+            31.744801002787426
+          ]
+        },
+        "recovery": {
+          "median_ms": 12.860817994805984,
+          "samples_ms": [
+            12.671301999944262,
+            12.948486997629516,
+            12.860817994805984
+          ]
+        },
+        "whole": {
+          "median_ms": 44.005645999277476,
+          "samples_ms": [
+            43.89895200438332,
+            44.75421999813989,
+            44.005645999277476
+          ]
+        },
+        "host_eig": {
+          "median_ms": 0.25854900013655424,
+          "samples_ms": [
+            0.26881700614467263,
+            0.25854900013655424,
+            0.25594999897293746
+          ]
+        }
+      },
+      "profile": {
+        "schur": {
+          "scalar_reads": 120,
+          "aten_calls": 2440,
+          "operators": {
+            "aten.select.int": 510,
+            "aten.abs.default": 216,
+            "aten.mul.Tensor": 191,
+            "aten.slice.Tensor": 176,
+            "aten.add.Tensor": 146,
+            "aten.sub.Tensor": 138,
+            "aten._local_scalar_dense.default": 120,
+            "aten.le.Tensor": 86,
+            "aten.copy_.default": 86,
+            "aten.mm.default": 78,
+            "aten.view_as_real.default": 67,
+            "aten.ne.Scalar": 61,
+            "aten.eq.Tensor": 61,
+            "aten.div.Tensor": 54,
+            "aten.linalg_vector_norm.default": 52
+          }
+        },
+        "recovery": {
+          "scalar_reads": 124,
+          "aten_calls": 1437,
+          "operators": {
+            "aten.select.int": 246,
+            "aten.abs.default": 159,
+            "aten._local_scalar_dense.default": 124,
+            "aten.div.Tensor": 86,
+            "aten.view_as_real.default": 85,
+            "aten.mul.Tensor": 84,
+            "aten.ne.Scalar": 82,
+            "aten.eq.Tensor": 82,
+            "aten.gt.Scalar": 76,
+            "aten.slice.Tensor": 72,
+            "aten.copy_.default": 54,
+            "aten.all.default": 41,
+            "aten.bitwise_and_.Tensor": 40,
+            "aten.sub.Tensor": 39,
+            "aten.amax.default": 39
+          }
+        },
+        "host_eig": {
+          "scalar_reads": 0,
+          "aten_calls": 1,
+          "operators": {
+            "aten.linalg_eig.default": 1
+          }
+        }
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "iterations": 45,
+      "correctness_before": {
+        "residual": 5.712718530040576e-16,
+        "projector_error": 2.8236711922574754e-14
+      },
+      "correctness_host": {
+        "residual": 6.01106226295179e-16,
+        "projector_error": 3.4302581835296457e-14
+      },
+      "components": {
+        "schur": {
+          "median_ms": 52.2779660022934,
+          "samples_ms": [
+            53.13935700542061,
+            52.1095959993545,
+            52.2779660022934
+          ]
+        },
+        "recovery": {
+          "median_ms": 37.26251800253522,
+          "samples_ms": [
+            37.16721099772258,
+            37.294981004379224,
+            37.26251800253522
+          ]
+        },
+        "whole": {
+          "median_ms": 89.97595099936007,
+          "samples_ms": [
+            90.57526900141966,
+            89.32456099864794,
+            89.97595099936007
+          ]
+        },
+        "host_eig": {
+          "median_ms": 0.4092310045962222,
+          "samples_ms": [
+            0.4183060009381734,
+            0.4010400007246062,
+            0.4092310045962222
+          ]
+        }
+      },
+      "profile": {
+        "schur": {
+          "scalar_reads": 203,
+          "aten_calls": 4203,
+          "operators": {
+            "aten.select.int": 884,
+            "aten.abs.default": 370,
+            "aten.slice.Tensor": 335,
+            "aten.mul.Tensor": 326,
+            "aten.add.Tensor": 255,
+            "aten.sub.Tensor": 240,
+            "aten._local_scalar_dense.default": 203,
+            "aten.le.Tensor": 150,
+            "aten.copy_.default": 150,
+            "aten.mm.default": 135,
+            "aten.view_as_real.default": 105,
+            "aten.ne.Scalar": 99,
+            "aten.eq.Tensor": 99,
+            "aten.div.Tensor": 92,
+            "aten.linalg_vector_norm.default": 90
+          }
+        },
+        "recovery": {
+          "scalar_reads": 376,
+          "aten_calls": 4349,
+          "operators": {
+            "aten.select.int": 764,
+            "aten.abs.default": 495,
+            "aten._local_scalar_dense.default": 376,
+            "aten.div.Tensor": 261,
+            "aten.view_as_real.default": 253,
+            "aten.mul.Tensor": 252,
+            "aten.ne.Scalar": 250,
+            "aten.eq.Tensor": 250,
+            "aten.gt.Scalar": 244,
+            "aten.slice.Tensor": 240,
+            "aten.copy_.default": 152,
+            "aten.all.default": 125,
+            "aten.bitwise_and_.Tensor": 124,
+            "aten.sub.Tensor": 123,
+            "aten.amax.default": 123
+          }
+        },
+        "host_eig": {
+          "scalar_reads": 0,
+          "aten_calls": 1,
+          "operators": {
+            "aten.linalg_eig.default": 1
+          }
+        }
+      }
+    }
+  ],
+  "before_sha256": "776fa33dfec16f362c466839132f5b6354e98ecf996c390bfbeede53f9b2407f",
+  "after_sha256": null,
+  "method": "Wall time with device synchronization before/after each call;3 samples/pass",
+  "limits": "Six small fixtures; ATen scalar-read counts are not full HIP activity traces"
+}

@@ -1,0 +1,7 @@
+time="2026-10-16T02:48:36+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+SOLVER_PROFILE torch.complex64 4 {'schur': 13.282, 'recovery': 3.498, 'whole': 16.807, 'host_eig': 0.207} {'schur': 47, 'recovery': 34, 'host_eig': 0} {'recovery': 1.562, 'whole': 1.079}
+SOLVER_PROFILE torch.complex64 9 {'schur': 24.347, 'recovery': 12.274, 'whole': 36.809, 'host_eig': 0.243} {'schur': 92, 'recovery': 124, 'host_eig': 0} {'recovery': 3.842, 'whole': 1.337}
+SOLVER_PROFILE torch.complex64 16 {'schur': 39.886, 'recovery': 36.036, 'whole': 75.809, 'host_eig': 0.338} {'schur': 155, 'recovery': 376, 'host_eig': 0} {'recovery': 8.428, 'whole': 1.72}
+SOLVER_PROFILE torch.complex128 4 {'schur': 13.848, 'recovery': 3.638, 'whole': 17.588, 'host_eig': 0.205} {'schur': 47, 'recovery': 34, 'host_eig': 0} {'recovery': 1.534, 'whole': 1.069}
+SOLVER_PROFILE torch.complex128 9 {'schur': 30.589, 'recovery': 12.126, 'whole': 42.951, 'host_eig': 0.257} {'schur': 120, 'recovery': 124, 'host_eig': 0} {'recovery': 3.861, 'whole': 1.262}
+SOLVER_PROFILE torch.complex128 16 {'schur': 51.631, 'recovery': 35.085, 'whole': 86.732, 'host_eig': 0.394} {'schur': 203, 'recovery': 376, 'host_eig': 0} {'recovery': 8.436, 'whole': 1.561}
