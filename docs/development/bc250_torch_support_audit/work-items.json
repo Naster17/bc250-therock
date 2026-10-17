@@ -49,9 +49,9 @@
     {
       "id": "A06",
       "feature": "Native gated-delta / FLA training kernels missing",
-      "evidence": "Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification",
-      "next": "Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support.",
-      "status": "queued"
+      "evidence": "Installed Torchba6cbcd native scalar/wave32 preparation: Q/K normalization/scaling, beta*K/V, layout/padding and cumulative decay with all five gradients.40 independent CPU-reference tests; tiny and actual2B BF16/rank16 LoRA372-gradient comparisons. Paired synthetic1024-token forward/backward7.653->7.390s and ~220MiB lower peak. Installed A05/core gates pass. See ../bc250_gated_delta_a06_results/README.md.",
+      "next": "A07 head256 tiled SDPA. A06 further native triangular-solve/chunk-scan fusion, packed/cache integration, FLA package, higher-order/compile/graphs and convergence remain unqualified; original trainer keeps reference warning.",
+      "status": "completed_bounded"
     },
     {
       "id": "A07",
@@ -131,14 +131,15 @@
       "status": "queued"
     }
   ],
-  "next": "A06: inspect existing gated-delta/FLA reference/model shapes; profile bounded forward/backward substages, then implement one scalar/wave32 substage with independent output and Q/K/V/gate gradient references. A06-A09 before N2.7; K6 completed.",
+  "next": "A07: inspect current tiled SDPA D<=128 guards and Qwen3.5 D256 geometry; qualify bounded D256 output/QKV gradients with GQA/masks/all-masked/LoRA references, keep math default. Dropout and compile/graph separate. A07-A09 before N2.7; K6 completed.",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
     "A01",
     "A02",
     "A03",
     "A04",
-    "A05"
+    "A05",
+    "A06"
   ],
-  "next_primary_item": "A06"
+  "next_primary_item": "A07"
 }

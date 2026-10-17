@@ -1,0 +1,307 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "results": [
+    {
+      "name": "test_low_precision_gates_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "exact_chunk": true,
+      "low_precision_gates": true
+    },
+    {
+      "name": "test_low_precision_gates_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "exact_chunk": true,
+      "low_precision_gates": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry0_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry0_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry0_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry1_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry1_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry1_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry2_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry2_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_False_geometry2_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry0_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry0_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry0_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry1_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry1_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry1_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry2_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry2_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_prepare_normalize_True_geometry2_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "all_five_gradients": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_129_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_129_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_129_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_1_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_1_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_1_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_65_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_65_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_False_length_65_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_129_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_129_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_129_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_1_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_1_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_1_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_65_cuda_bfloat16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_65_cuda_float16",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_recurrent_normalize_True_length_65_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "cpu_recurrent_reference": true,
+      "state_gradient": true
+    },
+    {
+      "name": "test_refusals_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "refusals": 8
+    },
+    {
+      "name": "test_zero_and_subsets_cuda_float32",
+      "status": "passed",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "module": "/workspace/pytorch-work/torch/nn/bc250_gated_delta.py",
+      "absent_output_grads": true,
+      "zero_norms_and_gates": true
+    }
+  ]
+}

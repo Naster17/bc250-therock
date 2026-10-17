@@ -1,0 +1,203 @@
+{
+  "status": "passed",
+  "variants": 210,
+  "scope": "Read-only final cached A06 kernel target/instruction audit; not runtime trace",
+  "full_report": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/gated-delta-a06-compiler-final.json",
+  "full_report_sha256": "f8ba153c1c503d1f71e256ad53d5e5a0f3efbe82561af28b26a6dd43b5b6c58f",
+  "counts": {
+    "_prepare": 90,
+    "_prepare_backward": 88,
+    "_decay": 32
+  },
+  "representatives": [
+    {
+      "metadata_path": "/home/nik/bc250work/rocm-10.2-gfx1013/cache/dev-user/triton/22IT23EQ4QB67AZMOUR2YPBXHFFCA4ZOJN4STKCRRRPTZSJ6VWNQ/_prepare.json",
+      "metadata": {
+        "hash": "d6913d6c90e403ef832c7523ac3c37394a20732e4b7929a8518c5f3cc93ead9b",
+        "target": {
+          "backend": "hip",
+          "arch": "gfx1013",
+          "warp_size": 32
+        },
+        "num_warps": 4,
+        "waves_per_eu": 0,
+        "num_stages": 2,
+        "num_ctas": 1,
+        "extern_libs": [
+          [
+            "ocml",
+            "/opt/torch-venv/lib/python3.12/site-packages/triton/backends/amd/lib/ocml.bc"
+          ],
+          [
+            "ockl",
+            "/opt/torch-venv/lib/python3.12/site-packages/triton/backends/amd/lib/ockl.bc"
+          ]
+        ],
+        "debug": false,
+        "sanitize_overflow": true,
+        "arch": "gfx1013",
+        "supported_fp8_dtypes": [
+          "fp8e4b8",
+          "fp8e4nv",
+          "fp8e5",
+          "fp8e5b16"
+        ],
+        "deprecated_fp8_dot_operand_dtypes": [],
+        "default_dot_input_precision": "ieee",
+        "allowed_dot_input_precisions": [
+          "ieee",
+          "bf16x3",
+          "bf16x6"
+        ],
+        "enable_fp_fusion": false,
+        "launch_cooperative_grid": false,
+        "matrix_instr_nonkdim": 0,
+        "kpack": 1,
+        "allow_flush_denorm": false,
+        "max_num_imprecise_acc_default": 0,
+        "backend_name": "hip",
+        "instrumentation_mode": "",
+        "schedule_hint": "",
+        "llvm_fn_attrs": [],
+        "warp_size": 32,
+        "triton_version": "3.8.0",
+        "tensordesc_meta": [],
+        "shared": 0,
+        "global_scratch_size": 0,
+        "global_scratch_align": 1,
+        "profile_scratch_size": 0,
+        "profile_scratch_align": 1,
+        "name": "_prepare"
+      },
+      "hsaco_sha256": "fdd14ec217ad2c2c16d02f9ebe671844ad3b184f50e6632754dfe2e36b0d4707",
+      "assembly_sha256": "69106f618897211fb8bb250f399a8ddcbda68ef880d07b19f15ac89c27ff3001",
+      "matrix_instructions": []
+    },
+    {
+      "metadata_path": "/home/nik/bc250work/rocm-10.2-gfx1013/cache/dev-user/triton/2NCTPBX3IFX4T2ST6VUU2LA5I4IN6BHCJE7PZZICDWBEEXDSW6OA/_prepare_backward.json",
+      "metadata": {
+        "hash": "d3453786fb416fc9ea53f5694d2c1d4710df04e2493efce5021d82425c72b79c",
+        "target": {
+          "backend": "hip",
+          "arch": "gfx1013",
+          "warp_size": 32
+        },
+        "num_warps": 4,
+        "waves_per_eu": 0,
+        "num_stages": 2,
+        "num_ctas": 1,
+        "extern_libs": [
+          [
+            "ocml",
+            "/opt/torch-venv/lib/python3.12/site-packages/triton/backends/amd/lib/ocml.bc"
+          ],
+          [
+            "ockl",
+            "/opt/torch-venv/lib/python3.12/site-packages/triton/backends/amd/lib/ockl.bc"
+          ]
+        ],
+        "debug": false,
+        "sanitize_overflow": true,
+        "arch": "gfx1013",
+        "supported_fp8_dtypes": [
+          "fp8e4b8",
+          "fp8e4nv",
+          "fp8e5",
+          "fp8e5b16"
+        ],
+        "deprecated_fp8_dot_operand_dtypes": [],
+        "default_dot_input_precision": "ieee",
+        "allowed_dot_input_precisions": [
+          "ieee",
+          "bf16x3",
+          "bf16x6"
+        ],
+        "enable_fp_fusion": false,
+        "launch_cooperative_grid": false,
+        "matrix_instr_nonkdim": 0,
+        "kpack": 1,
+        "allow_flush_denorm": false,
+        "max_num_imprecise_acc_default": 0,
+        "backend_name": "hip",
+        "instrumentation_mode": "",
+        "schedule_hint": "",
+        "llvm_fn_attrs": [],
+        "warp_size": 32,
+        "triton_version": "3.8.0",
+        "tensordesc_meta": [],
+        "shared": 0,
+        "global_scratch_size": 0,
+        "global_scratch_align": 1,
+        "profile_scratch_size": 0,
+        "profile_scratch_align": 1,
+        "name": "_prepare_backward"
+      },
+      "hsaco_sha256": "091f4f3271e2148c78a99bce38e4422a55b822e4d5aa9083ccf7608b8e5df904",
+      "assembly_sha256": "1326fabc557946807755c49602ab58cbe1b64c3a813929fe1b7f1827489b5b16",
+      "matrix_instructions": []
+    },
+    {
+      "metadata_path": "/home/nik/bc250work/rocm-10.2-gfx1013/cache/dev-user/triton/2IGOQMWDOXNECIIO4IPMTCRNWJYPQ4FZQ6WP6JZLPKZS3JICN4MA/_decay.json",
+      "metadata": {
+        "hash": "d20ce832c375da41210ee21ec98a2db270f870b987acff272b7ab32da5026f18",
+        "target": {
+          "backend": "hip",
+          "arch": "gfx1013",
+          "warp_size": 32
+        },
+        "num_warps": 4,
+        "waves_per_eu": 0,
+        "num_stages": 2,
+        "num_ctas": 1,
+        "extern_libs": [
+          [
+            "ocml",
+            "/opt/torch-venv/lib/python3.12/site-packages/triton/backends/amd/lib/ocml.bc"
+          ],
+          [
+            "ockl",
+            "/opt/torch-venv/lib/python3.12/site-packages/triton/backends/amd/lib/ockl.bc"
+          ]
+        ],
+        "debug": false,
+        "sanitize_overflow": true,
+        "arch": "gfx1013",
+        "supported_fp8_dtypes": [
+          "fp8e4b8",
+          "fp8e4nv",
+          "fp8e5",
+          "fp8e5b16"
+        ],
+        "deprecated_fp8_dot_operand_dtypes": [],
+        "default_dot_input_precision": "ieee",
+        "allowed_dot_input_precisions": [
+          "ieee",
+          "bf16x3",
+          "bf16x6"
+        ],
+        "enable_fp_fusion": false,
+        "launch_cooperative_grid": false,
+        "matrix_instr_nonkdim": 0,
+        "kpack": 1,
+        "allow_flush_denorm": false,
+        "max_num_imprecise_acc_default": 0,
+        "backend_name": "hip",
+        "instrumentation_mode": "",
+        "schedule_hint": "",
+        "llvm_fn_attrs": [],
+        "warp_size": 32,
+        "triton_version": "3.8.0",
+        "tensordesc_meta": [],
+        "shared": 8,
+        "global_scratch_size": 0,
+        "global_scratch_align": 1,
+        "profile_scratch_size": 0,
+        "profile_scratch_align": 1,
+        "name": "_decay"
+      },
+      "hsaco_sha256": "40cd1e6b49dcaac8757d3d4cdd6ed7e71366ea89a9339d7561fa31965bdd46aa",
+      "assembly_sha256": "af369674d37a3c214b18550c9993b8fa656099ae5b9966be9eee33799911e83e",
+      "matrix_instructions": []
+    }
+  ]
+}

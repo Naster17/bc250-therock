@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-16 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-17 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,42 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **A06 completed2026-10-17 (first native substage):** Torch
+  ba6cbcd2fafac1a6503f1f580033fbf72ad2a4f9 / TheRock helperse61d609d3658ee984907841f4fe1dc8ecdf66baa
+  installed .104. Explicit torch.nn.bc250_gated_delta fuses Q/K normalization/scaling,
+  beta*K/V, padded/chunked layout and cumulative log-decay; native scalar wave32
+  forward/backward covers all Q/K/V/g/beta. ATen triangular solves, GPU dense matmuls
+  and sequential chunk scan remain. Not a complete FLA backend or automatic trainer
+  replacement.40 candidate/installed CPU-float64 stage and independent recurrent
+  reference tests pass, plus69 A05 and seven core groups. Tiny FP32/BF16 LoRA with/
+  without checkpointing and actual Qwen3.5-2B BF16/rank16/checkpointed65+1024tokens
+  pass all372 adapter-gradient comparisons; max relativeL2~3.23%, not bitwise equal.
+  Three paired synthetic1024-token forward/backward medians7.653->7.390s(~3.6% faster)
+  and peak11,976,548,352->11,745,457,152bytes(~220MiB lower). Not dataset/optimizer/
+  convergence/resume or universal speed evidence. Installed four operator fixtures
+  show prep1.34–1.88x/full1.02–1.12x ratios; exact protocol/sample data in
+  [report](docs/development/bc250_gated_delta_a06_results/README.md).
+  Twelve guards all ACK/600s/dmesg unchanged53f83f7b, including three retained
+  model-adapter flag refusals.210 cached candidate/installed variants audit native
+  gfx1013/wave32/no-MFMA/WMMA. Spin nine targeted static/format checks and lintrunner
+  -a pass; no full-project typing/CI claim. Exclusive-lock additive module install,
+  41 protected hashes unchanged; DSOs, shared consumers and original trainer/helper
+  unchanged. Recovery WS/recovery/gated-delta-a06-before; SOURCE_GATED_DELTA_A06.json
+  in WS/current. Module SHA9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b.
+  Full local Git/incremental patch0006/bundle on6ed3d12 preserved; old SDPA3-file
+  reconstruction gap remains. No C++ build/image/kernel/reboot/default change;
+  existing Triton cache retained and ccache untouched. Raw WS/logs/gated-delta-a06-*
+  and local ignored kernel/artifacts/gated-delta-a06/. Disk8.4GiB free. No active
+  agent job/container/guard deadline. Existing LoRA command retains the reference
+  warning until explicitly integrated; packed/cache/higher-order/compile/graphs and
+  further native solve/scan fusion remain unqualified. Historical Python CPU fault
+  remains unresolved/distinct from fixed VM-heap/CSR. .105/BIOS/r2fallback/SDMA0/
+  heap-off/math/default dense BLAS/user src/data unchanged. Exact next **A07**:
+  inspect current tiled SDPA D<=128 guards and head256 Qwen3.5 geometry; implement
+  and qualify D256 output/QKV gradients with bounded GQA/mask/all-masked/LoRA refs,
+  keeping math default. Dropout/compile/graph contracts remain separate. A07–A09
+  before N2.7; K6 completed.
 
 - **Sparse/lint follow-up completed2026-10-16:** user-requested A04/A05 gap closure
   before A06; Torch6ed3d12b184a27d21c0fa41d43269ff6bd17f1e0 / TheRock runtime

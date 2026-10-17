@@ -1,0 +1,90 @@
+{
+  "status": "passed",
+  "scope": "All bounded guards ACKed and dmesg unchanged, three retained harness failures are not correctness passes",
+  "results": [
+    {
+      "label": "gated-delta-a06-api-installed",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-candidate-final",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-candidate-r1",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-core-installed",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-model-actual",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-model-tiny",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-model-tiny-r2",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-model-tiny-r3",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-model-tiny-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-profile-installed",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-profile-r1",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    },
+    {
+      "label": "gated-delta-a06-training-installed",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+    }
+  ]
+}

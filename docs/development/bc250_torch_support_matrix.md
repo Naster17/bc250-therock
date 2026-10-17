@@ -1,4 +1,4 @@
-# Torch / ROCm gfx1013 support matrix — 2026-10-16
+# Torch / ROCm gfx1013 support matrix — 2026-10-17
 
 This is the current capability audit and work queue requested before N2.7. It
 extends the [inventory](bc250_memory_inventory.md); it does not restart completed
@@ -86,6 +86,21 @@ Default dense routing stays unchanged. [Scope/results](bc250_sparse_followup_res
 Higher-order/forward AD/compile/graphs/integer gradients/broad shapes remain unqualified.
 Exact next A06 stays unchanged.
 
+## A06 update — 2026-10-17
+
+Installed Torchba6cbcd adds opt-in `torch.nn.bc250_gated_delta`: native wave32
+Q/K normalization/scaling, beta gating, padding/layout and cumulative decay with
+all five first-order input gradients. ATen solves/matmuls/chunk scan remain.
+40 installed CPU-reference tests, tiny LoRA/checkpoint pairs, actual2B BF16/rank16
+65/1024-token comparisons of372 adapter gradients and A05/core regressions pass.
+Actual1024-token paired synthetic forward/backward7.653->7.390s(~3.6%) and
+~220MiB lower peak; no universal/convergence claim. BF16 is not bitwise equal;
+max model adapter-gradient relativeL2~3.23%. Existing trainer remains unchanged,
+so it still prints the gated-delta reference warning. Further native fusion,
+packed/cache/higher-order/compile/graphs and FLA package integration remain open.
+[API, exact timings, limits and recovery](bc250_gated_delta_a06_results/README.md).
+Exact next A07: head256 tiled SDPA output/QKV-gradient references; keep math default.
+
 ## What the current audit established
 
 - Historical audit baseline Torch4ee6571, ROCm libraries a6f7d3d, Triton ee65ff3b, immutable image5df0a58,
@@ -132,6 +147,7 @@ The following rows are not an exhaustive API or dtype promise.
 | Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | General sparse solve absent B02; not every format/dtype/backward |
 | SDPA math | ATen HIP + BLAS | Current forward/QKV gradients and prior long/model/AMP gates | Quadratic attention memory; default retained |
 | Optional tiled SDPA | Patched scalar Triton helper | Prior FP32/FP16/BF16/GQA/masks/LoRA gates, D<=128 | Head256/dropout/compile/graphs remain A07; not built-in flash |
+| Gated-delta preparation | Opt-in torch.nn.bc250_gated_delta |40 CPU-reference first-order tests plus tiny/actual2B LoRA gradients and paired timings | Further native solve/scan fusion and FLA package/backend remain absent; original trainer unchanged |
 | Qwen3.5 frozen conv / loss | Application helper | Previous51 operator gates, real2B1024-token update and exact CLI resume | Only the inspected trainer by default; A05 |
 | AMP / fused AdamW | ATen HIP + generic optimizer kernels | Current finite FP16 scaled update and CPU-matched fused AdamW; prior full AMP/resume | Valid FP32 loss promotion; no universal optimizer qualification |
 | torch.compile | Dynamo/Inductor/patched Triton3.8 | Current fullgraph norm/GELU output/gradient ref; prior dynamic math attention | Fused SDPA/custom tiled graphs unqualified |
@@ -153,7 +169,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A03 — completed** | Genuine native MIOpen seed databases and capability-aware plugin probing | Libraries fcf7a714 installed:16 FindDb keys/58 checked solutions, one searched PerfDb record and41 KDB records; normal-path read-only replay has zero new user kernels. Unseen fallback and regressions pass. | Small geometry/version/device scope only; wider tuning and modern CK plugin B07 remain unqualified. [Report](bc250_miopen_a03_results/README.md). Continue A04. |
 | **A04 — completed** | Native Torch hipSPARSELt integration and follow-up | Torch6ed3d12;20 forward tests plus38 first-order gradient tests, including dense source conversion/transpose/linear. Targeted lint passes;12 forward and12 training timings recorded. | Same-dtype native floating first-order training; integer/higher-order/compile/graphs unqualified. Sparse training slower in measured small fixtures; keep explicit. [Follow-up](bc250_sparse_followup_results/README.md). Next A06 after completed A05. |
 | **A05 — completed** | Reusable opt-in causal conv/loss | Torch6181d00;69 tests: CPU output/dx/dw/db/loss, AMP/checkpoint/update and exact tiny-model AdamW resume. | Explicit torch.nn.bc250_training_ops calls; original trainer unchanged. Higher-order/compile/graphs/large-model/performance unqualified. [Report](bc250_training_a05_results/README.md). Next A06. |
-| **A06** | Native gated-delta / FLA training kernels missing | Transformers reference executes GPU ATen but warns about missing flash-linear-attention; no package/backend qualification | Profile Qwen3.5 geometry; port one scalar/wave32 substage with independent output and Q/K/V/gate gradients, then measure model memory/time. A package install alone is not support. |
+| **A06 — completed bounded** | Native gated-delta preparation and backward | Torchba6cbcd;40 CPU-reference cases, actual2B LoRA372-gradient/paired time+memory and A05/core gates pass | Explicit API; ATen solves/scan remain; original trainer unchanged. Full FLA/packed/cache/compile/graphs unqualified. [Report](bc250_gated_delta_a06_results/README.md). Next A07. |
 | **A07** | Efficient attention gaps: head256, dropout, compile/graph support | Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math | Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled. |
 | **A08** | Dense INT8 -> INT32 `_int_mm` | Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route. | Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption. |
 | **A09** | Torch GPU profiler/Kineto disabled | USE_KINETO=0; profiler records no GPU events. External rocprofiler is a separate working tool. | Audit pinned Kineto ROCm tracing dependencies and enable a separately tested build. Qualify GPU event correlation, memory/CPU traces and overhead; hardware counters remain separate. |
@@ -166,7 +182,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
-A01–A05 are completed within their recorded scopes. A06–A09 are the remaining primary
+A01–A06 are completed within their recorded scopes (A06 is one native substage). A07–A09 are the remaining primary
 queue, in this order. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did

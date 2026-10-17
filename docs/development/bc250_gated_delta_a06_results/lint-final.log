@@ -1,0 +1,18 @@
+No changes detected in lint configuration files. Skipping setup.
+Using existing generated files for linting.
+Done.
+$ uvx --python 3.10 lintrunner@0.12.7 list
+$ uvx --python 3.10 lintrunner@0.12.7 --take SET_LINTER,IMPORT_LINTER,DOCSTRING_LINTER,RUFF,NEWLINE,TESTOWNERS torch/nn/bc250_gated_delta.py test/test_bc250_gated_delta.py
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.
+$ uvx --python 3.10 lintrunner@0.12.7 --take TEST_HAS_MAIN,PYFMT,FLAKE8 torch/nn/bc250_gated_delta.py test/test_bc250_gated_delta.py
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.
+No changes detected in lint configuration files. Skipping setup.
+Using existing generated files for linting.
+Done.
+$ uvx --python 3.10 lintrunner@0.12.7 list
+$ uvx --python 3.10 lintrunner@0.12.7 -a --take=PYFMT,RUFF,FLAKE8,NEWLINE,TESTOWNERS,TEST_HAS_MAIN,IMPORT_LINTER,SET_LINTER,DOCSTRING_LINTER torch/nn/bc250_gated_delta.py test/test_bc250_gated_delta.py
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.
+Successfully applied all patches.

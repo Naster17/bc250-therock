@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "actual": true,
+  "results": [
+    {
+      "dtype": "torch.bfloat16",
+      "length": 65,
+      "checkpoint": true,
+      "adapter_gradient_count": 372,
+      "max_adapter_gradient_relative_l2": 0.032293159514665604,
+      "samples": {
+        "reference": [
+          {
+            "seconds": 0.6283897749963216,
+            "loss": 15.100475311279297,
+            "peak_allocated": 4652103168,
+            "extra_peak_bytes": 754043392
+          },
+          {
+            "seconds": 0.6278040389879607,
+            "loss": 15.100475311279297,
+            "peak_allocated": 4652103168,
+            "extra_peak_bytes": 754043392
+          },
+          {
+            "seconds": 0.6253199889906682,
+            "loss": 15.100475311279297,
+            "peak_allocated": 4652103168,
+            "extra_peak_bytes": 754043392
+          }
+        ],
+        "native": [
+          {
+            "seconds": 0.620121806015959,
+            "loss": 15.096644401550293,
+            "peak_allocated": 4627975680,
+            "extra_peak_bytes": 729915904
+          },
+          {
+            "seconds": 0.6193250390060712,
+            "loss": 15.096644401550293,
+            "peak_allocated": 4627975680,
+            "extra_peak_bytes": 729915904
+          },
+          {
+            "seconds": 0.612929332011845,
+            "loss": 15.096644401550293,
+            "peak_allocated": 4627975680,
+            "extra_peak_bytes": 729915904
+          }
+        ]
+      },
+      "medians": {
+        "reference": {
+          "seconds": 0.6278040389879607,
+          "loss": 15.100475311279297,
+          "peak_allocated": 4652103168,
+          "extra_peak_bytes": 754043392
+        },
+        "native": {
+          "seconds": 0.6193250390060712,
+          "loss": 15.096644401550293,
+          "peak_allocated": 4627975680,
+          "extra_peak_bytes": 729915904
+        }
+      },
+      "speed_ratio": 1.013690710770385
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "length": 1024,
+      "checkpoint": true,
+      "adapter_gradient_count": 372,
+      "max_adapter_gradient_relative_l2": 0.032077379524707794,
+      "samples": {
+        "reference": [
+          {
+            "seconds": 7.653459096996812,
+            "loss": 14.30451774597168,
+            "peak_allocated": 11976548352,
+            "extra_peak_bytes": 8078481408
+          },
+          {
+            "seconds": 7.426459862996126,
+            "loss": 14.30451774597168,
+            "peak_allocated": 11976548352,
+            "extra_peak_bytes": 8078481408
+          },
+          {
+            "seconds": 7.725733997998759,
+            "loss": 14.30451774597168,
+            "peak_allocated": 11976548352,
+            "extra_peak_bytes": 8078481408
+          }
+        ],
+        "native": [
+          {
+            "seconds": 7.262776986986864,
+            "loss": 14.3042631149292,
+            "peak_allocated": 11745457152,
+            "extra_peak_bytes": 7847390208
+          },
+          {
+            "seconds": 7.390244123002049,
+            "loss": 14.3042631149292,
+            "peak_allocated": 11745457152,
+            "extra_peak_bytes": 7847390208
+          },
+          {
+            "seconds": 7.523246634984389,
+            "loss": 14.3042631149292,
+            "peak_allocated": 11745457152,
+            "extra_peak_bytes": 7847390208
+          }
+        ]
+      },
+      "medians": {
+        "reference": {
+          "seconds": 7.653459096996812,
+          "loss": 14.30451774597168,
+          "peak_allocated": 11976548352,
+          "extra_peak_bytes": 8078481408
+        },
+        "native": {
+          "seconds": 7.390244123002049,
+          "loss": 14.3042631149292,
+          "peak_allocated": 11745457152,
+          "extra_peak_bytes": 7847390208
+        }
+      },
+      "speed_ratio": 1.0356165465732736
+    }
+  ],
+  "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+  "protocol": "Same model/input/helper/math SDPA; 3 alternating pairs after both-path warmup. Times include forward/backward, exclude CPU gradient copies. Synthetic data only."
+}
