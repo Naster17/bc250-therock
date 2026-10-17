@@ -1,0 +1,71 @@
+--- a/replica/train.py
++++ b/replica/train.py
+@@ -55,6 +55,7 @@
+     parser.add_argument("--device", default="cuda", choices=("cuda", "cpu"), help="ROCm also uses cuda")
+     parser.add_argument("--dtype", default="bf16", choices=("bf16", "fp32"))
+     parser.add_argument("--sdpa", default="math", choices=("math", "default"))
++    parser.add_argument("--attention-backend", default="math", choices=("math", "tiled"), help="Explicit BC-250 tiled attention; math keeps existing resume fingerprints")
+     args = parser.parse_args(argv)
+     for key in ("epochs", "accumulation_steps", "rank", "alpha"):
+         if getattr(args, key) < 1:
+@@ -141,6 +142,8 @@
+                    for path in sorted(args.model.rglob("*")) if path.is_file()]
+     run_config = {key: str(value.resolve()) if isinstance(value, Path) else value
+                   for key, value in vars(args).items() if key not in ("output", "resume", "preflight", "dataset")}
++    if args.attention_backend == "math":
++        run_config.pop("attention_backend")
+     run_config.update(format_version=FORMAT_VERSION, data_sha256=data_hash.hexdigest(),
+                       model_config=config.to_dict(), model_files=model_files, total_steps=total_steps,
+                       tokenizer_sha256=tokenizer_sha256,
+@@ -201,9 +204,16 @@
+             load_options["key_mapping"] = {r"^model.language_model\.": "model."}
+     elif text_config is not config:
+         parser.error("Unsupported composite architecture; a verified text-only loader is required")
++    attention_implementation = "sdpa"
++    if args.attention_backend == "tiled":
++        if args.device != "cuda":
++            parser.error("Tiled attention requires the native gfx1013 GPU")
++        from torch.nn.attention._gfx1013 import register_transformers_attention
++        register_transformers_attention()
++        attention_implementation = "bc250_tiled"
+     print("Loading local text-only base weights; no vision encoder will be trained", flush=True)
+     model, loading = loader.from_pretrained(args.model, config=text_config, dtype=dtype,
+-                                           attn_implementation="sdpa", local_files_only=True,
++                                           attn_implementation=attention_implementation, local_files_only=True,
+                                            trust_remote_code=False, output_loading_info=True, **load_options)
+     if loading.get("missing_keys") or loading.get("mismatched_keys") or loading.get("error_msgs"):
+         raise RuntimeError(f"Text-only weights did not load completely: {loading}")
+--- a/replica/bc250_ops.py
++++ b/replica/bc250_ops.py
+@@ -378,7 +378,7 @@
+         base._bc250_original_loss = base.loss_function
+     base.loss_function = chunked_causal_loss
+     digest = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+-    gated_status = "native A06 gated-delta active" if gated_delta_installed else "gated-delta reference retained"
++    gated_status = "precision-safe GPU gated-delta active" if gated_delta_installed else "gated-delta reference retained"
+     print(
+         f"[bc250] Qwen3.5 training ops {digest}: native frozen causal conv; chunk64 FP32 loss; {gated_status}",
+         flush=True,
+--- a/scripts/train_bc250.py
++++ b/scripts/train_bc250.py
+@@ -33,9 +33,11 @@
+     profile = json.loads(args.profile.expanduser().resolve().read_text())
+     allowed = {"max_seq_length", "epochs", "accumulation_steps", "learning_rate", "warmup_steps",
+                "weight_decay", "max_grad_norm", "rank", "alpha", "targets", "save_every", "eval_every",
+-               "eval_subset", "schedule", "seed", "device", "dtype", "sdpa"}
++               "eval_subset", "schedule", "seed", "device", "dtype", "sdpa", "attention_backend"}
+     if set(profile)-allowed:
+         raise ValueError("Unknown profile fields: "+", ".join(sorted(set(profile)-allowed)))
++    if args.attention_backend is not None:
++        profile["attention_backend"] = args.attention_backend
+     if args.smoke:
+         profile.update(epochs=1, accumulation_steps=1, warmup_steps=0, save_every=1, eval_every=0, eval_subset=2)
+     dataset = (args.dataset or root/"data/style-v1-1024").expanduser().resolve()
+@@ -69,6 +71,7 @@
+     parser.add_argument("--model", type=Path)
+     parser.add_argument("--output", type=Path)
+     parser.add_argument("--resume", type=Path)
++    parser.add_argument("--attention-backend", choices=("math", "tiled"), help="Override profile attention backend; math remains the default")
+     parser.add_argument("--preflight", action="store_true")
+     parser.add_argument("--smoke", action="store_true")
+     parser.add_argument("--dry-run", action="store_true", help="Print command without invoking bc250-train")

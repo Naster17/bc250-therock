@@ -104,7 +104,7 @@ def make_model(actual, dtype):
             for name, p in model.named_parameters():
                 if "lora_B" in name:
                     p.normal_(0, 0.01)
-    return model
+    return model.train()
 
 
 def run(model, ids):
