@@ -1,0 +1,44 @@
+[
+  {
+    "label": "gated-delta-a06-review-candidate",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "acknowledged": true,
+    "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+  },
+  {
+    "label": "gated-delta-a06-review-diagnosis",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "acknowledged": true,
+    "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+  },
+  {
+    "label": "gated-delta-a06-review-diagnosis-r2",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "acknowledged": true,
+    "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+  },
+  {
+    "label": "gated-delta-a06-review-models",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "acknowledged": true,
+    "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+  },
+  {
+    "label": "gated-delta-a06-review-phases",
+    "returncode": 1,
+    "kernel_log_unchanged": true,
+    "acknowledged": true,
+    "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+  },
+  {
+    "label": "gated-delta-a06-review-phases-r2",
+    "returncode": 0,
+    "kernel_log_unchanged": true,
+    "acknowledged": true,
+    "kernel_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7"
+  }
+]

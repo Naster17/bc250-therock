@@ -1,0 +1,226 @@
+{
+  "status": "passed",
+  "installed_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+  "results": [
+    {
+      "native": false,
+      "samples_ms": [
+        {
+          "prepare": 1.349524974822998,
+          "interactions": 0.6069369912147522,
+          "solves": 1.7588330507278442,
+          "scan_output": 3.8349978923797607,
+          "backward": 20.937191009521484,
+          "total": 28.487272262573242,
+          "wall_ms": 28.653853019932285
+        },
+        {
+          "prepare": 1.3511359691619873,
+          "interactions": 0.6039929986000061,
+          "solves": 1.7693159580230713,
+          "scan_output": 3.8417489528656006,
+          "backward": 23.17303466796875,
+          "total": 30.74122428894043,
+          "wall_ms": 30.899322999175638
+        },
+        {
+          "prepare": 1.3538589477539062,
+          "interactions": 0.6071370244026184,
+          "solves": 1.7550510168075562,
+          "scan_output": 3.8760108947753906,
+          "backward": 19.81174659729004,
+          "total": 27.403152465820312,
+          "wall_ms": 27.560028014704585
+        },
+        {
+          "prepare": 1.332463026046753,
+          "interactions": 0.5540559887886047,
+          "solves": 1.551866054534912,
+          "scan_output": 4.065441131591797,
+          "backward": 19.861135482788086,
+          "total": 27.364479064941406,
+          "wall_ms": 27.519349998328835
+        },
+        {
+          "prepare": 1.3221149444580078,
+          "interactions": 0.5529450178146362,
+          "solves": 1.5395959615707397,
+          "scan_output": 4.103103160858154,
+          "backward": 19.544700622558594,
+          "total": 27.060319900512695,
+          "wall_ms": 27.22297699074261
+        },
+        {
+          "prepare": 1.3284549713134766,
+          "interactions": 0.5529940128326416,
+          "solves": 1.5499340295791626,
+          "scan_output": 4.143404006958008,
+          "backward": 19.30789566040039,
+          "total": 26.882204055786133,
+          "wall_ms": 27.03810398816131
+        }
+      ],
+      "medians_ms": {
+        "prepare": 1.3409940004348755,
+        "interactions": 0.5790244936943054,
+        "solves": 1.6534585356712341,
+        "scan_output": 3.9707260131835938,
+        "backward": 19.836441040039062,
+        "total": 27.38381576538086,
+        "wall_ms": 27.53968900651671
+      },
+      "aten_calls": {
+        "aten.view.default": 339,
+        "aten.bmm.default": 196,
+        "aten.add.Tensor": 182,
+        "aten.transpose.int": 179,
+        "aten.expand.default": 138,
+        "aten.select.int": 128,
+        "aten.select_backward.default": 109,
+        "aten.mul.Tensor": 96,
+        "aten._unsafe_view.default": 70,
+        "aten.detach.default": 45,
+        "aten.unsqueeze.default": 38,
+        "aten.squeeze.dim": 36,
+        "aten.sum.dim_IntList": 27,
+        "aten.neg.default": 20,
+        "aten.exp.default": 19,
+        "aten.sub.Tensor": 18,
+        "aten.constant_pad_nd.default": 10,
+        "aten._to_copy.default": 8,
+        "aten.clone.default": 8,
+        "aten.pow.Tensor_Scalar": 6,
+        "aten.linalg_solve_triangular.default": 4,
+        "aten.mul.Scalar": 4,
+        "aten.rsqrt.default": 2,
+        "aten.cumsum.default": 2,
+        "aten.masked_fill.Scalar": 2,
+        "aten.tril.default": 2,
+        "aten.flip.default": 2,
+        "aten.ones.default": 1,
+        "aten.triu.default": 1,
+        "aten.slice.Tensor": 1,
+        "aten.zeros.default": 1,
+        "aten.stack.default": 1,
+        "aten.alias.default": 1,
+        "aten.slice_backward.default": 1
+      },
+      "instrumented_vs_unmodified_gradient_relative_l2": [
+        1.1284641004749574e-05,
+        1.9285533198853955e-05,
+        0.0,
+        1.1460453919198699e-07,
+        0.0
+      ],
+      "scope": "GPU-event phase envelopes include host submission and event instrumentation; ATen counts are dispatcher calls, not kernel counts. Backward total includes all phases."
+    },
+    {
+      "native": true,
+      "samples_ms": [
+        {
+          "prepare": 0.9558230042457581,
+          "interactions": 0.6054850220680237,
+          "solves": 1.7566289901733398,
+          "scan_output": 3.9301910400390625,
+          "backward": 20.274051666259766,
+          "total": 27.52164077758789,
+          "wall_ms": 27.682869986165315
+        },
+        {
+          "prepare": 0.8920530080795288,
+          "interactions": 0.6077640056610107,
+          "solves": 1.7659790515899658,
+          "scan_output": 3.9488210678100586,
+          "backward": 20.44280433654785,
+          "total": 27.656509399414062,
+          "wall_ms": 27.81548601342365
+        },
+        {
+          "prepare": 1.0264049768447876,
+          "interactions": 0.5551689863204956,
+          "solves": 1.5424799919128418,
+          "scan_output": 4.164595127105713,
+          "backward": 19.337324142456055,
+          "total": 26.625452041625977,
+          "wall_ms": 26.781318010762334
+        },
+        {
+          "prepare": 0.879360020160675,
+          "interactions": 0.5555660128593445,
+          "solves": 1.5536890029907227,
+          "scan_output": 4.199993133544922,
+          "backward": 19.374359130859375,
+          "total": 26.562719345092773,
+          "wall_ms": 26.718381006503478
+        },
+        {
+          "prepare": 0.9475640058517456,
+          "interactions": 0.5543929934501648,
+          "solves": 1.542678952217102,
+          "scan_output": 4.2009429931640625,
+          "backward": 19.243276596069336,
+          "total": 26.48851203918457,
+          "wall_ms": 26.642657991033047
+        },
+        {
+          "prepare": 0.8728399872779846,
+          "interactions": 0.554423987865448,
+          "solves": 1.5512219667434692,
+          "scan_output": 4.186226844787598,
+          "backward": 19.388290405273438,
+          "total": 26.552600860595703,
+          "wall_ms": 26.706019998528063
+        }
+      ],
+      "medians_ms": {
+        "prepare": 0.9198085069656372,
+        "interactions": 0.55536749958992,
+        "solves": 1.552455484867096,
+        "scan_output": 4.175410985946655,
+        "backward": 19.381324768066406,
+        "total": 26.594085693359375,
+        "wall_ms": 26.749849508632906
+      },
+      "aten_calls": {
+        "aten.view.default": 331,
+        "aten.bmm.default": 196,
+        "aten.add.Tensor": 176,
+        "aten.transpose.int": 169,
+        "aten.expand.default": 136,
+        "aten.select.int": 128,
+        "aten.select_backward.default": 109,
+        "aten.mul.Tensor": 78,
+        "aten._unsafe_view.default": 68,
+        "aten.detach.default": 41,
+        "aten.unsqueeze.default": 36,
+        "aten.squeeze.dim": 34,
+        "aten.sum.dim_IntList": 21,
+        "aten.neg.default": 20,
+        "aten.exp.default": 19,
+        "aten.sub.Tensor": 18,
+        "aten.empty_like.default": 6,
+        "aten.empty.memory_format": 4,
+        "aten.linalg_solve_triangular.default": 4,
+        "aten.clone.default": 3,
+        "aten.masked_fill.Scalar": 2,
+        "aten._to_copy.default": 2,
+        "aten.tril.default": 2,
+        "aten.ones.default": 1,
+        "aten.triu.default": 1,
+        "aten.slice.Tensor": 1,
+        "aten.zeros.default": 1,
+        "aten.stack.default": 1,
+        "aten.alias.default": 1,
+        "aten.slice_backward.default": 1
+      },
+      "instrumented_vs_unmodified_gradient_relative_l2": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scope": "GPU-event phase envelopes include host submission and event instrumentation; ATen counts are dispatcher calls, not kernel counts. Backward total includes all phases."
+    }
+  ]
+}

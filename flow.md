@@ -9,6 +9,40 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **A06 recheck2026-10-17: BF16 LoRA qualification reopened; production unchanged.**
+  The original actual2B test initialized LoRA B=0, so its372 named gradients included
+  zero A gradients. New seed61718/std0.001 nonzero-B fixtures exercise372 nonzero
+  finite A/B gradients each. FP32/65 worst/global relativeL2~9.54e-6/3.81e-6 passes;
+  BF16/65 worst4.00217%, BF16/1024 worst5.42540% exceed the unchanged4% per-adapter
+  limit (global1.574%/0.870%). Do not call broad/resumed BF16 LoRA parity complete.
+  40 earlier independent operator tests remain bounded evidence, not invalidated.
+  Exact ATen preparation control in the same composition gives zero model-gradient
+  difference at65; native-forward/exact-backward and inverse swaps support FP32
+  preparation rounding/derivative-order amplification through BF16 as the next
+  investigation. Restoring original ATen scan structure still fails4.002%/5.573%;
+  candidate retained but NOT installed. Original ba6cbcd/module9ecb6f9 unchanged.
+  Forward phase1.341ms of27.384ms(~4.9%); backward19.836ms(~72.4%);196 batched-mm
+  calls unchanged. Native event-instrumented total26.594ms; coarse event envelopes,
+  not kernel-only time. Five actual nonzero-B1024 pairs median7.778/7.317s, pair
+  ratios0.9887–1.0756; diagnostic timing on a failed numerical gate, not deployment
+  or universal gain evidence. [Review](docs/development/bc250_gated_delta_a06_review/README.md)
+  contains exact outcomes, counters, failed guards and source hashes.
+  Six review guards ACK/600s/dmesg unchanged53f83f7b; three retained numerical/
+  instrumentation failures.40/41 prior protected hashes match. Independent app edit
+  observed in finetune-n7/replica/bc250_ops.py at00:08:37UTC: eddfea40->d058b14a,
+  now enables A06 by default via BC250_GATED_DELTA=1. Origin not established; edit
+  preserved. Our test uses separate pinned old helper. For new ordinary training,
+  use inner bc250-train launcher option --env BC250_GATED_DELTA=0 before the script;
+  host shell assignment alone is not inherited. Current app integration is unqualified.
+  No prefix/module/DSO/kernel/default/boot change by this review; .105/fallback and
+  user src/data unchanged. Raw WS/logs/gated-delta-a06-review-* and ignored local
+  kernel/artifacts/gated-delta-a06-review/. No active job/container/guard deadline.
+  Exact next **A06 numerical parity**, before A07: reproduce seed61718 nonzero-B
+  65/1024, investigate reference-ordered Q/K normalization/reductions/derivatives
+  and decay scan rounding, keep4% model gate and independent operator refs. Full
+  native solve/scan fusion and FLA remain unqualified; A07–A09/N2.7 queued. Historical
+  Python CPU fault remains separate/unresolved; VM-heap/CSR corruption remains fixed.
+
 - **A06 completed2026-10-17 (first native substage):** Torch
   ba6cbcd2fafac1a6503f1f580033fbf72ad2a4f9 / TheRock helperse61d609d3658ee984907841f4fe1dc8ecdf66baa
   installed .104. Explicit torch.nn.bc250_gated_delta fuses Q/K normalization/scaling,

@@ -1,0 +1,15 @@
+{
+  "status": "baseline_drift_detected",
+  "module_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+  "unchanged": 40,
+  "total": 41,
+  "changed": [
+    {
+      "path": "/home/nik/finetune-n7/replica/bc250_ops.py",
+      "sha256": "d058b14a4bae969e5b84a9de8f69706c0f6e3df910409dfc15843f0eeee3d41a",
+      "expected": "eddfea40c7fb2f0fd6dcfac72d67077918d1c61730ceba60d6e3f872f5e1f6d8",
+      "unchanged": false
+    }
+  ],
+  "scope": "Read-only audit against prior A06 deployment baseline; no mutation. External changes must not be overwritten."
+}

@@ -1,5 +1,12 @@
 # A06: native gated-delta preparation — 2026-10-17
 
+> Later recheck: [nonzero-adapter BF16 qualification failed](../bc250_gated_delta_a06_review/README.md).
+> The actual-model tests below used zero-initialized B, hence zero A gradients.
+> Preserve these bounded results; do not infer resumed-adapter parity. A06 numerical
+> parity is now next before A07. An independent app edit now defaults its hook on;
+> that integration was not made or qualified by this milestone.
+
+
 This milestone implements the first bounded native gfx1013 gated-delta substage:
 Q/K normalization, query scaling, beta gating of K/V, padding/layout conversion
 and per-chunk cumulative log-decay, with Q/K/V/log-decay/beta first-order backward.

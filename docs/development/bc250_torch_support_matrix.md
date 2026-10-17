@@ -18,6 +18,19 @@ automatic general Torch routing is not implemented. A05 below adds trainable
 convolution gradients through a separate opt-in API; this older trainer is unchanged. The earlier C++ `1Torch` diagnostic fix does apply to all callers
 using the patched .104 Torch runtime. None of these changes updates .105.
 
+## A06 recheck: numerical qualification reopened — 2026-10-17
+
+Nonzero synthetic adapters expose BF16 model-gradient differences beyond the
+unchanged4% worst-adapter gate:4.002%/5.425% at65/1024 tokens; FP32/65 passes
+at~9.54e-6. All372 A/B gradients are nonzero. The original actual-model check
+used B=0 and left A gradients zero. Operator CPU references remain valid, but
+broader BF16 resumed-training parity is open. No production source was changed.
+An exact ATen preparation control gives zero model-gradient difference; the
+scan-structure candidate still fails and was not deployed.
+[Evidence, phase costs and the independently changed app default](bc250_gated_delta_a06_review/README.md).
+Use inner launcher `--env BC250_GATED_DELTA=0` for the reference training path.
+Exact next A06 reference-ordered normalization/scan/derivative parity before A07.
+
 ## A01 update — 2026-10-16
 
 A01 is implemented and installed in the current development prefix. ROCr329eaf7
@@ -169,7 +182,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A03 — completed** | Genuine native MIOpen seed databases and capability-aware plugin probing | Libraries fcf7a714 installed:16 FindDb keys/58 checked solutions, one searched PerfDb record and41 KDB records; normal-path read-only replay has zero new user kernels. Unseen fallback and regressions pass. | Small geometry/version/device scope only; wider tuning and modern CK plugin B07 remain unqualified. [Report](bc250_miopen_a03_results/README.md). Continue A04. |
 | **A04 — completed** | Native Torch hipSPARSELt integration and follow-up | Torch6ed3d12;20 forward tests plus38 first-order gradient tests, including dense source conversion/transpose/linear. Targeted lint passes;12 forward and12 training timings recorded. | Same-dtype native floating first-order training; integer/higher-order/compile/graphs unqualified. Sparse training slower in measured small fixtures; keep explicit. [Follow-up](bc250_sparse_followup_results/README.md). Next A06 after completed A05. |
 | **A05 — completed** | Reusable opt-in causal conv/loss | Torch6181d00;69 tests: CPU output/dx/dw/db/loss, AMP/checkpoint/update and exact tiny-model AdamW resume. | Explicit torch.nn.bc250_training_ops calls; original trainer unchanged. Higher-order/compile/graphs/large-model/performance unqualified. [Report](bc250_training_a05_results/README.md). Next A06. |
-| **A06 — completed bounded** | Native gated-delta preparation and backward | Torchba6cbcd;40 CPU-reference cases, actual2B LoRA372-gradient/paired time+memory and A05/core gates pass | Explicit API; ATen solves/scan remain; original trainer unchanged. Full FLA/packed/cache/compile/graphs unqualified. [Report](bc250_gated_delta_a06_results/README.md). Next A07. |
+| **A06 — reopened qualification** | Native preparation implemented; BF16 nonzero-adapter LoRA parity failed |40 CPU-reference cases remain; stronger372-nonzero-gradient BF16 model gates fail4.002%/5.425%; FP32 passes |Keep experimental; original app independently defaults hook on, opt out via --env BC250_GATED_DELTA=0. [Review](bc250_gated_delta_a06_review/README.md). Resolve A06 parity before A07. |
 | **A07** | Efficient attention gaps: head256, dropout, compile/graph support | Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math | Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled. |
 | **A08** | Dense INT8 -> INT32 `_int_mm` | Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route. | Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption. |
 | **A09** | Torch GPU profiler/Kineto disabled | USE_KINETO=0; profiler records no GPU events. External rocprofiler is a separate working tool. | Audit pinned Kineto ROCm tracing dependencies and enable a separately tested build. Qualify GPU event correlation, memory/CPU traces and overhead; hardware counters remain separate. |
@@ -182,7 +195,8 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
-A01–A06 are completed within their recorded scopes (A06 is one native substage). A07–A09 are the remaining primary
+A01–A05 are completed within their recorded scopes. A06 preparation is implemented,
+but stronger BF16 LoRA qualification is reopened; A06–A09 are the remaining primary
 queue, in this order. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did

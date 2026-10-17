@@ -1,0 +1,553 @@
+{
+  "scope": "Verification follow-up; production Torch/ROCm unchanged; failed stronger BF16 gates are retained",
+  "results": [
+    {
+      "dtype": "torch.float32",
+      "length": 65,
+      "nonzero_gradient_tensors": 372,
+      "max_relative_l2": 9.537176993035246e-06,
+      "global_relative_l2": 3.8088191792150245e-06,
+      "initial_comparison": [
+        {
+          "seconds": 3.423979077982949,
+          "loss": 15.30911636352539,
+          "peak_bytes": 8421244928
+        },
+        {
+          "seconds": 0.605956958985189,
+          "loss": 15.309114456176758,
+          "peak_bytes": 8435955712
+        }
+      ],
+      "samples": [
+        {
+          "reference": {
+            "seconds": 0.6175976460217498,
+            "loss": 15.30911636352539,
+            "peak_bytes": 8456232960
+          },
+          "native": {
+            "seconds": 0.5580571260070428,
+            "loss": 15.309114456176758,
+            "peak_bytes": 8435955712
+          }
+        },
+        {
+          "native": {
+            "seconds": 0.560808720998466,
+            "loss": 15.309114456176758,
+            "peak_bytes": 8435955712
+          },
+          "reference": {
+            "seconds": 0.5788357929850463,
+            "loss": 15.30911636352539,
+            "peak_bytes": 8456232960
+          }
+        }
+      ],
+      "numerics_passed": true,
+      "median_reference_seconds": 0.598216719503398,
+      "median_native_seconds": 0.5594329235027544,
+      "paired_ratios": [
+        1.1066925180952811,
+        1.0321447782667945
+      ],
+      "label": "gated-delta-a06-review-models",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "status": "passed",
+      "worst_gradients": [
+        {
+          "name": "base_model.model.model.layers.0.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.0010168973822146654,
+          "native_norm": 0.0010168998269364238,
+          "difference_norm": 9.698330138974143e-09,
+          "relative_l2": 9.537176993035246e-06
+        },
+        {
+          "name": "base_model.model.model.layers.2.linear_attn.in_proj_b.lora_A.default.weight",
+          "reference_norm": 0.0059598032385110855,
+          "native_norm": 0.005959793459624052,
+          "difference_norm": 5.34769277749092e-08,
+          "relative_l2": 8.972934665507637e-06
+        },
+        {
+          "name": "base_model.model.model.layers.12.linear_attn.in_proj_b.lora_A.default.weight",
+          "reference_norm": 0.0033298626076430082,
+          "native_norm": 0.003329869592562318,
+          "difference_norm": 2.9133328638408784e-08,
+          "relative_l2": 8.74910801940132e-06
+        }
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "length": 65,
+      "nonzero_gradient_tensors": 372,
+      "max_relative_l2": 0.040021732449531555,
+      "global_relative_l2": 0.015738103665456537,
+      "initial_comparison": [
+        {
+          "seconds": 0.6410987820127048,
+          "loss": 15.314414978027344,
+          "peak_bytes": 4652103168
+        },
+        {
+          "seconds": 0.6110458059993107,
+          "loss": 15.314413070678711,
+          "peak_bytes": 4627975680
+        }
+      ],
+      "samples": [
+        {
+          "reference": {
+            "seconds": 0.6186052819830365,
+            "loss": 15.314414978027344,
+            "peak_bytes": 4652103168
+          },
+          "native": {
+            "seconds": 0.6050773659953848,
+            "loss": 15.314413070678711,
+            "peak_bytes": 4627975680
+          }
+        },
+        {
+          "native": {
+            "seconds": 0.6039061220071744,
+            "loss": 15.314413070678711,
+            "peak_bytes": 4627975680
+          },
+          "reference": {
+            "seconds": 0.6166535240190569,
+            "loss": 15.314414978027344,
+            "peak_bytes": 4652103168
+          }
+        }
+      ],
+      "numerics_passed": false,
+      "median_reference_seconds": 0.6176294030010467,
+      "median_native_seconds": 0.6044917440012796,
+      "paired_ratios": [
+        1.0223573327113264,
+        1.0211082510134433
+      ],
+      "label": "gated-delta-a06-review-models",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "status": "failed",
+      "worst_gradients": [
+        {
+          "name": "base_model.model.model.layers.16.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.001291352091357112,
+          "native_norm": 0.0013033783761784434,
+          "difference_norm": 5.168214556761086e-05,
+          "relative_l2": 0.040021732449531555
+        },
+        {
+          "name": "base_model.model.model.layers.16.linear_attn.in_proj_a.lora_B.default.weight",
+          "reference_norm": 0.016028154641389847,
+          "native_norm": 0.016245990991592407,
+          "difference_norm": 0.0006121198530308902,
+          "relative_l2": 0.038190290331840515
+        },
+        {
+          "name": "base_model.model.model.layers.6.linear_attn.in_proj_b.lora_B.default.weight",
+          "reference_norm": 0.03271973133087158,
+          "native_norm": 0.033193714916706085,
+          "difference_norm": 0.0010875521693378687,
+          "relative_l2": 0.03323841840028763
+        }
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "length": 1024,
+      "nonzero_gradient_tensors": 372,
+      "max_relative_l2": 0.05425399914383888,
+      "global_relative_l2": 0.008700426543378987,
+      "initial_comparison": [
+        {
+          "seconds": 7.903616678988328,
+          "loss": 14.256771087646484,
+          "peak_bytes": 11976548352
+        },
+        {
+          "seconds": 7.651297153002815,
+          "loss": 14.258159637451172,
+          "peak_bytes": 11745457152
+        }
+      ],
+      "samples": [
+        {
+          "reference": {
+            "seconds": 7.935911369975656,
+            "loss": 14.256771087646484,
+            "peak_bytes": 11976548352
+          },
+          "native": {
+            "seconds": 7.431987674994161,
+            "loss": 14.258159637451172,
+            "peak_bytes": 11745457152
+          }
+        },
+        {
+          "native": {
+            "seconds": 7.418094944005134,
+            "loss": 14.258159637451172,
+            "peak_bytes": 11745457152
+          },
+          "reference": {
+            "seconds": 7.940430085000116,
+            "loss": 14.256771087646484,
+            "peak_bytes": 11976548352
+          }
+        },
+        {
+          "reference": {
+            "seconds": 7.563832403975539,
+            "loss": 14.256771087646484,
+            "peak_bytes": 11976548352
+          },
+          "native": {
+            "seconds": 7.317157156998292,
+            "loss": 14.258159637451172,
+            "peak_bytes": 11745457152
+          }
+        },
+        {
+          "native": {
+            "seconds": 7.30198392298189,
+            "loss": 14.258159637451172,
+            "peak_bytes": 11745457152
+          },
+          "reference": {
+            "seconds": 7.2193786459974945,
+            "loss": 14.256771087646484,
+            "peak_bytes": 11976548352
+          }
+        },
+        {
+          "reference": {
+            "seconds": 7.777884048991837,
+            "loss": 14.256771087646484,
+            "peak_bytes": 11976548352
+          },
+          "native": {
+            "seconds": 7.231276422011433,
+            "loss": 14.258159637451172,
+            "peak_bytes": 11745457152
+          }
+        }
+      ],
+      "numerics_passed": false,
+      "median_reference_seconds": 7.777884048991837,
+      "median_native_seconds": 7.317157156998292,
+      "paired_ratios": [
+        1.0678047000369777,
+        1.0704136499920514,
+        1.0337118968042558,
+        0.9886872830924198,
+        1.075589369715777
+      ],
+      "label": "gated-delta-a06-review-models",
+      "source_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+      "status": "failed",
+      "worst_gradients": [
+        {
+          "name": "base_model.model.model.layers.4.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.000497486034873873,
+          "native_norm": 0.0005083125433884561,
+          "difference_norm": 2.699060678423848e-05,
+          "relative_l2": 0.05425399914383888
+        },
+        {
+          "name": "base_model.model.model.layers.1.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.0007343307952396572,
+          "native_norm": 0.0007548921857960522,
+          "difference_norm": 3.976435255026445e-05,
+          "relative_l2": 0.05415046215057373
+        },
+        {
+          "name": "base_model.model.model.layers.14.linear_attn.in_proj_b.lora_B.default.weight",
+          "reference_norm": 0.016920024529099464,
+          "native_norm": 0.016980549320578575,
+          "difference_norm": 0.0008682904881425202,
+          "relative_l2": 0.051317330449819565
+        }
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "length": 65,
+      "nonzero_gradient_tensors": 372,
+      "max_relative_l2": 9.537176993035246e-06,
+      "global_relative_l2": 3.8088191792150245e-06,
+      "initial_comparison": [
+        {
+          "seconds": 3.0450911030056886,
+          "loss": 15.30911636352539,
+          "peak_bytes": 8421244928
+        },
+        {
+          "seconds": 0.6127168730017729,
+          "loss": 15.309114456176758,
+          "peak_bytes": 8436103168
+        }
+      ],
+      "samples": [
+        {
+          "reference": {
+            "seconds": 0.5574969169974793,
+            "loss": 15.30911636352539,
+            "peak_bytes": 8456232960
+          },
+          "native": {
+            "seconds": 0.5491313810052816,
+            "loss": 15.309114456176758,
+            "peak_bytes": 8436103168
+          }
+        }
+      ],
+      "numerics_passed": true,
+      "median_reference_seconds": 0.5574969169974793,
+      "median_native_seconds": 0.5491313810052816,
+      "paired_ratios": [
+        1.0152341248043102
+      ],
+      "label": "gated-delta-a06-review-candidate",
+      "source_sha256": "4026fe54096968b2c003352189c63f5e91b4204c487f5cd3418eddc4338a9c5c",
+      "status": "passed",
+      "worst_gradients": [
+        {
+          "name": "base_model.model.model.layers.0.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.0010168973822146654,
+          "native_norm": 0.0010168998269364238,
+          "difference_norm": 9.698330138974143e-09,
+          "relative_l2": 9.537176993035246e-06
+        },
+        {
+          "name": "base_model.model.model.layers.2.linear_attn.in_proj_b.lora_A.default.weight",
+          "reference_norm": 0.0059598032385110855,
+          "native_norm": 0.005959793459624052,
+          "difference_norm": 5.34769277749092e-08,
+          "relative_l2": 8.972934665507637e-06
+        },
+        {
+          "name": "base_model.model.model.layers.12.linear_attn.in_proj_b.lora_A.default.weight",
+          "reference_norm": 0.0033298626076430082,
+          "native_norm": 0.003329869592562318,
+          "difference_norm": 2.9133328638408784e-08,
+          "relative_l2": 8.74910801940132e-06
+        }
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "length": 65,
+      "nonzero_gradient_tensors": 372,
+      "max_relative_l2": 0.040021732449531555,
+      "global_relative_l2": 0.015738103665456537,
+      "initial_comparison": [
+        {
+          "seconds": 0.6592737770115491,
+          "loss": 15.314414978027344,
+          "peak_bytes": 4652103168
+        },
+        {
+          "seconds": 0.6126072379993275,
+          "loss": 15.314413070678711,
+          "peak_bytes": 4628123136
+        }
+      ],
+      "samples": [
+        {
+          "reference": {
+            "seconds": 0.6217125590192154,
+            "loss": 15.314414978027344,
+            "peak_bytes": 4652103168
+          },
+          "native": {
+            "seconds": 0.6093843179987743,
+            "loss": 15.314413070678711,
+            "peak_bytes": 4628123136
+          }
+        }
+      ],
+      "numerics_passed": false,
+      "median_reference_seconds": 0.6217125590192154,
+      "median_native_seconds": 0.6093843179987743,
+      "paired_ratios": [
+        1.020230650274899
+      ],
+      "label": "gated-delta-a06-review-candidate",
+      "source_sha256": "4026fe54096968b2c003352189c63f5e91b4204c487f5cd3418eddc4338a9c5c",
+      "status": "failed",
+      "worst_gradients": [
+        {
+          "name": "base_model.model.model.layers.16.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.001291352091357112,
+          "native_norm": 0.0013033783761784434,
+          "difference_norm": 5.168214556761086e-05,
+          "relative_l2": 0.040021732449531555
+        },
+        {
+          "name": "base_model.model.model.layers.16.linear_attn.in_proj_a.lora_B.default.weight",
+          "reference_norm": 0.016028154641389847,
+          "native_norm": 0.016245990991592407,
+          "difference_norm": 0.0006121198530308902,
+          "relative_l2": 0.038190290331840515
+        },
+        {
+          "name": "base_model.model.model.layers.6.linear_attn.in_proj_b.lora_B.default.weight",
+          "reference_norm": 0.03271973133087158,
+          "native_norm": 0.033193714916706085,
+          "difference_norm": 0.0010875521693378687,
+          "relative_l2": 0.03323841840028763
+        }
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "length": 1024,
+      "nonzero_gradient_tensors": 372,
+      "max_relative_l2": 0.0557270422577858,
+      "global_relative_l2": 0.00868306160940324,
+      "initial_comparison": [
+        {
+          "seconds": 7.7832243029843085,
+          "loss": 14.256771087646484,
+          "peak_bytes": 11976548352
+        },
+        {
+          "seconds": 7.342157692997716,
+          "loss": 14.258159637451172,
+          "peak_bytes": 11746516992
+        }
+      ],
+      "samples": [
+        {
+          "reference": {
+            "seconds": 7.611116796004353,
+            "loss": 14.256771087646484,
+            "peak_bytes": 11976548352
+          },
+          "native": {
+            "seconds": 7.223194351012353,
+            "loss": 14.258159637451172,
+            "peak_bytes": 11746516992
+          }
+        }
+      ],
+      "numerics_passed": false,
+      "median_reference_seconds": 7.611116796004353,
+      "median_native_seconds": 7.223194351012353,
+      "paired_ratios": [
+        1.0537051096981256
+      ],
+      "label": "gated-delta-a06-review-candidate",
+      "source_sha256": "4026fe54096968b2c003352189c63f5e91b4204c487f5cd3418eddc4338a9c5c",
+      "status": "failed",
+      "worst_gradients": [
+        {
+          "name": "base_model.model.model.layers.4.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.000497486034873873,
+          "native_norm": 0.0005082762218080461,
+          "difference_norm": 2.7723424864234403e-05,
+          "relative_l2": 0.0557270422577858
+        },
+        {
+          "name": "base_model.model.model.layers.1.linear_attn.in_proj_a.lora_A.default.weight",
+          "reference_norm": 0.0007343307952396572,
+          "native_norm": 0.0007545392727479339,
+          "difference_norm": 3.8222871808102354e-05,
+          "relative_l2": 0.052051298320293427
+        },
+        {
+          "name": "base_model.model.model.layers.14.linear_attn.in_proj_b.lora_B.default.weight",
+          "reference_norm": 0.016920024529099464,
+          "native_norm": 0.016985010355710983,
+          "difference_norm": 0.0008384812390431762,
+          "relative_l2": 0.04955555871129036
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "label": "stock",
+      "loss": 15.314414978027344,
+      "worst_parameter": "base_model.model.model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+      "max_relative_l2": 0.0,
+      "global_relative_l2": 0.0
+    },
+    {
+      "label": "native",
+      "loss": 15.314413070678711,
+      "worst_parameter": "base_model.model.model.layers.16.linear_attn.in_proj_a.lora_A.default.weight",
+      "max_relative_l2": 0.040021732449531555,
+      "global_relative_l2": 0.015738103665456537
+    },
+    {
+      "label": "ATen_preparation",
+      "loss": 15.314414978027344,
+      "worst_parameter": "base_model.model.model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+      "max_relative_l2": 0.0,
+      "global_relative_l2": 0.0
+    },
+    {
+      "label": "ATen_forward_native_backward",
+      "loss": 15.314414978027344,
+      "worst_parameter": "base_model.model.model.layers.0.linear_attn.in_proj_b.lora_A.default.weight",
+      "max_relative_l2": 0.021473534405231476,
+      "global_relative_l2": 0.006493405334175727
+    },
+    {
+      "label": "native_forward_ATen_backward",
+      "loss": 15.314413070678711,
+      "worst_parameter": "base_model.model.model.layers.16.linear_attn.in_proj_a.lora_A.default.weight",
+      "max_relative_l2": 0.03763880580663681,
+      "global_relative_l2": 0.0157509542680764
+    }
+  ],
+  "raw_evidence": {
+    "gated-delta-a06-review-models": {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/gated-delta-a06-review-models/result.json",
+      "sha256": "07d2ae0067feb1f684ab673c123083e482d87e5efc1d4f9029a5c5c5983f2cea"
+    },
+    "gated-delta-a06-review-candidate": {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/gated-delta-a06-review-candidate/result.json",
+      "sha256": "a3a54f8c6923e3161167bffd57c3b0e89f9936cbaace15ff915f52490385d71c"
+    },
+    "gated-delta-a06-review-diagnosis-r2": {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/gated-delta-a06-review-diagnosis-r2/result.json",
+      "sha256": "0719ac44993ae57fff06a9a120155ba05b2d18ab8cffccfdf85fccb00d91949a"
+    }
+  },
+  "first_layer_preparation": [
+    {
+      "max_abs": 1.4901161193847656e-08,
+      "relative_l2": 5.223876797799676e-08,
+      "different_values": 28850
+    },
+    {
+      "max_abs": 5.960464477539063e-08,
+      "relative_l2": 4.596136093937275e-08,
+      "different_values": 30261
+    },
+    {
+      "max_abs": 5.960464477539063e-08,
+      "relative_l2": 4.8434717569989516e-08,
+      "different_values": 27753
+    },
+    {
+      "max_abs": 0.0,
+      "relative_l2": 0.0,
+      "different_values": 0
+    },
+    {
+      "max_abs": 1.52587890625e-05,
+      "relative_l2": 2.976642932139839e-08,
+      "different_values": 212
+    }
+  ],
+  "module_sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b",
+  "status": "BF16_nonzero_adapter_qualification_failed"
+}

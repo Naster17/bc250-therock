@@ -14,19 +14,24 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
-## Opt-in gated-delta preparation (A06, updated 2026-10-17)
+## Gated-delta experimental API: BF16 review failed (2026-10-17)
 
-`torch.nn.bc250_gated_delta` now supplies explicit `prepare_gated_delta` and
-`chunk_gated_delta_rule` calls on native gfx1013. Preparation and all five input
-gradients are native scalar Triton; triangular solves/matmuls/chunk scan remain
-ATen GPU operations. This is not an installed FLA backend. The original LoRA
-trainer/helper is unchanged and retains its reference warning.
+`torch.nn.bc250_gated_delta` implements native preparation and explicit ATen
+solve/scan composition. Independent operator tests pass, but stronger actual2B
+BF16 LoRA tests with372 nonzero adapter gradients exceed the unchanged4% worst-
+adapter relativeL2 gate:4.002% at65 and5.425% at1024 tokens. Broader resumed-
+training parity and convergence remain unqualified. [Recheck/results](bc250_gated_delta_a06_review/README.md).
 
-See the [API, supported shapes/dtypes, CPU/model comparisons and exact timings](bc250_gated_delta_a06_results/README.md).
-A paired synthetic Qwen3.5-2B BF16/rank16/checkpointed1024-token forward/backward
-was about3.6% faster with~220MiB lower peak; this does not establish dataset
-throughput or convergence. Keep integration explicit; packed/cache/higher-order/
-compile/graph and full native fused gated-delta are unqualified.
+An independent edit to `/home/nik/finetune-n7/replica/bc250_ops.py` now defaults
+its A06 hook on (`BC250_GATED_DELTA=1`). This review preserved that edit and did
+not qualify its integration. For a fresh training process, add
+`--env BC250_GATED_DELTA=0` among the inner `bc250-train` launcher options,
+before the Python script, to select the reference path. Host shell assignment
+alone is not inherited by the launcher's environment allowlist.
+
+The earlier~3.6%/220MiB result belongs to a synthetic initial-adapter fixture;
+it is not a qualified gain for resumed training. Only preparation was fused;
+solves, scan and most backward computation remain. A06 parity work precedes A07.
 
 ## Sparse backward and measured cost (follow-up, updated 2026-10-16)
 

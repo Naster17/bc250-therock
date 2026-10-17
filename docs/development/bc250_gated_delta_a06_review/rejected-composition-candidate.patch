@@ -1,0 +1,37 @@
+--- a/torch/nn/bc250_gated_delta.py
++++ b/torch/nn/bc250_gated_delta.py
+@@ -310,25 +310,22 @@
+     )
+     system = (kb @ k.transpose(-1, -2)) * pair
+     attention = (q @ k.transpose(-1, -2)) * pair
+-    exp_decay = decay.exp().unsqueeze(-1)
++    decayed_k_beta = kb * decay.exp().unsqueeze(-1)
+     u = torch.linalg.solve_triangular(system, vb, upper=False, unitriangular=True)
+-    w = torch.linalg.solve_triangular(
+-        system, kb * exp_decay, upper=False, unitriangular=True
+-    )
+-    q = q * exp_decay
++    w = torch.linalg.solve_triangular(system, decayed_k_beta, upper=False, unitriangular=True)
++    q = q * decay.exp().unsqueeze(-1)
+     k = k * (decay[..., -1:] - decay).exp().unsqueeze(-1)
++    chunk_decay = decay[..., -1].exp()[..., None, None]
+     state = (
+         torch.zeros((b, h, dk, dv), device=query.device, dtype=torch.float32)
+         if initial_state is None
+         else initial_state
+     )
+-    outputs = []
++    out = torch.zeros_like(u)
+     for i in range(q.shape[2]):
+         delta = u[:, :, i] - w[:, :, i] @ state
+-        outputs.append(q[:, :, i] @ state + attention[:, :, i] @ delta)
+-        state = (
+-            state * decay[:, :, i, -1].exp()[..., None, None]
+-            + k[:, :, i].transpose(-1, -2) @ delta
+-        )
+-    out = torch.stack(outputs, dim=2).flatten(2, 3)[:, :, :t].transpose(1, 2)
++        inter_chunk = q[:, :, i] @ state
++        out[:, :, i] = inter_chunk + attention[:, :, i] @ delta
++        state = state * chunk_decay[:, :, i] + k[:, :, i].transpose(-1, -2) @ delta
++    out = out.flatten(2, 3)[:, :, :t].transpose(1, 2)
+     return out.to(query.dtype).contiguous(), state if output_final_state else None

@@ -49,9 +49,9 @@
     {
       "id": "A06",
       "feature": "Native gated-delta / FLA training kernels missing",
-      "evidence": "Installed Torchba6cbcd native scalar/wave32 preparation: Q/K normalization/scaling, beta*K/V, layout/padding and cumulative decay with all five gradients.40 independent CPU-reference tests; tiny and actual2B BF16/rank16 LoRA372-gradient comparisons. Paired synthetic1024-token forward/backward7.653->7.390s and ~220MiB lower peak. Installed A05/core gates pass. See ../bc250_gated_delta_a06_results/README.md.",
-      "next": "A07 head256 tiled SDPA. A06 further native triangular-solve/chunk-scan fusion, packed/cache integration, FLA package, higher-order/compile/graphs and convergence remain unqualified; original trainer keeps reference warning.",
-      "status": "completed_bounded"
+      "evidence": "Installed Torchba6cbcd native scalar/wave32 preparation: Q/K normalization/scaling, beta*K/V, layout/padding and cumulative decay with all five gradients.40 independent CPU-reference tests; tiny and actual2B BF16/rank16 LoRA372-gradient comparisons. Paired synthetic1024-token forward/backward7.653->7.390s and ~220MiB lower peak. Installed A05/core gates pass. See ../bc250_gated_delta_a06_results/README.md. Recheck: original actual2B B=0 left A gradients zero. All372-nonzero-gradient BF16 cases fail existing4% gate (4.002%/5.425% at65/1024); FP32 passes. Exact ATen prep control gives zero difference; original-scan candidate still fails and was not installed. See ../bc250_gated_delta_a06_review/README.md.",
+      "next": "Before A07: retain seed61718/nonzero-B65/1024; inspect reference-ordered Q/K normalization/reduction/derivative and decay-prefix rounding; require unchanged4% model gate and independent operator references. Existing app independently defaults A06 on; use inner --env BC250_GATED_DELTA=0 until qualified.",
+      "status": "implemented_first_substage_BF16_model_qualification_reopened"
     },
     {
       "id": "A07",
@@ -131,15 +131,14 @@
       "status": "queued"
     }
   ],
-  "next": "A07: inspect current tiled SDPA D<=128 guards and Qwen3.5 D256 geometry; qualify bounded D256 output/QKV gradients with GQA/masks/all-masked/LoRA references, keep math default. Dropout and compile/graph separate. A07-A09 before N2.7; K6 completed.",
+  "next": "Before A07: retain seed61718/nonzero-B65/1024; inspect reference-ordered Q/K normalization/reduction/derivative and decay-prefix rounding; require unchanged4% model gate and independent operator references. Existing app independently defaults A06 on; use inner --env BC250_GATED_DELTA=0 until qualified.",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
     "A01",
     "A02",
     "A03",
     "A04",
-    "A05",
-    "A06"
+    "A05"
   ],
-  "next_primary_item": "A07"
+  "next_primary_item": "A06"
 }
