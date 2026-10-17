@@ -1,5 +1,11 @@
 # BC-250 PyTorch patches
 
+Current A06 source: `ba6cbcd2fafac1a6503f1f580033fbf72ad2a4f9`.
+Patch0006 is incremental on6ed3d12 and adds only the opt-in gated-delta
+preparation/composition module and its tests. Existing DSOs are unchanged.
+[Scope/evidence](../../docs/development/bc250_gated_delta_a06_results/README.md).
+The older three-file SDPA reconstruction gap remains.
+
 Current sparse/lint follow-up source: `6ed3d12b184a27d21c0fa41d43269ff6bd17f1e0`.
 Patch0005 is incremental on A05 source6181d00. It adds native first-order sparse
 autograd and a source-only lint option. The older SDPA reconstruction gap remains.
