@@ -49,6 +49,10 @@ def gates(phase: str) -> list:
         ("api", "validate_profiler_a09.py", []),
         ("core", "validate_cleanup_runtime.py", []),
     ]
+    if phase == "installed":
+        rows.append(
+            ("reactivation", "validate_profiler_order.py", ["--order", "cpu-first"])
+        )
     for name, script, arguments in rows:
         label = f"profiler-order-{phase}-{name}"
         base = label
@@ -147,10 +151,20 @@ def main() -> None:
     old_target = os.readlink(RELEASE / "torch")
     old_runtime = (RELEASE / "runtime.json").read_bytes()
     recovery = WS / "recovery/profiler-order-before"
-    recovery.mkdir()
+    recovery.mkdir(exist_ok=True)
     backup = recovery / "runtime.json"
-    backup.write_bytes(old_runtime)
-    (recovery / "torch-link.txt").write_text(old_target + "\n")
+    if backup.exists():
+        assert backup.read_bytes() == old_runtime
+        assert (recovery / "torch-link.txt").read_text() == old_target + "\n"
+    else:
+        backup.write_bytes(old_runtime)
+        (recovery / "torch-link.txt").write_text(old_target + "\n")
+    old_link = recovery / "torch"
+    if old_link.is_symlink():
+        assert old_link.resolve() == OLD
+    else:
+        assert not old_link.exists()
+        old_link.symlink_to(OLD)
     report = dict(
         status="staging",
         source=source,
@@ -181,6 +195,12 @@ def main() -> None:
         preserved = dict(frozen)
         digest = preserved.pop("/opt/bc250-stack/current/runtime.json")
         preserved[str(backup)] = digest
+        # This active alias intentionally follows the new CPU library. Preserve
+        # the original identity through the independent old-runtime link.
+        digest = preserved.pop(
+            "/opt/bc250-stack/current/torch/torch/lib/libtorch_cpu.so"
+        )
+        preserved[str(recovery / "torch/torch/lib/libtorch_cpu.so")] = digest
         assert all(sha(Path(p)) == d for p, d in preserved.items())
         runtime["profiler_initialization_order"].update(
             status="bounded CPU-first/GPU-first/cold/masked and API/core gates passed",
