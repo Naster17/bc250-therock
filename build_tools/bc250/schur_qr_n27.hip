@@ -16,12 +16,12 @@ template <class R> struct Z {
 };
 
 template <class R>
-__global__ void small_qr_similarity(const Z<R> *t, const Z<R> *q,
-                                    const Z<R> *shift, Z<R> *out_t, Z<R> *out_q,
-                                    int n, int m) {
+__device__ void qr_similarity_core(const Z<R> *t, const Z<R> *q,
+                                   const Z<R> *shift, Z<R> *out_t, Z<R> *out_q,
+                                   int n, int m, Z<R> *r, Z<R> *u, Z<R> *left,
+                                   Z<R> *v) {
   // One wave cooperates on shared matrices. No host reads inside the QR step.
   // Inputs are component-normalized by the bounded Schur driver.
-  __shared__ Z<R> r[256], u[256], left[256], v[16];
   int lane = threadIdx.x;
   if (lane < m)
     for (int j = 0; j < m; ++j) {
@@ -102,6 +102,14 @@ __global__ void small_qr_similarity(const Z<R> *t, const Z<R> *q,
       out_q[i * n + j] = sq;
     }
   }
+}
+
+template <class R>
+__global__ void small_qr_similarity(const Z<R> *t, const Z<R> *q,
+                                    const Z<R> *shift, Z<R> *out_t, Z<R> *out_q,
+                                    int n, int m) {
+  __shared__ Z<R> r[256], u[256], left[256], v[16];
+  qr_similarity_core(t, q, shift, out_t, out_q, n, m, r, u, left, v);
 }
 
 extern "C" int bc250_qr_step(const void *t, const void *q, const void *shift,
