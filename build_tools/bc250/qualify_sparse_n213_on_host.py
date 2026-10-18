@@ -71,6 +71,8 @@ def gates(phase: str) -> list:
     passed = []
     for name, script, arguments in specs:
         label = f"sparse-n213-{phase}-{name}"
+        if name == "edge":
+            label += "-r2"
         command = [
             sys.executable,
             str(WS / "helpers/validate_torch_a04_on_host.py"),
