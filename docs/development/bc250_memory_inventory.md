@@ -1492,6 +1492,37 @@ balancing/subnormals/conditioning/batching/gradients remain unqualified; origina
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
 
+## N2.12 native triangular recovery — 2026-10-18
+
+TheRock codeb1c94bddc adds explicit recovery_backend=device to isolated
+right_eigenvectors; one32-thread HIP solve, cap16 complex64/128. Per-row
+homogeneous column scaling retained; existing finite/unitary/triangular/gap/
+unitnorm/residual checks common to both paths. N2.6 reference/default and
+production host-LAPACK eig unchanged.128 retained groups, six CPU fixtures/36
+backend evaluations,32 all-order direct cases,two near-gap rescaling stresses,
+six sentinel/native ABI cases,six ABI refusals,four public/output refusals pass.
+Default exact immutable N2.11; real GPU kernel traced. Paired three-sample
+A1/B1/B2/A2 recovery1.32–2.32x/whole warm candidate1.17–1.34x in six fixtures;
+recovery~1.90–2.10ms, host eig~0.213–0.408ms remains faster than native full
+~3.75–11.79ms. No general/model/LoRA gain/integration; scalar reads remain18,
+not all synchronizations. Nine guards ACK/600s, eight successful process gates;
+initial required trace check honestly failed: CPU-only-first profiler leaves
+later GPU captures empty. Source points to one-time cpuOnly registration; final
+fresh process starts CPU+CUDA and traces native kernel. **A09 initialization
+ordering defect remains unresolved**, independent of solver arithmetic. Both
+traces/logs retained.104 protected hashes match; dmesg unchanged entire batch.
+One-unit hipcc/ccache20GiB/OMP4 build; no Torch/installed ROCm DSO/prefix/default/
+image/kernel/boot/.105 mutation. Prior helper and oracle retained under
+WS/recovery/solver-n212-before and helpers/schur_n211_reference.py. [Report](bc250_solver_results/N212.md)
+and n212/ contain full results/commands/hashes; raw WS/logs/solver-*n212*.
+No active job/container/guard, disk~13GiB free. Python CPU segfault unresolved/
+separate from fixed VM-heap/CSR. Next A09/N4 first-CPU→GPU initialization
+reproducer/fix in separate candidate with both-order numerical/trace gates,
+then broader N2 sparse/FFT/RNG coverage triage. N2.1–12 complete within recorded
+bounds; N2–N8 still seven broad workstreams. Further small-eig optimization is
+optional; no larger/batched/close-spectrum/balancing/gradient/compile/graph/
+concurrency/general convergence contract added.
+
 ## N2.11 explicit GEHRD sessions — 2026-10-18
 
 TheRock code807642198 adds explicit caller-owned GehrdSession, one PID/thread/

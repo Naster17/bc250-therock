@@ -9,6 +9,39 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.12 completed2026-10-18:** TheRock codeb1c94bddc; explicit
+  right_eigenvectors(recovery_backend="device") uses one32-thread native HIP
+  triangular solve, complex64/128 cap16. N2.6 reference remains default/oracle;
+  all finite/unitary/separation/rescaling/unitnorm/residual gates retained.
+  Warm-session profile recovery~2.47–5.19ms supported fusion.128 retained groups,
+  six CPU fixtures/36 backend evaluations,32 all-order direct cases,two near-gap
+  rescaling stresses,six sentinel ABI cases,six ABI refusals,four public/output
+  refusals pass. Default recovery exact N2.11; real native GPU kernel traced.
+  Paired A1/B1/B2/A2 recovery1.32–2.32x/whole warm candidate1.17–1.34x in six
+  fixtures; recovery still~1.90–2.10ms, host full eig~0.213–0.408ms much faster
+  than full native~3.75–11.79ms. Scalar reads remain18, not total sync count.
+  No general/model/LoRA gain or production GPU eig integration. One-unit
+  hipcc/ccache20GiB/OMP4 build only; Torch/installed ROCm DSOs/defaults/prefix
+  metadata/links/images/kernel/boot/.105 unchanged.104 protected hashes match,
+  dmesg unchanged entire batch; nine guards ACK/600s, eight process gates pass.
+  **New separate A09/Kineto defect:** first CPU-only profile can leave later GPU
+  traces empty. Initial required trace check failed and is preserved; final
+  fresh-process first CPU+CUDA capture proves native kernel. Runtime defect is
+  unresolved, not hidden by a claim of profiler repair. Source points to one-time
+  cpuOnly profiler registration; existing A09 tested opposite ordering only.
+  [N212.md](docs/development/bc250_solver_results/N212.md), n212/ evidence/hashes/
+  failed+passing traces/commands; raw WS/logs/solver-*n212*, ignored local
+  kernel/artifacts/solver-n212. Prior helper/oracle WS/recovery/solver-n212-before
+  and schur_n211_reference.py. No active job/container/guard; disk~13GiB free.
+  Python CPU segfault stays unresolved/separate from fixed VM-heap/CSR.
+  **Next:** A09/N4 CPU-first→GPU profiler reproducer and reviewed initialization
+  fix in separate candidate, both-order trace/numerical gates before deployment;
+  then broader N2 sparse/FFT/RNG coverage triage from existing audit. N2.1–12
+  bounded milestones complete; broad N2–N8 remain seven workstreams, not seven
+  small tasks or a fixed percentage. Larger/batched/close spectra/balancing/
+  gradients/general native eig convergence remain unqualified; further small-eig
+  optimization is optional, not required for ordinary training.
+
 - **Storage refresh completed2026-10-18**, explicit user-authorized obsolete
   generated-artifact cleanup, code780e67ceb. Recovered12,839,837,696bytes=11.96GiB,
   free1.08->13.04GiB/used100->97%. Unlinked8,801 old Torch .o/.a/.so files under
@@ -1429,10 +1462,10 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.9 | Bounded chunks1..32 reduce status copies;128 retained+74 direct+100 chunk+six CPU fixtures pass. Latency mixed/regresses16; padded experiment not selected, defaults unchanged. |
 | [x]   | N2.10 | Native bounded reflector-Q formation;128 retained+24 independent reflector+six CPU/backend fixtures pass. Preparation1.11–1.39x/whole1.05–1.12x in fixtures; defaults unchanged. |
 | [x]   | N2.11 | Explicit pinned-stream GEHRD sessions;128 retained+six CPU/backend fixtures+three lifetime groups/16 refusals pass. Warm prep7.03–12.52x/whole1.28–1.95x in fixtures; cold/default/host limits recorded. |
-| [ ]   | **N2.12 — next** | Profile warm-session recovery and prototype bounded native triangular back-substitution; retain Python/N2.6 reference/fixed separation-rescaling-unitnorm-residual/CPU gates/cap16/host production eig. |
+| [x]   | N2.12 | Native bounded triangular recovery;128 retained+36 CPU/backend+32 direct+two rescaling+six ABI cases pass; fixed gates/defaults retained. Recovery1.32–2.32x/whole1.17–1.34x in six fixtures; host remains faster. Separate CPU-first profiler defect found. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
-| [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |
+| [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Next A09 follow-up: repair CPU-first→GPU profiler initialization with both-order traces; then physical telemetry/clock work. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |

@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "dtype": "torch.complex64",
+      "order": 1,
+      "guarded_output": true,
+      "input_unchanged": true,
+      "nondefault_stream": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 2,
+      "guarded_output": true,
+      "input_unchanged": true,
+      "nondefault_stream": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "guarded_output": true,
+      "input_unchanged": true,
+      "nondefault_stream": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 1,
+      "guarded_output": true,
+      "input_unchanged": true,
+      "nondefault_stream": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 2,
+      "guarded_output": true,
+      "input_unchanged": true,
+      "nondefault_stream": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "guarded_output": true,
+      "input_unchanged": true,
+      "nondefault_stream": true
+    }
+  ],
+  "refusals": [
+    "null-input",
+    "null-output",
+    "exact-alias",
+    "zero-order",
+    "oversize",
+    "invalid-precision"
+  ]
+}

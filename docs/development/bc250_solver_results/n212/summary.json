@@ -1,0 +1,93 @@
+{
+  "status": "passed",
+  "code_revision": "b1c94bddc",
+  "retained_groups": 128,
+  "full_fixtures": 6,
+  "backend_evaluations": 36,
+  "direct_cases": 32,
+  "rescaling_cases": 2,
+  "common_gate_refusals": 4,
+  "native_sentinel_cases": 6,
+  "native_abi_refusals": 6,
+  "successful_process_guards": 8,
+  "failed_trace_process_guards": 1,
+  "all_guards_acknowledged": 9,
+  "protected_hashes": 104,
+  "paired": [
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "recovery_reference_ms": 2.6397650017315755,
+      "recovery_device_ms": 2.004184500037809,
+      "recovery_ratio": 1.3171267424140722,
+      "whole_reference_ms": 4.403181001180201,
+      "whole_device_ms": 3.751139000087278,
+      "whole_ratio": 1.1738250704859916,
+      "host_before_ms": 0.24127199867507443,
+      "host_after_ms": 0.2210810016549658
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 9,
+      "recovery_reference_ms": 3.4355184998275945,
+      "recovery_device_ms": 1.9222134997107787,
+      "recovery_ratio": 1.7872720695929518,
+      "whole_reference_ms": 6.357498499710346,
+      "whole_device_ms": 4.817403501874651,
+      "whole_ratio": 1.319694000562,
+      "host_before_ms": 0.25435300267417915,
+      "host_after_ms": 0.2484500000718981
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "recovery_reference_ms": 4.59002900061023,
+      "recovery_device_ms": 1.9823900001938455,
+      "recovery_ratio": 2.3154016112679137,
+      "whole_reference_ms": 10.37073500083352,
+      "whole_device_ms": 7.716083000559593,
+      "whole_ratio": 1.344041400290977,
+      "host_before_ms": 0.3441600019868929,
+      "host_after_ms": 0.3480600025795866
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "recovery_reference_ms": 2.517205499316333,
+      "recovery_device_ms": 1.9029525010409998,
+      "recovery_ratio": 1.322789453724835,
+      "whole_reference_ms": 4.55614800011972,
+      "whole_device_ms": 3.8930930004426045,
+      "whole_ratio": 1.1703157359975045,
+      "host_before_ms": 0.21471400032169186,
+      "host_after_ms": 0.212879000173416
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 9,
+      "recovery_reference_ms": 3.3984564997808775,
+      "recovery_device_ms": 1.9215174997953,
+      "recovery_ratio": 1.768631563409085,
+      "whole_reference_ms": 7.2593914992467035,
+      "whole_device_ms": 5.722780499127111,
+      "whole_ratio": 1.268507764775177,
+      "host_before_ms": 0.2605849986139219,
+      "host_after_ms": 0.2627600006235298
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "recovery_reference_ms": 4.586684999594581,
+      "recovery_device_ms": 2.1001344994147075,
+      "recovery_ratio": 2.183995834968121,
+      "whole_reference_ms": 14.342459498948301,
+      "whole_device_ms": 11.786911500166752,
+      "whole_ratio": 1.216812351458259,
+      "host_before_ms": 0.4083919993718155,
+      "host_after_ms": 0.4080519975104835
+    }
+  ],
+  "default_and_production_unchanged": true,
+  "profiler_cpu_first_issue_unresolved": true,
+  "next": "A09/N4 follow-up: reproduce and fix CPU-first to GPU profiler initialization in separate candidate; then return to broader N2 sparse/FFT/RNG coverage triage; no automatic production native eig integration"
+}

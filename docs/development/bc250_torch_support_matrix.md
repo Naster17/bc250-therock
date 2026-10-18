@@ -7,6 +7,22 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
+## Current cursor after N2.12
+
+N2.1–N2.12 bounded milestones are complete; production nonsymmetric eig still
+uses host LAPACK. Explicit cap16 native recovery passes the fixed CPU/refusal
+checks and improves warm prototype latency in six fixtures; host remains faster.
+[Current scope and evidence](bc250_solver_results/N212.md). Earlier “next N2.7”
+lines below are historical milestone cursors, superseded by canonical flow.md.
+
+N2.12 found an A09 initialization-order defect: a CPU-only first profile can
+leave later GPU traces empty. Fresh-process CPU+CUDA-first capture works and
+traces the native recovery kernel. Runtime repair remains open; next is a
+separate candidate fix with both-order trace/numerical tests, then broader N2
+coverage triage. Existing A09 tested CPU-only after GPU initialization. This
+narrows the earlier profiler qualification; it does not invalidate recorded
+GPU-first captures or numerical operation results.
+
 ## A08 update
 
 **A08 completed2026-10-18: native dense INT8->INT32.** Libraries
@@ -207,7 +223,7 @@ The following rows are not an exhaustive API or dtype promise.
 | FFT | hipFFT/rocFFT | FP32/FP64 and FP16 power-of-two8x16 rfft2 output/backward pass | BF16 rejected B01; wider half plans not qualified |
 | Dense solve/SVD/lstsq | hipSOLVER/rocSOLVER/rocBLAS | Current solve, singular values+gradient, full-rank gels references pass | Rank-deficient drivers and every solver algorithm not qualified |
 | Hermitian eigenvectors | Native rocSOLVER | N2.1 retained22 cases through257 and gradients | Extreme/larger/two-stage cases unqualified |
-| Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–6 GPU prototype bounded | Production solve is host arithmetic; native N2.7 still queued |
+| Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–12 isolated GPU prototype cap16/separated spectra | Production solve is host arithmetic; native full prototype still slower; broader spectra/batching/gradients unqualified |
 | Structured sparse matmul | Torch hipSPARSELt | A04 forward plus follow-up38 floating first-order gradient tests; public FP16/BF16 matmul/linear source-weight/input/bias gradients | Scalar native packs; integer backward/higher-order/graphs/compile unqualified. Training slower in measured small fixtures; keep explicit |
 | Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | General sparse solve absent B02; not every format/dtype/backward |
 | SDPA math | ATen HIP + BLAS | Current forward/QKV gradients and prior long/model/AMP gates | Quadratic attention memory; default retained |
@@ -245,7 +261,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; A08 now supplies a bounded dense INT8/INT32 primitive, not a low-bit model recipe | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
 | **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
-| **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
+| **N2.3–12** | Native nonsymmetric eig remains an isolated bounded prototype | Native GEHRD/Q/QR/control/recovery and explicit sessions qualified within cap16/separated scope; production host LAPACK retained | Further eig expansion/optimization optional; return to broader N2 coverage after the observed A09 profiler-order repair. |
 
 A01–A07 are completed within their recorded bounded scopes; A07 dropout/compile/
 graph contracts and full native FLA remain open extensions. A09 was selected ahead of A08; A08 is now also completed within its

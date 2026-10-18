@@ -1,0 +1,24 @@
+time="2026-10-18T16:45:36+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+PASS torch.complex64 4
+PASS torch.complex64 9
+USDT:2026-10-18 14:45:40 1:1 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-18 14:45:40 1:1 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-10-18 14:45:40 1:1 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-18 14:45:40 1:1 SyncActivityProfilerHandler.cpp:59] profiler_stop
+PASS torch.complex64 16
+PASS torch.complex128 4
+PASS torch.complex128 9
+USDT:2026-10-18 14:45:41 1:1 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-18 14:45:41 1:1 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-10-18 14:45:41 1:1 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-18 14:45:41 1:1 SyncActivityProfilerHandler.cpp:59] profiler_stop
+PASS torch.complex128 16
+USDT:2026-10-18 14:45:44 1:1 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-10-18 14:45:44 1:1 SyncActivityProfilerHandler.cpp:59] profiler_stop
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_solver_n212.py", line 334, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_solver_n212.py", line 327, in main
+    assert len(kernels) == 1, kernels
+           ^^^^^^^^^^^^^^^^^
+AssertionError: []

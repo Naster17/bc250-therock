@@ -56,6 +56,11 @@ prof.export_chrome_trace("bc250-trace.json")
 print(prof.key_averages().table(sort_by="self_device_time_total"))
 ```
 
+The current Kineto build has an observed initialization-order defect: starting
+with a CPU-only profile can leave later GPU captures empty. Request CPU+CUDA in
+the first capture if GPU traces will be needed; restart a CPU-first process for
+GPU capture. Runtime repair is pending; [N2.12 evidence](bc250_solver_results/N212.md).
+
 Import `torch` in the script and warm up before selecting a short capture window.
 Tracing is explicit; ordinary training does not automatically collect profiles.
 It adds overhead and does not directly accelerate LoRA. Hardware counters,

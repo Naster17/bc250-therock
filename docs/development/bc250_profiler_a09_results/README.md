@@ -9,6 +9,18 @@ support is introduced. Native Kineto/SDK source changes were unnecessary.
 The user selected A09 ahead of A08. A08 remains unfinished; return to it before
 N2.7. Earlier dependency-audit results remain historical evidence.
 
+## N2.12 follow-up: initialization order defect
+
+2026-10-18: CPU-only-first profiling was observed to leave a later CPU+CUDA
+capture with CPU events but zero GPU events. The original tests exercised
+CPU-only selection after GPU initialization. A fresh process starting with
+CPU+CUDA captures the N2.12 native kernel correctly. The issue remains open;
+no Torch/Kineto fix has been installed. [Failed and passing traces/source
+inspection](../bc250_solver_results/N212.md). Until repaired, request CUDA in
+the first capture of a process when later GPU tracing is needed; restart a
+CPU-first process before collecting GPU traces. Numerical operations are
+unaffected by the missing trace records in the observed fixtures.
+
 ## Implementation and build provenance
 
 - Torch `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5` adds qualification tests only;
