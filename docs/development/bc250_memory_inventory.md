@@ -1477,6 +1477,30 @@ balancing/subnormals/conditioning/batching/gradients remain unqualified; origina
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
 
+## N2.7 cooperative device QR/similarity — 2026-10-18
+
+TheRock code100f43e2a adds explicit device-step Schur backend, complex64/128
+order2..16:32-thread HIP shared-memory Householder QR and full similarity/Q
+update. Reference backend remains default; final six fixtures match prior N2.6
+outputs/counts exactly. Normalization, iteration/deflation/fill, separation and
+recovery residual/refusal gates unchanged.28 direct CPU QR/invariant/stream cases,
+128 unchanged N2.3–5 groups and six complete eigenpair fixtures pass; budget0/1
+partial/refusal contracts and profiler kernel evidence retained. Correct serial
+prototype was slow; source/binary retained before cooperative rewrite.
+Paired three-sample A1/B1/B2/A2 Schur1.24–1.46x in six fixtures; device10–36ms
+still far slower than host full eig0.22–0.40ms. Separate instrumented order16
+preparation~6.1ms, QR3.38/6.41ms, remaining checks/scaling/control22.46/28.24ms;
+forced sync phase sums are diagnostic, not kernel-only/model/general gains.
+Eight guards ACK/600s/unchanged dmesg;64 prior protected source/runtime hashes
+unchanged. One-unit targeted hipcc build/ccache20GiB; no prefix metadata/ROCm
+DSO/Torch/image/kernel/boot/default/.105 change. No active job/container/guard;
+disk~1.09GiB free. Prior helper WS/helpers/schur_n26_reference.py; serial recovery
+WS/recovery/solver-n27-serial. [Report/reproduction/evidence](bc250_solver_results/N27.md),
+raw WS/logs/solver-*n27*. No production native eig, batching/gradient/general
+convergence contract. Python CPU fault stays unresolved/separate from fixed
+VM-heap/CSR. Next N2.8 bounded device shift/deflation/status to reduce measured
+control overhead, preserving Python oracle/fixed gates/cap16/host eig default.
+
 ## N2.6 small native eig profile/recovery vectorization — 2026-10-16
 
 Initial order16 recovery~37ms/376 Torch scalar reads; chose all-column rowwise

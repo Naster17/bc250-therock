@@ -136,3 +136,8 @@ N2.5 follow-up: [scale repair and separation boundaries](N25.md), with retained
 
 N2.6 follow-up: [profile and vectorized right recovery](N26.md),107 regression
 groups and six paired fixtures; native full pipeline remains slower than host.
+
+N2.7 follow-up: [bounded cooperative device QR/similarity step](N27.md).
+128 retained groups plus28 direct cases and six paired fixtures pass. The
+isolated Schur prototype improves in the measured fixtures; production eig
+remains host LAPACK and the reference backend remains the prototype default.
