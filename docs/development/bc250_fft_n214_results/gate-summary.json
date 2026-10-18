@@ -1,0 +1,72 @@
+{
+  "fft-n214-complex": {
+    "exit": {
+      "returncode": 1,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "fft-n214-r2-complex": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "fft-n214-r2-contracts": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "fft-n214-r2-core": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "fft-n214-r2-legacy": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "fft-n214-r2-native": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "fft-n214-r2-real": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  }
+}

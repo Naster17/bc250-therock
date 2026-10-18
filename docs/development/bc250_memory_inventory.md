@@ -879,7 +879,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | Historical reductions/scans and208 block-reduction tests; P2 int32 cases42/48/48 with guards/streams, signed stable sorts, selection, scans, blocks/wave32 and Thrust policies                               | Floating/custom/segmented algorithms and broader tuning remain. hipCCL is header packaging, not RCCL.                                                       |
-| rocFFT/hipFFT                               | Existing native backend, persistent 16-worker HIPRTC AOT cache; prime DFT andP2 FFT30                                                                                                                        | No custom rocFFT component architecture patch; more plans/types/layouts remain                                                                              |
+| rocFFT/hipFFT                               | Existing native backend/AOT cache; P2 FFT30 plus N2.14 public complex96/real72 output+weighted gradients+guarded out, three independent checks and16 direct advanced plans/32 executions | No production defect found; native in-place/planar/callbacks/giant plans and broader performance remain; BF16 promotion B01 separate |
 | rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 native eigh22; N2.2 nonsymmetric eig16 host-LAPACK compatibility only. Native nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and performance remain                                                                                         |
 | rocSPARSE/hipSPARSE | Existing native backend: P2 Torch25+legacy16; N2.13 public triangular433 and direct generic96 fixtures/192 solves, exact pivot NaN policy in Torch | More formats/analyses/general factorization remain; BSR public int64 is bounded downcast, triangular autograd/performance unqualified; old corruption fix was CLR |
 | rocALUTION                                  | CG40 ordinary cases andfive fresh-process200 passes after pool-default fix                                                                                                                                   | Larger systems, other solvers/preconditioners/concurrency remain                                                                                            |
@@ -1521,6 +1521,31 @@ unchanged; no native rebuild or performance claim. General dynamic ranges,
 balancing/subnormals/conditioning/batching/gradients remain unqualified; original
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
+
+## N2.14 FFT plan/layout/odd-real qualification — 2026-10-18
+
+TheRock `44568c2e2`; no native/build/default/prefix change required. Installed
+Torch native `dc8fea0` / test source `2b449c4`, libraries `319a235d6` unchanged.
+Complex96/real72 each verify CPU-double output, weighted first backward into
+the full leaf, private-stream GPU layouts, input immutability and guarded out.
+Includes odd17/45/7x13, three norms, crop/pad, conjugate/broadcast and four-dim
+decomposition. Three explicit DFT/finite-difference/cache-reuse checks pass;
+trace34 kernels includes native rocFFT forward/backward. Direct hipFFT16 plans/
+32 executions check single/double real/complex, caller workspace, batches3,
+advanced strides and synchronized stream rebinding. Native rocFFT permits
+input/gap writes; direct tests guard exterior spans, public tests all gaps.
+FFT30/core7 retained. Initial48 double fixture errors were non-leaf GPU .grad,
+fixed by detaching test leaf; no production or tolerance change, evidence kept.
+Seven guards ACK/600s, six passed processes, dmesg unchanged including failure;
+145 hashes/four AOT DBs/runtime/links/kernel/boot/r2 fallback/.105 preserved.
+No running agent job/guard/container, free~7.22GiB. No speed/universal-correctness
+claim; B01 BF16 promotion/native in-place/planar/giant/callbacks/graphs/higher
+gradients remain unqualified. [Report/evidence](bc250_fft_n214_results/README.md).
+Current preservation baseline WS/logs/fft-n214-qualification-r2/final.json;
+raw WS/logs/fft-n214-*, ignored kernel/artifacts/fft-n214. Historical Python CPU
+segfault unresolved/separate from fixed VM-heap/CSR and this fixture exception.
+Next N2.15 audit P2 RNG28/checkpoint coverage; bounded offset/state replay and
+private-stream sequencing against exact replay/analytic distribution contracts.
 
 ## N2.13 sparse triangular coverage and exact pivots — 2026-10-18
 

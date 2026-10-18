@@ -1,0 +1,160 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "checks": [
+    {
+      "name": "rfftn_torch.float32_(3, 17)_backward",
+      "status": "passed",
+      "seconds": 0.18794012600119459
+    },
+    {
+      "name": "rfftn_torch.float32_(3, 17)_ortho",
+      "status": "passed",
+      "seconds": 0.020896883004752453
+    },
+    {
+      "name": "rfftn_torch.float32_(3, 17)_forward",
+      "status": "passed",
+      "seconds": 0.0005055030051153153
+    },
+    {
+      "name": "fft_roundtrip_torch.float32_(3, 17)",
+      "status": "passed",
+      "seconds": 0.10911604799912311
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 45)_backward",
+      "status": "passed",
+      "seconds": 0.07902169699809747
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 45)_ortho",
+      "status": "passed",
+      "seconds": 0.0004922150037600659
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 45)_forward",
+      "status": "passed",
+      "seconds": 0.0003984050053986721
+    },
+    {
+      "name": "fft_roundtrip_torch.float32_(2, 45)",
+      "status": "passed",
+      "seconds": 0.044918818995938636
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 7, 13)_backward",
+      "status": "passed",
+      "seconds": 0.11528056500537787
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 7, 13)_ortho",
+      "status": "passed",
+      "seconds": 0.0005881769975530915
+    },
+    {
+      "name": "rfftn_torch.float32_(2, 7, 13)_forward",
+      "status": "passed",
+      "seconds": 0.00044749399967258796
+    },
+    {
+      "name": "fft_roundtrip_torch.float32_(2, 7, 13)",
+      "status": "passed",
+      "seconds": 0.17650791400228627
+    },
+    {
+      "name": "complex_fft_torch.complex64_19",
+      "status": "passed",
+      "seconds": 0.31119631999899866
+    },
+    {
+      "name": "complex_fft_torch.complex64_32",
+      "status": "passed",
+      "seconds": 0.2695445049976115
+    },
+    {
+      "name": "rfft_backward_torch.float32",
+      "status": "passed",
+      "seconds": 0.3789443339992431
+    },
+    {
+      "name": "rfftn_torch.float64_(3, 17)_backward",
+      "status": "passed",
+      "seconds": 0.10645462200045586
+    },
+    {
+      "name": "rfftn_torch.float64_(3, 17)_ortho",
+      "status": "passed",
+      "seconds": 0.0005521489947568625
+    },
+    {
+      "name": "rfftn_torch.float64_(3, 17)_forward",
+      "status": "passed",
+      "seconds": 0.00042869299795711413
+    },
+    {
+      "name": "fft_roundtrip_torch.float64_(3, 17)",
+      "status": "passed",
+      "seconds": 0.10527286799333524
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 45)_backward",
+      "status": "passed",
+      "seconds": 0.07954638399678515
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 45)_ortho",
+      "status": "passed",
+      "seconds": 0.0005053880013292655
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 45)_forward",
+      "status": "passed",
+      "seconds": 0.00042231499537592754
+    },
+    {
+      "name": "fft_roundtrip_torch.float64_(2, 45)",
+      "status": "passed",
+      "seconds": 0.04556659700028831
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 7, 13)_backward",
+      "status": "passed",
+      "seconds": 0.10442963500099722
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 7, 13)_ortho",
+      "status": "passed",
+      "seconds": 0.0005271140034892596
+    },
+    {
+      "name": "rfftn_torch.float64_(2, 7, 13)_forward",
+      "status": "passed",
+      "seconds": 0.0004198440001346171
+    },
+    {
+      "name": "fft_roundtrip_torch.float64_(2, 7, 13)",
+      "status": "passed",
+      "seconds": 0.10441144200012786
+    },
+    {
+      "name": "complex_fft_torch.complex128_19",
+      "status": "passed",
+      "seconds": 0.3132124379990273
+    },
+    {
+      "name": "complex_fft_torch.complex128_32",
+      "status": "passed",
+      "seconds": 0.27046082299784757
+    },
+    {
+      "name": "rfft_backward_torch.float64",
+      "status": "passed",
+      "seconds": 0.29784822100191377
+    }
+  ],
+  "seconds": 3.175782958001946,
+  "passed": 30,
+  "failed": 0
+}

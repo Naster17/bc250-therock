@@ -1,0 +1,31 @@
+PASS rfftn_torch.float32_(3, 17)_backward
+PASS rfftn_torch.float32_(3, 17)_ortho
+PASS rfftn_torch.float32_(3, 17)_forward
+PASS fft_roundtrip_torch.float32_(3, 17)
+PASS rfftn_torch.float32_(2, 45)_backward
+PASS rfftn_torch.float32_(2, 45)_ortho
+PASS rfftn_torch.float32_(2, 45)_forward
+PASS fft_roundtrip_torch.float32_(2, 45)
+PASS rfftn_torch.float32_(2, 7, 13)_backward
+PASS rfftn_torch.float32_(2, 7, 13)_ortho
+PASS rfftn_torch.float32_(2, 7, 13)_forward
+PASS fft_roundtrip_torch.float32_(2, 7, 13)
+PASS complex_fft_torch.complex64_19
+PASS complex_fft_torch.complex64_32
+PASS rfft_backward_torch.float32
+PASS rfftn_torch.float64_(3, 17)_backward
+PASS rfftn_torch.float64_(3, 17)_ortho
+PASS rfftn_torch.float64_(3, 17)_forward
+PASS fft_roundtrip_torch.float64_(3, 17)
+PASS rfftn_torch.float64_(2, 45)_backward
+PASS rfftn_torch.float64_(2, 45)_ortho
+PASS rfftn_torch.float64_(2, 45)_forward
+PASS fft_roundtrip_torch.float64_(2, 45)
+PASS rfftn_torch.float64_(2, 7, 13)_backward
+PASS rfftn_torch.float64_(2, 7, 13)_ortho
+PASS rfftn_torch.float64_(2, 7, 13)_forward
+PASS fft_roundtrip_torch.float64_(2, 7, 13)
+PASS complex_fft_torch.complex128_19
+PASS complex_fft_torch.complex128_32
+PASS rfft_backward_torch.float64
+{"status": "passed", "passed": 30, "failed": 0, "seconds": 3.175782958001946}

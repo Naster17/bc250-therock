@@ -68,6 +68,19 @@ It adds overhead and does not directly accelerate LoRA. Hardware counters,
 simultaneous external profilers, compile/graph and long tracing are unqualified.
 [Qualification, memory/schedule examples and rebuild/recovery](bc250_profiler_a09_results/README.md).
 
+## FFT output and backward (N2.14)
+
+Use ordinary `torch.fft` operations on CUDA tensors; no launcher flag or new
+installation is needed. Bounded FP32/FP64 and complex64/complex128 tests cover
+batched/strided transforms, odd real lengths, three normalizations, first
+backward and guarded `out=`. Supply the original length when inverting an odd
+real transform: `torch.fft.irfft(spectrum, n=17)`; omitting `n` assumes an even
+length by API design. BF16 FFT promotion remains separate B01 work.
+
+This batch adds qualification of the existing backend, with no dispatch change
+or speed claim. Raw hipFFT/rocFFT callers have weaker input/stride-gap
+preservation guarantees than Torch. See [scope and evidence](bc250_fft_n214_results/README.md).
+
 ## Sparse triangular solves (N2.13)
 
 The selected .104 Torch runtime now marks missing or exactly zero diagonal

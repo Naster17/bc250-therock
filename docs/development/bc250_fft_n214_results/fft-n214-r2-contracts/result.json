@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "checks": [
+    {
+      "name": "prime17_explicit_dft",
+      "status": "passed",
+      "details": {
+        "max_abs_error": 3.286335167103534e-14
+      },
+      "seconds": 0.3441435810018447
+    },
+    {
+      "name": "odd_rfft_finite_difference",
+      "status": "passed",
+      "details": {
+        "coordinates": 3,
+        "max_abs_error": 5.493488997032614e-11
+      },
+      "seconds": 0.19331194299593335
+    },
+    {
+      "name": "plan_reuse_two_private_streams_gpu_trace",
+      "status": "passed",
+      "details": {
+        "cache_sizes": [
+          2,
+          3,
+          3
+        ],
+        "capacity": 1023,
+        "kernels": 34,
+        "fft_kernel_names": [
+          "fft_rtc_back_len_17_factors_17_wgs_120_tpt_1_dim_1_i32_sp_op_CI_CI_unitstride_sbrr_dirReg.kd",
+          "fft_rtc_fwd_len_17_factors_17_wgs_120_tpt_1_dim_1_i32_sp_op_CI_CI_unitstride_sbrr_dirReg.kd"
+        ]
+      },
+      "seconds": 1.2742276529970695
+    }
+  ]
+}

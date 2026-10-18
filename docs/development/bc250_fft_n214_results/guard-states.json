@@ -1,0 +1,76 @@
+{
+  "guards": {
+    "fft-n214-complex": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "fft-n214-complex",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "648452e0cf83607b797c5c9975664e81",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 42844.000624376,
+      "dry_run": false
+    },
+    "fft-n214-r2-complex": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "fft-n214-r2-complex",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "dbba72a0017d4a102ed540bbd2af3d78",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 42917.166388461,
+      "dry_run": false
+    },
+    "fft-n214-r2-real": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "fft-n214-r2-real",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "c98a7620e1cf5043e90c0e03036598cf",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 42923.742031722,
+      "dry_run": false
+    },
+    "fft-n214-r2-contracts": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "fft-n214-r2-contracts",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "cf5dbf7443d9abcecebf2a822dfaaed6",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 42939.991520178,
+      "dry_run": false
+    },
+    "fft-n214-r2-native": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "fft-n214-r2-native",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "a195a2c33c78be95fbde613cbc2a2afe",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 42944.812524973,
+      "dry_run": false
+    },
+    "fft-n214-r2-legacy": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "fft-n214-r2-legacy",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "8c42be09cc023559e3f15e4dc263a8cd",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 42953.842697806,
+      "dry_run": false
+    },
+    "fft-n214-r2-core": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "fft-n214-r2-core",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "e0aef98186da108ebb7bb02d571ee415",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 42959.610201523,
+      "dry_run": false
+    }
+  },
+  "kernel_log_unchanged_including_initial_fixture": true,
+  "running_containers": []
+}

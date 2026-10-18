@@ -1,0 +1,310 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "C2C_17_-1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        1.0052625882587507e-06,
+        6.373023500913218e-07
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "C2C_17_1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        6.25589683947226e-07,
+        1.0516277728611252e-06
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "C2C_32_-1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        9.736923496732599e-07,
+        1.4644765636812732e-06
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "C2C_32_1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        1.2903752105928873e-06,
+        1.0608095126052536e-06
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Z2Z_17_-1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        2.7012892057857038e-15,
+        1.9860273225978185e-15
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Z2Z_17_1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        1.7763568394002505e-15,
+        2.6645352591003757e-15
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Z2Z_32_-1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        3.722145839155691e-15,
+        2.7012892057857038e-15
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Z2Z_32_1",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        3.552713678800501e-15,
+        2.808666774861361e-15
+      ],
+      "work_bytes": 0,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "R2C_17_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        9.007223038355341e-07,
+        7.242574581559337e-07
+      ],
+      "work_bytes": 416,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "R2C_32_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        1.1125460851842806e-06,
+        9.977964716993007e-07
+      ],
+      "work_bytes": 768,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "D2Z_17_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        1.3322676295501878e-15,
+        2.6645352591003757e-15
+      ],
+      "work_bytes": 816,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "D2Z_32_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        2.808666774861361e-15,
+        2.9790409838967277e-15
+      ],
+      "work_bytes": 1536,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "C2R_17_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        5.494428179098065e-07,
+        5.515679970535814e-07
+      ],
+      "work_bytes": 416,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "C2R_32_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        8.342547346273932e-07,
+        1.7425348204369584e-06
+      ],
+      "work_bytes": 768,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Z2D_17_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        1.7763568394002505e-15,
+        1.7763568394002505e-15
+      ],
+      "work_bytes": 816,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Z2D_32_None",
+      "status": "passed",
+      "executions": 2,
+      "max_abs_errors": [
+        3.552713678800501e-15,
+        3.552713678800501e-15
+      ],
+      "work_bytes": 1536,
+      "input_stride": 2,
+      "output_stride": 3,
+      "batches": 3,
+      "stream_rebound": true,
+      "exterior_sentinels_unchanged": true,
+      "output_gap_write_counts": [
+        0,
+        0
+      ]
+    }
+  ]
+}

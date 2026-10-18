@@ -9,6 +9,37 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.14 completed, 2026-10-18:** TheRock qualification `44568c2e2`.
+  Existing native FFT implementation passes; no production defect reproduced,
+  binary/build/default/prefix changes or performance claim. Active native Torch
+  `dc8fea0` / source tests `2b449c4`, libraries `319a235d6` remain installed.
+  New public complex96 + real72 fixtures each pass CPU-double output/weighted
+  backward, actual GPU strides/private stream, input immutability and guarded
+  strided out. Prime/composite/odd, crop/pad, conjugate/broadcast, reordered and
+  four-transform-dimension decomposition covered. Three independent DFT/finite
+  difference/cache-reuse checks pass; trace34 kernels includes native forward/
+  backward rocFFT. Direct hipFFT16 plans/32 executions pass caller workspace,
+  advanced strides, batches3 and synchronized stream rebinding; raw native gaps/
+  input may legally be overwritten, unlike Torch's stronger preservation contract.
+  Retained FFT30/core7 pass. Initial48/96 fixture failures were non-leaf GPU
+  double tensors with absent .grad; detach correction passes, no tolerance change.
+  Failed run/helper preserved. Seven guards ACK/600s, six successful processes,
+  dmesg byte-identical whole batch,145 protected identities and four persistent
+  AOT databases unchanged. No installation/cache reset/native build/reboot;
+  current Torch WS/pytorch-sparse-n213, ROCm/previous links/image/kernel/boot/
+  .105/BIOS/r2 fallback/defaults preserved. [Report](docs/development/bc250_fft_n214_results/README.md)
+  includes cases/commands/source hashes/trace/failure/preservation; raw
+  WS/logs/fft-n214-* and ignored kernel/artifacts/fft-n214. Next preservation
+  baseline WS/logs/fft-n214-qualification-r2/final.json. No running agent job/
+  container/guard; free~7.22GiB. Python CPU segfault unresolved/separate from
+  fixed VM-heap/CSR; test exceptions above are distinct. BF16 promotion B01,
+  native in-place/planar/giant plans/callbacks/graphs/higher-order gradients and
+  broad performance unqualified. **Next N2.15:** audit existing P2 RNG28 and
+  checkpoint/state evidence, then bounded generator offset/state replay and
+  private-stream sequencing through Torch/rocRAND with exact replay/analytic
+  distribution contracts. Do not require CPU/GPU RNG bitstreams to match.
+  Broad N2–N8 remain open; further tiny-eig work stays optional.
+
 - **N2.13 completed and installed, 2026-10-18.** Native Torch `dc8fea0`
   (implementation `a434d03`), final tests `2b449c4`; TheRock build `bbf556448`,
   final controllers `39ea58574`. Public CSR generic SpSV/SpSM and BSR block solves
@@ -1544,7 +1575,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.11 | Explicit pinned-stream GEHRD sessions;128 retained+six CPU/backend fixtures+three lifetime groups/16 refusals pass. Warm prep7.03–12.52x/whole1.28–1.95x in fixtures; cold/default/host limits recorded. |
 | [x]   | N2.12 | Native bounded triangular recovery;128 retained+36 CPU/backend+32 direct+two rescaling+six ABI cases pass; fixed gates/defaults retained. Recovery1.32–2.32x/whole1.17–1.34x in six fixtures; host remains faster. Separate CPU-first profiler defect found. |
 | [x]   | N2.13 | Generic sparse triangular coverage and exact-pivot NaN marking installed:433 public +96 direct generic fixtures, retained sparse41/core7/profiler pass in candidate and installed runtime. General sparse spsolve B02 remains separate. |
-| [ ]   | **N2.14 — next** | Audit existing P2 FFT30; qualify bounded batched/strided complex plans and odd-length real transforms with CPU output/gradient references, preserve AOT cache; BF16 promotion B01 separate. |
+| [x]   | N2.14 | FFT complex96/real72 output+weighted backward+guarded out, three DFT/finite-difference/reuse checks,16 direct plans/32 executions and FFT30/core7 pass; no production defect or binary/default change, AOT cache preserved. BF16 promotion B01 separate. |
+| [ ]   | **N2.15 — next** | Audit retained P2 RNG28 and checkpoint/state coverage; qualify bounded generator offset/state replay and private-stream sequencing through Torch/rocRAND with exact replay/analytic distribution contracts; fix demonstrated defects only. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
