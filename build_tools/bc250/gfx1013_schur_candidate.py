@@ -13,6 +13,8 @@ import time
 
 import torch
 
+from gfx1013_gehrd_session import GehrdBindings, GehrdSession
+
 
 @dataclass
 class SchurResult:
@@ -97,9 +99,17 @@ def _form_q_device(packed, tau):
     return q
 
 
+def _validate_session(session, device):
+    if session is not None:
+        if not isinstance(session, GehrdSession):
+            raise ValueError('Expected a GEHRD session')
+        session._check_context(device)
+
+
 @torch.no_grad()
-def hessenberg(a, *, q_backend="reference", phase_times=None):
-    """Return H,Q with A=Q H Q^H using native rocSOLVER GEHRD reflectors."""
+def hessenberg(a, *, q_backend="reference", phase_times=None, session=None):
+    """Return H,Q with A=Q H Q^H; optional explicit pinned-stream GEHRD session."""
+    _validate_session(session, a.device)
     _validate(a)
     if q_backend not in ("reference", "device"):
         raise ValueError('Q backend must be reference or device')
@@ -108,27 +118,37 @@ def hessenberg(a, *, q_backend="reference", phase_times=None):
     with torch.cuda.device(a.device):
         if n == 1:
             return a.clone(), torch.eye(n, dtype=a.dtype, device=a.device)
-        blas = ctypes.CDLL('librocblas.so')
-        solver = ctypes.CDLL('librocsolver.so')
-        ptr, integer = ctypes.c_void_p, ctypes.c_int
-        blas.rocblas_create_handle.argtypes = [ctypes.POINTER(ptr)]
-        blas.rocblas_create_handle.restype = integer
-        blas.rocblas_set_stream.argtypes = [ptr, ptr]
-        blas.rocblas_set_stream.restype = integer
-        blas.rocblas_destroy_handle.argtypes = [ptr]
-        blas.rocblas_destroy_handle.restype = integer
-        gehrd = getattr(solver, 'rocsolver_cgehrd' if a.dtype == torch.complex64 else 'rocsolver_zgehrd')
-        gehrd.argtypes = [ptr, integer, integer, integer, ptr, integer, ptr]
-        gehrd.restype = integer
-        # Always own the overwritten matrix, even if the input is already column-major.
+        ptr = ctypes.c_void_p
+        if phase_times is not None:
+            torch.cuda.synchronize()
+            phase_started = time.perf_counter()
+        bindings = GehrdBindings() if session is None else session.bindings
+        gehrd = bindings.gehrd[a.dtype]
+        if phase_times is not None:
+            torch.cuda.synchronize()
+            phase_times['binding_ms'] = 1000*(time.perf_counter()-phase_started)
+            phase_started = time.perf_counter()
+        # Always own the overwritten matrix, including already-column-major input.
         packed = a.mT.clone(memory_format=torch.contiguous_format).mT
         tau = torch.empty(n-1, dtype=a.dtype, device=a.device)
-        handle = ptr()
-        _status(blas.rocblas_create_handle(ctypes.byref(handle)), 'create_handle')
+        if phase_times is not None:
+            torch.cuda.synchronize()
+            phase_times['allocation_copy_ms'] = 1000*(time.perf_counter()-phase_started)
+            phase_started = time.perf_counter()
+        handle = ptr() if session is None else session.handle
+        if session is None:
+            _status(bindings.create(ctypes.byref(handle)), 'create_handle')
+        else:
+            session._acquire(a.device)
         try:
-            _status(blas.rocblas_set_stream(handle, ptr(torch.cuda.current_stream().cuda_stream)), 'set_stream')
             if phase_times is not None:
                 torch.cuda.synchronize()
+                phase_times['handle_create_ms' if session is None else 'handle_acquire_ms'] = 1000*(time.perf_counter()-phase_started)
+                phase_started = time.perf_counter()
+            _status(bindings.set_stream(handle, ptr(torch.cuda.current_stream().cuda_stream)), 'set_stream')
+            if phase_times is not None:
+                torch.cuda.synchronize()
+                phase_times['set_stream_ms'] = 1000*(time.perf_counter()-phase_started)
                 started = time.perf_counter()
             _status(gehrd(handle, n, 1, n, ptr(packed.data_ptr()), n, ptr(tau.data_ptr())), 'gehrd')
             if phase_times is not None:
@@ -139,9 +159,24 @@ def hessenberg(a, *, q_backend="reference", phase_times=None):
             if phase_times is not None:
                 torch.cuda.synchronize()
                 phase_times['q_form_ms'] = 1000*(time.perf_counter()-started)
-            return torch.triu(packed, diagonal=-1), q
+                phase_started = time.perf_counter()
+            h = torch.triu(packed, diagonal=-1)
+            if phase_times is not None:
+                torch.cuda.synchronize()
+                phase_times['h_extract_ms'] = 1000*(time.perf_counter()-phase_started)
+            if session is not None:
+                session.uses += 1
+            return h, q
         finally:
-            _status(blas.rocblas_destroy_handle(handle), 'destroy_handle')
+            if phase_times is not None:
+                phase_started = time.perf_counter()
+            if session is None:
+                _status(bindings.destroy(handle), 'destroy_handle')
+            else:
+                session._release()
+            if phase_times is not None:
+                torch.cuda.synchronize()
+                phase_times['handle_destroy_ms' if session is None else 'handle_release_ms'] = 1000*(time.perf_counter()-phase_started)
 
 
 def _qr_similarity_reference(t, q, shift, m):
@@ -245,13 +280,14 @@ def _schur_chunk_device(t, q, max_iterations, chunk_size):
 
 
 @torch.no_grad()
-def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16, q_backend="reference"):
+def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16, q_backend="reference", session=None):
     """Bounded explicit shifted QR experiment; inspect info before using T's diagonal.
 
     Positive info is not success and triggers no hidden host fallback. Q contains
     Schur vectors, not right eigenvectors of the original nonsymmetric matrix.
     """
     # Device QR is an explicit experiment; the reference remains the default.
+    _validate_session(session, a.device)
     _validate(a)
     if q_backend not in ("reference", "device"):
         raise ValueError('Q backend must be reference or device')
@@ -271,7 +307,7 @@ def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16, q_bac
         unit, scale = _normal_scale(a)
         if not bool(scale > 0):
             return SchurResult(a.clone(), torch.eye(n, dtype=a.dtype, device=a.device), 0, 0, n-1)
-        t, q = hessenberg(unit, q_backend=q_backend)
+        t, q = hessenberg(unit, q_backend=q_backend, session=session)
         if qr_backend in ("device_control", "device_chunked"):
             if qr_backend == "device_control":
                 t, q, info, iterations, deflations = _schur_control_device(t, q, max_iterations)
