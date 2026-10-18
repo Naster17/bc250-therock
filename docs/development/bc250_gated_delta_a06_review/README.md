@@ -1,5 +1,9 @@
 # A06 recheck — 2026-10-17
 
+> **Later correction (2026-10-18):** [A06/A07 qualification](../bc250_a06_a07_results/README.md)
+> fixes low-precision model parity using reference-ordered GPU preparation/scan.
+> The failure measurements below are retained historical evidence.
+
 **The native preparation remains implemented and passes its recorded operator
 references, but broader BF16 LoRA numerical qualification is reopened.** The
 stronger nonzero-adapter comparison exceeds the existing per-adapter4% relative

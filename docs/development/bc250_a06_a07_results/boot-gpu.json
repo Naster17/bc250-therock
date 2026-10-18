@@ -1,0 +1,85 @@
+{
+  "kernel": "7.2.10-bc250rocm-r3",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "lt",
+      "exit": 0,
+      "seconds": 4.069571601,
+      "reference_cases": 664
+    },
+    {
+      "name": "sparse",
+      "exit": 0,
+      "seconds": 1.4170281129999935,
+      "reference_cases": 150
+    },
+    {
+      "name": "tensor",
+      "exit": 0,
+      "seconds": 0.8657816179999998,
+      "reference_cases": 316
+    },
+    {
+      "name": "torch",
+      "exit": 0,
+      "seconds": 9.227123053
+    },
+    {
+      "name": "memory-process-0",
+      "exit": 0,
+      "seconds": 0.6652262909999962
+    },
+    {
+      "name": "memory-process-1",
+      "exit": 0,
+      "seconds": 0.6655957440000009
+    }
+  ],
+  "sdma": false,
+  "experimental_vm_heap": "existing safe default retained",
+  "limits": "No performance, arbitrary failure-path injection, migration, SDMA/reset or sustained qualification",
+  "runtime": {
+    "image": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59",
+    "profile": "gfx1013-priority2-n18-dev",
+    "therock_revision": "7f73d25f25c96d40f8768ddcbbc1cb2ad43ed50d",
+    "rocm_libraries_revision": "fcf7a7142af8c258164e106e66bf893c7f563d15",
+    "torch_revision": "ba6cbcd2fafac1a6503f1f580033fbf72ad2a4f9"
+  },
+  "explicit_vmm_requested": true,
+  "memory_processes": [
+    {
+      "allocation_rounds": 24,
+      "explicit_vmm_qualified": true,
+      "explicit_vmm_rounds": 16
+    },
+    {
+      "allocation_rounds": 24,
+      "explicit_vmm_qualified": true,
+      "explicit_vmm_rounds": 16
+    }
+  ],
+  "memory_probe": "hip-memory-remap",
+  "harness_sha256": "732e7c8fd745dd19e73054c906fca061f24dd0ab0ef30b84b2ad2d7d0c8846ac",
+  "memory_probe_sha256": "b1ab6571428fa6f57db8a0e57e6cf2240dbb31cde7c498743a293c6210ea1b1e",
+  "runtime_blas_pair_sha256": {
+    "lib/libhipblaslt.so.1.5": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    ".kpack/blas_lib_gfx1013.kpack": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5"
+  },
+  "phase": "memory-process-1",
+  "torch": {
+    "checks": 19,
+    "torch": "2.13.0a0+gfx1013",
+    "scope": "eager CPU-reference correctness only"
+  },
+  "kernel_log": {
+    "comparable": true,
+    "new_lines": [],
+    "fault_lines": []
+  },
+  "final_kernel_log": {
+    "comparable": true,
+    "new_lines": [],
+    "fault_lines": []
+  }
+}

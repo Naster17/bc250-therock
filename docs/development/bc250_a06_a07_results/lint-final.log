@@ -1,0 +1,8 @@
+No changes detected in lint configuration files. Skipping setup.
+Using existing generated files for linting.
+Done.
+$ uvx --python 3.10 lintrunner@0.12.7 list
+$ uvx --python 3.10 lintrunner@0.12.7 -a --take=PYFMT,RUFF,FLAKE8,NEWLINE,TESTOWNERS,TEST_HAS_MAIN,IMPORT_LINTER,SET_LINTER,DOCSTRING_LINTER torch/nn/bc250_gated_delta.py torch/nn/attention/_gfx1013.py test/test_bc250_gated_delta.py test/test_bc250_attention_a07.py
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.
+Successfully applied all patches.

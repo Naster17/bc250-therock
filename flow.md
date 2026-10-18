@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-17 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-18 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,52 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **A06 precision correction + A07 head256 completed2026-10-18:** Torch
+  `71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8`; installed runtime helpers
+  `e4f4b3854` (full revision in SOURCE_A06_A07.json). FP16/BF16/autocast full
+  gated-delta now preserves reference GPU preparation/scan ordering; non-autocast
+  FP32/native direct preparation retained.42 A06 tests + four exact autocast cases
+  pass; actual2B training/checkpoint/nonzero-B all372 BF16 adapter gradients exact
+  at65/1024. This supersedes the failed BF16 qualification below within this scope.
+  A07 explicit D<=256/tile16 above128: scalar tiled FP32/FP16/inference; BF16 D>128
+  training uses math-forward/native-LSE+tiled-backward hybrid.36 tests pass; actual
+  model worst adapter relativeL2~2.17%/1.31%65/1024 within unchanged4%;12 D256 calls
+  verify six forward + six checkpoint recomputations. Shared fixture now .train():
+  earlier actual-model tests that only enabled checkpointing were eval and did not
+  prove recomputation; prior operator and real CLI evidence remains separate.
+  Five paired attention fixtures through4096: BF16 hybrid lower peak but slower
+  (1024:27.42->32.98ms,156->112MiB extra peak). Forward temporary allocations remain
+  quadratic, saved state linear. Math remains default; no universal/model speedup.
+  App's independent A06 hook preserved/corrected and banner updated. Inner/outer
+  trainer --attention-backend tiled is opt-in for a new output/run; default math
+  preserves legacy fingerprint schema, tiled records a distinct backend. Exact
+  synthetic fresh/resume continuation passes within both backends, all372 adapter
+  tensors plus optimizer/scheduler/RNG/progress. User checkpoint500 unchanged;
+  this does not prove bitwise continuity across old buggy code/backend changes.
+  Final exclusive-lock deployment eight gates pass:42/36/four autocast/three
+  actual model/two CLI backend/69 A05/seven old-attention/seven core groups.
+  Five installed source hashes match,39 protected DSO/DB/kpack/frozen/consumer
+  hashes unchanged.32 GPU guards across candidates/retries all ACK/600s and unchanged
+  per-run dmesg; four failures retained (eval harness, pure BF16 model threshold,
+  stale trainer assertion, moved chat file). A separate r2 guard refusal occurred
+  before GPU execution and rolled back. Found .104 booted r2 at resume; restored
+  documented one-shot r3, base SSH/watchdog/cooling and full GPU/VMM gates pass;
+  boot e3ed129b-9c41-4d0c-ab84-5ab54720bb8f. r2 remains persistent fallback.
+  Recovery WS/recovery/a06-a07-before-r4; earlier original/r2/r3 attempt directories
+  retained. SOURCE_A06_A07.json in WS/current, logs WS/logs/a06-a07-deployment-r4
+  and a06*/a07*. [Results/evidence](docs/development/bc250_a06_a07_results/README.md).
+  Full local Git, patch0007 and verified incremental bundle onba6cbcd preserved;
+  older SDPA three-file reconstruction gap remains. Nine targeted spin/lintrunner
+  -a checks pass; no full CI/type claim. Python/Triton source-only, no native build;
+  existing Triton caches retained, ccache untouched. Usage docs updated locally and
+  /home/nik/finetune-n7/BC250_TRAINING_OPS.md. No BIOS/image/DSO/default BLAS/SDMA0/
+  heap-off/.105/user src/data change. Historical Python CPU segfault unresolved,
+  distinct from fixed VM-heap/CSR corruption. No running agent job/container/guard
+  deadline. **Exact next A08:** inspect existing dense INT8->INT32 _int_mm/Lt code
+  and audit evidence; implement one bounded native route with CPU integer refs,
+  overflow/layout/scalar/epilogue contracts and targeted ccache build settings.
+  Then A09, then N2.7; full native FLA, dropout/compile/graphs remain extensions.
 
 - **A06 recheck2026-10-17: BF16 LoRA qualification reopened; production unchanged.**
   The original actual2B test initialized LoRA B=0, so its372 named gradients included

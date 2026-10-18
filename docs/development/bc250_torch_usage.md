@@ -14,24 +14,32 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
-## Gated-delta experimental API: BF16 review failed (2026-10-17)
+## Corrected gated-delta and optional head256 attention (2026-10-18)
 
-`torch.nn.bc250_gated_delta` implements native preparation and explicit ATen
-solve/scan composition. Independent operator tests pass, but stronger actual2B
-BF16 LoRA tests with372 nonzero adapter gradients exceed the unchanged4% worst-
-adapter relativeL2 gate:4.002% at65 and5.425% at1024 tokens. Broader resumed-
-training parity and convergence remain unqualified. [Recheck/results](bc250_gated_delta_a06_review/README.md).
+The .104 development runtime now uses reference-ordered **GPU** preparation/scan
+for full FP16/BF16/autocast gated-delta. This closes the recorded BF16 parity gap:
+all372 nonzero adapter gradients exactly match the reference in actual2B65/1024
+fixtures. Native non-autocast FP32/direct preparation remains. This is not a full
+FLA backend. The existing Qwen3.5 app hook remains enabled and now reports
+“precision-safe GPU gated-delta active.” `BC250_GATED_DELTA=0` among the inner
+`bc250-train --env` options selects the reference; shell assignment alone is not
+inherited. Other projects must opt into the explicit API.
 
-An independent edit to `/home/nik/finetune-n7/replica/bc250_ops.py` now defaults
-its A06 hook on (`BC250_GATED_DELTA=1`). This review preserved that edit and did
-not qualify its integration. For a fresh training process, add
-`--env BC250_GATED_DELTA=0` among the inner `bc250-train` launcher options,
-before the Python script, to select the reference path. Host shell assignment
-alone is not inherited by the launcher's environment allowlist.
+Math attention remains the default. For a **new output/run**, opt into head256:
 
-The earlier~3.6%/220MiB result belongs to a synthetic initial-adapter fixture;
-it is not a qualified gain for resumed training. Only preparation was fused;
-solves, scan and most backward computation remain. A06 parity work precedes A07.
+```sh
+~/finetune-n7/dlvenv/bin/python ~/finetune-n7/scripts/train_bc250.py \
+  --attention-backend tiled --output ~/finetune-n7/checkpoints/new-tiled-run
+```
+
+BF16 D>128 training uses math forward plus native tiled backward. Saved state is
+linear but forward temporary allocations remain quadratic. It reduced isolated
+peak memory while running slower in the measured BF16 fixtures, so it is not an
+automatic LoRA speed switch. A changed backend gets a distinct checkpoint
+fingerprint. Default math preserves the earlier fingerprint schema; old
+checkpoints are not rewritten. Exact fresh/resume continuation was checked
+within each corrected backend, not across old buggy code/backend changes.
+[Results, limitations and recovery](bc250_a06_a07_results/README.md).
 
 ## Sparse backward and measured cost (follow-up, updated 2026-10-16)
 
@@ -148,11 +156,10 @@ installation or checkpoint migration is needed. Resume also accepts PEFT's
 equivalent shortened target names while requiring the exact resolved modules,
 rank and alpha. Bounded fresh/resume continuation passed.
 
-Gated-delta attention still uses the GPU PyTorch reference; its FLA warning is
-valid. A01 corrects the reproduced MIOpen timing/workspace faults within its
-recorded convolution scope; it does not qualify all MIOpen operations. Qwen3.5 uses
-math SDPA: its head width256 exceeds the separate tiled backend's128 limit.
-The older Qwen3-1.7B tiled examples below do not describe this trainer's options.
+Gated-delta now uses the corrected GPU operation described above; complete native
+FLA fusion is absent. A01 corrects reproduced MIOpen timing/workspace faults
+within its recorded scope, not all operations. Qwen3.5 keeps math SDPA by default;
+head256 tiled/hybrid is now an explicit option as described above.
 See [usage and opt-out](../../build_tools/bc250/qwen35_training_usage.md), also
 installed as `/home/nik/finetune-n7/BC250_TRAINING_OPS.md`, and the
 [qualification report](bc250_qwen35_training_results/README.md).
@@ -192,8 +199,8 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 ```
 
-This prototype supports eager first-order FP32/FP16/BF16 attention, grouped heads,
-head width up to128 and sequence length up to4096, with the documented mask
+This explicit backend supports eager first-order FP32/FP16/BF16 attention, grouped heads,
+head width up to256 and sequence length up to4096, with the documented mask
 contracts. Attention dropout, mask gradients, higher-order gradients and compiled/
 graph operation are unqualified or unsupported. Ordinary functional SDPA keeps its
 math fallback. Tiled attention supports CUDA autocast. Causal head128 kernel fixtures improved

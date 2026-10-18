@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "status": "passed",
+      "dtype": "torch.float16",
+      "normalize": false,
+      "exact_output_and_five_gradients": true
+    },
+    {
+      "status": "passed",
+      "dtype": "torch.float16",
+      "normalize": true,
+      "exact_output_and_five_gradients": true
+    },
+    {
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "normalize": false,
+      "exact_output_and_five_gradients": true
+    },
+    {
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "normalize": true,
+      "exact_output_and_five_gradients": true
+    }
+  ],
+  "source_sha256": "21398daf2bdae7b6cfdaac08e510c97f94c5ed8d709213de638ca181a868c64e"
+}

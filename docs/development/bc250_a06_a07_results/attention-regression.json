@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "checks": [
+    "quiet_normal_probe_and_retained_explicit_failure_diagnostics",
+    "default_functional_sdpa_remains_quiet_math_fallback",
+    "zero_scale_and_large_logits_output_and_gradients",
+    "nondefault_gpu_stream",
+    "qwen17_bf16_head128_gqa16_to8_causal65_cpu_references",
+    "qwen3_bf16_lora_two_steps_checkpoint_gradients_and_cached_decode",
+    "deployed_callers_new_api_backward_scope_and_cli_help"
+  ],
+  "training": [
+    {
+      "step": 0,
+      "loss": 4.7987236976623535,
+      "reference_loss": 4.798731803894043,
+      "logit_relative_l2": 0.0041403307218278425,
+      "gradient_relative_l2": {
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight": 0.0,
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight": 0.0080877582006987,
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight": 0.0,
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight": 0.00548344762161224
+      }
+    },
+    {
+      "step": 1,
+      "loss": 4.796833038330078,
+      "reference_loss": 4.796725273132324,
+      "logit_relative_l2": 0.004303459168020746,
+      "gradient_relative_l2": {
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight": 0.00462925644121582,
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight": 0.008594460842680866,
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight": 0.0041875780762664514,
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight": 0.006008226730256329
+      }
+    }
+  ],
+  "explicit_diagnostics": [
+    "[W1018 08:12:02.087775564 sdp_utils.cpp:976] Warning: Torch was not compiled with memory efficient attention. (function can_use_mem_efficient_attention)\n"
+  ],
+  "qwen17_head_geometry_relative_l2": [
+    0.0015700218844614032,
+    0.001672948503130862,
+    0.0016644389797589186,
+    0.0016608436550082234
+  ],
+  "warnings": [],
+  "caller_layout": {
+    "train_lora.py": "/home/nik/finetune-n7/scripts/train_lora.py",
+    "chat.py": "/home/nik/finetune-n7/replica/chat.py"
+  }
+}

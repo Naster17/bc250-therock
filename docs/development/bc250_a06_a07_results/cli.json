@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "status": "passed",
+      "backend": "math",
+      "exact_adapter_tensors": 372,
+      "exact_optimizer_scheduler_rng_progress": true
+    },
+    {
+      "status": "passed",
+      "backend": "tiled",
+      "exact_adapter_tensors": 372,
+      "exact_optimizer_scheduler_rng_progress": true
+    }
+  ],
+  "math_fingerprint_preserved": true,
+  "backend_fingerprints_distinct": true
+}

@@ -1,0 +1,583 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "results": [
+    {
+      "name": "test_autocast_mixed_False_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "mixed": false
+    },
+    {
+      "name": "test_autocast_mixed_False_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "mixed": false
+    },
+    {
+      "name": "test_autocast_mixed_True_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "mixed": true
+    },
+    {
+      "name": "test_autocast_mixed_True_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "mixed": true
+    },
+    {
+      "name": "test_checkpoint_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7"
+    },
+    {
+      "name": "test_checkpoint_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7"
+    },
+    {
+      "name": "test_cpu_reference_case0_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        2,
+        4,
+        2,
+        17,
+        19,
+        256,
+        "none",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.0016457787894234284,
+        0.0016424714835050608,
+        0.0016562941481497253,
+        0.0016496934750558207
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case0_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        2,
+        4,
+        2,
+        17,
+        19,
+        256,
+        "none",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.00020724009212250006,
+        0.00020773768613953928,
+        0.00020680080779581094,
+        0.0002079506047090668
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case0_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        2,
+        4,
+        2,
+        17,
+        19,
+        256,
+        "none",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        8.111230367090181e-08,
+        3.009377933536865e-07,
+        3.040257240373414e-07,
+        2.9753130535834747e-07
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case1_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        33,
+        41,
+        256,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.0014377288760578292,
+        0.0016854125768879515,
+        0.0016394925007381306,
+        0.0016910356072850146
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case1_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        33,
+        41,
+        256,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.00017368678127671101,
+        0.00021120757046608443,
+        0.00020891395723306812,
+        0.000203318268110304
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case1_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        33,
+        41,
+        256,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        5.6352525403050086e-08,
+        2.2350365686421325e-07,
+        2.2804244478424347e-07,
+        1.742696764041351e-07
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case2_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        17,
+        33,
+        256,
+        "bool",
+        0.13
+      ],
+      "output_qkv_relative_l2": [
+        0.0016531305287821793,
+        0.001634894707306845,
+        0.001661146195516411,
+        0.00166010170696214
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case2_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        17,
+        33,
+        256,
+        "bool",
+        0.13
+      ],
+      "output_qkv_relative_l2": [
+        0.00020617034750779523,
+        0.00020640087200693465,
+        0.00020715858784107157,
+        0.00020769556070050494
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case2_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        17,
+        33,
+        256,
+        "bool",
+        0.13
+      ],
+      "output_qkv_relative_l2": [
+        8.303895124107403e-08,
+        2.658122956580839e-07,
+        2.7084812456315265e-07,
+        2.7486914486225227e-07
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case3_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        4,
+        2,
+        19,
+        23,
+        256,
+        "additive",
+        -0.2
+      ],
+      "output_qkv_relative_l2": [
+        0.0016346097704076615,
+        0.0016242490921152097,
+        0.0016537417885970271,
+        0.0016447925757074658
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case3_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        4,
+        2,
+        19,
+        23,
+        256,
+        "additive",
+        -0.2
+      ],
+      "output_qkv_relative_l2": [
+        0.00020504662476110967,
+        0.00020889535520603035,
+        0.00020449334910793633,
+        0.000210093474093228
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case3_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        4,
+        2,
+        19,
+        23,
+        256,
+        "additive",
+        -0.2
+      ],
+      "output_qkv_relative_l2": [
+        8.607459304735195e-08,
+        3.2254137174629725e-07,
+        3.234565163318413e-07,
+        3.010023955566131e-07
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case4_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        5,
+        7,
+        129,
+        "none",
+        0.0
+      ],
+      "output_qkv_relative_l2": [
+        0.0018440697231277819,
+        0.0,
+        0.0,
+        0.001972518582416562
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case4_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        5,
+        7,
+        129,
+        "none",
+        0.0
+      ],
+      "output_qkv_relative_l2": [
+        0.00023112604303157067,
+        0.0,
+        0.0,
+        0.00022189989191963698
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case4_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        5,
+        7,
+        129,
+        "none",
+        0.0
+      ],
+      "output_qkv_relative_l2": [
+        5.15292154129109e-08,
+        0.0,
+        0.0,
+        8.55056968216607e-08
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case5_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        19,
+        3,
+        256,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.0015431485543600614,
+        0.0016656625294563148,
+        0.0016894660084500214,
+        0.0016973989458190437
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case5_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        19,
+        3,
+        256,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.00019333826784499075,
+        0.000207411454528652,
+        0.00020561778907967235,
+        0.00021962017643131605
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case5_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        19,
+        3,
+        256,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        4.9494587793460765e-08,
+        1.6302089252860893e-07,
+        1.5633279824719617e-07,
+        9.679596191801609e-08
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case6_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        3,
+        19,
+        255,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.0011311539453763989,
+        0.0016123330931814288,
+        0.0017463420496616707,
+        0.0016013305065436963
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case6_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        3,
+        19,
+        255,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        0.00013594718670447773,
+        0.00021127196847195694,
+        0.00021366366925501139,
+        0.00021485996869820043
+      ]
+    },
+    {
+      "name": "test_cpu_reference_case6_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "case": [
+        1,
+        2,
+        1,
+        3,
+        19,
+        255,
+        "causal",
+        null
+      ],
+      "output_qkv_relative_l2": [
+        3.5179902746381064e-08,
+        8.98932407875467e-08,
+        9.619743002192065e-08,
+        7.261003377255507e-08
+      ]
+    },
+    {
+      "name": "test_empty_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "empty_geometries": 3
+    },
+    {
+      "name": "test_empty_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "empty_geometries": 3
+    },
+    {
+      "name": "test_empty_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "empty_geometries": 3
+    },
+    {
+      "name": "test_hybrid_forward_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "reference_forward_calls": 1
+    },
+    {
+      "name": "test_inference_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "fully_tiled_inference": true
+    },
+    {
+      "name": "test_inference_cuda_float16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "fully_tiled_inference": true
+    },
+    {
+      "name": "test_inference_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "fully_tiled_inference": true
+    },
+    {
+      "name": "test_long_geometry_cuda_bfloat16",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "output_qkv_relative_l2": [
+        0.0,
+        4.312011878937483e-05,
+        5.768194023403339e-05,
+        3.036614907614421e-05
+      ],
+      "shape": [
+        1,
+        8,
+        2,
+        1024,
+        256
+      ]
+    },
+    {
+      "name": "test_refusals_cuda_float32",
+      "status": "passed",
+      "module": "/workspace/pytorch-work/torch/nn/attention/_gfx1013.py",
+      "source_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+      "refusals": 4
+    }
+  ]
+}

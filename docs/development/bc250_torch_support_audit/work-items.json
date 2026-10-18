@@ -49,16 +49,16 @@
     {
       "id": "A06",
       "feature": "Native gated-delta / FLA training kernels missing",
-      "evidence": "Installed Torchba6cbcd native scalar/wave32 preparation: Q/K normalization/scaling, beta*K/V, layout/padding and cumulative decay with all five gradients.40 independent CPU-reference tests; tiny and actual2B BF16/rank16 LoRA372-gradient comparisons. Paired synthetic1024-token forward/backward7.653->7.390s and ~220MiB lower peak. Installed A05/core gates pass. See ../bc250_gated_delta_a06_results/README.md. Recheck: original actual2B B=0 left A gradients zero. All372-nonzero-gradient BF16 cases fail existing4% gate (4.002%/5.425% at65/1024); FP32 passes. Exact ATen prep control gives zero difference; original-scan candidate still fails and was not installed. See ../bc250_gated_delta_a06_review/README.md.",
-      "next": "Before A07: retain seed61718/nonzero-B65/1024; inspect reference-ordered Q/K normalization/reduction/derivative and decay-prefix rounding; require unchanged4% model gate and independent operator references. Existing app independently defaults A06 on; use inner --env BC250_GATED_DELTA=0 until qualified.",
-      "status": "implemented_first_substage_BF16_model_qualification_reopened"
+      "evidence": "Torch71a0426: reference-ordered GPU preparation/scan for low-precision/autocast full operation; native non-autocast FP32/direct preparation retained.42 tests+4 exact autocast cases; actual2B BF1665/1024 all372 nonzero gradients exact. Per-backend fresh/resume CLI continuation exact. Earlier native low-precision model failures retained; no speedup claim. See ../bc250_a06_a07_results/README.md.",
+      "next": "A08 then A09 before N2.7; deeper native solves/scan/FLA and broad convergence remain unqualified.",
+      "status": "completed_bounded_precision_corrected"
     },
     {
       "id": "A07",
       "feature": "Efficient attention gaps: head256, dropout, compile/graph support",
-      "evidence": "Built-in flash/efficient disabled; custom D256 explicit refusal, current Qwen3.5 full attention D256 uses math",
-      "next": "Extend scalar tiled attention one contract at a time (D256 first), with GQA/masks/all-masked rows/gradients/LoRA refs. Separate later dropout RNG and compiled/graph qualification. Vendor MFMA flash kernels cannot simply be enabled.",
-      "status": "queued"
+      "evidence": "Torch71a0426: D<=256/tile16 above128, scalar tiled FP32/FP16/inference; BF16 D>128 training math-forward/native-LSE+tiled-backward hybrid.36 tests; actual2B train/checkpoint twelve head256 calls; worst BF16 adapter relativeL2 2.17%/1.31%65/1024. Exact fresh/resume per backend. BF16 lower peak but slower; math default. See ../bc250_a06_a07_results/README.md.",
+      "next": "A08. Separate future dropout RNG, compile/graphs, fully tiled BF16 deep-model parity. Hybrid forward temporary allocations remain quadratic.",
+      "status": "completed_bounded_head256"
     },
     {
       "id": "A08",
@@ -131,14 +131,16 @@
       "status": "queued"
     }
   ],
-  "next": "Before A07: retain seed61718/nonzero-B65/1024; inspect reference-ordered Q/K normalization/reduction/derivative and decay-prefix rounding; require unchanged4% model gate and independent operator references. Existing app independently defaults A06 on; use inner --env BC250_GATED_DELTA=0 until qualified.",
+  "next": "A08: inspect existing dense INT8/INT32 Lt and Torch paths; implement one bounded native route with overflow/layout/scalar/epilogue references, preserving dense floating defaults.",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
     "A01",
     "A02",
     "A03",
     "A04",
-    "A05"
+    "A05",
+    "A06",
+    "A07"
   ],
-  "next_primary_item": "A06"
+  "next_primary_item": "A08"
 }

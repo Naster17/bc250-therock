@@ -1,5 +1,11 @@
 # Qwen3.5 training operations — 2026-10-16
 
+> **Fixture correction (2026-10-18):** `from_pretrained()` leaves actual models
+> in eval mode. Earlier actual-model tests that only enabled checkpointing did
+> not prove checkpoint recomputation. The shared fixture now calls `.train()`;
+> [A06/A07](../bc250_a06_a07_results/README.md) asserts training/checkpoint flags
+> and twelve actual head256 calls. Earlier real CLI training/resume remains distinct.
+
 Implemented and enabled two application-scoped native gfx1013 training helpers in
 `/home/nik/finetune-n7/replica/train.py` on .104. Existing `scripts/train_bc250.py`
 uses them by default through `replica/bc250_ops.py`; other projects are unchanged.

@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "kernel": "7.2.10-bc250rocm-r3",
+  "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+  "source_sha256": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-sparse-followup/torch/nn/bc250_gated_delta.py": "21398daf2bdae7b6cfdaac08e510c97f94c5ed8d709213de638ca181a868c64e",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-sparse-followup/torch/nn/attention/_gfx1013.py": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+    "/home/nik/finetune-n7/replica/train.py": "bee80abde3fd065c0145fb8f3483a42c18643e0cc2cb9007f30fcb7d06c6e758",
+    "/home/nik/finetune-n7/replica/bc250_ops.py": "f0bcb35eadd3cde6c08dbeca0929358e4361f1f2b7358f2cad5288517f9fa4e6",
+    "/home/nik/finetune-n7/scripts/train_bc250.py": "fa7b7ee1321ef6300f398be09a461d55a32e4de552b6d503675f22799b53909a"
+  },
+  "protected_files_unchanged": 39,
+  "installed_gates": [
+    "a06-installed-corrected-r4",
+    "a07-installed-d256-r4",
+    "a06-installed-autocast-r4",
+    "a06-a07-installed-model-r4",
+    "a06-a07-installed-cli-r4",
+    "a06-a07-installed-training-r4",
+    "a06-a07-installed-attention-regression-r4",
+    "a06-a07-installed-core-r4"
+  ],
+  "current_prefix": "/opt/bc250-stack/dev/priority1",
+  "current_torch": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-sparse-followup",
+  "runtime_code_revision": "e4f4b3854194537bf7c0dbfca815d2cb7574e975",
+  "torch_revision": "71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8",
+  "doc_sha256": "027b790c7bef99544a6e44ae9bee8de0a757f74ac295f4cc2df11f2def495fdc",
+  "previous_doc_sha256": "084843ea94eaf70233c05045c36858a7d089b1435dd2ef4c1f9ccac7449bca2c",
+  "boot_fallback": "r2 remains persistent default; r3 one-shot consumed",
+  "disk_available_bytes": 6259834880,
+  "running_agent_jobs": [],
+  "running_containers": []
+}

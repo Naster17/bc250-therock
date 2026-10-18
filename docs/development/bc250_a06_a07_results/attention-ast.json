@@ -1,0 +1,16 @@
+{
+  "base_revision": "ba6cbcd2fafac1a6503f1f580033fbf72ad2a4f9",
+  "final_revision": "71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8",
+  "unchanged_top_level_asts": [
+    "_mask_scores",
+    "_backward_q",
+    "_backward_kv",
+    "register_transformers_attention"
+  ],
+  "changed_top_level_asts": [
+    "_forward",
+    "_Attention",
+    "scaled_dot_product_attention"
+  ],
+  "scope": "AST comparison only, not execution proof. Forward adds LSE_ONLY for BF16 D>128 training; native backward kernel ASTs unchanged."
+}

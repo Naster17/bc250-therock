@@ -473,6 +473,33 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 
 ## Component coverage: implemented versus existing native backend
 
+**A06 correction and A07 head256 qualified on .104 — 2026-10-18.** Torch
+`71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8`, runtime helpers `e4f4b3854`.
+Low-precision/autocast full gated-delta uses reference-ordered GPU preparation and
+scan; non-autocast FP32/native standalone preparation remains. All372 nonzero
+adapter gradients match exactly in BF16 actual2B65/1024 fixtures. A07 extends
+explicit attention through D256: scalar tiled FP32/FP16/inference, BF16 D>128
+training math-forward/native-LSE+tiled-backward hybrid.36 operator/dispatch tests,
+42 A06 tests, four exact autocast cases, three actual-model train/checkpoint cases
+and exact fresh/resume CLI checks within math and tiled pass. Actual-model A07
+worst gradient relativeL2 is2.17%/1.31%, within unchanged4%;12 head256 calls prove
+forward+checkpoint recomputation. The fixture now explicitly calls `.train()`;
+earlier actual-model tests that only enabled checkpointing did not establish its
+execution. BF16 hybrid lowers isolated peak memory but is slower; forward temporary
+allocations remain quadratic. Math stays default; `--attention-backend tiled` is
+an explicit new-run option with a distinct fingerprint. No automatic speedup claim.
+Full FLA/dropout/compile/graphs/higher-order remain unqualified. [Report and evidence](bc250_a06_a07_results/README.md).
+Final exclusive-lock deployment passes eight installed gates; five source/app
+hashes match and39 protected runtime hashes remain unchanged. Recovery
+`WS/recovery/a06-a07-before-r4`, provenance `WS/SOURCE_A06_A07.json`. At resume
+r2 was active; documented one-shot r3 base/GPU/VMM recovery gates passed, with r2
+still persistent fallback.32 GPU guards all acknowledged with unchanged per-run
+dmesg; failed harness/numerical/legacy-caller attempts retained separately. No
+active agent job/container/deadline. Next primary **A08**, then A09, then N2.7. Historical Python CPU segfault remains
+unresolved and distinct from the fixed VM-heap/CSR corruption. Earlier failed A06
+review and original timing evidence below remain historical and are superseded
+only within this corrected scope.
+
 **A06 recheck2026-10-17: BF16 LoRA qualification reopened; production unchanged.**
 The original actual2B test initialized LoRA B=0, so its372 named gradients included
 zero A gradients. New seed61718/std0.001 nonzero-B fixtures exercise372 nonzero

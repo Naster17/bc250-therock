@@ -1,0 +1,334 @@
+{
+  "gpu_guards": 32,
+  "all_acknowledged": true,
+  "all_kernel_logs_unchanged": true,
+  "failed_gpu_test_processes": [
+    "a06-a07-candidate-model",
+    "a06-a07-candidate-model-r2",
+    "a06-a07-installed-attention-regression",
+    "a06-a07-installed-attention-regression-r3"
+  ],
+  "rows": [
+    {
+      "label": "a06-a07-candidate-model",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "running",
+      "groups": 1
+    },
+    {
+      "label": "a06-a07-candidate-model-r2",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "running",
+      "groups": 2
+    },
+    {
+      "label": "a06-a07-hybrid-model",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 3
+    },
+    {
+      "label": "a06-a07-installed-attention-regression",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "running",
+      "groups": 6
+    },
+    {
+      "label": "a06-a07-installed-attention-regression-r3",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "running",
+      "groups": 6
+    },
+    {
+      "label": "a06-a07-installed-attention-regression-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 7
+    },
+    {
+      "label": "a06-a07-installed-cli",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 2
+    },
+    {
+      "label": "a06-a07-installed-cli-r3",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 2
+    },
+    {
+      "label": "a06-a07-installed-cli-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 2
+    },
+    {
+      "label": "a06-a07-installed-core-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 7
+    },
+    {
+      "label": "a06-a07-installed-model",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 3
+    },
+    {
+      "label": "a06-a07-installed-model-r3",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 3
+    },
+    {
+      "label": "a06-a07-installed-model-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 3
+    },
+    {
+      "label": "a06-a07-installed-training",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 69
+    },
+    {
+      "label": "a06-a07-installed-training-r3",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 69
+    },
+    {
+      "label": "a06-a07-installed-training-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 69
+    },
+    {
+      "label": "a06-autocast-final",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 4
+    },
+    {
+      "label": "a06-final-candidate-api",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 42
+    },
+    {
+      "label": "a06-fixed-nonzero-model",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 3
+    },
+    {
+      "label": "a06-installed-autocast",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 4
+    },
+    {
+      "label": "a06-installed-autocast-r3",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 4
+    },
+    {
+      "label": "a06-installed-autocast-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 4
+    },
+    {
+      "label": "a06-installed-corrected",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 42
+    },
+    {
+      "label": "a06-installed-corrected-r3",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 42
+    },
+    {
+      "label": "a06-installed-corrected-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 42
+    },
+    {
+      "label": "a07-d256-candidate",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 32
+    },
+    {
+      "label": "a07-final-candidate-api",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 36
+    },
+    {
+      "label": "a07-hybrid-candidate",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 32
+    },
+    {
+      "label": "a07-installed-d256",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 36
+    },
+    {
+      "label": "a07-installed-d256-r3",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 36
+    },
+    {
+      "label": "a07-installed-d256-r4",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "result_status": "passed",
+      "groups": 36
+    },
+    {
+      "label": "a07-qualified-benchmark",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "guard_acknowledged": true,
+      "kernel_before_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "kernel_after_sha256": "4f12867af1d50a713a09beab0fbc1852a4622e55ce94de675dc2b6b7c09a03e7",
+      "result_status": "passed",
+      "groups": 5
+    }
+  ],
+  "inactive_r2_note": "r2 attempt refused to arm before GPU execution; no exit.json, separately retained"
+}

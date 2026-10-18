@@ -1,0 +1,23 @@
+{
+  "kernel": "7.2.10-bc250rocm-r3",
+  "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+  "cmdline": "BOOT_IMAGE=/home/nik/bc250work/kernel-r3-7.2.10/artifacts/vmlinuz-7.2.10-bc250rocm-r3 root=UUID=b1d12c0a-7a44-45a7-8742-0e9e246fce28 ro modules=sd-mod,usb-storage,ext4,nvme quiet rootfstype=ext4 amdgpu.sg_display=0 mitigations=off amdgpu.gttsize=15200 ttm.pages_limit=3891200 ttm.page_pool_size=3891200 amdgpu.gpu_recovery=0 amdgpu.bc250_cc_write_mode=3 amdgpu.bc250_flush_pasid_kiq=0 amdgpu.bc250_flush_by_runlist=3 modprobe.blacklist=amdgpu panic=60 oops=panic softlockup_panic=1 nmi_watchdog=1 hardlockup_panic=1 sp5100_tco.heartbeat=180 watchdog.open_timeout=180 firmware_class.path=/home/nik/bc250work/kernel-r3-7.2.10/firmware-from-r2",
+  "watchdog": {
+    "identity": "SP5100 TCO timer",
+    "state": "active",
+    "timeout": "120",
+    "nowayout": "1",
+    "bootstatus": "0"
+  },
+  "cooling": {
+    "cpu_millidegrees": 55125,
+    "fan_rpm": 2037,
+    "pwm": 90,
+    "pwm_enable": "1"
+  },
+  "grub_env": "next_entry=\n",
+  "kernel_log_sha256": "5148b58d47092a7c65a44ac633bfe596a75fe93616521e3b086d66192bb74ef4",
+  "status": "base_checks_passed",
+  "gpu_loaded": false,
+  "limits": "SSH/base boot only; separate GPU guardian and gates required"
+}
