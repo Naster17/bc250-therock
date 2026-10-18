@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 """Atomic Python/app deployment with rollback under exclusive prefix lock."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -12,11 +13,17 @@ from deploy_torch_a04_on_host import atomic_json, check_gate, sha
 WS = Path("/home/nik/bc250work/rocm-10.2-gfx1013")
 RELEASE = Path("/opt/bc250-stack/current").resolve()
 TORCH = (RELEASE / "torch").resolve()
-RECOVERY = WS / "recovery/a06-a07-before-r2"
-LOGS = WS / "logs/a06-a07-deployment-r2"
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--attempt", required=True, help="Unique alphanumeric attempt ID"
+    )
+    options = parser.parse_args()
+    assert options.attempt.isalnum(), "Use an alphanumeric attempt ID"
+    recovery = WS / ("recovery/a06-a07-before-" + options.attempt)
+    logs = WS / ("logs/a06-a07-deployment-" + options.attempt)
     assert os.geteuid() == 0
     assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
     source = json.loads((WS / "helpers/a06-a07-source.json").read_text())
@@ -49,8 +56,8 @@ def main() -> None:
     old = {p: p.read_bytes() for p in targets}
     old_runtime = (RELEASE / "runtime.json").read_bytes()
     old_revision = (TORCH / "GIT_REVISION").read_bytes()
-    RECOVERY.mkdir()
-    LOGS.mkdir()
+    recovery.mkdir()
+    logs.mkdir()
     for path, data in old.items():
         name = (
             "gated_delta.py"
@@ -61,9 +68,9 @@ def main() -> None:
                 else "launcher.py" if path.name == "train_bc250.py" else path.name
             )
         )
-        (RECOVERY / name).write_bytes(data)
-    (RECOVERY / "runtime.json").write_bytes(old_runtime)
-    (RECOVERY / "GIT_REVISION").write_bytes(old_revision)
+        (recovery / name).write_bytes(data)
+    (recovery / "runtime.json").write_bytes(old_runtime)
+    (recovery / "GIT_REVISION").write_bytes(old_revision)
     report = dict(
         status="staging",
         source=source,
@@ -123,9 +130,9 @@ def main() -> None:
             ),
             ("a06-a07-installed-core", "validate_cleanup_runtime.py", [], None),
         ]:
-            label += "-r2"
+            label += "-" + options.attempt
             report["phase"] = label
-            atomic_json(LOGS / "result.json", report)
+            atomic_json(logs / "result.json", report)
             cmd = [
                 sys.executable,
                 str(WS / "helpers/validate_torch_a04_on_host.py"),
@@ -134,7 +141,7 @@ def main() -> None:
                 "--script",
                 script,
             ] + ["--test-arg=" + a for a in args]
-            with (LOGS / (label + ".log")).open("w") as log:
+            with (logs / (label + ".log")).open("w") as log:
                 subprocess.run(
                     cmd, check=True, stdout=log, stderr=subprocess.STDOUT, timeout=570
                 )
@@ -165,7 +172,7 @@ def main() -> None:
         for p in [
             WS / "SOURCE_A06_A07.json",
             RELEASE / "SOURCE_A06_A07.json",
-            LOGS / "result.json",
+            logs / "result.json",
         ]:
             atomic_json(p, report)
     except BaseException as error:
@@ -174,7 +181,7 @@ def main() -> None:
         replace(RELEASE / "runtime.json", old_runtime)
         replace(TORCH / "GIT_REVISION", old_revision)
         report.update(status="failed_rolled_back", error=str(error))
-        atomic_json(LOGS / "result.json", report)
+        atomic_json(logs / "result.json", report)
         raise
 
 
