@@ -68,6 +68,15 @@ It adds overhead and does not directly accelerate LoRA. Hardware counters,
 simultaneous external profilers, compile/graph and long tracing are unqualified.
 [Qualification, memory/schedule examples and rebuild/recovery](bc250_profiler_a09_results/README.md).
 
+## Native primitive coverage (N2.16)
+
+The existing installed rocPRIM/hipCUB/rocThrust headers passed bounded FP32/FP64
+reductions and ordinary/segmented scans, including guarded in-place operations,
+custom argmax, empty segments and private streams. This extends C++ header
+qualification; it introduces no Torch operator, launcher option, dispatch change
+or measured training speedup. Broader Torch consumers and autograd paths remain
+separate from these standalone tests. [Scope and results](bc250_primitives_n216_results/README.md).
+
 ## RNG replay and checkpoints (N2.15)
 
 GPU RNG state is a CPU byte tensor: save `generator.get_state()` or

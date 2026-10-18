@@ -1,0 +1,123 @@
+{
+  "primitives-n216-r1-rocprim": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    "native": {
+      "status": "passed",
+      "architecture": "gfx1013",
+      "library": "rocPRIM",
+      "cases": 576,
+      "streams": 2,
+      "guards": true,
+      "max_workspace_bytes": 7196
+    },
+    "precision_error": {
+      "f32/": 5.715417501050979e-06,
+      "f64/": 8.769677692366251e-15,
+      "arg32/": 0,
+      "arg64/": 0
+    }
+  },
+  "primitives-n216-r1-hipcub": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    "native": {
+      "status": "passed",
+      "architecture": "gfx1013",
+      "library": "hipCUB",
+      "cases": 480,
+      "streams": 2,
+      "guards": true,
+      "max_workspace_bytes": 7196
+    },
+    "precision_error": {
+      "f32/": 5.715417501050979e-06,
+      "f64/": 8.769677692366251e-15,
+      "arg32/": 0,
+      "arg64/": 0
+    }
+  },
+  "primitives-n216-r1-thrust": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    "native": {
+      "status": "passed",
+      "architecture": "gfx1013",
+      "library": "rocThrust",
+      "cases": 480,
+      "streams": 2,
+      "guards": true,
+      "max_workspace_bytes": 0
+    },
+    "precision_error": {
+      "f32/": 5.715417501050979e-06,
+      "f64/": 8.769677692366251e-15,
+      "arg32/": 0,
+      "arg64/": 0
+    }
+  },
+  "primitives-n216-r1-legacy": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    "native": {
+      "rocprim": {
+        "status": "passed",
+        "library": "rocPRIM",
+        "architecture": "gfx1013",
+        "cases": 42,
+        "streams": 2,
+        "guards": true
+      },
+      "hipcub": {
+        "status": "passed",
+        "library": "hipCUB",
+        "architecture": "gfx1013",
+        "cases": 48,
+        "streams": 2,
+        "guards": true
+      },
+      "thrust": {
+        "status": "passed",
+        "library": "rocThrust",
+        "architecture": "gfx1013",
+        "cases": 48,
+        "streams": 2,
+        "guards": true
+      }
+    }
+  },
+  "primitives-n216-r1-core": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  }
+}

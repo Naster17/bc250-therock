@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "rocprim",
+      "cases": 42,
+      "status": "passed"
+    },
+    {
+      "name": "hipcub",
+      "cases": 48,
+      "status": "passed"
+    },
+    {
+      "name": "thrust",
+      "cases": 48,
+      "status": "passed"
+    }
+  ]
+}

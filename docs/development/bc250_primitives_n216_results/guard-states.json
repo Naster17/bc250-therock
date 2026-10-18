@@ -1,0 +1,56 @@
+{
+  "guards": {
+    "primitives-n216-r1-rocprim": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "primitives-n216-r1-rocprim",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "5761ebc30e7a87cb2bde171032b55e16",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 47238.805717071,
+      "dry_run": false
+    },
+    "primitives-n216-r1-hipcub": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "primitives-n216-r1-hipcub",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "9fa18e6ecdb29e52262b102cc5e33b1f",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 47241.433259785,
+      "dry_run": false
+    },
+    "primitives-n216-r1-thrust": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "primitives-n216-r1-thrust",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "bb35286e7b99baf71aaf14abb5f5c454",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 47243.653144399,
+      "dry_run": false
+    },
+    "primitives-n216-r1-legacy": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "primitives-n216-r1-legacy",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "90290cfcda9200a65d2572bca20566fb",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 47245.874784443,
+      "dry_run": false
+    },
+    "primitives-n216-r1-core": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "primitives-n216-r1-core",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "7cf8ad836cdff5c55b4da1d6a640dbdf",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 47246.892298564,
+      "dry_run": false
+    }
+  },
+  "kernel_log_unchanged_entire_batch": true,
+  "build_image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+}

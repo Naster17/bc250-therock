@@ -9,6 +9,35 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.16 completed, 2026-10-18:** TheRock qualification `2db3b18c1`.
+  Existing installed headers pass native rocPRIM 576 / hipCUB 480 / rocThrust 480 new
+  CPU-reference checks: FP32/FP64 ordinary/segmented reduce and inclusive/
+  exclusive scans, nonzero init, repeated keys, empty/uneven segments, in-place
+  scans, plus 288 exact custom first-index argmax checks. Sizes 0/1/33/257/4099/
+  65537, default/private streams, guarded inputs/outputs/workspace and immutable
+  read-only inputs/keys/offsets. Dyadic sums exact; fixed-tolerance non-dyadic
+  CPU long-double refs max error 5.72e-6/8.77e-15 FP32/64. Offset APIs include
+  empty segments; Thrust reduce-by-key correctly checks only nonempty runs.
+  No production defect reproduced; no new Torch operator/dispatch or speed claim.
+  Three standalone native test units built ccache20GiB/OMP4/three jobs (<=16),
+  -O2/C++17/gfx1013, builder fa3e8c254, no mapped GPU/network. Output
+  WS/build/bc250-coverage/primitives-n216-r1; sources/builds/caches/P2 binaries
+  preserved. First attempt passes, P2 INT32 primitives138/core7 retained. Five
+  GPU processes/guards ACK/600s; dmesg unchanged whole batch, 168 protected hashes
+  match plus new binaries separately sealed. No library/Torch/header install,
+  runtime metadata/link/default/image/kernel/boot/.105/BIOS/r2 fallback change;
+  four FFT AOT DBs preserved. Native Torch `dc8fea0`, source tests `2b449c4`, libraries `319a235d6`,
+  libraries source-doc `c29021b40e7` retained. [Report](docs/development/bc250_primitives_n216_results/README.md)
+  includes source/build commands, counts/errors/guards/protected and binary hashes.
+  Raw WS/logs/primitives-n216-*; ignored local kernel/artifacts/primitives-n216.
+  Next preservation baseline WS/logs/primitives-n216-qualification-r1/final.json
+  plus binary_sha256 when protecting new test artifacts. No running agent job/
+  container/guard; free ~7.19GiB. CPU Python fault unresolved/separate from fixed
+  VM-heap/CSR. No broad precision/determinism/performance/consumer-autograd claim.
+  **Next N2.17:** audit P2 sorting/selection, then bounded floating stable key/
+  value sorting and selection with explicit ordering/special-value contracts,
+  CPU references, guards/private streams and targeted builds. N2–N8 remain open.
+
 - **N2.15 completed, 2026-10-18:** TheRock qualification `0e4557ee5`;
   libraries source-doc revision `c29021b40e7`, native libraries still `319a235d6`.
   No RNG arithmetic defect reproduced. Torch state/layout80, moment/range22,
@@ -1609,7 +1638,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.13 | Generic sparse triangular coverage and exact-pivot NaN marking installed:433 public +96 direct generic fixtures, retained sparse41/core7/profiler pass in candidate and installed runtime. General sparse spsolve B02 remains separate. |
 | [x]   | N2.14 | FFT complex96/real72 output+weighted backward+guarded out, three DFT/finite-difference/reuse checks,16 direct plans/32 executions and FFT30/core7 pass; no production defect or binary/default change, AOT cache preserved. BF16 promotion B01 separate. |
 | [x]   | N2.15 | Torch state80/statistics22/contracts20/fresh continuation1, direct native68 and RNG28/core7 pass. Stale LFSR113 offset comments corrected; implementation/binaries/defaults unchanged; four AOT DBs preserved. |
-| [ ]   | **N2.16 — next** | Audit P2 rocPRIM42/hipCUB48/Thrust48; qualify bounded floating/segmented reductions/scans with CPU references, guards/private streams and targeted ccache builds; fix demonstrated defects only. |
+| [x]   | N2.16 | Native floating/segmented/custom reductions/scans: rocPRIM576/hipCUB480/Thrust480, P2 primitives138/core7 pass; fixed CPU references/guards/streams, no production defect or default/binary change. |
+| [ ]   | **N2.17 — next** | Audit P2 sorting/selection; bounded floating stable key/value sorting and selection with explicit ordering/special-value contracts, CPU references, guards/private streams and targeted builds; fix demonstrated defects only. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
