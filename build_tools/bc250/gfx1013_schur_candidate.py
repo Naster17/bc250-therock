@@ -365,14 +365,64 @@ class EigenvectorResult:
     triangular_residual: float
 
 
+def _backsubstitution_reference(scaled):
+    """N2.6 vectorized oracle; scaled finite upper triangle with checked gaps."""
+    n = scaled.shape[0]
+    diagonal = scaled.diag()
+    # Solve all eigenvector columns together, one triangular row at a time.
+    # The checked global pairwise gap guarantees every active pivot exceeds
+    # floor. Inactive/diagonal pivots are replaced by1 before division.
+    y = torch.eye(n, dtype=scaled.dtype, device=scaled.device)
+    columns = torch.arange(n, device=scaled.device)
+    for i in range(n-2, -1, -1):
+        active_columns = columns > i
+        pivots = diagonal[i]-diagonal
+        safe_pivots = torch.where(active_columns, pivots, torch.ones_like(pivots))
+        rhs = scaled[i, i+1:]@y[i+1:, :]
+        y[i, :] = torch.where(active_columns, -rhs/safe_pivots, y[i, :])
+        # Homogeneous per-column rescaling preserves already solved rows.
+        # With scaled |T|<=1, |y|<=1 and the gap bound, active row values
+        # cannot overflow for this order<=16/dtype contract. Defer finite
+        # checks to the end instead of synchronizing the host per element.
+        magnitude = y.abs().amax(dim=0)
+        y = y/magnitude[None, :]
+    return y
+
+
+_BACKSUB_LIBRARY = None
+
+
+def _backsubstitution_device(scaled):
+    """Private checked/normalized input, owned output, actual current GPU stream."""
+    global _BACKSUB_LIBRARY
+    if _BACKSUB_LIBRARY is None:
+        library = ctypes.CDLL(str(Path(__file__).with_name('schur_backsub_n212.so')))
+        library.bc250_triangular_backsub.argtypes = [ctypes.c_void_p]*2 + [ctypes.c_int]*2 + [ctypes.c_void_p]
+        library.bc250_triangular_backsub.restype = ctypes.c_int
+        _BACKSUB_LIBRARY = library
+    scaled = scaled.resolve_conj().resolve_neg().contiguous()
+    y = torch.empty_like(scaled)
+    status = _BACKSUB_LIBRARY.bc250_triangular_backsub(scaled.data_ptr(), y.data_ptr(),
+        scaled.shape[0], int(scaled.dtype == torch.complex128),
+        torch.cuda.current_stream().cuda_stream)
+    if status:
+        raise RuntimeError(f'N2.12 back-substitution launch returned HIP status {status}')
+    return y
+
+
 @torch.no_grad()
-def right_eigenvectors(result):
+def right_eigenvectors(result, *, recovery_backend="reference"):
     """Recover separated-spectrum right vectors from a converged small Schur form.
 
     Refuse unconverged/nontriangular forms, repeated or close eigenvalues,
     nonunitary transforms and unstable recovery. No perturbing singular pivots,
     hidden host solver, gradients or guarantee for ill-conditioned eigenbases.
+    Explicit device recovery fuses only the triangular solve; all common gates
+    remain. The reference backend and production Torch eig defaults are unchanged.
     """
+    if recovery_backend not in ("reference", "device"):
+        raise ValueError('Recovery backend must be reference or device')
+    solve = _backsubstitution_device if recovery_backend == "device" else _backsubstitution_reference
     if not isinstance(result, SchurResult):
         raise ValueError('Expected a candidate SchurResult')
     if result.info != 0:
@@ -406,23 +456,7 @@ def right_eigenvectors(result):
         floor = 8*finfo.eps**.5
         if not bool(separation > floor):
             raise RuntimeError('Spectrum not sufficiently separated for candidate recovery')
-        # Solve all eigenvector columns together, one triangular row at a time.
-        # The checked global pairwise gap guarantees every active pivot exceeds
-        # floor. Inactive/diagonal pivots are replaced by1 before division.
-        y = torch.eye(n, dtype=t.dtype, device=t.device)
-        columns = torch.arange(n, device=t.device)
-        for i in range(n-2, -1, -1):
-            active_columns = columns > i
-            pivots = diagonal[i]-diagonal
-            safe_pivots = torch.where(active_columns, pivots, torch.ones_like(pivots))
-            rhs = scaled[i, i+1:]@y[i+1:, :]
-            y[i, :] = torch.where(active_columns, -rhs/safe_pivots, y[i, :])
-            # Homogeneous per-column rescaling preserves already solved rows.
-            # With scaled |T|<=1, |y|<=1 and the gap bound, active row values
-            # cannot overflow for this order<=16/dtype contract. Defer finite
-            # checks to the end instead of synchronizing the host per element.
-            magnitude = y.abs().amax(dim=0)
-            y = y/magnitude[None, :]
+        y = solve(scaled)
         norms = y.norm(dim=0)
         if not bool(torch.isfinite(y).all()) or not bool((norms > finfo.tiny).all()):
             raise RuntimeError('Unstable triangular eigenvector recovery')
