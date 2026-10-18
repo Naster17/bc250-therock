@@ -1,5 +1,12 @@
 # BC-250 PyTorch patches
 
+Patch0010 is a three-commit incremental mbox on Torch `da45369`: native sparse
+triangular pivot marking (`a434d03`/`dc8fea0`) and test qualification `2b449c4`.
+Only libtorch_hip.so changes; the old profiler-order runtime is retained.
+[Build, source/trace evidence and recovery](../../docs/development/bc250_sparse_n213_results/README.md).
+This does not close the historical SDPA reconstruction gap below.
+
+
 Latest addition0009 is a three-commit incremental mbox on qualified Torch4af4a15:
 native CPU-first ROCm profiler fixb823a1b plus test-only fixture corrections
 throughda45369. Only libtorch_cpu.so changes in the separate installed candidate;
