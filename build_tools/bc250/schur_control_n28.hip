@@ -18,11 +18,10 @@ template <class R> __device__ Z<R> principal_sqrt(Z<R> z) {
 // phase=0 continue,1 converged,2 budget exhausted,3 nonfinite/excess fill.
 // Each launch first consumes trailing deflations, then performs at most one QR.
 template <class R>
-__global__ void small_schur_control(const Z<R> *t, const Z<R> *q, Z<R> *out_t,
-                                    Z<R> *out_q, int *state, int n,
-                                    int budget) {
-  __shared__ Z<R> work[256], r[256], u[256], left[256], v[16], shift;
-  __shared__ int m, phase;
+__device__ void schur_control_core(const Z<R> *t, const Z<R> *q, Z<R> *out_t,
+                                   Z<R> *out_q, int *state, int n, int budget,
+                                   Z<R> *work, Z<R> *r, Z<R> *u, Z<R> *left,
+                                   Z<R> *v, Z<R> &shift, int &m, int &phase) {
   constexpr R eps = std::numeric_limits<R>::epsilon();
   constexpr R tiny = std::numeric_limits<R>::min();
   int lane = threadIdx.x;
@@ -98,6 +97,16 @@ __global__ void small_schur_control(const Z<R> *t, const Z<R> *q, Z<R> *out_t,
   if (state[4] == 0 && lane < n)
     for (int j = 0; j < lane - 1; ++j)
       out_t[lane * n + j] = {0, 0};
+}
+
+template <class R>
+__global__ void small_schur_control(const Z<R> *t, const Z<R> *q, Z<R> *out_t,
+                                    Z<R> *out_q, int *state, int n,
+                                    int budget) {
+  __shared__ Z<R> work[256], r[256], u[256], left[256], v[16], shift;
+  __shared__ int m, phase;
+  schur_control_core(t, q, out_t, out_q, state, n, budget, work, r, u, left, v,
+                     shift, m, phase);
 }
 
 extern "C" int bc250_schur_control(const void *t, const void *q, void *ot,

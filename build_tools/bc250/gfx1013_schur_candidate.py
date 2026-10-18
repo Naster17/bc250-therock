@@ -167,8 +167,42 @@ def _schur_control_device(t, q, max_iterations):
     raise RuntimeError('Device control exceeded its bounded launch count')
 
 
+_CHUNK_LIBRARY = None
+
+
+def _chunk_step_device(t, q, state, max_iterations, chunk_size):
+    """Private normalized tensors/valid state; at most32 reused control steps."""
+    global _CHUNK_LIBRARY
+    if _CHUNK_LIBRARY is None:
+        library = ctypes.CDLL(str(Path(__file__).with_name('schur_chunk_n29.so')))
+        library.bc250_schur_chunk.argtypes = [ctypes.c_void_p]*5 + [ctypes.c_int]*4 + [ctypes.c_void_p]
+        library.bc250_schur_chunk.restype = ctypes.c_int
+        _CHUNK_LIBRARY = library
+    t, q = t.contiguous(), q.contiguous()
+    updated, newq = torch.empty_like(t), torch.empty_like(q)
+    status = _CHUNK_LIBRARY.bc250_schur_chunk(t.data_ptr(), q.data_ptr(),
+        updated.data_ptr(), newq.data_ptr(), state.data_ptr(), t.shape[0],
+        max_iterations, chunk_size, int(t.dtype == torch.complex128),
+        torch.cuda.current_stream().cuda_stream)
+    if status:
+        raise RuntimeError(f'N2.9 chunk launch returned HIP status {status}')
+    return updated, newq
+
+
+def _schur_chunk_device(t, q, max_iterations, chunk_size):
+    state = torch.tensor([t.shape[0], 0, 0, 0, 0], dtype=torch.int32, device=t.device)
+    for _ in range((max_iterations+1+chunk_size-1)//chunk_size):
+        t, q = _chunk_step_device(t, q, state, max_iterations, chunk_size)
+        active, iterations, deflations, since_deflation, phase = state.cpu().tolist()
+        if phase == 3:
+            raise RuntimeError('Nonfinite iterate or unexpected Hessenberg fill')
+        if phase in (1, 2):
+            return t, q, 0 if phase == 1 else active, iterations, deflations
+    raise RuntimeError('Device chunk exceeded its bounded launch count')
+
+
 @torch.no_grad()
-def schur(a, *, max_iterations=256, qr_backend="reference"):
+def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16):
     """Bounded explicit shifted QR experiment; inspect info before using T's diagonal.
 
     Positive info is not success and triggers no hidden host fallback. Q contains
@@ -176,8 +210,12 @@ def schur(a, *, max_iterations=256, qr_backend="reference"):
     """
     # Device QR is an explicit experiment; the reference remains the default.
     _validate(a)
-    if qr_backend not in ("reference", "device", "device_control"):
-        raise ValueError("QR backend must be reference, device or device_control")
+    if qr_backend not in ("reference", "device", "device_control", "device_chunked"):
+        raise ValueError("QR backend must be reference, device, device_control or device_chunked")
+    if isinstance(chunk_size, bool) or not isinstance(chunk_size, int) or not 1 <= chunk_size <= 32:
+        raise ValueError('Chunk size must be an integer within1..32')
+    if qr_backend != "device_chunked" and chunk_size != 16:
+        raise ValueError('Nondefault chunk size requires device_chunked backend')
     step = _qr_similarity_device if qr_backend == "device" else _qr_similarity_reference
     if isinstance(max_iterations, bool) or not isinstance(max_iterations, int) or not 0 <= max_iterations <= 4096:
         raise ValueError('Iteration budget must be an integer within0..4096')
@@ -189,8 +227,11 @@ def schur(a, *, max_iterations=256, qr_backend="reference"):
         if not bool(scale > 0):
             return SchurResult(a.clone(), torch.eye(n, dtype=a.dtype, device=a.device), 0, 0, n-1)
         t, q = hessenberg(unit)
-        if qr_backend == "device_control":
-            t, q, info, iterations, deflations = _schur_control_device(t, q, max_iterations)
+        if qr_backend in ("device_control", "device_chunked"):
+            if qr_backend == "device_control":
+                t, q, info, iterations, deflations = _schur_control_device(t, q, max_iterations)
+            else:
+                t, q, info, iterations, deflations = _schur_chunk_device(t, q, max_iterations, chunk_size)
             original_units = torch.complex(t.real*scale, t.imag*scale)
             if not bool(torch.isfinite(original_units).all()):
                 raise RuntimeError('Schur rescaling is not representable in the input dtype')
