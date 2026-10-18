@@ -1,5 +1,12 @@
 # BC-250 PyTorch patches
 
+Latest addition0009 is a three-commit incremental mbox on qualified Torch4af4a15:
+native CPU-first ROCm profiler fixb823a1b plus test-only fixture corrections
+throughda45369. Only libtorch_cpu.so changes in the separate installed candidate;
+Kineto/SDK pinned sources are unchanged. [Build/qualification/recovery](../../docs/development/bc250_profiler_order_results/README.md).
+This does not close the historical SDPA reconstruction gap documented below.
+
+
 Current A09 source: `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5`.
 Patch0008 adds seven Kineto/SDK profiler qualification tests on71a0426; native
 profiler source was already present. Enable it with the tracked
