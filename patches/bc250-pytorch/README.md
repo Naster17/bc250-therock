@@ -1,5 +1,13 @@
 # BC-250 PyTorch patches
 
+Current corrected A06/A07 source: `71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8`.
+Patch0007 is incremental onba6cbcd and includes low-precision full-operation
+parity correction, D256 tiled/hybrid attention and tests. DSOs unchanged. Full Git
+and incremental bundle retained; older SDPA three-file reconstruction gap remains.
+[Scope/evidence](../../docs/development/bc250_a06_a07_results/README.md).
+
+Historical initial A06 follows.
+
 Current A06 source: `ba6cbcd2fafac1a6503f1f580033fbf72ad2a4f9`.
 Patch0006 is incremental on6ed3d12 and adds only the opt-in gated-delta
 preparation/composition module and its tests. Existing DSOs are unchanged.
