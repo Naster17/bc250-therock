@@ -237,6 +237,9 @@ def main():
     passed("qwen3_bf16_lora_two_steps_checkpoint_gradients_and_cached_decode")
     for name in ["train_lora.py", "chat.py"]:
         path = Path("/home/nik/finetune-n7/scripts") / name
+        modular_chat = name == "chat.py" and not path.exists()
+        if modular_chat:
+            path = path.parents[1] / "replica/chat.py"
         sources = [path]
         tree = ast.parse(path.read_text())
         if name == "train_lora.py":
@@ -278,14 +281,42 @@ def main():
                 ):
                     guarded_backward.append(node)
             assert guarded_backward, sources
+        if modular_chat:
+            assert any(
+                isinstance(node, ast.With)
+                and any(
+                    isinstance(item.context_expr, ast.Call)
+                    and isinstance(item.context_expr.func, ast.Name)
+                    and item.context_expr.func.id == "sdpa_kernel"
+                    and [ast.unparse(arg) for arg in item.context_expr.args]
+                    == ["SDPBackend.MATH"]
+                    for item in node.items
+                )
+                and any(
+                    isinstance(call, ast.Call)
+                    and isinstance(call.func, ast.Attribute)
+                    and call.func.attr == "generate"
+                    for call in ast.walk(node)
+                )
+                for node in ast.walk(tree)
+            ), path
         for source in sources:
             text = source.read_text()
             assert "torch.backends.cuda.sdp_kernel" not in text, source
             assert "filterwarnings" not in text, source
         p = subprocess.run(
-            [sys.executable, str(path), "--help"], capture_output=True, text=True
+            (
+                [sys.executable, "-m", "replica.chat", "--help"]
+                if modular_chat
+                else [sys.executable, str(path), "--help"]
+            ),
+            capture_output=True,
+            text=True,
+            cwd="/home/nik/finetune-n7",
         )
-        assert p.returncode == 0 and "--attention-backend" in p.stdout, p.stderr
+        expected_option = "--model" if modular_chat else "--attention-backend"
+        assert p.returncode == 0 and expected_option in p.stdout, p.stderr
+        report.setdefault("caller_layout", {})[name] = str(path)
     passed("deployed_callers_new_api_backward_scope_and_cli_help")
     report["status"] = "passed"
     args.output.write_text(json.dumps(report, indent=2) + "\n")
