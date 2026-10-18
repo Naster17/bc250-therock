@@ -33,7 +33,7 @@ def main() -> None:
         command.append("--expect-missing")
     env = dict(os.environ)
     if args.order == "masked":
-        env.update(HIP_VISIBLE_DEVICES="-1", ROCR_VISIBLE_DEVICES="-1")
+        env.update(HIP_VISIBLE_DEVICES="999999")
     code = subprocess.call(command, env=env)
     result = (
         json.loads((traces / "result.json").read_text())

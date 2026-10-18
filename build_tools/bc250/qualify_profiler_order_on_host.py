@@ -51,6 +51,15 @@ def gates(phase: str) -> list:
     ]
     for name, script, arguments in rows:
         label = f"profiler-order-{phase}-{name}"
+        base = label
+        attempt = 1
+        while (WS / "logs" / label).exists():
+            exit_path = WS / "logs" / label / "exit.json"
+            assert exit_path.exists(), "Preserve an unfinished gate: " + label
+            if json.loads(exit_path.read_text())["returncode"] == 0:
+                break
+            attempt += 1
+            label = base + f"-r{attempt}"
         command = [
             sys.executable,
             str(WS / "helpers/validate_torch_a04_on_host.py"),
@@ -62,14 +71,15 @@ def gates(phase: str) -> list:
         if phase == "candidate":
             command += ["--torch-candidate", str(CANDIDATE)]
         command += ["--test-arg=" + a for a in arguments]
-        with (LOGS / (label + ".log")).open("w") as output:
-            subprocess.run(
-                command,
-                check=True,
-                stdout=output,
-                stderr=subprocess.STDOUT,
-                timeout=570,
-            )
+        if not (WS / "logs" / label).exists():
+            with (LOGS / (label + ".log")).open("w") as output:
+                subprocess.run(
+                    command,
+                    check=True,
+                    stdout=output,
+                    stderr=subprocess.STDOUT,
+                    timeout=570,
+                )
         check_gate(label)
         report = json.loads((WS / "logs" / label / "result.json").read_text())
         assert report["status"] == "passed", label
