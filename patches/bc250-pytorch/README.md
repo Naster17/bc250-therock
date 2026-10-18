@@ -1,5 +1,13 @@
 # BC-250 PyTorch patches
 
+Current A09 source: `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5`.
+Patch0008 adds seven Kineto/SDK profiler qualification tests on71a0426; native
+profiler source was already present. Enable it with the tracked
+`build_tools/bc250/build_torch_a09.sh` helper (USE_KINETO=1). Preserve the documented
+read-only shared third-party mount and original source/build. Full Git plus
+incremental bundle retained; older three-file SDPA reconstruction gap remains.
+[Scope, build and evidence](../../docs/development/bc250_profiler_a09_results/README.md).
+
 Current corrected A06/A07 source: `71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8`.
 Patch0007 is incremental onba6cbcd and includes low-precision full-operation
 parity correction, D256 tiled/hybrid attention and tests. DSOs unchanged. Full Git
