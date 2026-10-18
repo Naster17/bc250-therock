@@ -1,0 +1,251 @@
+{
+  "status": "passed",
+  "code_revision": "807642198",
+  "retained_regression_groups": 128,
+  "lifetime_groups": 3,
+  "refusals": 16,
+  "paired_fixtures": 6,
+  "guards_acknowledged": 7,
+  "fixtures": [
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "profile": {
+        "fresh": {
+          "binding_ms": 0.12778100062860176,
+          "allocation_copy_ms": 0.058015000831801444,
+          "handle_create_ms": 3.2165820011869073,
+          "set_stream_ms": 0.04284000169718638,
+          "gehrd_ms": 0.15693499881308526,
+          "q_form_ms": 0.13085500177112408,
+          "h_extract_ms": 0.050711001676972955,
+          "handle_destroy_ms": 0.14561299758497626
+        },
+        "session": {
+          "binding_ms": 0.006980997568462044,
+          "allocation_copy_ms": 0.06337900049402378,
+          "handle_acquire_ms": 0.0203909985430073,
+          "set_stream_ms": 0.01731999873300083,
+          "gehrd_ms": 0.10427600136608817,
+          "q_form_ms": 0.05612799941445701,
+          "h_extract_ms": 0.03375400046934374,
+          "handle_release_ms": 0.005916997906751931
+        }
+      },
+      "session_create_ms": 3.3824120000645053,
+      "cold_including_create_close_ms": 4.284458998881746,
+      "host_before_ms": 0.22838699806015939,
+      "host_after_ms": 0.21869900228921324,
+      "preparation": {
+        "fresh_ms": 4.253472499840427,
+        "warm_session_ms": 0.33973750032600947,
+        "fresh_over_warm": 12.519879306107887
+      },
+      "whole": {
+        "fresh_ms": 8.17306700082554,
+        "warm_session_ms": 4.192414498902508,
+        "fresh_over_warm": 1.9494892508756205
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 9,
+      "profile": {
+        "fresh": {
+          "binding_ms": 0.12355899889371358,
+          "allocation_copy_ms": 0.06419900091714226,
+          "handle_create_ms": 3.204356999049196,
+          "set_stream_ms": 0.04658400212065317,
+          "gehrd_ms": 0.25564400129951537,
+          "q_form_ms": 0.15078200158313848,
+          "h_extract_ms": 0.053588999435305595,
+          "handle_destroy_ms": 0.14837699927738868
+        },
+        "session": {
+          "binding_ms": 0.007393999112537131,
+          "allocation_copy_ms": 0.06403400038834661,
+          "handle_acquire_ms": 0.022121999791124836,
+          "set_stream_ms": 0.017300000763498247,
+          "gehrd_ms": 0.20771300114574842,
+          "q_form_ms": 0.07652299973415211,
+          "h_extract_ms": 0.038004000089131296,
+          "handle_release_ms": 0.006432997906813398
+        }
+      },
+      "session_create_ms": 3.346421999594895,
+      "cold_including_create_close_ms": 4.326770998886786,
+      "host_before_ms": 0.2644439991854597,
+      "host_after_ms": 0.2579610008979216,
+      "preparation": {
+        "fresh_ms": 4.361830498964991,
+        "warm_session_ms": 0.44110850103606936,
+        "fresh_over_warm": 9.88833923789722
+      },
+      "whole": {
+        "fresh_ms": 10.229497000182164,
+        "warm_session_ms": 6.323390000034124,
+        "fresh_over_warm": 1.6177235628558355
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "profile": {
+        "fresh": {
+          "binding_ms": 0.12334699931670912,
+          "allocation_copy_ms": 0.06494199988082983,
+          "handle_create_ms": 3.227649998734705,
+          "set_stream_ms": 0.04292199810151942,
+          "gehrd_ms": 0.3959159985242877,
+          "q_form_ms": 0.1822929989430122,
+          "h_extract_ms": 0.05305999729898758,
+          "handle_destroy_ms": 0.14974800069467165
+        },
+        "session": {
+          "binding_ms": 0.0072639995778445154,
+          "allocation_copy_ms": 0.07353299952228554,
+          "handle_acquire_ms": 0.023771997803123668,
+          "set_stream_ms": 0.01730199801386334,
+          "gehrd_ms": 0.3492979994916823,
+          "q_form_ms": 0.09876399781205691,
+          "h_extract_ms": 0.03752400152734481,
+          "handle_release_ms": 0.009218998457072303
+        }
+      },
+      "session_create_ms": 3.322478998597944,
+      "cold_including_create_close_ms": 4.462824999791337,
+      "host_before_ms": 0.3463670000201091,
+      "host_after_ms": 0.3453999997873325,
+      "preparation": {
+        "fresh_ms": 4.493560001719743,
+        "warm_session_ms": 0.6107749995862832,
+        "fresh_over_warm": 7.357144619153562
+      },
+      "whole": {
+        "fresh_ms": 14.229103000616306,
+        "warm_session_ms": 10.259330501867225,
+        "fresh_over_warm": 1.3869426467961599
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "profile": {
+        "fresh": {
+          "binding_ms": 0.11433300096541643,
+          "allocation_copy_ms": 0.057377001212444156,
+          "handle_create_ms": 3.2203549999394454,
+          "set_stream_ms": 0.04151699977228418,
+          "gehrd_ms": 0.15108400111785159,
+          "q_form_ms": 0.13262500215205364,
+          "h_extract_ms": 0.05082700226921588,
+          "handle_destroy_ms": 0.13588399815489538
+        },
+        "session": {
+          "binding_ms": 0.006962000043131411,
+          "allocation_copy_ms": 0.06130700057838112,
+          "handle_acquire_ms": 0.022624000848736614,
+          "set_stream_ms": 0.018484002794139087,
+          "gehrd_ms": 0.10612700134515762,
+          "q_form_ms": 0.060792001022491604,
+          "h_extract_ms": 0.035708999348571524,
+          "handle_release_ms": 0.008646999049233273
+        }
+      },
+      "session_create_ms": 3.378040000825422,
+      "cold_including_create_close_ms": 4.239666999637848,
+      "host_before_ms": 0.22138599888421595,
+      "host_after_ms": 0.22088300102041103,
+      "preparation": {
+        "fresh_ms": 4.265069999746629,
+        "warm_session_ms": 0.34100000084436033,
+        "fresh_over_warm": 12.507536625178185
+      },
+      "whole": {
+        "fresh_ms": 8.46961050228856,
+        "warm_session_ms": 4.474641500564758,
+        "fresh_over_warm": 1.8928020269824042
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 9,
+      "profile": {
+        "fresh": {
+          "binding_ms": 0.11453599654487334,
+          "allocation_copy_ms": 0.05480599793372676,
+          "handle_create_ms": 3.266206000262173,
+          "set_stream_ms": 0.04278000051272102,
+          "gehrd_ms": 0.2543829978094436,
+          "q_form_ms": 0.14970899792388082,
+          "h_extract_ms": 0.0551310004084371,
+          "handle_destroy_ms": 0.14289799946709536
+        },
+        "session": {
+          "binding_ms": 0.006850001227576286,
+          "allocation_copy_ms": 0.0606399989919737,
+          "handle_acquire_ms": 0.022883999918121845,
+          "set_stream_ms": 0.016672001947881654,
+          "gehrd_ms": 0.21561299945460632,
+          "q_form_ms": 0.07987500066519715,
+          "h_extract_ms": 0.036233999708201736,
+          "handle_release_ms": 0.008568000339437276
+        }
+      },
+      "session_create_ms": 3.391810998436995,
+      "cold_including_create_close_ms": 4.336668996984372,
+      "host_before_ms": 0.27657800092129037,
+      "host_after_ms": 0.26884999897447415,
+      "preparation": {
+        "fresh_ms": 4.407127502418007,
+        "warm_session_ms": 0.4419700017024297,
+        "fresh_over_warm": 9.971553466167698
+      },
+      "whole": {
+        "fresh_ms": 11.209996999241412,
+        "warm_session_ms": 7.284037497811369,
+        "fresh_over_warm": 1.5389812315779092
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "profile": {
+        "fresh": {
+          "binding_ms": 0.11566499961190857,
+          "allocation_copy_ms": 0.058608002291293815,
+          "handle_create_ms": 3.264445000240812,
+          "set_stream_ms": 0.041267001506639645,
+          "gehrd_ms": 0.4040729982079938,
+          "q_form_ms": 0.19628600057330914,
+          "h_extract_ms": 0.04843799979425967,
+          "handle_destroy_ms": 0.14037100118002854
+        },
+        "session": {
+          "binding_ms": 0.006991998816374689,
+          "allocation_copy_ms": 0.06559200119227171,
+          "handle_acquire_ms": 0.023062999389367178,
+          "set_stream_ms": 0.016971000150078908,
+          "gehrd_ms": 0.3703420006786473,
+          "q_form_ms": 0.1263029989786446,
+          "h_extract_ms": 0.035467997804516926,
+          "handle_release_ms": 0.00862600063555874
+        }
+      },
+      "session_create_ms": 3.4081810008501634,
+      "cold_including_create_close_ms": 4.507998000917723,
+      "host_before_ms": 0.40203900061897,
+      "host_after_ms": 0.4075110009580385,
+      "preparation": {
+        "fresh_ms": 4.507373998421826,
+        "warm_session_ms": 0.6410030000552069,
+        "fresh_over_warm": 7.031751798405975
+      },
+      "whole": {
+        "fresh_ms": 18.032001999017666,
+        "warm_session_ms": 14.134793000266654,
+        "fresh_over_warm": 1.275717444088321
+      }
+    }
+  ]
+}

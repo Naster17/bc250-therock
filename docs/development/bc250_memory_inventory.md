@@ -1477,6 +1477,31 @@ balancing/subnormals/conditioning/batching/gradients remain unqualified; origina
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
 
+## N2.11 explicit GEHRD sessions — 2026-10-18
+
+TheRock code807642198 adds explicit caller-owned GehrdSession, one PID/thread/
+device/stream; native handle/bindings reused, fresh owned GEHRD copies retained,
+close waits pinned stream then destroys once. No global cache/default mutation.
+Create3.13–3.18ms dominates binding0.11–0.13/alloc-copy0.06–0.08/destroy~0.13ms.
+128 retained groups, six CPU/backend fixtures, three lifetime groups/16 refusals
+pass: mixed-dtype reuse, close synchronization/idempotence, exception after GEHRD,
+two private sessions/streams interleaved, wrong thread/stream/device/closed/busy/
+PID. PID guard injected, no real post-fork GPU test; device mismatch metadata-only.
+Default exact N2.10 and fresh/reused H/Q exact on fixtures. Seven guards ACK/600s/
+unchanged dmesg;82 protected hashes unchanged. Six paired three-sample warm prep
+7.03–12.52x/whole1.28–1.95x with N2.8 QR/device Q; creation3.32–3.41ms/close outside
+warm pairs. Cold one-call prep4.24–4.51ms gives no warm gain; host eig0.219–0.408ms
+still faster. No general/model/LoRA/Torch-wide gain; N2.9 regression unchanged.
+Python-only/no build/ccache/DSO/Torch/image/prefix metadata/kernel/boot/default/
+.105 mutation. gfx1013_gehrd_session.py accompanies candidate. Prior helper/oracle
+retained WS/recovery/solver-n211-before and schur_n210_reference.py. [Report and
+reproduction](bc250_solver_results/N211.md), raw WS/logs/solver-*n211*. No active
+job/container/guard; disk~1.08GiB free. No general concurrency/batching/gradient/
+compile/graph/convergence/production GPU eig contract. Python CPU fault remains
+unresolved/separate from fixed VM-heap/CSR. Next N2.12 profile warm-session recovery,
+bounded native triangular back-substitution, Python/N2.6 reference/fixed separation/
+rescaling/unitnorm/residual/CPU gates/cap16/host LAPACK default retained.
+
 ## N2.10 device GEHRD reflector-Q — 2026-10-18
 
 TheRock codecc8a05d3c adds explicit q_backend=device to isolated hessenberg/schur:

@@ -9,6 +9,36 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.11 completed2026-10-18:** TheRock code807642198; explicit caller-owned
+  GehrdSession reuses bindings/native handle for one PID/host-thread/device/GPU
+  stream. No global cache/default change; current-stream checked/rebound, owned
+  GEHRD packed/tau copies retained, close synchronizes pinned stream then destroys
+  exactly once. Initial split: create~3.13–3.18ms vs binding0.11–0.13ms/alloc-copy
+  0.06–0.08ms/destroy~0.13ms.128 retained groups, six full CPU/backend fixtures,
+  three lifetime groups and16 refusal assertions pass: mixed-dtype reuse,
+  close-event/double-close, post-GEHRD exception cleanup, two private stream
+  sessions/six interleaved submissions, thread/stream/device/closed/busy/PID guards.
+  PID guard injected, not actual fork; device metadata check, not multi-GPU test.
+  Default reference exact N2.10; fresh/reused H/Q bitwise equal on fixtures.
+  Seven guards ACK/600s/dmesg unchanged,82 protected hashes unchanged. Paired
+  A1/B1/B2/A2 three-sample preparation4.25–4.51->0.34–0.64ms (7.03–12.52x),
+  whole candidate1.28–1.95x, six warm-session fixtures with N2.8 QR/device Q.
+  Init3.32–3.41ms/close excluded from warm pairs; cold one-call create+close
+  prep4.24–4.51ms has no such gain. Host full eig0.219–0.408ms remains faster;
+  no general/model/LoRA/Torch-wide gain. N2.9 regression remains separate.
+  Python-only, no native build/ccache/DSO/Torch/image/prefix metadata/kernel/
+  boot/default/.105 change. New gfx1013_gehrd_session.py must accompany candidate.
+  Prior helper WS/recovery/solver-n211-before; immutable schur_n210_reference.py.
+  [N211.md](docs/development/bc250_solver_results/N211.md), n211/ evidence/hashes/
+  trace/commands; raw WS/logs/solver-*n211*, ignored kernel/artifacts/solver-n211.
+  No active agent job/container/guard; disk~1.08GiB free: check before builds.
+  Python CPU fault unresolved/separate from fixed VM-heap/CSR. No broad concurrency/
+  batching/gradient/compile/graph/general convergence/production GPU eig claim.
+  **Next N2.12:** profile warm-session right-vector recovery and prototype bounded
+  native triangular back-substitution for separated Schur forms; retain Python/
+  N2.6 reference/fixed separation-rescaling-unitnorm-residual/CPU gates/cap16/
+  production host LAPACK default.
+
 - **N2.10 completed2026-10-18:** TheRock codecc8a05d3c; explicit q_backend="device"
   on isolated hessenberg/schur forms GEHRD reflector-Q with one32-thread HIP
   launch, complex64/128 cap16. Native GEHRD/owned packed copy/current-stream
@@ -1371,7 +1401,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.8 | Device shift/deflation/status around cooperative QR;128 retained+74 direct+six CPU/paired fixtures pass. Whole prototype1.56–2.21x versus N2.7 in fixtures; host default remains faster/unchanged. |
 | [x]   | N2.9 | Bounded chunks1..32 reduce status copies;128 retained+74 direct+100 chunk+six CPU fixtures pass. Latency mixed/regresses16; padded experiment not selected, defaults unchanged. |
 | [x]   | N2.10 | Native bounded reflector-Q formation;128 retained+24 independent reflector+six CPU/backend fixtures pass. Preparation1.11–1.39x/whole1.05–1.12x in fixtures; defaults unchanged. |
-| [ ]   | **N2.11 — next** | Split remaining prep binding/handle/allocation cost; one measured reuse/cache correction with lifetime/current-stream tests, owned GEHRD inputs/Python oracle/cap16/fixed gates/host production eig. |
+| [x]   | N2.11 | Explicit pinned-stream GEHRD sessions;128 retained+six CPU/backend fixtures+three lifetime groups/16 refusals pass. Warm prep7.03–12.52x/whole1.28–1.95x in fixtures; cold/default/host limits recorded. |
+| [ ]   | **N2.12 — next** | Profile warm-session recovery and prototype bounded native triangular back-substitution; retain Python/N2.6 reference/fixed separation-rescaling-unitnorm-residual/CPU gates/cap16/host production eig. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |

@@ -156,3 +156,8 @@ N2.10 follow-up: [bounded native GEHRD reflector-Q formation](N210.md).
 128 retained groups,24 independent reflector cases and six CPU/backend fixtures
 pass; measured preparation/whole-candidate gains remain small-scope. Remaining
 setup/teardown is separate, and reference/host production defaults are unchanged.
+
+N2.11 follow-up: [explicit stream-pinned GEHRD sessions](N211.md). Handle creation
+is the measured setup cost; warm reuse improves bounded fixtures, while cold
+creation/close and production host eig remain separate.128 retained groups,
+six CPU/backend fixtures and lifetime/refusal gates pass; defaults unchanged.
