@@ -4,10 +4,11 @@
 Matrix arithmetic stays on the current GPU stream. Python controls iterations and
 reads scalar convergence tests. Bounded separated-spectrum right-vector recovery
 is available; no CPU eigensolver, balancing, batching, gradients or performance
-contract. See N23.md and N24.md.
+contract. See N23.md, N24.md and N27.md.
 """
 import ctypes
 from dataclasses import dataclass
+from pathlib import Path
 
 import torch
 
@@ -100,14 +101,49 @@ def hessenberg(a):
             _status(blas.rocblas_destroy_handle(handle), 'destroy_handle')
 
 
+def _qr_similarity_reference(t, q, shift, m):
+    eye = torch.eye(m, dtype=t.dtype, device=t.device)
+    rotation, _ = torch.linalg.qr(t[:m, :m]-shift*eye)
+    updated = t.clone()
+    updated[:m, :] = rotation.mH@t[:m, :]
+    updated[:, :m] = updated[:, :m]@rotation
+    q[:, :m] = q[:, :m]@rotation
+    return updated, q
+
+
+_QR_LIBRARY = None
+
+
+def _qr_similarity_device(t, q, shift, m):
+    """Private normalized, finite, order<=16 driver inputs; current stream only."""
+    global _QR_LIBRARY
+    if _QR_LIBRARY is None:
+        library = ctypes.CDLL(str(Path(__file__).with_name('schur_qr_n27.so')))
+        library.bc250_qr_step.argtypes = [ctypes.c_void_p]*5 + [ctypes.c_int]*3 + [ctypes.c_void_p]
+        library.bc250_qr_step.restype = ctypes.c_int
+        _QR_LIBRARY = library
+    t, q, shift = t.contiguous(), q.contiguous(), shift.contiguous()
+    updated, newq = torch.empty_like(t), torch.empty_like(q)
+    status = _QR_LIBRARY.bc250_qr_step(t.data_ptr(), q.data_ptr(), shift.data_ptr(),
+        updated.data_ptr(), newq.data_ptr(), t.shape[0], m,
+        int(t.dtype == torch.complex128), torch.cuda.current_stream().cuda_stream)
+    if status:
+        raise RuntimeError(f'N2.7 QR launch returned HIP status {status}')
+    return updated, newq
+
+
 @torch.no_grad()
-def schur(a, *, max_iterations=256):
+def schur(a, *, max_iterations=256, qr_backend="reference"):
     """Bounded explicit shifted QR experiment; inspect info before using T's diagonal.
 
     Positive info is not success and triggers no hidden host fallback. Q contains
     Schur vectors, not right eigenvectors of the original nonsymmetric matrix.
     """
+    # Device QR is an explicit experiment; the reference remains the default.
     _validate(a)
+    if qr_backend not in ("reference", "device"):
+        raise ValueError("QR backend must be reference or device")
+    step = _qr_similarity_device if qr_backend == "device" else _qr_similarity_reference
     if isinstance(max_iterations, bool) or not isinstance(max_iterations, int) or not 0 <= max_iterations <= 4096:
         raise ValueError('Iteration budget must be an integer within0..4096')
     with torch.cuda.device(a.device):
@@ -147,12 +183,7 @@ def schur(a, *, max_iterations=256):
             # not a convergence guarantee for arbitrary spectra.
             if since_deflation and since_deflation % 20 == 0:
                 shift = dd+cc.abs()
-            eye = torch.eye(m, dtype=a.dtype, device=a.device)
-            rotation, _ = torch.linalg.qr(t[:m, :m]-shift*eye)
-            updated = t.clone()
-            updated[:m, :] = rotation.mH@t[:m, :]
-            updated[:, :m] = updated[:, :m]@rotation
-            q[:, :m] = q[:, :m]@rotation
+            updated, q = step(t, q, shift, m)
             # Exact QR preserves Hessenberg structure; remove only roundoff fill.
             fill = torch.tril(updated, diagonal=-2).norm()
             if not bool(torch.isfinite(updated).all()) or not bool(fill <= 128*finfo.eps*updated.norm()):
