@@ -1,0 +1,118 @@
+{
+  "guards": 12,
+  "all_acknowledged": true,
+  "all_kernel_logs_unchanged": true,
+  "retained_failed_tests": [
+    "dense-int8-a08-candidate"
+  ],
+  "rows": [
+    {
+      "label": "dense-int8-a08-a06",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-a07",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-benchmark",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-candidate",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "status": "no report before descriptor refusal",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-candidate-r2",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-conv",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-core",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-float-regressions",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-installed",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-model",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-profiler",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "dense-int8-a08-sparse",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "built_not_gpu_qualified",
+  "before": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/source/rocm-libraries/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp": "5234592e505c79b082d59a7bc5294ac9d9179844e5bc5fcd5a603c71385ac3c8",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipblaslt.so.1.5": "91c65ae424a19b58edb9210d033e0c5d2ce72f1781fd283f5204371c2f654ff6",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/.kpack/blas_lib_gfx1013.kpack": "a431881f2b826ee3eedb65fa6f08b2c2ba6242a62f9c4671f811f7ceb018dde5"
+  },
+  "after": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/source/rocm-libraries/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp": "4ec267cfb5dff6c1b7fde8848edce570af5761c71aa57817710fc7cd6c564cb8",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/lib/libhipblaslt.so.1.5": "8134d30766a89e2e5cc565146a2f06a34a6ba149521c46d84c7de6bd8745d1f5",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm/.kpack/blas_lib_gfx1013.kpack": "792367f3a312fb40de8c7b16a17be2a6305cd48ba9967ac2bcc408a56dd7bab9"
+  },
+  "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/dense-int8-a08-before"
+}

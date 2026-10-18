@@ -462,6 +462,7 @@ library reconstruction; retained earlier manifests keep their original meaning. 
 | 0028 | A02 native gfx1013 bundled legacy CK scalar profile: `2093090048f` |
 | 0029 | A02 BF16 reduction conversions/scaling and cache-key isolation: `d375d8a2ea7` |
 | 0030 | A03 capability-aware optional CK plugin probing: `fcf7a7142af` |
+| 0031 | A08 native dense INT8/INT32 Lt, modulo arithmetic and typed contracts: `319a235d6c6` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -472,6 +473,28 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 (`270bfb9d`), RDNA1 buffer flags (`ee65ff3b`).
 
 ## Component coverage: implemented versus existing native backend
+
+**A08 completed2026-10-18: native dense INT8->INT32.** Libraries
+`319a235d6c6496f0da37be44dfa60eaf31a29f82`, runtime helpers
+`8f0dfb671e88b31bc3f5bb4a4958acefdafde556`; Torch4af4a15 unchanged.
+The native gfx1013 Lt backend admits I8 A/B, I32 C/D/scalars, COMPUTE_32I,
+modulo32 arithmetic, row/column/N/T/padded/offset/batched/broadcast layouts,
+host/device scalar alpha/beta and DEFAULT/BIAS/RELU/RELU_BIAS. Existing
+`torch._int_mm` works without Torch rebuild/launcher hooks.99 direct exact CPU
+cases+11 refusals,16 public Torch configurations/out/custom streams+five
+refusals pass; GPU trace confirms gemm_int8.1628 existing floating Lt cases,
+core7/profiler7/sparse38/conv30/A0642/A0736/actual2B3 pass.12 guards ACK/600s/
+dmesg unchanged,61 protected hashes unchanged. DSO+kpack paired recovery in
+WS/recovery/dense-int8-a08-before, SOURCE_DENSE_INT8_A08.json in WS/current.
+[Report/usage/timings](bc250_dense_int8_a08_results/README.md). Small eager timing
+is mixed versus FP32 GEMM+cast; no universal or LoRA speedup. No quantization
+recipe, packed low-bit/QLoRA, integer autograd or compile/graph qualification.
+Other scales/compute modes (including public pedantic), pointer vectors and
+nonlinear/aux epilogues remain refused. No active job/container/guard deadline;
+disk~1.10GiB free, preserve existing sources/builds/caches. No kernel/.105/default
+BLAS/SDMA0/heap-off/image change. Historical CPU Python fault remains separate
+from fixed VM-heap/CSR. A01–A09 bounded scopes complete; next **N2.7**, existing
+small Schur/device-side QR iteration roadmap with default host dispatch retained.
 
 **A09 native Torch GPU profiler — 2026-10-18.** User selected A09 ahead of
 unfinished A08. Torch `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5` adds tests on

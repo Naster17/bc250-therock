@@ -7,6 +7,30 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
+## A08 update
+
+**A08 completed2026-10-18: native dense INT8->INT32.** Libraries
+`319a235d6c6496f0da37be44dfa60eaf31a29f82`, runtime helpers
+`8f0dfb671e88b31bc3f5bb4a4958acefdafde556`; Torch4af4a15 unchanged.
+The native gfx1013 Lt backend admits I8 A/B, I32 C/D/scalars, COMPUTE_32I,
+modulo32 arithmetic, row/column/N/T/padded/offset/batched/broadcast layouts,
+host/device scalar alpha/beta and DEFAULT/BIAS/RELU/RELU_BIAS. Existing
+`torch._int_mm` works without Torch rebuild/launcher hooks.99 direct exact CPU
+cases+11 refusals,16 public Torch configurations/out/custom streams+five
+refusals pass; GPU trace confirms gemm_int8.1628 existing floating Lt cases,
+core7/profiler7/sparse38/conv30/A0642/A0736/actual2B3 pass.12 guards ACK/600s/
+dmesg unchanged,61 protected hashes unchanged. DSO+kpack paired recovery in
+WS/recovery/dense-int8-a08-before, SOURCE_DENSE_INT8_A08.json in WS/current.
+[Report/usage/timings](bc250_dense_int8_a08_results/README.md). Small eager timing
+is mixed versus FP32 GEMM+cast; no universal or LoRA speedup. No quantization
+recipe, packed low-bit/QLoRA, integer autograd or compile/graph qualification.
+Other scales/compute modes (including public pedantic), pointer vectors and
+nonlinear/aux epilogues remain refused. No active job/container/guard deadline;
+disk~1.10GiB free, preserve existing sources/builds/caches. No kernel/.105/default
+BLAS/SDMA0/heap-off/image change. Historical CPU Python fault remains separate
+from fixed VM-heap/CSR. A01–A09 bounded scopes complete; next **N2.7**, existing
+small Schur/device-side QR iteration roadmap with default host dispatch retained.
+
 ## A09 update
 
 **A09 native Torch GPU profiler — 2026-10-18.** User selected A09 ahead of
@@ -173,7 +197,7 @@ The following rows are not an exhaustive API or dtype promise.
 | HIP allocation/copy/stream | ROCr, CLR, amdhip64, c10_hip | Native gfx1013; prior allocation/stream/churn and current probes | SDMA/experimental heap off; VMM/reset/fault migration limits remain |
 | Pointwise/reductions/indexing | ATen HIP, rocPRIM/hipCUB/Thrust | Existing P1/P2 suites; current normalization/embedding/optimizer checks | Larger dtype/layout/indexing contracts unqualified |
 | Dense FP32/FP64/FP16/BF16 GEMM | hipBLAS/rocBLAS, default | All four current output/input-gradient references pass; earlier broad fixtures retained | Scalar backend, no Tensor Core throughput claim |
-| Optional dense Lt | hipBLASLt | Explicit hipblaslt selection output/gradients pass; N1.8 bounds retained | Remains opt-in; INT8/FP8 gaps below |
+| Optional dense Lt | hipBLASLt | Explicit hipblaslt selection output/gradients pass; N1.8 bounds retained | Floating Lt remains opt-in; dense INT8/I32 now A08-qualified, FP8 gaps remain |
 | Conv1D/2D/3D | MIOpen | Group2 FP32 ranks1–3 and FP16/BF16 2D output/dx/dw pass | Group1 training defect A01; not blanket convolution support |
 | Depthwise / transpose conv | MIOpen or ATen selection | BF16 K4/C64/L65 depthwise and FP32 transpose-conv gradients pass | Does not qualify the missing CK plugin or all depths/layouts |
 | Norms | ATen/MIOpen by selection | Batch/layer/group norm output/input gradients pass | A02 native legacy CK reductions now pass bounded FP32/FP16/BF16 references; other compute/NaN/index contracts unqualified |
@@ -212,20 +236,20 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A05 — completed** | Reusable opt-in causal conv/loss | Torch6181d00;69 tests: CPU output/dx/dw/db/loss, AMP/checkpoint/update and exact tiny-model AdamW resume. | Explicit torch.nn.bc250_training_ops calls; original trainer unchanged. Higher-order/compile/graphs/large-model/performance unqualified. [Report](bc250_training_a05_results/README.md). Next A06. |
 | **A06 — corrected, bounded** | Native preparation and precision-safe full operation | Torch71a0426;42 operator tests, four autocast cases, all372 nonzero BF16 model gradients exact65/1024 | Default app hook corrected; BC250_GATED_DELTA=0 remains reference opt-out. Full FLA/deeper native fusion unqualified. [Report](bc250_a06_a07_results/README.md). |
 | **A07 — head256 completed, bounded** | Explicit D<=256 tiled/hybrid attention |36 tests; actual2B training/checkpoint gates and exact per-backend fresh/resume CLI continuation | Math default. BF16 hybrid lower peak/slower in measured fixtures; quadratic forward temporaries. Dropout/compile/graphs remain separate. [Report](bc250_a06_a07_results/README.md). |
-| **A08** | Dense INT8 -> INT32 `_int_mm` | Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route. | Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption. |
+| **A08 — completed, bounded** | Native dense INT8 -> INT32 Lt and Torch `_int_mm` | Libraries319a235;99 direct CPU-reference cases+11 refusals,16 Torch cases/out/streams+five refusals; overflow and above-FP32 exact-range cases pass | I32 scalar/modulo32 route, four integer epilogues. Existing Torch shape restrictions retained. Quantization/QLoRA/packed/compile integration unqualified. [Report](bc250_dense_int8_a08_results/README.md). |
 | **A09 — completed, bounded** | Native Torch GPU profiler via existing Kineto/SDK | Separate USE_KINETO=1 build; seven native trace/reference/lifecycle tests and existing numerical/model/resume gates | Explicit torch.profiler contexts; CPU/GPU kernels/copies/memory correlation. Hardware counters, broad concurrency, compile/graphs and long tracing unqualified. [Report](bc250_profiler_a09_results/README.md). |
 | **B01** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
 | **B02** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
 | **B03** | Distributed build, Gloo/RCCL absent | USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected. | CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here. |
 | **B04** | torchvision / torchaudio not installed in reviewed runtime | Package discovery absent, not a core Torch loader failure; RPP/FFTS are separate libraries | Build matching pinned extensions, test needed scalar ATen/C++ ops; keep optional codecs/CPU paths explicit. No assumption that RPP/media blocks automatically accelerate them. |
-| **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; scalar dense INT8 route also missing A08 | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
+| **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; A08 now supplies a bounded dense INT8/INT32 primitive, not a low-bit model recipe | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
 | **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
 A01–A07 are completed within their recorded bounded scopes; A07 dropout/compile/
-graph contracts and full native FLA remain open extensions. A09 was selected and completed ahead of A08; A08 is the
-remaining primary item before N2.7. B-items are optional
+graph contracts and full native FLA remain open extensions. A09 was selected ahead of A08; A08 is now also completed within its
+recorded bounds. Resume N2.7; optional B-items remain separate. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did
 not silently begin their implementation. Small targeted tests cannot prove that

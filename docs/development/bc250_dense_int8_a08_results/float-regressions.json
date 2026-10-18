@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "status": "passed",
+      "suite": "hipblaslt_scalar_smoke",
+      "cases": 403
+    },
+    {
+      "status": "passed",
+      "suite": "hipblaslt_priority1_smoke",
+      "cases": 561
+    },
+    {
+      "status": "passed",
+      "suite": "hipblaslt_n18_smoke",
+      "cases": 664
+    }
+  ]
+}

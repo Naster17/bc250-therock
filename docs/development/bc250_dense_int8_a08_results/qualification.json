@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "passed_gates": [
+    "dense-int8-a08-candidate-r2",
+    "dense-int8-a08-float-regressions",
+    "dense-int8-a08-installed",
+    "dense-int8-a08-core",
+    "dense-int8-a08-profiler",
+    "dense-int8-a08-sparse",
+    "dense-int8-a08-conv",
+    "dense-int8-a08-a06",
+    "dense-int8-a08-a07",
+    "dense-int8-a08-model"
+  ],
+  "phase": "dense-int8-a08-model"
+}

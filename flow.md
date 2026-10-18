@@ -9,6 +9,47 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **A08 completed2026-10-18:** libraries319a235d6c6496f0da37be44dfa60eaf31a29f82;
+  runtime helpers8f0dfb671e88b31bc3f5bb4a4958acefdafde556; Torch4af4a15 unchanged.
+  Existing native gfx1013 Lt now supports signed INT8 A/B, INT32 C/D/scalars and
+  COMPUTE_32I with unsigned modulo32 accumulation/scalar/bias arithmetic. Row/col,
+  N/T, padding/offsets/strided+broadcast batches, host/device scalars and DEFAULT/
+  BIAS/RELU/RELU_BIAS qualified. Integer alignment/span-alias guards added; zero
+  scalar no-read behavior retained. Existing torch._int_mm works without Torch
+  rebuild or launcher hook, preserving its M>16/K,N positive multiples8/out rules.
+  99 direct CPU cases+11 refusals and16 public Torch/out/custom-stream cases+five
+  refusals pass, including odd16,790,289 above FP32 exact range and both overflow
+  directions. Profiler confirms native gemm_int8. Existing floating403+561+664
+  cases pass; old floating gemm/launch token streams unchanged. Core7/profiler7/
+  sparse38/conv30/A0642/A0736/actual2B3 pass;372 nonzero adapters and12 head256
+  forward/recompute calls retain A06 exact BF16/A07 prior bounded agreement.
+  Three five-pair eager timing fixtures versus resident FP32 GEMM+cast are mixed:
+  M=N=K32/128/256 INT8~0.01473/0.01528/0.05640ms vs0.02179/0.03440/0.05550ms.
+  Event envelopes include submission, baseline has an extra conversion kernel;
+  no kernel-only/universal/LoRA/quantized-model speedup claim. No quantization
+  recipe, packed low-bit/QLoRA, integer autograd or compile/graph integration.
+  Initial probe requested unsupported public pedantic descriptor mode and failed
+  before GEMM dispatch; retained, implementation explicitly supports plain32I.
+  Other compute/scales/pointer vectors/nonlinear+aux epilogues remain refused.
+  12 GPU guards all ACK/600s/dmesg unchanged. Final source/DSO/external kpack
+  identities verified;61 protected old/current Torch/runtime/SDK/app/frozen-pair
+  hashes unchanged. Paired recovery WS/recovery/dense-int8-a08-before; restore
+  DSO+kpack together under exclusive prefix lock. Runtime/source GIT stamps
+  updated only after qualification. SOURCE_DENSE_INT8_A08.json in WS/current.
+  [Report/usage/trace](docs/development/bc250_dense_int8_a08_results/README.md),
+  logs WS/logs/dense-int8-a08*, ignored kernel/artifacts/dense-int8-a08/remote-logs/.
+  Targeted hipBLASLt+dist build ccache20GiB/jobs12; full Git/patch0031/verified
+  bundle onfcf7a714 retained. Clang-format, six Python helper format checks pass;
+  no full CI/type claim. No agent job/container/guard deadline; disk~1.10GiB
+  free: capacity check before builds. Old source/build/cache/image/links/user src
+  retained. No kernel/BIOS/boot/.105/default BLAS/attention/SDMA0/heap-off changes.
+  Historical Python CPU fault stays unresolved/separate from fixed VM-heap/CSR.
+  **Next N2.7:** re-read existing N2.6 profile/failure evidence, split Schur
+  preparation/QR-loop cost and prototype one bounded device-side small QR/
+  similarity iteration with residual/scale/separation/failure gates, retaining
+  default host-LAPACK production eig. A01–A09 complete within recorded bounds;
+  optional B-items, fuller attention/profiling/quantization contracts remain open.
+
 - **A09 completed2026-10-18 (user selected ahead of unfinished A08):** Torch
   `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5` adds tests on unchanged native source
   71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8; helpers

@@ -63,9 +63,9 @@
     {
       "id": "A08",
       "feature": "Dense INT8 -> INT32 `_int_mm`",
-      "evidence": "Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route.",
-      "next": "Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption.",
-      "status": "queued"
+      "evidence": "Libraries319a235 native I8/I32 scalar Lt, COMPUTE_32I/scalars, modulo32, four epilogues/layout/batch/alias guards.99 exact direct cases+11 refusals,16 public Torch _int_mm cases/out/streams+five refusals, native kernel trace. Existing floating1628/core/profiler/sparse/conv/A06/A07/actual2B gates pass. See ../bc250_dense_int8_a08_results/README.md.",
+      "next": "N2.7. Quantization recipes/QLoRA/packed formats, compile/graphs and other integer compute/scale/epilogue modes remain separate. No universal speedup claim.",
+      "status": "completed_bounded"
     },
     {
       "id": "A09",
@@ -131,8 +131,8 @@
       "status": "queued"
     }
   ],
-  "next": "A08: inspect existing dense INT8/INT32 Lt and Torch paths; implement one bounded native route with overflow/layout/scalar/epilogue references, preserving dense floating defaults. Then N2.7.",
-  "N2.7": "queued behind selected Torch/library primary items",
+  "next": "N2.7: resume recorded small Schur substage profile and one bounded device-side QR/similarity iteration; retain CPU/residual/failure gates and default host-LAPACK production dispatch. Check disk capacity first.",
+  "N2.7": "next, selected A01-A09 bounded scopes completed",
   "completed_primary_items": [
     "A01",
     "A02",
@@ -141,8 +141,9 @@
     "A05",
     "A06",
     "A07",
+    "A08",
     "A09"
   ],
-  "next_primary_item": "A08",
+  "next_primary_item": "N2.7",
   "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08"
 }

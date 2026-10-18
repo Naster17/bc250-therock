@@ -1,0 +1,141 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "dtype": "torch.float32",
+      "length": 65,
+      "a06": {
+        "max_relative_l2": 9.537176993035246e-06,
+        "global_relative_l2": 3.8088191792150245e-06,
+        "exact": false,
+        "worst_parameter": "base_model.model.model.layers.0.linear_attn.in_proj_a.lora_A.default.weight",
+        "nonzero_gradients": 372
+      },
+      "a07": {
+        "max_relative_l2": 8.427137800026685e-06,
+        "global_relative_l2": 3.2538607810979346e-06,
+        "exact": false,
+        "worst_parameter": "base_model.model.model.layers.8.linear_attn.in_proj_b.lora_B.default.weight",
+        "nonzero_gradients": 372
+      },
+      "reference": {
+        "loss": 15.30911636352539,
+        "seconds": 4.191138205999778,
+        "peak_allocated": 7836095488,
+        "allocated": 7730046464,
+        "reserved": 7939817472
+      },
+      "corrected_math": {
+        "loss": 15.309114456176758,
+        "seconds": 1.1982967699996152,
+        "peak_allocated": 7869649920,
+        "allocated": 7730046464,
+        "reserved": 7983857664
+      },
+      "corrected_tiled": {
+        "loss": 15.309114456176758,
+        "seconds": 1.0352657940002246,
+        "peak_allocated": 7869649920,
+        "allocated": 7730046464,
+        "reserved": 7985954816
+      },
+      "tiled_d256_calls": 12,
+      "model_training": true,
+      "gradient_checkpointing": true,
+      "a06_passed": true,
+      "a07_passed": true
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "length": 65,
+      "a06": {
+        "max_relative_l2": 0.0,
+        "global_relative_l2": 0.0,
+        "exact": true,
+        "worst_parameter": "base_model.model.model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+        "nonzero_gradients": 372
+      },
+      "a07": {
+        "max_relative_l2": 0.02170286886394024,
+        "global_relative_l2": 0.0068322784157203815,
+        "exact": false,
+        "worst_parameter": "base_model.model.model.layers.0.linear_attn.in_proj_a.lora_A.default.weight",
+        "nonzero_gradients": 372
+      },
+      "reference": {
+        "loss": 15.314414978027344,
+        "seconds": 0.9925121500000387,
+        "peak_allocated": 4096715264,
+        "allocated": 3965869568,
+        "reserved": 4305453056
+      },
+      "corrected_math": {
+        "loss": 15.314414978027344,
+        "seconds": 0.9878109869996479,
+        "peak_allocated": 4096715264,
+        "allocated": 3965869568,
+        "reserved": 4305453056
+      },
+      "corrected_tiled": {
+        "loss": 15.314414978027344,
+        "seconds": 0.9910146639995219,
+        "peak_allocated": 4096715264,
+        "allocated": 3965869568,
+        "reserved": 4303355904
+      },
+      "tiled_d256_calls": 12,
+      "model_training": true,
+      "gradient_checkpointing": true,
+      "a06_passed": true,
+      "a07_passed": true
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "length": 1024,
+      "a06": {
+        "max_relative_l2": 0.0,
+        "global_relative_l2": 0.0,
+        "exact": true,
+        "worst_parameter": "base_model.model.model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+        "nonzero_gradients": 372
+      },
+      "a07": {
+        "max_relative_l2": 0.013072287663817406,
+        "global_relative_l2": 0.0028170629963636348,
+        "exact": false,
+        "worst_parameter": "base_model.model.model.layers.0.linear_attn.in_proj_b.lora_B.default.weight",
+        "nonzero_gradients": 372
+      },
+      "reference": {
+        "loss": 14.256771087646484,
+        "seconds": 9.670222920000015,
+        "peak_allocated": 5217338368,
+        "allocated": 3973732864,
+        "reserved": 5442109440
+      },
+      "corrected_math": {
+        "loss": 14.256771087646484,
+        "seconds": 9.672565244999532,
+        "peak_allocated": 5217338368,
+        "allocated": 3973732864,
+        "reserved": 5442109440
+      },
+      "corrected_tiled": {
+        "loss": 14.256771087646484,
+        "seconds": 9.72040757800005,
+        "peak_allocated": 5217338368,
+        "allocated": 3973732864,
+        "reserved": 5442109440
+      },
+      "tiled_d256_calls": 12,
+      "model_training": true,
+      "gradient_checkpointing": true,
+      "a06_passed": true,
+      "a07_passed": true
+    }
+  ],
+  "source_sha256": {
+    "a06": "21398daf2bdae7b6cfdaac08e510c97f94c5ed8d709213de638ca181a868c64e",
+    "a07": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7"
+  }
+}

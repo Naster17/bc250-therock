@@ -1,0 +1,9 @@
+{
+  "unchanged_floating_function_tokens": {
+    "floating_gemm": true,
+    "floating_launch": true
+  },
+  "source_sha256": "4ec267cfb5dff6c1b7fde8848edce570af5761c71aa57817710fc7cd6c564cb8",
+  "clang_format": "passed",
+  "scope": "Token equality for existing GPU gemm/launch bodies; validator type gates extended, not universal behavior proof"
+}

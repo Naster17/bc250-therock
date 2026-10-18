@@ -14,6 +14,28 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Dense INT8 matmul (A08, 2026-10-18)
+
+The selected .104 ROCm prefix now supports `torch._int_mm` through native
+hipBLASLt, producing INT32 output from signed INT8 matrices. No launcher flag or
+Torch rebuild is required. The pinned Torch API requires M>16, positive K/N
+multiples of8, and contiguous INT32 output. Row/column/strided inputs and `out=`
+passed bounded exact-reference tests. Arithmetic wraps modulo2^32 on overflow.
+
+```python
+import torch
+
+a = torch.randint(-128, 128, (32, 64), device="cuda", dtype=torch.int8)
+b = torch.randint(-128, 128, (64, 32), device="cuda", dtype=torch.int8)
+result = torch._int_mm(a, b)
+```
+
+This supplies an integer primitive. It does not quantize models, install a
+QLoRA/low-bit package, or automatically speed up BF16 LoRA. Mixed bounded timings,
+raw Lt scalar/epilogue contracts and recovery are in the
+[A08 report](bc250_dense_int8_a08_results/README.md). Packed formats, quantization
+recipes, integer autograd and compile/graph integration remain unqualified.
+
 ## GPU profiler (A09, 2026-10-18)
 
 The selected .104 Torch build now supports real GPU tracing through Kineto and

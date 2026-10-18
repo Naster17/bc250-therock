@@ -1,0 +1,171 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "status": "passed",
+      "m": 17,
+      "n": 8,
+      "k": 8,
+      "layout": "row",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 17,
+      "n": 8,
+      "k": 8,
+      "layout": "column",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 17,
+      "n": 8,
+      "k": 8,
+      "layout": "strided",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 32,
+      "n": 32,
+      "k": 32,
+      "layout": "row",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 32,
+      "n": 32,
+      "k": 32,
+      "layout": "column",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 32,
+      "n": 32,
+      "k": 32,
+      "layout": "strided",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 65,
+      "n": 24,
+      "k": 72,
+      "layout": "row",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 65,
+      "n": 24,
+      "k": 72,
+      "layout": "column",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 65,
+      "n": 24,
+      "k": 72,
+      "layout": "strided",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 128,
+      "n": 64,
+      "k": 128,
+      "layout": "row",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 128,
+      "n": 64,
+      "k": 128,
+      "layout": "column",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 128,
+      "n": 64,
+      "k": 128,
+      "layout": "strided",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 32,
+      "n": 32,
+      "k": 1048,
+      "layout": "row",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 32,
+      "n": 32,
+      "k": 1048,
+      "layout": "column",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 32,
+      "n": 32,
+      "k": 1048,
+      "layout": "strided",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    },
+    {
+      "status": "passed",
+      "m": 17,
+      "n": 8,
+      "k": 131080,
+      "layout": "row",
+      "exact_cpu_int64_reference_mod32": true,
+      "custom_stream": true,
+      "out_variant": true
+    }
+  ],
+  "direct_cases": 99,
+  "direct_refusals": 11,
+  "torch_refusals": 5,
+  "native_kernel_trace": true,
+  "torch": "2.13.0a0+gfx1013",
+  "arch": "gfx1013:xnack-"
+}

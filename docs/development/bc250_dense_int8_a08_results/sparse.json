@@ -1,0 +1,213 @@
+{
+  "status": "passed",
+  "results": [
+    {
+      "name": "test_gradient_subsets_cuda_bfloat16",
+      "status": "passed",
+      "independent_gradient_subsets": 5
+    },
+    {
+      "name": "test_gradient_subsets_cuda_float16",
+      "status": "passed",
+      "independent_gradient_subsets": 5
+    },
+    {
+      "name": "test_gradient_subsets_cuda_float32",
+      "status": "passed",
+      "independent_gradient_subsets": 5
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_False_rows_32_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_False_rows_32_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_False_rows_64_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_False_rows_64_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_True_rows_32_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_True_rows_32_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_True_rows_64_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_False_linear_True_rows_64_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": false
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_False_rows_32_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_False_rows_32_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_False_rows_64_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_False_rows_64_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_True_rows_32_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_True_rows_32_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_True_rows_64_cuda_bfloat16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_public_trainable_weight_True_linear_True_rows_64_cuda_float16",
+      "status": "passed",
+      "source_weight_gradient": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_none_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_none_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_none_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_scalar_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_scalar_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_scalar_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_vector_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_vector_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_False_alpha_mode_vector_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_none_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_none_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_none_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_scalar_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_scalar_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_scalar_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_vector_cuda_bfloat16",
+      "status": "passed",
+      "dtype": "torch.bfloat16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_vector_cuda_float16",
+      "status": "passed",
+      "dtype": "torch.float16",
+      "all_gradients": true
+    },
+    {
+      "name": "test_raw_transpose_True_alpha_mode_vector_cuda_float32",
+      "status": "passed",
+      "dtype": "torch.float32",
+      "all_gradients": true
+    },
+    {
+      "name": "test_retained_zero_cuda",
+      "status": "passed"
+    }
+  ],
+  "returncode": 0
+}
