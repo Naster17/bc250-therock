@@ -1,0 +1,271 @@
+From 319a235d6c6496f0da37be44dfa60eaf31a29f82 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Sun, 18 Oct 2026 11:29:40 +0200
+Subject: [PATCH] feat(hipblaslt): add native gfx1013 dense INT8 to INT32
+ matmul
+
+Admit matching signed INT8 operands with INT32 output/scales and COMPUTE_32I.
+Use a scalar tiled HIP kernel with unsigned modulo-2^32 accumulation and
+integer alpha/beta/bias arithmetic, avoiding signed-overflow UB or FP32 rounding.
+Support existing row/column, transpose, offset and strided/broadcast contracts,
+host/device scalars and DEFAULT/BIAS/RELU/RELU_BIAS epilogues. Validate pointer
+alignment and overlapping spans; preserve zero-scalar no-read behavior.
+Other integer compute/scale types and nonlinear/aux epilogues remain refused.
+Existing floating gemm and launch token streams are unchanged.
+
+Test Plan: .104 native gfx1013 targeted hipBLASLt+dist build, ccache20G/jobs12;
+99 CPU-reference direct cases and11 refusal contracts,16 public Torch _int_mm
+CPU-int64/mod32 fixtures with stream/out coverage and five public refusals.
+Profiler confirms gemm_int8 GPU execution. Existing403 scalar,561 extended,
+664 skinny float cases; core7, profiler7, sparse38, conv30, A0642/A0736 and
+three actual2B checkpointed/nonzero-adapter model comparisons pass.
+---
+ .../library/src/amd_detail/gfx1013_scalar.cpp | 194 +++++++++++++++++-
+ 1 file changed, 183 insertions(+), 11 deletions(-)
+
+diff --git a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+index 221c93c9bc1..37ae571f81c 100644
+--- a/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
++++ b/projects/hipblaslt/library/src/amd_detail/gfx1013_scalar.cpp
+@@ -105,6 +105,7 @@ namespace gfx1013_scalar
+             if(device != h->device || std::strncmp(h->properties.gcnArchName, "gfx1013", 7)
+                || (h->properties.gcnArchName[7] && h->properties.gcnArchName[7] != ':'))
+                 return HIPBLAS_STATUS_ARCH_MISMATCH;
++            const bool integer = a->type == HIP_R_8I;
+             if(!supported_epilogue(op->epilogue) || (!uses_bias(op->epilogue) && op->bias)
+                || op->scaleA || op->scaleB || op->scaleC || op->scaleD || op->scaleE || op->amaxD
+                || (!uses_aux(op->epilogue) && op->e)
+@@ -112,15 +113,16 @@ namespace gfx1013_scalar
+                || op->scaleBType != RocblasltContractionProblem::ScalingFormat::None
+                || op->compute_input_typeA != HIPBLASLT_DATATYPE_INVALID
+                || op->compute_input_typeB != HIPBLASLT_DATATYPE_INVALID
+-               || op->scale_type != HIP_R_32F || op->sm_count_target || h->sm_count_target
+-               || op->streamk_tile_scheduling_ext
++               || op->scale_type != (integer ? HIP_R_32I : HIP_R_32F) || op->sm_count_target
++               || h->sm_count_target || op->streamk_tile_scheduling_ext
+                || h->check_numerics != hipblaslt_check_numerics_mode_no_check
+-               || (op->compute_type_original != rocblaslt_compute_f32
+-                   && op->compute_type_original != rocblaslt_compute_f32_pedantic
+-                   && !(op->compute_type_original == rocblaslt_compute_f32_fast_f16
+-                        && a->type == HIP_R_16F)
+-                   && !(op->compute_type_original == rocblaslt_compute_f32_fast_bf16
+-                        && a->type == HIP_R_16BF))
++               || (integer ? (op->compute_type_original != rocblaslt_compute_i32)
++                           : (op->compute_type_original != rocblaslt_compute_f32
++                              && op->compute_type_original != rocblaslt_compute_f32_pedantic
++                              && !(op->compute_type_original == rocblaslt_compute_f32_fast_f16
++                                   && a->type == HIP_R_16F)
++                              && !(op->compute_type_original == rocblaslt_compute_f32_fast_bf16
++                                   && a->type == HIP_R_16BF)))
+                || (op->pointermode != rocblaslt_pointer_mode_host
+                    && op->pointermode != rocblaslt_pointer_mode_device))
+                 return HIPBLAS_STATUS_NOT_SUPPORTED;
+@@ -132,8 +134,14 @@ namespace gfx1013_scalar
+                || (op->op_B != HIPBLAS_OP_N && op->op_B != HIPBLAS_OP_T))
+                 return HIPBLAS_STATUS_NOT_SUPPORTED;
+             if(a->type != b->type || c->type != d->type
+-               || (a->type != HIP_R_32F && a->type != HIP_R_16F && a->type != HIP_R_16BF)
+-               || (d->type != a->type && d->type != HIP_R_32F))
++               || (integer
++                       ? d->type != HIP_R_32I
++                       : ((a->type != HIP_R_32F && a->type != HIP_R_16F && a->type != HIP_R_16BF)
++                          || (d->type != a->type && d->type != HIP_R_32F))))
++                return HIPBLAS_STATUS_NOT_SUPPORTED;
++            if(integer && op->epilogue != ROCBLASLT_EPILOGUE_DEFAULT
++               && op->epilogue != ROCBLASLT_EPILOGUE_BIAS && op->epilogue != ROCBLASLT_EPILOGUE_RELU
++               && op->epilogue != ROCBLASLT_EPILOGUE_RELU_BIAS)
+                 return HIPBLAS_STATUS_NOT_SUPPORTED;
+             if(uses_bias(op->epilogue))
+             {
+@@ -142,9 +150,22 @@ namespace gfx1013_scalar
+                     return HIPBLAS_STATUS_INVALID_VALUE;
+                 const auto bias_type
+                     = op->bias_type == HIPBLASLT_DATATYPE_INVALID ? d->type : op->bias_type;
+-                if(bias_type != d->type && bias_type != HIP_R_32F)
++                if(integer ? bias_type != HIP_R_32I
++                           : (bias_type != d->type && bias_type != HIP_R_32F))
+                     return HIPBLAS_STATUS_NOT_SUPPORTED;
+             }
++            if(integer && uses_bias(op->epilogue))
++            {
++                auto bias         = *d;
++                bias.m            = d->m;
++                bias.n            = 1;
++                bias.ld           = d->m;
++                bias.order        = HIPBLASLT_ORDER_COL;
++                bias.batch_offset = 0;
++                bias.batch_stride = op->bias_stride;
++                if(!valid_span(bias, false))
++                    return HIPBLAS_STATUS_INVALID_VALUE;
++            }
+             if(uses_aux(op->epilogue))
+             {
+                 // Upstream auxiliary tensors are column-major, even for row-major D.
+@@ -184,6 +205,155 @@ namespace gfx1013_scalar
+             return HIPBLAS_STATUS_SUCCESS;
+         }
+ 
++        __global__ void gemm_int8(Layout         a,
++                                  Layout         b,
++                                  Layout         c,
++                                  Layout         d,
++                                  const int8_t*  A,
++                                  const int8_t*  B,
++                                  const int32_t* C,
++                                  int32_t*       D,
++                                  uint64_t       k,
++                                  bool           trans_a,
++                                  bool           trans_b,
++                                  int32_t        alpha_host,
++                                  int32_t        beta_host,
++                                  const int32_t* alpha_device,
++                                  const int32_t* beta_device,
++                                  const int32_t* bias,
++                                  uint64_t       bias_stride,
++                                  bool           relu)
++        {
++            __shared__ int32_t left[tile][tile];
++            __shared__ int32_t right[tile][tile];
++            const unsigned     x = threadIdx.x, y = threadIdx.y;
++            const uint64_t     tiles_m  = (d.rows + tile - 1) / tile;
++            const uint64_t     tiles_n  = (d.cols + tile - 1) / tile;
++            const uint64_t     batch    = uint64_t(blockIdx.x) / (tiles_m * tiles_n);
++            const uint64_t     position = uint64_t(blockIdx.x) % (tiles_m * tiles_n);
++            const uint64_t     row      = (position % tiles_m) * tile + y;
++            const uint64_t     col      = (position / tiles_m) * tile + x;
++            const uint32_t     alpha    = uint32_t(alpha_device ? *alpha_device : alpha_host);
++            const uint32_t     beta     = uint32_t(beta_device ? *beta_device : beta_host);
++            uint32_t           acc      = 0;
++            // Unsigned accumulation defines modulo-2^32 overflow without signed UB.
++            if(alpha != 0)
++                for(uint64_t base = 0; base < k; base += tile)
++                {
++                    const uint64_t ka = base + x, kb = base + y;
++                    left[y][x]
++                        = row < d.rows && ka < k
++                              ? int32_t(A[a.index(trans_a ? ka : row, trans_a ? row : ka, batch)])
++                              : 0;
++                    right[y][x]
++                        = col < d.cols && kb < k
++                              ? int32_t(B[b.index(trans_b ? col : kb, trans_b ? kb : col, batch)])
++                              : 0;
++                    __syncthreads();
++                    for(unsigned i = 0; i < tile; ++i)
++                        acc += uint32_t(left[y][i] * right[i][x]);
++                    __syncthreads();
++                }
++            if(row < d.rows && col < d.cols)
++            {
++                uint32_t value = alpha * acc;
++                if(beta != 0)
++                    value += beta * uint32_t(C[c.index(row, col, batch)]);
++                if(bias)
++                    value += uint32_t(bias[batch * bias_stride + row]);
++                int32_t result;
++                __builtin_memcpy(&result, &value, sizeof(result));
++                D[d.index(row, col, batch)] = relu && result < 0 ? 0 : result;
++            }
++        }
++
++        uint64_t span_bytes(const Layout& x, unsigned width)
++        {
++            if(!x.rows || !x.cols)
++                return 0;
++            const uint64_t inner = x.row_major ? x.cols : x.rows;
++            const uint64_t outer = x.row_major ? x.rows : x.cols;
++            return (x.offset + (x.batches - 1) * x.stride + (outer - 1) * x.ld + inner) * width;
++        }
++
++        hipblasStatus_t launch_int8(rocblaslt_matmul_desc   op,
++                                    rocblaslt_matrix_layout a,
++                                    rocblaslt_matrix_layout b,
++                                    rocblaslt_matrix_layout c,
++                                    rocblaslt_matrix_layout d,
++                                    const void*             alpha,
++                                    const void*             A,
++                                    const void*             B,
++                                    const void*             beta,
++                                    const void*             C,
++                                    void*                   D,
++                                    hipStream_t             stream)
++        {
++            const bool device = op->pointermode == rocblaslt_pointer_mode_device;
++            int32_t    ah = 0, bh = 0;
++            if(!device)
++            {
++                std::memcpy(&ah, alpha, sizeof(ah));
++                std::memcpy(&bh, beta, sizeof(bh));
++            }
++            const uint64_t k = op->op_A == HIPBLAS_OP_N ? a->n : a->m;
++            if(!D || (reinterpret_cast<uintptr_t>(D) & 3) || ((device || bh != 0) && !C)
++               || (k && (device || ah != 0) && (!A || !B))
++               || (C && (reinterpret_cast<uintptr_t>(C) & 3))
++               || (op->bias && (reinterpret_cast<uintptr_t>(op->bias) & 3))
++               || (device
++                   && ((reinterpret_cast<uintptr_t>(alpha) & 3)
++                       || (reinterpret_cast<uintptr_t>(beta) & 3))))
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            if(C == D
++               && (c->ld != d->ld || c->batch_stride != d->batch_stride
++                   || c->batch_offset != d->batch_offset))
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            const uint64_t output_bytes = span_bytes(layout(*d), 4);
++            const auto     overlap      = [&](const void* input, uint64_t bytes) {
++                if(!input || !bytes || !output_bytes)
++                    return false;
++                const uintptr_t src = reinterpret_cast<uintptr_t>(input);
++                const uintptr_t dst = reinterpret_cast<uintptr_t>(D);
++                return bytes > UINTPTR_MAX - src || output_bytes > UINTPTR_MAX - dst
++                       || (src < dst + output_bytes && dst < src + bytes);
++            };
++            const uint64_t bias_bytes
++                = uses_bias(op->epilogue)
++                      ? (uint64_t(d->batch_count - 1) * uint64_t(op->bias_stride) + d->m) * 4
++                      : 0;
++            if(overlap(A, span_bytes(layout(*a), 1)) || overlap(B, span_bytes(layout(*b), 1))
++               || (C != D && overlap(C, span_bytes(layout(*c), 4))) || overlap(op->bias, bias_bytes)
++               || (device && (overlap(alpha, 4) || overlap(beta, 4))))
++                return HIPBLAS_STATUS_INVALID_VALUE;
++            const uint64_t blocks = ((d->m + tile - 1) / tile) * ((d->n + tile - 1) / tile)
++                                    * uint64_t(d->batch_count);
++            if(!blocks)
++                return HIPBLAS_STATUS_SUCCESS;
++            gemm_int8<<<dim3(unsigned(blocks)), dim3(tile, tile), 0, stream>>>(
++                layout(*a),
++                layout(*b),
++                layout(*c),
++                layout(*d),
++                static_cast<const int8_t*>(A),
++                static_cast<const int8_t*>(B),
++                static_cast<const int32_t*>(C),
++                static_cast<int32_t*>(D),
++                k,
++                op->op_A == HIPBLAS_OP_T,
++                op->op_B == HIPBLAS_OP_T,
++                ah,
++                bh,
++                device ? static_cast<const int32_t*>(alpha) : nullptr,
++                device ? static_cast<const int32_t*>(beta) : nullptr,
++                uses_bias(op->epilogue) ? static_cast<const int32_t*>(op->bias) : nullptr,
++                uint64_t(op->bias_stride),
++                op->epilogue == ROCBLASLT_EPILOGUE_RELU
++                    || op->epilogue == ROCBLASLT_EPILOGUE_RELU_BIAS);
++            return hipGetLastError() == hipSuccess ? HIPBLAS_STATUS_SUCCESS
++                                                   : HIPBLAS_STATUS_EXECUTION_FAILED;
++        }
++
+         template <typename Input, typename Output, unsigned Outputs = 1, bool Cooperative = false>
+         __global__ void gemm(Layout             a,
+                              Layout             b,
+@@ -563,6 +733,8 @@ namespace gfx1013_scalar
+                && (std::memcmp(algo->data, algorithm_id, sizeof(algorithm_id))
+                    || algo->max_workspace_bytes)))
+             return HIPBLAS_STATUS_INVALID_VALUE;
++        if(a->type == HIP_R_8I)
++            return launch_int8(op, a, b, c, d, alpha, A, B, beta, C, D, stream);
+         if(a->type == HIP_R_32F)
+             return launch<float, float>(op, a, b, c, d, alpha, A, B, beta, C, D, stream);
+         if(a->type == HIP_R_16F)
+-- 
+2.56.0
+
