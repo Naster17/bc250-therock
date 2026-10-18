@@ -1,0 +1,25 @@
+F1018 15:04:23.772432       7 agent.cpp:216] Sequence '-1' in ROCR_VISIBLE_DEVICES=-1 not recognized. Expected device ordinal or GPU-XXX where XXX is the hexadecimal UUID
+*** Check failure stack trace: ***
+Fatal Python error: Aborted
+
+Current thread 0x00007f97e62e1140 (most recent call first):
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1289 in create_module
+  File "<frozen importlib._bootstrap>", line 813 in module_from_spec
+  File "<frozen importlib._bootstrap>", line 921 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/pytorch-work/torch/__init__.py", line 445 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 995 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/test_bc250_profiler_order.py", line 13 in <module>
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_profiler_order.py", line 51, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_profiler_order.py", line 47, in main
+    assert result["status"] == "passed"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

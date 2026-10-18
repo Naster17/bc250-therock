@@ -1,0 +1,10 @@
+No changes detected in lint configuration files. Skipping setup.
+Using existing generated files for linting.
+Done.
+$ uvx --python 3.10 lintrunner@0.12.7 list
+$ uvx --python 3.10 lintrunner@0.12.7 --take NEWLINE,INCLUDE,RUFF,NATIVEFUNCTIONS,SET_LINTER,TESTOWNERS,DOCSTRING_LINTER,IMPORT_LINTER torch/csrc/profiler/kineto_shim.cpp test/test_bc250_profiler_order.py
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.
+$ uvx --python 3.10 lintrunner@0.12.7 --take CLANGFORMAT,TEST_HAS_MAIN,FLAKE8,PYFMT torch/csrc/profiler/kineto_shim.cpp test/test_bc250_profiler_order.py
+Warning: Could not find a lintrunner config at: '.lintrunner.private.toml'. Continuing without using configuration file.
+ok No lint issues.

@@ -70,8 +70,8 @@
     {
       "id": "A09",
       "feature": "Torch GPU profiler/Kineto disabled",
-      "evidence": "Separate Torch candidate on native source71a0426, tests4af4a15, helpers4c2edb785: USE_KINETO=1/KINETO_BACKEND=rocm selects existing rocprofiler-sdk. Seven native GPU kernel/copy/memory/correlation, CPU/GPU reference, scheduled/custom-stream and CPU-only/overhead tests pass; existing core/convolution/sparse/A05/A06/A07/actual2B/resume gates pass. See ../bc250_profiler_a09_results/README.md. N2.12 found CPU-only-first\u2192GPU capture missing GPU events; GPU-first works. Both traces retained in ../bc250_solver_results/N212.md; runtime repair pending.",
-      "next": "A09/N4 immediate follow-up: fresh-process initialization-order reproducer, reviewed separate-candidate repair and both-order numerical/kernel/copy trace gates. Then return to broader N2 coverage; hardware counters and broader tracing remain unqualified.",
+      "evidence": "Separate Torch candidate on native source71a0426, tests4af4a15, helpers4c2edb785: USE_KINETO=1/KINETO_BACKEND=rocm selects existing rocprofiler-sdk. Seven native GPU kernel/copy/memory/correlation, CPU/GPU reference, scheduled/custom-stream and CPU-only/overhead tests pass; existing core/convolution/sparse/A05/A06/A07/actual2B/resume gates pass. See ../bc250_profiler_a09_results/README.md. N2.12 found CPU-only-first\u2192GPU capture missing GPU events; GPU-first works. Both traces retained in ../bc250_solver_results/N212.md; Follow-up installed native Torchb823a1b/final testsda453: CPU-first warm/cold/GPU-first/hidden-device and API7/core7 gates pass; see ../bc250_profiler_order_results/README.md.",
+      "next": "N2.13 sparse triangular solve coverage. Profiler first-CPU ordering repaired; physical counters, daemon/external concurrency, compiled/graph, long trace and cross-boot scopes remain N4.",
       "status": "completed_bounded"
     },
     {

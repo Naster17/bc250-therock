@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "order": "cpu-first",
+  "captures": [
+    {
+      "label": "first-cpu",
+      "gpu_requested": false,
+      "kernels": 0,
+      "copies": 0,
+      "runtime": 0
+    },
+    {
+      "label": "gpu-0",
+      "gpu_requested": true,
+      "kernels": 0,
+      "copies": 0,
+      "runtime": 0,
+      "expected_baseline_defect_reproduced": true
+    },
+    {
+      "label": "cpu-after-0",
+      "gpu_requested": false,
+      "kernels": 0,
+      "copies": 0,
+      "runtime": 0
+    },
+    {
+      "label": "gpu-1",
+      "gpu_requested": true,
+      "kernels": 0,
+      "copies": 0,
+      "runtime": 0,
+      "expected_baseline_defect_reproduced": true
+    },
+    {
+      "label": "cpu-after-1",
+      "gpu_requested": false,
+      "kernels": 0,
+      "copies": 0,
+      "runtime": 0
+    }
+  ],
+  "references": [
+    "exact profiled/unprofiled output+both gradients and pinned copy roundtrip; CPU float64 references; nondefault stream"
+  ],
+  "expected_baseline_defect": true,
+  "returncode": 0
+}

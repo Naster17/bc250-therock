@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **A09/N4 profiler ordering repaired/installed2026-10-18:** native Torch
+  b823a1b, test qualificationda45369; TheRock build669baa5d7/controller39f3ed14b.
+  ROCm first Kineto init retains GPU capability when a GPU is visible, even for
+  CPU-selected first capture; per-capture activity filtering remains. No visible
+  GPU retains CPU-only backend. CPU-first warm/cold and GPU-first now each produce
+  13 kernels/two copies per GPU window; CPU-selected captures omit GPU records
+  even while GPU work runs. Exact profiled/unprofiled outputs+both gradients,
+  CPU float64 refs, correlations/durations and nondefault stream pass. Hidden HIP
+  device CPU capture passes without Torch CUDA lazy init (not a physical CPU-only
+  host/driver-uninitialized claim). Candidate and installed each pass four orders,
+  API7/core7; fresh installed reactivation also passes. Only libtorch_cpu.so changes,
+  GPU arithmetic DSO byte-identical; no LoRA/training speedup claim. Independent
+  WS/pytorch-profiler-order built pip-only after required out-of-place HIP generation,
+  ccache20GiB/jobs12/link1/native gfx1013; old A09 build and shared immutable
+  sparse-followup/third_party retained.21 guards ACK/600s,18 successful process
+  gates incl expected-defect reproductions; three failed fixtures retained (small
+  copy trace expectation and two SDK-invalid -1 visibility settings, corrected
+  to256KiB/valid nonmatching HIP ordinal). Native patch/bounds unchanged.
+  First final preservation check automatically rolled back after installed gates:
+  expected old hash on intentionally switched CPU alias. Controller now pins that
+  old identity through recovery; fresh reactivation/seal pass.104 protected old
+  identities match; dmesg unchanged entire batch. Development torch link/runtime
+  metadata updated only; ROCm DSOs/packs/current/previous/rocm links/image/kernel/
+  boot/BIOS/.105/defaults unchanged; r2 fallback retained. Recovery
+  WS/recovery/profiler-order-before has old link/exact runtime bytes/old Torch link;
+  SOURCE_PROFILER_ORDER.json in WS/current. Next preservation baseline is
+  WS/logs/profiler-order-qualification/final.json:104 old/recovery identities plus
+  candidate_sha256/new runtime_sha256; old N2.12 active alias hashes are historical.
+  Native GIT_REVISION=b823a1b;
+  subsequent test-only qualificationda45369 recorded separately; no metadata-only
+  Torch rebuild. [Report](docs/development/bc250_profiler_order_results/README.md)
+  includes both-order/failed traces, source/hash/command/rollback evidence.
+  Raw WS/logs/profiler-order-*, ignored kernel/artifacts/profiler-order. No running
+  agent job/container/guard; free~10.13GiB. Python CPU segfault unresolved/separate
+  from fixed VM-heap/CSR; explicit SDK import aborts above are distinct too.
+  **Next N2.13:** audit existing generic hipSPARSE/Torch CSR/BSR triangular vector/
+  multi-RHS paths; CPU-reference missing complex/index/layout/stream/zero-pivot
+  cases and fix demonstrated defects. Retain P2 legacy real csrsv16; general
+  sparse factorization/spsolve B02 separate. Further tiny-eig optimization optional;
+  N2–N8 broad workstreams remain. Profiler counters/daemon/external concurrency/
+  compile/graphs/long trace/cross-boot clocks remain N4, not claimed fixed.
+
 - **N2.12 completed2026-10-18:** TheRock codeb1c94bddc; explicit
   right_eigenvectors(recovery_backend="device") uses one32-thread native HIP
   triangular solve, complex64/128 cap16. N2.6 reference remains default/oracle;
@@ -1463,9 +1505,10 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.10 | Native bounded reflector-Q formation;128 retained+24 independent reflector+six CPU/backend fixtures pass. Preparation1.11–1.39x/whole1.05–1.12x in fixtures; defaults unchanged. |
 | [x]   | N2.11 | Explicit pinned-stream GEHRD sessions;128 retained+six CPU/backend fixtures+three lifetime groups/16 refusals pass. Warm prep7.03–12.52x/whole1.28–1.95x in fixtures; cold/default/host limits recorded. |
 | [x]   | N2.12 | Native bounded triangular recovery;128 retained+36 CPU/backend+32 direct+two rescaling+six ABI cases pass; fixed gates/defaults retained. Recovery1.32–2.32x/whole1.17–1.34x in six fixtures; host remains faster. Separate CPU-first profiler defect found. |
+| [ ]   | **N2.13 — next** | Generic hipSPARSE/Torch sparse triangular vector/multi-RHS coverage: audit existing CSR/BSR paths; CPU-reference missing complex/index/layout/stream/zero-pivot cases, patch demonstrated defects; general sparse spsolve B02 separate. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
-| [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Next A09 follow-up: repair CPU-first→GPU profiler initialization with both-order traces; then physical telemetry/clock work. Dangerous debugger tests require recovery first.                                                                                                                                                   |
+| [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |

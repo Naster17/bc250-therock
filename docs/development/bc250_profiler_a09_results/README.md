@@ -9,17 +9,16 @@ support is introduced. Native Kineto/SDK source changes were unnecessary.
 The user selected A09 ahead of A08. A08 remains unfinished; return to it before
 N2.7. Earlier dependency-audit results remain historical evidence.
 
-## N2.12 follow-up: initialization order defect
+## Initialization order repaired after N2.12
 
-2026-10-18: CPU-only-first profiling was observed to leave a later CPU+CUDA
-capture with CPU events but zero GPU events. The original tests exercised
-CPU-only selection after GPU initialization. A fresh process starting with
-CPU+CUDA captures the N2.12 native kernel correctly. The issue remains open;
-no Torch/Kineto fix has been installed. [Failed and passing traces/source
-inspection](../bc250_solver_results/N212.md). Until repaired, request CUDA in
-the first capture of a process when later GPU tracing is needed; restart a
-CPU-first process before collecting GPU traces. Numerical operations are
-unaffected by the missing trace records in the observed fixtures.
+The CPU-only-first→GPU defect found by N2.12 is now repaired and installed in
+WS/pytorch-profiler-order. Native Torchb823a1b/final testsda453 retain available
+ROCm GPU capability independently of first capture selection. Warm/cold
+CPU-first, GPU-first and masked-device CPU captures, API7/core7 and installed
+reactivation pass; only libtorch_cpu.so changes. The original A09 build remains
+available for recovery. [Current evidence, source and recovery](../bc250_profiler_order_results/README.md).
+The historical implementation/deployment sections below describe the original
+A09 milestone; current flow/runtime manifests supersede their active-link claims.
 
 ## Implementation and build provenance
 

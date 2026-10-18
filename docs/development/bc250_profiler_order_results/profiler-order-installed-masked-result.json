@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "order": "masked",
+  "captures": [
+    {
+      "label": "masked-cpu",
+      "gpu_requested": false,
+      "kernels": 0,
+      "copies": 0,
+      "runtime": 0
+    }
+  ],
+  "references": [],
+  "no_visible_device": true,
+  "returncode": 0
+}

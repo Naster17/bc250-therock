@@ -56,10 +56,11 @@ prof.export_chrome_trace("bc250-trace.json")
 print(prof.key_averages().table(sort_by="self_device_time_total"))
 ```
 
-The current Kineto build has an observed initialization-order defect: starting
-with a CPU-only profile can leave later GPU captures empty. Request CPU+CUDA in
-the first capture if GPU traces will be needed; restart a CPU-first process for
-GPU capture. Runtime repair is pending; [N2.12 evidence](bc250_solver_results/N212.md).
+The CPU-first initialization-order defect found during N2.12 is now fixed in
+the selected .104 runtime. A CPU-only first capture can be followed by GPU
+captures in the same process; CPU-only activity selection still omits GPU
+kernel/copy records. No special first-capture workaround is needed. [Both-order
+qualification and recovery](bc250_profiler_order_results/README.md).
 
 Import `torch` in the script and warm up before selecting a short capture window.
 Tracing is explicit; ordinary training does not automatically collect profiles.

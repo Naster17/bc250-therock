@@ -1,0 +1,217 @@
+{
+  "status": "passed",
+  "installed_orders": [
+    {
+      "status": "passed",
+      "order": "cpu-first",
+      "captures": [
+        {
+          "label": "first-cpu",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        },
+        {
+          "label": "gpu-0",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-0",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        },
+        {
+          "label": "gpu-1",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-1",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        }
+      ],
+      "references": [
+        "exact profiled/unprofiled output+both gradients and pinned copy roundtrip; CPU float64 references; nondefault stream"
+      ],
+      "expected_baseline_defect": false,
+      "returncode": 0
+    },
+    {
+      "status": "passed",
+      "order": "gpu-first",
+      "captures": [
+        {
+          "label": "gpu-0",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-0",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        },
+        {
+          "label": "gpu-1",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-1",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        }
+      ],
+      "references": [
+        "exact profiled/unprofiled output+both gradients and pinned copy roundtrip; CPU float64 references; nondefault stream"
+      ],
+      "expected_baseline_defect": false,
+      "returncode": 0
+    },
+    {
+      "status": "passed",
+      "order": "cpu-cold",
+      "captures": [
+        {
+          "label": "cold-cpu",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        },
+        {
+          "label": "gpu-0",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-0",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        },
+        {
+          "label": "gpu-1",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-1",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        }
+      ],
+      "references": [
+        "exact profiled/unprofiled output+both gradients and pinned copy roundtrip; CPU float64 references; nondefault stream"
+      ],
+      "expected_baseline_defect": false,
+      "returncode": 0
+    },
+    {
+      "status": "passed",
+      "order": "masked",
+      "captures": [
+        {
+          "label": "masked-cpu",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        }
+      ],
+      "references": [],
+      "no_visible_device": true,
+      "returncode": 0
+    },
+    {
+      "status": "passed",
+      "order": "cpu-first",
+      "captures": [
+        {
+          "label": "first-cpu",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        },
+        {
+          "label": "gpu-0",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-0",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        },
+        {
+          "label": "gpu-1",
+          "gpu_requested": true,
+          "kernels": 13,
+          "copies": 2,
+          "runtime": 22,
+          "correlated_kernel_and_copy": true
+        },
+        {
+          "label": "cpu-after-1",
+          "gpu_requested": false,
+          "kernels": 0,
+          "copies": 0,
+          "runtime": 0
+        }
+      ],
+      "references": [
+        "exact profiled/unprofiled output+both gradients and pinned copy roundtrip; CPU float64 references; nondefault stream"
+      ],
+      "expected_baseline_defect": false,
+      "returncode": 0
+    }
+  ],
+  "guards": 21,
+  "successful_processes": 18,
+  "failed_fixtures": 3,
+  "preserved_identities": 104,
+  "changed_native_libraries": [
+    "libtorch_cpu.so"
+  ],
+  "native_torch_revision": "b823a1b2f327d5ba07af0796876f93e5308a1012",
+  "test_qualification_revision": "da453699db3b79bc198dc3b3cc1bf57633743b1c",
+  "qualification_helper_revision": "39f3ed14bdfd9f7dd6e5e58a1220945ed019c72d",
+  "next": "N2.13 generic sparse triangular solve coverage, retaining existing legacy P2 references; profiler advanced scope remains N4"
+}

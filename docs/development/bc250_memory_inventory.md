@@ -489,6 +489,36 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 
 ## Component coverage: implemented versus existing native backend
 
+**A09/N4 CPU-first profiler fix installed2026-10-18:** native Torchb823a1b,
+final testsda45369, TheRock build669baa5d7/final controllers39f3ed14b. First ROCm
+Kineto initialization retains available GPU capability, independent of first
+capture selection; no visible GPU keeps CPU-only backend. CPU-first warm/cold,
+GPU-first and hidden-device cases pass against candidate/installed. Each regular
+GPU window13 kernels/two pinned copies, correlated positive-duration records;
+exact profiled/unprofiled output/both gradients, CPU float64 references and
+nondefault stream. CPU-selected GPU work omits GPU records; cold CPU capture
+leaves Torch lazy init false (HIP availability/backend can initialize). API7/
+core7 pass in both mounts, plus fresh installed reactivation. Only libtorch_cpu.so
+changes; libtorch_hip.so identical. Independent pip-only candidate
+WS/pytorch-profiler-order, ccache20GiB/jobs12/link1/native gfx1013, old full A09
+build and shared immutable third_party preserved.104 original identities verified,
+old runtime.json and CPU alias pinned via WS/recovery/profiler-order-before;
+SOURCE_PROFILER_ORDER.json records active/recovery cohorts.21 guards ACK/600s,
+18 successful process gates and three honest failed fixtures retained (small
+copy expectation/two invalid -1 visibility values). First controller final hash
+check auto-rolled back an old-hash-on-active-alias accounting mistake; corrected
+old identity pin, qualified installed hash and fresh reactivation pass. Dmesg
+unchanged whole batch. No ROCm DSO/packs/image/kernel/boot/default/.105 changes;
+only development Torch link/runtime metadata. Free~10.13GiB/no active jobs.
+[Report/results/recovery](bc250_profiler_order_results/README.md); patch0009 mbox
+on4af4a15 includes nativeb823 plus two test-only fixture corrections; native
+GIT_REVISION staysb823, final testsda453 separately identified. No performance/
+LoRA gain or physical CPU-only host/counters/daemon/external concurrency/graphs/
+long trace/cross-boot qualification. Python CPU segfault unresolved/separate
+from fixed VM-heap/CSR; explicit SDK import aborts are separate. Next N2.13
+generic sparse triangular vector/multi-RHS coverage, preserving legacy P2 and
+keeping general sparse spsolve/factorization B02 separate.
+
 **A08 completed2026-10-18: native dense INT8->INT32.** Libraries
 `319a235d6c6496f0da37be44dfa60eaf31a29f82`, runtime helpers
 `8f0dfb671e88b31bc3f5bb4a4958acefdafde556`; Torch4af4a15 unchanged.
