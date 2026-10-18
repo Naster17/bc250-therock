@@ -9,6 +9,7 @@ contract. See N23.md, N24.md and N27.md.
 import ctypes
 from dataclasses import dataclass
 from pathlib import Path
+import time
 
 import torch
 
@@ -63,10 +64,46 @@ def _normal_scale(a):
     return unit, scale
 
 
+def _form_q_reference(packed, tau):
+    n = packed.shape[0]
+    q = torch.eye(n, dtype=packed.dtype, device=packed.device)
+    for i in range(n-1):
+        v = torch.cat((torch.zeros(i+1, dtype=packed.dtype, device=packed.device),
+                       torch.ones(1, dtype=packed.dtype, device=packed.device), packed[i+2:, i]))
+        q = q - tau[i]*(q@v)[:, None]*v.conj()[None, :]
+    return q
+
+
+_Q_LIBRARY = None
+
+
+def _form_q_device(packed, tau):
+    """Private matching GEHRD packed matrix/tau; no input writes or CPU reads."""
+    global _Q_LIBRARY
+    if _Q_LIBRARY is None:
+        library = ctypes.CDLL(str(Path(__file__).with_name('schur_q_n210.so')))
+        library.bc250_gehrd_form_q.argtypes = [ctypes.c_void_p]*3 + [ctypes.c_int]*2 + [ctypes.c_void_p]
+        library.bc250_gehrd_form_q.restype = ctypes.c_int
+        _Q_LIBRARY = library
+    packed = packed.mT.contiguous().mT
+    tau = tau.contiguous()
+    n = packed.shape[0]
+    q = torch.empty((n,n), dtype=packed.dtype, device=packed.device)
+    status = _Q_LIBRARY.bc250_gehrd_form_q(packed.data_ptr(), tau.data_ptr(),
+        q.data_ptr(), n, int(packed.dtype == torch.complex128),
+        torch.cuda.current_stream().cuda_stream)
+    if status:
+        raise RuntimeError(f'N2.10 Q launch returned HIP status {status}')
+    return q
+
+
 @torch.no_grad()
-def hessenberg(a):
+def hessenberg(a, *, q_backend="reference", phase_times=None):
     """Return H,Q with A=Q H Q^H using native rocSOLVER GEHRD reflectors."""
     _validate(a)
+    if q_backend not in ("reference", "device"):
+        raise ValueError('Q backend must be reference or device')
+    form_q = _form_q_device if q_backend == "device" else _form_q_reference
     n = a.shape[0]
     with torch.cuda.device(a.device):
         if n == 1:
@@ -90,12 +127,18 @@ def hessenberg(a):
         _status(blas.rocblas_create_handle(ctypes.byref(handle)), 'create_handle')
         try:
             _status(blas.rocblas_set_stream(handle, ptr(torch.cuda.current_stream().cuda_stream)), 'set_stream')
+            if phase_times is not None:
+                torch.cuda.synchronize()
+                started = time.perf_counter()
             _status(gehrd(handle, n, 1, n, ptr(packed.data_ptr()), n, ptr(tau.data_ptr())), 'gehrd')
-            q = torch.eye(n, dtype=a.dtype, device=a.device)
-            for i in range(n-1):
-                v = torch.cat((torch.zeros(i+1, dtype=a.dtype, device=a.device),
-                               torch.ones(1, dtype=a.dtype, device=a.device), packed[i+2:, i]))
-                q = q - tau[i]*(q@v)[:, None]*v.conj()[None, :]
+            if phase_times is not None:
+                torch.cuda.synchronize()
+                phase_times['gehrd_ms'] = 1000*(time.perf_counter()-started)
+                started = time.perf_counter()
+            q = form_q(packed, tau)
+            if phase_times is not None:
+                torch.cuda.synchronize()
+                phase_times['q_form_ms'] = 1000*(time.perf_counter()-started)
             return torch.triu(packed, diagonal=-1), q
         finally:
             _status(blas.rocblas_destroy_handle(handle), 'destroy_handle')
@@ -202,7 +245,7 @@ def _schur_chunk_device(t, q, max_iterations, chunk_size):
 
 
 @torch.no_grad()
-def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16):
+def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16, q_backend="reference"):
     """Bounded explicit shifted QR experiment; inspect info before using T's diagonal.
 
     Positive info is not success and triggers no hidden host fallback. Q contains
@@ -210,6 +253,8 @@ def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16):
     """
     # Device QR is an explicit experiment; the reference remains the default.
     _validate(a)
+    if q_backend not in ("reference", "device"):
+        raise ValueError('Q backend must be reference or device')
     if qr_backend not in ("reference", "device", "device_control", "device_chunked"):
         raise ValueError("QR backend must be reference, device, device_control or device_chunked")
     if isinstance(chunk_size, bool) or not isinstance(chunk_size, int) or not 1 <= chunk_size <= 32:
@@ -226,7 +271,7 @@ def schur(a, *, max_iterations=256, qr_backend="reference", chunk_size=16):
         unit, scale = _normal_scale(a)
         if not bool(scale > 0):
             return SchurResult(a.clone(), torch.eye(n, dtype=a.dtype, device=a.device), 0, 0, n-1)
-        t, q = hessenberg(unit)
+        t, q = hessenberg(unit, q_backend=q_backend)
         if qr_backend in ("device_control", "device_chunked"):
             if qr_backend == "device_control":
                 t, q, info, iterations, deflations = _schur_control_device(t, q, max_iterations)
