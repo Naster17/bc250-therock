@@ -1,0 +1,728 @@
+{
+  "status": "passed",
+  "group": "edge",
+  "checks": [
+    {
+      "name": "torch.float32_csr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.2628388490047655,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.007323220997932367,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.001663946000917349,
+      "nan": 2,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0005400220034061931,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.00043854799878317863,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.025227871003153268,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.0011491960030980408,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0007779699953971431,
+      "nan": 6,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0004819169989787042,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.00043296000512782484,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.013789323995297309,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.000985396996838972,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.0008361200016224757,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0005052720007370226,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.00048218900337815285,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.011270057002548128,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.0009379280018038116,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0008369220013264567,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0005144500028109178,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.0004790820021298714,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.0008030370008782484,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.001241737998498138,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.0007927219994599,
+      "nan": 2,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.000481395996757783,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0004427249950822443,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.0007783600012771785,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.0010699830017983913,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0007772190001560375,
+      "nan": 6,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.00047503499808954075,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_csr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.00044525699922814965,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.0008511459964211099,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.0008246190045611002,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.00112306800292572,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0005212949981796555,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0005045630023232661,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.0008487359955324791,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.0008457069998257793,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0008380529980058782,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0005099949994473718,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float64_bsr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.0004754609981318936,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.02984219600330107,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.0014160339997033589,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.0009173950020340271,
+      "nan": 2,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0005965529999230057,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0005697639935533516,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.0009143260031123646,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.001202767001814209,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0009247519992641173,
+      "nan": 6,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0005989440032863058,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_csr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.000566329006687738,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.0009675539986346848,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.0009580759942764416,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.0009552039991831407,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0006301260000327602,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0006291259996942244,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.0009711520033306442,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.0009674350003479049,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0009574670039000921,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0006344420035020448,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex64_bsr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.0006019449938321486,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.0009072899993043393,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.0011929030006285757,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.0008902400004444644,
+      "nan": 2,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0005959720001555979,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.000572256998566445,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.0009073019973584451,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.0011926030056201853,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0009029030043166131,
+      "nan": 6,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0006065199995646253,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.0005696830048691481,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_missing",
+      "status": "passed",
+      "seconds": 0.0009842540021054447,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_zero",
+      "status": "passed",
+      "seconds": 0.0009563470011926256,
+      "nan": 1,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_missing-block",
+      "status": "passed",
+      "seconds": 0.000982525001745671,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0006376070014084689,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0006034749967511743,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_missing",
+      "status": "passed",
+      "seconds": 0.0009732229955261573,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_zero",
+      "status": "passed",
+      "seconds": 0.0009820909981499426,
+      "nan": 3,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_missing-block",
+      "status": "passed",
+      "seconds": 0.0009673130043665878,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0006307959993137047,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.0006155540031613782,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    }
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "failed": []
+}

@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "group": "trace",
+  "checks": [
+    {
+      "name": "native-pivot-mask",
+      "status": "passed",
+      "kernels": [
+        "void at::native::sparse::impl::cuda::(anonymous namespace)::sparse_triangular_pivot_mask_kernel<c10::complex<float>, long>(long const*, long const*, c10::complex<float> const*, c10::complex<float>*, long, long, long, long, long, long, long) [clone .kd]"
+      ],
+      "residual": 2.0516361311262492e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    }
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "failed": []
+}

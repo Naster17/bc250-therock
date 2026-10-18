@@ -881,7 +881,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocPRIM/hipCUB/rocThrust                    | Historical reductions/scans and208 block-reduction tests; P2 int32 cases42/48/48 with guards/streams, signed stable sorts, selection, scans, blocks/wave32 and Thrust policies                               | Floating/custom/segmented algorithms and broader tuning remain. hipCCL is header packaging, not RCCL.                                                       |
 | rocFFT/hipFFT                               | Existing native backend, persistent 16-worker HIPRTC AOT cache; prime DFT andP2 FFT30                                                                                                                        | No custom rocFFT component architecture patch; more plans/types/layouts remain                                                                              |
 | rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 native eigh22; N2.2 nonsymmetric eig16 host-LAPACK compatibility only. Native nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and performance remain                                                                                         |
-| rocSPARSE/hipSPARSE                         | Existing backend, Torch COO/CSR25 anddirect triangular16 inP2                                                                                                                                                | More formats, analyses/solves/API contracts remain; old corruption fix was CLR, not sparse kernel rewriting                                                 |
+| rocSPARSE/hipSPARSE | Existing native backend: P2 Torch25+legacy16; N2.13 public triangular433 and direct generic96 fixtures/192 solves, exact pivot NaN policy in Torch | More formats/analyses/general factorization remain; BSR public int64 is bounded downcast, triangular autograd/performance unqualified; old corruption fix was CLR |
 | rocALUTION                                  | CG40 ordinary cases andfive fresh-process200 passes after pool-default fix                                                                                                                                   | Larger systems, other solvers/preconditioners/concurrency remain                                                                                            |
 | rocRAND/hipRAND                             | Native dispatch patch; historical44 basic+6 dispatch; P2 direct22 acrosssix pseudo/four Sobol variants andTorch RNG6                                                                                         | More generator/distribution/type combinations remain                                                                                                        |
 | OpenCL                                      | Native CL1.2 kernels, LDS/atomics/images/events/profiling checked                                                                                                                                            | OpenCL2 completeness and other feature combinations remain                                                                                                  |
@@ -1521,6 +1521,44 @@ unchanged; no native rebuild or performance claim. General dynamic ranges,
 balancing/subnormals/conditioning/batching/gradients remain unqualified; original
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
+
+## N2.13 sparse triangular coverage and exact pivots — 2026-10-18
+
+Installed native Torch `dc8fea0` (implementation `a434d03`), final tests `2b449c4`;
+TheRock build `bbf556448`, controllers `39ea58574`. Existing generic CSR SpSV/SpSM
+and BSR paths pass bounded four-dtype/index/layout/stream/flag CPU references.
+Pre-fix healthy256 pass; singular/empty failures16/32 then39/80 expose finite
+placeholders after division avoidance. New ROCm-only2D Torch GPU postcheck marks
+exact zero/missing scalar pivot rows as NaN using compressed diagonal binary
+search and bit-exact zero tests; no host reads/dense conversion/workspace/pivot
+perturbation. One extra GPU launch on nonunit/nonempty solves; no throughput or
+near-zero/conditioning claim. Other singular rows unspecified; legacy empty-A
+NaNs including unit mode retained. Unit solves bypass. Direct raw library APIs
+unchanged and general sparse spsolve/factorization B02 remains separate.
+
+Each candidate/installed mount passes433 new public groups (256 matrix,80 pivot/
+empty,32 larger CSR65/257+BSR66/258 block3,64 implicit unit,one real kernel trace),
+96 native generic fixtures/192 solves (N/T/adjoint, host/device alpha, private
+stream, two submissions/analysis, sentinels), sparse41/core7/CPU-first profiler.
+Final pivot group tests NaN writes into strided sentinel output/private stream;
+only that group rerun after test-only strengthening, native binaries unchanged.
+BSR int64 public metadata is downcast within admitted bounds; no giant native64
+BSR, batching, sparse triangular autograd/compile/graphs/universal performance
+qualification. Only libtorch_hip.so changes; CPU profiler fix remains identical.
+121 prior identities preserved,22 guards ACK/600s and unchanged dmesg whole batch.
+Independent WS/pytorch-sparse-n213, pip-only after required HIP generation,
+ccache20GiB/jobs12/link1/native gfx1013; old sources/builds/caches/third_party/
+releases/fallbacks retained. Only dev Torch link/runtime metadata changes; ROCm
+DSOs/packs/image/kernel/boot/defaults/.105 unchanged. Recovery
+WS/recovery/sparse-n213-before, SOURCE_SPARSE_N213.json in WS/current; final
+preservation baseline WS/logs/sparse-n213-qualification/final.json with candidate/
+current-runtime hashes. [Report/results/recovery](bc250_sparse_n213_results/README.md).
+Raw WS/logs/sparse-n213-* and ignored kernel/artifacts/sparse-n213. No active jobs;
+free~7.23GiB. Python CPU segfault unresolved/separate from fixed VM-heap/CSR.
+Next N2.14 FFT plan/layout/odd-real output+gradient coverage after P2 FFT30 audit;
+AOT cache preserved, BF16 promotion B01 separate. Patch0010 incremental mbox on
+Torch da45369 retains all three native/test commits; historical reconstruction
+gap remains.
 
 ## N2.12 native triangular recovery — 2026-10-18
 

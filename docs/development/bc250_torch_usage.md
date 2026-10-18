@@ -68,6 +68,18 @@ It adds overhead and does not directly accelerate LoRA. Hardware counters,
 simultaneous external profilers, compile/graph and long tracing are unqualified.
 [Qualification, memory/schedule examples and rebuild/recovery](bc250_profiler_a09_results/README.md).
 
+## Sparse triangular solves (N2.13)
+
+The selected .104 Torch runtime now marks missing or exactly zero diagonal
+pivot rows as NaN for non-unit CSR/BSR `torch.triangular_solve(B, A, ...)`.
+Selected FP32/FP64/complex64/complex128 layouts, indices and streams are qualified.
+Nonsingular solves use the existing native backend plus one GPU diagonal check;
+there is no speedup claim. Other rows of a singular result are unspecified.
+Unit solves bypass the check; empty sparse matrices retain their old NaN behavior,
+including unit mode. This is the existing deprecated sparse-compatible API;
+general `torch.sparse.spsolve` and sparse solve autograd are separate gaps.
+[Qualification, exact scope and recovery](bc250_sparse_n213_results/README.md).
+
 ## Corrected gated-delta and optional head256 attention (2026-10-18)
 
 The .104 development runtime now uses reference-ordered **GPU** preparation/scan

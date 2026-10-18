@@ -7,21 +7,21 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after profiler ordering repair
+## Current cursor after N2.13
 
-A09/N4 CPU-first initialization ordering is repaired and installed: native
-Torchb823a1b/final testsda453, active WS/pytorch-profiler-order. Warm/cold
-CPU-first/GPU-first/hidden-device cases and API7/core7 pass, plus fresh installed
-reactivation. CPU-selected captures still omit GPU records; requested GPU
-windows contain correlated kernels/copies and checked outputs/gradients.
-[Current evidence/recovery](bc250_profiler_order_results/README.md). Hardware
-counters and broader profiler contracts remain N4 work.
+N2.13 is installed in WS/pytorch-sparse-n213: native Torch `dc8fea0`, final tests
+`2b449c4`. CSR/BSR sparse triangular solves pass433 public CPU-reference/guard/
+stream/pivot groups,96 direct generic fixtures and retained sparse41/core7/
+CPU-first profiler gates in candidate and installed runtime. Exact missing/zero
+pivot rows now become NaN instead of finite placeholders. Unit and legacy empty
+behavior retained; one extra GPU diagnostic launch on nonunit solves. Only
+libtorch_hip.so changes; the A09 CPU-first profiler repair remains.
+[Evidence and limits](bc250_sparse_n213_results/README.md).
 
-N2.1–N2.12 bounded milestones are complete; production nonsymmetric eig remains
-host LAPACK. Next **N2.13** audits generic hipSPARSE/Torch sparse triangular
-vector/multi-RHS paths and qualifies missing complex/index/layout/stream/pivot
-cases. General sparse factorization/spsolve B02 stays separate. Earlier next
-N2.7/profiler-open statements below are historical cursors superseded by flow.md.
+Next **N2.14**: bounded FFT plan/layout and odd-real output/gradient coverage,
+after reviewing P2 FFT30. General sparse factorization/spsolve B02, sparse solve
+autograd, giant native64 BSR and broad performance remain separate. Earlier
+next N2.7/N2.13/profiler-open statements below are historical milestone cursors.
 
 ## A08 update
 
@@ -226,6 +226,7 @@ The following rows are not an exhaustive API or dtype promise.
 | Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–12 isolated GPU prototype cap16/separated spectra | Production solve is host arithmetic; native full prototype still slower; broader spectra/batching/gradients unqualified |
 | Structured sparse matmul | Torch hipSPARSELt | A04 forward plus follow-up38 floating first-order gradient tests; public FP16/BF16 matmul/linear source-weight/input/bias gradients | Scalar native packs; integer backward/higher-order/graphs/compile unqualified. Training slower in measured small fixtures; keep explicit |
 | Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | General sparse solve absent B02; not every format/dtype/backward |
+| Sparse CSR/BSR triangular solve | generic hipSPARSE SpSV/SpSM and block APIs | N2.13:433 public +96 direct fixtures; real/complex/indices/layouts/streams, exact pivot NaNs | Public BSR64 downcasts within tested bounds; direct raw singular policy, general sparse factorization/B02, solve autograd/compile/graphs/performance unqualified |
 | SDPA math | ATen HIP + BLAS | Current forward/QKV gradients and prior long/model/AMP gates | Quadratic attention memory; default retained |
 | Optional tiled SDPA | Patched scalar Triton helper, explicit D<=256 |36 A07 tests and actual2B nonzero-adapter train/checkpoint gates | BF16 D>128 training uses math-forward/tiled-backward hybrid: quadratic forward temporary, linear saved state. Dropout/compile/graphs remain unsupported; math default. |
 | Gated-delta preparation | torch.nn.bc250_gated_delta; app hook preserved |42 tests, four exact autocast cases, BF16 actual2B65/1024 all372 gradients exact | Low-precision full operation uses reference-ordered GPU ATen preparation/scan. Native FP32/direct preparation remains; complete FLA/native solve/scan fusion absent. |

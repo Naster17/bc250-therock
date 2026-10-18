@@ -1,0 +1,584 @@
+{
+  "status": "passed",
+  "group": "extended",
+  "checks": [
+    {
+      "name": "torch.float32_csr_rhs1_n65",
+      "status": "passed",
+      "seconds": 0.3639720959981787,
+      "residual": 5.265465092026262e-09,
+      "order": 65,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_rhs1_n257",
+      "status": "passed",
+      "seconds": 0.024174367004889064,
+      "residual": 4.915716244375211e-09,
+      "order": 257,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_rhs3_n65",
+      "status": "passed",
+      "seconds": 0.06163971500063781,
+      "residual": 1.5433028026923825e-08,
+      "order": 65,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_rhs3_n257",
+      "status": "passed",
+      "seconds": 0.01429914800246479,
+      "residual": 1.585172230243117e-08,
+      "order": 257,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_n66",
+      "status": "passed",
+      "seconds": 0.017998998002440203,
+      "residual": 8.83323423642164e-09,
+      "order": 66,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_n258",
+      "status": "passed",
+      "seconds": 0.007954232998599764,
+      "residual": 9.56470112131586e-09,
+      "order": 258,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_n66",
+      "status": "passed",
+      "seconds": 0.01782858899969142,
+      "residual": 9.037681923911152e-09,
+      "order": 66,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_n258",
+      "status": "passed",
+      "seconds": 0.008184097001503687,
+      "residual": 1.0933890702551722e-08,
+      "order": 258,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_rhs1_n65",
+      "status": "passed",
+      "seconds": 0.006257114000618458,
+      "residual": 1.3301540206178911e-17,
+      "order": 65,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_rhs1_n257",
+      "status": "passed",
+      "seconds": 0.013288461996125989,
+      "residual": 1.5164015532567686e-17,
+      "order": 257,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_rhs3_n65",
+      "status": "passed",
+      "seconds": 0.007748666001134552,
+      "residual": 1.1089431278197906e-17,
+      "order": 65,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_rhs3_n257",
+      "status": "passed",
+      "seconds": 0.01189501999760978,
+      "residual": 3.2841178319446723e-17,
+      "order": 257,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_rhs1_n66",
+      "status": "passed",
+      "seconds": 0.006026974006090313,
+      "residual": 1.838313569276771e-17,
+      "order": 66,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_rhs1_n258",
+      "status": "passed",
+      "seconds": 0.009112612002354581,
+      "residual": 2.344121514439319e-17,
+      "order": 258,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_rhs3_n66",
+      "status": "passed",
+      "seconds": 0.006002550995617639,
+      "residual": 3.611675601070148e-17,
+      "order": 66,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_rhs3_n258",
+      "status": "passed",
+      "seconds": 0.009504943998763338,
+      "residual": 1.979810666533995e-17,
+      "order": 258,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_rhs1_n65",
+      "status": "passed",
+      "seconds": 0.006050427000445779,
+      "residual": 7.420366902653004e-09,
+      "order": 65,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_rhs1_n257",
+      "status": "passed",
+      "seconds": 0.014062426998862065,
+      "residual": 5.681329967688052e-09,
+      "order": 257,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_rhs3_n65",
+      "status": "passed",
+      "seconds": 0.007447935997333843,
+      "residual": 2.4550400791620757e-08,
+      "order": 65,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_rhs3_n257",
+      "status": "passed",
+      "seconds": 0.012806140002794564,
+      "residual": 2.3617966731244704e-08,
+      "order": 257,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_rhs1_n66",
+      "status": "passed",
+      "seconds": 0.0062263020008686,
+      "residual": 9.693122262086007e-09,
+      "order": 66,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_rhs1_n258",
+      "status": "passed",
+      "seconds": 0.009228081995388493,
+      "residual": 9.732358220833119e-09,
+      "order": 258,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_rhs3_n66",
+      "status": "passed",
+      "seconds": 0.006336063001072034,
+      "residual": 9.46012741178959e-09,
+      "order": 66,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_rhs3_n258",
+      "status": "passed",
+      "seconds": 0.00933984400035115,
+      "residual": 9.94933773024082e-09,
+      "order": 258,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_n65",
+      "status": "passed",
+      "seconds": 0.006349975999910384,
+      "residual": 1.632615168433543e-17,
+      "order": 65,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_n257",
+      "status": "passed",
+      "seconds": 0.020655905005696695,
+      "residual": 2.2146822340535585e-17,
+      "order": 257,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_n65",
+      "status": "passed",
+      "seconds": 0.007769976997224148,
+      "residual": 3.4487011518068916e-17,
+      "order": 65,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_n257",
+      "status": "passed",
+      "seconds": 0.016341815004125237,
+      "residual": 4.6237768828675084e-17,
+      "order": 257,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_n66",
+      "status": "passed",
+      "seconds": 0.006297428997640964,
+      "residual": 1.560124389856506e-17,
+      "order": 66,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_n258",
+      "status": "passed",
+      "seconds": 0.015534667996689677,
+      "residual": 2.9297700316718616e-17,
+      "order": 258,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_n66",
+      "status": "passed",
+      "seconds": 0.00639371699799085,
+      "residual": 3.527951136381722e-17,
+      "order": 66,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_n258",
+      "status": "passed",
+      "seconds": 0.01608611200208543,
+      "residual": 1.9081429694741144e-17,
+      "order": 258,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    }
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "failed": []
+}

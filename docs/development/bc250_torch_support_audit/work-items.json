@@ -71,7 +71,7 @@
       "id": "A09",
       "feature": "Torch GPU profiler/Kineto disabled",
       "evidence": "Separate Torch candidate on native source71a0426, tests4af4a15, helpers4c2edb785: USE_KINETO=1/KINETO_BACKEND=rocm selects existing rocprofiler-sdk. Seven native GPU kernel/copy/memory/correlation, CPU/GPU reference, scheduled/custom-stream and CPU-only/overhead tests pass; existing core/convolution/sparse/A05/A06/A07/actual2B/resume gates pass. See ../bc250_profiler_a09_results/README.md. N2.12 found CPU-only-first\u2192GPU capture missing GPU events; GPU-first works. Both traces retained in ../bc250_solver_results/N212.md; Follow-up installed native Torchb823a1b/final testsda453: CPU-first warm/cold/GPU-first/hidden-device and API7/core7 gates pass; see ../bc250_profiler_order_results/README.md.",
-      "next": "N2.13 sparse triangular solve coverage. Profiler first-CPU ordering repaired; physical counters, daemon/external concurrency, compiled/graph, long trace and cross-boot scopes remain N4.",
+      "next": "N2.14 FFT coverage after completed N2.13; physical counters, daemon/external concurrency, compile/graph, long traces and cross-boot clocks remain N4.",
       "status": "completed_bounded"
     },
     {
@@ -84,7 +84,7 @@
     {
       "id": "B02",
       "feature": "Public general sparse linear solve unavailable on ROCm",
-      "evidence": "`torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver",
+      "evidence": "`torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver N2.13 qualifies triangular CSR/BSR solves and marks exact singular pivots as NaN in Torch; it does not add general factorization/spsolve.",
       "next": "Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback.",
       "status": "queued"
     },
@@ -145,5 +145,10 @@
     "A09"
   ],
   "next_primary_item": "N2.7",
-  "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08"
+  "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08",
+  "current_n2_workstream": {
+    "completed": "N2.13 sparse triangular coverage and pivot NaNs",
+    "next": "N2.14 FFT plans/layouts and odd-length real transforms",
+    "evidence": "../bc250_sparse_n213_results/README.md"
+  }
 }

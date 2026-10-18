@@ -1,0 +1,265 @@
+{
+  "status": "failed",
+  "group": "edge",
+  "checks": [
+    {
+      "name": "torch.float32_csr_rhs1_missing",
+      "status": "failed",
+      "error": "tensor([[  0.5000],\n        [  0.5000],\n        [  0.4750],\n        [148.4291],\n        [  0.5000],\n        [  0.5000]], device='cuda:0')",
+      "seconds": 0.43688285600364907
+    },
+    {
+      "name": "torch.float32_csr_rhs1_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000],\n        [0.5000],\n        [0.4750],\n        [1.0000],\n        [0.5000],\n        [0.5000]], device='cuda:0')",
+      "seconds": 0.0022443720008595847
+    },
+    {
+      "name": "torch.float32_csr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.015308716996514704,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0005934569999226369,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs3_missing",
+      "status": "failed",
+      "error": "tensor([[0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000],\n        [0.4750, 0.4750, 0.4750],\n        [1.0000, 1.0000, 1.0000],\n        [0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000]], device='cuda:0')",
+      "seconds": 0.025746765000803862
+    },
+    {
+      "name": "torch.float32_csr_rhs3_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000],\n        [0.4750, 0.4750, 0.4750],\n        [1.0000, 1.0000, 1.0000],\n        [0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000]], device='cuda:0')",
+      "seconds": 0.0020429310025065206
+    },
+    {
+      "name": "torch.float32_csr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0005364269964047708,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_csr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.0004349020018707961,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_missing",
+      "status": "failed",
+      "error": "tensor([[0.5000],\n        [0.5000],\n        [0.4750],\n        [1.0000],\n        [0.5000],\n        [0.5000]], device='cuda:0')",
+      "seconds": 0.01471665500139352
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000],\n        [0.5000],\n        [0.4750],\n        [1.0000],\n        [0.5000],\n        [0.5000]], device='cuda:0')",
+      "seconds": 0.0017006460038828664
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0005846729982295074,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0004734700050903484,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_missing",
+      "status": "failed",
+      "error": "tensor([[0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000],\n        [0.4750, 0.4750, 0.4750],\n        [1.0000, 1.0000, 1.0000],\n        [0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000]], device='cuda:0')",
+      "seconds": 0.01126063900301233
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000],\n        [0.4750, 0.4750, 0.4750],\n        [1.0000, 1.0000, 1.0000],\n        [0.5000, 0.5000, 0.5000],\n        [0.5000, 0.5000, 0.5000]], device='cuda:0')",
+      "seconds": 0.0018240939971292391
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0005865380007890053,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.float32_bsr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.00047164900024654344,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_missing",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.0000j],\n        [0.5000+0.0000j],\n        [0.4750+0.0000j],\n        [0.0733+0.0553j],\n        [0.5000+0.0000j],\n        [0.5000+0.0000j]], device='cuda:0', dtype=torch.complex128)",
+      "seconds": 0.002185338002163917
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.j],\n        [0.5000+0.j],\n        [0.4750+0.j],\n        [1.0000+0.j],\n        [0.5000+0.j],\n        [0.5000+0.j]], device='cuda:0', dtype=torch.complex128)",
+      "seconds": 0.0021653179937857203
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0006896729973959737,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0005617179995169863,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_missing",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],\n        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',\n       dtype=torch.complex128)",
+      "seconds": 0.0019908239992219023
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],\n        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',\n       dtype=torch.complex128)",
+      "seconds": 0.002290352997079026
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0006576250016223639,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_csr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.000551509001525119,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_missing",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.j],\n        [0.5000+0.j],\n        [0.4750+0.j],\n        [1.0000+0.j],\n        [0.5000+0.j],\n        [0.5000+0.j]], device='cuda:0', dtype=torch.complex128)",
+      "seconds": 0.003615768000599928
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.j],\n        [0.5000+0.j],\n        [0.4750+0.j],\n        [1.0000+0.j],\n        [0.5000+0.j],\n        [0.5000+0.j]], device='cuda:0', dtype=torch.complex128)",
+      "seconds": 0.0019547479969332926
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_empty",
+      "status": "passed",
+      "seconds": 0.0006996640004217625,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs1_empty-unit",
+      "status": "passed",
+      "seconds": 0.0006003779999446124,
+      "nan": 6,
+      "inf": 0,
+      "numel": 6,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_missing",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],\n        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',\n       dtype=torch.complex128)",
+      "seconds": 0.0020306520018493757
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_zero",
+      "status": "failed",
+      "error": "tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],\n        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],\n        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',\n       dtype=torch.complex128)",
+      "seconds": 0.00205818799440749
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_empty",
+      "status": "passed",
+      "seconds": 0.0006996630036155693,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    },
+    {
+      "name": "torch.complex128_bsr_rhs3_empty-unit",
+      "status": "passed",
+      "seconds": 0.0005807819979963824,
+      "nan": 18,
+      "inf": 0,
+      "numel": 18,
+      "behavior": "nonfinite-singular-or-legacy-empty"
+    }
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "failed": [
+    "torch.float32_csr_rhs1_missing",
+    "torch.float32_csr_rhs1_zero",
+    "torch.float32_csr_rhs3_missing",
+    "torch.float32_csr_rhs3_zero",
+    "torch.float32_bsr_rhs1_missing",
+    "torch.float32_bsr_rhs1_zero",
+    "torch.float32_bsr_rhs3_missing",
+    "torch.float32_bsr_rhs3_zero",
+    "torch.complex128_csr_rhs1_missing",
+    "torch.complex128_csr_rhs1_zero",
+    "torch.complex128_csr_rhs3_missing",
+    "torch.complex128_csr_rhs3_zero",
+    "torch.complex128_bsr_rhs1_missing",
+    "torch.complex128_bsr_rhs1_zero",
+    "torch.complex128_bsr_rhs3_missing",
+    "torch.complex128_bsr_rhs3_zero"
+  ]
+}

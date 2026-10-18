@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "native_torch_revision": "dc8fea0cb8b157cb415359033e4f0175d2ebfa56",
+  "test_qualification_revision": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+  "therock_implementation_revision": "39ea58574d54b4f3c2bb1ab573494809636c7bbd",
+  "new_public_groups": 433,
+  "native_generic_fixtures": 96,
+  "native_solve_executions_per_mount": 192,
+  "retained_sparse_groups_per_mount": 41,
+  "core_groups_per_mount": 7,
+  "candidate_and_installed_qualified": true,
+  "before_failures_initial": 16,
+  "before_cases_initial": 32,
+  "before_failures_expanded": 39,
+  "before_cases_expanded": 80,
+  "successful_processes": 20,
+  "failed_baseline_processes": 2,
+  "guards_acknowledged": 22,
+  "protected_identities": 121,
+  "changed_native_libraries": [
+    "libtorch_hip.so"
+  ],
+  "disk_available_bytes": 7761481728,
+  "next": "N2.14 audit P2 FFT30 and qualify bounded batched/strided complex plans and odd-length real transforms with CPU output/gradient references; BF16 promotion B01 remains separate"
+}

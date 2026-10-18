@@ -1,0 +1,4616 @@
+{
+  "status": "passed",
+  "group": "matrix",
+  "checks": [
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.4143046089957352,
+      "residual": 5.782765819217739e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.01647677999426378,
+      "residual": 1.086645370690969e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0076377009972929955,
+      "residual": 8.357117596315108e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005627601996820886,
+      "residual": 7.664901294050235e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.005378184003347997,
+      "residual": 7.42648584401708e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.00554465499590151,
+      "residual": 1.0990459844436704e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.005366111006878782,
+      "residual": 1.0257012721594881e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005687325006874744,
+      "residual": 8.511366916183328e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.03015273999335477,
+      "residual": 1.1213224402558924e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0055473399988841265,
+      "residual": 1.2398460256843493e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.005510670998774003,
+      "residual": 1.7030722307811104e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005532324998057447,
+      "residual": 1.3421613040438041e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.005583245998423081,
+      "residual": 1.3433914913191177e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.005484954999701586,
+      "residual": 1.2613263894972664e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.005581681994954124,
+      "residual": 1.4897803991946226e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005417867003416177,
+      "residual": 9.513027123619121e-09,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.005490544004715048,
+      "residual": 9.164551436205947e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.005827521003084257,
+      "residual": 8.799942844483055e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.005497336998814717,
+      "residual": 1.3147111850567201e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005447174000437371,
+      "residual": 9.32263045888341e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.005514829994353931,
+      "residual": 9.320017915134734e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.005467354996653739,
+      "residual": 7.401783587944642e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.005497979000210762,
+      "residual": 9.18501352876729e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005449835000035819,
+      "residual": 6.1627300093758626e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.005903482997382525,
+      "residual": 1.9124527394439764e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.005494760996953119,
+      "residual": 1.3210049848126195e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.007161241002904717,
+      "residual": 1.4474908026695877e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005597155002760701,
+      "residual": 1.4607746044628177e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.005592893001448829,
+      "residual": 1.0492952714496383e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.005511123003088869,
+      "residual": 1.522856539965821e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.005660155999066774,
+      "residual": 1.2322948000935777e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_csr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.005462179993628524,
+      "residual": 9.684474797999535e-09,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.016300909002893604,
+      "residual": 7.952075460969794e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.00268560899712611,
+      "residual": 9.230369714287491e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002517985994927585,
+      "residual": 8.20251307863617e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002643430001626257,
+      "residual": 1.4580009710139865e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002529990000766702,
+      "residual": 1.0144121822833175e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002648240995767992,
+      "residual": 8.769888751538113e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002535361003538128,
+      "residual": 1.5375846665772835e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002575096004875377,
+      "residual": 9.371691861568976e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.012881360002211295,
+      "residual": 1.2790331035328616e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0029018540008109994,
+      "residual": 9.63848494095059e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002582031003839802,
+      "residual": 9.688257620005795e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026744909991975874,
+      "residual": 9.508231870033113e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.00263663700025063,
+      "residual": 8.58647259458704e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002690551002160646,
+      "residual": 1.1053305679578328e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002572361998318229,
+      "residual": 1.3193074444819977e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027481369979796,
+      "residual": 9.44122174325147e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002525457995943725,
+      "residual": 1.3108406807915218e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026124430005438626,
+      "residual": 1.201404232746344e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002517255998100154,
+      "residual": 7.632634766552483e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002648810994287487,
+      "residual": 8.257126329596497e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025259389949496835,
+      "residual": 1.8707982192754668e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026694879998103715,
+      "residual": 7.893989280666696e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002517075998184737,
+      "residual": 7.2330625182419425e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026033679969259538,
+      "residual": 1.1013534948454314e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002554948005126789,
+      "residual": 8.68317830397341e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026690570011851378,
+      "residual": 9.033746987243074e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002533988001232501,
+      "residual": 8.806658241599012e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026616030008881353,
+      "residual": 1.383774209147126e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002552721998654306,
+      "residual": 8.795466828901386e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027022810027119704,
+      "residual": 1.2660398466174987e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025708139946800657,
+      "residual": 9.998385094401989e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float32_bsr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002607956004794687,
+      "residual": 7.270709675121864e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0024964550029835664,
+      "residual": 1.3837364473493916e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0025263950010412373,
+      "residual": 2.340049012296302e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002470129002176691,
+      "residual": 2.833746480930474e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0025763770026969723,
+      "residual": 2.2994038091500324e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026044420010293834,
+      "residual": 2.837819885935809e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002589123003417626,
+      "residual": 1.451915693107743e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0024973670006147586,
+      "residual": 1.8826415553301058e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0025131660004262812,
+      "residual": 2.3937909339529268e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0024602280027465895,
+      "residual": 3.401392812126861e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002615106997836847,
+      "residual": 4.3621309574688385e-19,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0024657920002937317,
+      "residual": 2.5683826676839925e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002636832003190648,
+      "residual": 4.9231522824565394e-18,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025454900023760274,
+      "residual": 1.2538799159863454e-18,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002573874000518117,
+      "residual": 2.4328338338004782e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002577275001385715,
+      "residual": 1.4339739868399728e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002530562000174541,
+      "residual": 2.299101168159379e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.003039517003344372,
+      "residual": 1.4474042280644228e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002523016002669465,
+      "residual": 3.092636798523049e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0024520340011804365,
+      "residual": 2.3987604676893096e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002559305001341272,
+      "residual": 1.3155119059210975e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002464058001351077,
+      "residual": 1.8463286021847293e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002543226000852883,
+      "residual": 2.1584505749733996e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0024921899967011996,
+      "residual": 1.8654886664425568e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002498652000213042,
+      "residual": 2.0758454977733758e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002477832997101359,
+      "residual": 2.961407971228624e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002744388999417424,
+      "residual": 9.584752860101838e-18,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002469354003551416,
+      "residual": 2.196762522069302e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026233929966110736,
+      "residual": 5.826941518751369e-18,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025329370037070476,
+      "residual": 6.106329245073643e-18,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0025636099962866865,
+      "residual": 2.550263451673934e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025736379975569434,
+      "residual": 7.975725790652148e-18,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_csr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0025270459955208935,
+      "residual": 2.372268835028316e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025435569987166673,
+      "residual": 1.498505372947976e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026304350030841306,
+      "residual": 8.869701574690206e-18,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002506042997993063,
+      "residual": 1.8089967024603047e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026420469948789105,
+      "residual": 1.025667118974108e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025300159977632575,
+      "residual": 1.7099697994701393e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026502950058784336,
+      "residual": 2.1524952584590518e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025208840015693568,
+      "residual": 2.5797654258589157e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002596229998744093,
+      "residual": 1.6962188628889886e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025790020008571446,
+      "residual": 3.041132260480071e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002661573998921085,
+      "residual": 3.462947211159423e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025461200057179667,
+      "residual": 2.2092984528410166e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002653790004842449,
+      "residual": 3.0296751748288046e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025512790016364306,
+      "residual": 1.6259031814557428e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002666802000021562,
+      "residual": 2.2697993635448708e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026848609995795414,
+      "residual": 3.0984085883102245e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026055109992739744,
+      "residual": 1.805300701392175e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025239469978259876,
+      "residual": 2.846747353255037e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002635980003105942,
+      "residual": 2.5702352874705065e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025261319970013574,
+      "residual": 3.1724728494767055e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026443919996381737,
+      "residual": 1.5227858775039025e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002537802000006195,
+      "residual": 1.4911435767175337e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026584379957057536,
+      "residual": 2.0432801137338005e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002549748998717405,
+      "residual": 1.7908305862303025e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002564681002695579,
+      "residual": 1.9606025777917963e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002577772000222467,
+      "residual": 1.5109947691679836e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026444640025147237,
+      "residual": 2.9209177176040025e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025271959966630675,
+      "residual": 1.7331410929825506e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026598539989208803,
+      "residual": 3.45777837237436e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025574679966666736,
+      "residual": 3.2376518360496865e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002701910001633223,
+      "residual": 1.9665217734128625e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025731709974934347,
+      "residual": 2.846722537835849e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.float64_bsr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002655855001648888,
+      "residual": 3.2396254784213376e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026744300048449077,
+      "residual": 1.2020217500971394e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026102230040123686,
+      "residual": 1.0447787542146464e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002610855000966694,
+      "residual": 1.215434797070904e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002818556000420358,
+      "residual": 1.1073155244058626e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002560564003943,
+      "residual": 1.23975848587816e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002671051006473135,
+      "residual": 1.3253611377335194e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026050189990201034,
+      "residual": 7.802296901173168e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026276130010955967,
+      "residual": 1.7117685573397485e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002565103000961244,
+      "residual": 2.1439775389747775e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002742827004112769,
+      "residual": 2.2345001118943877e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002585084002930671,
+      "residual": 2.098348694302335e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002743731005466543,
+      "residual": 1.823060088762529e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026540819962974638,
+      "residual": 2.451503279501526e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002708890999201685,
+      "residual": 2.3247956521205012e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002706208993913606,
+      "residual": 2.521301032784703e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026379850023658946,
+      "residual": 1.7022852158438885e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0027630580007098615,
+      "residual": 1.2207552073511938e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.00267158099450171,
+      "residual": 8.358581176178738e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025680409962660633,
+      "residual": 1.030335991552898e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002701571000216063,
+      "residual": 5.958573986811368e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025765370010049082,
+      "residual": 7.994821999622767e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0026663649987312965,
+      "residual": 1.2029852558628198e-08,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0025840340022114106,
+      "residual": 9.403186712040218e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002625663997605443,
+      "residual": 9.975814425145809e-09,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002708810003241524,
+      "residual": 2.3300699877096133e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002707376996113453,
+      "residual": 2.2314102003157236e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002583856003184337,
+      "residual": 1.7382068177463886e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027468229964142665,
+      "residual": 1.5420697231570862e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002629091999551747,
+      "residual": 1.7788130945452798e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002685897001356352,
+      "residual": 2.8798589862274508e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002698866999708116,
+      "residual": 1.761034412795218e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_csr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0026398539994261228,
+      "residual": 1.8366397268272273e-08,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002631192000990268,
+      "residual": 1.3617007527894695e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027598899978329428,
+      "residual": 9.018343438199309e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002617796002596151,
+      "residual": 1.0299190960342865e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027338259969837964,
+      "residual": 1.2114390428858168e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002645272994413972,
+      "residual": 1.4098724309147272e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0028106919999117963,
+      "residual": 1.1899598254740249e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026667339989217,
+      "residual": 8.236071845700872e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027323250033077784,
+      "residual": 8.452833362300479e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026696919958340004,
+      "residual": 9.211031233937287e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027750670051318593,
+      "residual": 1.0893701789098667e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002646786000696011,
+      "residual": 9.493062896964224e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027838410023832694,
+      "residual": 1.0017396482138299e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026995660009561107,
+      "residual": 7.098290222072786e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0029348730022320524,
+      "residual": 9.29587367655353e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002700846998777706,
+      "residual": 1.3949817460432474e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027436899981694296,
+      "residual": 9.30481942732427e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026444370014360175,
+      "residual": 8.19394987568912e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027531859959708527,
+      "residual": 8.503033095708187e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026411159997223876,
+      "residual": 1.0839428581826322e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002748158003669232,
+      "residual": 1.1094174589177575e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002648729998327326,
+      "residual": 9.448132379337426e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027921119981328957,
+      "residual": 1.1047218009794667e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0027010179983335547,
+      "residual": 8.99314468715595e-09,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.00272453799698269,
+      "residual": 1.0833542520977712e-08,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0027169140012119897,
+      "residual": 9.210170276104272e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0028122060030000284,
+      "residual": 1.3592008791551842e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026749129974632524,
+      "residual": 9.344723752505473e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027900560016860254,
+      "residual": 1.1661232537812152e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002690435001568403,
+      "residual": 1.0826327070106029e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0028278750032768585,
+      "residual": 9.955502873518543e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002734599998802878,
+      "residual": 8.406562004472723e-09,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex64_bsr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002774451997538563,
+      "residual": 1.0069969466961012e-08,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002628244001243729,
+      "residual": 1.5706697594134017e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027103960019303486,
+      "residual": 2.7320300196700452e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002763689000857994,
+      "residual": 2.4501089774016756e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027274390013189986,
+      "residual": 3.38560906543405e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026194169986410998,
+      "residual": 5.773160439748331e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027427489985711873,
+      "residual": 1.9901721685723246e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002660347003256902,
+      "residual": 3.217502566428735e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027072320008301176,
+      "residual": 2.2301785833319675e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002666683998540975,
+      "residual": 3.613569162917426e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027981719977105968,
+      "residual": 2.491489638089542e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026516860016272403,
+      "residual": 4.176584221407474e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0028083209981559776,
+      "residual": 2.5327100687700037e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0027199809992453083,
+      "residual": 2.893744567625955e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027298899949528277,
+      "residual": 3.582629344532948e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0027326380004524253,
+      "residual": 3.814020750203323e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002683808001165744,
+      "residual": 4.6351534885545174e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026241480009048246,
+      "residual": 2.4921706188305504e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002676108997547999,
+      "residual": 2.6741599193106763e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026004309984273277,
+      "residual": 2.3962708454657886e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027001880007446744,
+      "residual": 3.103897312451145e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0025999400022556074,
+      "residual": 2.6323786261766807e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002682894999452401,
+      "residual": 2.1672725181852843e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002667685999767855,
+      "residual": 4.6100729986205526e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002816726002492942,
+      "residual": 2.0154724045985254e-17,
+      "order": 17,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026040169977932237,
+      "residual": 3.5876669145622266e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002761409996310249,
+      "residual": 2.9810235765998026e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002612090000184253,
+      "residual": 4.2359509235481945e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.00278863099811133,
+      "residual": 2.6817904762976762e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026955709981848486,
+      "residual": 2.8325441701732893e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0027227940008742735,
+      "residual": 4.104103785708787e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0027219159965170547,
+      "residual": 2.827951036660224e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_csr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027008180040866137,
+      "residual": 3.210119087868308e-17,
+      "order": 17,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "csr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0031098140025278553,
+      "residual": 1.473904210860376e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0028014560011797585,
+      "residual": 2.4456021991696985e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.00266645300143864,
+      "residual": 1.798825956957308e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027993709954898804,
+      "residual": 2.24749073849951e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026918809962808155,
+      "residual": 2.909151991439299e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002854366000974551,
+      "residual": 2.260406276844921e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002691651003260631,
+      "residual": 3.0457131457900444e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027768619984271936,
+      "residual": 1.962971902060006e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0027187320010853,
+      "residual": 2.3129042972767144e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0028442080001696013,
+      "residual": 2.5676554400638254e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0027030440032831393,
+      "residual": 2.413335107271122e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002821987996867392,
+      "residual": 3.912614951765657e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0028569190035341308,
+      "residual": 2.6215642650805318e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002821454996592365,
+      "residual": 1.9924277612449172e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0027216259986744262,
+      "residual": 2.5141040121073128e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int32_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.00277226999605773,
+      "residual": 1.6109272941810625e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int32",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002664020001247991,
+      "residual": 2.5654866821630186e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002801939997880254,
+      "residual": 3.0485006358396055e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0026755430008051917,
+      "residual": 2.779184156586949e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.0027718890050891787,
+      "residual": 1.3054983660407106e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0026808170005097054,
+      "residual": 2.7740650068003636e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.0028043709971825592,
+      "residual": 2.112477472907348e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002689524997549597,
+      "residual": 2.3785570883332616e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs1_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002745679004874546,
+      "residual": 2.473445758672235e-17,
+      "order": 18,
+      "nrhs": 1,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        10,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperFalse_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.002700087999983225,
+      "residual": 2.0527579605954024e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperFalse_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002804039999318775,
+      "residual": 3.50907034552797e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperFalse_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.002693872003874276,
+      "residual": 2.198035596613107e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperFalse_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002816464002535213,
+      "residual": 3.6226062601783505e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperTrue_unitFalse_transFalse",
+      "status": "passed",
+      "seconds": 0.0027167049993295223,
+      "residual": 2.711496176203575e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 1,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperTrue_unitFalse_transTrue",
+      "status": "passed",
+      "seconds": 0.002868591000151355,
+      "residual": 2.491710453167021e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperTrue_unitTrue_transFalse",
+      "status": "passed",
+      "seconds": 0.0027470429995446466,
+      "residual": 3.570266434855419e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "row",
+      "rhs_layout": 2,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    },
+    {
+      "name": "torch.complex128_bsr_torch.int64_rhs3_upperTrue_unitTrue_transTrue",
+      "status": "passed",
+      "seconds": 0.002806283999234438,
+      "residual": 2.5969324790281357e-17,
+      "order": 18,
+      "nrhs": 3,
+      "index_dtype": "torch.int64",
+      "format": "bsr",
+      "value_layout": "column",
+      "rhs_layout": 0,
+      "output_strides": [
+        18,
+        2
+      ],
+      "nondefault_stream": true,
+      "input_and_output_guards": true
+    }
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "failed": []
+}

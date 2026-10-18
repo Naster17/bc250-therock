@@ -1,0 +1,215 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "checks": [
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.06286256800376577
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0006805070006521419
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.4635225609963527
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0008671649993630126
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.00044495100155472755
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float32_(17, 13)",
+      "status": "passed",
+      "seconds": 0.26647839000361273
+    },
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0004702660007751547
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.000467693003884051
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0019510060010361485
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00036528100463328883
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0003975340005126782
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float32_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0015154479988268577
+    },
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0004580730019370094
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0004553679973469116
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0021879510022699833
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0003767360030906275
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0004011669952888042
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float64_(17, 13)",
+      "status": "passed",
+      "seconds": 0.0016563070021220483
+    },
+    {
+      "name": "sparse_mm_torch.sparse_coo_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00042028499592561275
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_coo_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.000425263999204617
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_coo_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0017741689953254536
+    },
+    {
+      "name": "sparse_mm_torch.sparse_csr_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0003657279958133586
+    },
+    {
+      "name": "sparse_addmm_torch.sparse_csr_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.00038680899888277054
+    },
+    {
+      "name": "sparse_rhs_backward_torch.sparse_csr_torch.float64_(9, 21)",
+      "status": "passed",
+      "seconds": 0.0014861429954180494
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.27845616199920187
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.013570444003562443
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004877158004092053
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperFalse_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004914862998703029
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.0048780869983602315
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004912938995403238
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004768080994836055
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float32_upperTrue_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004899823994492181
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004904933004581835
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004909866998787038
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004855920000409242
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperFalse_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004914698001812212
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitFalse_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004859840002609417
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitFalse_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004894829995464534
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitTrue_transposeFalse",
+      "status": "passed",
+      "seconds": 0.004824531002668664
+    },
+    {
+      "name": "hipsparse_csrsv_torch.float64_upperTrue_unitTrue_transposeTrue",
+      "status": "passed",
+      "seconds": 0.004878905994701199
+    },
+    {
+      "name": "sparse_duplicate_coo_value_backward",
+      "status": "passed",
+      "seconds": 0.085066375999304
+    }
+  ],
+  "seconds": 1.3136083189965575,
+  "passed": 41,
+  "failed": 0
+}

@@ -1,0 +1,16 @@
+{
+  "torch_revision": "dc8fea0cb8b157cb415359033e4f0175d2ebfa56",
+  "therock_revision": "140d5d38467aa5d1294dd4cab255f1b912be48fb",
+  "patched_source_sha256": {
+    "aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h": "4341b71a2cf821873956eecf7d7961c9843c18b581550fb42dcc4ba799dd196c",
+    "aten/src/ATen/native/sparse/cuda/SparseBlas.cpp": "87f06ad6a509023b42c4e4c1ae7f03b440d2c9b3a90b80d552e7f7f62c935207",
+    "aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu": "001a2c5a17cdae5df68cc3899e379badcdd0715e89dfc2417af128e09bb3062a",
+    "test/test_bc250_sparse_triangular.py": "8a6b5b1c383f172735f67430279687766e4fe2da2ab18459aaf63beba4a5297a"
+  },
+  "helper_sha256": {
+    "validate_sparse_n213.py": "f0a4c6a210a5929b710c1cec6329161793af3005ce0b67c240789aef47be4125",
+    "validate_sparse_n213_native.py": "a2df3fad80de488d92f5b1d4b8469e5f361898ec439c87451167ffee2ade7c9f",
+    "build_sparse_n213_on_host.py": "14c788718b25f5390d2dafcd46d84e0fbb72c487d17cce92dd3701e142e72d77",
+    "qualify_sparse_n213_on_host.py": "f6762b9e5c50da89d9ff571cfbbaa36ba143c9cf85b43e09edd673214ecca836"
+  }
+}

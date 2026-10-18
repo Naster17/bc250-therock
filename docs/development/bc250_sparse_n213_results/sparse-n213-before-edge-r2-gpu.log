@@ -1,0 +1,251 @@
+time="2026-10-18T21:23:25+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/test_bc250_sparse_triangular.py:298: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /workspace/pytorch-work/aten/src/ATen/SparseCsrTensorImpl.cpp:49.)
+  else dense.to_sparse_csr()
+N213_SUMMARY 80 failed 39
+FAIL torch.float32_csr_rhs1_missing False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [0.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0')
+FAIL torch.float32_csr_rhs1_zero False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [1.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0')
+FAIL torch.float32_csr_rhs1_missing-block False is not true : tensor([[5.0000e-01],
+        [5.0000e-01],
+        [0.0000e+00],
+        [2.5223e-44],
+        [5.0000e-01],
+        [5.0000e-01]], device='cuda:0')
+FAIL torch.float32_csr_rhs3_missing False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0')
+FAIL torch.float32_csr_rhs3_zero False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0')
+FAIL torch.float32_csr_rhs3_missing-block False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.9500, 0.9500, 0.9500],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0')
+FAIL torch.float32_bsr_rhs1_missing False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [1.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0')
+FAIL torch.float32_bsr_rhs1_zero False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [1.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0')
+FAIL torch.float32_bsr_rhs3_missing False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0')
+FAIL torch.float32_bsr_rhs3_zero False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0')
+FAIL torch.float64_csr_rhs1_missing False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [0.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_csr_rhs1_zero False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [1.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_csr_rhs1_missing-block False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.0000],
+        [0.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_csr_rhs3_missing False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_csr_rhs3_zero False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_csr_rhs3_missing-block False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.9500, 0.9500, 0.9500],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_bsr_rhs1_missing False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [1.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_bsr_rhs1_zero False is not true : tensor([[0.5000],
+        [0.5000],
+        [0.4750],
+        [1.0000],
+        [0.5000],
+        [0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_bsr_rhs3_missing False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.float64_bsr_rhs3_zero False is not true : tensor([[0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000],
+        [0.4750, 0.4750, 0.4750],
+        [1.0000, 1.0000, 1.0000],
+        [0.5000, 0.5000, 0.5000],
+        [0.5000, 0.5000, 0.5000]], device='cuda:0', dtype=torch.float64)
+FAIL torch.complex64_csr_rhs1_missing False is not true : tensor([[5.0000e-01+0.j],
+        [5.0000e-01+0.j],
+        [4.7500e-01+0.j],
+        [4.2039e-45+0.j],
+        [5.0000e-01+0.j],
+        [5.0000e-01+0.j]], device='cuda:0')
+FAIL torch.complex64_csr_rhs1_zero False is not true : tensor([[0.5000+0.j],
+        [0.5000+0.j],
+        [0.4750+0.j],
+        [1.0000+0.j],
+        [0.5000+0.j],
+        [0.5000+0.j]], device='cuda:0')
+FAIL torch.complex64_csr_rhs1_missing-block False is not true : tensor([[5.0000e-01+0.j],
+        [5.0000e-01+0.j],
+        [2.8026e-45+0.j],
+        [4.2039e-45+0.j],
+        [5.0000e-01+0.j],
+        [5.0000e-01+0.j]], device='cuda:0')
+FAIL torch.complex64_csr_rhs3_missing False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0')
+FAIL torch.complex64_csr_rhs3_zero False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0')
+FAIL torch.complex64_csr_rhs3_missing-block False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.9500+0.j, 0.9500+0.j, 0.9500+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0')
+FAIL torch.complex64_bsr_rhs1_missing False is not true : tensor([[0.5000+0.j],
+        [0.5000+0.j],
+        [0.4750+0.j],
+        [1.0000+0.j],
+        [0.5000+0.j],
+        [0.5000+0.j]], device='cuda:0')
+FAIL torch.complex64_bsr_rhs1_zero False is not true : tensor([[0.5000+0.j],
+        [0.5000+0.j],
+        [0.4750+0.j],
+        [1.0000+0.j],
+        [0.5000+0.j],
+        [0.5000+0.j]], device='cuda:0')
+FAIL torch.complex64_bsr_rhs3_missing False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0')
+FAIL torch.complex64_bsr_rhs3_zero False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0')
+FAIL torch.complex128_csr_rhs1_zero False is not true : tensor([[0.5000+0.j],
+        [0.5000+0.j],
+        [0.4750+0.j],
+        [1.0000+0.j],
+        [0.5000+0.j],
+        [0.5000+0.j]], device='cuda:0', dtype=torch.complex128)
+FAIL torch.complex128_csr_rhs1_missing-block False is not true : tensor([[ 5.0000e-01+0.0000e+00j],
+        [ 5.0000e-01+0.0000e+00j],
+        [1.5334e-319+1.5334e-319j],
+        [2.4703e-323+9.8813e-324j],
+        [ 5.0000e-01+0.0000e+00j],
+        [ 5.0000e-01+0.0000e+00j]], device='cuda:0', dtype=torch.complex128)
+FAIL torch.complex128_csr_rhs3_missing False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',
+       dtype=torch.complex128)
+FAIL torch.complex128_csr_rhs3_zero False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',
+       dtype=torch.complex128)
+FAIL torch.complex128_csr_rhs3_missing-block False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.9500+0.j, 0.9500+0.j, 0.9500+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',
+       dtype=torch.complex128)
+FAIL torch.complex128_bsr_rhs1_missing False is not true : tensor([[0.5000+0.j],
+        [0.5000+0.j],
+        [0.4750+0.j],
+        [1.0000+0.j],
+        [0.5000+0.j],
+        [0.5000+0.j]], device='cuda:0', dtype=torch.complex128)
+FAIL torch.complex128_bsr_rhs1_zero False is not true : tensor([[0.5000+0.j],
+        [0.5000+0.j],
+        [0.4750+0.j],
+        [1.0000+0.j],
+        [0.5000+0.j],
+        [0.5000+0.j]], device='cuda:0', dtype=torch.complex128)
+FAIL torch.complex128_bsr_rhs3_missing False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',
+       dtype=torch.complex128)
+FAIL torch.complex128_bsr_rhs3_zero False is not true : tensor([[0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.4750+0.j, 0.4750+0.j, 0.4750+0.j],
+        [1.0000+0.j, 1.0000+0.j, 1.0000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j],
+        [0.5000+0.j, 0.5000+0.j, 0.5000+0.j]], device='cuda:0',
+       dtype=torch.complex128)
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/test_bc250_sparse_triangular.py", line 369, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/test_bc250_sparse_triangular.py", line 342, in main
+    CHECK.assertTrue(not failed)
+  File "/usr/lib/python3.12/unittest/case.py", line 727, in assertTrue
+    raise self.failureException(msg)
+AssertionError: False is not true

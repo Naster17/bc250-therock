@@ -9,6 +9,44 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.13 completed and installed, 2026-10-18.** Native Torch `dc8fea0`
+  (implementation `a434d03`), final tests `2b449c4`; TheRock build `bbf556448`,
+  final controllers `39ea58574`. Public CSR generic SpSV/SpSM and BSR block solves
+  qualified across four real/complex types, public 32/64-bit indices, vector/three
+  RHS, upper/lower/transpose/unit flags, layouts, guarded outputs and streams.
+  Initial nonsingular 256 cases passed; exact/missing pivot probes failed 16/32,
+  expanded 39/80 because native division avoidance can leave finite placeholders.
+  ROCm-only 2D Torch postcheck now marks exact zero/missing pivot rows as NaN.
+  One GPU diagonal-search launch, actual stream, no host reads/dense conversion/
+  extra workspace; bit-exact zero test, no near-zero/conditioning claim. Unit
+  bypass and legacy empty-A NaNs retained. Other singular rows unspecified;
+  direct native APIs unchanged; general sparse factorization/spsolve B02 separate.
+  Candidate/installed each pass 433 new public groups, 96 direct generic fixtures/
+  192 solves (N/T/adjoint, host/device alpha, analysis reuse), retained sparse41,
+  core7 and CPU-first profiler. Final pivot group verifies real NaN writes into
+  strided sentinel buffers on a private stream; test-only post-build revision is
+  separate from native GIT_REVISION. BSR public int64 still downcasts within
+  tested bounds; no giant native64 BSR, triangular autograd, batching or broad
+  performance claim. Only libtorch_hip.so changes; CPU profiler fix retained.
+  Independent WS/pytorch-sparse-n213 build uses required HIP generation then pip
+  editable/no-isolation, ccache20GiB/jobs12/link1/gfx1013; old builds/sources/caches
+  and shared immutable third_party retained. 22 guards ACK/600s, two numerical
+  baseline failures preserved, dmesg unchanged whole batch; 121 prior identities
+  verified, changed active runtime/GPU aliases pinned through recovery. Only dev
+  Torch link/runtime metadata updated; ROCm DSOs/packs/current/previous/rocm links,
+  image/kernel/boot/BIOS/.105/defaults/r2 fallback unchanged. Recovery
+  WS/recovery/sparse-n213-before, SOURCE_SPARSE_N213.json in WS/current. Next
+  preservation baseline WS/logs/sparse-n213-qualification/final.json plus its
+  candidate_sha256/runtime_sha256; prior active GPU alias hashes are historical.
+  [Report](docs/development/bc250_sparse_n213_results/README.md), compressed traces/
+  full build log, cases/commands/source/generated hashes; raw WS/logs/sparse-n213-*,
+  ignored local kernel/artifacts/sparse-n213. No active agent job/container/guard;
+  free about 7.23GiB: capacity check before future builds. Python CPU segfault
+  remains unresolved/separate from fixed VM-heap/CSR; these are numerical pivots.
+  **Next N2.14:** audit P2 FFT30, then bounded batched/strided complex plans and
+  odd-length real transforms with CPU outputs/gradients; preserve rocFFT AOT
+  cache. BF16 promotion B01 remains separate. Broad N2–N8 still open.
+
 - **A09/N4 profiler ordering repaired/installed2026-10-18:** native Torch
   b823a1b, test qualificationda45369; TheRock build669baa5d7/controller39f3ed14b.
   ROCm first Kineto init retains GPU capability when a GPU is visible, even for
@@ -1505,7 +1543,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.10 | Native bounded reflector-Q formation;128 retained+24 independent reflector+six CPU/backend fixtures pass. Preparation1.11–1.39x/whole1.05–1.12x in fixtures; defaults unchanged. |
 | [x]   | N2.11 | Explicit pinned-stream GEHRD sessions;128 retained+six CPU/backend fixtures+three lifetime groups/16 refusals pass. Warm prep7.03–12.52x/whole1.28–1.95x in fixtures; cold/default/host limits recorded. |
 | [x]   | N2.12 | Native bounded triangular recovery;128 retained+36 CPU/backend+32 direct+two rescaling+six ABI cases pass; fixed gates/defaults retained. Recovery1.32–2.32x/whole1.17–1.34x in six fixtures; host remains faster. Separate CPU-first profiler defect found. |
-| [ ]   | **N2.13 — next** | Generic hipSPARSE/Torch sparse triangular vector/multi-RHS coverage: audit existing CSR/BSR paths; CPU-reference missing complex/index/layout/stream/zero-pivot cases, patch demonstrated defects; general sparse spsolve B02 separate. |
+| [x]   | N2.13 | Generic sparse triangular coverage and exact-pivot NaN marking installed:433 public +96 direct generic fixtures, retained sparse41/core7/profiler pass in candidate and installed runtime. General sparse spsolve B02 remains separate. |
+| [ ]   | **N2.14 — next** | Audit existing P2 FFT30; qualify bounded batched/strided complex plans and odd-length real transforms with CPU output/gradient references, preserve AOT cache; BF16 promotion B01 separate. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
