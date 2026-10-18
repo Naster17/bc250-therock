@@ -7,6 +7,24 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
+## A09 update
+
+**A09 native Torch GPU profiler — 2026-10-18.** User selected A09 ahead of
+unfinished A08. Torch `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5` adds tests on
+unchanged native source71a0426; TheRock runtime helpers `4c2edb785` enable
+USE_KINETO=1/KINETO_BACKEND=rocm with the pinned rocprofiler-sdk backend.
+Seven profiler tests require actual GPU kernels/copies, positive durations,
+CPU/GPU correlation, FP32/BF16 output/gradient references, allocation/free events,
+scheduled capture, custom streams and CPU-only selection. Profiling is explicit;
+ordinary training does not automatically collect traces or become faster.
+Candidate short-window setup/teardown-inclusive wall overhead was~4.70x;
+not application throughput. Existing convolution/sparse/training/A06/A07/model/
+resume gates pass within their recorded scopes. [Evidence and usage](bc250_profiler_a09_results/README.md).
+Hardware counters, broad simultaneous/external profiling, compile/graphs,
+long traces and cross-boot absolute-clock calibration remain unqualified.
+A08 remains next, then N2.7. Historical Python CPU fault stays unresolved and
+separate from fixed VM-heap/CSR corruption. No .105/kernel/BIOS/image change.
+
 ## Scope of the latest fixes
 
 The Qwen3.5 helpers from implementation690042b55 are **application scoped**.
@@ -175,7 +193,7 @@ The following rows are not an exhaustive API or dtype promise.
 | AMP / fused AdamW | ATen HIP + generic optimizer kernels | Current finite FP16 scaled update and CPU-matched fused AdamW; prior full AMP/resume | Valid FP32 loss promotion; no universal optimizer qualification |
 | torch.compile | Dynamo/Inductor/patched Triton3.8 | Current fullgraph norm/GELU output/gradient ref; prior dynamic math attention | Fused SDPA/custom tiled graphs unqualified |
 | HIP graphs | Torch CUDA namespace -> HIP | Current fixed-buffer add capture/replay, previous direct graph fixtures | Does not qualify every op/allocation or custom attention |
-| ROCTX / external tracing | roctracer/rocprofiler | Prior API/kernel/copy correlation evidence | Torch profiler integration disabled A09; counters/PC sampling unqualified |
+| ROCTX / external tracing | roctracer/rocprofiler | Prior API/kernel/copy correlation evidence | Torch Kineto/SDK integration now bounded-qualified A09; counters/PC sampling remain unqualified |
 | hipTensor / hipDNN / CK generic | Installed libraries, no pinned ATen integration found | DSOs load; prior direct native library/provider tests | Not mandatory dependencies for Torch einsum/convolution; installing them alone changes no Torch route |
 
 ## Ordered work queue
@@ -195,7 +213,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A06 — corrected, bounded** | Native preparation and precision-safe full operation | Torch71a0426;42 operator tests, four autocast cases, all372 nonzero BF16 model gradients exact65/1024 | Default app hook corrected; BC250_GATED_DELTA=0 remains reference opt-out. Full FLA/deeper native fusion unqualified. [Report](bc250_a06_a07_results/README.md). |
 | **A07 — head256 completed, bounded** | Explicit D<=256 tiled/hybrid attention |36 tests; actual2B training/checkpoint gates and exact per-backend fresh/resume CLI continuation | Math default. BF16 hybrid lower peak/slower in measured fixtures; quadratic forward temporaries. Dropout/compile/graphs remain separate. [Report](bc250_a06_a07_results/README.md). |
 | **A08** | Dense INT8 -> INT32 `_int_mm` | Valid32x32x32 reaches hipBLASLt heuristic and returns HIPBLAS_STATUS_NOT_SUPPORTED; current Lt scalar type subset has no INT8. Sparse INT8 N1.7 is a different route. | Add bounded dense scalar INT8/INT32 Lt path or explicit native Torch alternative, with overflow/accumulation/layout/alpha-beta/epilogue tests. No matrix instruction assumption. |
-| **A09** | Torch GPU profiler/Kineto disabled | USE_KINETO=0; profiler records no GPU events. External rocprofiler is a separate working tool. | Audit pinned Kineto ROCm tracing dependencies and enable a separately tested build. Qualify GPU event correlation, memory/CPU traces and overhead; hardware counters remain separate. |
+| **A09 — completed, bounded** | Native Torch GPU profiler via existing Kineto/SDK | Separate USE_KINETO=1 build; seven native trace/reference/lifecycle tests and existing numerical/model/resume gates | Explicit torch.profiler contexts; CPU/GPU kernels/copies/memory correlation. Hardware counters, broad concurrency, compile/graphs and long tracing unqualified. [Report](bc250_profiler_a09_results/README.md). |
 | **B01** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
 | **B02** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
 | **B03** | Distributed build, Gloo/RCCL absent | USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected. | CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here. |
@@ -206,8 +224,8 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **N2.7** | Native nonsymmetric eig remains a bounded slow prototype | N2.6 completed; production DnXgeev uses host LAPACK; GPU arithmetic prototype has host scalar control | Resume the existing Schur substage profile/device-iteration roadmap after the selected Torch/library blockers, without duplicating N2.1–6. |
 
 A01–A07 are completed within their recorded bounded scopes; A07 dropout/compile/
-graph contracts and full native FLA remain open extensions. A08 then A09 are the
-remaining primary queue before N2.7. B-items are optional
+graph contracts and full native FLA remain open extensions. A09 was selected and completed ahead of A08; A08 is the
+remaining primary item before N2.7. B-items are optional
 workloads/integration expansions rather than mandatory missing Torch dependencies.
 N2.7 stays queued while we work through the selected primary items; this audit did
 not silently begin their implementation. Small targeted tests cannot prove that

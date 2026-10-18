@@ -9,6 +9,50 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **A09 completed2026-10-18 (user selected ahead of unfinished A08):** Torch
+  `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5` adds tests on unchanged native source
+  71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8; helpers
+  `4c2edb78553a8fe993a209d41539eba2c5966317` (full revision in SOURCE_PROFILER_A09.json). Existing pinned
+  Kineto094d3c1 SDK backend enabled by USE_KINETO=1/KINETO_BACKEND=rocm and linked
+  librocprofiler-sdk.so.1. No Kineto/SDK native source repair or architecture alias
+  required. Separate WS/pytorch-profiler-a09 candidate built through pip editable,
+  ccache20GiB/MAX_JOBS12/link1, original object cache copied and immutable third-party
+  sources bind-mounted read-only from preserved pytorch-sparse-followup/third_party.
+  Rebuilds require this shared source mount; no old tree/cache/image removed.
+  Seven candidate/installed profiler tests pass:13 kernels/16 runtime/13 linked CPU
+  events per FP32/BF16 fixture, exact profiled/unprofiled output+both gradients and
+  CPU-float64 refs, two correlated H2D/D2H copies with exact roundtrip,4MiB alloc/free,
+  two scheduled8-kernel custom-stream windows, CPU-only selection and bounded wall
+  overhead. Candidate/installed short-window median ratio4.70x/4.63x includes setup/
+  teardown, not LoRA throughput; profiling is explicit and adds cost.
+  Nine candidate gates pass: profiler7/core7/sparse38/A05=69/A06=42/A07=36/conv30/
+  actual2B3/CLI2. Four installed gates pass: profiler7/core7/actual2B3/CLI2. Model
+  checks retain all372 nonzero adapter grads, exact A06 BF1665/1024, bounded A07
+  2.17%/1.31% with12 D256 forward/checkpoint calls. Each backend fresh/resume exact
+  across adapters/optimizer/scheduler/RNG/progress; user checkpoints/data untouched.
+  14 GPU guards all ACK/600s/dmesg unchanged. Initial marker test confused CPU/GPU
+  annotations sharing a name; explicit CPU-category check fixed harness, no wider
+  tolerance. Controller schema mismatch after successful model test corrected;
+  existing passed/ACKed gates reused, failed intermediate report retained.
+  Exclusive-lock current/torch -> WS/pytorch-profiler-a09, old full source/build
+  pytorch-sparse-followup retained.47 protected old/runtime/SDK/app hashes unchanged;
+  candidate CPU/Python DSOs change, libtorch_hip.so remains byte-identical8ffd32ee.
+  Recovery WS/recovery/profiler-a09-before; SOURCE_PROFILER_A09.json in WS/current.
+  [Report/traces/usage](docs/development/bc250_profiler_a09_results/README.md), logs
+  WS/logs/profiler-a09-* and ignored kernel/artifacts/profiler-a09/remote-logs/.
+  Build container bc250-profiler-a09-build retained stopped; no running agent job,
+  GPU container or guard deadline. Disk~2.03GiB free: capacity check before builds.
+  Full local Git, patch0008/test bundle on71a0426 preserve tests; feature build flag
+  is in build_torch_a09.sh. Older SDPA3-file reconstruction gap retained. Nine
+  targeted spin/lintrunner -a checks pass, no full CI/type claim. General and host
+  BC250_TRAINING_OPS.md usage updated. No ROCm DSO/image/kernel/boot/BIOS/.105/default
+  attention/SDMA0/heap-off/dense BLAS/user src change. Hardware counters, broad
+  concurrency/external profiler combinations, compile/graphs, long tracing and
+  cross-boot clock calibration unqualified. CPU Python segfault remains open and
+  distinct from fixed VM-heap/CSR. **Exact next A08:** inspect dense INT8->INT32
+  _int_mm/Lt code/audit, capacity plan and bounded native route with CPU integer,
+  overflow/layout/scalar/epilogue references; then N2.7. A08 was not completed.
+
 - **A06 precision correction + A07 head256 completed2026-10-18:** Torch
   `71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8`; installed runtime helpers
   `e4f4b3854` (full revision in SOURCE_A06_A07.json). FP16/BF16/autocast full

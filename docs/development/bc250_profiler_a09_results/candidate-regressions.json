@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "passed_gates": [
+    "profiler-a09-candidate-r2",
+    "profiler-a09-candidate-core",
+    "profiler-a09-candidate-sparse",
+    "profiler-a09-candidate-training",
+    "profiler-a09-candidate-a06",
+    "profiler-a09-candidate-a07",
+    "profiler-a09-candidate-conv",
+    "profiler-a09-candidate-model",
+    "profiler-a09-candidate-cli"
+  ],
+  "phase": "profiler-a09-candidate-cli",
+  "candidate_library_sha256": {
+    "libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+    "libtorch_cpu.so": "d976ddba4c23b4122a40b2c0917f19340bac82cf5fa87fb1f4846c726835bc02",
+    "libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+    "libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+    "libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+    "libtorch_python.so": "61832bb7efcb250796391cdd2bfbfacb14a8add3594cc0ffb8e829eb12157d2a",
+    "libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+    "libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+    "libtorch_hip.so": "8ffd32eeaa6548ef896a5f56773255a26a985398a4a7bf811463bcb1dc043b90"
+  }
+}

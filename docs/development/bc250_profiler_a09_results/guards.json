@@ -1,0 +1,136 @@
+{
+  "guards": 14,
+  "all_acknowledged": true,
+  "all_kernel_logs_unchanged": true,
+  "failed_test_processes": [
+    "profiler-a09-candidate"
+  ],
+  "rows": [
+    {
+      "label": "profiler-a09-candidate",
+      "returncode": 1,
+      "kernel_log_unchanged": true,
+      "status": "failed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-a06",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-a07",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-cli",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-conv",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-core",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-model",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-r2",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-sparse",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-candidate-training",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-installed-api",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-installed-cli",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-installed-core",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    {
+      "label": "profiler-a09-installed-model",
+      "returncode": 0,
+      "kernel_log_unchanged": true,
+      "status": "passed",
+      "acknowledged": true,
+      "kernel_before_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel_after_sha256": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  ]
+}

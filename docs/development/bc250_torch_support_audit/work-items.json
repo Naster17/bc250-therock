@@ -70,9 +70,9 @@
     {
       "id": "A09",
       "feature": "Torch GPU profiler/Kineto disabled",
-      "evidence": "USE_KINETO=0; profiler records no GPU events. External rocprofiler is a separate working tool.",
-      "next": "Audit pinned Kineto ROCm tracing dependencies and enable a separately tested build. Qualify GPU event correlation, memory/CPU traces and overhead; hardware counters remain separate.",
-      "status": "queued"
+      "evidence": "Separate Torch candidate on native source71a0426, tests4af4a15, helpers4c2edb785: USE_KINETO=1/KINETO_BACKEND=rocm selects existing rocprofiler-sdk. Seven native GPU kernel/copy/memory/correlation, CPU/GPU reference, scheduled/custom-stream and CPU-only/overhead tests pass; existing core/convolution/sparse/A05/A06/A07/actual2B/resume gates pass. See ../bc250_profiler_a09_results/README.md.",
+      "next": "A08 remains next, then N2.7. Hardware counters, broad concurrency/external profiler combinations, compile/graphs, long tracing and cross-boot clock calibration unqualified.",
+      "status": "completed_bounded"
     },
     {
       "id": "B01",
@@ -131,7 +131,7 @@
       "status": "queued"
     }
   ],
-  "next": "A08: inspect existing dense INT8/INT32 Lt and Torch paths; implement one bounded native route with overflow/layout/scalar/epilogue references, preserving dense floating defaults.",
+  "next": "A08: inspect existing dense INT8/INT32 Lt and Torch paths; implement one bounded native route with overflow/layout/scalar/epilogue references, preserving dense floating defaults. Then N2.7.",
   "N2.7": "queued behind selected Torch/library primary items",
   "completed_primary_items": [
     "A01",
@@ -140,7 +140,9 @@
     "A04",
     "A05",
     "A06",
-    "A07"
+    "A07",
+    "A09"
   ],
-  "next_primary_item": "A08"
+  "next_primary_item": "A08",
+  "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08"
 }

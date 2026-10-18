@@ -473,6 +473,28 @@ dot (`c815e192`), signed/rounding tests (`63915ab7`), BF16 multiplication fallba
 
 ## Component coverage: implemented versus existing native backend
 
+**A09 native Torch GPU profiler — 2026-10-18.** User selected A09 ahead of
+unfinished A08. Torch `4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5` adds tests on
+unchanged native source71a0426; TheRock runtime helpers `4c2edb785` enable
+USE_KINETO=1/KINETO_BACKEND=rocm with the pinned rocprofiler-sdk backend.
+Seven profiler tests require actual GPU kernels/copies, positive durations,
+CPU/GPU correlation, FP32/BF16 output/gradient references, allocation/free events,
+scheduled capture, custom streams and CPU-only selection. Profiling is explicit;
+ordinary training does not automatically collect traces or become faster.
+Candidate short-window setup/teardown-inclusive wall overhead was~4.70x;
+not application throughput. Existing convolution/sparse/training/A06/A07/model/
+resume gates pass within their recorded scopes. [Evidence and usage](bc250_profiler_a09_results/README.md).
+Hardware counters, broad simultaneous/external profiling, compile/graphs,
+long traces and cross-boot absolute-clock calibration remain unqualified.
+Final exclusive-lock switch to WS/pytorch-profiler-a09 passes four installed
+gates;47 protected old/runtime/SDK/app files unchanged. Candidate CPU/Python
+DSOs changed, GPU DSO byte-identical.14 guards ACK/600s/dmesg unchanged, no active
+agent job/container/deadline. Recovery WS/recovery/profiler-a09-before and
+SOURCE_PROFILER_A09.json retain provenance. Disk~2.03GiB free; preserve old build
+and shared read-only third-party sources when rebuilding.
+A08 remains next, then N2.7. Historical Python CPU fault stays unresolved and
+separate from fixed VM-heap/CSR corruption. No .105/kernel/BIOS/image change.
+
 **A06 correction and A07 head256 qualified on .104 — 2026-10-18.** Torch
 `71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8`, runtime helpers `e4f4b3854`.
 Low-precision/autocast full gated-delta uses reference-ordered GPU preparation and

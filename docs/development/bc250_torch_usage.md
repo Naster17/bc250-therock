@@ -14,6 +14,32 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## GPU profiler (A09, 2026-10-18)
+
+The selected .104 Torch build now supports real GPU tracing through Kineto and
+rocprofiler-sdk. Use `torch.profiler.profile` with CPU and CUDA activities (ROCm
+uses the CUDA API name), then export a Chrome trace to your persistent project
+folder. GPU kernels, copies and CPU correlations are recorded; `profile_memory`
+adds allocation/free events. This applies to callers of this Torch runtime,
+including bc250-torch/bc250-train, rather than a single LoRA script.
+
+```python
+from torch.profiler import profile, ProfilerActivity
+
+with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA]) as prof:
+    output = model(**batch)
+    output.loss.backward()
+    torch.cuda.synchronize()
+prof.export_chrome_trace("bc250-trace.json")
+print(prof.key_averages().table(sort_by="self_device_time_total"))
+```
+
+Import `torch` in the script and warm up before selecting a short capture window.
+Tracing is explicit; ordinary training does not automatically collect profiles.
+It adds overhead and does not directly accelerate LoRA. Hardware counters,
+simultaneous external profilers, compile/graph and long tracing are unqualified.
+[Qualification, memory/schedule examples and rebuild/recovery](bc250_profiler_a09_results/README.md).
+
 ## Corrected gated-delta and optional head256 attention (2026-10-18)
 
 The .104 development runtime now uses reference-ordered **GPU** preparation/scan

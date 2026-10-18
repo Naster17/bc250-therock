@@ -1,0 +1,49 @@
+{
+  "status": "failed",
+  "returncode": 1,
+  "results": [
+    {
+      "name": "test_copies_cuda",
+      "status": "passed",
+      "gpu_copies": 2,
+      "exact_roundtrip": true
+    },
+    {
+      "name": "test_cpu_only_cuda",
+      "status": "passed",
+      "no_gpu_events": true
+    },
+    {
+      "name": "test_memory_cuda",
+      "status": "passed",
+      "allocation_and_free_recorded": true,
+      "allocation_bytes": 4194304,
+      "memory_events": 8
+    },
+    {
+      "name": "test_overhead_cuda",
+      "status": "passed",
+      "plain_seconds": [
+        0.0002013739999711106,
+        0.0003045490002477891,
+        0.00030551200006811996
+      ],
+      "profiled_seconds": [
+        0.002934568999990006,
+        0.0013717000001634005,
+        0.001400463000209129
+      ],
+      "median_wall_ratio": 4.598481686262885,
+      "scope": "Three short eager windows including profiler setup/teardown; diagnostic overhead, not throughput or hardware counter qualification"
+    },
+    {
+      "name": "test_schedule_and_stream_cuda",
+      "status": "passed",
+      "captures": [
+        8,
+        8
+      ],
+      "nondefault_stream": true
+    }
+  ]
+}

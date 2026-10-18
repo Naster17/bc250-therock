@@ -1,0 +1,100 @@
+{
+  "status": "passed",
+  "kernel": "7.2.10-bc250rocm-r3",
+  "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+  "current_torch": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09",
+  "torch_revision": "4af4a1508a6ec0b7b2b29f5e0115f8477c4d1bb5",
+  "native_source_revision": "71a0426566bc9b952d9aa9b41f4a9d79ce46e0e8",
+  "runtime_helpers": "4c2edb78553a8fe993a209d41539eba2c5966317",
+  "protected_files_unchanged": 47,
+  "guard_states": [
+    {
+      "label": "profiler-a09-candidate-r2",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-core",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-sparse",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-training",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-a06",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-a07",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-conv",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-model",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate-cli",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-installed-api",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-installed-core",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-installed-model",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-installed-cli",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    },
+    {
+      "label": "profiler-a09-candidate",
+      "status": "acknowledged",
+      "timeout_seconds": 600
+    }
+  ],
+  "native_library_sha256": {
+    "libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+    "libtorch_cpu.so": "d976ddba4c23b4122a40b2c0917f19340bac82cf5fa87fb1f4846c726835bc02",
+    "libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+    "libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+    "libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+    "libtorch_python.so": "61832bb7efcb250796391cdd2bfbfacb14a8add3594cc0ffb8e829eb12157d2a",
+    "libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+    "libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+    "libtorch_hip.so": "8ffd32eeaa6548ef896a5f56773255a26a985398a4a7bf811463bcb1dc043b90"
+  },
+  "python_extension_sha256": {
+    "torch/_C.cpython-312-x86_64-linux-gnu.so": "1ec597fb398c8fe5484b83a9c747ae5c7c46411ce3e15e479660c726429d3330"
+  },
+  "direct_dependency": "librocprofiler-sdk.so.1",
+  "running_agent_jobs": [],
+  "running_containers": [],
+  "disk_available_bytes": 2181091328
+}

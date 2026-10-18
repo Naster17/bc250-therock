@@ -52,3 +52,16 @@ A07 stays inside unchanged4% per-adapter reference limits. Exact fresh/resume
 continuation passes within each backend. This does not promise convergence,
 universal speedup or bitwise continuity across a code/backend change. See
 `therock/docs/development/bc250_a06_a07_results/README.md` in the workspace.
+
+## Optional GPU profiling (A09, 2026-10-18)
+
+The selected .104 Torch build now supports Kineto/rocprofiler-sdk GPU traces.
+Use explicit `torch.profiler.profile` contexts with CPU and CUDA activities;
+ROCm uses the CUDA activity API name. Export a Chrome trace to your persistent
+project directory, then inspect kernel/copy events, CPU correlations and optional
+allocation/free records. `self_device_time_total` sorts GPU timings in tables.
+The trainer does not automatically collect profiles, and profiling adds overhead.
+Hardware counters, simultaneous external profilers, compile/graphs and long
+traces remain unqualified. The workspace guide
+`therock/docs/development/bc250_profiler_a09_results/README.md` contains examples,
+exact references, measurements and recovery instructions.

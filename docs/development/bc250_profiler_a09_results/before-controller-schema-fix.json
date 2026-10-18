@@ -1,0 +1,13 @@
+{
+  "status": "running",
+  "passed_gates": [
+    "profiler-a09-candidate-r2",
+    "profiler-a09-candidate-core",
+    "profiler-a09-candidate-sparse",
+    "profiler-a09-candidate-training",
+    "profiler-a09-candidate-a06",
+    "profiler-a09-candidate-a07",
+    "profiler-a09-candidate-conv"
+  ],
+  "phase": "profiler-a09-candidate-model"
+}
