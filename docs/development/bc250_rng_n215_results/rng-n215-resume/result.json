@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "fresh_process_mixed_rng_checkpoint_continuation",
+      "status": "passed",
+      "details": {
+        "status": "passed",
+        "exact_fields": [
+          "explicit_uniform",
+          "explicit_normal",
+          "explicit_integer",
+          "default_uniform",
+          "default_normal",
+          "cpu",
+          "python",
+          "explicit_state",
+          "default_state",
+          "cpu_state"
+        ]
+      },
+      "seconds": 4.333331307003391
+    }
+  ]
+}

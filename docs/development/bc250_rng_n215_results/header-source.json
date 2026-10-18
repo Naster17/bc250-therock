@@ -1,0 +1,15 @@
+{
+  "previous_revision": "319a235d6c6496f0da37be44dfa60eaf31a29f82",
+  "documentation_revision": "c29021b40e758abd3fa97e3c8bddb7f091dd29d2",
+  "files": {
+    "rocrand.h": {
+      "before_sha256": "c4d3be67bbd898bf863449a6428793202efe6f6b6ad6498a2db9449d3464f0fa",
+      "after_sha256": "feb4e5fd50cda5f159ec449ecbddee5dea6021b881f9d1e9d2681000c68eea48"
+    },
+    "rocrand.hpp": {
+      "before_sha256": "f242e8202de0581ba7321e119b85b1f2d763b429bf234a3c876c2353e63a1079",
+      "after_sha256": "c3db9fbbf6af52ced05b09a28d3402f9bb4c4fc6cb6d6f25fcdcedda187be778"
+    }
+  },
+  "comments_only": true
+}

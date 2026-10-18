@@ -1,0 +1,1286 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "uniform_torch.float16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.06964501299808035
+    },
+    {
+      "name": "uniform_torch.float16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.03772243900311878
+    },
+    {
+      "name": "uniform_torch.float16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.006080803999793716
+    },
+    {
+      "name": "uniform_torch.bfloat16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.004049866001878399
+    },
+    {
+      "name": "uniform_torch.bfloat16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.004010061995359138
+    },
+    {
+      "name": "uniform_torch.bfloat16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003978101005486678
+    },
+    {
+      "name": "uniform_torch.float32_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.004068909001944121
+    },
+    {
+      "name": "uniform_torch.float32_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.00397156899998663
+    },
+    {
+      "name": "uniform_torch.float32_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.004105167005036492
+    },
+    {
+      "name": "uniform_torch.float64_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003815728996414691
+    },
+    {
+      "name": "uniform_torch.float64_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.004018077001092024
+    },
+    {
+      "name": "uniform_torch.float64_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003755787001864519
+    },
+    {
+      "name": "normal_torch.float16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.008794904002570547
+    },
+    {
+      "name": "normal_torch.float16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003945925993320998
+    },
+    {
+      "name": "normal_torch.float16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0039039469993440434
+    },
+    {
+      "name": "normal_torch.bfloat16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0038899770006537437
+    },
+    {
+      "name": "normal_torch.bfloat16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.004008885996881872
+    },
+    {
+      "name": "normal_torch.bfloat16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0037873959954595193
+    },
+    {
+      "name": "normal_torch.float32_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0039031799969961867
+    },
+    {
+      "name": "normal_torch.float32_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003885228004946839
+    },
+    {
+      "name": "normal_torch.float32_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003940483002224937
+    },
+    {
+      "name": "normal_torch.float64_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0037586710022878833
+    },
+    {
+      "name": "normal_torch.float64_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0040112770002451725
+    },
+    {
+      "name": "normal_torch.float64_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003787405999901239
+    },
+    {
+      "name": "bernoulli_torch.float16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.02921870700083673
+    },
+    {
+      "name": "bernoulli_torch.float16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003927370002202224
+    },
+    {
+      "name": "bernoulli_torch.float16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0038258179993135855
+    },
+    {
+      "name": "bernoulli_torch.bfloat16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003996051993453875
+    },
+    {
+      "name": "bernoulli_torch.bfloat16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003878712006553542
+    },
+    {
+      "name": "bernoulli_torch.bfloat16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0038991710025584325
+    },
+    {
+      "name": "bernoulli_torch.float32_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003756975995202083
+    },
+    {
+      "name": "bernoulli_torch.float32_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.003959526999096852
+    },
+    {
+      "name": "bernoulli_torch.float32_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008178460047929548
+    },
+    {
+      "name": "bernoulli_torch.float64_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008141290018102154
+    },
+    {
+      "name": "bernoulli_torch.float64_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008855109990690835
+    },
+    {
+      "name": "bernoulli_torch.float64_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008008559962036088
+    },
+    {
+      "name": "exponential_torch.float16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.00719071500498103
+    },
+    {
+      "name": "exponential_torch.float16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0009183340007439256
+    },
+    {
+      "name": "exponential_torch.float16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008154890019795857
+    },
+    {
+      "name": "exponential_torch.bfloat16_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008188170031644404
+    },
+    {
+      "name": "exponential_torch.bfloat16_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0009157410022453405
+    },
+    {
+      "name": "exponential_torch.bfloat16_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008275039945147
+    },
+    {
+      "name": "exponential_torch.float32_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008134340023389086
+    },
+    {
+      "name": "exponential_torch.float32_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.000917899000342004
+    },
+    {
+      "name": "exponential_torch.float32_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008203610050259158
+    },
+    {
+      "name": "exponential_torch.float64_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008131370050250553
+    },
+    {
+      "name": "exponential_torch.float64_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.000913326999580022
+    },
+    {
+      "name": "exponential_torch.float64_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.002221684997493867
+    },
+    {
+      "name": "integer_torch.int32_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.022253493996686302
+    },
+    {
+      "name": "integer_torch.int32_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.000915687000087928
+    },
+    {
+      "name": "integer_torch.int32_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.000805759998911526
+    },
+    {
+      "name": "integer_torch.int64_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.000812696001958102
+    },
+    {
+      "name": "integer_torch.int64_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008638040017103776
+    },
+    {
+      "name": "integer_torch.int64_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0007779930019751191
+    },
+    {
+      "name": "normal_torch.complex64_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0009911609959090129
+    },
+    {
+      "name": "normal_torch.complex64_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0009836720055318438
+    },
+    {
+      "name": "normal_torch.complex64_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0008771819993853569
+    },
+    {
+      "name": "normal_torch.complex128_contiguous",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          19,
+          1
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0009017789998324588
+    },
+    {
+      "name": "normal_torch.complex128_step",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          43,
+          2
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.0009444600000279024
+    },
+    {
+      "name": "normal_torch.complex128_transpose",
+      "status": "passed",
+      "details": {
+        "shape": [
+          17,
+          19
+        ],
+        "strides": [
+          1,
+          17
+        ],
+        "exact_replay": true,
+        "outside_view_unchanged": true,
+        "offset_after": 4294967304
+      },
+      "seconds": 0.000889216003997717
+    },
+    {
+      "name": "boundary_uniform_torch.float32_0",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "exact_replay": true,
+        "empty_state_unchanged": true
+      },
+      "seconds": 0.00044459600030677393
+    },
+    {
+      "name": "boundary_uniform_torch.float32_1",
+      "status": "passed",
+      "details": {
+        "elements": 1,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.03516589300124906
+    },
+    {
+      "name": "boundary_uniform_torch.float32_3",
+      "status": "passed",
+      "details": {
+        "elements": 3,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.012588245001097675
+    },
+    {
+      "name": "boundary_uniform_torch.float32_257",
+      "status": "passed",
+      "details": {
+        "elements": 257,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.0004142239995417185
+    },
+    {
+      "name": "boundary_uniform_torch.float32_65537",
+      "status": "passed",
+      "details": {
+        "elements": 65537,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.0003244929976062849
+    },
+    {
+      "name": "boundary_normal_torch.float32_0",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "exact_replay": true,
+        "empty_state_unchanged": true
+      },
+      "seconds": 0.00027971000235993415
+    },
+    {
+      "name": "boundary_normal_torch.float32_1",
+      "status": "passed",
+      "details": {
+        "elements": 1,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00033552799868630245
+    },
+    {
+      "name": "boundary_normal_torch.float32_3",
+      "status": "passed",
+      "details": {
+        "elements": 3,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.0003120180044788867
+    },
+    {
+      "name": "boundary_normal_torch.float32_257",
+      "status": "passed",
+      "details": {
+        "elements": 257,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.0002978429984068498
+    },
+    {
+      "name": "boundary_normal_torch.float32_65537",
+      "status": "passed",
+      "details": {
+        "elements": 65537,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00031119799677981064
+    },
+    {
+      "name": "boundary_uniform_torch.float64_0",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "exact_replay": true,
+        "empty_state_unchanged": true
+      },
+      "seconds": 0.00026507500297157094
+    },
+    {
+      "name": "boundary_uniform_torch.float64_1",
+      "status": "passed",
+      "details": {
+        "elements": 1,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00034299400431336835
+    },
+    {
+      "name": "boundary_uniform_torch.float64_3",
+      "status": "passed",
+      "details": {
+        "elements": 3,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00028893700073240325
+    },
+    {
+      "name": "boundary_uniform_torch.float64_257",
+      "status": "passed",
+      "details": {
+        "elements": 257,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00028796800324926153
+    },
+    {
+      "name": "boundary_uniform_torch.float64_65537",
+      "status": "passed",
+      "details": {
+        "elements": 65537,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.0003180439962306991
+    },
+    {
+      "name": "boundary_normal_torch.float64_0",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "exact_replay": true,
+        "empty_state_unchanged": true
+      },
+      "seconds": 0.0002663169943843968
+    },
+    {
+      "name": "boundary_normal_torch.float64_1",
+      "status": "passed",
+      "details": {
+        "elements": 1,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00031777100230101496
+    },
+    {
+      "name": "boundary_normal_torch.float64_3",
+      "status": "passed",
+      "details": {
+        "elements": 3,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00031456300348509103
+    },
+    {
+      "name": "boundary_normal_torch.float64_257",
+      "status": "passed",
+      "details": {
+        "elements": 257,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.00034506699739722535
+    },
+    {
+      "name": "boundary_normal_torch.float64_65537",
+      "status": "passed",
+      "details": {
+        "elements": 65537,
+        "exact_replay": true,
+        "empty_state_unchanged": false
+      },
+      "seconds": 0.0003031800006283447
+    }
+  ]
+}

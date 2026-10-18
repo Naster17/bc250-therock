@@ -1,0 +1,386 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "moments_uniform_torch.float16",
+      "status": "passed",
+      "details": {
+        "mean": 0.4996210342287668,
+        "variance": 0.08342904893858302,
+        "expected": [
+          0.5,
+          0.08333333333333333
+        ],
+        "bounds": [
+          0.010021097956087903,
+          0.004
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.07603583599848207
+    },
+    {
+      "name": "moments_uniform_torch.bfloat16",
+      "status": "passed",
+      "details": {
+        "mean": 0.4977155773958657,
+        "variance": 0.08342598130910941,
+        "expected": [
+          0.5,
+          0.08333333333333333
+        ],
+        "bounds": [
+          0.017021097956087902,
+          0.004
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0007933469969430007
+    },
+    {
+      "name": "moments_uniform_torch.float32",
+      "status": "passed",
+      "details": {
+        "mean": 0.4998355230872171,
+        "variance": 0.08342960289518793,
+        "expected": [
+          0.5,
+          0.08333333333333333
+        ],
+        "bounds": [
+          0.010021097956087903,
+          0.004
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0007056260001263581
+    },
+    {
+      "name": "moments_uniform_torch.float64",
+      "status": "passed",
+      "details": {
+        "mean": 0.4996979346423175,
+        "variance": 0.08300945081741852,
+        "expected": [
+          0.5,
+          0.08333333333333333
+        ],
+        "bounds": [
+          0.010021097956087903,
+          0.004
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0006531820035888813
+    },
+    {
+      "name": "moments_normal_torch.float16",
+      "status": "passed",
+      "details": {
+        "mean": 0.000721634703950258,
+        "variance": 0.9966089981388067,
+        "expected": [
+          0,
+          1
+        ],
+        "bounds": [
+          0.03225,
+          0.04
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.005561424004554283
+    },
+    {
+      "name": "moments_normal_torch.bfloat16",
+      "status": "passed",
+      "details": {
+        "mean": 0.0007285466663233819,
+        "variance": 0.9965975879709486,
+        "expected": [
+          0,
+          1
+        ],
+        "bounds": [
+          0.03925,
+          0.04
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0006443730017053895
+    },
+    {
+      "name": "moments_normal_torch.float32",
+      "status": "passed",
+      "details": {
+        "mean": 0.0007219507631455319,
+        "variance": 0.9966052021935661,
+        "expected": [
+          0,
+          1
+        ],
+        "bounds": [
+          0.03225,
+          0.04
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0006043939938535914
+    },
+    {
+      "name": "moments_normal_torch.float64",
+      "status": "passed",
+      "details": {
+        "mean": 0.0029502128274564885,
+        "variance": 1.0016131438468054,
+        "expected": [
+          0,
+          1
+        ],
+        "bounds": [
+          0.03225,
+          0.04
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0006058979997760616
+    },
+    {
+      "name": "moments_bernoulli_torch.float16",
+      "status": "passed",
+      "details": {
+        "mean": 0.29974365234375,
+        "variance": 0.20989739522337914,
+        "expected": [
+          0.3,
+          0.21
+        ],
+        "bounds": [
+          0.015320549046736999,
+          0.0084
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0250221899987082
+    },
+    {
+      "name": "moments_bernoulli_torch.bfloat16",
+      "status": "passed",
+      "details": {
+        "mean": 0.29974365234375,
+        "variance": 0.20989739522337914,
+        "expected": [
+          0.3,
+          0.21
+        ],
+        "bounds": [
+          0.022320549046736998,
+          0.0084
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0007915780006442219
+    },
+    {
+      "name": "moments_bernoulli_torch.float32",
+      "status": "passed",
+      "details": {
+        "mean": 0.29974365234375,
+        "variance": 0.20989739522337914,
+        "expected": [
+          0.3,
+          0.21
+        ],
+        "bounds": [
+          0.015320549046736999,
+          0.0084
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0007891150016803294
+    },
+    {
+      "name": "moments_bernoulli_torch.float64",
+      "status": "passed",
+      "details": {
+        "mean": 0.298675537109375,
+        "variance": 0.20946846064180136,
+        "expected": [
+          0.3,
+          0.21
+        ],
+        "bounds": [
+          0.015320549046736999,
+          0.0084
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0007463349975296296
+    },
+    {
+      "name": "moments_exponential_torch.float16",
+      "status": "passed",
+      "details": {
+        "mean": 0.5889737393490577,
+        "variance": 0.3474233753080319,
+        "expected": [
+          0.5882352941176471,
+          0.34602076124567477
+        ],
+        "bounds": [
+          0.019382352941176472,
+          0.013840830449826992
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.005638829999952577
+    },
+    {
+      "name": "moments_exponential_torch.bfloat16",
+      "status": "passed",
+      "details": {
+        "mean": 0.5889803616282734,
+        "variance": 0.34746408285922165,
+        "expected": [
+          0.5882352941176471,
+          0.34602076124567477
+        ],
+        "bounds": [
+          0.02638235294117647,
+          0.013840830449826992
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0006825349992141128
+    },
+    {
+      "name": "moments_exponential_torch.float32",
+      "status": "passed",
+      "details": {
+        "mean": 0.5889745383403546,
+        "variance": 0.3474245357113076,
+        "expected": [
+          0.5882352941176471,
+          0.34602076124567477
+        ],
+        "bounds": [
+          0.019382352941176472,
+          0.013840830449826992
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0006638409977313131
+    },
+    {
+      "name": "moments_exponential_torch.float64",
+      "status": "passed",
+      "details": {
+        "mean": 0.5875641874153376,
+        "variance": 0.3439849826736948,
+        "expected": [
+          0.5882352941176471,
+          0.34602076124567477
+        ],
+        "bounds": [
+          0.019382352941176472,
+          0.013840830449826992
+        ],
+        "samples": 65536
+      },
+      "seconds": 0.0006441079967771657
+    },
+    {
+      "name": "moments_integer_torch.float32",
+      "status": "passed",
+      "details": {
+        "max_frequency_error": 0.0018890380859375028
+      },
+      "seconds": 0.01864512499741977
+    },
+    {
+      "name": "moments_integer_torch.float64",
+      "status": "passed",
+      "details": {
+        "max_frequency_error": 0.0018890380859375028
+      },
+      "seconds": 0.0006215419998625293
+    },
+    {
+      "name": "moments_poisson_torch.float32",
+      "status": "passed",
+      "details": {
+        "moments": [
+          {
+            "parameter": 0.2,
+            "mean": 0.198455810546875,
+            "variance": 0.19614995922893286
+          },
+          {
+            "parameter": 7.0,
+            "mean": 6.996917724609375,
+            "variance": 6.940572774969041
+          }
+        ]
+      },
+      "seconds": 0.05268896300549386
+    },
+    {
+      "name": "moments_poisson_torch.float64",
+      "status": "passed",
+      "details": {
+        "moments": [
+          {
+            "parameter": 0.2,
+            "mean": 0.198455810546875,
+            "variance": 0.19614995922893286
+          },
+          {
+            "parameter": 7.0,
+            "mean": 6.996917724609375,
+            "variance": 6.940572774969041
+          }
+        ]
+      },
+      "seconds": 0.001363636001769919
+    },
+    {
+      "name": "moments_gamma_torch.float32",
+      "status": "passed",
+      "details": {
+        "moments": [
+          {
+            "parameter": 0.7,
+            "mean": 0.7043669557686021,
+            "variance": 0.7089071616094464
+          },
+          {
+            "parameter": 3.5,
+            "mean": 3.5021312493767027,
+            "variance": 3.4851529894932645
+          }
+        ]
+      },
+      "seconds": 0.0012493009999161586
+    },
+    {
+      "name": "moments_gamma_torch.float64",
+      "status": "passed",
+      "details": {
+        "moments": [
+          {
+            "parameter": 0.7,
+            "mean": 0.704366958800034,
+            "variance": 0.7089071582985187
+          },
+          {
+            "parameter": 3.5,
+            "mean": 3.5021311500684713,
+            "variance": 3.4851527942085383
+          }
+        ]
+      },
+      "seconds": 0.001234761999512557
+    }
+  ]
+}

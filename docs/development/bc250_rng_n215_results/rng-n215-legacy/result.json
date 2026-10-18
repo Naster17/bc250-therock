@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "torch": "2.13.0a0+gfx1013",
+  "checks": [
+    {
+      "name": "rng_uniform_state_replay",
+      "status": "passed",
+      "seconds": 0.04541214000346372
+    },
+    {
+      "name": "rng_uniform_distribution",
+      "status": "passed",
+      "seconds": 0.10645955300424248
+    },
+    {
+      "name": "rng_normal_state_replay",
+      "status": "passed",
+      "seconds": 0.005577765005000401
+    },
+    {
+      "name": "rng_normal_distribution",
+      "status": "passed",
+      "seconds": 0.0005589829961536452
+    },
+    {
+      "name": "rng_integer_state_replay",
+      "status": "passed",
+      "seconds": 0.01868767999985721
+    },
+    {
+      "name": "rng_integer_distribution",
+      "status": "passed",
+      "seconds": 0.0608303619956132
+    },
+    {
+      "name": "rocrand_xorwow_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.11340517699863994
+    },
+    {
+      "name": "rocrand_xorwow_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.005617322996840812
+    },
+    {
+      "name": "rocrand_xorwow_normal_statistics",
+      "status": "passed",
+      "seconds": 0.002683886996237561
+    },
+    {
+      "name": "rocrand_mrg32k3a_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.042124815001443494
+    },
+    {
+      "name": "rocrand_mrg32k3a_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.003692197999043856
+    },
+    {
+      "name": "rocrand_mrg32k3a_normal_statistics",
+      "status": "passed",
+      "seconds": 0.00175713899807306
+    },
+    {
+      "name": "rocrand_mtgp32_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.04629918600403471
+    },
+    {
+      "name": "rocrand_mtgp32_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.005391765997046605
+    },
+    {
+      "name": "rocrand_mtgp32_normal_statistics",
+      "status": "passed",
+      "seconds": 0.0026139859983231872
+    },
+    {
+      "name": "rocrand_philox_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.042508898994128685
+    },
+    {
+      "name": "rocrand_philox_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.0020241859965608455
+    },
+    {
+      "name": "rocrand_philox_normal_statistics",
+      "status": "passed",
+      "seconds": 0.000966243002039846
+    },
+    {
+      "name": "rocrand_mrg31k3p_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.045896618998085614
+    },
+    {
+      "name": "rocrand_mrg31k3p_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.003869305000989698
+    },
+    {
+      "name": "rocrand_mrg31k3p_normal_statistics",
+      "status": "passed",
+      "seconds": 0.001860739997937344
+    },
+    {
+      "name": "rocrand_lfsr113_uniform_torch.float32_seed_replay",
+      "status": "passed",
+      "seconds": 0.05146250399411656
+    },
+    {
+      "name": "rocrand_lfsr113_uniform_torch.float64_seed_replay",
+      "status": "passed",
+      "seconds": 0.004692955000791699
+    },
+    {
+      "name": "rocrand_lfsr113_normal_statistics",
+      "status": "passed",
+      "seconds": 0.0022979490022407845
+    },
+    {
+      "name": "rocrand_sobol32_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.006840647001808975
+    },
+    {
+      "name": "rocrand_scrambled_sobol32_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.006970745998842176
+    },
+    {
+      "name": "rocrand_sobol64_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.008868543998687528
+    },
+    {
+      "name": "rocrand_scrambled_sobol64_three_dimensions_replay",
+      "status": "passed",
+      "seconds": 0.008942302003561053
+    }
+  ],
+  "seconds": 0.6583203370028059,
+  "passed": 28,
+  "failed": 0
+}

@@ -1,0 +1,86 @@
+{
+  "guards": {
+    "rng-n215-state": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-state",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "e7ab17b8a29cd3bc2b1db8b28d856836",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 44967.797325649,
+      "dry_run": false
+    },
+    "rng-n215-statistics": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-statistics",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "681be0f1eeb16a4a4c58f01230ae610f",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 44971.021197559,
+      "dry_run": false
+    },
+    "rng-n215-contracts": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-contracts",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "c539592e08d9b45b7392fb26975ca4e4",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 44974.043984957,
+      "dry_run": false
+    },
+    "rng-n215-resume": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-resume",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "c619c44d7ec3d54dd1bbed174d59bca3",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 44978.008603616,
+      "dry_run": false
+    },
+    "rng-n215-native": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-native",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "ada2598186466034b8809d8a3bea5c5e",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 44985.03964135,
+      "dry_run": false
+    },
+    "rng-n215-native-r2": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-native-r2",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "0209b5dfe12f6a3f9d2f0a89a479b7ef",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 45151.408264855,
+      "dry_run": false
+    },
+    "rng-n215-legacy": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-legacy",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "d3df792ffe1a7478d6187dedd03182a6",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 45155.038486398,
+      "dry_run": false
+    },
+    "rng-n215-core": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "rng-n215-core",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "18dd380409e054488c0ad7bff43430c8",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 45158.460269752,
+      "dry_run": false
+    }
+  },
+  "kernel_log_unchanged_including_initial_contract_failure": true,
+  "running_containers": []
+}

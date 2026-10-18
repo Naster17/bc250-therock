@@ -9,6 +9,38 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.15 completed, 2026-10-18:** TheRock qualification `0e4557ee5`;
+  libraries source-doc revision `c29021b40e7`, native libraries still `319a235d6`.
+  No RNG arithmetic defect reproduced. Torch state/layout80, moment/range22,
+  offset/lifecycle/stream/dropout-trace20 and fresh-process continuation1 pass.
+  FP16/BF16/FP32/64, complex normal and INT32/64; guarded strided views, empty/
+  odd/tail sizes, seeds>2^63, offsets>2^32/2^40, state rejection/legacy bytes,
+  default isolation/fork exception restoration and ordered private streams.
+  Five GPU kernels traced including dropout forward/backward and Philox normal;
+  dropout CPU mask/scale refs pass. Mixed GPU/default/explicit+CPU+Python fresh
+  continuation matches10 fields. Direct native68 pass: five pseudo/four Sobol
+  variants, reset/rebinding, exact prefix relationships and CPU Philox words
+  through rocRAND/hipRAND. Initial native59/60: stale header incorrectly said
+  LFSR113 rejects offsets; implementation/upstream tests deliberately support
+  them. Corrected comments only (C API vs C++ wrapper), added9 LFSR cases incl
+  high-offset non-aliasing. MTGP32 refusal retained. Patch0032/source before/after
+  hashes and failed helper/result preserved; source comments staged on .104 with
+  recovery WS/recovery/rng-n215-source-before. Installed headers/DSOs/defaults/
+  prefix metadata unchanged; no rebuild/cache reset. Retained RNG28/core7 pass;
+  seven passing containers plus initial assertion failure, eight guards ACK/600s,
+  dmesg byte-identical whole batch,153 protected identities/four AOT DBs match.
+  Active Torch `dc8fea0` / source tests `2b449c4`, WS/pytorch-sparse-n213,
+  current/previous/ROCm links/image/kernel/boot/.105/BIOS/r2 fallback preserved.
+  [Report](docs/development/bc250_rng_n215_results/README.md) includes exact cases/
+  commands/source hashes/trace/failed contract; raw WS/logs/rng-n215-* and ignored
+  kernel/artifacts/rng-n215. Next preservation baseline
+  WS/logs/rng-n215-qualification-r2/final.json. No running agent job/container/
+  guard; free~7.21GiB. No speed/randomness-certification/universal correctness
+  claim. CPU Python segfault unresolved/separate from fixed VM-heap/CSR and this
+  explicit assertion. **Next N2.16:** audit P2 rocPRIM42/hipCUB48/Thrust48, then
+  bounded floating/segmented reduction/scan CPU references, guards and private
+  streams with targeted ccache builds. Broad N2–N8 remain open; B01 separate.
+
 - **N2.14 completed, 2026-10-18:** TheRock qualification `44568c2e2`.
   Existing native FFT implementation passes; no production defect reproduced,
   binary/build/default/prefix changes or performance claim. Active native Torch
@@ -1576,7 +1608,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.12 | Native bounded triangular recovery;128 retained+36 CPU/backend+32 direct+two rescaling+six ABI cases pass; fixed gates/defaults retained. Recovery1.32–2.32x/whole1.17–1.34x in six fixtures; host remains faster. Separate CPU-first profiler defect found. |
 | [x]   | N2.13 | Generic sparse triangular coverage and exact-pivot NaN marking installed:433 public +96 direct generic fixtures, retained sparse41/core7/profiler pass in candidate and installed runtime. General sparse spsolve B02 remains separate. |
 | [x]   | N2.14 | FFT complex96/real72 output+weighted backward+guarded out, three DFT/finite-difference/reuse checks,16 direct plans/32 executions and FFT30/core7 pass; no production defect or binary/default change, AOT cache preserved. BF16 promotion B01 separate. |
-| [ ]   | **N2.15 — next** | Audit retained P2 RNG28 and checkpoint/state coverage; qualify bounded generator offset/state replay and private-stream sequencing through Torch/rocRAND with exact replay/analytic distribution contracts; fix demonstrated defects only. |
+| [x]   | N2.15 | Torch state80/statistics22/contracts20/fresh continuation1, direct native68 and RNG28/core7 pass. Stale LFSR113 offset comments corrected; implementation/binaries/defaults unchanged; four AOT DBs preserved. |
+| [ ]   | **N2.16 — next** | Audit P2 rocPRIM42/hipCUB48/Thrust48; qualify bounded floating/segmented reductions/scans with CPU references, guards/private streams and targeted ccache builds; fix demonstrated defects only. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |

@@ -1,0 +1,211 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "offset_uniform_0",
+      "status": "passed",
+      "details": {
+        "offset": 0,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.0914620149997063
+    },
+    {
+      "name": "offset_uniform_4",
+      "status": "passed",
+      "details": {
+        "offset": 4,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.000371121997886803
+    },
+    {
+      "name": "offset_uniform_256",
+      "status": "passed",
+      "details": {
+        "offset": 256,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.0002779260030365549
+    },
+    {
+      "name": "offset_uniform_4294967308",
+      "status": "passed",
+      "details": {
+        "offset": 4294967308,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00022878900199430063
+    },
+    {
+      "name": "offset_uniform_1099511627780",
+      "status": "passed",
+      "details": {
+        "offset": 1099511627780,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00022311899374471977
+    },
+    {
+      "name": "offset_normal_0",
+      "status": "passed",
+      "details": {
+        "offset": 0,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.005167708994122222
+    },
+    {
+      "name": "offset_normal_4",
+      "status": "passed",
+      "details": {
+        "offset": 4,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.0002657529985299334
+    },
+    {
+      "name": "offset_normal_256",
+      "status": "passed",
+      "details": {
+        "offset": 256,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00023910400341264904
+    },
+    {
+      "name": "offset_normal_4294967308",
+      "status": "passed",
+      "details": {
+        "offset": 4294967308,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.0002254919963888824
+    },
+    {
+      "name": "offset_normal_1099511627780",
+      "status": "passed",
+      "details": {
+        "offset": 1099511627780,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00026301100297132507
+    },
+    {
+      "name": "offset_integer_0",
+      "status": "passed",
+      "details": {
+        "offset": 0,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.01785252199624665
+    },
+    {
+      "name": "offset_integer_4",
+      "status": "passed",
+      "details": {
+        "offset": 4,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00025851099780993536
+    },
+    {
+      "name": "offset_integer_256",
+      "status": "passed",
+      "details": {
+        "offset": 256,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00024160800239769742
+    },
+    {
+      "name": "offset_integer_4294967308",
+      "status": "passed",
+      "details": {
+        "offset": 4294967308,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00022939700284041464
+    },
+    {
+      "name": "offset_integer_1099511627780",
+      "status": "passed",
+      "details": {
+        "offset": 1099511627780,
+        "advance": 4,
+        "exact_replay": true
+      },
+      "seconds": 0.00023058999795466661
+    },
+    {
+      "name": "offset_and_state_contracts",
+      "status": "passed",
+      "details": {
+        "refusals": 6,
+        "legacy_seed_only_state": true
+      },
+      "seconds": 0.0006636999969487078
+    },
+    {
+      "name": "shared_generator_ordered_submissions_two_streams",
+      "status": "passed",
+      "details": {
+        "submissions": 4,
+        "private_streams": 2,
+        "host_order_preserved": true
+      },
+      "seconds": 0.0123841309978161
+    },
+    {
+      "name": "default_and_explicit_generator_isolation",
+      "status": "passed",
+      "details": {
+        "explicit_generator_isolated": true,
+        "fork_normal_and_exception_restore": true
+      },
+      "seconds": 0.001414658996509388
+    },
+    {
+      "name": "wide_integer_consecutive_calls_no_bulk_state_reuse",
+      "status": "passed",
+      "details": {
+        "samples": 131074,
+        "unique": 131074,
+        "range_bits": 40,
+        "distinct_first_second": true
+      },
+      "seconds": 0.03572561699547805
+    },
+    {
+      "name": "dropout_output_gradient_replay_gpu_trace",
+      "status": "passed",
+      "details": {
+        "kernels": 5,
+        "kernel_names": [
+          "void at::native::(anonymous namespace)::distribution_elementwise_grid_stride_kernel<float, 4, at::native::templates::cuda::normal_and_transform<float, float, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(hiprandStatePhilox4_32_10*)#2}, at::native::(anonymous namespace)::distribution_nullary_kernel<float, float, HIP_vector_type<float, 4u>, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_and_transform<float, float, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(hiprandStatePhilox4_32_10*)#2}, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_and_transform<float, float, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(hiprandStatePhilox4_32_10*)#2} const&, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(int, float)#1}>(long, at::PhiloxCudaState, at::native::templates::cuda::normal_and_transform<float, float, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(hiprandStatePhilox4_32_10*)#2}, at::native::(anonymous namespace)::distribution_nullary_kernel<float, float, HIP_vector_type<float, 4u>, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_and_transform<float, float, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(hiprandStatePhilox4_32_10*)#2}, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_and_transform<float, float, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::CUDAGeneratorImpl*, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(hiprandStatePhilox4_32_10*)#2} const&, at::native::templates::cuda::normal_kernel<at::CUDAGeneratorImpl*>(at::TensorBase const&, double, double, at::CUDAGeneratorImpl*)::{lambda()#1}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1})::{lambda(int, float)#1}) [clone .kd]",
+          "void at::native::(anonymous namespace)::fused_dropout_kernel<float, float, unsigned int, 1, 1, bool>(at::cuda::detail::TensorInfo<float const, unsigned int>, at::cuda::detail::TensorInfo<float, unsigned int>, at::cuda::detail::TensorInfo<bool, unsigned int>, unsigned int, float, at::PhiloxCudaState) [clone .kd]",
+          "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::(anonymous namespace)::masked_scale_kernel<bool, float, float>(at::Tensor&, at::Tensor const&, at::Tensor const&, float)::{lambda(float, bool)#1}>(at::TensorIteratorBase&, at::native::(anonymous namespace)::masked_scale_kernel<bool, float, float>(at::Tensor&, at::Tensor const&, at::Tensor const&, float)::{lambda(float, bool)#1} const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::(anonymous namespace)::masked_scale_kernel<bool, float, float>(at::Tensor&, at::Tensor const&, at::Tensor const&, float)::{lambda(float, bool)#1}>(at::TensorIteratorBase&, at::native::(anonymous namespace)::masked_scale_kernel<bool, float, float>(at::Tensor&, at::Tensor const&, at::Tensor const&, float)::{lambda(float, bool)#1} const&)::{lambda(int, bool)#1}) [clone .kd]",
+          "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4>) [clone .kd]",
+          "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>) [clone .kd]"
+        ],
+        "dropout_output_gradient_reference": true
+      },
+      "seconds": 0.9408457909958088
+    }
+  ]
+}

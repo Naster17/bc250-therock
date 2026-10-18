@@ -68,6 +68,21 @@ It adds overhead and does not directly accelerate LoRA. Hardware counters,
 simultaneous external profilers, compile/graph and long tracing are unqualified.
 [Qualification, memory/schedule examples and rebuild/recovery](bc250_profiler_a09_results/README.md).
 
+## RNG replay and checkpoints (N2.15)
+
+GPU RNG state is a CPU byte tensor: save `generator.get_state()` or
+`torch.cuda.get_rng_state()` and load state tensors with `map_location="cpu"`
+before restoring them. Exact continuation requires matching operation order,
+shapes, types and execution path. CPU/GPU RNG algorithms need not produce the
+same bitstream. Torch CUDA offsets must be multiples of4 and are per-thread
+Philox offsets, not a count of output tensor elements.
+
+Bounded strided/low-precision replay, high offsets, private streams and fresh
+process continuation passed. Native LFSR113 C offsets already work; its stale
+source comment was corrected, while the C++ wrapper still does not expose them.
+No sampler/default/binary change or training speedup was introduced.
+[Evidence and limits](bc250_rng_n215_results/README.md).
+
 ## FFT output and backward (N2.14)
 
 Use ordinary `torch.fft` operations on CUDA tensors; no launcher flag or new

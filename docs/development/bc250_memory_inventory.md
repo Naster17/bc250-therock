@@ -883,7 +883,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 native eigh22; N2.2 nonsymmetric eig16 host-LAPACK compatibility only. Native nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and performance remain                                                                                         |
 | rocSPARSE/hipSPARSE | Existing native backend: P2 Torch25+legacy16; N2.13 public triangular433 and direct generic96 fixtures/192 solves, exact pivot NaN policy in Torch | More formats/analyses/general factorization remain; BSR public int64 is bounded downcast, triangular autograd/performance unqualified; old corruption fix was CLR |
 | rocALUTION                                  | CG40 ordinary cases andfive fresh-process200 passes after pool-default fix                                                                                                                                   | Larger systems, other solvers/preconditioners/concurrency remain                                                                                            |
-| rocRAND/hipRAND                             | Native dispatch patch; historical44 basic+6 dispatch; P2 direct22 acrosssix pseudo/four Sobol variants andTorch RNG6                                                                                         | More generator/distribution/type combinations remain                                                                                                        |
+| rocRAND/hipRAND                             | Native dispatch; P2 RNG28; N2.15 Torch state80/statistics22/contracts20/fresh continuation1 and direct native68 incl CPU Philox, offsets/streams and LFSR113 source-comment repair | No arithmetic defect reproduced; broader generators/orderings, large statistical suites, graphs/concurrent mutation/cross-version replay remain |
 | OpenCL                                      | Native CL1.2 kernels, LDS/atomics/images/events/profiling checked                                                                                                                                            | OpenCL2 completeness and other feature combinations remain                                                                                                  |
 | OpenMP/Flang                                | Mandatory GPU SAXPY/reduction/task dependency checks; bundled Flang compiled                                                                                                                                 | Fortran device execution and hipThreads remain unqualified                                                                                                  |
 | HIPIFY                                      | hipify-perl CUDA translation → native compilation → exact GPU check                                                                                                                                          | hipify-clang requires parser/SDK input qualification                                                                                                        |
@@ -1521,6 +1521,32 @@ unchanged; no native rebuild or performance claim. General dynamic ranges,
 balancing/subnormals/conditioning/batching/gradients remain unqualified; original
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
+
+## N2.15 RNG offset/state/stream qualification — 2026-10-18
+
+TheRock `0e4557ee5`; libraries documentation `c29021b40e7` on native319a235.
+State/layout80, analytic distribution22, offset/isolation/stream/dropout20 and
+fresh-process continuation1 pass. Low-precision/complex normal/integer, guarded
+strides, empty/odd/tail, seed>2^63/offset>2^40; exact GPU/CPU/Python continuation
+ten fields, native dropout output/backward CPU mask refs and five GPU kernels.
+Direct native68 includes five pseudo/four Sobol variants, offset reset/stream
+rebinding, exact prefix relations and scalar CPU Philox through both wrappers.
+Initial native59/60: LFSR113 offset accepted despite stale rocrand.h restriction;
+implementation and upstream offset tests confirm intentional support. Comments
+corrected, C++ wrapper distinction retained, nine extra LFSR probes pass incl
+high-offset non-aliasing. MTGP32 TYPE_ERROR still expected. No arithmetic/ABI/
+binary/default/prefix/header-install change; comments staged in source only with
+hash-verified recovery WS/recovery/rng-n215-source-before. Patch0032 retained.
+RNG28/core7 pass; seven successful GPU containers plus initial assertion failure,
+eight guards ACK/600s, dmesg unchanged whole batch;153 protected hashes/four FFT
+AOT DBs match. Active Torchdc8fea0/source2b449c4/libraries319a235/kernel/boot/
+fallbacks/.105 preserved. No active agent jobs; free~7.21GiB. CPU Python fault
+unresolved/separate from fixed VM-heap/CSR and explicit contract exception.
+[Report/evidence/limits](bc250_rng_n215_results/README.md); raw WS/logs/rng-n215-*,
+ignored kernel/artifacts/rng-n215. Current preservation baseline
+WS/logs/rng-n215-qualification-r2/final.json. No broad statistics/tail/ordering/
+concurrent/graph/compiled/cross-version replay or speed claim. Next N2.16 audit
+P2 primitives138 then bounded floating/segmented reduction/scan references.
 
 ## N2.14 FFT plan/layout/odd-real qualification — 2026-10-18
 

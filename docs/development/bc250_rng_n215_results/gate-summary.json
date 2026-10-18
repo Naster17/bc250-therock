@@ -1,0 +1,82 @@
+{
+  "rng-n215-contracts": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "rng-n215-core": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "rng-n215-legacy": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "rng-n215-native": {
+    "exit": {
+      "returncode": 1,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "rng-n215-native-r2": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "rng-n215-resume": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "rng-n215-state": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "rng-n215-statistics": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  }
+}
