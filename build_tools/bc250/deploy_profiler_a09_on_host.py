@@ -35,6 +35,11 @@ def main() -> None:
     old_runtime = (RELEASE / "runtime.json").read_bytes()
     prior = json.loads((WS / "SOURCE_A06_A07.json").read_text())
     protected = list(prior["protected_before"]) + list(prior["after_sha256"])
+    protected += [
+        str(RELEASE / "rocm/lib/librocprofiler-sdk.so"),
+        str(RELEASE / "rocm/lib/librocprofiler-register.so"),
+        str(WS / "pytorch-sparse-followup/GIT_REVISION"),
+    ]
     frozen = {p: sha(Path(p)) for p in protected}
     assert all(frozen[p] == digest for p, digest in prior["protected_before"].items())
     assert all(frozen[p] == digest for p, digest in prior["after_sha256"].items())
@@ -94,11 +99,11 @@ def main() -> None:
                     stderr=subprocess.STDOUT,
                     timeout=570,
                 )
-            check_gate(label, count)
-            assert (
-                json.loads((WS / "logs" / label / "result.json").read_text())["status"]
-                == "passed"
-            )
+            check_gate(label)
+            result = json.loads((WS / "logs" / label / "result.json").read_text())
+            assert result["status"] == "passed"
+            if count is not None:
+                assert len(result["results"]) == count
             report["installed_gates"].append(label)
         assert {p: sha(Path(p)) for p in protected} == frozen
         for name, digest in source["candidate_library_sha256"].items():

@@ -21,7 +21,7 @@ def main() -> None:
     )
     check_gate("profiler-a09-candidate-r2", 7)
     folder = WS / "logs/profiler-a09-candidate-regressions"
-    folder.mkdir()
+    folder.mkdir(exist_ok=True)
     report = dict(status="running", passed_gates=["profiler-a09-candidate-r2"])
     for name, script, args, count in [
         ("core", "validate_cleanup_runtime.py", [], None),
@@ -47,19 +47,20 @@ def main() -> None:
             str(CANDIDATE),
         ]
         command += ["--test-arg=" + a for a in args]
-        with (folder / (name + ".log")).open("w") as output:
-            subprocess.run(
-                command,
-                check=True,
-                stdout=output,
-                stderr=subprocess.STDOUT,
-                timeout=570,
-            )
-        check_gate(label, count)
-        assert (
-            json.loads((WS / "logs" / label / "result.json").read_text())["status"]
-            == "passed"
-        )
+        if not (WS / "logs" / label).exists():
+            with (folder / (name + ".log")).open("w") as output:
+                subprocess.run(
+                    command,
+                    check=True,
+                    stdout=output,
+                    stderr=subprocess.STDOUT,
+                    timeout=570,
+                )
+        check_gate(label)
+        result = json.loads((WS / "logs" / label / "result.json").read_text())
+        assert result["status"] == "passed"
+        if count is not None:
+            assert len(result["results"]) == count
         report["passed_gates"].append(label)
     report.update(
         status="passed",
