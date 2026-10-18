@@ -146,3 +146,8 @@ N2.8 follow-up: [bounded device shift/deflation/status control](N28.md).
 128 retained groups plus74 direct oracle cases and six complete CPU/paired
 fixtures pass. Per-iteration status copies remain; production host LAPACK and
 prototype reference defaults are unchanged.
+
+N2.9 follow-up: [bounded multi-iteration device chunks](N29.md). Transfers fall,
+but latency is mixed and regresses at order16; the padded experiment was not
+selected.128 retained groups,74 control oracles,100 chunk boundaries and six
+full CPU fixtures pass; reference and production host LAPACK defaults stay.

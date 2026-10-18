@@ -1,0 +1,19 @@
+[setup_ccache] Config preset: local
+[setup_ccache] Platform: POSIX
+[setup_ccache] Cache mode: release_type=(unset) preset=local remote=disabled local=/workspace/cache/data
+[setup_ccache] Generated ccache config:
+[setup_ccache]   max_size = 10G
+[setup_ccache]   cache_dir = /workspace/cache/data
+[setup_ccache]   compiler_check = /opt/build-venv/bin/python3 /workspace/cache/compiler_check.py /workspace/cache/compiler_check_cache %compiler%
+[setup_ccache]   sloppiness = include_file_ctime,pch_defines,time_macros
+Cacheable calls:   106014 / 111083 (95.44%)
+  Hits:             36862 / 106014 (34.77%)
+    Direct:         28386 /  36862 (77.01%)
+    Preprocessed:    8476 /  36862 (22.99%)
+  Misses:           69152 / 106014 (65.23%)
+Uncacheable calls:   5042 / 111083 ( 4.54%)
+Errors:                27 / 111083 ( 0.02%)
+Local storage:
+  Cache size (GB):    4.4 /   20.0 (21.98%)
+  Hits:             36862 / 106014 (34.77%)
+  Misses:           69152 / 106014 (65.23%)

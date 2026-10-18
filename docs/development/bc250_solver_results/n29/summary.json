@@ -1,0 +1,169 @@
+{
+  "status": "passed",
+  "code_revision": "13f91e094",
+  "retained_regression_groups": 128,
+  "direct_control_cases": 74,
+  "chunk_boundary_cases": 100,
+  "public_refusals": 7,
+  "paired_fixtures": 6,
+  "guards_acknowledged": 12,
+  "performance": "Mixed; order16 regressions, padded experiment did not help and was not selected",
+  "fixtures": [
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "iterations": 7,
+      "host_before_ms": 0.23095199867384508,
+      "host_after_ms": 0.2238790002593305,
+      "n28_status_transfers": 8,
+      "n29_status_transfers": 1,
+      "chunk_sizes_exact": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "schur": {
+        "n28_ms": 6.057718999727513,
+        "n29_ms": 5.729819000407588,
+        "n28_over_n29": 1.0572269384594173
+      },
+      "whole": {
+        "n28_ms": 8.84367949947773,
+        "n29_ms": 8.54989900108194,
+        "n28_over_n29": 1.034360698103991
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 9,
+      "iterations": 19,
+      "host_before_ms": 0.2603960019769147,
+      "host_after_ms": 0.26692699975683354,
+      "n28_status_transfers": 20,
+      "n29_status_transfers": 2,
+      "chunk_sizes_exact": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "schur": {
+        "n28_ms": 7.7443005011446076,
+        "n29_ms": 7.240793500386644,
+        "n28_over_n29": 1.0695375445703674
+      },
+      "whole": {
+        "n28_ms": 11.419454998758738,
+        "n29_ms": 10.913879499639734,
+        "n28_over_n29": 1.0463240866032737
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "iterations": 34,
+      "host_before_ms": 0.3510749993438367,
+      "host_after_ms": 0.3560619989002589,
+      "n28_status_transfers": 35,
+      "n29_status_transfers": 3,
+      "chunk_sizes_exact": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "schur": {
+        "n28_ms": 11.352149998856476,
+        "n29_ms": 11.584260000745417,
+        "n28_over_n29": 0.9799633293905692
+      },
+      "whole": {
+        "n28_ms": 16.18410999981279,
+        "n29_ms": 16.447363999759546,
+        "n28_over_n29": 0.9839941525006315
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "iterations": 10,
+      "host_before_ms": 0.23131399939302355,
+      "host_after_ms": 0.23105000218492933,
+      "n28_status_transfers": 11,
+      "n29_status_transfers": 1,
+      "chunk_sizes_exact": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "schur": {
+        "n28_ms": 6.319348500255728,
+        "n29_ms": 6.036771997969481,
+        "n28_over_n29": 1.0468092057114786
+      },
+      "whole": {
+        "n28_ms": 9.082953500183066,
+        "n29_ms": 8.733824999580975,
+        "n28_over_n29": 1.039974295411099
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 9,
+      "iterations": 25,
+      "host_before_ms": 0.27209800100536086,
+      "host_after_ms": 0.2895110010285862,
+      "n28_status_transfers": 26,
+      "n29_status_transfers": 2,
+      "chunk_sizes_exact": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "schur": {
+        "n28_ms": 8.780660498814541,
+        "n29_ms": 8.29353699919011,
+        "n28_over_n29": 1.0587353139766544
+      },
+      "whole": {
+        "n28_ms": 12.440995500583085,
+        "n29_ms": 11.887696000485448,
+        "n28_over_n29": 1.0465438803343425
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "iterations": 45,
+      "host_before_ms": 0.4233590007061139,
+      "host_after_ms": 0.4261579997546505,
+      "n28_status_transfers": 46,
+      "n29_status_transfers": 3,
+      "chunk_sizes_exact": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "schur": {
+        "n28_ms": 15.236314498906722,
+        "n29_ms": 16.39254000110668,
+        "n28_over_n29": 0.9294663607883891
+      },
+      "whole": {
+        "n28_ms": 20.13567549875006,
+        "n29_ms": 21.179911998842726,
+        "n28_over_n29": 0.9506968442479967
+      }
+    }
+  ]
+}

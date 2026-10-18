@@ -1477,6 +1477,30 @@ balancing/subnormals/conditioning/batching/gradients remain unqualified; origina
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
 
+## N2.9 bounded iteration chunks — 2026-10-18
+
+TheRock code13f91e094 adds explicit device_chunked backend, chunk1..32/default16,
+reusing N2.8 control and stopping immediately on convergence/budget/failure.
+Separate T/Q input buffers; unchanged cap16/scaling/total QR budget/deflation/
+shift/fill/separation/residual gates.128 retained groups,74 control oracles,
+100 chunk boundaries, four long-chunk failures, seven public option refusals
+and six full CPU eigenpair fixtures pass. Complete results/counters bitwise
+exact across chunks1/2/8/16/32 on fixtures, boundary chunks exact vs repeated1.
+Copies8/20/35->1/2/3 c64,11/26/46->1/2/3 c128; whole ratios1.034/1.046/0.984
+and1.040/1.047/0.951 at4/9/16 are mixed, with16 regressing. Host eig0.224–0.426ms
+remains much faster. Padded-Q variant passes but does not improve timing; retained
+in WS/recovery/solver-n29-padded, original restored/verified against passed hashes.
+12 guards ACK/600s/unchanged dmesg;76 protected runtime/source/recovery hashes
+unchanged. Two one-unit hipcc/ccache20GiB builds; no Torch/ROCm DSO/image/prefix
+metadata/kernel/boot/default/.105 mutation. Prior source/binary/oracle retained
+WS/recovery/solver-n29-before and WS/helpers/schur_n28_reference.py. [Report and
+reproduction](bc250_solver_results/N29.md), raw WS/logs/solver-*n29*. No active
+job/container/guard; disk~1.09GiB free. No general convergence/gradient/batching/
+compile/graph/production GPU eig/model speed contract. Python CPU fault remains
+unresolved/separate from fixed VM-heap/CSR. Next N2.10 split GEHRD/reflector-Q
+preparation and prototype bounded device Q accumulation, preserving native GEHRD,
+Python/N2.8/N2.9 controls/cap16/fixed gates/production host LAPACK default.
+
 ## N2.8 bounded device Schur control — 2026-10-18
 
 TheRock code67e5d1ef8 adds explicit device_control backend: trailing deflations,

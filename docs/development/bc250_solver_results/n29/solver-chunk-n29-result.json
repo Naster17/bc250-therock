@@ -1,0 +1,4608 @@
+{
+  "status": "passed",
+  "steps": [
+    {
+      "label": "n2_m2_since0",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 3.391446625755634e-07,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_m2_since20",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_m2_since40",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_budget0",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_deflate_before_budget",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m2_since0",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        2,
+        1,
+        0
+      ],
+      "oracle_t_error": 3.6010283110954333e-07,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m2_since20",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        2,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        2,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m2_since40",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        2,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        2,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m4_since0",
+      "dtype": "torch.complex64",
+      "state": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        4,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m4_since20",
+      "dtype": "torch.complex64",
+      "state": [
+        4,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        4,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 1.877140576311831e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m4_since40",
+      "dtype": "torch.complex64",
+      "state": [
+        4,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        4,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 1.877140576311831e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_budget0",
+      "dtype": "torch.complex64",
+      "state": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        4,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_deflate_before_budget",
+      "dtype": "torch.complex64",
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        3,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m2_since0",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        7,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        7,
+        1,
+        0
+      ],
+      "oracle_t_error": 6.695503316223039e-07,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m2_since20",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        7,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        7,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m2_since40",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        7,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        7,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m9_since0",
+      "dtype": "torch.complex64",
+      "state": [
+        9,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        9,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 1.3622005781144253e-06,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m9_since20",
+      "dtype": "torch.complex64",
+      "state": [
+        9,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        9,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 1.154189810392836e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m9_since40",
+      "dtype": "torch.complex64",
+      "state": [
+        9,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        9,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 1.154189810392836e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_budget0",
+      "dtype": "torch.complex64",
+      "state": [
+        9,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        9,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_deflate_before_budget",
+      "dtype": "torch.complex64",
+      "state": [
+        9,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        8,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m2_since0",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        14,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        14,
+        1,
+        0
+      ],
+      "oracle_t_error": 1.4674286603622022e-06,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m2_since20",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        14,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        14,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m2_since40",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        14,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        14,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m16_since0",
+      "dtype": "torch.complex64",
+      "state": [
+        16,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        16,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 3.893077973771142e-06,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m16_since20",
+      "dtype": "torch.complex64",
+      "state": [
+        16,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        16,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 4.640534356781245e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m16_since40",
+      "dtype": "torch.complex64",
+      "state": [
+        16,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        16,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 4.640534356781245e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_budget0",
+      "dtype": "torch.complex64",
+      "state": [
+        16,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        16,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_deflate_before_budget",
+      "dtype": "torch.complex64",
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        15,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "deflation_boundary_0.5",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "deflation_boundary_1.0",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "deflation_boundary_2.0",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "rotation",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 6.181723932741079e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "zero_root",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "negative_zero",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 6.181723932741079e-08,
+      "stream": "nondefault"
+    },
+    {
+      "label": "nonfinite_guard",
+      "dtype": "torch.complex64",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        0,
+        0,
+        0,
+        3
+      ],
+      "oracle_t_error": null,
+      "stream": "nondefault"
+    },
+    {
+      "label": "fill_guard",
+      "dtype": "torch.complex64",
+      "state": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        4,
+        0,
+        0,
+        0,
+        3
+      ],
+      "oracle_t_error": null,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_m2_since0",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 4.751181878766898e-36,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_m2_since20",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_m2_since40",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_budget0",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n2_deflate_before_budget",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m2_since0",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        2,
+        1,
+        0
+      ],
+      "oracle_t_error": 2.4077461921058082e-15,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m2_since20",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        2,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        2,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m2_since40",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        2,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        2,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m4_since0",
+      "dtype": "torch.complex128",
+      "state": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        4,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 1.990725005259545e-15,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m4_since20",
+      "dtype": "torch.complex128",
+      "state": [
+        4,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        4,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 3.469446951953614e-18,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_m4_since40",
+      "dtype": "torch.complex128",
+      "state": [
+        4,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        4,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 3.469446951953614e-18,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_budget0",
+      "dtype": "torch.complex128",
+      "state": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        4,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n4_deflate_before_budget",
+      "dtype": "torch.complex128",
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        3,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m2_since0",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        7,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        7,
+        1,
+        0
+      ],
+      "oracle_t_error": 9.583778104382556e-16,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m2_since20",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        7,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        7,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m2_since40",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        7,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        7,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m9_since0",
+      "dtype": "torch.complex128",
+      "state": [
+        9,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        9,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m9_since20",
+      "dtype": "torch.complex128",
+      "state": [
+        9,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        9,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 6.952644564601984e-18,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_m9_since40",
+      "dtype": "torch.complex128",
+      "state": [
+        9,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        9,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 6.952644564601984e-18,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_budget0",
+      "dtype": "torch.complex128",
+      "state": [
+        9,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        9,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n9_deflate_before_budget",
+      "dtype": "torch.complex128",
+      "state": [
+        9,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        8,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m2_since0",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        14,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        14,
+        1,
+        0
+      ],
+      "oracle_t_error": 1.0349777356350523e-15,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m2_since20",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        14,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        14,
+        21,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m2_since40",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        14,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        2,
+        1,
+        14,
+        41,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m16_since0",
+      "dtype": "torch.complex128",
+      "state": [
+        16,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        16,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 6.697245914960556e-17,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m16_since20",
+      "dtype": "torch.complex128",
+      "state": [
+        16,
+        0,
+        0,
+        20,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        16,
+        1,
+        0,
+        21,
+        0
+      ],
+      "oracle_t_error": 4.450039104512744e-17,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_m16_since40",
+      "dtype": "torch.complex128",
+      "state": [
+        16,
+        0,
+        0,
+        40,
+        0
+      ],
+      "budget": 5,
+      "result_state": [
+        16,
+        1,
+        0,
+        41,
+        0
+      ],
+      "oracle_t_error": 4.450039104512744e-17,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_budget0",
+      "dtype": "torch.complex128",
+      "state": [
+        16,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        16,
+        0,
+        0,
+        0,
+        2
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "n16_deflate_before_budget",
+      "dtype": "torch.complex128",
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        0
+      ],
+      "budget": 0,
+      "result_state": [
+        1,
+        0,
+        15,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "deflation_boundary_0.5",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "deflation_boundary_1.0",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "deflation_boundary_2.0",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "rotation",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 8.659560562354932e-17,
+      "stream": "nondefault"
+    },
+    {
+      "label": "zero_root",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 0.0,
+      "stream": "nondefault"
+    },
+    {
+      "label": "negative_zero",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_t_error": 8.659560562354932e-17,
+      "stream": "nondefault"
+    },
+    {
+      "label": "nonfinite_guard",
+      "dtype": "torch.complex128",
+      "state": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        2,
+        0,
+        0,
+        0,
+        3
+      ],
+      "oracle_t_error": null,
+      "stream": "nondefault"
+    },
+    {
+      "label": "fill_guard",
+      "dtype": "torch.complex128",
+      "state": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "budget": 1,
+      "result_state": [
+        4,
+        0,
+        0,
+        0,
+        3
+      ],
+      "oracle_t_error": null,
+      "stream": "nondefault"
+    }
+  ],
+  "fixtures": [
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "reference_exact_n28": true,
+      "correctness": {
+        "reference": {
+          "iterations": 7,
+          "deflations": 3,
+          "residual": 1.6643394709252396e-07,
+          "projector_error": 6.886989675947308e-07
+        },
+        "device_control": {
+          "iterations": 7,
+          "deflations": 3,
+          "residual": 1.6307964845744588e-07,
+          "projector_error": 1.7498818442984486e-06
+        },
+        "device_chunked": {
+          "iterations": 7,
+          "deflations": 3,
+          "residual": 1.6307964845744588e-07,
+          "projector_error": 1.7498818442984486e-06
+        },
+        "host": {
+          "residual": 1.8971680188352437e-07,
+          "projector_error": 1.0443591767530174e-06
+        }
+      },
+      "paired_schur": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            6.223092001164332,
+            6.007506999594625,
+            5.986849999317201
+          ],
+          "median_ms": 6.007506999594625
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            5.727175001084106,
+            5.721965000702767,
+            5.78697499804548
+          ],
+          "median_ms": 5.727175001084106
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            5.729253000026802,
+            5.732462999731069,
+            5.7402769998589065
+          ],
+          "median_ms": 5.732462999731069
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            6.1079309998604,
+            6.248298999707913,
+            6.006691997754388
+          ],
+          "median_ms": 6.1079309998604
+        }
+      ],
+      "paired_whole": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            9.251319999748375,
+            8.844537998811575,
+            8.801199997833464
+          ],
+          "median_ms": 8.844537998811575
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            8.493343000736786,
+            8.57082600123249,
+            8.57241899939254
+          ],
+          "median_ms": 8.57082600123249
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            8.661617001052946,
+            8.52897200093139,
+            8.510214000125416
+          ],
+          "median_ms": 8.52897200093139
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            8.874453997123055,
+            8.842821000143886,
+            8.741773999645375
+          ],
+          "median_ms": 8.842821000143886
+        }
+      ],
+      "profile": {
+        "reference": {
+          "scalar_reads": 39,
+          "aten_calls": 745,
+          "operators": {
+            "aten.view_as_real.default": 29,
+            "aten.select.int": 156,
+            "aten.abs.default": 68,
+            "aten.ne.Scalar": 23,
+            "aten.eq.Tensor": 23,
+            "aten.mul.Tensor": 62,
+            "aten.bitwise_and_.Tensor": 11,
+            "aten.all.default": 11,
+            "aten._local_scalar_dense.default": 39,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 16,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 9,
+            "aten.clone.default": 11,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 8,
+            "aten.zeros.default": 3,
+            "aten.ones.default": 3,
+            "aten.slice.Tensor": 27,
+            "aten.cat.default": 3,
+            "aten.mv.default": 3,
+            "aten.unsqueeze.default": 6,
+            "aten._conj.default": 10,
+            "aten.sub.Tensor": 38,
+            "aten.triu.default": 8,
+            "aten.add.Tensor": 41,
+            "aten.le.Tensor": 24,
+            "aten.pow.Tensor_Scalar": 7,
+            "aten.sqrt.default": 7,
+            "aten.alias.default": 16,
+            "aten.linalg_qr.default": 7,
+            "aten.mm.default": 21,
+            "aten.copy_.default": 24,
+            "aten.tril.default": 7,
+            "aten.linalg_vector_norm.default": 14,
+            "aten.lift_fresh.default": 3
+          }
+        },
+        "device_control": {
+          "scalar_reads": 8,
+          "aten_calls": 163,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 19,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 17,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 4,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 3,
+            "aten.ones.default": 3,
+            "aten.slice.Tensor": 3,
+            "aten.cat.default": 3,
+            "aten.mv.default": 3,
+            "aten.unsqueeze.default": 6,
+            "aten._conj.default": 3,
+            "aten.sub.Tensor": 3,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 16,
+            "aten._to_copy.default": 8
+          }
+        },
+        "device_chunked": {
+          "scalar_reads": 8,
+          "aten_calls": 142,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 19,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 17,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 4,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 3,
+            "aten.ones.default": 3,
+            "aten.slice.Tensor": 3,
+            "aten.cat.default": 3,
+            "aten.mv.default": 3,
+            "aten.unsqueeze.default": 6,
+            "aten._conj.default": 3,
+            "aten.sub.Tensor": 3,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 2,
+            "aten._to_copy.default": 1
+          }
+        }
+      },
+      "chunk_size_equivalence": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "host_before": {
+        "samples_ms": [
+          0.23593199875904247,
+          0.2273539976158645,
+          0.23095199867384508
+        ],
+        "median_ms": 0.23095199867384508
+      },
+      "host_after": {
+        "samples_ms": [
+          0.23394799791276455,
+          0.2238790002593305,
+          0.22350799918058328
+        ],
+        "median_ms": 0.2238790002593305
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 9,
+      "reference_exact_n28": true,
+      "correctness": {
+        "reference": {
+          "iterations": 19,
+          "deflations": 8,
+          "residual": 2.2943549709298915e-07,
+          "projector_error": 2.522480078739276e-06
+        },
+        "device_control": {
+          "iterations": 19,
+          "deflations": 8,
+          "residual": 2.411847164239918e-07,
+          "projector_error": 3.691274145277082e-06
+        },
+        "device_chunked": {
+          "iterations": 19,
+          "deflations": 8,
+          "residual": 2.411847164239918e-07,
+          "projector_error": 3.691274145277082e-06
+        },
+        "host": {
+          "residual": 3.1993234128281795e-07,
+          "projector_error": 9.351667276330574e-06
+        }
+      },
+      "paired_schur": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            7.808687001670478,
+            7.598421001603128,
+            7.748891999654006
+          ],
+          "median_ms": 7.748891999654006
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            7.232156000100076,
+            7.256553999468451,
+            7.217562997539062
+          ],
+          "median_ms": 7.232156000100076
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            7.287955002539093,
+            7.249431000673212,
+            7.237835001433268
+          ],
+          "median_ms": 7.249431000673212
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            7.781342002999736,
+            7.739709002635209,
+            7.728803000645712
+          ],
+          "median_ms": 7.739709002635209
+        }
+      ],
+      "paired_whole": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            11.475965999125037,
+            11.434189000283368,
+            11.309897003229707
+          ],
+          "median_ms": 11.434189000283368
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            10.86657300038496,
+            10.842053998203482,
+            10.886045998631744
+          ],
+          "median_ms": 10.86657300038496
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            10.961185998894507,
+            10.994758999004262,
+            10.878123001020867
+          ],
+          "median_ms": 10.961185998894507
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            11.47892100198078,
+            11.31213100234163,
+            11.404720997234108
+          ],
+          "median_ms": 11.404720997234108
+        }
+      ],
+      "profile": {
+        "reference": {
+          "scalar_reads": 92,
+          "aten_calls": 1877,
+          "operators": {
+            "aten.view_as_real.default": 53,
+            "aten.select.int": 398,
+            "aten.abs.default": 167,
+            "aten.ne.Scalar": 47,
+            "aten.eq.Tensor": 47,
+            "aten.mul.Tensor": 149,
+            "aten.bitwise_and_.Tensor": 23,
+            "aten.all.default": 23,
+            "aten._local_scalar_dense.default": 92,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 40,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 21,
+            "aten.clone.default": 28,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 20,
+            "aten.zeros.default": 8,
+            "aten.ones.default": 8,
+            "aten.slice.Tensor": 128,
+            "aten.cat.default": 8,
+            "aten.mv.default": 8,
+            "aten.unsqueeze.default": 16,
+            "aten._conj.default": 27,
+            "aten.sub.Tensor": 103,
+            "aten.triu.default": 20,
+            "aten.add.Tensor": 111,
+            "aten.le.Tensor": 65,
+            "aten.pow.Tensor_Scalar": 19,
+            "aten.sqrt.default": 19,
+            "aten.alias.default": 16,
+            "aten.linalg_qr.default": 19,
+            "aten.mm.default": 57,
+            "aten.copy_.default": 65,
+            "aten.tril.default": 19,
+            "aten.linalg_vector_norm.default": 38,
+            "aten.lift_fresh.default": 8
+          }
+        },
+        "device_control": {
+          "scalar_reads": 8,
+          "aten_calls": 269,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 29,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 27,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 9,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 8,
+            "aten.ones.default": 8,
+            "aten.slice.Tensor": 8,
+            "aten.cat.default": 8,
+            "aten.mv.default": 8,
+            "aten.unsqueeze.default": 16,
+            "aten._conj.default": 8,
+            "aten.sub.Tensor": 8,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 40,
+            "aten._to_copy.default": 20
+          }
+        },
+        "device_chunked": {
+          "scalar_reads": 8,
+          "aten_calls": 215,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 29,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 27,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 9,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 8,
+            "aten.ones.default": 8,
+            "aten.slice.Tensor": 8,
+            "aten.cat.default": 8,
+            "aten.mv.default": 8,
+            "aten.unsqueeze.default": 16,
+            "aten._conj.default": 8,
+            "aten.sub.Tensor": 8,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 4,
+            "aten._to_copy.default": 2
+          }
+        }
+      },
+      "chunk_size_equivalence": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "host_before": {
+        "samples_ms": [
+          0.27321800007484853,
+          0.2603960019769147,
+          0.25868300144793466
+        ],
+        "median_ms": 0.2603960019769147
+      },
+      "host_after": {
+        "samples_ms": [
+          0.2671190013643354,
+          0.2587039998616092,
+          0.26692699975683354
+        ],
+        "median_ms": 0.26692699975683354
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "reference_exact_n28": true,
+      "correctness": {
+        "reference": {
+          "iterations": 34,
+          "deflations": 15,
+          "residual": 2.9782806194855193e-07,
+          "projector_error": 1.0435844050933473e-05
+        },
+        "device_control": {
+          "iterations": 34,
+          "deflations": 15,
+          "residual": 4.1593813410791307e-07,
+          "projector_error": 1.1114693925325807e-05
+        },
+        "device_chunked": {
+          "iterations": 34,
+          "deflations": 15,
+          "residual": 4.1593813410791307e-07,
+          "projector_error": 1.1114693925325807e-05
+        },
+        "host": {
+          "residual": 3.882874091328352e-07,
+          "projector_error": 1.1844213468552644e-05
+        }
+      },
+      "paired_schur": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            11.361182001564885,
+            11.362934001226677,
+            11.361619999661343
+          ],
+          "median_ms": 11.361619999661343
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            11.514140001963824,
+            11.49874100156012,
+            11.731071997928666
+          ],
+          "median_ms": 11.514140001963824
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            11.65437999952701,
+            11.578256999200676,
+            11.698021000484005
+          ],
+          "median_ms": 11.65437999952701
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            11.342679998051608,
+            11.325203002343187,
+            11.392289998184424
+          ],
+          "median_ms": 11.342679998051608
+        }
+      ],
+      "paired_whole": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            16.169182999874465,
+            16.194749001442688,
+            16.064514999015955
+          ],
+          "median_ms": 16.169182999874465
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            16.419540999777382,
+            16.423624998424202,
+            16.774509000242688
+          ],
+          "median_ms": 16.423624998424202
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            16.47110300109489,
+            16.37307800046983,
+            16.486092998093227
+          ],
+          "median_ms": 16.47110300109489
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            16.199036999751115,
+            16.276893999020103,
+            16.13299399832613
+          ],
+          "median_ms": 16.199036999751115
+        }
+      ],
+      "profile": {
+        "reference": {
+          "scalar_reads": 159,
+          "aten_calls": 3316,
+          "operators": {
+            "aten.view_as_real.default": 83,
+            "aten.select.int": 708,
+            "aten.abs.default": 293,
+            "aten.ne.Scalar": 77,
+            "aten.eq.Tensor": 77,
+            "aten.mul.Tensor": 260,
+            "aten.bitwise_and_.Tensor": 38,
+            "aten.all.default": 38,
+            "aten._local_scalar_dense.default": 159,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 70,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 36,
+            "aten.clone.default": 50,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 35,
+            "aten.zeros.default": 15,
+            "aten.ones.default": 15,
+            "aten.slice.Tensor": 255,
+            "aten.cat.default": 15,
+            "aten.mv.default": 15,
+            "aten.unsqueeze.default": 30,
+            "aten._conj.default": 49,
+            "aten.sub.Tensor": 185,
+            "aten.triu.default": 35,
+            "aten.add.Tensor": 200,
+            "aten.le.Tensor": 117,
+            "aten.pow.Tensor_Scalar": 34,
+            "aten.sqrt.default": 34,
+            "aten.alias.default": 16,
+            "aten.linalg_qr.default": 34,
+            "aten.mm.default": 102,
+            "aten.copy_.default": 117,
+            "aten.tril.default": 34,
+            "aten.linalg_vector_norm.default": 68,
+            "aten.lift_fresh.default": 15
+          }
+        },
+        "device_control": {
+          "scalar_reads": 8,
+          "aten_calls": 412,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 43,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 41,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 16,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 15,
+            "aten.ones.default": 15,
+            "aten.slice.Tensor": 15,
+            "aten.cat.default": 15,
+            "aten.mv.default": 15,
+            "aten.unsqueeze.default": 30,
+            "aten._conj.default": 15,
+            "aten.sub.Tensor": 15,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 70,
+            "aten._to_copy.default": 35
+          }
+        },
+        "device_chunked": {
+          "scalar_reads": 8,
+          "aten_calls": 316,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 43,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 41,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 16,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 15,
+            "aten.ones.default": 15,
+            "aten.slice.Tensor": 15,
+            "aten.cat.default": 15,
+            "aten.mv.default": 15,
+            "aten.unsqueeze.default": 30,
+            "aten._conj.default": 15,
+            "aten.sub.Tensor": 15,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 6,
+            "aten._to_copy.default": 3
+          }
+        }
+      },
+      "chunk_size_equivalence": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "host_before": {
+        "samples_ms": [
+          0.381259000278078,
+          0.3510749993438367,
+          0.35069300065515563
+        ],
+        "median_ms": 0.3510749993438367
+      },
+      "host_after": {
+        "samples_ms": [
+          0.3615239984355867,
+          0.3542520025803242,
+          0.3560619989002589
+        ],
+        "median_ms": 0.3560619989002589
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "reference_exact_n28": true,
+      "correctness": {
+        "reference": {
+          "iterations": 10,
+          "deflations": 3,
+          "residual": 1.6957203851617467e-16,
+          "projector_error": 3.43117866984355e-15
+        },
+        "device_control": {
+          "iterations": 10,
+          "deflations": 3,
+          "residual": 3.406653963786499e-16,
+          "projector_error": 4.324194865759548e-15
+        },
+        "device_chunked": {
+          "iterations": 10,
+          "deflations": 3,
+          "residual": 3.406653963786499e-16,
+          "projector_error": 4.324194865759548e-15
+        },
+        "host": {
+          "residual": 4.247245204773209e-16,
+          "projector_error": 2.3079933571575626e-15
+        }
+      },
+      "paired_schur": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            6.3237770009436645,
+            6.318113999441266,
+            6.257634002395207
+          ],
+          "median_ms": 6.318113999441266
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            6.058936000044923,
+            6.330459000309929,
+            6.082406998757506
+          ],
+          "median_ms": 6.082406998757506
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            5.995183000777615,
+            5.981684997095726,
+            5.9911369971814565
+          ],
+          "median_ms": 5.9911369971814565
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            6.32058300107019,
+            6.347587001073407,
+            6.196239999553654
+          ],
+          "median_ms": 6.32058300107019
+        }
+      ],
+      "paired_whole": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            9.005698000692064,
+            9.0703179994307,
+            9.070077001524623
+          ],
+          "median_ms": 9.070077001524623
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            8.78848299907986,
+            8.667557998705888,
+            8.781356998952106
+          ],
+          "median_ms": 8.781356998952106
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            8.686293000209844,
+            8.789273000729736,
+            8.59590799882426
+          ],
+          "median_ms": 8.686293000209844
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            9.09582999884151,
+            9.01445600175066,
+            9.358735998830525
+          ],
+          "median_ms": 9.09582999884151
+        }
+      ],
+      "profile": {
+        "reference": {
+          "scalar_reads": 51,
+          "aten_calls": 980,
+          "operators": {
+            "aten.view_as_real.default": 35,
+            "aten.select.int": 204,
+            "aten.abs.default": 89,
+            "aten.ne.Scalar": 29,
+            "aten.eq.Tensor": 29,
+            "aten.mul.Tensor": 80,
+            "aten.bitwise_and_.Tensor": 14,
+            "aten.all.default": 14,
+            "aten._local_scalar_dense.default": 51,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 22,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 12,
+            "aten.clone.default": 14,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 11,
+            "aten.zeros.default": 3,
+            "aten.ones.default": 3,
+            "aten.slice.Tensor": 35,
+            "aten.cat.default": 3,
+            "aten.mv.default": 3,
+            "aten.unsqueeze.default": 6,
+            "aten._conj.default": 13,
+            "aten.sub.Tensor": 53,
+            "aten.triu.default": 11,
+            "aten.add.Tensor": 56,
+            "aten.le.Tensor": 33,
+            "aten.pow.Tensor_Scalar": 10,
+            "aten.sqrt.default": 10,
+            "aten.alias.default": 24,
+            "aten.linalg_qr.default": 10,
+            "aten.mm.default": 30,
+            "aten.copy_.default": 33,
+            "aten.tril.default": 10,
+            "aten.linalg_vector_norm.default": 20,
+            "aten.lift_fresh.default": 3
+          }
+        },
+        "device_control": {
+          "scalar_reads": 8,
+          "aten_calls": 172,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 19,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 17,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 4,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 3,
+            "aten.ones.default": 3,
+            "aten.slice.Tensor": 3,
+            "aten.cat.default": 3,
+            "aten.mv.default": 3,
+            "aten.unsqueeze.default": 6,
+            "aten._conj.default": 3,
+            "aten.sub.Tensor": 3,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 22,
+            "aten._to_copy.default": 11
+          }
+        },
+        "device_chunked": {
+          "scalar_reads": 8,
+          "aten_calls": 142,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 19,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 17,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 4,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 3,
+            "aten.ones.default": 3,
+            "aten.slice.Tensor": 3,
+            "aten.cat.default": 3,
+            "aten.mv.default": 3,
+            "aten.unsqueeze.default": 6,
+            "aten._conj.default": 3,
+            "aten.sub.Tensor": 3,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 2,
+            "aten._to_copy.default": 1
+          }
+        }
+      },
+      "chunk_size_equivalence": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "host_before": {
+        "samples_ms": [
+          0.24221200146712363,
+          0.23131399939302355,
+          0.22666400036541745
+        ],
+        "median_ms": 0.23131399939302355
+      },
+      "host_after": {
+        "samples_ms": [
+          0.2361919978284277,
+          0.23105000218492933,
+          0.22793199968873523
+        ],
+        "median_ms": 0.23105000218492933
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 9,
+      "reference_exact_n28": true,
+      "correctness": {
+        "reference": {
+          "iterations": 25,
+          "deflations": 8,
+          "residual": 2.7870808151681963e-16,
+          "projector_error": 1.2047963286171685e-14
+        },
+        "device_control": {
+          "iterations": 25,
+          "deflations": 8,
+          "residual": 6.6822767959178e-16,
+          "projector_error": 1.000526243637152e-14
+        },
+        "device_chunked": {
+          "iterations": 25,
+          "deflations": 8,
+          "residual": 6.6822767959178e-16,
+          "projector_error": 1.000526243637152e-14
+        },
+        "host": {
+          "residual": 6.22666561073269e-16,
+          "projector_error": 1.5504297572045555e-14
+        }
+      },
+      "paired_schur": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            8.486369999445742,
+            8.758619002037449,
+            8.717388998775277
+          ],
+          "median_ms": 8.717388998775277
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            8.37227800002438,
+            8.24781799747143,
+            8.223847999033751
+          ],
+          "median_ms": 8.24781799747143
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            8.33925600090879,
+            8.20143699820619,
+            8.500554002239369
+          ],
+          "median_ms": 8.33925600090879
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            9.161488997051492,
+            8.771872999204788,
+            8.843931998853805
+          ],
+          "median_ms": 8.843931998853805
+        }
+      ],
+      "paired_whole": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            12.457909000659129,
+            12.465171002986608,
+            12.473618000512943
+          ],
+          "median_ms": 12.465171002986608
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            11.864702002640115,
+            12.087203998817131,
+            11.886792999575846
+          ],
+          "median_ms": 11.886792999575846
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            11.88859900139505,
+            12.094424000679282,
+            11.880881000251975
+          ],
+          "median_ms": 11.88859900139505
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            12.398867998854257,
+            12.416819998179562,
+            12.446458000340499
+          ],
+          "median_ms": 12.416819998179562
+        }
+      ],
+      "profile": {
+        "reference": {
+          "scalar_reads": 116,
+          "aten_calls": 2363,
+          "operators": {
+            "aten.view_as_real.default": 65,
+            "aten.select.int": 494,
+            "aten.abs.default": 209,
+            "aten.ne.Scalar": 59,
+            "aten.eq.Tensor": 59,
+            "aten.mul.Tensor": 185,
+            "aten.bitwise_and_.Tensor": 29,
+            "aten.all.default": 29,
+            "aten._local_scalar_dense.default": 116,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 52,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 27,
+            "aten.clone.default": 34,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 26,
+            "aten.zeros.default": 8,
+            "aten.ones.default": 8,
+            "aten.slice.Tensor": 176,
+            "aten.cat.default": 8,
+            "aten.mv.default": 8,
+            "aten.unsqueeze.default": 16,
+            "aten._conj.default": 33,
+            "aten.sub.Tensor": 133,
+            "aten.triu.default": 26,
+            "aten.add.Tensor": 141,
+            "aten.le.Tensor": 83,
+            "aten.pow.Tensor_Scalar": 25,
+            "aten.sqrt.default": 25,
+            "aten.alias.default": 16,
+            "aten.linalg_qr.default": 25,
+            "aten.mm.default": 75,
+            "aten.copy_.default": 83,
+            "aten.tril.default": 25,
+            "aten.linalg_vector_norm.default": 50,
+            "aten.lift_fresh.default": 8
+          }
+        },
+        "device_control": {
+          "scalar_reads": 8,
+          "aten_calls": 287,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 29,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 27,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 9,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 8,
+            "aten.ones.default": 8,
+            "aten.slice.Tensor": 8,
+            "aten.cat.default": 8,
+            "aten.mv.default": 8,
+            "aten.unsqueeze.default": 16,
+            "aten._conj.default": 8,
+            "aten.sub.Tensor": 8,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 52,
+            "aten._to_copy.default": 26
+          }
+        },
+        "device_chunked": {
+          "scalar_reads": 8,
+          "aten_calls": 215,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 29,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 27,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 9,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 8,
+            "aten.ones.default": 8,
+            "aten.slice.Tensor": 8,
+            "aten.cat.default": 8,
+            "aten.mv.default": 8,
+            "aten.unsqueeze.default": 16,
+            "aten._conj.default": 8,
+            "aten.sub.Tensor": 8,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 4,
+            "aten._to_copy.default": 2
+          }
+        }
+      },
+      "chunk_size_equivalence": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "host_before": {
+        "samples_ms": [
+          0.2935800002887845,
+          0.27159700039192103,
+          0.27209800100536086
+        ],
+        "median_ms": 0.27209800100536086
+      },
+      "host_after": {
+        "samples_ms": [
+          0.2895110010285862,
+          0.2907600028265733,
+          0.2807239980029408
+        ],
+        "median_ms": 0.2895110010285862
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "reference_exact_n28": true,
+      "correctness": {
+        "reference": {
+          "iterations": 45,
+          "deflations": 15,
+          "residual": 6.157909887510744e-16,
+          "projector_error": 1.9816763931587947e-14
+        },
+        "device_control": {
+          "iterations": 45,
+          "deflations": 15,
+          "residual": 9.768106000852943e-16,
+          "projector_error": 3.5745229383080694e-14
+        },
+        "device_chunked": {
+          "iterations": 45,
+          "deflations": 15,
+          "residual": 9.768106000852943e-16,
+          "projector_error": 3.5745229383080694e-14
+        },
+        "host": {
+          "residual": 6.086714568901999e-16,
+          "projector_error": 2.5194779027056e-14
+        }
+      },
+      "paired_schur": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            15.256455997587182,
+            15.22661600029096,
+            15.358339001977583
+          ],
+          "median_ms": 15.256455997587182
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            16.283814002235886,
+            16.415712001617067,
+            16.248447998805204
+          ],
+          "median_ms": 16.283814002235886
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            16.390033000789117,
+            16.501265999977477,
+            16.737401001591934
+          ],
+          "median_ms": 16.501265999977477
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            15.180846003204351,
+            15.216173000226263,
+            15.246162001858465
+          ],
+          "median_ms": 15.216173000226263
+        }
+      ],
+      "paired_whole": [
+        {
+          "label": "A1",
+          "backend": "device_control",
+          "samples_ms": [
+            20.142291999945883,
+            20.13102099954267,
+            20.055528002558276
+          ],
+          "median_ms": 20.13102099954267
+        },
+        {
+          "label": "B1",
+          "backend": "device_chunked",
+          "samples_ms": [
+            21.236634001979837,
+            21.090500998980133,
+            21.166021997487405
+          ],
+          "median_ms": 21.166021997487405
+        },
+        {
+          "label": "B2",
+          "backend": "device_chunked",
+          "samples_ms": [
+            21.115780000400264,
+            21.29604299989296,
+            21.193802000198048
+          ],
+          "median_ms": 21.193802000198048
+        },
+        {
+          "label": "A2",
+          "backend": "device_control",
+          "samples_ms": [
+            20.10969300317811,
+            20.201986000756733,
+            20.14032999795745
+          ],
+          "median_ms": 20.14032999795745
+        }
+      ],
+      "profile": {
+        "reference": {
+          "scalar_reads": 203,
+          "aten_calls": 4199,
+          "operators": {
+            "aten.view_as_real.default": 105,
+            "aten.select.int": 884,
+            "aten.abs.default": 370,
+            "aten.ne.Scalar": 99,
+            "aten.eq.Tensor": 99,
+            "aten.mul.Tensor": 326,
+            "aten.bitwise_and_.Tensor": 49,
+            "aten.all.default": 49,
+            "aten._local_scalar_dense.default": 203,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 92,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 47,
+            "aten.clone.default": 61,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 46,
+            "aten.zeros.default": 15,
+            "aten.ones.default": 15,
+            "aten.slice.Tensor": 327,
+            "aten.cat.default": 15,
+            "aten.mv.default": 15,
+            "aten.unsqueeze.default": 30,
+            "aten._conj.default": 60,
+            "aten.sub.Tensor": 240,
+            "aten.triu.default": 46,
+            "aten.add.Tensor": 255,
+            "aten.le.Tensor": 150,
+            "aten.pow.Tensor_Scalar": 45,
+            "aten.sqrt.default": 45,
+            "aten.alias.default": 24,
+            "aten.linalg_qr.default": 45,
+            "aten.mm.default": 135,
+            "aten.copy_.default": 150,
+            "aten.tril.default": 45,
+            "aten.linalg_vector_norm.default": 90,
+            "aten.lift_fresh.default": 15
+          }
+        },
+        "device_control": {
+          "scalar_reads": 8,
+          "aten_calls": 445,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 43,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 41,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 16,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 15,
+            "aten.ones.default": 15,
+            "aten.slice.Tensor": 15,
+            "aten.cat.default": 15,
+            "aten.mv.default": 15,
+            "aten.unsqueeze.default": 30,
+            "aten._conj.default": 15,
+            "aten.sub.Tensor": 15,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 92,
+            "aten._to_copy.default": 46
+          }
+        },
+        "device_chunked": {
+          "scalar_reads": 8,
+          "aten_calls": 316,
+          "operators": {
+            "aten.view_as_real.default": 14,
+            "aten.select.int": 43,
+            "aten.abs.default": 10,
+            "aten.ne.Scalar": 9,
+            "aten.eq.Tensor": 9,
+            "aten.mul.Tensor": 41,
+            "aten.bitwise_and_.Tensor": 4,
+            "aten.all.default": 4,
+            "aten._local_scalar_dense.default": 8,
+            "aten.amax.default": 1,
+            "aten.gt.Scalar": 2,
+            "aten.ge.Scalar": 1,
+            "aten.div.Tensor": 2,
+            "aten.complex.default": 2,
+            "aten.transpose.int": 2,
+            "aten.clone.default": 16,
+            "aten.empty.memory_format": 1,
+            "aten.eye.default": 1,
+            "aten.zeros.default": 15,
+            "aten.ones.default": 15,
+            "aten.slice.Tensor": 15,
+            "aten.cat.default": 15,
+            "aten.mv.default": 15,
+            "aten.unsqueeze.default": 30,
+            "aten._conj.default": 15,
+            "aten.sub.Tensor": 15,
+            "aten.triu.default": 1,
+            "aten.lift_fresh.default": 1,
+            "aten.empty_like.default": 6,
+            "aten._to_copy.default": 3
+          }
+        }
+      },
+      "chunk_size_equivalence": [
+        1,
+        2,
+        8,
+        16,
+        32
+      ],
+      "host_before": {
+        "samples_ms": [
+          0.44249699931242503,
+          0.41584599966881797,
+          0.4233590007061139
+        ],
+        "median_ms": 0.4233590007061139
+      },
+      "host_after": {
+        "samples_ms": [
+          0.4261579997546505,
+          0.43066699799965136,
+          0.4136720017413609
+        ],
+        "median_ms": 0.4261579997546505
+      }
+    }
+  ],
+  "refusals": [
+    "0",
+    "33",
+    "-1",
+    "True",
+    "1.5",
+    "None",
+    "non-chunk backend"
+  ],
+  "hashes": {
+    "gfx1013_schur_candidate.py": "5fe2cef32c09f96bdcf80d34e0e38765162d506c2b58a52cbc71434cabcf20ca",
+    "schur_qr_n27.hip": "811964a2e047150ab735bc39465b70f0a41c05b1343c0df44138765669ba02e0",
+    "schur_control_n28.hip": "f25629324637a4d8e610b0e9387d74c5c526b09b787abd0785de75b52febb74c",
+    "schur_control_n28.so": "af0df0d9b2d3a1073ece968036b6b057e65291e34b0cd98cc098c7651b807238",
+    "schur_qr_n27.so": "b55631927717f249d4d70eb8132a2ba8051c5e8d83fb1a05d4a2244df77b0237",
+    "schur_n28_reference.py": "70d8a4e4dd454a0c12de77623d8bc339335884932eba5e7f362466405367de80",
+    "schur_chunk_n29.hip": "6abf09e5592ed96c8404ef4cd31acfd63947b9f4ea65b111edfbb159d822f9b9",
+    "schur_chunk_n29.so": "02bf2c217457f2af3a73986d3714ffae24d299620675862608686951daf03d05"
+  },
+  "method": "Three synchronized wall samples per A1/B1/B2/A2 pass. ATen counts separate from timing; status transfers are explicitly counted.",
+  "chunks": [
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 7,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 17,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 33,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 7,
+      "state": [
+        4,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 17,
+      "state": [
+        4,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 33,
+      "state": [
+        4,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 7,
+      "state": [
+        3,
+        7,
+        1,
+        3,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 17,
+      "state": [
+        3,
+        8,
+        1,
+        4,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 33,
+      "state": [
+        3,
+        8,
+        1,
+        4,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 7,
+      "state": [
+        3,
+        7,
+        1,
+        3,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 17,
+      "state": [
+        1,
+        9,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 10,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 33,
+      "state": [
+        1,
+        9,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 10,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 7,
+      "state": [
+        3,
+        7,
+        1,
+        3,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 17,
+      "state": [
+        1,
+        9,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 10,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 33,
+      "state": [
+        1,
+        9,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 10,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 7,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 17,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 33,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 7,
+      "state": [
+        16,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 17,
+      "state": [
+        16,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 33,
+      "state": [
+        16,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 7,
+      "state": [
+        14,
+        7,
+        2,
+        1,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 17,
+      "state": [
+        14,
+        8,
+        2,
+        2,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 33,
+      "state": [
+        14,
+        8,
+        2,
+        2,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 7,
+      "state": [
+        14,
+        7,
+        2,
+        1,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 17,
+      "state": [
+        12,
+        16,
+        4,
+        4,
+        0
+      ],
+      "repeated_calls": 16,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 33,
+      "state": [
+        12,
+        16,
+        4,
+        4,
+        0
+      ],
+      "repeated_calls": 16,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 7,
+      "state": [
+        14,
+        7,
+        2,
+        1,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 17,
+      "state": [
+        12,
+        17,
+        4,
+        5,
+        2
+      ],
+      "repeated_calls": 18,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 33,
+      "state": [
+        7,
+        32,
+        9,
+        2,
+        0
+      ],
+      "repeated_calls": 32,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 7,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 17,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 1,
+      "budget": 33,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 7,
+      "state": [
+        4,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 17,
+      "state": [
+        4,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 2,
+      "budget": 33,
+      "state": [
+        4,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 7,
+      "state": [
+        3,
+        7,
+        1,
+        0,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 17,
+      "state": [
+        3,
+        8,
+        1,
+        1,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 8,
+      "budget": 33,
+      "state": [
+        3,
+        8,
+        1,
+        1,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 7,
+      "state": [
+        3,
+        7,
+        1,
+        0,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 17,
+      "state": [
+        1,
+        11,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 12,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 16,
+      "budget": 33,
+      "state": [
+        1,
+        11,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 12,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 0,
+      "state": [
+        4,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 1,
+      "state": [
+        4,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 7,
+      "state": [
+        3,
+        7,
+        1,
+        0,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 17,
+      "state": [
+        1,
+        11,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 12,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "chunk_size": 32,
+      "budget": 33,
+      "state": [
+        1,
+        11,
+        3,
+        0,
+        1
+      ],
+      "repeated_calls": 12,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 7,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 17,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 1,
+      "budget": 33,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        0
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 7,
+      "state": [
+        16,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 17,
+      "state": [
+        16,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 2,
+      "budget": 33,
+      "state": [
+        16,
+        2,
+        0,
+        21,
+        0
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 7,
+      "state": [
+        15,
+        7,
+        1,
+        0,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 17,
+      "state": [
+        15,
+        8,
+        1,
+        1,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 8,
+      "budget": 33,
+      "state": [
+        15,
+        8,
+        1,
+        1,
+        0
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 7,
+      "state": [
+        15,
+        7,
+        1,
+        0,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 17,
+      "state": [
+        13,
+        16,
+        3,
+        1,
+        0
+      ],
+      "repeated_calls": 16,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 16,
+      "budget": 33,
+      "state": [
+        13,
+        16,
+        3,
+        1,
+        0
+      ],
+      "repeated_calls": 16,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 0,
+      "state": [
+        16,
+        0,
+        0,
+        19,
+        2
+      ],
+      "repeated_calls": 1,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 1,
+      "state": [
+        16,
+        1,
+        0,
+        20,
+        2
+      ],
+      "repeated_calls": 2,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 7,
+      "state": [
+        15,
+        7,
+        1,
+        0,
+        2
+      ],
+      "repeated_calls": 8,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 17,
+      "state": [
+        13,
+        17,
+        3,
+        2,
+        2
+      ],
+      "repeated_calls": 18,
+      "exact": true
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "chunk_size": 32,
+      "budget": 33,
+      "state": [
+        9,
+        32,
+        7,
+        1,
+        0
+      ],
+      "repeated_calls": 32,
+      "exact": true
+    }
+  ],
+  "native_kernel_trace": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/solver-chunk-n29/trace.json"
+}

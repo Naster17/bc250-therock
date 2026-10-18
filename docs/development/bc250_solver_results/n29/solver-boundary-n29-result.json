@@ -1,0 +1,308 @@
+{
+  "status": "passed",
+  "group": "boundary",
+  "checks": [
+    {
+      "name": "boundary_torch.complex64_e-25_gap0.5",
+      "status": "passed",
+      "seconds": 0.368882234000921,
+      "scale": 1e-25,
+      "factor": 0.5,
+      "relative_separation": 0.001352445931355221,
+      "floor": 0.0027621358640099515,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex64_e-25_gap0.9",
+      "status": "passed",
+      "seconds": 0.0019879299979947973,
+      "scale": 1e-25,
+      "factor": 0.9,
+      "relative_separation": 0.002431810424106572,
+      "floor": 0.0027621358640099515,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex64_e-25_gap1.1",
+      "status": "passed",
+      "seconds": 0.18187579599907622,
+      "scale": 1e-25,
+      "factor": 1.1,
+      "relative_separation": 0.002970665111569365,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e-25_gap2.0",
+      "status": "passed",
+      "seconds": 0.0032512759971723426,
+      "scale": 1e-25,
+      "factor": 2.0,
+      "relative_separation": 0.005388343117835637,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e-25_gap4.0",
+      "status": "passed",
+      "seconds": 0.0031504270009463653,
+      "scale": 1e-25,
+      "factor": 4.0,
+      "relative_separation": 0.010720086112143123,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e0_gap0.5",
+      "status": "passed",
+      "seconds": 0.001754885000991635,
+      "scale": 1.0,
+      "factor": 0.5,
+      "relative_separation": 0.0013524247991787742,
+      "floor": 0.0027621358640099515,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex64_e0_gap0.9",
+      "status": "passed",
+      "seconds": 0.0017128310028056148,
+      "scale": 1.0,
+      "factor": 0.9,
+      "relative_separation": 0.0024317844957969965,
+      "floor": 0.0027621358640099515,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex64_e0_gap1.1",
+      "status": "passed",
+      "seconds": 0.0031179439974948764,
+      "scale": 1.0,
+      "factor": 1.1,
+      "relative_separation": 0.002970722966393984,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e0_gap2.0",
+      "status": "passed",
+      "seconds": 0.0031171730006462894,
+      "scale": 1.0,
+      "factor": 2.0,
+      "relative_separation": 0.005388374920033705,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e0_gap4.0",
+      "status": "passed",
+      "seconds": 0.003135499999189051,
+      "scale": 1.0,
+      "factor": 4.0,
+      "relative_separation": 0.010720089880774879,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e25_gap0.5",
+      "status": "passed",
+      "seconds": 0.001720306998322485,
+      "scale": 1e+25,
+      "factor": 0.5,
+      "relative_separation": 0.0013524689150836437,
+      "floor": 0.0027621358640099515,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex64_e25_gap0.9",
+      "status": "passed",
+      "seconds": 0.0017308149981545284,
+      "scale": 1e+25,
+      "factor": 0.9,
+      "relative_separation": 0.0024318412332457076,
+      "floor": 0.0027621358640099515,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex64_e25_gap1.1",
+      "status": "passed",
+      "seconds": 0.0030928109990782104,
+      "scale": 1e+25,
+      "factor": 1.1,
+      "relative_separation": 0.002970725978042969,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e25_gap2.0",
+      "status": "passed",
+      "seconds": 0.003107194002950564,
+      "scale": 1e+25,
+      "factor": 2.0,
+      "relative_separation": 0.0053884343254801525,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex64_e25_gap4.0",
+      "status": "passed",
+      "seconds": 0.0031332329999713693,
+      "scale": 1e+25,
+      "factor": 4.0,
+      "relative_separation": 0.010720096757331963,
+      "floor": 0.0027621358640099515,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e-200_gap0.5",
+      "status": "passed",
+      "seconds": 0.005452081000839826,
+      "scale": 1e-200,
+      "factor": 0.5,
+      "relative_separation": 5.844715949843694e-08,
+      "floor": 1.1920928955078125e-07,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex128_e-200_gap0.9",
+      "status": "passed",
+      "seconds": 0.0017356200005451683,
+      "scale": 1e-200,
+      "factor": 0.9,
+      "relative_separation": 1.0520488209938558e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex128_e-200_gap1.1",
+      "status": "passed",
+      "seconds": 0.007368667000264395,
+      "scale": 1e-200,
+      "factor": 1.1,
+      "relative_separation": 1.2858374200972108e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e-200_gap2.0",
+      "status": "passed",
+      "seconds": 0.003142198998830281,
+      "scale": 1e-200,
+      "factor": 2.0,
+      "relative_separation": 2.3378859779696237e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e-200_gap4.0",
+      "status": "passed",
+      "seconds": 0.0031214820010063704,
+      "scale": 1e-200,
+      "factor": 4.0,
+      "relative_separation": 4.675770881848067e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e0_gap0.5",
+      "status": "passed",
+      "seconds": 0.0017863930006569717,
+      "scale": 1.0,
+      "factor": 0.5,
+      "relative_separation": 5.844715949843694e-08,
+      "floor": 1.1920928955078125e-07,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex128_e0_gap0.9",
+      "status": "passed",
+      "seconds": 0.0017090279980038758,
+      "scale": 1.0,
+      "factor": 0.9,
+      "relative_separation": 1.0520488231711818e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex128_e0_gap1.1",
+      "status": "passed",
+      "seconds": 0.0031214030022965744,
+      "scale": 1.0,
+      "factor": 1.1,
+      "relative_separation": 1.2858374200972108e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e0_gap2.0",
+      "status": "passed",
+      "seconds": 0.00308440400112886,
+      "scale": 1.0,
+      "factor": 2.0,
+      "relative_separation": 2.3378859779696237e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e0_gap4.0",
+      "status": "passed",
+      "seconds": 0.0031002489995444193,
+      "scale": 1.0,
+      "factor": 4.0,
+      "relative_separation": 4.675770884025391e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e200_gap0.5",
+      "status": "passed",
+      "seconds": 0.001731598997139372,
+      "scale": 1e+200,
+      "factor": 0.5,
+      "relative_separation": 5.844715949843694e-08,
+      "floor": 1.1920928955078125e-07,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex128_e200_gap0.9",
+      "status": "passed",
+      "seconds": 0.0017176549990836065,
+      "scale": 1e+200,
+      "factor": 0.9,
+      "relative_separation": 1.0520488231711818e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": false
+    },
+    {
+      "name": "boundary_torch.complex128_e200_gap1.1",
+      "status": "passed",
+      "seconds": 0.0030755369989492465,
+      "scale": 1e+200,
+      "factor": 1.1,
+      "relative_separation": 1.2858374200972108e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e200_gap2.0",
+      "status": "passed",
+      "seconds": 0.003112506998149911,
+      "scale": 1e+200,
+      "factor": 2.0,
+      "relative_separation": 2.3378859779696237e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    },
+    {
+      "name": "boundary_torch.complex128_e200_gap4.0",
+      "status": "passed",
+      "seconds": 0.0031096100028662477,
+      "scale": 1e+200,
+      "factor": 4.0,
+      "relative_separation": 4.675770884025391e-07,
+      "floor": 1.1920928955078125e-07,
+      "accepted": true
+    }
+  ],
+  "candidate_sha256": "5fe2cef32c09f96bdcf80d34e0e38765162d506c2b58a52cbc71434cabcf20ca",
+  "passed": 30
+}
