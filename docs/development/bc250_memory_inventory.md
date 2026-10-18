@@ -1477,6 +1477,31 @@ balancing/subnormals/conditioning/batching/gradients remain unqualified; origina
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
 
+## N2.10 device GEHRD reflector-Q — 2026-10-18
+
+TheRock codecc8a05d3c adds explicit q_backend=device to isolated hessenberg/schur:
+one32-thread HIP complex reflector product, cap16/complex64+128. Native GEHRD,
+owned packed input/current-stream handle lifetime and reference/production host
+LAPACK defaults unchanged. Initial order16 split GEHRD~0.37–0.40ms/Q1.87–1.91ms/
+preparation~6.2ms; remaining setup/teardown not attributed.128 retained groups,
+24 independent CPU complex/zero/mixed reflector cases with strided guards/streams,
+six complete eigenpair fixtures across both Q/three QR backends, exact old-default
+reference/H controls, zero/scalar/refusal and GPU kernel trace pass. Fixed bounds
+unchanged. Six paired three-sample preparation1.11–1.39x, whole N2.8-control
+candidate1.05–1.12x; diagnostic Q1.87->0.17/1.83->0.19ms at16 includes submission/
+sync. Host full eig0.222–0.429ms still far faster; no general/model/LoRA gain or
+production integration. N2.9 regression stays distinct. Seven guards ACK/600s/
+unchanged dmesg;79 protected hashes unchanged. One-unit hipcc/ccache20GiB/OMP4,
+no Torch/ROCm DSO/image/prefix metadata/kernel/default/boot/.105 mutation. Prior
+helper/oracle retained WS/recovery/solver-n210-before and schur_n29_reference.py;
+all previous binaries retained. [Report/reproduction](bc250_solver_results/N210.md),
+raw WS/logs/solver-*n210*. No active job/container/guard; disk~1.08GiB free.
+No general convergence/batching/gradient/compile/graph/concurrency contract.
+Python CPU fault unresolved/separate from fixed VM-heap/CSR. Next N2.11 profile
+binding/handle creation-destruction/allocations and one measured reuse/cache fix,
+retaining explicit lifetime/current-stream tests/owned GEHRD inputs/Python oracle/
+cap16/fixed numerical/failure gates/host production eig default.
+
 ## N2.9 bounded iteration chunks — 2026-10-18
 
 TheRock code13f91e094 adds explicit device_chunked backend, chunk1..32/default16,

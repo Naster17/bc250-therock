@@ -151,3 +151,8 @@ N2.9 follow-up: [bounded multi-iteration device chunks](N29.md). Transfers fall,
 but latency is mixed and regresses at order16; the padded experiment was not
 selected.128 retained groups,74 control oracles,100 chunk boundaries and six
 full CPU fixtures pass; reference and production host LAPACK defaults stay.
+
+N2.10 follow-up: [bounded native GEHRD reflector-Q formation](N210.md).
+128 retained groups,24 independent reflector cases and six CPU/backend fixtures
+pass; measured preparation/whole-candidate gains remain small-scope. Remaining
+setup/teardown is separate, and reference/host production defaults are unchanged.

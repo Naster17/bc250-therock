@@ -1,0 +1,175 @@
+{
+  "status": "passed",
+  "code_revision": "cc8a05d3c",
+  "retained_regression_groups": 128,
+  "independent_reflector_cases": 24,
+  "paired_fixtures": 6,
+  "qr_backends": [
+    "reference",
+    "device_control",
+    "device_chunked"
+  ],
+  "q_backends": [
+    "reference",
+    "device"
+  ],
+  "guards_acknowledged": 7,
+  "fixtures": [
+    {
+      "dtype": "torch.complex64",
+      "order": 4,
+      "profile": {
+        "reference": {
+          "gehrd_ms": 0.16271099957521074,
+          "q_form_ms": 0.6477589995483868
+        },
+        "device": {
+          "gehrd_ms": 0.16112899902509525,
+          "q_form_ms": 0.1331770035903901
+        }
+      },
+      "host_before_ms": 0.2270340009999927,
+      "host_after_ms": 0.22154199905344285,
+      "preparation": {
+        "reference_q_ms": 4.862208999838913,
+        "device_q_ms": 4.3090140006825095,
+        "reference_over_device": 1.1283808776366895
+      },
+      "whole": {
+        "reference_q_ms": 8.937835000324412,
+        "device_q_ms": 8.5307824992924,
+        "reference_over_device": 1.0477157284300445
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 9,
+      "profile": {
+        "reference": {
+          "gehrd_ms": 0.24463700174237601,
+          "q_form_ms": 1.1547739995876327
+        },
+        "device": {
+          "gehrd_ms": 0.25069600087590516,
+          "q_form_ms": 0.1357750006718561
+        }
+      },
+      "host_before_ms": 0.2623780019348487,
+      "host_after_ms": 0.26065600104629993,
+      "preparation": {
+        "reference_q_ms": 5.376990000513615,
+        "device_q_ms": 4.369816500911838,
+        "reference_over_device": 1.230484163211799
+      },
+      "whole": {
+        "reference_q_ms": 11.507882998557761,
+        "device_q_ms": 10.630268498061923,
+        "reference_over_device": 1.08255807467665
+      }
+    },
+    {
+      "dtype": "torch.complex64",
+      "order": 16,
+      "profile": {
+        "reference": {
+          "gehrd_ms": 0.388956003007479,
+          "q_form_ms": 1.8741859967121854
+        },
+        "device": {
+          "gehrd_ms": 0.39686099989921786,
+          "q_form_ms": 0.16909399710129946
+        }
+      },
+      "host_before_ms": 0.3695089981192723,
+      "host_after_ms": 0.3641920011432376,
+      "preparation": {
+        "reference_q_ms": 6.411355001546326,
+        "device_q_ms": 4.609780500686611,
+        "reference_over_device": 1.3908156799638023
+      },
+      "whole": {
+        "reference_q_ms": 16.433063001386472,
+        "device_q_ms": 14.61105450107425,
+        "reference_over_device": 1.1247006846889978
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 4,
+      "profile": {
+        "reference": {
+          "gehrd_ms": 0.1601510011823848,
+          "q_form_ms": 0.6360990009852685
+        },
+        "device": {
+          "gehrd_ms": 0.16740200226195157,
+          "q_form_ms": 0.13494299855665304
+        }
+      },
+      "host_before_ms": 0.22458099920186214,
+      "host_after_ms": 0.22236299992073327,
+      "preparation": {
+        "reference_q_ms": 4.805087499335059,
+        "device_q_ms": 4.320531001212657,
+        "reference_over_device": 1.1121520706566854
+      },
+      "whole": {
+        "reference_q_ms": 9.03689600090729,
+        "device_q_ms": 8.580485999118537,
+        "reference_over_device": 1.0531916259563434
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 9,
+      "profile": {
+        "reference": {
+          "gehrd_ms": 0.2599770014057867,
+          "q_form_ms": 1.1537259997567162
+        },
+        "device": {
+          "gehrd_ms": 0.25950300187105313,
+          "q_form_ms": 0.14390300202649087
+        }
+      },
+      "host_before_ms": 0.27933100136579014,
+      "host_after_ms": 0.279259002127219,
+      "preparation": {
+        "reference_q_ms": 5.483388500579167,
+        "device_q_ms": 4.371270500996616,
+        "reference_over_device": 1.2544152779675835
+      },
+      "whole": {
+        "reference_q_ms": 12.596490500072832,
+        "device_q_ms": 11.513712499436224,
+        "reference_over_device": 1.094042473328184
+      }
+    },
+    {
+      "dtype": "torch.complex128",
+      "order": 16,
+      "profile": {
+        "reference": {
+          "gehrd_ms": 0.412106001022039,
+          "q_form_ms": 1.8309820006834343
+        },
+        "device": {
+          "gehrd_ms": 0.41301300007035024,
+          "q_form_ms": 0.19283800065750256
+        }
+      },
+      "host_before_ms": 0.4293019992474001,
+      "host_after_ms": 0.41829299880191684,
+      "preparation": {
+        "reference_q_ms": 6.413994498871034,
+        "device_q_ms": 4.635466999388882,
+        "reference_over_device": 1.383678170876122
+      },
+      "whole": {
+        "reference_q_ms": 20.123893498748657,
+        "device_q_ms": 18.373615499513107,
+        "reference_over_device": 1.0952604020303969
+      }
+    }
+  ]
+}
