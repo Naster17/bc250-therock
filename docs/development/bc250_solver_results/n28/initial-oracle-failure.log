@@ -1,0 +1,15 @@
+time="2026-10-18T15:08:05+02:00" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_solver_n28.py", line 332, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_solver_n28.py", line 134, in main
+    step_case(
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_solver_n28.py", line 111, in step_case
+    torch.testing.assert_close(ot, rt, rtol=tol, atol=tol)
+  File "/workspace/pytorch-work/torch/testing/_comparison.py", line 1631, in assert_close
+    raise error_metas[0].to_error(msg)
+AssertionError: Tensor-likes are not close!
+
+Mismatched elements: 9 / 81 (11.1%)
+Greatest absolute difference: 2.704550266265869 at index (1, 4) (up to 0.0001373291015625 allowed)
+Greatest relative difference: 2.0000007152557373 at index (1, 8) (up to 0.0001373291015625 allowed)

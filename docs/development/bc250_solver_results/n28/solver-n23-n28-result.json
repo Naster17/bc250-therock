@@ -1,0 +1,346 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "schur_torch.complex64_n4_basis1",
+      "status": "passed",
+      "seconds": 0.5490585309999005,
+      "hessenberg": {
+        "similarity": 1.0103513707952647e-07,
+        "orthogonality": 7.334362074206825e-08
+      },
+      "schur": {
+        "similarity": 1.2467925317352917e-06,
+        "orthogonality": 6.38020843139638e-07
+      },
+      "iterations": 6,
+      "deflations": 3,
+      "eigenvalue_error": 2.192077497347571e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n4_basis10",
+      "status": "passed",
+      "seconds": 0.02221093800108065,
+      "hessenberg": {
+        "similarity": 9.990225306052533e-08,
+        "orthogonality": 6.53074246626266e-08
+      },
+      "schur": {
+        "similarity": 5.91477969501963e-07,
+        "orthogonality": 6.631283999234283e-07
+      },
+      "iterations": 8,
+      "deflations": 3,
+      "eigenvalue_error": 2.1272263807298846e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n9_basis1",
+      "status": "passed",
+      "seconds": 0.026113722997251898,
+      "hessenberg": {
+        "similarity": 3.544035997521354e-07,
+        "orthogonality": 2.3010698255681958e-07
+      },
+      "schur": {
+        "similarity": 3.2253494439647656e-06,
+        "orthogonality": 1.3336932396857733e-06
+      },
+      "iterations": 16,
+      "deflations": 8,
+      "eigenvalue_error": 8.085168118554275e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n9_basis10",
+      "status": "passed",
+      "seconds": 0.02302717800193932,
+      "hessenberg": {
+        "similarity": 3.300261091474693e-07,
+        "orthogonality": 2.1785291325978462e-07
+      },
+      "schur": {
+        "similarity": 1.5230747273869356e-06,
+        "orthogonality": 1.0677310338968952e-06
+      },
+      "iterations": 20,
+      "deflations": 8,
+      "eigenvalue_error": 4.955708969164438e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n16_basis1",
+      "status": "passed",
+      "seconds": 0.02914801499719033,
+      "hessenberg": {
+        "similarity": 3.5207019834844043e-07,
+        "orthogonality": 2.5038997123109447e-07
+      },
+      "schur": {
+        "similarity": 4.512673713598093e-06,
+        "orthogonality": 1.6902755008828908e-06
+      },
+      "iterations": 29,
+      "deflations": 15,
+      "eigenvalue_error": 1.3504164261271697e-05,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex64_n16_basis10",
+      "status": "passed",
+      "seconds": 0.027739550001570024,
+      "hessenberg": {
+        "similarity": 3.2314252166830546e-07,
+        "orthogonality": 2.5181487760061226e-07
+      },
+      "schur": {
+        "similarity": 2.2764470558868533e-06,
+        "orthogonality": 1.5816420652875745e-06
+      },
+      "iterations": 33,
+      "deflations": 15,
+      "eigenvalue_error": 5.445937983732035e-06,
+      "tolerance": 5e-05,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "nonconvergence_torch.complex64",
+      "status": "passed",
+      "seconds": 0.017609212001843844,
+      "attempts": [
+        {
+          "info": 9,
+          "iterations": 0,
+          "similarity": {
+            "similarity": 2.631220851159094e-07,
+            "orthogonality": 1.9875070119746255e-07
+          }
+        },
+        {
+          "info": 9,
+          "iterations": 1,
+          "similarity": {
+            "similarity": 4.57373617201477e-07,
+            "orthogonality": 3.0234023803618764e-07
+          }
+        }
+      ],
+      "hidden_host_fallback": false
+    },
+    {
+      "name": "triangular_torch.complex64",
+      "status": "passed",
+      "seconds": 0.006124750998424133,
+      "repeated_eigenvalues": true,
+      "iterations": 0,
+      "limits": "Already triangular; no defective eigvector claim"
+    },
+    {
+      "name": "rotation_2x2_torch.complex64",
+      "status": "passed",
+      "seconds": 0.0060997610016784165,
+      "iterations": 1,
+      "nonreal_eigenvalues": true,
+      "similarity": {
+        "similarity": 3.474511729404528e-07,
+        "orthogonality": 1.7961949171667902e-07
+      }
+    },
+    {
+      "name": "scalar_torch.complex64",
+      "status": "passed",
+      "seconds": 0.0007656529996893369,
+      "iterations": 0
+    },
+    {
+      "name": "schur_torch.complex128_n4_basis1",
+      "status": "passed",
+      "seconds": 0.03054512200105819,
+      "hessenberg": {
+        "similarity": 3.662326364550058e-16,
+        "orthogonality": 2.9394222583710625e-16
+      },
+      "schur": {
+        "similarity": 2.855301619714286e-15,
+        "orthogonality": 1.0618093041745793e-15
+      },
+      "iterations": 7,
+      "deflations": 3,
+      "eigenvalue_error": 7.350984424391015e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n4_basis10",
+      "status": "passed",
+      "seconds": 0.020458790997508913,
+      "hessenberg": {
+        "similarity": 2.2683822354587763e-16,
+        "orthogonality": 2.751603441236969e-16
+      },
+      "schur": {
+        "similarity": 1.3616046794711122e-15,
+        "orthogonality": 1.598901318628105e-15
+      },
+      "iterations": 10,
+      "deflations": 3,
+      "eigenvalue_error": 7.0810995818524236e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n9_basis1",
+      "status": "passed",
+      "seconds": 0.023544216997834155,
+      "hessenberg": {
+        "similarity": 4.821749201416233e-16,
+        "orthogonality": 4.567250643639753e-16
+      },
+      "schur": {
+        "similarity": 3.659764187475443e-15,
+        "orthogonality": 2.1977747041700633e-15
+      },
+      "iterations": 20,
+      "deflations": 8,
+      "eigenvalue_error": 5.60415245948141e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n9_basis10",
+      "status": "passed",
+      "seconds": 0.023966313998244004,
+      "hessenberg": {
+        "similarity": 5.088223833535365e-16,
+        "orthogonality": 3.7713790071887966e-16
+      },
+      "schur": {
+        "similarity": 2.4340713454461954e-15,
+        "orthogonality": 2.021027933979451e-15
+      },
+      "iterations": 25,
+      "deflations": 8,
+      "eigenvalue_error": 5.863197006355355e-15,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n16_basis1",
+      "status": "passed",
+      "seconds": 0.030091134998656344,
+      "hessenberg": {
+        "similarity": 7.982054922993782e-16,
+        "orthogonality": 6.356421328479698e-16
+      },
+      "schur": {
+        "similarity": 6.1307745729557995e-15,
+        "orthogonality": 2.970001254547441e-15
+      },
+      "iterations": 36,
+      "deflations": 15,
+      "eigenvalue_error": 1.0889244914870514e-14,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "schur_torch.complex128_n16_basis10",
+      "status": "passed",
+      "seconds": 0.03201379399979487,
+      "hessenberg": {
+        "similarity": 6.809338904719188e-16,
+        "orthogonality": 5.062634129852607e-16
+      },
+      "schur": {
+        "similarity": 4.225310090778387e-15,
+        "orthogonality": 3.073263882498285e-15
+      },
+      "iterations": 45,
+      "deflations": 15,
+      "eigenvalue_error": 1.7746907235050534e-14,
+      "tolerance": 3e-12,
+      "input_and_guards_unchanged": true,
+      "stream": "nondefault"
+    },
+    {
+      "name": "nonconvergence_torch.complex128",
+      "status": "passed",
+      "seconds": 0.014486299998679897,
+      "attempts": [
+        {
+          "info": 9,
+          "iterations": 0,
+          "similarity": {
+            "similarity": 6.697158182614026e-16,
+            "orthogonality": 4.939977097989447e-16
+          }
+        },
+        {
+          "info": 9,
+          "iterations": 1,
+          "similarity": {
+            "similarity": 8.641986355219876e-16,
+            "orthogonality": 8.338566847347703e-16
+          }
+        }
+      ],
+      "hidden_host_fallback": false
+    },
+    {
+      "name": "triangular_torch.complex128",
+      "status": "passed",
+      "seconds": 0.006276057996728923,
+      "repeated_eigenvalues": true,
+      "iterations": 0,
+      "limits": "Already triangular; no defective eigvector claim"
+    },
+    {
+      "name": "rotation_2x2_torch.complex128",
+      "status": "passed",
+      "seconds": 0.006155270999443019,
+      "iterations": 1,
+      "nonreal_eigenvalues": true,
+      "similarity": {
+        "similarity": 1.3597399555105182e-16,
+        "orthogonality": 0.0
+      }
+    },
+    {
+      "name": "scalar_torch.complex128",
+      "status": "passed",
+      "seconds": 0.0007112690000212751,
+      "iterations": 0
+    },
+    {
+      "name": "argument_contract",
+      "status": "passed",
+      "seconds": 0.0011155830034113023,
+      "rejections": 9
+    }
+  ],
+  "candidate_sha256": "70d8a4e4dd454a0c12de77623d8bc339335884932eba5e7f362466405367de80",
+  "execution": "GPU matrix arithmetic, host scalar convergence/control only",
+  "mapped_solver_libraries": [
+    "/workspace/build/dist/rocm/lib/libhipsolver.so.1.5",
+    "/workspace/build/dist/rocm/lib/librocblas.so.5.8",
+    "/workspace/build/dist/rocm/lib/librocsolver.so.0.13"
+  ],
+  "passed": 21
+}

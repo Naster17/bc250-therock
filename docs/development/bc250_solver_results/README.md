@@ -141,3 +141,8 @@ N2.7 follow-up: [bounded cooperative device QR/similarity step](N27.md).
 128 retained groups plus28 direct cases and six paired fixtures pass. The
 isolated Schur prototype improves in the measured fixtures; production eig
 remains host LAPACK and the reference backend remains the prototype default.
+
+N2.8 follow-up: [bounded device shift/deflation/status control](N28.md).
+128 retained groups plus74 direct oracle cases and six complete CPU/paired
+fixtures pass. Per-iteration status copies remain; production host LAPACK and
+prototype reference defaults are unchanged.

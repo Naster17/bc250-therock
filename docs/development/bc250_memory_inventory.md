@@ -1477,6 +1477,31 @@ balancing/subnormals/conditioning/batching/gradients remain unqualified; origina
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
 
+## N2.8 bounded device Schur control — 2026-10-18
+
+TheRock code67e5d1ef8 adds explicit device_control backend: trailing deflations,
+nearest/exceptional complex shift, reused cooperative QR/similarity and finite/
+128eps fill status in one HIP launch. At most one QR/launch, budget+1 launches,
+one five-int status copy/launch; unchanged cap16/dtypes/scaling/budget/deflation/
+separation/recovery residual/refusal rules. Default reference and production host
+LAPACK unchanged.128 retained groups,74 direct state/boundary/root/failure/stream
+oracle cases and six CPU eigenpair/paired fixtures pass. Reference matches N2.7
+exactly on final six fixtures. Initial direct T/Q comparison ignored nonunique QR
+phases; phase-aligned similarity and independent reconstruction fix harness with
+unchanged bounds, no solver change. Failed log retained. Seven guards ACK/600s/
+unchanged dmesg. Schur1.80–2.73x, whole candidate1.56–2.21x versus N2.7 in fixtures;
+whole8.88–20.35ms still much slower than host full eig0.23–0.42ms. Order16 scalar
+reads159/207->8 excludes explicit35/47 status copies; not a total-sync count.
+70 protected runtime/source/recovery/metadata hashes unchanged; one-unit hipcc/
+ccache20GiB, no prefix metadata/DSO/Torch/image/kernel/boot/default/.105 mutation.
+Prior source/binary WS/recovery/solver-n28-before; immutable N2.7 oracle retained.
+[Report/reproduction/evidence](bc250_solver_results/N28.md), raw WS/logs/solver-*n28*.
+No active job/container/guard; disk~1.09GiB free. No general convergence/gradient/
+batching/compile/graph/production GPU eig or universal/model/LoRA performance
+claim. Python CPU fault unresolved/separate from fixed VM-heap/CSR. Next N2.9
+bounded multi-iteration chunk to reduce status copies, preserving exact QR budget,
+terminal/refusal semantics, Python/N2.8 oracle/fixed gates/cap16/host default.
+
 ## N2.7 cooperative device QR/similarity — 2026-10-18
 
 TheRock code100f43e2a adds explicit device-step Schur backend, complex64/128

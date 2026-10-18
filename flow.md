@@ -9,6 +9,35 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.8 completed2026-10-18:** TheRock code67e5d1ef8; explicit isolated
+  schur(qr_backend="device_control") fuses trailing deflation, nearest/exceptional
+  complex shift, reused cooperative QR/similarity and finite/128eps fill status.
+  At most one QR/launch, bounded budget+1 launches; five-int D2H status/launch.
+  Cap16/complex64+128/normalization/iteration budget/deflation-before-budget/
+  separation/residual/refusal gates unchanged. Reference helper and production
+  host-LAPACK defaults unchanged.128 retained N2.3–5 groups +74 direct oracle/
+  boundary/branch/nonfinite/fill/nondefault-stream cases +six CPU eigenpair
+  fixtures pass. Default reference exactly matches immutable N2.7 on six fixtures.
+  First direct harness ignored nonunique QR phases near singular shifts; fixed
+  phase-aligned T/Q+independent reconstruction with original bounds, no solver
+  change or tolerance increase. Failed log retained. Seven guards ACK/600s/
+  dmesg unchanged. Paired A1/B1/B2/A2 three-sample synchronized Schur1.80–2.73x
+  and whole-candidate1.56–2.21x versus N2.7 in six fixtures; whole8.88–20.35ms
+  still slower than host eig~0.23–0.42ms. No universal/model/LoRA speedup claim.
+  Order16 ATen scalar reads159/207->8, but explicit D2H statuses35/47 remain;
+  do not describe scalar counts as total synchronizations.70 protected runtime/
+  source/recovery/metadata hashes unchanged. Targeted one-unit hipcc/ccache20GiB;
+  no Torch/ROCm DSO/image/prefix metadata/kernel/boot/.105/default mutation.
+  Prior source/binary WS/recovery/solver-n28-before and immutable N2.7 Python
+  oracle retained. [N28.md](docs/development/bc250_solver_results/N28.md) and n28/
+  contain results/hashes/trace/commands; raw WS/logs/solver-*n28*, ignored local
+  kernel/artifacts/solver-n28. No running agent job/container/guard deadline;
+  disk~1.09GiB free: capacity check before builds. Python CPU fault unresolved,
+  separate from fixed VM-heap/CSR. No general convergence/batching/gradient/
+  compile/graph/production GPU eig contract. **Next N2.9:** bounded multi-iteration
+  device chunk to reduce repeated status transfers; retain exact total QR budget,
+  terminal/failure semantics, Python/N2.8 oracle/fixed gates/cap16/host eig default.
+
 - **N2.7 completed2026-10-18:** TheRock code100f43e2a; isolated native HIP
   complex64/128 Householder QR+full similarity/Q accumulation, order2..16,
   explicit schur(qr_backend="device").32-thread shared-memory block/current
@@ -1283,7 +1312,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.5 | Repair demonstrated tiny/large magnitude failures; seeded6 replay,40 scale,30 separation,16 failure/control and21 N2.4 groups pass. Experimental cap16/default eig unchanged. |
 | [x]   | N2.6 | Profiled small native versus host, vectorized recovery;107 groups and6 paired fixtures pass, recovery1.53–8.44x/whole1.07–1.72x in fixtures. Native remains slower than host; default unchanged. |
 | [x]   | N2.7 | Isolated native cooperative small QR/similarity step;28 direct+128 retained groups+six paired CPU fixtures pass. Schur1.24–1.46x in fixtures, host eig remains faster; defaults unchanged. |
-| [ ]   | **N2.8 — next** | Prototype bounded device shift selection/deflation/status around cooperative QR; retain Python oracle/fixed scale/separation/nonconvergence gates/cap16 and host production eig. |
+| [x]   | N2.8 | Device shift/deflation/status around cooperative QR;128 retained+74 direct+six CPU/paired fixtures pass. Whole prototype1.56–2.21x versus N2.7 in fixtures; host default remains faster/unchanged. |
+| [ ]   | **N2.9 — next** | Bounded multi-iteration device chunk to reduce status transfers; preserve exact QR budget/terminal/failure semantics, Python/N2.8 oracle/fixed scale/separation/residual gates/cap16/host production eig. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. Resolve clock inconsistencies before explaining small speed changes; dangerous debugger tests require recovery first.                                                                                                                                                   |
