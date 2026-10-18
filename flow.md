@@ -9,6 +9,33 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Storage refresh completed2026-10-18**, explicit user-authorized obsolete
+  generated-artifact cleanup, code780e67ceb. Recovered12,839,837,696bytes=11.96GiB,
+  free1.08->13.04GiB/used100->97%. Unlinked8,801 old Torch .o/.a/.so files under
+  WS/pytorch-{work,a04,sparse-followup}/build,21 old Triton bin/test compiled files,
+  90 synthetic CLI adapter/state/tokenizer files from five explicit test labels,
+  and removed9 stopped project build containers. Exact plan/journal preserved.
+  Sources/generated sources/build metadata/directory paths/links intact; retired
+  generated targets require rebuilding. Current A09 full build, shared immutable
+  sparse-followup/third_party, active ROCm build/caches and all installed old/current
+  DSOs retained. No package/image/global prune: all image IDs/tags and user neural-p1
+  container unchanged; real user models/data/checkpoints, all recovery copies,
+  source archives, releases/compat installs, .105/user src/boot fallbacks preserved.
+  101 protected product/config hashes unchanged, no current/previous/runtime link
+  or metadata change. Current-before/current-after/fallback-after plus current/
+  fallback fresh Triton constexpr-specialization gates all exit0:8 groups each,
+  40 executions incl output/gradient/SDPA/FFT/RNG/consumer imports and GPU Triton.
+  Five guards ACK/600s; dmesg byte-identical across entire batch. No native build/
+  cache reset/default/kernel/boot/BIOS change; CPU Python fault stays unresolved/
+  separate from fixed VM-heap/CSR. [Cleanup report](docs/development/bc250_storage_cleanup_20261018/README.md)
+  includes compressed exact plan/journal, final identities and gate evidence.
+  Raw WS/logs/storage-refresh-20261018 and storage-refresh-*; ignored local
+  kernel/artifacts/storage-refresh-20261018. No active agent job/container/guard.
+  **Next remains N2.12:** warm-session recovery profile and bounded native triangular
+  back-substitution; retain Python/N2.6 reference/fixed numerical+failure gates/
+  cap16/production host LAPACK. Scientific code807642198/Torch4af4a15/libraries319a235
+  and r3 boot e3ed129b-9c41-4d0c-ab84-5ab54720bb8f unchanged.
+
 - **N2.11 completed2026-10-18:** TheRock code807642198; explicit caller-owned
   GehrdSession reuses bindings/native handle for one PID/host-thread/device/GPU
   stream. No global cache/default change; current-stream checked/rebound, owned

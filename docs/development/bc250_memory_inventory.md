@@ -390,6 +390,21 @@ prepare separately versioned candidate with one-shot boot/SSH fallback preserved
 | Recovery link          | `/opt/bc250-stack/before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542` release                                                                   |
 | Software fallback      | `previous` and `before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542`; initial20261012 payload retired20261016                                       |
 
+Storage refresh20261018 (code780e67ceb) recovered11.96GiB: free1.08->13.04GiB.
+Explicit user cleanup authority supersedes retention only for inspected obsolete
+compiled outputs:8,801 .o/.a/.so files in three inactive Torch build trees,
+21 Triton bin/test compiled files,90 synthetic CLI fixture files and9 stopped
+project build containers. All source/generated source/config/directory/link paths,
+current A09 build/shared third_party source, ROCm build, caches, installed binaries,
+images/releases, user data/recovery/compat/boot fallbacks/.105/src remain. Missing
+retired generated targets must rebuild; deleted synthetic payloads require a new
+fixture label.101 protected hashes unchanged; all images/user neural-p1/current/
+previous/runtime metadata unchanged. Five8-group current/fallback/fresh-Triton GPU
+gates pass,600s guards ACK, whole-batch dmesg identical. No native build/cache reset/
+package/default/boot change or active job/container/guard. [Exact plan/journal and
+report](bc250_storage_cleanup_20261018/README.md). Next N2.12 unchanged; CPU Python
+fault remains unresolved/separate from fixed VM-heap/CSR.
+
 Storage cleanup20261016 (implementation/evidence `a26b5621b666d08dc18257208a6a68d21b7bb21e`)
 recovered29.13GiB on .104; available12.2->41.3GiB. User explicitly authorized
 retiring inspected obsolete payloads,56 stopped containers,2 image records and

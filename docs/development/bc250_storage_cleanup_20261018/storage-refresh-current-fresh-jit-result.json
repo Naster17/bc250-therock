@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    "gemm-output-grad-torch.float32",
+    "gemm-output-grad-torch.bfloat16",
+    "math-sdpa-output-qkv-grad-32",
+    "math-sdpa-output-qkv-grad-256",
+    "layernorm-output-grad",
+    "fft-output-grad",
+    "rng-exact-replay",
+    "triton-jit-nondefault-stream-exact-513"
+  ],
+  "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+  "transformers_path": "/opt/bc250-stack/dev/priority1/python-consumers/site-packages/transformers/__init__.py",
+  "versions": {
+    "torch": "2.13.0a0+gfx1013",
+    "triton": "3.8.0",
+    "transformers": "5.2.0",
+    "peft": "0.18.1",
+    "accelerate": "1.12.0"
+  },
+  "triton_unique_specialization_bias": 52267,
+  "triton_module": "/opt/torch-venv/lib/python3.12/site-packages/triton/__init__.py",
+  "triton_native": "/opt/torch-venv/lib/python3.12/site-packages/triton/_C/libtriton.so"
+}
