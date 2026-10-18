@@ -66,6 +66,7 @@ def gates(phase: str) -> list:
         "unit": 64,
         "trace": 1,
         "native": 96,
+        "legacy": 41,
         "core": 7,
     }
     passed = []
@@ -192,6 +193,9 @@ def main() -> None:
         assert identities() == current
         preserved = dict(frozen)
         preserved[str(backup)] = preserved.pop("/opt/bc250-stack/current/runtime.json")
+        preserved[str(recovery / "torch/torch/lib/libtorch_hip.so")] = preserved.pop(
+            "/opt/bc250-stack/current/torch/torch/lib/libtorch_hip.so"
+        )
         assert all(sha(Path(p)) == d for p, d in preserved.items())
         runtime["sparse_triangular_n213"].update(
             status="bounded generic/native/reference/pivot and retained regression gates passed",
