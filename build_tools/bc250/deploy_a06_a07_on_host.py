@@ -12,8 +12,8 @@ from deploy_torch_a04_on_host import atomic_json, check_gate, sha
 WS = Path("/home/nik/bc250work/rocm-10.2-gfx1013")
 RELEASE = Path("/opt/bc250-stack/current").resolve()
 TORCH = (RELEASE / "torch").resolve()
-RECOVERY = WS / "recovery/a06-a07-before"
-LOGS = WS / "logs/a06-a07-deployment"
+RECOVERY = WS / "recovery/a06-a07-before-r2"
+LOGS = WS / "logs/a06-a07-deployment-r2"
 
 
 def main() -> None:
@@ -123,6 +123,7 @@ def main() -> None:
             ),
             ("a06-a07-installed-core", "validate_cleanup_runtime.py", [], None),
         ]:
+            label += "-r2"
             report["phase"] = label
             atomic_json(LOGS / "result.json", report)
             cmd = [
@@ -144,6 +145,8 @@ def main() -> None:
                 assert len(result["results"]) == count, label
             report["installed_gates"].append(label)
         assert {str(p): sha(p) for p in protected} == frozen
+        for path, name in targets.items():
+            assert sha(path) == source["helper_sha256"][name], str(path)
         (TORCH / "GIT_REVISION").write_text(source["torch_revision"] + "\n")
         runtime["a06_gated_delta"][
             "status"
