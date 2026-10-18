@@ -9,6 +9,40 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N2.17 completed, 2026-10-18:** TheRock qualification `5826261d8`.
+  Native FP32/64 stable key/value sorting and selection pass rocPRIM 656 /
+  hipCUB 656 / Thrust 648 =1,960 checks, plus public Torch 62 (54 finite output/
+  indices/base-gradient fixtures, eight non-finite output/index fixtures).
+  Sizes 0/1/33/257/4099/65537, default/private streams, guarded outputs/workspace,
+  immutable inputs/indices/flags. Exact bits preserve signed zero, smallest
+  subnormals, infinities and quiet-NaN sign/payloads; exact payload indices prove
+  stability. Native radix pinned encoded NaN ordering is distinct from explicit
+  strict-weak NaNs-last comparison (both directions) and Torch default NaN
+  ordering. Five selection policies verify stable counts/bits;16 unsupported
+  partial-float-bit queries rejected. Torch sort/masked_select finite backward
+  matches CPU exactly, including unused strided base storage; no NaN-gradient
+  claim. No production defect/new operator/default/dispatch/speed claim.
+  Initial build r1 failed only new Thrust adapter's mixed-type auto declaration;
+  corrected in separate r2 outputs, failed source/logs/r1 binaries retained.
+  Three standalone builds ccache20GiB/OMP4/three jobs/native gfx1013, builder
+  fa3e8c254, no mapped GPU/network; no library/Torch rebuild/install. P2 INT32
+  primitives138/core7 retained; six GPU gates/guards ACK/600s, dmesg unchanged
+  including initial build, 181 protected hashes plus new binaries sealed.
+  Active native Torch `dc8fea0`, source `2b449c4`, native libraries `319a235d6`,
+  source-doc `c29021b40e7`,
+  links/runtime metadata/DSOs/headers/four FFT AOT DBs/image/kernel/boot/defaults/
+  .105/BIOS/r2 fallback unchanged. [Report](docs/development/bc250_sorting_n217_results/README.md)
+  includes explicit contracts, case counts, source/binary/build/kernel evidence.
+  Outputs WS/build/bc250-coverage/sorting-n217-r{1,2}; raw WS/logs/sorting-n217-*,
+  local ignored kernel/artifacts/sorting-n217. Next preservation baseline
+  WS/logs/sorting-n217-qualification-r2/final.json plus binary_sha256 for new
+  test products. No running agent job/container/guard; free ~7.16GiB. CPU Python
+  fault unresolved/separate from fixed VM-heap/CSR and the compile error above.
+  **Next N2.18:** audit CK scalar DL admission/GEMM evidence, then one admitted
+  DL convolution/grouped CPU-reference qualification and targeted build; keep
+  XDL/WMMA/modern MIOpen CK plugin off, preserve defaults, do not repeat completed
+  CK Tile normalization/top-k. Broad N2–N8 remain open.
+
 - **N2.16 completed, 2026-10-18:** TheRock qualification `2db3b18c1`.
   Existing installed headers pass native rocPRIM 576 / hipCUB 480 / rocThrust 480 new
   CPU-reference checks: FP32/FP64 ordinary/segmented reduce and inclusive/
@@ -1639,7 +1673,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.14 | FFT complex96/real72 output+weighted backward+guarded out, three DFT/finite-difference/reuse checks,16 direct plans/32 executions and FFT30/core7 pass; no production defect or binary/default change, AOT cache preserved. BF16 promotion B01 separate. |
 | [x]   | N2.15 | Torch state80/statistics22/contracts20/fresh continuation1, direct native68 and RNG28/core7 pass. Stale LFSR113 offset comments corrected; implementation/binaries/defaults unchanged; four AOT DBs preserved. |
 | [x]   | N2.16 | Native floating/segmented/custom reductions/scans: rocPRIM576/hipCUB480/Thrust480, P2 primitives138/core7 pass; fixed CPU references/guards/streams, no production defect or default/binary change. |
-| [ ]   | **N2.17 — next** | Audit P2 sorting/selection; bounded floating stable key/value sorting and selection with explicit ordering/special-value contracts, CPU references, guards/private streams and targeted builds; fix demonstrated defects only. |
+| [x]   | N2.17 | Native floating stable sorting/selection: rocPRIM656/hipCUB656/Thrust648; Torch62 incl54 finite backward cases; P2 primitives138/core7 pass. Exact ordering/payload/count/guard checks; no production defect or installed change. |
+| [ ]   | **N2.18 — next** | Audit CK scalar DL admission/GEMM evidence; qualify one hardware-admitted DL convolution/grouped case with CPU references and targeted builds. Keep XDL/WMMA/modern MIOpen CK plugin off; do not repeat completed CK Tile work. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |

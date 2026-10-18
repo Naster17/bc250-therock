@@ -1,0 +1,998 @@
+{
+  "status": "passed",
+  "arch": "gfx1013:xnack-",
+  "checks": [
+    {
+      "name": "sort_torch.float32_0_contiguous_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_0_contiguous_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_0_contiguous",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_0_step_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          3,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_0_step_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          3,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_0_step",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          3,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_0_transpose_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_0_transpose_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_0_transpose",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_33_contiguous_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          33,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_33_contiguous_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          33,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_33_contiguous",
+      "status": "passed",
+      "details": {
+        "elements": 41,
+        "strides": [
+          33,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_33_step_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_33_step_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_33_step",
+      "status": "passed",
+      "details": {
+        "elements": 42,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_33_transpose_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_33_transpose_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_33_transpose",
+      "status": "passed",
+      "details": {
+        "elements": 41,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_4099_contiguous_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          4099,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_4099_contiguous_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          4099,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_4099_contiguous",
+      "status": "passed",
+      "details": {
+        "elements": 5156,
+        "strides": [
+          4099,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_4099_step_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_4099_step_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_4099_step",
+      "status": "passed",
+      "details": {
+        "elements": 5158,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_4099_transpose_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float32_4099_transpose_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float32_4099_transpose",
+      "status": "passed",
+      "details": {
+        "elements": 5156,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_0_contiguous_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_0_contiguous_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_0_contiguous",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_0_step_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          3,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_0_step_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          3,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_0_step",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          3,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_0_transpose_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_0_transpose_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_0_transpose",
+      "status": "passed",
+      "details": {
+        "elements": 0,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_33_contiguous_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          33,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_33_contiguous_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          33,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_33_contiguous",
+      "status": "passed",
+      "details": {
+        "elements": 41,
+        "strides": [
+          33,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_33_step_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_33_step_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_33_step",
+      "status": "passed",
+      "details": {
+        "elements": 42,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_33_transpose_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_33_transpose_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_33_transpose",
+      "status": "passed",
+      "details": {
+        "elements": 41,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_4099_contiguous_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          4099,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_4099_contiguous_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          4099,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_4099_contiguous",
+      "status": "passed",
+      "details": {
+        "elements": 5156,
+        "strides": [
+          4099,
+          1
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_4099_step_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_4099_step_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_4099_step",
+      "status": "passed",
+      "details": {
+        "elements": 5158,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_4099_transpose_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "sort_torch.float64_4099_transpose_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "masked_select_torch.float64_4099_transpose",
+      "status": "passed",
+      "details": {
+        "elements": 5156,
+        "strides": [
+          1,
+          3
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": false,
+        "exact_gradient": true,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float32_33_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float32_33_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float32_4099_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float32_4099_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float64_33_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float64_33_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 99,
+        "strides": [
+          69,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float64_4099_descFalse",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    },
+    {
+      "name": "special_sort_torch.float64_4099_descTrue",
+      "status": "passed",
+      "details": {
+        "elements": 12297,
+        "strides": [
+          8201,
+          2
+        ],
+        "private_stream": true,
+        "exact_output": true,
+        "exact_indices": true,
+        "exact_gradient": false,
+        "input_unchanged": true
+      }
+    }
+  ]
+}

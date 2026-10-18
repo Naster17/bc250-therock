@@ -1,0 +1,23 @@
+/workspace/helpers/sorting_n217.cpp:188:3: error: 'auto' deduced as 'device_ptr<float>' in declaration of 'first' and deduced as 'device_ptr<int>' in declaration of 'payload'
+  188 |   auto first = thrust::device_pointer_cast(out.data),
+      |   ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  189 |        payload = thrust::device_pointer_cast(values.data);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/helpers/sorting_n217.cpp:277:5: note: in instantiation of function template specialization 'radix<float>' requested here
+  277 |     radix(in, output, indices, values, descending, pattern, stream);
+      |     ^
+/workspace/helpers/sorting_n217.cpp:349:11: note: in instantiation of function template specialization 'run<float>' requested here
+  349 |           run<float>(n, pattern, stream);
+      |           ^
+/workspace/helpers/sorting_n217.cpp:188:3: error: 'auto' deduced as 'device_ptr<double>' in declaration of 'first' and deduced as 'device_ptr<int>' in declaration of 'payload'
+  188 |   auto first = thrust::device_pointer_cast(out.data),
+      |   ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  189 |        payload = thrust::device_pointer_cast(values.data);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/helpers/sorting_n217.cpp:277:5: note: in instantiation of function template specialization 'radix<double>' requested here
+  277 |     radix(in, output, indices, values, descending, pattern, stream);
+      |     ^
+/workspace/helpers/sorting_n217.cpp:351:11: note: in instantiation of function template specialization 'run<double>' requested here
+  351 |           run<double>(n, pattern, stream);
+      |           ^
+2 errors generated when compiling for gfx1013.

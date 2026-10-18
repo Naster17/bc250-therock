@@ -1,0 +1,89 @@
+{
+  "sorting-n217-r2-rocprim": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    "native": {
+      "status": "passed",
+      "architecture": "gfx1013",
+      "library": "rocPRIM",
+      "cases": 656,
+      "streams": 2,
+      "guards": true,
+      "max_workspace_bytes": 786444
+    }
+  },
+  "sorting-n217-r2-hipcub": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    "native": {
+      "status": "passed",
+      "architecture": "gfx1013",
+      "library": "hipCUB",
+      "cases": 656,
+      "streams": 2,
+      "guards": true,
+      "max_workspace_bytes": 786444
+    }
+  },
+  "sorting-n217-r2-thrust": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    },
+    "native": {
+      "status": "passed",
+      "architecture": "gfx1013",
+      "library": "rocThrust",
+      "cases": 648,
+      "streams": 2,
+      "guards": true,
+      "max_workspace_bytes": 0
+    }
+  },
+  "sorting-n217-r2-legacy": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "sorting-n217-r2-torch": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  },
+  "sorting-n217-r2-core": {
+    "exit": {
+      "returncode": 0,
+      "kernel_log_unchanged": true
+    },
+    "kernel_sha256": {
+      "kernel-before.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42",
+      "kernel-after.log": "a29ed486231445a7cbd50cd29690afe5e3725b5ec256641cdb1f3e896facaa42"
+    }
+  }
+}

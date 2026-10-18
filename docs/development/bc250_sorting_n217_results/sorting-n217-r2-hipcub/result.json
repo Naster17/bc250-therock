@@ -1,0 +1,3941 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "f32/n0/pattern0/stream0/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/select_mode1",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/select_mode1",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream0/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/select_mode0",
+      "elements": 18,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/select_mode1",
+      "elements": 17,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream0/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/select_mode0",
+      "elements": 18,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/select_mode1",
+      "elements": 17,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream0/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/select_mode0",
+      "elements": 21,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream0/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/select_mode0",
+      "elements": 21,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream0/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/select_mode0",
+      "elements": 13,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream0/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/select_mode0",
+      "elements": 13,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream0/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/select_mode0",
+      "elements": 128,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/select_mode1",
+      "elements": 131,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream0/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/select_mode0",
+      "elements": 128,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/select_mode1",
+      "elements": 131,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream0/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/select_mode0",
+      "elements": 158,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream0/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/select_mode0",
+      "elements": 158,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream0/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/select_mode0",
+      "elements": 102,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream0/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/select_mode0",
+      "elements": 102,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream0/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/select_mode0",
+      "elements": 2070,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/select_mode1",
+      "elements": 2052,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream0/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/select_mode0",
+      "elements": 2070,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/select_mode1",
+      "elements": 2052,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream0/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/select_mode0",
+      "elements": 2522,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream0/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/select_mode0",
+      "elements": 2522,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream0/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/select_mode0",
+      "elements": 1646,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream0/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/select_mode0",
+      "elements": 1646,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream0/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/select_mode0",
+      "elements": 33107,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/select_mode1",
+      "elements": 32769,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream0/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/select_mode0",
+      "elements": 33107,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/select_mode1",
+      "elements": 32769,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream0/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/select_mode0",
+      "elements": 40330,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream0/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/select_mode0",
+      "elements": 40330,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream0/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/select_mode0",
+      "elements": 26324,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream0/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/select_mode0",
+      "elements": 26324,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream0/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/contracts/stream0/refuse_partial_bits_1_32",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/contracts/stream0/refuse_partial_bits_0_31",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/contracts/stream0/refuse_partial_bits_1_64",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/contracts/stream0/refuse_partial_bits_0_63",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern0/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern0/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern1/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern1/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n0/pattern2/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/radix_or_default_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/nan_last_stable_asc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/radix_or_default_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/nan_last_stable_desc",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/select_mode2",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n0/pattern2/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/select_mode1",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern0/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/select_mode0",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/select_mode1",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern0/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern1/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern1/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n1/pattern2/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/radix_or_default_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/nan_last_stable_asc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/radix_or_default_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/nan_last_stable_desc",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/select_mode0",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/select_mode1",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/select_mode2",
+      "elements": 1,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n1/pattern2/stream1/select_mode4",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/select_mode0",
+      "elements": 18,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/select_mode1",
+      "elements": 17,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern0/stream1/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/select_mode0",
+      "elements": 18,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/select_mode1",
+      "elements": 17,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern0/stream1/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/select_mode0",
+      "elements": 21,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern1/stream1/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/select_mode0",
+      "elements": 21,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern1/stream1/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/select_mode0",
+      "elements": 13,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n33/pattern2/stream1/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/radix_or_default_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/nan_last_stable_asc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/radix_or_default_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/nan_last_stable_desc",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/select_mode0",
+      "elements": 13,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/select_mode1",
+      "elements": 15,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/select_mode2",
+      "elements": 33,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n33/pattern2/stream1/select_mode4",
+      "elements": 24,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/select_mode0",
+      "elements": 128,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/select_mode1",
+      "elements": 131,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern0/stream1/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/select_mode0",
+      "elements": 128,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/select_mode1",
+      "elements": 131,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern0/stream1/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/select_mode0",
+      "elements": 158,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern1/stream1/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/select_mode0",
+      "elements": 158,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern1/stream1/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/select_mode0",
+      "elements": 102,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n257/pattern2/stream1/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/radix_or_default_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/nan_last_stable_asc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/radix_or_default_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/nan_last_stable_desc",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/select_mode0",
+      "elements": 102,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/select_mode1",
+      "elements": 119,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/select_mode2",
+      "elements": 257,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n257/pattern2/stream1/select_mode4",
+      "elements": 192,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/select_mode0",
+      "elements": 2070,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/select_mode1",
+      "elements": 2052,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern0/stream1/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/select_mode0",
+      "elements": 2070,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/select_mode1",
+      "elements": 2052,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern0/stream1/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/select_mode0",
+      "elements": 2522,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern1/stream1/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/select_mode0",
+      "elements": 2522,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern1/stream1/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/select_mode0",
+      "elements": 1646,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n4099/pattern2/stream1/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/radix_or_default_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/nan_last_stable_asc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/radix_or_default_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/nan_last_stable_desc",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/select_mode0",
+      "elements": 1646,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/select_mode1",
+      "elements": 1892,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/select_mode2",
+      "elements": 4099,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n4099/pattern2/stream1/select_mode4",
+      "elements": 3074,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/select_mode0",
+      "elements": 33107,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/select_mode1",
+      "elements": 32769,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern0/stream1/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/select_mode0",
+      "elements": 33107,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/select_mode1",
+      "elements": 32769,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern0/stream1/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/select_mode0",
+      "elements": 40330,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern1/stream1/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/select_mode0",
+      "elements": 40330,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern1/stream1/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/select_mode0",
+      "elements": 26324,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/n65537/pattern2/stream1/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/radix_or_default_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/nan_last_stable_asc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/radix_or_default_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/nan_last_stable_desc",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/select_mode0",
+      "elements": 26324,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/select_mode1",
+      "elements": 30248,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/select_mode2",
+      "elements": 65537,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/select_mode3",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/n65537/pattern2/stream1/select_mode4",
+      "elements": 49152,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/contracts/stream1/refuse_partial_bits_1_32",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f32/contracts/stream1/refuse_partial_bits_0_31",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/contracts/stream1/refuse_partial_bits_1_64",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "f64/contracts/stream1/refuse_partial_bits_0_63",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    }
+  ]
+}

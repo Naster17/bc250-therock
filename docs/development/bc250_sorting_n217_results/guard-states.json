@@ -1,0 +1,66 @@
+{
+  "guards": {
+    "sorting-n217-r2-rocprim": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "sorting-n217-r2-rocprim",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "e6fa64634f2faba522050545a9b6bf41",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 49177.247536434,
+      "dry_run": false
+    },
+    "sorting-n217-r2-hipcub": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "sorting-n217-r2-hipcub",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "9c81a8655fa59ac07905bcacf630cf44",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 49178.472369991,
+      "dry_run": false
+    },
+    "sorting-n217-r2-thrust": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "sorting-n217-r2-thrust",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "c7c635f444d38ae8dcc528ccca84605d",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 49179.695167839,
+      "dry_run": false
+    },
+    "sorting-n217-r2-legacy": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "sorting-n217-r2-legacy",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "4b00b903d0b7d93b479e4dcbee3d56ed",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 49180.713590643,
+      "dry_run": false
+    },
+    "sorting-n217-r2-torch": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "sorting-n217-r2-torch",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "0f358e1069a4409899b2c95212af69cd",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 49181.729532375,
+      "dry_run": false
+    },
+    "sorting-n217-r2-core": {
+      "release": "7.2.10-bc250rocm-r3",
+      "phase": "sorting-n217-r2-core",
+      "boot_id": "e3ed129b-9c41-4d0c-ab84-5ab54720bb8f",
+      "nonce": "6d8574f85958c3b203d0defd9e7d536b",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 49186.556142461,
+      "dry_run": false
+    }
+  },
+  "kernel_log_unchanged_including_initial_build": true,
+  "build_image": "fa3e8c254b6a791b541d49d4b0a1000a5d18aaa661b41e89794b82c104770238"
+}

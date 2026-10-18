@@ -70,6 +70,13 @@ simultaneous external profilers, compile/graph and long tracing are unqualified.
 
 ## Native primitive coverage (N2.16)
 
+N2.17 additionally verifies FP32/FP64 `torch.sort(..., stable=True)` and
+`torch.masked_select` on contiguous/strided inputs with CPU output, index and
+finite-input backward references. Special-value sort fixtures check output and
+indices only. Ordinary Torch calls and launcher defaults remain unchanged;
+native C++ sorting/selection also passed explicit ordering/payload tests.
+[N2.17 scope and evidence](bc250_sorting_n217_results/README.md).
+
 The existing installed rocPRIM/hipCUB/rocThrust headers passed bounded FP32/FP64
 reductions and ordinary/segmented scans, including guarded in-place operations,
 custom argmax, empty segments and private streams. This extends C++ header

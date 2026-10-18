@@ -878,7 +878,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
-| rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 native floating/segmented/custom reduction/scan cases576/480/480 with CPU references, guards/default/private streams and exact first-index argmax | No production defect found; floating sorts/selection, more types/operators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
+| rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
 | rocFFT/hipFFT                               | Existing native backend/AOT cache; P2 FFT30 plus N2.14 public complex96/real72 output+weighted gradients+guarded out, three independent checks and16 direct advanced plans/32 executions | No production defect found; native in-place/planar/callbacks/giant plans and broader performance remain; BF16 promotion B01 separate |
 | rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 native eigh22; N2.2 nonsymmetric eig16 host-LAPACK compatibility only. Native nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and performance remain                                                                                         |
 | rocSPARSE/hipSPARSE | Existing native backend: P2 Torch25+legacy16; N2.13 public triangular433 and direct generic96 fixtures/192 solves, exact pivot NaN policy in Torch | More formats/analyses/general factorization remain; BSR public int64 is bounded downcast, triangular autograd/performance unqualified; old corruption fix was CLR |
@@ -1521,6 +1521,34 @@ unchanged; no native rebuild or performance claim. General dynamic ranges,
 balancing/subnormals/conditioning/batching/gradients remain unqualified; original
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
+
+## N2.17 floating sorting/selection and Torch consumers — 2026-10-18
+
+TheRock `5826261d8`; native rocPRIM 656 / hipCUB 656 / Thrust 648 checks pass for
+FP32/64 ascending/descending stable pairs, explicit NaNs-last comparisons,
+five stable selection policies and16 float partial-bit refusals. Sizes 0..65537,
+default/private streams, guarded outputs/tails/workspace and immutable inputs/
+indices/flags. Exact keys/payload indices preserve zeros/subnormals/infinities/
+quiet-NaN sign+payload bits; pinned radix NaN bit-order is distinguished from
+custom comparison and Torch policies. Torch62:54 finite output/index/base-
+gradient references plus eight special-value output/index fixtures. No nonfinite
+gradient, whole-Torch consumer or speed claim. P2 primitives138/core7 pass.
+Initial r1 build failed new adapter's mixed-type auto declaration, fixed in r2;
+original source/compiler logs and partial binaries preserved. Three standalone
+units only, ccache20GiB/OMP4/three jobs/native gfx1013, no mapped GPU/network.
+Six GPU gates/guards ACK/600s, dmesg unchanged entire batch incl failed build;
+181 protected hashes match, new binaries separately sealed. No production
+defect/Torch/library/header install/default/prefix change. Active native Torch
+`dc8fea0` / source `2b449c4` / libraries `319a235d6` / source-doc `c29021b40e7` and image/kernel/boot/
+links/DSOs/four FFT AOT DBs/.105/BIOS/r2 fallback preserved. No active jobs;
+free ~7.16GiB. [Report/evidence/contracts](bc250_sorting_n217_results/README.md).
+Raw WS/logs/sorting-n217-*, outputs WS/build/bc250-coverage/sorting-n217-r{1,2},
+local ignored kernel/artifacts/sorting-n217. Preservation baseline
+WS/logs/sorting-n217-qualification-r2/final.json plus binary_sha256 for new test
+products. CPU Python fault remains unresolved/separate from fixed VM-heap/CSR
+and explicit compile error. Next N2.18 audit scalar CK DL admission/GEMM then
+one admitted convolution/grouped CPU-reference case; XDL/WMMA/modern CK plugin
+off, completed CK Tile work retained.
 
 ## N2.16 floating/segmented/custom primitives — 2026-10-18
 
