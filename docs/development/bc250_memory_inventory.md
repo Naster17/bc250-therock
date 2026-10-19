@@ -926,6 +926,34 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**N3.4 square projection audit2026-10-19:** code6531025ef, no native/runtime
+change. Actual BF16 [1024,2048]@[2048,2048] TN84/NN42 mm calls, two layouts,
+all14 admitted solutions each+default CPU-double/guards/input preservation pass
+fixedrelativeL2<0.004, worst0.001702264. Initial fixture1.34234x TN-346/1.07391x
+NN-533; TN timing regime shifts retained. Full-model TN-346 test keeps installed
+N3.2 NT-490 baseline active in both workers: worst372-adapter gradientrelativeL2
+0.0765128583>unchanged0.04, candidate REJECTED. Lossdelta0.00033474 passes existing
+forward-model0.015 contract; each own-gradient CPU AdamW replay maxabs1.863e-9,
+RNG hashes equal. One warm median pair5.625697/5.581987s; ABBA stops after failed
+first candidate, no qualified model gain. No tolerance relaxation/production
+arithmetic defect claim. Follow-up14 TN exact-output audit: -343/-338/-345/-350
+match captured default; sustained2s warmup/six-round ratios0.69190/0.99441/0.99386/
+0.72009, no gain. Other solutions change624–639 of2097152 outputs; -346638 at
+relativeL2=5.45847e-5. No square override deployed; experimental CSV stays inactive.
+Four guards ACK600s, three GPU passes/one candidate rejection; dmesg identical,
+309 identities/four FFT AOT DBs/links/runtime/user trainer/config unchanged.
+Runtime62ab2437c/rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4/other native libs
+319a235d6 remain. No build/install/cache reset/reboot/.105/BIOS/default/fallback
+change; same r2 boot, no active job/container/guard, free~5.34GiB. Historical CPU
+fault unresolved/separate from fixed VM-heap/CSR/repaired N3.2 loader/rejection.
+[Report](bc250_training_n34_results/README.md); raw fixtures/gradients/errors
+WS/logs/training-n34-* and local ignored kernel/artifacts/training-n34/remote
+copied SHA verified. Helper backup WS/recovery/training-n34-before; runtime
+recovery WS/recovery/gemm-n32-before. Next baseline
+WS/logs/training-n34-qualification-r3/final.json. Next N3.5 current-preset1024/rank16
+accumulation16/update/owned fresh-process checkpoint resume; older42-token/rank4
+CLI evidence retained. Large vocab tuning still open, requires memory-bounded design.
+
 **N3.3 optimized-model profile / reverse GEMM audit2026-10-19:** code7838d94bc;
 installed runtime still62ab2437c/rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4,
 other native libraries319a235d6. Current automatic preset active without preload.

@@ -9,6 +9,42 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N3.4 audit completed, candidate rejected, 2026-10-19:** code `6531025ef`.
+  Actual BF16 [1024,2048]@[2048,2048] TN42forward+42backward/NN42backward calls,
+  two layouts offsets0. All14 admitted solutions each plus defaults pass full
+  CPU-double references/guards/immutable inputs, fixedrelativeL2<0.004; worst
+  0.001702264. Six-round fixture best-346 TN1.34234x/-533 NN1.07391x; initial TN
+  timing regime shifts retained, not a stable-clock or whole-model gain claim.
+  TN-346 full-model comparison keeps installed N3.2 NT-490 in BOTH workers.
+  Actual-base synthetic1024/batch1/accum1/rank16/BF16/math/checkpoint: candidate
+  worst372-adapter gradientrelativeL2=0.0765128583 > unchanged0.04: REJECTED.
+  Lossdelta0.00033474 passes existing forward-model0.015 contract; CPU AdamW
+  own-gradient parameter/state checks pass maxabs1.863e-9, RNG hashes equal.
+  One warm median pair5.625697/5.581987s; ABBA stops at failed gradient gate,
+  no qualified speedup. ExperimentalCSV not active; no tolerance relaxation.
+  Follow-up14 TN solutions: exact default-output indices-343/-338/-345/-350;
+  after sustained2s warmup, six-round ratios0.69190/0.99441/0.99386/0.72009.
+  Other solutions change624–639 of2097152 captured outputs; -346638/relativeL2
+  5.45847e-5. Fixture exactness not universal. No square override deployed;
+  no production arithmetic defect established. Four guards ACK600s (three GPU
+  passes/one numerical candidate rejection), dmesg identical; final309 protected
+  identities/four FFT AOT DBs/links/runtime/defaults/user trainer/config intact.
+  No native build/install/cache reset/reboot/.105/BIOS/fallback change.
+  Runtime62ab2437c/rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4/other native
+  libraries319a235d6 retained; same r2 boot d0532075-88fb-4a2f-974e-f61578d20d9f.
+  No active agent job/container/guard; free~5.34GiB. CPU Python fault unresolved/
+  separate from fixed VM-heap/CSR, repaired N3.2 loader and this rejection.
+  [Report](docs/development/bc250_training_n34_results/README.md); failed source/
+  logs/gradients retained, raw WS/logs/training-n34-* and matching local ignored
+  kernel/artifacts/training-n34/remote copied/hash-verified. Helper backup
+  WS/recovery/training-n34-before; runtime recovery WS/recovery/gemm-n32-before.
+  Next baseline WS/logs/training-n34-qualification-r3/final.json (309 unchanged).
+  **Next N3.5:** current-preset1024/rank16 accumulation16 gradients/update and
+  owned checkpoint/fresh-process resume. Inspect prior42-token/rank4 CLI resume
+  and current accumulation1 evidence first, qualify new geometry without user
+  dataset/checkpoint edits. Vocab projection tuning remains open; needs bounded
+  memory/reference design, not declared hardware-impossible.
+
 - **N3.3 completed, 2026-10-19:** TheRock profiling/audit code `7838d94bc`.
   Installed N3.2 preset/DSO active, no preload. Same actual Qwen3.5-2B synthetic
   1024/batch1/accum1/BF16/rank16/math/checkpoint: loss/all372 nonzero clipped
@@ -1825,7 +1861,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.1 | Current Qwen3.5 synthetic training profile:65/1024 exact loss/372 gradients/AdamW/RNG replay, corrected kernel-only correlation/shape attribution. Dense mm dominates; no runtime/default or speed claim. |
 | [x]   | N3.2 | Exact-layout BF16 NT solution-490 plus cold override loader repair installed; CPU GEMM/all372 model gradients/CPU AdamW/ABBA timings and installed gates pass. Synthetic whole-step1.52–1.56x; changed reduction order, no convergence/bitwise continuity claim. |
 | [x]   | N3.3 | Optimized1024 model exact replay/profile and reverse-projection CPU-reference selection audit complete; mm75.39%, reverse26.43%, modest1.09x fixture candidates left undeployed. No runtime/default/new speed claim. |
-| [ ]   | **N3.4 — next** | Audit square BF16 [1024,2048]@[2048,2048] actual layouts/admitted solutions with fixed CPU references and paired fixture timings; full-model gradients/AdamW/timing before any deployment. |
+| [x]   | N3.4 | Square BF16 two-layout/all14-solutions-each CPU audit complete; faster-346 fails full-model gradient7.65%>4% contract, exact-output alternatives flat/slower. No runtime deployment or qualified speedup. |
+| [ ]   | **N3.5 — next** | Current N3.2 preset1024-token/rank16 accumulation16 gradient/update and owned checkpoint/fresh-process resume qualification; inspect prior small CLI evidence and keep user files untouched. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

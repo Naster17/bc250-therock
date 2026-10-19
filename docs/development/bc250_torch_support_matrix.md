@@ -7,14 +7,20 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N3.3 / practical review
+## Current cursor after N3.4 / practical review
+
+N3.4 square2048 mm audit complete: two layouts/all14 admitted solutions each
+pass CPU references. Faster-346 fails the full-model gradient contract7.65%>4%;
+exact captured-output alternatives are flat/slower. **No override deployed or
+new qualified speedup**; N3.2 preset remains active. [Report](bc250_training_n34_results/README.md).
+Next N3.5 current-preset1024/rank16 accumulation16 and owned checkpoint/resume
+qualification; prior42-token/rank4 CLI evidence remains distinct.
 
 N3.3 optimized1024-token synthetic model exact replay passes loss/all372 gradients/
 AdamW/RNG; median5.443s, mm75.39% of kernel sum. Reverse projection26.43% audited:
 two layouts/14 admitted solutions each CPU-reference checked; best isolated1.09x,
 no demonstrated full-model benefit or deployment. Current N3.2 preset unchanged.
-[Report](bc250_training_n33_results/README.md). Next N3.4 audits square2048 mm
-layouts/selection before any full-model candidate gate.
+[Report](bc250_training_n33_results/README.md). N3.4 has now completed that square-projection audit and rejected the candidate.
 
 N3.2 is installed: rocBLAS/Tensile source8389197c1 repairs cold override loading;
 exact-layout BF16 NT2048x1024x6144 solution-490 is automatic through current dev
@@ -287,7 +293,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1–N3.3 are complete within scope; N3.4 square-projection selection is next. Small targeted
+N3.1–N3.4 audits are complete within scope; N3.5 accumulation/resume is next. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.
 
