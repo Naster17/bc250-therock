@@ -1,0 +1,8 @@
+{
+  "scratch": "/tmp/bc250-training-n36-r1",
+  "scratch_filesystem": "tmpfs",
+  "memory_available_bytes": 14676922368,
+  "scratch_available_bytes": 6972260352,
+  "minimum_disk_free_bytes": 536870912,
+  "purpose": "Only text logs on disk; preserve checkpoints in RAM then copy/hash-verify on local workspace before handoff"
+}

@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "pinned_masked_1024_fixture",
+      "records": 32,
+      "distinct_target_counts": 32
+    },
+    {
+      "name": "actual_gpu_cli_finite_updates",
+      "steps": 1,
+      "input_tokens_per_step": 16384
+    },
+    {
+      "name": "checkpoint_progress_fingerprint",
+      "step": 2,
+      "position": 32
+    },
+    {
+      "name": "exact_fresh_process_replay",
+      "adapter_tensors": 372,
+      "full_optimizer_scheduler_rng_progress": true,
+      "loss": true
+    }
+  ],
+  "mode": "resumed",
+  "identity": {
+    "preset_sha256": "1f2947a88ee69a3d3854ec7615f209dadd19292489b7df3d101c5941727846c0",
+    "sources": {
+      "train.py": "bee80abde3fd065c0145fb8f3483a42c18643e0cc2cb9007f30fcb7d06c6e758",
+      "formatting.py": "00df12edc046b31db0144a09c0277b120414aba11c99c5e92d1f81fdfc5061a6",
+      "bc250_ops.py": "f0bcb35eadd3cde6c08dbeca0929358e4361f1f2b7358f2cad5288517f9fa4e6",
+      "bc250_gated_delta.py": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b"
+    },
+    "test_sha256": "0b013853c796e8e1a56edc852702d14435fe4e01e7b2f1c62424bed6d8804280"
+  },
+  "command": [
+    "/opt/torch-venv/bin/python",
+    "-m",
+    "replica.train",
+    "--model",
+    "/home/nik/finetune-n7/models/Qwen3.5-2B-Base",
+    "--dataset",
+    "/tmp/bc250-training-n36-r1/data",
+    "--max-seq-length",
+    "1024",
+    "--epochs",
+    "1",
+    "--max-steps",
+    "2",
+    "--accumulation-steps",
+    "16",
+    "--learning-rate",
+    "0.0001",
+    "--warmup-steps",
+    "0",
+    "--rank",
+    "16",
+    "--alpha",
+    "32",
+    "--targets",
+    "auto-linear",
+    "--save-every",
+    "1",
+    "--eval-every",
+    "1",
+    "--schedule",
+    "cosine",
+    "--seed",
+    "31936",
+    "--device",
+    "cuda",
+    "--dtype",
+    "bf16",
+    "--sdpa",
+    "math",
+    "--output",
+    "/tmp/bc250-training-n36-r1/resumed",
+    "--resume",
+    "/tmp/bc250-training-n36-r1/fresh/checkpoint-00000001"
+  ],
+  "steps": [
+    {
+      "step": 2,
+      "epoch": 1,
+      "position": 32,
+      "loss": 0.07038949553197377,
+      "target_tokens": 2951,
+      "input_tokens": 16384,
+      "tps": 182.1,
+      "avg_tps": 182.1,
+      "lr": 0.0,
+      "seconds": 89.997,
+      "eta": "00m 00s",
+      "peak_allocated_bytes": 5419161600
+    }
+  ],
+  "fingerprint": "22341cbc0ecceca2f2d120d5f83aef8f47c610d2d47ac8ac66933ab439d3f289"
+}

@@ -926,6 +926,26 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**N3.6 actual trainer CLI2026-10-19:** codebee5c6ce9. Deployed inner CLI on
+current N3.2 preset, owned32 exactly1024-token records/32 distinct masked-target
+counts72–289/rank16/alpha32/BF16/FP32 adapters/math/checkpoint/accum16. Two fresh
+updates plus checkpoint1→2 separate process: exact372 adapters/full AdamW/
+scheduler/CPU+GPU+Python RNG/shuffled order/progress/run.json/training loss/
+token counts/LR; evaluation2 exact.48 train micros/three eval forwards,7 checks;
+two guards ACK600s/dmesg identical/309 hashes/four FFT AOT DBs unchanged. No
+production app/native/runtime change, build/install/cache reset/delete/reboot/
+.105/BIOS/fallback edit. Same r2 boot d3857b96, disk~5.1GiB. Volatile
+/tmp/bc250-training-n36-r1 exported/SHA-verified durable local
+kernel/artifacts/training-n36/scratch-r1; priorN35 preserved. No active own jobs.
+[Report](bc250_training_n36_results/README.md); baseline
+WS/logs/training-n36-qualification-r1/final.json. CPU fault remains unresolved/
+distinct from fixed VM-heap/CSR and N3.2 loader. No real-data/convergence/speed/
+mid-accum/CPU-model/cross-runtime promise. Fingerprint pins data/model/args/
+package versions, omits numerical runtime/preset/hook content; qualifier pins
+these separately. Next N3.7 compatible supplemental provenance for new
+checkpoints, owned same-runtime/changed-runtime tests, explicit legacy behavior
+preserved. Vocabulary-projection tuning remains open afterward.
+
 **N3.5 accumulation16/replay2026-10-19:** code986093a3c. Current-preset actual
 Qwen3.5 synthetic1024/rank16/BF16/math/checkpoint, FP32 adapters:372 GPU accumulated
 gradients versus independent CPU FP64 sum16 pass fixed2e-6 bound, worst1.17090e-8.

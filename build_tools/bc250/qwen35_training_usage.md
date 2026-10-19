@@ -65,3 +65,18 @@ Hardware counters, simultaneous external profilers, compile/graphs and long
 traces remain unqualified. The workspace guide
 `therock/docs/development/bc250_profiler_a09_results/README.md` contains examples,
 exact references, measurements and recovery instructions.
+
+## Current-preset CLI resume qualification (N3.6, 2026-10-19)
+
+The deployed inner trainer passes an owned synthetic1024-token/rank16/
+accumulation16 test with variable assistant target masks: checkpoint1 resumed in
+another process reproduces update2 exactly for all372 adapter tensors, complete
+optimizer/scheduler/RNG/data progress and training/evaluation losses. This is a
+bounded optimizer-boundary test, not long training quality or a new speed claim.
+
+Keep the numerical runtime, GEMM preset and application hooks consistent when
+resuming. Existing fingerprints cover data/model/settings/package versions but
+do not pin those additional identities; the test records them separately.
+Changed-runtime exact replay is unqualified. N3.7 will add compatible provenance
+for newly saved checkpoints; existing user checkpoints remain untouched.
+Evidence: `therock/docs/development/bc250_training_n36_results/README.md`.

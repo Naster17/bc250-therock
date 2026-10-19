@@ -1,0 +1,22 @@
+{
+  "fresh": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n36-r1-fresh",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "c07cd8011b1c718ab7d794a4d6e2eefb",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 6275.031342711,
+    "dry_run": false
+  },
+  "resumed": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n36-r1-resumed",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "5fa92a2979b5b9b55ff5427339cee01c",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 6479.999679007,
+    "dry_run": false
+  }
+}

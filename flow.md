@@ -9,6 +9,33 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N3.6 completed, 2026-10-19:** qualification code `bee5c6ce9`.
+  Actual deployed inner trainer CLI/current N3.2 preset/no preload; owned32
+  exactly1024-token records with32 distinct masked-target counts72–289,
+  rank16/alpha32/BF16/FP32 adapters/math/checkpoint/accum16. Fresh2 updates,
+  separate checkpoint1→2 resume: all372 adapter tensors/full optimizer/scheduler/
+  CPU+GPU+Python RNG/shuffled order/progress/run.json/loss/token counts/LR exact;
+  evaluation2 exact too.48 training micros/three eval forwards,7 checks pass.
+  Two guards ACK600s, dmesg identical,309 hashes/four FFT AOT DBs/links/runtime/
+  user trainer/config unchanged. No production code/native build/install/cache
+  reset/deletion/reboot/.105/BIOS/fallback change. Runtime62ab2437c/rocBLAS
+  8389197c1/nativeTorchdc8fea0/source2b449c4/other libs319a235d6 retained.
+  Same r2 boot d3857b96; disk~5.1GiB observed, no reclamation performed.
+  RAM artifacts /tmp/bc250-training-n36-r1 are VOLATILE; all copied/SHA-verified
+  durable local kernel/artifacts/training-n36/scratch-r1. PriorN35 kept.
+  Executed raw sources archived; committed formatting AST-identical/Black/
+  Ruff-F/syntax pass. [Report](docs/development/bc250_training_n36_results/README.md).
+  Raw WS/logs/training-n36-* and local kernel/artifacts/training-n36/remote;
+  next baseline WS/logs/training-n36-qualification-r1/final.json; runtime
+  recovery WS/recovery/gemm-n32-before. No active agent job/container/guard.
+  No real-data/convergence/throughput/mid-accum/CPU-model/cross-runtime claim.
+  CPU fault unresolved/distinct from fixed VM-heap/CSR and repaired N3.2 loader.
+  **Next N3.7:** production fingerprint omits preset/native runtime/hook content.
+  Add compatible supplemental provenance for NEW checkpoints: inspect launcher
+  identities, qualify same-runtime replay/changed-runtime handling with owned
+  fixtures, preserve explicit legacy behavior and user checkpoints. No arithmetic
+  change. Vocabulary projection tuning remains open afterward.
+
 - **N3.5 completed, 2026-10-19:** qualification code `986093a3c`.
   Current N3.2 preset/no preload, actual-base synthetic1024/batch1/rank16/BF16/
   FP32 adapters/math/checkpoint/accumulation16. Independent16 scaled gradients
@@ -1900,7 +1927,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.3 | Optimized1024 model exact replay/profile and reverse-projection CPU-reference selection audit complete; mm75.39%, reverse26.43%, modest1.09x fixture candidates left undeployed. No runtime/default/new speed claim. |
 | [x]   | N3.4 | Square BF16 two-layout/all14-solutions-each CPU audit complete; faster-346 fails full-model gradient7.65%>4% contract, exact-output alternatives flat/slower. No runtime deployment or qualified speedup. |
 | [x]   | N3.5 | Current-preset1024/rank16 accumulation16 versus FP64 gradient sum, CPU AdamW/scheduler and exact owned fresh-process state replay qualified; test mount/CPU-oracle alias fixes, no runtime change. |
-| [ ]   | **N3.6 — next** | Actual deployed trainer CLI owned1024/rank16/accum16 fresh/resume on current preset; inspect prior42-token CLI/fingerprints, preserve user files, RAM artifacts/local durable copies with low disk. |
+| [x]   | N3.6 | Actual deployed inner CLI1024/rank16/accum16 masked targets; fresh/resume exact372 adapters/full state/loss/evaluation,7 checks, no production change. |
+| [ ]   | **N3.7 — next** | Compatible supplemental numerical-runtime/preset/hook provenance for new checkpoints; qualify unchanged replay/changed-runtime handling and preserve explicit legacy behavior. Vocabulary tuning remains open afterward. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
