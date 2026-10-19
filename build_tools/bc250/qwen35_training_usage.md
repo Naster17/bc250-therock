@@ -102,3 +102,11 @@ cannot be verified. They are never rewritten. New checkpoints saved by the resum
 run record the current runtime. Data-only `--preflight` validates the sidecar and
 binding but defers comparison with the live numerical runtime until training;
 it does not initialize the GPU or load weights.
+
+Whole source files are part of that identity: even a changed status message can
+refuse a provenance-bound checkpoint. N3.9 restores the N3.7 trainer/provenance
+and explicit tiled CLI while preserving the current ops helper's status edit.
+Checkpoints saved with the older helper require its recorded source/runtime;
+they are not silently migrated. Matching new checkpoints and legacy checkpoints
+are qualified separately. Math remains the default; the N3.8 vocabulary GEMM
+candidate is experimental and is not installed.

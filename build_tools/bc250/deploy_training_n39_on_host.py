@@ -47,6 +47,7 @@ if __name__ == "__main__":
     installs = (
         (WS / "helpers/n37_app_train.py", trainer),
         (WS / "helpers/n39_test_training_launch.py", tests),
+        (WS / "helpers/qwen35_training_usage.md", PROJECT / "BC250_TRAINING_OPS.md"),
     )
     assert (
         installs[1][0].read_bytes()
@@ -104,6 +105,7 @@ if __name__ == "__main__":
                 "validate_installed_training_n37.py",
                 "n37_app_train.py",
                 "n39_test_training_launch.py",
+                "qwen35_training_usage.md",
                 "bc250_checkpoint_provenance.py",
             ),
             scratch_mounts=(scratch, Path("/tmp/bc250-training-n36-r1")),
