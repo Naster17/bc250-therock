@@ -1,0 +1,14 @@
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -111,8 +111,9 @@
+   To support modern architectures (Qwen3.5) without disturbing the stable Torch build:
+   Run `python scripts/prepare_bc250.py`, which populates `runtime/transformers-5.19.0-cp312/` and is prepended to `PYTHONPATH`.
+ - **Attention Backend**:
+-  - Math SDPA only: `sdpa_kernel(SDPBackend.MATH)` must wrap all forward and backward passes.
+-  - FlashAttention is not supported on gfx1013. Tiled attention is experimental and unqualified for Qwen.
++  - Math SDPA remains the default for forward/backward and legacy math fingerprints.
++  - Explicit `--attention-backend tiled` is bounded-qualified by the BC-250 workspace A07/N3.9 evidence. Head256 BF16 uses math forward/tiled backward; this is not FlashAttention or a universal speedup.
++  - Keep backend and runtime identities when resuming. New provenance-bound checkpoints reject even cosmetic hook-source changes; never silently remove or migrate their provenance. See `BC250_TRAINING_OPS.md` and the canonical workspace `flow.md`.
+ - **Memory Safety**:
+   - `gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})`
+   - Must call `model.enable_input_require_grads()` or gradient checkpointing silently fails, causing immediate OOM.
