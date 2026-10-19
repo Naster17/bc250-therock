@@ -1,0 +1,8 @@
+[setup_ccache] Config preset: local
+[setup_ccache] Platform: POSIX
+[setup_ccache] Cache mode: release_type=(unset) preset=local remote=disabled local=/workspace/cache/data
+[setup_ccache] Generated ccache config:
+[setup_ccache]   max_size = 10G
+[setup_ccache]   cache_dir = /workspace/cache/data
+[setup_ccache]   compiler_check = /opt/build-venv/bin/python3 /workspace/cache/compiler_check.py /workspace/cache/compiler_check_cache %compiler%
+[setup_ccache]   sloppiness = include_file_ctime,pch_defines,time_macros

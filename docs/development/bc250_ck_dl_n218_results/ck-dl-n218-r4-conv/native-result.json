@@ -1,0 +1,825 @@
+{
+  "status": "passed",
+  "architecture": "gfx1013",
+  "guards": true,
+  "streams": 2,
+  "cases": 136,
+  "checks": [
+    {
+      "name": "plain/stream0/shape0/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 7.733825846401032e-08,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape0/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape0/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 7.733825846401032e-08,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape0/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape0/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.1182028458733839e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape0/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape0/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.1182028458733839e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape0/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 3.83834207973166e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 1.9654754774833805e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 3.83834207973166e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 2.157097022781329e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape1/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 1.0105696572892953e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 7.428413573151715e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 1.210811711338522e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 7.428413573151715e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape2/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 1.67336345846536e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 3.5533727711367646e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 1.67336345846536e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 3.5533727711367646e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/shape3/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/reject0/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream0/reject1/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 9.802747324982874e-08,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 9.113106891334155e-08,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.1182028458733839e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.273371950105684e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape0/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 4.017156014057832e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 2.025080122258771e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 4.255574593159395e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 2.1868993451690244e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape1/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 1.109089732054258e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 7.24368844018386e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 1.4492302904400844e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 7.514618634019143e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape2/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 1.7031657808530554e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 3.4341634815859834e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 1.7031657808530554e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 4.000407606952194e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/shape3/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/reject0/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream0/reject1/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 7.733825846401032e-08,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 7.733825846401032e-08,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.1182028458733839e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.1182028458733839e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape0/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 3.83834207973166e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 1.9654754774833805e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 3.83834207973166e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 2.157097022781329e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape1/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 1.0105696572892953e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 7.428413573151715e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 1.210811711338522e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 7.428413573151715e-07,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape2/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 1.67336345846536e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 3.5533727711367646e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 1.67336345846536e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 3.5533727711367646e-06,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/shape3/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/reject0/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "plain/stream1/reject1/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 9.802747324982874e-08,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 9.113106891334155e-08,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 140,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.1182028458733839e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 1.273371950105684e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape0/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 420,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 4.017156014057832e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 2.025080122258771e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 1512,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 4.255574593159395e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 2.1868993451690244e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape1/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 4536,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 1.109089732054258e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 7.24368844018386e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 2640,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 1.4492302904400844e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 7.514618634019143e-07,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape2/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 7920,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups1/padded0/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 1.7031657808530554e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups1/padded0/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups1/padded1/dyadic0/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 3.4341634815859834e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups1/padded1/dyadic1/cpu-reference",
+      "elements": 448,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups3/padded0/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 1.7031657808530554e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups3/padded0/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups3/padded1/dyadic0/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 4.000407606952194e-06,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/shape3/groups3/padded1/dyadic1/cpu-reference",
+      "elements": 1344,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/reject0/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    },
+    {
+      "name": "add-relu/stream1/reject1/unsupported-vector-shape",
+      "elements": 0,
+      "max_abs_error": 0,
+      "status": "passed"
+    }
+  ]
+}

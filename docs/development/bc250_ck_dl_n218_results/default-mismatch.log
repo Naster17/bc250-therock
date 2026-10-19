@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_torch_a04_on_host.py", line 209, in <module>
+    main()
+  File "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_torch_a04_on_host.py", line 43, in main
+    os.uname().release == args.guard_release
+AssertionError: Guard release must match running kernel

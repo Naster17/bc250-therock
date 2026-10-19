@@ -84,8 +84,15 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 
 ## Kernel, unlock, cooling and recovery
 
-Active experimental .104 kernel: `7.2.10-bc250rocm-r3`, six guarded one-shot
-boots2026-10-15. Current module0957f1aa4: bounded GPU/Torch/VMM and prior SVM
+Latest live observation2026-10-19 (N2.18): .104 already running fallback
+`7.1.5-bc250rocm-r2`, boot `d0532075-88fb-4a2f-974e-f61578d20d9f`.
+No reboot or boot-policy change in N2.18; reason for the intervening reboot is
+not established by this batch. The test launcher accepts an explicit r2/r3
+acknowledgement-guard release, retains r3 default, refuses mismatch before GPU
+launch and keeps the600s deadline/nonce/boot-ID/recovery checks.
+
+Previously qualified experimental kernel: `7.2.10-bc250rocm-r3`, six guarded
+one-shot boots2026-10-15. Qualified module0957f1aa4: bounded GPU/Torch/VMM and prior SVM
 milestones pass; HPD init dummy errors and two IRQ ASSERT WARNs repaired below.
 Physical display/hotplug and broader failure/recovery remain unqualified.
 Persistent default/retained fallback and .105 reference remain
@@ -873,7 +880,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipTensor generic                           | Historical154 rank-two and23 higher-rank reduction/permutation/binary/trinary checks in generic-only profile                                                                                                 | Wider rank/layout/operators remain; these counts are separate from contractions                                                                             |
 | hipTensor contraction | N1.1 real273 API cases (253 numerical +20 descriptor); N1.2 complex450 (426 numerical +24 descriptor) and273 real regressions. Same-type C32F/C64F, identity/NEG/CONJ, public complex scalars, shared/unilateral sums, padded/permuted layouts, zero/imaginary scalars, span/alias/guard bytes, in-place conjugated C/D,16-mode union with unit axes, plan lifetime and3algorithms×3workspace preferences/type with JIT NONE | N1.3:304 plan API checks +12 numerical executions across four real/complex types; pointer/size/enum guards, atomic failed setters, owning plans, zero required workspace. Scalar cache NONE/JIT NONE/autotune NONE/count0/rank0; alternative requests explicitly unsupported. Broader cache/JIT implementations remain optional. Mixed/widened complex and other complex unary ops unsupported; small-fixture timing is not general performance. |
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
-| CK scalar DL                                | CPU-checked FP32/FP16/signedINT8 GEMM examples; native architecture applicability changes                                                                                                                    | Admitted DL convolution/grouped classes are not automatically executed/qualified                                                                            |
+| CK scalar DL | CPU-checked FP32/FP16/signedINT8 GEMM examples; N2.18 FP32 grouped forward128 CPU-reference cases +8 refusals, plain/Add+ReLU, valid strided layouts/guards/private streams | Direct header consumer only; backward, low-precision convolution, other layouts/configurations/performance and automatic Torch/MIOpen routing unqualified. XDL/WMMA/modern CK plugin off. |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
 | MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
@@ -1521,6 +1528,36 @@ unchanged; no native rebuild or performance claim. General dynamic ranges,
 balancing/subnormals/conditioning/batching/gradients remain unqualified; original
 CPU fault and separate MIOpen defect unresolved. Next N2.6 bounded cost/profile
 versus host eig and one measured overhead-reduction step before any integration.
+
+## N2.18 scalar CK DL grouped forward — 2026-10-19
+
+TheRock `746528fa6`;128 FP32 grouped convolution CPU-reference comparisons +8
+vector-shape refusals pass, GEMM FP32/FP16/INT8 examples3 and Torch core7 retained.
+Plain/Add+ReLU, four1x1/3x3 shapes with stride/dilation/asymmetric padding and tile
+tails, groups1/3, contiguous/padded strided layouts, default/private streams.
+Independent CPU double oracle: dyadic exact, fixed non-dyadic tolerance, max abs
+error4.255575e-6.256-byte guards/output holes and immutable inputs/weights/D pass.
+No production arithmetic defect or runtime/new operator/routing/performance change.
+Four bounded standalone build attempts preserved (ccache20GiB/OMP4/one job/native
+gfx1013/no GPU/network). r1 test namespace error; r2 r3-default guard inactive
+on already-running r2; r3 invalid padded packed-layout fixture. Corrected r4
+passes with explicit strided-layout contract, no tolerance/reference relaxation.
+Launcher explicit --guard-release for retained r2/r3, unchanged r3 default and
+existing boot guard, early mismatch refusal/guard diagnostics. Old helper at
+WS/recovery/ck-dl-n218-before. Four GPU guards including failed fixture ACK/600s;
+all4 attempts' dmesg identical/191 protected hashes + new binary sealed.
+Kernel observed r2 at entry, boot d0532075-88fb-4a2f-974e-f61578d20d9f; no reboot
+or boot-policy change. Native Torchdc8fea0/source2b449c4/libraries319a235d6/source-
+doc c29021b40e7/links/runtime/defaults/four AOT DBs/.105/BIOS preserved. Free~7.16GiB,
+no running agent job/container/guard. [Report/evidence](bc250_ck_dl_n218_results/README.md).
+Raw WS/logs/ck-dl-n218-*, outputs WS/build/bc250-coverage/ck-dl-n218-r{1,2,3,4},
+local ignored kernel/artifacts/ck-dl-n218. Next preservation baseline
+WS/logs/ck-dl-n218-qualification-r4/final.json plus binary_sha256. CPU Python fault
+unresolved/separate from fixed VM-heap/CSR and test-only errors. Forward FP32 only;
+backward/other types/layouts/configurations/graphs/concurrency/tuning unqualified.
+Next review N2 practical gaps versus current model workloads/B01/B02/B07/A09,
+then select next N3 batch without repeating completed AMP/compile/resume/CK Tile.
+No automatic N2.19 or exhaustive API-combination gate; broad N2 remains open.
 
 ## N2.17 floating sorting/selection and Torch consumers — 2026-10-18
 

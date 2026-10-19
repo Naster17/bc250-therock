@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "fp32",
+      "status": "passed",
+      "command": [
+        "/home/nik/bc250work/rocm-10.2-gfx1013/build/bc250-validation/ck/gemm_dl_fp32",
+        "1",
+        "1",
+        "0",
+        "256",
+        "128",
+        "64",
+        "-1",
+        "-1",
+        "-1"
+      ]
+    },
+    {
+      "name": "fp16",
+      "status": "passed",
+      "command": [
+        "/home/nik/bc250work/rocm-10.2-gfx1013/build/bc250-validation/ck/gemm_dl_fp16",
+        "1",
+        "1",
+        "0",
+        "256",
+        "128",
+        "64",
+        "-1",
+        "-1",
+        "-1"
+      ]
+    },
+    {
+      "name": "int8",
+      "status": "passed",
+      "command": [
+        "/home/nik/bc250work/rocm-10.2-gfx1013/build/bc250-validation/ck/gemm_dl_int8",
+        "1",
+        "1",
+        "0",
+        "256",
+        "128",
+        "64",
+        "-1",
+        "-1",
+        "-1"
+      ]
+    }
+  ]
+}

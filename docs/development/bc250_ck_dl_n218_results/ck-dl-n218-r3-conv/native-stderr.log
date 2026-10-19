@@ -1,0 +1,3 @@
+PASS plain/stream0/shape0/groups1/padded0/dyadic0/cpu-reference
+PASS plain/stream0/shape0/groups1/padded0/dyadic1/cpu-reference
+FAIL CPU convolution reference mismatch

@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-18 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-19 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,37 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **N2.18 completed, 2026-10-19:** TheRock qualification `746528fa6`.
+  Direct installed scalar CK DL FP32 grouped forward convolution:128 independent
+  CPU-double reference cases plus8 vector-shape refusals pass. Plain/Add+ReLU,
+  groups1/3, four1x1/3x3 shapes, stride/dilation/asymmetric padding, M/N tails,
+  valid contiguous/strided spatial layouts, exact dyadic/fixed-tolerance other
+  inputs, default/private streams,256-byte guards/stride holes/input preservation.
+  Max abs error4.255575e-6. Retained FP32/FP16/INT8 GEMM3/core7 pass; no production
+  defect, new Torch routing/operator, library/header install or speed claim.
+  Initial r1 global StreamConfig namespace compile error, r2 guard startup on
+  nondefault kernel, r3 invalid packed-layout fixture all retained; corrected
+  r4 passes. Four build outputs preserved, ccache20GiB/OMP4/one job/native gfx1013,
+  no mapped GPU/network. Test launcher now accepts explicit retained r2/r3
+  --guard-release, defaults to r3, rejects mismatch before launch, reports early
+  guard failure. Original kernel guard/recovery semantics unchanged; helper backup
+  WS/recovery/ck-dl-n218-before. Failed GPU fixture plus3 final guards ACK/600s;
+  dmesg identical across all4 attempts,191 protected identities/new binary sealed.
+  **Observed .104 already on r2 at entry:**7.1.5-bc250rocm-r2,
+  boot d0532075-88fb-4a2f-974e-f61578d20d9f. No reboot/boot-policy change this batch;
+  prior r3 qualifications retained, do not describe r3 as currently running.
+  Active Torch dc8fea0/source2b449c4/libraries319a235d6/source-doc c29021b40e7,
+  current/previous/ROCm links/runtime/defaults/four FFT AOT DBs/.105/BIOS unchanged.
+  No running agent job/container/guard; free~7.16GiB. CPU Python fault remains
+  unresolved/separate from fixed VM-heap/CSR and test-only failures above.
+  [Report](docs/development/bc250_ck_dl_n218_results/README.md); raw
+  WS/logs/ck-dl-n218-*, outputs WS/build/bc250-coverage/ck-dl-n218-r{1,2,3,4},
+  local ignored kernel/artifacts/ck-dl-n218. Next preservation baseline
+  WS/logs/ck-dl-n218-qualification-r4/final.json plus binary_sha256.
+  **Next:** audit remaining N2 gaps against current model workloads/B01/B02/B07/
+  A09 evidence, then select next bounded N3 batch; avoid repeating prior AMP/
+  compile/resume/CK Tile work. N2 remains broad/open, no automatic N2.19 sweep.
 
 - **N2.17 completed, 2026-10-18:** TheRock qualification `5826261d8`.
   Native FP32/64 stable key/value sorting and selection pass rocPRIM 656 /
@@ -1674,7 +1705,7 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.15 | Torch state80/statistics22/contracts20/fresh continuation1, direct native68 and RNG28/core7 pass. Stale LFSR113 offset comments corrected; implementation/binaries/defaults unchanged; four AOT DBs preserved. |
 | [x]   | N2.16 | Native floating/segmented/custom reductions/scans: rocPRIM576/hipCUB480/Thrust480, P2 primitives138/core7 pass; fixed CPU references/guards/streams, no production defect or default/binary change. |
 | [x]   | N2.17 | Native floating stable sorting/selection: rocPRIM656/hipCUB656/Thrust648; Torch62 incl54 finite backward cases; P2 primitives138/core7 pass. Exact ordering/payload/count/guard checks; no production defect or installed change. |
-| [ ]   | **N2.18 — next** | Audit CK scalar DL admission/GEMM evidence; qualify one hardware-admitted DL convolution/grouped case with CPU references and targeted builds. Keep XDL/WMMA/modern MIOpen CK plugin off; do not repeat completed CK Tile work. |
+| [x]   | N2.18 | Scalar CK DL FP32 grouped forward:128 CPU-reference cases +8 refusals; GEMM3/core7 retained. Explicit r2/r3 guard selection repaired; no production CK/runtime/default change or speed claim. Next review N2 practical gaps before selecting another N3 batch. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |

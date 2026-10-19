@@ -1,0 +1,7 @@
+/workspace/helpers/ck_dl_n218.cpp:86:39: error: no member named 'StreamConfig' in namespace 'ck'; did you mean simply 'StreamConfig'?
+   86 |   Conv<Fused>::MakeInvoker().Run(arg, ck::StreamConfig{stream, false});
+      |                                       ^   ~~~~~~~~~~~~
+/workspace/build/math-libs/composable_kernel/stage/include/ck/stream_config.hpp:8:8: note: 'StreamConfig' declared here
+    8 | struct StreamConfig
+      |        ^
+1 error generated when compiling for gfx1013.

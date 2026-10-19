@@ -1,0 +1,110 @@
+[
+  {
+    "attempt": "r1",
+    "status": "failed",
+    "gates": [],
+    "changed_hashes": [],
+    "kernel_log_unchanged": true,
+    "kernel_before_sha256": "6a8f3484a79bbcc0dfd63b63ad674d28d36dcc4f5103365ef32362e663ea4bd3"
+  },
+  {
+    "attempt": "r2",
+    "status": "failed",
+    "gates": [],
+    "changed_hashes": [],
+    "kernel_log_unchanged": true,
+    "kernel_before_sha256": "6a8f3484a79bbcc0dfd63b63ad674d28d36dcc4f5103365ef32362e663ea4bd3"
+  },
+  {
+    "attempt": "r3",
+    "status": "failed",
+    "gates": [],
+    "changed_hashes": [],
+    "kernel_log_unchanged": true,
+    "kernel_before_sha256": "6a8f3484a79bbcc0dfd63b63ad674d28d36dcc4f5103365ef32362e663ea4bd3"
+  },
+  {
+    "attempt": "r4",
+    "status": "passed",
+    "gates": [
+      {
+        "label": "ck-dl-n218-r4-conv",
+        "checks": 136,
+        "command": [
+          "/usr/bin/python3",
+          "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_torch_a04_on_host.py",
+          "--guard-release",
+          "7.1.5-bc250rocm-r2",
+          "--label",
+          "ck-dl-n218-r4-conv",
+          "--script",
+          "validate_ck_dl_n218.py",
+          "--test-arg=--attempt",
+          "--test-arg=r4"
+        ],
+        "guard": {
+          "release": "7.1.5-bc250rocm-r2",
+          "phase": "ck-dl-n218-r4-conv",
+          "boot_id": "d0532075-88fb-4a2f-974e-f61578d20d9f",
+          "nonce": "6faf61a46a27e35228f4c0b0d0850dc9",
+          "timeout_seconds": 600,
+          "status": "acknowledged",
+          "deadline_monotonic": 1223.532495672,
+          "dry_run": false
+        }
+      },
+      {
+        "label": "ck-dl-n218-r4-gemm",
+        "checks": 3,
+        "command": [
+          "/usr/bin/python3",
+          "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_torch_a04_on_host.py",
+          "--guard-release",
+          "7.1.5-bc250rocm-r2",
+          "--label",
+          "ck-dl-n218-r4-gemm",
+          "--script",
+          "validate_ck_dl_n218.py",
+          "--test-arg=--legacy"
+        ],
+        "guard": {
+          "release": "7.1.5-bc250rocm-r2",
+          "phase": "ck-dl-n218-r4-gemm",
+          "boot_id": "d0532075-88fb-4a2f-974e-f61578d20d9f",
+          "nonce": "9e066a2057beea553982a254d39a475c",
+          "timeout_seconds": 600,
+          "status": "acknowledged",
+          "deadline_monotonic": 1224.550940632,
+          "dry_run": false
+        }
+      },
+      {
+        "label": "ck-dl-n218-r4-core",
+        "checks": 7,
+        "command": [
+          "/usr/bin/python3",
+          "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_torch_a04_on_host.py",
+          "--guard-release",
+          "7.1.5-bc250rocm-r2",
+          "--label",
+          "ck-dl-n218-r4-core",
+          "--script",
+          "validate_cleanup_runtime.py"
+        ],
+        "guard": {
+          "release": "7.1.5-bc250rocm-r2",
+          "phase": "ck-dl-n218-r4-core",
+          "boot_id": "d0532075-88fb-4a2f-974e-f61578d20d9f",
+          "nonce": "41d5c9407795c515937719ed25c811c4",
+          "timeout_seconds": 600,
+          "status": "acknowledged",
+          "deadline_monotonic": 1225.368419662,
+          "dry_run": false
+        }
+      }
+    ],
+    "changed_hashes": [],
+    "kernel_log_unchanged": true,
+    "kernel_before_sha256": "6a8f3484a79bbcc0dfd63b63ad674d28d36dcc4f5103365ef32362e663ea4bd3"
+  }
+]
