@@ -3,9 +3,11 @@
 """Run vocabulary layout/reference gates separately on the preserved native stack."""
 
 import argparse
+import json
+from pathlib import Path
 import sys
 
-from qualify_training_n33_on_host import main
+from qualify_training_n33_on_host import WS, main
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(add_help=False)
@@ -24,6 +26,49 @@ if __name__ == "__main__":
     )
     args, remaining = parser.parse_known_args()
     sys.argv = [sys.argv[0], *remaining]
+    if args.stage == "model-stable":
+        memory = {
+            line.split(":", 1)[0]: int(line.split()[1]) * 1024
+            for line in Path("/proc/meminfo").read_text().splitlines()
+            if line.startswith(("MemAvailable:", "SwapFree:"))
+        }
+        clients = []
+        for proc in Path("/proc").iterdir():
+            if not proc.name.isdigit():
+                continue
+            try:
+                links = [str(p.readlink()) for p in (proc / "fd").iterdir()]
+                if any(
+                    "/dev/kfd" in link or "/dev/dri/render" in link for link in links
+                ):
+                    clients.append(
+                        dict(
+                            pid=int(proc.name),
+                            comm=(proc / "comm").read_text().strip(),
+                            uid=proc.stat().st_uid,
+                        )
+                    )
+            except (OSError, PermissionError):
+                continue
+        occupied = [
+            p
+            for p in clients
+            if not (p["uid"] == 0 and p["comm"].startswith("cyan-skillfish"))
+        ]
+        assert not occupied, f"GPU already held by other processes: {occupied}"
+        assert memory["MemAvailable"] > 8 * 1024**3, memory
+        attempt = remaining[remaining.index("--attempt") + 1]
+        (WS / "logs" / ("training-n38-resource-" + attempt + ".json")).write_text(
+            json.dumps(
+                dict(
+                    memory=memory,
+                    clients=clients,
+                    note="Exclusive prefix lock does not serialize raw GPU clients; keep other work idle during this gate.",
+                ),
+                indent=2,
+            )
+            + "\n"
+        )
     if args.stage == "layout":
         gates = (("layout", "audit_vocab_n38.py", [], 2),)
     elif args.stage in ("model", "model-stable"):
