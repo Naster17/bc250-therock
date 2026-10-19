@@ -15,11 +15,21 @@ from deploy_torch_a04_on_host import atomic_json, check_gate, sha
 WS = Path("/home/nik/bc250work/rocm-10.2-gfx1013")
 
 
-def main() -> None:
+def main(
+    *,
+    batch_id: str = "training-n33",
+    shape: tuple[int, int, int] = (1024, 2048, 6144),
+    baseline_label: str = "gemm-n32-deployment-r1",
+    default_phase: str = "profile",
+    extra_gates: tuple = (),
+    additional_sources: tuple[str, ...] = (),
+) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--attempt", default="r1")
     parser.add_argument("--length", type=int, choices=(65, 1024), default=1024)
-    parser.add_argument("--phase", choices=("profile", "gemm"), default="profile")
+    parser.add_argument(
+        "--phase", choices=("profile", "gemm", "extra"), default=default_phase
+    )
     parser.add_argument(
         "--reuse-attempt", help="Seal existing passed GPU gates without rerunning them"
     )
@@ -28,13 +38,17 @@ def main() -> None:
         assert args.phase == "gemm" and re.fullmatch(
             r"r[1-9][0-9]*", args.reuse_attempt
         )
+    assert args.phase != "extra" or extra_gates
     assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
+    assert re.fullmatch(r"training-n[0-9]+", batch_id)
+    assert Path(baseline_label).name == baseline_label
+    assert len(shape) == 3 and min(shape) > 0
     assert os.geteuid() == 0
     assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
     assert os.statvfs(WS).f_bavail * os.statvfs(WS).f_frsize > 2 * 1024**3
-    logs = WS / ("logs/training-n33-qualification-" + args.attempt)
+    logs = WS / ("logs/" + batch_id + "-qualification-" + args.attempt)
     logs.mkdir()
-    baseline = json.loads((WS / "logs/gemm-n32-deployment-r1/final.json").read_text())
+    baseline = json.loads((WS / "logs" / baseline_label / "final.json").read_text())
     protected = dict(baseline["protected_sha256"])
     for path in (
         Path("/home/nik/finetune-n7/replica/train.py"),
@@ -49,6 +63,7 @@ def main() -> None:
         name: sha(WS / "helpers" / name)
         for name in (
             Path(__file__).name,
+            Path(sys.argv[0]).name,
             "profile_training_n31.py",
             "profile_training_n33.py",
             "analyze_training_n31.py",
@@ -57,13 +72,14 @@ def main() -> None:
             "validate_qwen35_training_model.py",
             "validate_torch_a04_on_host.py",
             "update_dev_prefix.py",
+            *additional_sources,
         )
     }
     if args.reuse_attempt:
         original = json.loads(
             (
                 WS
-                / ("logs/training-n33-qualification-" + args.reuse_attempt)
+                / ("logs/" + batch_id + "-qualification-" + args.reuse_attempt)
                 / "before.json"
             ).read_text()
         )
@@ -86,6 +102,8 @@ def main() -> None:
         runtime_sha256=baseline["runtime_sha256"],
         aot_caches=baseline["aot_caches"],
         sequence_length=args.length,
+        audited_shape=list(shape),
+        baseline_label=baseline_label,
         phase=args.phase,
         reused_gpu_attempt=args.reuse_attempt,
         prefix_changed=False,
@@ -96,29 +114,35 @@ def main() -> None:
         groups = (
             [("profile", "profile_training_n33.py", ["--length", str(args.length)], 9)]
             if args.phase == "profile"
-            else [
-                ("layout", "audit_gemm_n32.py", ["--shape", "1024", "2048", "6144"], 2),
-                (
-                    "solutions",
-                    "benchmark_gemm_n32.py",
-                    [
-                        "--audit-label",
-                        "training-n33-"
-                        + (args.reuse_attempt or args.attempt)
-                        + "-layout",
-                    ],
-                    None,
-                ),
-            ]
+            else (
+                [
+                    ("layout", "audit_gemm_n32.py", ["--shape", *map(str, shape)], 2),
+                    (
+                        "solutions",
+                        "benchmark_gemm_n32.py",
+                        [
+                            "--audit-label",
+                            batch_id
+                            + "-"
+                            + (args.reuse_attempt or args.attempt)
+                            + "-layout",
+                        ],
+                        None,
+                    ),
+                ]
+                if args.phase == "gemm"
+                else extra_gates
+            )
         )
         for group, script, arguments, count in groups:
-            label = "training-n33-" + (args.reuse_attempt or args.attempt) + "-" + group
+            label = batch_id + "-" + (args.reuse_attempt or args.attempt) + "-" + group
             if group == "solutions":
                 layout = (
                     WS
                     / "logs"
                     / (
-                        "training-n33-"
+                        batch_id
+                        + "-"
                         + (args.reuse_attempt or args.attempt)
                         + "-layout"
                     )
@@ -189,7 +213,7 @@ def main() -> None:
             report["status"] = "failed"
         atomic_json(logs / "final.json", report)
     assert report["status"] == "passed"
-    print("TRAINING_N33_PASS", logs)
+    print(batch_id.upper().replace("-", "_") + "_PASS", logs)
 
 
 if __name__ == "__main__":
