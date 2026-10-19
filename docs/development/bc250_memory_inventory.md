@@ -924,6 +924,36 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**Practical N2 review / N3.1 current-model profiling2026-10-19**, TheRock code
+`4e76c2f01`: [review](bc250_n2_practical_review.md) classifies residual capabilities
+rather than adding an exhaustive N2.19 test sweep. No recorded mandatory N2
+implementation blocking current LoRA found; support-matrix stale N2.14 cursor and
+fixed-A01 group1 boundary corrected. Optional B01/B02/B07, CK backward/RPP and
+broader scientific scopes remain open. Historical CPU fault remains unresolved.
+Actual Qwen3.5-2B base, owned nonzero rank16 adapters, BF16/autocast/math/checkpoint,
+synthetic batch1/accumulation1:65/1024 exact profiled/unprofiled loss,372 nonzero
+clipped gradients, adapter update/AdamW state/CPU+GPU RNG.36 conv/36 gated-delta
+calls, three warm unprofiled steps per shape. Current installed app hook read-only;
+no user training data/checkpoint access, source/library/default change or build.
+Offline kernel-category/launch-correlation accounting fixes new collector's
+annotation double counting/worker-thread attribution;4 contract tests pass.
+Initial r1 numeric/profile pass retained; r2 controller NameError before GPU fixed;
+r3 final1024/r4 short65 pass. No A09 runtime defect/repair claim in this batch.
+At1024 median8.676s/peak5351892480B,38314 kernels, summed8.680s; mm84.71%, backward
+submitted76.82%; BF16 [1024,6144]@[6144,2048]45.94%, reverse16.53%.65 median0.726s/
+peak4232892416B,17286 kernels. Synthetic traces are not sustained user throughput
+or an improvement. [Report/source/raw trace hashes](bc250_training_n31_results/README.md).
+Three GPU guards ACK600s, dmesg identical across all attempts,193 protected
+identities/four AOT DBs/user trainer/config/links/runtime unchanged. No native
+build/cache reset/reboot/boot-policy/.105/BIOS/SDMA0/heap-off/math/rocBLAS change.
+Same r2 boot d0532075-88fb-4a2f-974e-f61578d20d9f; free~6.85GiB, no active agent
+job/container/guard. Native Torchdc8fea0/source2b449c4/libraries319a235d6/source-doc
+c29021b40e7. Raw WS/logs/training-n31-*, full local ignored kernel/artifacts/training-n31.
+Next preservation baseline WS/logs/training-n31-qualification-r4/final.json.
+Next N3.2 audit dominant BF16 GEMM selection/strides, CPU/qualified-GPU reference
+and paired timing of one scalar candidate, then model gradients before any
+reversible deployment. Do not infer universal backward/performance qualification.
+
 **Current Qwen3.5 training follow-up2026-10-16**, implementation690042b55:
 application-scoped native scalar Triton frozen depthwise causal conv K<=4,
 FP32/FP16/BF16 forward/dx/SiLU; unsupported/trainable weights keep original.

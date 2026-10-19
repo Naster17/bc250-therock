@@ -1,0 +1,222 @@
+{
+  "kernel_count": 38314,
+  "kernel_sum_us": 8563122.937,
+  "kernel_device_union_us": 8563121.818359375,
+  "stages": {
+    "zero_grad": {
+      "kernel_calls": 0,
+      "gpu_us": 0.0
+    },
+    "forward": {
+      "kernel_calls": 9258,
+      "gpu_us": 2024672.8969999868
+    },
+    "backward": {
+      "kernel_calls": 28994,
+      "gpu_us": 6534481.646000035
+    },
+    "clip": {
+      "kernel_calls": 22,
+      "gpu_us": 575.7370000000001
+    },
+    "optimizer": {
+      "kernel_calls": 40,
+      "gpu_us": 3392.6570000000006
+    }
+  },
+  "top_kernels": [
+    {
+      "name": "Cijk_Ailk_Bjlk_BBS_BH_MT64x1x64_SE_AMAS0_BL1_BS1_GLVWA1_GLVWB1_GRVW1_GSU3_GSUAMB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU0_SUS0_SVW4_TT1_1_USFGROn1_VAW1_VSn1_VW1_VWB1_WG64_1_1_WGM1.kd",
+      "calls": 282,
+      "gpu_us": 3398363.1050000023,
+      "fraction_of_kernel_sum": 0.3968602494676531
+    },
+    {
+      "name": "Cijk_Alik_Bljk_BBS_BH_MT64x32x8_SN_AMAS2_BL0_BS1_GLVWA2_GLVWB1_GRVW2_GSU1_GSUASB_K1_LRVW2_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT4_2_USFGRO0_VAW1_VS1_VW2_VWB2_WG16_16_1_WGM8.kd",
+      "calls": 301,
+      "gpu_us": 2566290.1000000006,
+      "fraction_of_kernel_sum": 0.2996909093657218
+    },
+    {
+      "name": "Cijk_Ailk_Bljk_BBS_BH_MT64x32x8_SN_AMAS2_BL0_BS1_GLVWA2_GLVWB1_GRVW2_GSU1_GSUASB_K1_LRVW2_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT4_2_USFGRO0_VAW1_VS1_VW2_VWB2_WG16_16_1_WGM8.kd",
+      "calls": 691,
+      "gpu_us": 751100.9550000023,
+      "fraction_of_kernel_sum": 0.08771343825447198
+    },
+    {
+      "name": "_conv.kd",
+      "calls": 36,
+      "gpu_us": 402293.833,
+      "fraction_of_kernel_sum": 0.0469798035085713
+    },
+    {
+      "name": "Cijk_Alik_Bljk_BBS_BH_MT32x128x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT2_8_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 1020,
+      "gpu_us": 272548.0509999999,
+      "fraction_of_kernel_sum": 0.031828113762370464
+    },
+    {
+      "name": "Cijk_Ailk_Bjlk_BBS_BH_MT64x1x64_SE_AMAS0_BL1_BS1_GLVWA1_GLVWB1_GRVW1_GSU15_GSUAMB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR0_SIA1_SU0_SUS0_SVW4_TT1_1_USFGROn1_VAW1_VSn1_VW1_VWB1_WG64_1_1_WGM1.kd",
+      "calls": 18,
+      "gpu_us": 121882.988,
+      "fraction_of_kernel_sum": 0.014233474037066715
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>) [clone .kd]",
+      "calls": 2745,
+      "gpu_us": 99174.46100000004,
+      "fraction_of_kernel_sum": 0.011581576222791537
+    },
+    {
+      "name": "Cijk_Ailk_Bljk_BBS_BH_MT128x32x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT8_2_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 492,
+      "gpu_us": 87050.03999999996,
+      "fraction_of_kernel_sum": 0.010165688457404889
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>) [clone .kd]",
+      "calls": 5126,
+      "gpu_us": 59027.84300000025,
+      "fraction_of_kernel_sum": 0.006893261189203483
+    },
+    {
+      "name": "Cijk_Ailk_Bljk_BBS_BH_MT32x128x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT2_8_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 1032,
+      "gpu_us": 58789.93700000011,
+      "fraction_of_kernel_sum": 0.006865478568102461
+    },
+    {
+      "name": "void at::native::elementwise_kernel_manual_unroll<128, 8, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int, bool)#1}) [clone .kd]",
+      "calls": 192,
+      "gpu_us": 53782.302,
+      "fraction_of_kernel_sum": 0.006280687827990248
+    },
+    {
+      "name": "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}) [clone .kd]",
+      "calls": 1797,
+      "gpu_us": 53512.68299999994,
+      "fraction_of_kernel_sum": 0.006249201768291737
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16tofloat32_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16tofloat32_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>) [clone .kd]",
+      "calls": 3797,
+      "gpu_us": 45974.341000000284,
+      "fraction_of_kernel_sum": 0.005368875507012971
+    },
+    {
+      "name": "Cijk_Ailk_Bjlk_BBS_BH_MT128x32x16_SE_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT8_2_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 666,
+      "gpu_us": 41696.01700000005,
+      "fraction_of_kernel_sum": 0.00486925357801856
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<8, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul>) [clone .kd]",
+      "calls": 1356,
+      "gpu_us": 34524.91399999999,
+      "fraction_of_kernel_sum": 0.004031813422977135
+    }
+  ],
+  "top_launch_operations": [
+    {
+      "name": "aten::mm",
+      "kernel_calls": 2324,
+      "gpu_us": 7243853.248000014,
+      "fraction_of_kernel_sum": 0.8459359162882485
+    },
+    {
+      "name": "_FrozenCausalConv",
+      "kernel_calls": 36,
+      "gpu_us": 402293.833,
+      "fraction_of_kernel_sum": 0.0469798035085713
+    },
+    {
+      "name": "aten::copy_",
+      "kernel_calls": 15410,
+      "gpu_us": 243963.84200000323,
+      "fraction_of_kernel_sum": 0.028490054831032636
+    },
+    {
+      "name": "aten::bmm",
+      "kernel_calls": 4764,
+      "gpu_us": 215029.36199999938,
+      "fraction_of_kernel_sum": 0.02511109131353107
+    },
+    {
+      "name": "aten::add_",
+      "kernel_calls": 3115,
+      "gpu_us": 124208.38799999998,
+      "fraction_of_kernel_sum": 0.014505033842654964
+    },
+    {
+      "name": "aten::mul",
+      "kernel_calls": 3871,
+      "gpu_us": 119021.41300000023,
+      "fraction_of_kernel_sum": 0.013899299808686167
+    },
+    {
+      "name": "aten::linalg_solve_triangular",
+      "kernel_calls": 756,
+      "gpu_us": 49466.73200000001,
+      "fraction_of_kernel_sum": 0.0057767163176253725
+    },
+    {
+      "name": "aten::fill_",
+      "kernel_calls": 2206,
+      "gpu_us": 26362.20899999988,
+      "fraction_of_kernel_sum": 0.003078574159678665
+    },
+    {
+      "name": "aten::add",
+      "kernel_calls": 2036,
+      "gpu_us": 26023.891000000065,
+      "fraction_of_kernel_sum": 0.003039065442766755
+    },
+    {
+      "name": "aten::sum",
+      "kernel_calls": 614,
+      "gpu_us": 21030.04000000002,
+      "fraction_of_kernel_sum": 0.002455884395765509
+    },
+    {
+      "name": "aten::_softmax",
+      "kernel_calls": 28,
+      "gpu_us": 13184.801999999998,
+      "fraction_of_kernel_sum": 0.0015397188732431248
+    },
+    {
+      "name": "aten::_log_softmax",
+      "kernel_calls": 16,
+      "gpu_us": 10543.565999999999,
+      "fraction_of_kernel_sum": 0.0012312757947737494
+    },
+    {
+      "name": "aten::mean",
+      "kernel_calls": 157,
+      "gpu_us": 7877.245000000001,
+      "fraction_of_kernel_sum": 0.0009199032943884968
+    },
+    {
+      "name": "aten::pow",
+      "kernel_calls": 272,
+      "gpu_us": 6637.703999999997,
+      "fraction_of_kernel_sum": 0.0007751499130439258
+    },
+    {
+      "name": "aten::masked_fill_",
+      "kernel_calls": 86,
+      "gpu_us": 6348.336999999998,
+      "fraction_of_kernel_sum": 0.0007413576853567946
+    }
+  ],
+  "top_mm_shapes": [
+    {
+      "input_shapes": null,
+      "input_types": null,
+      "kernel_calls": 2324,
+      "gpu_us": 7243853.248000014,
+      "fraction_of_kernel_sum": 0.8459359162882485
+    }
+  ],
+  "excluded_gpu_annotations": 77,
+  "method": "kernel category only; launch correlation to CPU submit time partitions sequential training stages across CPU threads; External id maps launch operations; sums and per-device interval union reported separately"
+}

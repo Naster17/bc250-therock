@@ -9,6 +9,44 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Practical N2 review + N3.1 completed, 2026-10-19:** TheRock code `4e76c2f01`.
+  [Review](docs/development/bc250_n2_practical_review.md) separates optional BF16
+  FFT/general sparse solve/CK backward/plugin/RPP and other residual scopes from
+  current LoRA requirements. No recorded mandatory N2 runtime implementation was
+  identified before N3. Corrected stale support-matrix N2.14 cursor and fixed-A01
+  group1 convolution boundary; broad N2 remains open, no N2.19 batch executed.
+  New explicit synthetic actual Qwen3.5-2B BF16/autocast/rank16/math/checkpointed
+  training profiler uses current app hooks; only local base weights read, no user
+  training data/checkpoint opened. At65 and1024tokens profiled/unprofiled loss,
+  all372 nonzero clipped adapter gradients, adapter update, full AdamW state and
+  CPU/GPU RNG match exactly;36 conv/36 gated-delta calls prove recomputation.
+  Each shape completes3 additional finite warm training updates. Offline analyzer
+  kernel-only/correlation/stage/shape accounting has4 contract tests, Black/Ruff-F/
+  syntax checks pass. Initial r1 numeric/profile pass had mixed annotation/kernel
+  views; corrected reporting excludes annotations and handles autograd worker
+  submissions. r2 controller NameError before launch fixed; r3 final1024/r4 short65
+  pass, all raw/source/error evidence retained. No Torch/library/native build,
+  ccache reset, application/default/prefix change or speed improvement claim.
+  At1024:38314 kernels, warm median8.676s/peak5351892480B;65:17286 kernels,
+  median0.726s/peak4232892416B, accumulation1 synthetic only. Kernel sum at1024
+  8.680s: mm84.71%, backward-submitted76.82%; BF16 [1024,6144]@[6144,2048]
+  45.94% and reverse projection16.53%. Shape call counts are kernel dispatches,
+  not necessarily mm call counts; inspect stride/transpose before selection.
+  Initial plus2 final GPU processes/guards ACK600s, whole batch dmesg identical,
+  193 protected identities incl user trainer/config/four FFT AOT DBs unchanged.
+  Active native Torchdc8fea0/source2b449c4/libraries319a235d6/source-doc c29021b40e7,
+  r2 boot d0532075-88fb-4a2f-974e-f61578d20d9f/current/previous/image/defaults/
+  BIOS/.105 preserved; no reboot. No running agent job/container/guard; free~6.85GiB.
+  CPU Python fault unresolved/separate from fixed VM-heap/CSR and tool errors.
+  [Report](docs/development/bc250_training_n31_results/README.md); full raw traces
+  WS/logs/training-n31-r{1,3,4}-profile/training-step-trace.json and matching local
+  ignored kernel/artifacts/training-n31; logs WS/logs/training-n31-*. Preservation
+  baseline WS/logs/training-n31-qualification-r4/final.json (N2 binaries retained).
+  **Next N3.2:** audit rocBLAS/Tensile selection and actual strides/transposes for
+  dominant BF16 [1024,6144]@[6144,2048]; CPU/qualified-GPU reference + paired timing
+  of one hardware-feasible scalar candidate, then model gradients before any
+  reversible deployment. Default rocBLAS/math remains until demonstrated benefit.
+
 - **N2.18 completed, 2026-10-19:** TheRock qualification `746528fa6`.
   Direct installed scalar CK DL FP32 grouped forward convolution:128 independent
   CPU-double reference cases plus8 vector-shape refusals pass. Plain/Add+ReLU,
@@ -1707,6 +1745,9 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N2.17 | Native floating stable sorting/selection: rocPRIM656/hipCUB656/Thrust648; Torch62 incl54 finite backward cases; P2 primitives138/core7 pass. Exact ordering/payload/count/guard checks; no production defect or installed change. |
 | [x]   | N2.18 | Scalar CK DL FP32 grouped forward:128 CPU-reference cases +8 refusals; GEMM3/core7 retained. Explicit r2/r3 guard selection repaired; no production CK/runtime/default change or speed claim. Next review N2 practical gaps before selecting another N3 batch. |
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
+| [x]   | N2 practical review | Current-workload gap classification complete; stale A01/next-task documentation corrected. Broad optional scientific coverage remains open; no mandatory implementation identified before N3. |
+| [x]   | N3.1 | Current Qwen3.5 synthetic training profile:65/1024 exact loss/372 gradients/AdamW/RNG replay, corrected kernel-only correlation/shape attribution. Dense mm dominates; no runtime/default or speed claim. |
+| [ ]   | **N3.2 — next** | Audit dominant BF16 [1024,6144]@[6144,2048] rocBLAS/Tensile selection/strides; benchmark one feasible scalar candidate with fixed numerical references, paired timing and model-gradient checks before deployment. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

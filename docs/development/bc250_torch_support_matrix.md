@@ -1,4 +1,4 @@
-# Torch / ROCm gfx1013 support matrix — 2026-10-18
+# Torch / ROCm gfx1013 support matrix — 2026-10-19
 
 This is the current capability audit and work queue requested before N2.7. It
 extends the [inventory](bc250_memory_inventory.md); it does not restart completed
@@ -7,21 +7,25 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N2.13
+## Current cursor after N2.18 / practical review
 
-N2.13 is installed in WS/pytorch-sparse-n213: native Torch `dc8fea0`, final tests
-`2b449c4`. CSR/BSR sparse triangular solves pass433 public CPU-reference/guard/
-stream/pivot groups,96 direct generic fixtures and retained sparse41/core7/
-CPU-first profiler gates in candidate and installed runtime. Exact missing/zero
-pivot rows now become NaN instead of finite placeholders. Unit and legacy empty
-behavior retained; one extra GPU diagnostic launch on nonunit solves. Only
-libtorch_hip.so changes; the A09 CPU-first profiler repair remains.
-[Evidence and limits](bc250_sparse_n213_results/README.md).
+N2.1–N2.18 are complete within their recorded scopes. Installed Torch remains
+`dc8fea0` in WS/pytorch-sparse-n213, source/test `2b449c4`; native libraries
+`319a235d6`, source-documentation `c29021b40e7`. N2.13 sparse pivot marking and
+the A09 CPU-first profiler repair remain installed. N2.14 FFT output/backward,
+N2.15 RNG replay/contracts, N2.16 reductions/scans and N2.17 sorting/selection
+have bounded CPU-reference evidence. N2.18 directly qualifies scalar CK DL FP32
+grouped forward128 +8 refusals; it adds no Torch/MIOpen route or speed claim.
 
-Next **N2.14**: bounded FFT plan/layout and odd-real output/gradient coverage,
-after reviewing P2 FFT30. General sparse factorization/spsolve B02, sparse solve
-autograd, giant native64 BSR and broad performance remain separate. Earlier
-next N2.7/N2.13/profiler-open statements below are historical milestone cursors.
+The [practical N2 review](bc250_n2_practical_review.md) separates missing optional
+APIs from the current LoRA path. No additional mandatory N2 implementation was
+identified before N3.1 training-step attribution. B01/B02/B07 and other residual
+coverage remain open; a proposed N2.19 backward batch was not assigned/executed.
+Historical next N2.7/N2.13/N2.14 and profiler-open cursors below do not override
+this section or flow.md. N3.1 has now passed current-model65/1024 exact training
+replay and kernel/shape attribution; [results](bc250_training_n31_results/README.md).
+Next N3.2 targets the dominant BF16 GEMM selection. The board was already on r2
+at entry; prior r3 qualifications remain historical, not a current-boot assertion.
 
 ## A08 update
 
@@ -211,16 +215,16 @@ The following rows are not an exhaustive API or dtype promise.
 | Area | Torch route / dependency | Current evidence | Boundary |
 | --- | --- | --- | --- |
 | HIP allocation/copy/stream | ROCr, CLR, amdhip64, c10_hip | Native gfx1013; prior allocation/stream/churn and current probes | SDMA/experimental heap off; VMM/reset/fault migration limits remain |
-| Pointwise/reductions/indexing | ATen HIP, rocPRIM/hipCUB/Thrust | Existing P1/P2 suites; current normalization/embedding/optimizer checks | Larger dtype/layout/indexing contracts unqualified |
+| Pointwise/reductions/indexing | ATen HIP, rocPRIM/hipCUB/Thrust | Existing P1/P2 consumers; N2.16 native1536 FP32/64 reduction/scan/custom cases, N2.17 native1960 sort/select +Torch62 incl54 finite backward | Wider types/operators/iterators/concurrency/graphs/performance unqualified |
 | Dense FP32/FP64/FP16/BF16 GEMM | hipBLAS/rocBLAS, default | All four current output/input-gradient references pass; earlier broad fixtures retained | Scalar backend, no Tensor Core throughput claim |
 | Optional dense Lt | hipBLASLt | Explicit hipblaslt selection output/gradients pass; N1.8 bounds retained | Floating Lt remains opt-in; dense INT8/I32 now A08-qualified, FP8 gaps remain |
-| Conv1D/2D/3D | MIOpen | Group2 FP32 ranks1–3 and FP16/BF16 2D output/dx/dw pass | Group1 training defect A01; not blanket convolution support |
+| Conv1D/2D/3D | MIOpen | A01 fixes group1 timing/workspace; installed30 output/dx/dw configurations and15 direct APIs, earlier group2 references retained | Wider tuning/types/layouts remain unqualified; no blanket convolution claim |
 | Depthwise / transpose conv | MIOpen or ATen selection | BF16 K4/C64/L65 depthwise and FP32 transpose-conv gradients pass | Does not qualify the missing CK plugin or all depths/layouts |
 | Norms | ATen/MIOpen by selection | Batch/layer/group norm output/input gradients pass | A02 native legacy CK reductions now pass bounded FP32/FP16/BF16 references; other compute/NaN/index contracts unqualified |
 | Pooling/resize/activations | ATen HIP | Current pool/resize backward and existing NHWC padding fix references | More shapes/types/antialias modes unqualified |
 | Embedding, cross entropy, CTC | ATen HIP | Current CPU-float64 forward/gradient references pass | Ordinary CE still materializes full FP32 logits in Transformers |
-| RNG | hipRAND/rocRAND + Torch | Current exact GPU RNG save/replay; P2 direct/RNG suites | Not all generators/distributions |
-| FFT | hipFFT/rocFFT | FP32/FP64 and FP16 power-of-two8x16 rfft2 output/backward pass | BF16 rejected B01; wider half plans not qualified |
+| RNG | hipRAND/rocRAND + Torch | N2.15 Torch state80/statistics22/contracts20/fresh continuation1; direct native68/P2 RNG28 retained | Wider generators/orderings/statistical suites/graphs/concurrent mutation/cross-version replay unqualified |
+| FFT | hipFFT/rocFFT | N2.14 complex96/real72 output+weighted gradients, independent DFT/finite differences/reuse; direct16 plans/32 executions, FFT30 retained | BF16 rejected B01; native in-place/planar/callbacks/giant/wider half plans/performance unqualified |
 | Dense solve/SVD/lstsq | hipSOLVER/rocSOLVER/rocBLAS | Current solve, singular values+gradient, full-rank gels references pass | Rank-deficient drivers and every solver algorithm not qualified |
 | Hermitian eigenvectors | Native rocSOLVER | N2.1 retained22 cases through257 and gradients | Extreme/larger/two-stage cases unqualified |
 | Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–12 isolated GPU prototype cap16/separated spectra | Production solve is host arithmetic; native full prototype still slower; broader spectra/batching/gradients unqualified |
@@ -235,7 +239,7 @@ The following rows are not an exhaustive API or dtype promise.
 | torch.compile | Dynamo/Inductor/patched Triton3.8 | Current fullgraph norm/GELU output/gradient ref; prior dynamic math attention | Fused SDPA/custom tiled graphs unqualified |
 | HIP graphs | Torch CUDA namespace -> HIP | Current fixed-buffer add capture/replay, previous direct graph fixtures | Does not qualify every op/allocation or custom attention |
 | ROCTX / external tracing | roctracer/rocprofiler | Prior API/kernel/copy correlation evidence | Torch Kineto/SDK integration now bounded-qualified A09; counters/PC sampling remain unqualified |
-| hipTensor / hipDNN / CK generic | Installed libraries, no pinned ATen integration found | DSOs load; prior direct native library/provider tests | Not mandatory dependencies for Torch einsum/convolution; installing them alone changes no Torch route |
+| hipTensor / hipDNN / CK generic | Installed libraries, no pinned ATen integration found | Prior N1/provider/CK Tile tests; N2.18 scalar CK DL FP32 grouped forward128 +8 refusals | Direct coverage does not change Torch routes; CK backward/plugin/other types remain unqualified. Not mandatory Torch einsum/convolution dependencies |
 
 ## Ordered work queue
 
@@ -264,13 +268,12 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
 | **N2.3–12** | Native nonsymmetric eig remains an isolated bounded prototype | Native GEHRD/Q/QR/control/recovery and explicit sessions qualified within cap16/separated scope; production host LAPACK retained | Further eig expansion/optimization optional; return to broader N2 coverage after the completed A09 profiler-order repair. |
 
-A01–A07 are completed within their recorded bounded scopes; A07 dropout/compile/
-graph contracts and full native FLA remain open extensions. A09 was selected ahead of A08; A08 is now also completed within its
-recorded bounds. Resume N2.7; optional B-items remain separate. B-items are optional
-workloads/integration expansions rather than mandatory missing Torch dependencies.
-N2.7 stays queued while we work through the selected primary items; this audit did
-not silently begin their implementation. Small targeted tests cannot prove that
-no other hidden defects exist; the retained runner makes new probes reproducible.
+A01–A09 are completed within their recorded bounded scopes, including the later
+CPU-first profiler repair. B-items remain optional workload/integration
+expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
+N3.1 is complete after the practical review; N3.2 is next. Small targeted
+tests cannot prove that no hidden defect exists; the evidence and retained
+runners make new workload-specific probes reproducible.
 
 ## Hardware limits and unresolved stability
 

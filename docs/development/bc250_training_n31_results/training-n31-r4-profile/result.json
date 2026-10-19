@@ -1,0 +1,577 @@
+{
+  "status": "passed",
+  "capabilities": {
+    "distributed": false,
+    "flash_attention": false,
+    "torch_hip_version": "7.17.0",
+    "optional_packages": {
+      "torchvision": null,
+      "torchaudio": null,
+      "torchao": null,
+      "bitsandbytes": null,
+      "onnx": null,
+      "onnxruntime": null,
+      "flash-linear-attention": null,
+      "causal-conv1d": null
+    }
+  },
+  "checks": [
+    "exact-loss",
+    "372-exact-nonzero-gradients",
+    "exact-adapter-update",
+    "exact-optimizer-state",
+    "exact-cpu-gpu-rng",
+    "positive-native-gpu-events",
+    "checkpointed-stage-calls",
+    "three-finite-warm-training-steps"
+  ],
+  "length": 65,
+  "batch": 1,
+  "rank": 16,
+  "dtype": "bfloat16 base/autocast with FP32 adapters",
+  "attention": "math",
+  "accumulation_steps": 1,
+  "gradient_checkpointing": true,
+  "synthetic_inputs": true,
+  "user_data_or_checkpoints_opened": false,
+  "source_sha256": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/profile_training_n31.py": "9b33540870b4eb42f28966019230c501045a18187146656fc0394ffd26e59c58",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_qwen35_training_model.py": "f0c7e1a666ee6434bb20cc9c71f2ec6b102b59ba595f1a2ef9d4a82d890e11d6",
+    "/home/nik/finetune-n7/replica/bc250_ops.py": "f0bcb35eadd3cde6c08dbeca0929358e4361f1f2b7358f2cad5288517f9fa4e6"
+  },
+  "protocol": "warmup1; exact unprofiled/profiled loss, clipped gradients, parameters, optimizer and RNG replay; three warm unprofiled whole steps; no throughput improvement claim",
+  "profiled_wall_seconds_with_setup_teardown": 2.1319781140000487,
+  "loss": 14.034814834594727,
+  "kernel_analysis": {
+    "kernel_count": 17286,
+    "kernel_sum_us": 693487.06,
+    "kernel_device_union_us": 693486.9443359375,
+    "stages": {
+      "zero_grad": {
+        "kernel_calls": 0,
+        "gpu_us": 0.0
+      },
+      "forward": {
+        "kernel_calls": 4990,
+        "gpu_us": 198646.52499999973
+      },
+      "backward": {
+        "kernel_calls": 12234,
+        "gpu_us": 490864.387000004
+      },
+      "clip": {
+        "kernel_calls": 22,
+        "gpu_us": 580.5020000000001
+      },
+      "optimizer": {
+        "kernel_calls": 40,
+        "gpu_us": 3395.6460000000006
+      }
+    },
+    "top_kernels": [
+      {
+        "name": "Cijk_Alik_Bljk_BBS_BH_MT64x32x8_SN_AMAS2_BL0_BS1_GLVWA2_GLVWB1_GRVW2_GSU1_GSUASB_K1_LRVW2_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT4_2_USFGRO0_VAW1_VS1_VW2_VWB2_WG16_16_1_WGM8.kd",
+        "calls": 301,
+        "gpu_us": 184589.75599999985,
+        "fraction_of_kernel_sum": 0.26617620810401255
+      },
+      {
+        "name": "Cijk_Alik_Bljk_BBS_BH_MT128x32x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT8_2_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+        "calls": 444,
+        "gpu_us": 136034.14699999994,
+        "fraction_of_kernel_sum": 0.19615960390090037
+      },
+      {
+        "name": "Cijk_Ailk_Bjlk_BBS_BH_MT64x1x64_SE_AMAS0_BL1_BS1_GLVWA1_GLVWB1_GRVW1_GSU15_GSUAMB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR0_SIA1_SU0_SUS0_SVW4_TT1_1_USFGROn1_VAW1_VSn1_VW1_VWB1_WG64_1_1_WGM1.kd",
+        "calls": 36,
+        "gpu_us": 125899.561,
+        "fraction_of_kernel_sum": 0.18154565277685208
+      },
+      {
+        "name": "Cijk_Ailk_Bljk_BBS_BH_MT64x32x8_SN_AMAS2_BL0_BS1_GLVWA2_GLVWB1_GRVW2_GSU1_GSUASB_K1_LRVW2_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT4_2_USFGRO0_VAW1_VS1_VW2_VWB2_WG16_16_1_WGM8.kd",
+        "calls": 187,
+        "gpu_us": 91915.55400000002,
+        "fraction_of_kernel_sum": 0.13254112340610943
+      },
+      {
+        "name": "Cijk_Ailk_Bljk_BBS_BH_MT128x32x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT8_2_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+        "calls": 390,
+        "gpu_us": 54396.454999999994,
+        "fraction_of_kernel_sum": 0.07843903388766907
+      },
+      {
+        "name": "Cijk_Alik_Bljk_BBS_BH_MT32x128x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT2_8_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+        "calls": 348,
+        "gpu_us": 8356.453000000014,
+        "fraction_of_kernel_sum": 0.012049904723528675
+      },
+      {
+        "name": "Cijk_Ailk_Bjlk_BBS_BH_MT64x1x64_SE_AMAS0_BL1_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR0_SIA1_SU0_SUS0_SVW4_TT1_1_USFGROn1_VAW1_VSn1_VW1_VWB1_WG64_1_1_WGM1.kd",
+        "calls": 222,
+        "gpu_us": 7015.577999999998,
+        "fraction_of_kernel_sum": 0.010116379100137783
+      },
+      {
+        "name": "Cijk_Ailk_Bjlk_BBS_BH_MT128x32x16_SE_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT8_2_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+        "calls": 240,
+        "gpu_us": 5728.947999999996,
+        "fraction_of_kernel_sum": 0.008261074114346121
+      },
+      {
+        "name": "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int, bool)#1}) [clone .kd]",
+        "calls": 784,
+        "gpu_us": 5424.008999999993,
+        "fraction_of_kernel_sum": 0.00782135574382598
+      },
+      {
+        "name": "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}) [clone .kd]",
+        "calls": 1027,
+        "gpu_us": 5261.014000000018,
+        "fraction_of_kernel_sum": 0.007586318914155396
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>) [clone .kd]",
+        "calls": 2304,
+        "gpu_us": 4753.407999999979,
+        "fraction_of_kernel_sum": 0.00685435716709693
+      },
+      {
+        "name": "Cijk_Ailk_Bljk_BBS_BH_MT32x128x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT2_8_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+        "calls": 90,
+        "gpu_us": 4693.658,
+        "fraction_of_kernel_sum": 0.006768198385706
+      },
+      {
+        "name": "_conv.kd",
+        "calls": 36,
+        "gpu_us": 3600.6689999999994,
+        "fraction_of_kernel_sum": 0.005192121393007678
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16tofloat32_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16tofloat32_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>) [clone .kd]",
+        "calls": 1753,
+        "gpu_us": 3136.0129999999963,
+        "fraction_of_kernel_sum": 0.004522093029392641
+      },
+      {
+        "name": "void rocblas_trsm_block_forward_substitution<float, float, float const* const*, float* const*, true, false, true>(rocblas_operation_, long, long, float, float const* const*, long, long, long, float* const*, long, long, long, int, bool) [clone .kd]",
+        "calls": 288,
+        "gpu_us": 2990.3259999999977,
+        "fraction_of_kernel_sum": 0.004312014127559926
+      }
+    ],
+    "top_launch_operations": [
+      {
+        "name": "aten::mm",
+        "kernel_calls": 2060,
+        "gpu_us": 607920.4439999998,
+        "fraction_of_kernel_sum": 0.8766139688316603
+      },
+      {
+        "name": "aten::bmm",
+        "kernel_calls": 732,
+        "gpu_us": 21629.833000000002,
+        "fraction_of_kernel_sum": 0.031189959045522783
+      },
+      {
+        "name": "aten::copy_",
+        "kernel_calls": 5746,
+        "gpu_us": 18251.8589999999,
+        "fraction_of_kernel_sum": 0.02631896116417788
+      },
+      {
+        "name": "aten::mul",
+        "kernel_calls": 2863,
+        "gpu_us": 11672.822999999938,
+        "fraction_of_kernel_sum": 0.016832070377780284
+      },
+      {
+        "name": "aten::linalg_solve_triangular",
+        "kernel_calls": 756,
+        "gpu_us": 7619.365999999981,
+        "fraction_of_kernel_sum": 0.010987034134422032
+      },
+      {
+        "name": "_FrozenCausalConv",
+        "kernel_calls": 36,
+        "gpu_us": 3600.6689999999994,
+        "fraction_of_kernel_sum": 0.005192121393007678
+      },
+      {
+        "name": "aten::add_",
+        "kernel_calls": 847,
+        "gpu_us": 3438.071999999998,
+        "fraction_of_kernel_sum": 0.004957658474550337
+      },
+      {
+        "name": "aten::add",
+        "kernel_calls": 1014,
+        "gpu_us": 2583.964000000002,
+        "fraction_of_kernel_sum": 0.003726045010847069
+      },
+      {
+        "name": "aten::sum",
+        "kernel_calls": 362,
+        "gpu_us": 2206.7119999999995,
+        "fraction_of_kernel_sum": 0.003182052164030284
+      },
+      {
+        "name": "aten::fill_",
+        "kernel_calls": 640,
+        "gpu_us": 1076.5280000000014,
+        "fraction_of_kernel_sum": 0.0015523404286736098
+      },
+      {
+        "name": "aten::mean",
+        "kernel_calls": 157,
+        "gpu_us": 1015.97,
+        "fraction_of_kernel_sum": 0.0014650165210004062
+      },
+      {
+        "name": "aten::sub",
+        "kernel_calls": 146,
+        "gpu_us": 940.5640000000003,
+        "fraction_of_kernel_sum": 0.0013562819759030547
+      },
+      {
+        "name": "aten::_foreach_addcdiv_",
+        "kernel_calls": 8,
+        "gpu_us": 801.6470000000002,
+        "fraction_of_kernel_sum": 0.0011559653326480238
+      },
+      {
+        "name": "aten::_softmax",
+        "kernel_calls": 14,
+        "gpu_us": 756.2729999999999,
+        "fraction_of_kernel_sum": 0.0010905365703579239
+      },
+      {
+        "name": "aten::_foreach_mul_",
+        "kernel_calls": 8,
+        "gpu_us": 708.354,
+        "fraction_of_kernel_sum": 0.0010214379486763604
+      }
+    ],
+    "top_mm_shapes": [
+      {
+        "input_shapes": [
+          [
+            65,
+            6144
+          ],
+          [
+            6144,
+            2048
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 132,
+        "gpu_us": 198852.004,
+        "fraction_of_kernel_sum": 0.28674219818896113
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            2048
+          ],
+          [
+            2048,
+            16
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 462,
+        "gpu_us": 114843.81199999989,
+        "fraction_of_kernel_sum": 0.16560339568556603
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            2048
+          ],
+          [
+            2048,
+            6144
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 156,
+        "gpu_us": 104658.68499999997,
+        "fraction_of_kernel_sum": 0.15091656504737083
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            6144
+          ],
+          [
+            6144,
+            16
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 132,
+        "gpu_us": 70339.77100000001,
+        "fraction_of_kernel_sum": 0.1014291038105311
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            2048
+          ],
+          [
+            2048,
+            2048
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 126,
+        "gpu_us": 31517.864999999987,
+        "fraction_of_kernel_sum": 0.04544838226685871
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            248320
+          ],
+          [
+            248320,
+            2048
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 1,
+        "gpu_us": 28581.8,
+        "fraction_of_kernel_sum": 0.041214611848705576
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            2048
+          ],
+          [
+            2048,
+            248320
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 1,
+        "gpu_us": 24298.582,
+        "fraction_of_kernel_sum": 0.035038263006666626
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            2048
+          ],
+          [
+            2048,
+            4096
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 12,
+        "gpu_us": 5692.509999999999,
+        "fraction_of_kernel_sum": 0.008208530956583384
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            16
+          ],
+          [
+            16,
+            2048
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 306,
+        "gpu_us": 4460.2549999999965,
+        "fraction_of_kernel_sum": 0.006431634066827428
+      },
+      {
+        "input_shapes": [
+          [
+            16,
+            65
+          ],
+          [
+            65,
+            2048
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 162,
+        "gpu_us": 3958.0199999999986,
+        "fraction_of_kernel_sum": 0.005707417237172383
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            16
+          ],
+          [
+            16,
+            6144
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 156,
+        "gpu_us": 3431.909999999999,
+        "fraction_of_kernel_sum": 0.004948772944660278
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            2048
+          ],
+          [
+            2048,
+            512
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 24,
+        "gpu_us": 3096.8650000000007,
+        "fraction_of_kernel_sum": 0.0044656420842228844
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            4096
+          ],
+          [
+            4096,
+            2048
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 6,
+        "gpu_us": 2948.686,
+        "fraction_of_kernel_sum": 0.004251969748361274
+      },
+      {
+        "input_shapes": [
+          [
+            65,
+            4096
+          ],
+          [
+            4096,
+            16
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 6,
+        "gpu_us": 2739.376,
+        "fraction_of_kernel_sum": 0.003950147245717894
+      },
+      {
+        "input_shapes": [
+          [
+            6144,
+            65
+          ],
+          [
+            65,
+            16
+          ]
+        ],
+        "input_types": [
+          "c10::BFloat16",
+          "c10::BFloat16"
+        ],
+        "kernel_calls": 66,
+        "gpu_us": 2274.17,
+        "fraction_of_kernel_sum": 0.0032793257887176724
+      }
+    ],
+    "excluded_gpu_annotations": 77,
+    "method": "kernel category only; launch correlation to CPU submit time partitions sequential training stages across CPU threads; External id maps launch operations; sums and per-device interval union reported separately"
+  },
+  "stage_calls": {
+    "n31/causal_conv": 36,
+    "n31/gated_delta": 36,
+    "n31/chunked_loss": 1
+  },
+  "gpu_kernel_count": 17286,
+  "trace_bytes": 65916736,
+  "trace_sha256": "b36710fc01d83ca91f382c3a57100c85e2342adc48dc517cfb9213549afa88e8",
+  "unprofiled_samples": [
+    {
+      "wall_seconds": 0.784868127999971,
+      "gpu_event_ms": 784.7725830078125,
+      "loss": 13.30914306640625,
+      "peak_allocated_bytes": 4232891904,
+      "reserved_bytes": 4500488192
+    },
+    {
+      "wall_seconds": 0.726104487999919,
+      "gpu_event_ms": 726.0540161132812,
+      "loss": 12.58189582824707,
+      "peak_allocated_bytes": 4232892416,
+      "reserved_bytes": 4500488192
+    },
+    {
+      "wall_seconds": 0.7231350959998508,
+      "gpu_event_ms": 723.0931396484375,
+      "loss": 11.789436340332031,
+      "peak_allocated_bytes": 4232892416,
+      "reserved_bytes": 4500488192
+    }
+  ],
+  "median_unprofiled_wall_seconds": 0.726104487999919
+}

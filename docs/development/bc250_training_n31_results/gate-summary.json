@@ -1,0 +1,56 @@
+[
+  {
+    "attempt": "r1",
+    "status": "passed",
+    "guard": {
+      "release": "7.1.5-bc250rocm-r2",
+      "phase": "training-n31-r1-profile",
+      "boot_id": "d0532075-88fb-4a2f-974e-f61578d20d9f",
+      "nonce": "08fe96f8751cdc982eff869a456fa133",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 2109.141292326,
+      "dry_run": false
+    },
+    "protected": 193,
+    "kernel_log_unchanged": true,
+    "trace_bytes": 114244158,
+    "trace_sha256": "e994ba00665aff5f6b4b6598198a43e2177fce6c72f5c8029c9548445ebdd680"
+  },
+  {
+    "attempt": "r3",
+    "status": "passed",
+    "guard": {
+      "release": "7.1.5-bc250rocm-r2",
+      "phase": "training-n31-r3-profile",
+      "boot_id": "d0532075-88fb-4a2f-974e-f61578d20d9f",
+      "nonce": "210dab85d62552d0611d8e04a525c949",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 2447.828995253,
+      "dry_run": false
+    },
+    "protected": 193,
+    "kernel_log_unchanged": true,
+    "trace_bytes": 151632377,
+    "trace_sha256": "06b77f7db3f4652886e8705d20a95dc9310b5988fa4c766d30e9a72adf0a2f6d"
+  },
+  {
+    "attempt": "r4",
+    "status": "passed",
+    "guard": {
+      "release": "7.1.5-bc250rocm-r2",
+      "phase": "training-n31-r4-profile",
+      "boot_id": "d0532075-88fb-4a2f-974e-f61578d20d9f",
+      "nonce": "3f60eee2e0c918ae35d7d9804a481ccc",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 2553.520075129,
+      "dry_run": false
+    },
+    "protected": 193,
+    "kernel_log_unchanged": true,
+    "trace_bytes": 65916736,
+    "trace_sha256": "b36710fc01d83ca91f382c3a57100c85e2342adc48dc517cfb9213549afa88e8"
+  }
+]

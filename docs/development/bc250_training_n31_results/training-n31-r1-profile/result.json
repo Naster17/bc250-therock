@@ -1,0 +1,361 @@
+{
+  "status": "passed",
+  "capabilities": {
+    "distributed": false,
+    "flash_attention": false,
+    "torch_hip_version": "7.17.0",
+    "optional_packages": {
+      "torchvision": null,
+      "torchaudio": null,
+      "torchao": null,
+      "bitsandbytes": null,
+      "onnx": null,
+      "onnxruntime": null,
+      "flash-linear-attention": null,
+      "causal-conv1d": null
+    }
+  },
+  "checks": [
+    "exact-loss",
+    "372-exact-nonzero-gradients",
+    "exact-adapter-update",
+    "exact-optimizer-state",
+    "exact-cpu-gpu-rng",
+    "positive-native-gpu-events",
+    "checkpointed-stage-calls",
+    "three-finite-warm-training-steps"
+  ],
+  "length": 1024,
+  "batch": 1,
+  "rank": 16,
+  "dtype": "bfloat16 base/autocast with FP32 adapters",
+  "attention": "math",
+  "accumulation_steps": 1,
+  "gradient_checkpointing": true,
+  "synthetic_inputs": true,
+  "user_data_or_checkpoints_opened": false,
+  "source_sha256": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/profile_training_n31.py": "ecacf70fb00f179058a55b021ed95a672d68e457664d14a4a4d06eb26500c2f7",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_qwen35_training_model.py": "f0c7e1a666ee6434bb20cc9c71f2ec6b102b59ba595f1a2ef9d4a82d890e11d6",
+    "/home/nik/finetune-n7/replica/bc250_ops.py": "f0bcb35eadd3cde6c08dbeca0929358e4361f1f2b7358f2cad5288517f9fa4e6"
+  },
+  "protocol": "warmup1; exact unprofiled/profiled loss, clipped gradients, parameters, optimizer and RNG replay; three warm unprofiled whole steps; no throughput improvement claim",
+  "profiled_wall_seconds_with_setup_teardown": 9.74248730000022,
+  "loss": 13.808328628540039,
+  "top_self_gpu_operations": [
+    {
+      "name": "aten::mm",
+      "calls": 2048,
+      "self_gpu_us": 7243853.248000007,
+      "total_gpu_us": 7243853.248000007,
+      "self_cpu_us": 102253.9940000046
+    },
+    {
+      "name": "Cijk_Ailk_Bjlk_BBS_BH_MT64x1x64_SE_AMAS0_BL1_BS1_GLVWA1_GLVWB1_GRVW1_GSU3_GSUAMB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU0_SUS0_SVW4_TT1_1_USFGROn1_VAW1_VSn1_VW1_VWB1_WG64_1_1_WGM1.kd",
+      "calls": 282,
+      "self_gpu_us": 3398363.105000007,
+      "total_gpu_us": 3398363.105000007,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "Cijk_Alik_Bljk_BBS_BH_MT64x32x8_SN_AMAS2_BL0_BS1_GLVWA2_GLVWB1_GRVW2_GSU1_GSUASB_K1_LRVW2_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT4_2_USFGRO0_VAW1_VS1_VW2_VWB2_WG16_16_1_WGM8.kd",
+      "calls": 301,
+      "self_gpu_us": 2566290.0999999917,
+      "total_gpu_us": 2566290.0999999917,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/forward",
+      "calls": 1,
+      "self_gpu_us": 2038170.1339999998,
+      "total_gpu_us": 2038170.1339999998,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "Cijk_Ailk_Bljk_BBS_BH_MT64x32x8_SN_AMAS2_BL0_BS1_GLVWA2_GLVWB1_GRVW2_GSU1_GSUASB_K1_LRVW2_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT4_2_USFGRO0_VAW1_VS1_VW2_VWB2_WG16_16_1_WGM8.kd",
+      "calls": 691,
+      "self_gpu_us": 751100.9550000001,
+      "total_gpu_us": 751100.9550000001,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "_FrozenCausalConv",
+      "calls": 36,
+      "self_gpu_us": 402293.8330000018,
+      "total_gpu_us": 402293.8330000018,
+      "self_cpu_us": 8370.143999999393
+    },
+    {
+      "name": "_conv.kd",
+      "calls": 36,
+      "self_gpu_us": 402293.8330000018,
+      "total_gpu_us": 402293.8330000018,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/causal_conv",
+      "calls": 36,
+      "self_gpu_us": 402293.8330000018,
+      "total_gpu_us": 402293.8330000018,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "Cijk_Alik_Bljk_BBS_BH_MT32x128x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT2_8_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 1020,
+      "self_gpu_us": 272548.05100001337,
+      "total_gpu_us": 272548.05100001337,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "aten::copy_",
+      "calls": 15410,
+      "self_gpu_us": 243963.84200004424,
+      "total_gpu_us": 243963.84200004424,
+      "self_cpu_us": 132838.78500001397
+    },
+    {
+      "name": "n31/gated_delta",
+      "calls": 36,
+      "self_gpu_us": 231549.43499999936,
+      "total_gpu_us": 231549.43499999936,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "aten::bmm",
+      "calls": 4764,
+      "self_gpu_us": 215029.36200004822,
+      "total_gpu_us": 215029.36200004822,
+      "self_cpu_us": 322831.51300002355
+    },
+    {
+      "name": "aten::add_",
+      "calls": 3487,
+      "self_gpu_us": 124208.38800001651,
+      "total_gpu_us": 124208.38800001651,
+      "self_cpu_us": 24908.30399999807
+    },
+    {
+      "name": "Cijk_Ailk_Bjlk_BBS_BH_MT64x1x64_SE_AMAS0_BL1_BS1_GLVWA1_GLVWB1_GRVW1_GSU15_GSUAMB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR0_SIA1_SU0_SUS0_SVW4_TT1_1_USFGROn1_VAW1_VSn1_VW1_VWB1_WG64_1_1_WGM1.kd",
+      "calls": 18,
+      "self_gpu_us": 121882.98800000083,
+      "total_gpu_us": 121882.98800000083,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "aten::mul",
+      "calls": 3871,
+      "self_gpu_us": 119021.41299996518,
+      "total_gpu_us": 119021.41299996518,
+      "self_cpu_us": 76602.08000000287
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>) [clone .kd]",
+      "calls": 2745,
+      "self_gpu_us": 99174.46100001247,
+      "total_gpu_us": 99174.46100001247,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "Cijk_Ailk_Bljk_BBS_BH_MT128x32x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT8_2_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 492,
+      "self_gpu_us": 87050.03999999864,
+      "total_gpu_us": 87050.03999999864,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>) [clone .kd]",
+      "calls": 5126,
+      "self_gpu_us": 59027.842999980865,
+      "total_gpu_us": 59027.842999980865,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "Cijk_Ailk_Bljk_BBS_BH_MT32x128x16_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT2_8_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 1032,
+      "self_gpu_us": 58789.93700001177,
+      "total_gpu_us": 58789.93700001177,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "void at::native::elementwise_kernel_manual_unroll<128, 8, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int, bool)#1}) [clone .kd]",
+      "calls": 192,
+      "self_gpu_us": 53782.30200000891,
+      "total_gpu_us": 53782.30200000891,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}) [clone .kd]",
+      "calls": 1797,
+      "self_gpu_us": 53512.682999978795,
+      "total_gpu_us": 53512.682999978795,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "aten::linalg_solve_triangular",
+      "calls": 108,
+      "self_gpu_us": 49466.73200000361,
+      "total_gpu_us": 61659.15700000992,
+      "self_cpu_us": 13209.342999996534
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16tofloat32_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16tofloat32_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>) [clone .kd]",
+      "calls": 3797,
+      "self_gpu_us": 45974.34100005866,
+      "total_gpu_us": 45974.34100005866,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "Cijk_Ailk_Bjlk_BBS_BH_MT128x32x16_SE_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR1_SIA1_SU32_SUS256_SVW4_TT8_2_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+      "calls": 666,
+      "self_gpu_us": 41696.01699999426,
+      "total_gpu_us": 41696.01699999426,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<8, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul>) [clone .kd]",
+      "calls": 1356,
+      "self_gpu_us": 34524.91400000325,
+      "total_gpu_us": 34524.91400000325,
+      "self_cpu_us": 0.0
+    }
+  ],
+  "stages": [
+    {
+      "name": "n31/training_step",
+      "calls": 1,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 2038426.602999995,
+      "self_cpu_us": 8668.356000000611
+    },
+    {
+      "name": "n31/zero_grad",
+      "calls": 1,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 0.0,
+      "self_cpu_us": 41.499000000000024
+    },
+    {
+      "name": "n31/forward",
+      "calls": 1,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 2034412.5249999955,
+      "self_cpu_us": 38818.73000000074
+    },
+    {
+      "name": "n31/forward",
+      "calls": 1,
+      "self_gpu_us": 2038170.1339999998,
+      "total_gpu_us": 2038170.1339999998,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/causal_conv",
+      "calls": 36,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 402293.8330000018,
+      "self_cpu_us": 3736.453000001029
+    },
+    {
+      "name": "n31/gated_delta",
+      "calls": 36,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 205611.7229999812,
+      "self_cpu_us": 73178.16199998985
+    },
+    {
+      "name": "n31/causal_conv",
+      "calls": 36,
+      "self_gpu_us": 402293.8330000018,
+      "total_gpu_us": 402293.8330000018,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/gated_delta",
+      "calls": 36,
+      "self_gpu_us": 231549.43499999936,
+      "total_gpu_us": 231549.43499999936,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/chunked_loss",
+      "calls": 1,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 14590.751999999862,
+      "self_cpu_us": 164.53100000001723
+    },
+    {
+      "name": "n31/backward",
+      "calls": 1,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 1.5220000001136214,
+      "self_cpu_us": 4817914.935
+    },
+    {
+      "name": "n31/chunked_loss",
+      "calls": 1,
+      "self_gpu_us": 14734.56700000004,
+      "total_gpu_us": 14734.56700000004,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/backward",
+      "calls": 1,
+      "self_gpu_us": 1.5220000001136214,
+      "total_gpu_us": 1.5220000001136214,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/clip",
+      "calls": 1,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 575.7369999997318,
+      "self_cpu_us": 4901.154999991879
+    },
+    {
+      "name": "n31/clip",
+      "calls": 1,
+      "self_gpu_us": 2439.5590000003576,
+      "total_gpu_us": 2439.5590000003576,
+      "self_cpu_us": 0.0
+    },
+    {
+      "name": "n31/optimizer",
+      "calls": 1,
+      "self_gpu_us": 0.0,
+      "total_gpu_us": 3392.6569999996573,
+      "self_cpu_us": 74.80800000019372
+    }
+  ],
+  "stage_calls": {
+    "n31/causal_conv": 36,
+    "n31/gated_delta": 36,
+    "n31/chunked_loss": 1
+  },
+  "gpu_event_count": 38391,
+  "trace_bytes": 114244158,
+  "trace_sha256": "e994ba00665aff5f6b4b6598198a43e2177fce6c72f5c8029c9548445ebdd680",
+  "unprofiled_samples": [
+    {
+      "wall_seconds": 8.586925005000012,
+      "gpu_event_ms": 8586.8125,
+      "loss": 13.44404411315918,
+      "peak_allocated_bytes": 5351891968,
+      "reserved_bytes": 5683281920
+    },
+    {
+      "wall_seconds": 8.53441454599988,
+      "gpu_event_ms": 8534.328125,
+      "loss": 13.153635025024414,
+      "peak_allocated_bytes": 5351892480,
+      "reserved_bytes": 5683281920
+    },
+    {
+      "wall_seconds": 8.554821040999968,
+      "gpu_event_ms": 8554.736328125,
+      "loss": 12.935285568237305,
+      "peak_allocated_bytes": 5351892480,
+      "reserved_bytes": 5683281920
+    }
+  ],
+  "median_unprofiled_wall_seconds": 8.554821040999968
+}
