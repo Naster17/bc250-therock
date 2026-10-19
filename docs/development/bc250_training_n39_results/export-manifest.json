@@ -1,0 +1,1422 @@
+{
+  "records": {
+    "remote/training-n39-candidate-unit-tests.json": {
+      "size": 106,
+      "sha256": "d6181b26a27909130405a178b79b236731c9709cbe1ba1599d4776db44a4a143"
+    },
+    "remote/training-n39-candidate-unit-tests.log": {
+      "size": 99,
+      "sha256": "acb52fd449f41d3b82855020c8f00d208eb1423b2418ed4f419f37f549f3d773"
+    },
+    "remote/training-n39-controller-r1.log": {
+      "size": 91,
+      "sha256": "524a15d47eb39fe3f2dc65191471ce29486a448fa987db52d5ab9a0e92dd58e4"
+    },
+    "remote/training-n39-controller-r2.log": {
+      "size": 91,
+      "sha256": "b5ee08ca8ca0724e7078258dcf5ebbd62ae0fe733c3d38254a6d9e10beb536cd"
+    },
+    "remote/training-n39-controller-r3.log": {
+      "size": 91,
+      "sha256": "82e6cdf62f10f25e2e9ad54a14c8cc44d97950cd6d5779d1def88ce5aa52c5e3"
+    },
+    "remote/training-n39-controller-r4.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-deployment-r3/final.json": {
+      "size": 60944,
+      "sha256": "26cb032558cee9a5d8f96d4a14968b340feacc7537a44fe1b132b677364a928a"
+    },
+    "remote/training-n39-guard-states.json": {
+      "size": 2386,
+      "sha256": "5fa1211ea36f43d295f3dc217f1a8867abe07fb8f71d9a677739e1387dc2e892"
+    },
+    "remote/training-n39-guidance-r4/final.json": {
+      "size": 60936,
+      "sha256": "b86ce29c61320b2c6bccc9c75dfa79f54c7988ef3395e1b240753e97077f7db0"
+    },
+    "remote/training-n39-handoff.json": {
+      "size": 430,
+      "sha256": "1df0028ad5c380b39c05d5042cd6a35b3fe3e5bfb442ee8c3c6d4af99cb64667"
+    },
+    "remote/training-n39-host-provenance-tests.log": {
+      "size": 97,
+      "sha256": "880fee4251c609f4928cd7cf68de792909c8b0f190a7d286e7a56ca313743590"
+    },
+    "remote/training-n39-installed-unit-tests.log": {
+      "size": 99,
+      "sha256": "49bdd1f5f00efdb83c39a131feb854b57665f128df5332f2049c2d0c9bde48a2"
+    },
+    "remote/training-n39-qualification-r1/before.json": {
+      "size": 59106,
+      "sha256": "652f53030d49b88831143cb0d7013720e59eb61653e95817e9edef6a4a66610d"
+    },
+    "remote/training-n39-qualification-r1/final.json": {
+      "size": 64654,
+      "sha256": "97d232633bc24b8c71d3c4a2f2760d2d555c443d64d9f989e6e2252e28f56772"
+    },
+    "remote/training-n39-qualification-r1/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-qualification-r1/progress.json": {
+      "size": 64424,
+      "sha256": "cf2516a24072662e67658d506ba512078cb1a70ff2c89bce0efcd05ad5f5eebf"
+    },
+    "remote/training-n39-qualification-r1/training-n39-r1-attention.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-qualification-r1/training-n39-r1-fresh.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-qualification-r1/training-n39-r1-legacy.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-qualification-r1/training-n39-r1-refusals.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-qualification-r1/training-n39-r1-resumed.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-qualification-r2/before.json": {
+      "size": 58718,
+      "sha256": "1837db005368bf060f01524dd83ffe6e3ed7a8921855b1be82cad4206c8fdcf4"
+    },
+    "remote/training-n39-qualification-r2/final.json": {
+      "size": 59999,
+      "sha256": "620c59e732aaa123b4953a9bc31e5e8babad09c4a3d1361a0e27aefc74143129"
+    },
+    "remote/training-n39-qualification-r2/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-qualification-r2/progress.json": {
+      "size": 59769,
+      "sha256": "ea4079a8fc752f25ec03a8a9ad03afd19f22c493f90f931dfc0ec69774514aa6"
+    },
+    "remote/training-n39-qualification-r2/training-n39-r2-continuity.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-qualification-r3/before.json": {
+      "size": 59135,
+      "sha256": "39abcde86cdcf418583775bb6586bf72018ca1e2f2902f2edee1c0bf168152cc"
+    },
+    "remote/training-n39-qualification-r3/final.json": {
+      "size": 60410,
+      "sha256": "7a55f9eb015afb044513b3422d46a07234f710b41415055a1663b1d61fd2de9f"
+    },
+    "remote/training-n39-qualification-r3/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-qualification-r3/progress.json": {
+      "size": 60180,
+      "sha256": "5e5ea7ba8c7aec2bbe3507a1e016bf3141f8b17ac6c82b2ce706acd3fd94ca22"
+    },
+    "remote/training-n39-qualification-r3/training-n39-r3-installed.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-r1-attention/command.json": {
+      "size": 2621,
+      "sha256": "9c0b34a3612d941af2f62070e10854469c739b1d4caf4b8177ae0df69fef7c72"
+    },
+    "remote/training-n39-r1-attention/exit.json": {
+      "size": 48,
+      "sha256": "d80602710ddb133964c705fba301c2cd8b9ab8839dd506b740bba1dcb65b6d3a"
+    },
+    "remote/training-n39-r1-attention/gpu.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-r1-attention/guard.log": {
+      "size": 93,
+      "sha256": "905be7c32a8c898a2cf5fb804d2149c10122e3178961c402fb604cc620d69168"
+    },
+    "remote/training-n39-r1-attention/kernel-after.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-attention/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-attention/result.json": {
+      "size": 2537,
+      "sha256": "e92b5f39caf49406dabbb682c5b2a5bf1b690b3af85517cfc9ec3b7753ea92f0"
+    },
+    "remote/training-n39-r1-fresh/command.json": {
+      "size": 2631,
+      "sha256": "0beb4973270789384a83257e906b45638b983776c0d7a758c8f272107e54532f"
+    },
+    "remote/training-n39-r1-fresh/exit.json": {
+      "size": 48,
+      "sha256": "d80602710ddb133964c705fba301c2cd8b9ab8839dd506b740bba1dcb65b6d3a"
+    },
+    "remote/training-n39-r1-fresh/gpu.log": {
+      "size": 2114,
+      "sha256": "e49f1d4f8d999dc15b0608a7336ab9bf3fe4b4428323bcc12abf00925dd0ac7b"
+    },
+    "remote/training-n39-r1-fresh/guard.log": {
+      "size": 85,
+      "sha256": "3cffc0735d2b249bdf147d5df5f57e38e458308bc8058868a66f74500b2fa069"
+    },
+    "remote/training-n39-r1-fresh/kernel-after.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-fresh/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-fresh/result.json": {
+      "size": 2622,
+      "sha256": "2d04485e47fd716da60f7212613163c720c13196ba1e47759093839f677d5815"
+    },
+    "remote/training-n39-r1-legacy/command.json": {
+      "size": 2634,
+      "sha256": "914adfc2787d3442806675cb0e4a5401672834d959f936b3c0ec94bc06eed366"
+    },
+    "remote/training-n39-r1-legacy/exit.json": {
+      "size": 48,
+      "sha256": "d80602710ddb133964c705fba301c2cd8b9ab8839dd506b740bba1dcb65b6d3a"
+    },
+    "remote/training-n39-r1-legacy/gpu.log": {
+      "size": 2073,
+      "sha256": "26efa4874e62f873d4923b7bd559857298c39e55045342c37688a00106004a3e"
+    },
+    "remote/training-n39-r1-legacy/guard.log": {
+      "size": 87,
+      "sha256": "2e035c47e6a784ac96f387ce3363d847a7109ce660d164d6b326236ee32fa442"
+    },
+    "remote/training-n39-r1-legacy/kernel-after.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-legacy/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-legacy/result.json": {
+      "size": 2541,
+      "sha256": "f2b8f83b1ed6e73640c629e6529c3a70bfd7860e841f9429ff09297024598610"
+    },
+    "remote/training-n39-r1-refusals/command.json": {
+      "size": 2616,
+      "sha256": "addc23eece7c4fb240fee5add47aa655ab704bd30fc00d9f7e5b5c6dfbbe6d6e"
+    },
+    "remote/training-n39-r1-refusals/exit.json": {
+      "size": 48,
+      "sha256": "d80602710ddb133964c705fba301c2cd8b9ab8839dd506b740bba1dcb65b6d3a"
+    },
+    "remote/training-n39-r1-refusals/gpu.log": {
+      "size": 667,
+      "sha256": "67a5c0b9a912fc3ac655044838f066a7f106be3485ca8e61149dea33ee07101b"
+    },
+    "remote/training-n39-r1-refusals/guard.log": {
+      "size": 91,
+      "sha256": "1afe27be34a3ad7d6e3d9dd9f5d1b6ceb13bba5efbecf42d1b3cc3dc23fc29dd"
+    },
+    "remote/training-n39-r1-refusals/kernel-after.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-refusals/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-refusals/result.json": {
+      "size": 949,
+      "sha256": "0784b89069a88b92f7b2b9eef418decd6dae54c4f277fbfecd381951975d8786"
+    },
+    "remote/training-n39-r1-resumed/command.json": {
+      "size": 2637,
+      "sha256": "ccb2767e2503835d4f474d9dd6ada82c340410c5e43ae45621f259b6406c9478"
+    },
+    "remote/training-n39-r1-resumed/exit.json": {
+      "size": 48,
+      "sha256": "d80602710ddb133964c705fba301c2cd8b9ab8839dd506b740bba1dcb65b6d3a"
+    },
+    "remote/training-n39-r1-resumed/gpu.log": {
+      "size": 2115,
+      "sha256": "a30d4e8809a71871ed5aab4d0f948dfbd18974f821f72d8f07ac3cee0dd80013"
+    },
+    "remote/training-n39-r1-resumed/guard.log": {
+      "size": 89,
+      "sha256": "204f02f435a73f0155b29a937161dcf46532cf9b14f3c159121714577330cebb"
+    },
+    "remote/training-n39-r1-resumed/kernel-after.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-resumed/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r1-resumed/result.json": {
+      "size": 2583,
+      "sha256": "24de9a08551a842429683496e5d1f06da50ab97d46f32a6627724eddcc7065c3"
+    },
+    "remote/training-n39-r2-continuity/command.json": {
+      "size": 2631,
+      "sha256": "ea4e5110f26e2805c8b1aa9650da3307b58ca0398e2570388a502a43c5ea907d"
+    },
+    "remote/training-n39-r2-continuity/exit.json": {
+      "size": 48,
+      "sha256": "d80602710ddb133964c705fba301c2cd8b9ab8839dd506b740bba1dcb65b6d3a"
+    },
+    "remote/training-n39-r2-continuity/gpu.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote/training-n39-r2-continuity/guard.log": {
+      "size": 95,
+      "sha256": "3bac756bf11b0861f39722834123b8a19c5e39c09b68374ca3b09998d6c43e31"
+    },
+    "remote/training-n39-r2-continuity/kernel-after.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r2-continuity/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r2-continuity/result.json": {
+      "size": 1046,
+      "sha256": "4c07b7fd3b5a3b00dc51c32a05c08093ed3d958531a95a5954387c8d72e0a7f3"
+    },
+    "remote/training-n39-r3-installed/command.json": {
+      "size": 2626,
+      "sha256": "189cd6f7deb6865be2042b8212aa30031fd5ba0a1580bbce1a07b4de31299322"
+    },
+    "remote/training-n39-r3-installed/exit.json": {
+      "size": 48,
+      "sha256": "d80602710ddb133964c705fba301c2cd8b9ab8839dd506b740bba1dcb65b6d3a"
+    },
+    "remote/training-n39-r3-installed/gpu.log": {
+      "size": 485,
+      "sha256": "56fba1c336150fe4791170116aada31a5b4116b9fea421a875c6bb2c8655b54e"
+    },
+    "remote/training-n39-r3-installed/guard.log": {
+      "size": 93,
+      "sha256": "397844cf93deb24f45bcefd70b459e18d73d58d1168f261f7965d445adb31509"
+    },
+    "remote/training-n39-r3-installed/kernel-after.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r3-installed/kernel-before.log": {
+      "size": 116551,
+      "sha256": "508ed890ba9483d67bb61ad68bb4b1882f4a1d7e4078aba61de3864e418b9862"
+    },
+    "remote/training-n39-r3-installed/result.json": {
+      "size": 675,
+      "sha256": "688bcaa0ebbddddd6f02e05b0f1522a31c4e76eea22a3b32c68ca09495984858"
+    },
+    "remote/training-n39-resource-handoff.json": {
+      "size": 148,
+      "sha256": "5ea4fcb08f5ca06018496c25607aff837e7ae292f98df9369ffba622af0e2239"
+    },
+    "remote/training-n39-resource-r1.json": {
+      "size": 148,
+      "sha256": "34f1222fbf294150bd06a36737baa03f465ccd2401c4df1daf35d1e287806eac"
+    },
+    "remote/training-n39-resource-r3.json": {
+      "size": 148,
+      "sha256": "979e08bff5810f5bb5f93938591d71c75e938493c63deb4100a5e5cf1c955533"
+    },
+    "scratch-r1/application/replica/__init__.py": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "scratch-r1/application/replica/__main__.py": {
+      "size": 9412,
+      "sha256": "f93a0648bb9022cd72a9c4b3afeb45022255e250a553f4e45a0ba2f55e3a0070"
+    },
+    "scratch-r1/application/replica/bc250_checkpoint_provenance.py": {
+      "size": 6707,
+      "sha256": "36dddb8a3d1c44f74f9b86c7707b8c598c07468b1a362dcc73dfab44c5cf766b"
+    },
+    "scratch-r1/application/replica/bc250_gated_delta.py": {
+      "size": 11065,
+      "sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b"
+    },
+    "scratch-r1/application/replica/bc250_ops.py": {
+      "size": 12934,
+      "sha256": "d058b14a4bae969e5b84a9de8f69706c0f6e3df910409dfc15843f0eeee3d41a"
+    },
+    "scratch-r1/application/replica/chat.py": {
+      "size": 11366,
+      "sha256": "8970ecfeecae6d8986d746f32f44d186ef7b6fe1e4dde150e2443dc2fc9ddbc8"
+    },
+    "scratch-r1/application/replica/dataset.py": {
+      "size": 29691,
+      "sha256": "e7d6ee3374110c832a26fc32d417cdd669ade4578fbcf742bdb7b961262ea9b2"
+    },
+    "scratch-r1/application/replica/formatting.py": {
+      "size": 6461,
+      "sha256": "00df12edc046b31db0144a09c0277b120414aba11c99c5e92d1f81fdfc5061a6"
+    },
+    "scratch-r1/application/replica/importer.py": {
+      "size": 25113,
+      "sha256": "94e9be0b0745bda6cbcab3411d1e37c0534aeb17373ec7bc3b1eb57647f6bbb4"
+    },
+    "scratch-r1/application/replica/labeler.py": {
+      "size": 43977,
+      "sha256": "9917a5a6834dfdaaf30aa77a16b2eecf3e0e870d82476256ba4f9d4db10ceef9"
+    },
+    "scratch-r1/application/replica/names.py": {
+      "size": 3546,
+      "sha256": "4222327359d9f8d8e83a8a04df3a5cc75ecf18048def64a0a551e582743903de"
+    },
+    "scratch-r1/application/replica/quality.py": {
+      "size": 10787,
+      "sha256": "d20a59421ce7bcaa9c45b967bef896391bdc611ffde98825562b5834e980b89c"
+    },
+    "scratch-r1/application/replica/search.py": {
+      "size": 2617,
+      "sha256": "c4eef14a7bc9c799369eefb279acd162f34585f484d4650dbc7a5ed288a60733"
+    },
+    "scratch-r1/application/replica/store.py": {
+      "size": 3318,
+      "sha256": "b35d2b155029bd0ab208dbd0a0c0106dd51262ddc4bf64300762e2141120a853"
+    },
+    "scratch-r1/application/replica/synthesizer.py": {
+      "size": 46361,
+      "sha256": "e2d6d6e73553dae7693bd58be56be3efd2783cc4664f444982e468b92d49b149"
+    },
+    "scratch-r1/application/replica/train.py": {
+      "size": 26604,
+      "sha256": "b9bf2587d8f3b14b3f7ca7f62bcfface0c1a72606633ac5920600c28f1f0f4c1"
+    },
+    "scratch-r1/attention/backend-refusal.log": {
+      "size": 1390,
+      "sha256": "da0d05457d5571b7b7642453ac70b4124801878e26bb16b74ed9612344b5745c"
+    },
+    "scratch-r1/attention/data/train.jsonl": {
+      "size": 304,
+      "sha256": "4fea70f45bf7978604dc6e686ca58637762ccb76b003e6ed6cf04a391fd47c86"
+    },
+    "scratch-r1/attention/data/val.jsonl": {
+      "size": 149,
+      "sha256": "3fa06958c2ca167bba3b5b842cc2c1e555b79726d5a2db5b9b12f365b07d1577"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/adapter_config.json": {
+      "size": 1158,
+      "sha256": "2111ff5dd90cd30777a3eeb5f29bf3e74633b2d6b81d3df24995ed6abd7cbcf7"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/adapter_model.safetensors": {
+      "size": 16868752,
+      "sha256": "5535efc64903fe44980091cdb2c8dc1a6baf96f0dbed0725d7d1242715758aa1"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/run.json": {
+      "size": 10073,
+      "sha256": "bfe31aaa5243b88d9d04ce7101533f1f3b9069d29799586c8bab51ba1c1cc7de"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "8d8ba53f41cb4d0a509f67a0c99f59523cf455168487420c737c2888ba9d90a0"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000001/training.pt": {
+      "size": 33959709,
+      "sha256": "dec584ae02c6cbed1a98e2341c90ff2880382e0516396857ce68e7cd7baa8ece"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/adapter_config.json": {
+      "size": 1158,
+      "sha256": "2111ff5dd90cd30777a3eeb5f29bf3e74633b2d6b81d3df24995ed6abd7cbcf7"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/adapter_model.safetensors": {
+      "size": 16868752,
+      "sha256": "915df7046c33e031fa686becf527d7f88cdc273c39d5ed200e522a9f4e0077ef"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/run.json": {
+      "size": 10073,
+      "sha256": "bfe31aaa5243b88d9d04ce7101533f1f3b9069d29799586c8bab51ba1c1cc7de"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "8d8ba53f41cb4d0a509f67a0c99f59523cf455168487420c737c2888ba9d90a0"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/attention/fresh/checkpoint-00000002/training.pt": {
+      "size": 33959709,
+      "sha256": "9d487bd11cf80d4f2ac6a08ad65efa2c136660cf3f0c2f226641fcf123585e64"
+    },
+    "scratch-r1/attention/fresh.log": {
+      "size": 9683,
+      "sha256": "ad0f85c0ba9aaef32d44d4b5450768442328bd4005eb08761c18a4287ead0e8c"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/adapter_config.json": {
+      "size": 1158,
+      "sha256": "56c4369ce551b8be60629399781ce3a983fdb7d58da0a5049a93994bb491d359"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/adapter_model.safetensors": {
+      "size": 16868752,
+      "sha256": "915df7046c33e031fa686becf527d7f88cdc273c39d5ed200e522a9f4e0077ef"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/run.json": {
+      "size": 10073,
+      "sha256": "bfe31aaa5243b88d9d04ce7101533f1f3b9069d29799586c8bab51ba1c1cc7de"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "8d8ba53f41cb4d0a509f67a0c99f59523cf455168487420c737c2888ba9d90a0"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/attention/resumed/checkpoint-00000002/training.pt": {
+      "size": 33959709,
+      "sha256": "8c65bbfa546634826a09de512620c34794df9d0b9bf37837037d7a4f6f560a4a"
+    },
+    "scratch-r1/attention/resumed.log": {
+      "size": 9239,
+      "sha256": "342496acd2885f8f9bc91a560a67e064d3d19686f331d16f89c000c6c2d963aa"
+    },
+    "scratch-r1/changed-hook/replica/__init__.py": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "scratch-r1/changed-hook/replica/__main__.py": {
+      "size": 9412,
+      "sha256": "f93a0648bb9022cd72a9c4b3afeb45022255e250a553f4e45a0ba2f55e3a0070"
+    },
+    "scratch-r1/changed-hook/replica/bc250_checkpoint_provenance.py": {
+      "size": 6707,
+      "sha256": "36dddb8a3d1c44f74f9b86c7707b8c598c07468b1a362dcc73dfab44c5cf766b"
+    },
+    "scratch-r1/changed-hook/replica/bc250_gated_delta.py": {
+      "size": 11065,
+      "sha256": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b"
+    },
+    "scratch-r1/changed-hook/replica/bc250_ops.py": {
+      "size": 12971,
+      "sha256": "bfc24606217b1fe22cb75e0e20f36f649e9838a286fba12280190e9d32b3166f"
+    },
+    "scratch-r1/changed-hook/replica/chat.py": {
+      "size": 11366,
+      "sha256": "8970ecfeecae6d8986d746f32f44d186ef7b6fe1e4dde150e2443dc2fc9ddbc8"
+    },
+    "scratch-r1/changed-hook/replica/dataset.py": {
+      "size": 29691,
+      "sha256": "e7d6ee3374110c832a26fc32d417cdd669ade4578fbcf742bdb7b961262ea9b2"
+    },
+    "scratch-r1/changed-hook/replica/formatting.py": {
+      "size": 6461,
+      "sha256": "00df12edc046b31db0144a09c0277b120414aba11c99c5e92d1f81fdfc5061a6"
+    },
+    "scratch-r1/changed-hook/replica/importer.py": {
+      "size": 25113,
+      "sha256": "94e9be0b0745bda6cbcab3411d1e37c0534aeb17373ec7bc3b1eb57647f6bbb4"
+    },
+    "scratch-r1/changed-hook/replica/labeler.py": {
+      "size": 43977,
+      "sha256": "9917a5a6834dfdaaf30aa77a16b2eecf3e0e870d82476256ba4f9d4db10ceef9"
+    },
+    "scratch-r1/changed-hook/replica/names.py": {
+      "size": 3546,
+      "sha256": "4222327359d9f8d8e83a8a04df3a5cc75ecf18048def64a0a551e582743903de"
+    },
+    "scratch-r1/changed-hook/replica/quality.py": {
+      "size": 10787,
+      "sha256": "d20a59421ce7bcaa9c45b967bef896391bdc611ffde98825562b5834e980b89c"
+    },
+    "scratch-r1/changed-hook/replica/search.py": {
+      "size": 2617,
+      "sha256": "c4eef14a7bc9c799369eefb279acd162f34585f484d4650dbc7a5ed288a60733"
+    },
+    "scratch-r1/changed-hook/replica/store.py": {
+      "size": 3318,
+      "sha256": "b35d2b155029bd0ab208dbd0a0c0106dd51262ddc4bf64300762e2141120a853"
+    },
+    "scratch-r1/changed-hook/replica/synthesizer.py": {
+      "size": 46361,
+      "sha256": "e2d6d6e73553dae7693bd58be56be3efd2783cc4664f444982e468b92d49b149"
+    },
+    "scratch-r1/changed-preset.csv": {
+      "size": 172,
+      "sha256": "09f68fe6c327a3e6f748a658da492f5f7be8e1a16ebaccd8a682c35051687df9"
+    },
+    "scratch-r1/data/train.jsonl": {
+      "size": 168788,
+      "sha256": "be8f23bff47b1389e3022f66ae49bdb95fb0b6700a50335d837dd315f2d4c766"
+    },
+    "scratch-r1/data/val.jsonl": {
+      "size": 5168,
+      "sha256": "4a95a397e5b42b38f849997665237796323c24d8f6da5e1b527bc7d82e6af3c8"
+    },
+    "scratch-r1/entry_train.py": {
+      "size": 24952,
+      "sha256": "170d39204518bcd9526f86dba3f67c40cfeafbd547f764796e366dbb9e02ac8e"
+    },
+    "scratch-r1/fixture.json": {
+      "size": 5403,
+      "sha256": "0514a66f6c4dcb6874ce221f9accbaffa17961675faa75667c5bc215d6e589a7"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/adapter_config.json": {
+      "size": 1160,
+      "sha256": "9df03bbf079036bb92dbfe5e2fed37e1d2cbf6b316d4d6888b90276b24ab2f87"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/adapter_model.safetensors": {
+      "size": 67327104,
+      "sha256": "ea78abc71f2a64d52d22d5659a0e64be40b63cb49bd9527c9593119e27fd5512"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/run.json": {
+      "size": 10044,
+      "sha256": "9f0dc9110b782c4726a4ebe576863c35a94cb7aebcf58b7152399b8a7f05730f"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "ce711d28ccf400adb8911b0eead8301f03337d39e989233db68c1c212f591b01"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/fresh/checkpoint-00000001/training.pt": {
+      "size": 134875485,
+      "sha256": "f5a39c6cac85051347ba2d04e521bedd38ac25126a8815d232db8fad5098e755"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/adapter_config.json": {
+      "size": 1160,
+      "sha256": "9df03bbf079036bb92dbfe5e2fed37e1d2cbf6b316d4d6888b90276b24ab2f87"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/adapter_model.safetensors": {
+      "size": 67327104,
+      "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/run.json": {
+      "size": 10044,
+      "sha256": "9f0dc9110b782c4726a4ebe576863c35a94cb7aebcf58b7152399b8a7f05730f"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "ce711d28ccf400adb8911b0eead8301f03337d39e989233db68c1c212f591b01"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/fresh/checkpoint-00000002/training.pt": {
+      "size": 134875485,
+      "sha256": "9fba87dd68d5e3e9954250786d76aba1b69fe351e62ae380138fae890384f725"
+    },
+    "scratch-r1/fresh-result.json": {
+      "size": 2622,
+      "sha256": "2d04485e47fd716da60f7212613163c720c13196ba1e47759093839f677d5815"
+    },
+    "scratch-r1/fresh.log": {
+      "size": 9782,
+      "sha256": "570c9a42d1c3838c6c9023d50cc15e59688790e7968373db466e8820e8a7e95a"
+    },
+    "scratch-r1/installed/checkpoint-00000002/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/installed/checkpoint-00000002/adapter_config.json": {
+      "size": 1160,
+      "sha256": "ba27630775b199293391b93f8b5c66d822f7e6fce6efe7ecb2e7b068444f27ac"
+    },
+    "scratch-r1/installed/checkpoint-00000002/adapter_model.safetensors": {
+      "size": 67327104,
+      "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+    },
+    "scratch-r1/installed/checkpoint-00000002/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/installed/checkpoint-00000002/run.json": {
+      "size": 10044,
+      "sha256": "9f0dc9110b782c4726a4ebe576863c35a94cb7aebcf58b7152399b8a7f05730f"
+    },
+    "scratch-r1/installed/checkpoint-00000002/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "ce711d28ccf400adb8911b0eead8301f03337d39e989233db68c1c212f591b01"
+    },
+    "scratch-r1/installed/checkpoint-00000002/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/installed/checkpoint-00000002/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/installed/checkpoint-00000002/training.pt": {
+      "size": 134875485,
+      "sha256": "72597f87aadbc103648ab1b5358d8947327db800b1ceb57c8809651bbf1bb70d"
+    },
+    "scratch-r1/installed.log": {
+      "size": 9253,
+      "sha256": "87514e18000f69ed546a3a7efe907c53be2617d707cbeb6a74e1182887dbac48"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/adapter_config.json": {
+      "size": 1160,
+      "sha256": "575ab63279a71e7ecbc016511749e3116fec0346616e7afaf63014d3d0900410"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/adapter_model.safetensors": {
+      "size": 67327104,
+      "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/run.json": {
+      "size": 10044,
+      "sha256": "9f0dc9110b782c4726a4ebe576863c35a94cb7aebcf58b7152399b8a7f05730f"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "ce711d28ccf400adb8911b0eead8301f03337d39e989233db68c1c212f591b01"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/legacy/checkpoint-00000002/training.pt": {
+      "size": 134875485,
+      "sha256": "72597f87aadbc103648ab1b5358d8947327db800b1ceb57c8809651bbf1bb70d"
+    },
+    "scratch-r1/legacy-result.json": {
+      "size": 2541,
+      "sha256": "f2b8f83b1ed6e73640c629e6529c3a70bfd7860e841f9429ff09297024598610"
+    },
+    "scratch-r1/legacy.log": {
+      "size": 9377,
+      "sha256": "03530af08403e164e37feff7cfbab3ef5e8035923cfac03c9333393b586d1163"
+    },
+    "scratch-r1/n37-original-ops-refusal.log": {
+      "size": 1723,
+      "sha256": "75990e7647712d8968dc518947b76ca8cff087165dd384b26e9bead8c53249d9"
+    },
+    "scratch-r1/refusal-digest/run.json": {
+      "size": 7107,
+      "sha256": "5f5b7db61098367adc655d3adc219406e0c30365598f145e8d6b1ae0849f94ff"
+    },
+    "scratch-r1/refusal-digest/runtime-provenance.json": {
+      "size": 23219,
+      "sha256": "61cfaf34442d71e74a1d1d5b4b234f9e919ece5f7e9e493dc38da169f93dcf51"
+    },
+    "scratch-r1/refusal-digest.log": {
+      "size": 1361,
+      "sha256": "4e858e1c2237bf8819a5b9ad804e388c761dd5542e1864f230788cea2fc45563"
+    },
+    "scratch-r1/refusal-hook/run.json": {
+      "size": 7107,
+      "sha256": "5f5b7db61098367adc655d3adc219406e0c30365598f145e8d6b1ae0849f94ff"
+    },
+    "scratch-r1/refusal-hook/runtime-provenance.json": {
+      "size": 23219,
+      "sha256": "e0fdeb856d124b556424c4384bfa299a88697c00c28ef0127141258fef2a4e60"
+    },
+    "scratch-r1/refusal-hook.log": {
+      "size": 1723,
+      "sha256": "75990e7647712d8968dc518947b76ca8cff087165dd384b26e9bead8c53249d9"
+    },
+    "scratch-r1/refusal-malformed/run.json": {
+      "size": 7107,
+      "sha256": "5f5b7db61098367adc655d3adc219406e0c30365598f145e8d6b1ae0849f94ff"
+    },
+    "scratch-r1/refusal-malformed/runtime-provenance.json": {
+      "size": 1,
+      "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96"
+    },
+    "scratch-r1/refusal-malformed.log": {
+      "size": 1361,
+      "sha256": "b19e5450e23cb10adafe9a55b446ecbfe5422ec58882483bf17a9762b5a7ed3a"
+    },
+    "scratch-r1/refusal-missing/run.json": {
+      "size": 7107,
+      "sha256": "5f5b7db61098367adc655d3adc219406e0c30365598f145e8d6b1ae0849f94ff"
+    },
+    "scratch-r1/refusal-missing.log": {
+      "size": 1361,
+      "sha256": "b19e5450e23cb10adafe9a55b446ecbfe5422ec58882483bf17a9762b5a7ed3a"
+    },
+    "scratch-r1/refusal-native/run.json": {
+      "size": 7107,
+      "sha256": "a64dba148c9fd71dc0a47c743780d62e3550e66021a74bb9c1fe3e1ce9fc63d0"
+    },
+    "scratch-r1/refusal-native/runtime-provenance.json": {
+      "size": 23219,
+      "sha256": "4e2885140219e78cb640abacac0e7b01d6cc5cd077bb27a7cafc08a521a3e8e8"
+    },
+    "scratch-r1/refusal-native.log": {
+      "size": 1723,
+      "sha256": "75990e7647712d8968dc518947b76ca8cff087165dd384b26e9bead8c53249d9"
+    },
+    "scratch-r1/refusal-orphan/run.json": {
+      "size": 7010,
+      "sha256": "5c8d4e4cd4af7eec23b9694208a139cb30ec78f815fc551024f3e43ff9002ac4"
+    },
+    "scratch-r1/refusal-orphan/runtime-provenance.json": {
+      "size": 23219,
+      "sha256": "e0fdeb856d124b556424c4384bfa299a88697c00c28ef0127141258fef2a4e60"
+    },
+    "scratch-r1/refusal-orphan.log": {
+      "size": 1358,
+      "sha256": "a5e8c94ebff7c98d0d5128f1bb2b4fbb771648ea2228bf3887d7d9585c23d69d"
+    },
+    "scratch-r1/refusal-preset/run.json": {
+      "size": 7107,
+      "sha256": "5f5b7db61098367adc655d3adc219406e0c30365598f145e8d6b1ae0849f94ff"
+    },
+    "scratch-r1/refusal-preset/runtime-provenance.json": {
+      "size": 23219,
+      "sha256": "e0fdeb856d124b556424c4384bfa299a88697c00c28ef0127141258fef2a4e60"
+    },
+    "scratch-r1/refusal-preset.log": {
+      "size": 1731,
+      "sha256": "8b7db7aae60a3dffef3f5d33bc4a02b8ff0865dd51933566e4c8e441d9d5b37d"
+    },
+    "scratch-r1/refusal-schema/run.json": {
+      "size": 7107,
+      "sha256": "607f1663905fe590fe6ff04bb9ad15b64a09f6878ef1f40b0dadcf25c20a07dc"
+    },
+    "scratch-r1/refusal-schema/runtime-provenance.json": {
+      "size": 23219,
+      "sha256": "a1b4b11a9efb3289ab88b4cfcd545a79cace29a1e60b143704d69a8de1646422"
+    },
+    "scratch-r1/refusal-schema.log": {
+      "size": 1361,
+      "sha256": "4e858e1c2237bf8819a5b9ad804e388c761dd5542e1864f230788cea2fc45563"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/README.md": {
+      "size": 5242,
+      "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/adapter_config.json": {
+      "size": 1160,
+      "sha256": "dcf0733f873ecfa6cb471353ef3218f908c8d2ea8995b5d72e73e266b5221c93"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/adapter_model.safetensors": {
+      "size": 67327104,
+      "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/chat_template.jinja": {
+      "size": 7755,
+      "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/run.json": {
+      "size": 10044,
+      "sha256": "9f0dc9110b782c4726a4ebe576863c35a94cb7aebcf58b7152399b8a7f05730f"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/runtime-provenance.json": {
+      "size": 24244,
+      "sha256": "ce711d28ccf400adb8911b0eead8301f03337d39e989233db68c1c212f591b01"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/tokenizer.json": {
+      "size": 19989339,
+      "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/tokenizer_config.json": {
+      "size": 1467,
+      "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+    },
+    "scratch-r1/resumed/checkpoint-00000002/training.pt": {
+      "size": 134875485,
+      "sha256": "72597f87aadbc103648ab1b5358d8947327db800b1ceb57c8809651bbf1bb70d"
+    },
+    "scratch-r1/resumed-result.json": {
+      "size": 2583,
+      "sha256": "24de9a08551a842429683496e5d1f06da50ab97d46f32a6627724eddcc7065c3"
+    },
+    "scratch-r1/resumed.log": {
+      "size": 9251,
+      "sha256": "a4c00611cdcd2670f12a0bb47a2ec94f0e76e87090e44e99487064b36af351b9"
+    },
+    "scratch-r1/tests/__pycache__/test_cli.cpython-312.pyc": {
+      "size": 13689,
+      "sha256": "ce37952204e6d5d7fb40b18ead6edb0fc552e71c645263eca6bdae8141bfb93d"
+    },
+    "scratch-r1/tests/__pycache__/test_dataset.cpython-312.pyc": {
+      "size": 34050,
+      "sha256": "3128cc02234dbe24d2055ccec9b960631a9697c3d461a6468d419ec60405fb15"
+    },
+    "scratch-r1/tests/__pycache__/test_dataset_quality.cpython-312.pyc": {
+      "size": 28604,
+      "sha256": "69fa475c965d8c6619881b263b394af046d7aa985d6cdfdcdaaae59b0363575c"
+    },
+    "scratch-r1/tests/__pycache__/test_formatting.cpython-312.pyc": {
+      "size": 15465,
+      "sha256": "f5409b0442d1d9d09f55ed28e69cf2161bb4ed4d517689369da1fa9e97205f2c"
+    },
+    "scratch-r1/tests/__pycache__/test_importer.cpython-312.pyc": {
+      "size": 18583,
+      "sha256": "d6479bbe20eab42d794c98251e998c76f62ad9b5c2c02b96fd4addddda2b93cc"
+    },
+    "scratch-r1/tests/__pycache__/test_importer_merge.cpython-312.pyc": {
+      "size": 40194,
+      "sha256": "833a56c03b70eb2fd238ebff47720ff066901cc3459bee284cebd0db18a26152"
+    },
+    "scratch-r1/tests/__pycache__/test_labeler.cpython-312.pyc": {
+      "size": 47448,
+      "sha256": "38f3ea3a1d47f70a4cd5596cc24e9c2d91f0a1da375cc3b7b6da867af5ae39d4"
+    },
+    "scratch-r1/tests/__pycache__/test_names.cpython-312.pyc": {
+      "size": 8911,
+      "sha256": "71ab211576a99d9fc7f6d37e4522687c6b6404ba84a452e731990fd993d48074"
+    },
+    "scratch-r1/tests/__pycache__/test_pipeline.cpython-312.pyc": {
+      "size": 6824,
+      "sha256": "0a06de2b7348d53075516809545d32fdb85fb96b597dbc488344f97bf8303820"
+    },
+    "scratch-r1/tests/__pycache__/test_quality.cpython-312.pyc": {
+      "size": 14984,
+      "sha256": "d4111e0cad5c378dbf41d99472fec26df713300d42d75cac94abbd11c8cdc5fc"
+    },
+    "scratch-r1/tests/__pycache__/test_train_preflight.cpython-312.pyc": {
+      "size": 7311,
+      "sha256": "900705d26fc0a87d617bcad29c899d0df6f9b0b6b696129793347f046d05d60d"
+    },
+    "scratch-r1/tests/__pycache__/test_training_launch.cpython-312.pyc": {
+      "size": 14790,
+      "sha256": "2c97f07b1b1d0577deb957e41c707a4b92b0799be09fe31a2803e52915829f5f"
+    },
+    "scratch-r1/tests/test_cli.py": {
+      "size": 8146,
+      "sha256": "820f8d78ab8cfbc5ebc9f00abd066713808db32df8b0164ff773faeeb68f84f4"
+    },
+    "scratch-r1/tests/test_dataset.py": {
+      "size": 17308,
+      "sha256": "9341b54532c8f6f90156127fb9e7003be726b987e091a82ecc6f1e1080b0afa8"
+    },
+    "scratch-r1/tests/test_dataset_quality.py": {
+      "size": 13479,
+      "sha256": "02de4df76eb11cd0bfa6b7eb3b60389770355c80ec6cd1f9329e66a2ae0ba59d"
+    },
+    "scratch-r1/tests/test_formatting.py": {
+      "size": 9371,
+      "sha256": "3265e543b4b08b08f8c803b3d8214028e4d97488c2249a1438ba5b39ed94af52"
+    },
+    "scratch-r1/tests/test_importer.py": {
+      "size": 11133,
+      "sha256": "67bb7af39acb7d35e3d22c7870e9cc0659d29cb3d6ad218b4221f4ae39d0b5f0"
+    },
+    "scratch-r1/tests/test_importer_merge.py": {
+      "size": 22595,
+      "sha256": "516024b00f796ea4b15100038c98b50743e2d884426b7d295c59807ac4a99095"
+    },
+    "scratch-r1/tests/test_labeler.py": {
+      "size": 27615,
+      "sha256": "8e23a3115f2fb30021c16f985f0bab198dc85cd733e86a26856f3ff0cef3ba43"
+    },
+    "scratch-r1/tests/test_names.py": {
+      "size": 4578,
+      "sha256": "8e1ab06652af1ab73016f008cb95022923a382ce0733a53958689b4431150897"
+    },
+    "scratch-r1/tests/test_pipeline.py": {
+      "size": 3295,
+      "sha256": "7cbc1af20ba953f7c7714fe42c7e0bef23bac2c9436aa82e79a505615cbd6f63"
+    },
+    "scratch-r1/tests/test_quality.py": {
+      "size": 7703,
+      "sha256": "c3a1e29d521d5f5f632917a212654bde3514315d52de7fc5dee1d724be9c202e"
+    },
+    "scratch-r1/tests/test_train_preflight.py": {
+      "size": 4048,
+      "sha256": "d947ae3c11dc1f4baabca24b7f07341baebecbd65b53f623ea75f6f10aec7877"
+    },
+    "scratch-r1/tests/test_training_launch.py": {
+      "size": 6665,
+      "sha256": "384ee9af303d736a6222a75c0a068cda17f7bce8386f8c57a5c80bed3053cb7c"
+    },
+    "recovery/AGENTS.md": {
+      "size": 8508,
+      "sha256": "6c17635ba8cb5cc7686e2413005792fef4939beb9876760527069483813f46a8"
+    },
+    "recovery/AGENTS.n39-candidate.md": {
+      "size": 8844,
+      "sha256": "59f456a125970caecf4a1f881bb978831c1d23e8eb3e9b6d3ae28cd777dfdcc5"
+    },
+    "recovery/BC250_TRAINING_OPS.md": {
+      "size": 6757,
+      "sha256": "cd75ff9b4836c40024e05c35188e2fa5bbbf06feca97621061f3538a4e0b378d"
+    },
+    "recovery/test_training_launch.py": {
+      "size": 6146,
+      "sha256": "20115c6efd5c6693ef24e324e98e8b2fb7690d215a929a4a25b0273da1733586"
+    },
+    "recovery/train.py": {
+      "size": 24952,
+      "sha256": "170d39204518bcd9526f86dba3f67c40cfeafbd547f764796e366dbb9e02ac8e"
+    },
+    "recovery/validate_training_n37.py": {
+      "size": 11360,
+      "sha256": "31577b234e8a2826a1be2ba4de8fd3dc2206980bfef6eb08e8228c20926f8460"
+    }
+  },
+  "links": {
+    "scratch-r1/application/replica/__init__.py": {
+      "target": "/home/nik/finetune-n7/replica/__init__.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/__main__.py": {
+      "target": "/home/nik/finetune-n7/replica/__main__.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/bc250_checkpoint_provenance.py": {
+      "target": "/home/nik/finetune-n7/replica/bc250_checkpoint_provenance.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/bc250_gated_delta.py": {
+      "target": "/home/nik/finetune-n7/replica/bc250_gated_delta.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/bc250_ops.py": {
+      "target": "/home/nik/finetune-n7/replica/bc250_ops.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/chat.py": {
+      "target": "/home/nik/finetune-n7/replica/chat.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/dataset.py": {
+      "target": "/home/nik/finetune-n7/replica/dataset.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/formatting.py": {
+      "target": "/home/nik/finetune-n7/replica/formatting.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/importer.py": {
+      "target": "/home/nik/finetune-n7/replica/importer.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/labeler.py": {
+      "target": "/home/nik/finetune-n7/replica/labeler.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/names.py": {
+      "target": "/home/nik/finetune-n7/replica/names.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/quality.py": {
+      "target": "/home/nik/finetune-n7/replica/quality.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/search.py": {
+      "target": "/home/nik/finetune-n7/replica/search.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/store.py": {
+      "target": "/home/nik/finetune-n7/replica/store.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/application/replica/synthesizer.py": {
+      "target": "/home/nik/finetune-n7/replica/synthesizer.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/__init__.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/__init__.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/__main__.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/__main__.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/bc250_checkpoint_provenance.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/bc250_checkpoint_provenance.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/bc250_gated_delta.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/bc250_gated_delta.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/chat.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/chat.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/dataset.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/dataset.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/formatting.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/formatting.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/importer.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/importer.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/labeler.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/labeler.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/names.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/names.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/quality.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/quality.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/search.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/search.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/store.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/store.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/synthesizer.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/synthesizer.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/changed-hook/replica/train.py": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/application/replica/train.py",
+      "local_link": "../../application/replica/train.py"
+    },
+    "scratch-r1/refusal-digest/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-digest/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-digest/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-digest/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-digest/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-digest/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-digest/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/refusal-hook/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-hook/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-hook/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-hook/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-hook/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-hook/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-hook/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/refusal-malformed/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-malformed/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-malformed/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-malformed/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-malformed/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-malformed/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-malformed/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/refusal-missing/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-missing/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-missing/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-missing/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-missing/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-missing/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-missing/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/refusal-native/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-native/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-native/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-native/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-native/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-native/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-native/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/refusal-orphan/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-orphan/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-orphan/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-orphan/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-orphan/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-orphan/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-orphan/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/refusal-preset/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-preset/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-preset/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-preset/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-preset/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-preset/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-preset/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/refusal-schema/README.md": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/README.md",
+      "local_link": "../fresh/checkpoint-00000001/README.md"
+    },
+    "scratch-r1/refusal-schema/adapter_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_config.json",
+      "local_link": "../fresh/checkpoint-00000001/adapter_config.json"
+    },
+    "scratch-r1/refusal-schema/adapter_model.safetensors": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+      "local_link": "../fresh/checkpoint-00000001/adapter_model.safetensors"
+    },
+    "scratch-r1/refusal-schema/chat_template.jinja": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/chat_template.jinja",
+      "local_link": "../fresh/checkpoint-00000001/chat_template.jinja"
+    },
+    "scratch-r1/refusal-schema/tokenizer.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer.json"
+    },
+    "scratch-r1/refusal-schema/tokenizer_config.json": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+      "local_link": "../fresh/checkpoint-00000001/tokenizer_config.json"
+    },
+    "scratch-r1/refusal-schema/training.pt": {
+      "target": "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh/checkpoint-00000001/training.pt",
+      "local_link": "../fresh/checkpoint-00000001/training.pt"
+    },
+    "scratch-r1/tests/test_cli.py": {
+      "target": "/home/nik/finetune-n7/tests/test_cli.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_dataset.py": {
+      "target": "/home/nik/finetune-n7/tests/test_dataset.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_dataset_quality.py": {
+      "target": "/home/nik/finetune-n7/tests/test_dataset_quality.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_formatting.py": {
+      "target": "/home/nik/finetune-n7/tests/test_formatting.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_importer.py": {
+      "target": "/home/nik/finetune-n7/tests/test_importer.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_importer_merge.py": {
+      "target": "/home/nik/finetune-n7/tests/test_importer_merge.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_labeler.py": {
+      "target": "/home/nik/finetune-n7/tests/test_labeler.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_names.py": {
+      "target": "/home/nik/finetune-n7/tests/test_names.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_pipeline.py": {
+      "target": "/home/nik/finetune-n7/tests/test_pipeline.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_quality.py": {
+      "target": "/home/nik/finetune-n7/tests/test_quality.py",
+      "resolved_external_python": true
+    },
+    "scratch-r1/tests/test_train_preflight.py": {
+      "target": "/home/nik/finetune-n7/tests/test_train_preflight.py",
+      "resolved_external_python": true
+    }
+  }
+}

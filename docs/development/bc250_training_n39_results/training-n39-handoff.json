@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "guards": 7,
+  "running_containers": [],
+  "running_agent_jobs": [],
+  "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+  "kernel": "7.1.5-bc250rocm-r2",
+  "disk_available_bytes": 5490642944,
+  "preset_sha256": "1f2947a88ee69a3d3854ec7615f209dadd19292489b7df3d101c5941727846c0",
+  "protected_paths": 313,
+  "baseline": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/training-n39-guidance-r4/final.json"
+}

@@ -926,7 +926,36 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
-**N3.8 vocabulary audit2026-10-19:** implementationd7b7a2bc4/settlinged0946ef6/
+**N3.9 trainer reconciliation2026-10-20 local/19UTC:** code9899e0659,
+continuity5a24fe4e7/guidea7fa50d00/appguidanceabb5256ab. Exact reviewed patch
+restores qualified N37 trainerb9bf2587/provenance/A07 attention CLI; keeps current
+opsd058b14a status edit and all arithmetic. Math/N3.2 default unchanged. New
+runtime-bound checkpoints enforce130 selected files/mapped native identities;
+old provenance-bound ownedN37 checkpoint correctly refuses ONLY cosmetic ops
+source drift before weights/output and stays SHA-identical. No silent migration.
+Actual masked32x1024/rank16/accum16 fresh2/new resume/ownedN36 legacy/installed
+resume exact372 adapters/full AdamW/scheduler/CPU+GPU+Python RNG/order/progress/
+run.json/loss/evaluation. Installed numerical state exact preN37 after excluding
+metadata marker. Short tiled rank4 fresh2/resume1 exact full state and provenance;
+old math fingerprint unchanged/tiled distinct/backend change refused.31 composite
+checks/83 train micros/eight eval forwards;175 app tests candidate+installed and
+four provenance CPU contracts local+.104 pass. Initial174 app tests had3 stale
+fixture errors (missing attention_backend), fixture fixed+one forwarding test;
+no launcher runtime change. Seven600s guards ACK, dmesg identical.313 protected
+paths final:309 original unchanged, trainer/guide intentionally updated; tests/
+AGENTS added. App AGENTS attention paragraph synchronized with qualified opt-in
+scope. BackupWS/recovery/training-n39-before incl shared validator old source;
+baselineWS/logs/training-n39-guidance-r4/final.json; GPUbaselinequalification-r3.
+Disk-backed owned scratchWS/experiments/training-n39-r1; evidence local
+kernel/artifacts/training-n39, [report](bc250_training_n39_results/README.md).
+Runtime62ab2437c/rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4/otherlibs
+319a235d6 retained, same r2 bootd3857b96. No native build/install/cache reset/
+delete/reboot/.105/BIOS/fallback change; CPU fault unresolved/separate from fixed
+VM-heap/CSR and historicalN38 OOM. No own GPU job/container/guard deadline.
+Next N3.10 actual LoRA MLP compiled/eager audit after reading prior compiled-block
+evidence; keep math/N3.2 defaults and full-trainer/performance claims separate.
+
+**Historical N3.8 vocabulary audit2026-10-19:** implementationd7b7a2bc4/settlinged0946ef6/
 resourcepreflightf85831f3b. Actual1024-token BF16 forward[1024,2048]@[2048,248320]
 and input-backward[1024,248320]@[248320,2048]; all14 admitted solutions+default
 per role pass full chunked CPU FP64/guards/immutable inputs. FP64 tensor bounds
@@ -949,7 +978,7 @@ Entry againstN37 has exactly two drifts: current replica/train.py removes N37
 provenance/A07 tiled CLI, bc250_ops.py only changes printed status. Current app
 preserved, all309 other protected identities match; isolated N38 model uses
 byte-exact old qualified hookf0bcb35e. Thus N37 historical deployment below is
-NOT current trainer feature qualification. EntrybaselineWS/logs/training-n38-
+NOT current trainer feature qualification at that entry; N3.9 above restores it. EntrybaselineWS/logs/training-n38-
 entry-r2/final.json is a preservation snapshot, not application qualification.
 Next reconcile trainer features, then owned CLI fresh/resume before default
 preset decision; do not silently migrate new-provenance checkpoints. Native

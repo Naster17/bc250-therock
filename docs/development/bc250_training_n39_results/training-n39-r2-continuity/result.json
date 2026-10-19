@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "checks": [
+    "owned-n37-cosmetic-hook-change-refused-before-weights-no-mutation"
+  ],
+  "differing_identity_files": [
+    "application/bc250_ops.py"
+  ],
+  "checkpoint_sha256": {
+    "training.pt": "698811c9aae8e86ecb9119a6032b89681b438c28ba275c10e6ae2edf32fc3c6f",
+    "run.json": "d4dea7a23bc5a0a7f1b65514840d9428e891b8627445793d4b22ee689e54a222",
+    "runtime-provenance.json": "ee348cfd3dd49e7605932b832b39970fd7fd5315f2b81d6fb725f8da7079845c",
+    "tokenizer.json": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f",
+    "tokenizer_config.json": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62",
+    "chat_template.jinja": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80",
+    "adapter_config.json": "02315f89399fedc59751adb71d87163da6d303697449c31b395146787d87bdc7",
+    "adapter_model.safetensors": "ea78abc71f2a64d52d22d5659a0e64be40b63cb49bd9527c9593119e27fd5512",
+    "README.md": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "training-n39-r3-installed": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n39-r3-installed",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "1b6a0ac4899562f0b16dce66cb3b25c1",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 29582.301478698,
+    "dry_run": false
+  },
+  "training-n39-r2-continuity": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n39-r2-continuity",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "98326325badb8771498072dd65a26a34",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 29522.177737319,
+    "dry_run": false
+  },
+  "training-n39-r1-attention": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n39-r1-attention",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "54c394dde4a1afe7048c67e8c76a6b4a",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 29431.741448552,
+    "dry_run": false
+  },
+  "training-n39-r1-refusals": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n39-r1-refusals",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "a8ddfc710e8abb6219e717a4e92a3df0",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 29362.433526378,
+    "dry_run": false
+  },
+  "training-n39-r1-legacy": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n39-r1-legacy",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "527aba12a2771f961754b62aad5f60fd",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 29238.470624678,
+    "dry_run": false
+  },
+  "training-n39-r1-resumed": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n39-r1-resumed",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "31c688edcb0b736db4ca66d823a94278",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 29114.363760742,
+    "dry_run": false
+  },
+  "training-n39-r1-fresh": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n39-r1-fresh",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "7de75b14182f660d2dc3b663845aa71d",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 28863.535785822,
+    "dry_run": false
+  }
+}

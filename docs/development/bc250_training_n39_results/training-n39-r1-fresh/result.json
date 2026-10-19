@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "pinned_masked_1024_fixture",
+      "records": 32,
+      "distinct_target_counts": 32
+    },
+    {
+      "name": "actual_gpu_cli_finite_updates",
+      "steps": 2,
+      "input_tokens_per_step": 16384
+    },
+    {
+      "name": "checkpoint_progress_fingerprint",
+      "step": 2,
+      "position": 32
+    },
+    {
+      "name": "bound_provenance_and_explicit_legacy_policy",
+      "legacy": false
+    }
+  ],
+  "mode": "fresh",
+  "identity": {
+    "preset_sha256": "1f2947a88ee69a3d3854ec7615f209dadd19292489b7df3d101c5941727846c0",
+    "sources": {
+      "train.py": "b9bf2587d8f3b14b3f7ca7f62bcfface0c1a72606633ac5920600c28f1f0f4c1",
+      "formatting.py": "00df12edc046b31db0144a09c0277b120414aba11c99c5e92d1f81fdfc5061a6",
+      "bc250_ops.py": "d058b14a4bae969e5b84a9de8f69706c0f6e3df910409dfc15843f0eeee3d41a",
+      "bc250_gated_delta.py": "9ecb6f9014bc139e54cffe0fbb2c80f782035e57a3149e3c9a6b31fe445e8b2b"
+    },
+    "test_sha256": "f44aac7b349e93762bcd45e5c08fb3359bcd36a4a67cd3bf1866594ad09be601"
+  },
+  "command": [
+    "/opt/torch-venv/bin/python",
+    "-m",
+    "replica.train",
+    "--model",
+    "/home/nik/finetune-n7/models/Qwen3.5-2B-Base",
+    "--dataset",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/data",
+    "--max-seq-length",
+    "1024",
+    "--epochs",
+    "1",
+    "--max-steps",
+    "2",
+    "--accumulation-steps",
+    "16",
+    "--learning-rate",
+    "0.0001",
+    "--warmup-steps",
+    "0",
+    "--rank",
+    "16",
+    "--alpha",
+    "32",
+    "--targets",
+    "auto-linear",
+    "--save-every",
+    "1",
+    "--eval-every",
+    "1",
+    "--schedule",
+    "cosine",
+    "--seed",
+    "31936",
+    "--device",
+    "cuda",
+    "--dtype",
+    "bf16",
+    "--sdpa",
+    "math",
+    "--output",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/experiments/training-n39-r1/fresh"
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "epoch": 1,
+      "position": 16,
+      "loss": 0.11412767701708111,
+      "target_tokens": 2825,
+      "input_tokens": 16384,
+      "tps": 155.9,
+      "avg_tps": 155.9,
+      "lr": 5e-05,
+      "seconds": 105.079,
+      "eta": "01m 45s",
+      "peak_allocated_bytes": 5284608000
+    },
+    {
+      "step": 2,
+      "epoch": 1,
+      "position": 32,
+      "loss": 0.07038949553197377,
+      "target_tokens": 2951,
+      "input_tokens": 16384,
+      "tps": 170.9,
+      "avg_tps": 160.0,
+      "lr": 0.0,
+      "seconds": 95.841,
+      "eta": "00m 00s",
+      "peak_allocated_bytes": 5419161600
+    }
+  ],
+  "fingerprint": "22341cbc0ecceca2f2d120d5f83aef8f47c610d2d47ac8ac66933ab439d3f289"
+}
