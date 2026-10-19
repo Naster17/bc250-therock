@@ -20,8 +20,8 @@ N3.4 square2048 mm audit complete: two layouts/all14 admitted solutions each
 pass CPU references. Faster-346 fails the full-model gradient contract7.65%>4%;
 exact captured-output alternatives are flat/slower. **No override deployed or
 new qualified speedup**; N3.2 preset remains active. [Report](bc250_training_n34_results/README.md).
-Next N3.5 current-preset1024/rank16 accumulation16 and owned checkpoint/resume
-qualification; prior42-token/rank4 CLI evidence remains distinct.
+N3.5 now qualifies that helper accumulation/resume case; N3.6 covers actual CLI
+integration. Prior42-token/rank4 CLI evidence remains distinct.
 
 N3.3 optimized1024-token synthetic model exact replay passes loss/all372 gradients/
 AdamW/RNG; median5.443s, mm75.39% of kernel sum. Reverse projection26.43% audited:
