@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "checks": [],
+  "results": [],
+  "settle_steps": 2,
+  "baseline_csv_sha256": "1f2947a88ee69a3d3854ec7615f209dadd19292489b7df3d101c5941727846c0",
+  "candidate_csv_sha256": "ffc1b5a3f61dc8fddf2d25627558dcb5fb3621742af56c23a0ab0bf21d81f3e9",
+  "contract": "Existing model abs loss <0.015 and max adapter gradient relativeL2 <0.04; each worker CPU AdamW replay unchanged; reference repetition exact",
+  "performance": "Three warm complete steps per fresh ABBA worker; no speed gate or deployment implied",
+  "error": "CalledProcessError(-9, ['/opt/torch-venv/bin/python', '/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_model_vocab_n38.py', '--worker', 'reference', '--settle-steps', '2', '--output', '/home/nik/bc250work/rocm-10.2-gfx1013/logs/training-n38-r8-model-stable/worker-0-reference.json'])"
+}

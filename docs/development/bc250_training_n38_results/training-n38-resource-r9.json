@@ -1,0 +1,14 @@
+{
+  "memory": {
+    "MemAvailable": 15211716608,
+    "SwapFree": 1444618240
+  },
+  "clients": [
+    {
+      "pid": 12812,
+      "comm": "cyan-skillfish-",
+      "uid": 0
+    }
+  ],
+  "note": "Exclusive prefix lock does not serialize raw GPU clients; keep other work idle during this gate."
+}

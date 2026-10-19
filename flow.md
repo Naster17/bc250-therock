@@ -9,7 +9,52 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **N3.7 completed and deployed, 2026-10-19:** code `e55d8b23a`, app0f2dfa078.
+- **N3.8 audit completed, experimental candidate NOT deployed, 2026-10-19:**
+  coded7b7a2bc4/settlinged0946ef6/resourcepreflightf85831f3b. Actual BF16 vocab
+  forward[1024,2048]@[2048,248320] and input-backward[1024,248320]@[248320,2048];
+  all14 admitted scalar solutions+default per role pass full chunked CPU FP64,
+  output guards/immutable inputs; five small CPU oracle/checker contracts pass.
+  Owned FP64 tensor bounds1.916GiB/64MiB, not RSS. Two2.547GB actual fixtures
+  SHA-verified durable locally. Method correction: private handle starts atomics0,
+  eagerTorch uses atomics1/32MiB workspace; initial raw2.443x backward ratio is NOT
+  Torch speedup. Corrected paired actualTorch/candidate isolated1.078x forward
+  (-339)/1.723x backward(-533); candidate reduction order differs. Experimental
+  CSV keepsN3.2 -490 row, adds only these two; active N3.2 SHA1f2947a8 unchanged.
+  r7 full-model ABBA passes loss/all372 gradients/CPU AdamW/state/RNG/reference
+  exact repetition, worstgradientrelativeL2=1.446%<4%; timings shift strongly.
+  r8 extra-settling FAILS global host OOM/SIGKILL: concurrent UID1000 train appears
+  in OOM tasks, no exclusive-causality claim. Failed evidence retained, distinct
+  from unknown CPU segfault and repaired VM-heap/CSR. User then reserves board;
+  r9 >8GiB RAM/no competing GPU clients preflight passes, two extra full untimed
+  steps before three timed steps per worker. All four numerical workers pass;
+  reference medians5.809/5.435s, candidates5.352/5.352s, ratios1.085/1.015x still
+  variable. Firstloss exact14.2942647934, CPU parametererror<=1.86265e-9; no stable
+  whole-model/accumulated LoRA/convergence/bitwise continuation speed claim.
+  **Entry drift:** r1 refuses oldN37 baseline BEFORE GPU. Current user train.py
+  SHA170d3920 removes N37 provenance integration AND A07 attention-backend CLI;
+  bc250_ops.pyd058b14a changes only printed status. Both preserved; other309
+  protected identities match. Do NOT describe current trainer as enforcingN37
+  or exposing tiled CLI. N38 model workers use separate exact qualified hookf0bc.
+  WS/logs/training-n38-entry-r2/final.json is preservation snapshot, NOT app
+  qualification. All311 entry identities/four FFT AOT DBs/links/native files
+  remain unchanged.14 passing composite checks/41 completed model micros across
+  passing gates (failedr8 partial excluded); eight600s guards ACK, passed gates
+  dmesg identical; whole batch differs dueOOM. All136 raw files3,159,740,816B
+  SHA-verified durable local kernel/artifacts/training-n38 (fixtures/, remote/);
+  original app/source variants retained there. RawWS/logs/training-n38-*;
+  [report](docs/development/bc250_training_n38_results/README.md).
+  Shared worker backupsWS/recovery/training-n38-before; no app/native install,
+  build/cache reset/delete/reboot/.105/BIOS/fallback change. Runtime62ab2437c/
+  rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4/otherlibs319a235d6 retained;
+  same r2 bootd3857b96. Disk9,799,057,408B free observed. No running own test,
+  build/container/export/guard deadline; root SSH closed. Memory snapshot is
+  WS/agent-memory/latest, keyed by final memory revision; prior snapshots kept.
+  **Next N3.9:** reconcile preserved current trainer with qualifiedN37/A07
+  provenance/attention CLI, preserving other edits. Keep current N3.2 preset;
+  owned masked1024/rank16/accum16 fresh/resume/refusal gates before app install.
+  No silent new-provenance checkpoint migration or vocabulary preset activation.
+
+- **Historical N3.7 completed and deployed, 2026-10-19:** code `e55d8b23a`, app0f2dfa078.
   Supplemental runtime-provenance.json digest bound in run.json/training.pt;
   existing training fingerprint unchanged.130 selected files incl110 gfx1013
   GEMM assets +15 mapped DSOs/preset/hooks/environment/kernel/version identity.

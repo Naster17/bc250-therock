@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "mode": "reference",
+  "loss": 14.294264793395996,
+  "gradient_count": 372,
+  "cpu_adamw_updates_checked": 372,
+  "max_cpu_adamw_update_abs_error": 1.862645149230957e-09,
+  "gradients": "worker-0-reference.gradients.pt",
+  "gradient_sha256": "6f355dbbd78c5114c64f804070eed76e91dd95e41530f0979d26fae392d31879",
+  "cpu_rng_sha256": "f51c7d7b57de46bb0d74e3f6582926ee5051763045d4273b192e8abe40cc778d",
+  "gpu_rng_sha256": "68ad7e8d092054e2df132924877356f517dc74908105d19ddfd680fe76307bc2",
+  "samples": [
+    {
+      "wall_seconds": 5.830462646001251,
+      "gpu_event_ms": 5830.37060546875,
+      "loss": 13.136214256286621,
+      "peak_allocated_bytes": 5351892480
+    },
+    {
+      "wall_seconds": 5.792825375003304,
+      "gpu_event_ms": 5792.73779296875,
+      "loss": 12.907979011535645,
+      "peak_allocated_bytes": 5351892480
+    },
+    {
+      "wall_seconds": 5.809403987001133,
+      "gpu_event_ms": 5809.3330078125,
+      "loss": 12.732683181762695,
+      "peak_allocated_bytes": 5351892480
+    }
+  ],
+  "override": "/workspace/rocblas-gemm-overrides.csv",
+  "median_wall_seconds": 5.809403987001133
+}

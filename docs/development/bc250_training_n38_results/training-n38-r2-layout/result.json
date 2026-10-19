@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual-layouts",
+    "finite-model-backward"
+  ],
+  "loss": 14.294264793395996,
+  "layouts": [
+    {
+      "role": "forward",
+      "a_shape": [
+        1024,
+        2048
+      ],
+      "b_shape": [
+        2048,
+        248320
+      ],
+      "a_stride": [
+        2048,
+        1
+      ],
+      "b_stride": [
+        1,
+        2048
+      ],
+      "a_offset": 0,
+      "b_offset": 0,
+      "dtype": "torch.bfloat16",
+      "fixture": "fixture-f4b9a722ac3e.pt",
+      "fixture_sha256": "e0a0cba29e1c48cb1c6bc98b55096c6119dd489c13758e434168d127ac6c3b69",
+      "forward_mm_calls": 1,
+      "backward_mm_calls": 0
+    },
+    {
+      "role": "input-backward",
+      "a_shape": [
+        1024,
+        248320
+      ],
+      "b_shape": [
+        248320,
+        2048
+      ],
+      "a_stride": [
+        248320,
+        1
+      ],
+      "b_stride": [
+        2048,
+        1
+      ],
+      "a_offset": 0,
+      "b_offset": 0,
+      "dtype": "torch.bfloat16",
+      "fixture": "fixture-870b9f3f4b9b.pt",
+      "fixture_sha256": "3d8689776cec8c96a661018d1e10634a9bbec84bee0425734f2f92f4948f1beb",
+      "forward_mm_calls": 0,
+      "backward_mm_calls": 1
+    }
+  ],
+  "audited_logical_shapes": [
+    [
+      1024,
+      2048,
+      248320
+    ],
+    [
+      1024,
+      248320,
+      2048
+    ]
+  ],
+  "gemm_preset_sha256": "1f2947a88ee69a3d3854ec7615f209dadd19292489b7df3d101c5941727846c0",
+  "note": "CPU copies/saving perturb timing; audit is not a benchmark; no user data/checkpoints"
+}

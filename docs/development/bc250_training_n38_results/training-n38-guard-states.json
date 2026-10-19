@@ -1,0 +1,82 @@
+{
+  "training-n38-r9-model-stable": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r9-model-stable",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "148bd48526cab0c46eab3fa629e26c98",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 19247.576950262,
+    "dry_run": false
+  },
+  "training-n38-r8-model-stable": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r8-model-stable",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "c01c47ccd9790d0d52fc34e53114df8d",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 18736.481720239,
+    "dry_run": false
+  },
+  "training-n38-r7-model": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r7-model",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "805dd514b75ba805ce223a083c14181e",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 18453.439403944,
+    "dry_run": false
+  },
+  "training-n38-r6-policy-backward": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r6-policy-backward",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "499e7728aa93543ab891937255c048f5",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 18315.990886873,
+    "dry_run": false
+  },
+  "training-n38-r5-policy-forward": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r5-policy-forward",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "cd0780d274b4172eb33efba08e64fc5d",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 18180.682114442,
+    "dry_run": false
+  },
+  "training-n38-r4-input-backward": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r4-input-backward",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "442009cc64f3897513f74776eb6190d9",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 17980.598343196,
+    "dry_run": false
+  },
+  "training-n38-r3-forward": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r3-forward",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "e332e684ceda2f90f24a47e15260a8c2",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 17849.62798283,
+    "dry_run": false
+  },
+  "training-n38-r2-layout": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n38-r2-layout",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "232aeb2e0926c2e9e3b432bfe8c247f3",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 17766.097575535,
+    "dry_run": false
+  }
+}

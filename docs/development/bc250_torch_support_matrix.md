@@ -7,23 +7,29 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N3.7 / practical review
+## Current cursor after N3.8 / practical review
 
-N3.7 supplemental checkpoint runtime/preset/hook provenance is deployed. New
-checkpoints reject invalid/changed identity; legacy resume remains explicit and
-compatible. Actual1024/rank16/accum16 new/legacy/installed replay exact372
-adapters/full state/loss/eval, numerical state exact N36;26 composite checks and
-four CPU contracts pass. Network-only kernel-log failure retained; strict short
-recheck passes. [Report](bc250_training_n37_results/README.md). Selected eager
-identity checks, not universal determinism/security/convergence or new speed.
-Next N3.8 bounded-memory vocabulary projection layout/reference/solution audit.
+N3.8 vocabulary forward/input-backward actual layouts are CPU-FP64 qualified:
+all14 admitted scalar solutions plus default per role, including matched eager
+Torch atomics/workspace policy. Experimental -339/-533 rows remain inactive;
+installed N3.2 preset is preserved. Full-model and resource/timing evidence:
+[report](bc250_training_n38_results/README.md).
+
+**Entry drift:** current user trainer has lost N3.7 provenance integration and
+the A07 attention-backend CLI since its prior qualification. Its ops helper
+changes only printed status. These two files are preserved; other309 protected
+identities match. N3.8 uses a separate byte-exact qualified hook for isolated
+model workers. The old N3.7 deployment evidence remains historical; current
+trainer must not be described as enforcing that provenance. Reconcile the
+trainer features and repeat owned CLI fresh/resume before considering a new
+preset default. Do not migrate new-provenance checkpoints silently.
 
 N3.6 deployed inner CLI1024/rank16/accum16 masked-target replay passes:
 all372 adapters/full optimizer/scheduler/RNG/order/progress/loss/evaluation exact,
 48 training micros/three evaluation forwards, seven checks. No production change
 or new speed/convergence claim. [Report](bc250_training_n36_results/README.md).
-N3.7 now adds supplemental checkpoint numerical-runtime/preset/hook provenance;
-the original fingerprint schema stays compatible.
+N3.7 added supplemental checkpoint numerical-runtime/preset/hook provenance;
+the original fingerprint schema stays compatible. See current entry drift above.
 
 N3.5 current-preset1024/rank16/accumulation16 qualified:372 gradients versus
 CPU FP64 sum worstrelativeL2=1.17e-8, CPU AdamW/scheduler replay and exact owned
@@ -301,7 +307,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A04 — completed** | Native Torch hipSPARSELt integration and follow-up | Torch6ed3d12;20 forward tests plus38 first-order gradient tests, including dense source conversion/transpose/linear. Targeted lint passes;12 forward and12 training timings recorded. | Same-dtype native floating first-order training; integer/higher-order/compile/graphs unqualified. Sparse training slower in measured small fixtures; keep explicit. [Follow-up](bc250_sparse_followup_results/README.md). Next A06 after completed A05. |
 | **A05 — completed** | Reusable opt-in causal conv/loss | Torch6181d00;69 tests: CPU output/dx/dw/db/loss, AMP/checkpoint/update and exact tiny-model AdamW resume. | Explicit torch.nn.bc250_training_ops calls; original trainer unchanged. Higher-order/compile/graphs/large-model/performance unqualified. [Report](bc250_training_a05_results/README.md). Next A06. |
 | **A06 — corrected, bounded** | Native preparation and precision-safe full operation | Torch71a0426;42 operator tests, four autocast cases, all372 nonzero BF16 model gradients exact65/1024 | Default app hook corrected; BC250_GATED_DELTA=0 remains reference opt-out. Full FLA/deeper native fusion unqualified. [Report](bc250_a06_a07_results/README.md). |
-| **A07 — head256 completed, bounded** | Explicit D<=256 tiled/hybrid attention |36 tests; actual2B training/checkpoint gates and exact per-backend fresh/resume CLI continuation | Math default. BF16 hybrid lower peak/slower in measured fixtures; quadratic forward temporaries. Dropout/compile/graphs remain separate. [Report](bc250_a06_a07_results/README.md). |
+| **A07 — head256 completed, bounded** | Explicit D<=256 tiled/hybrid attention |36 tests; actual2B training/checkpoint gates and exact per-backend fresh/resume CLI continuation | Math default. Current trainer CLI lost the option at N3.8 entry; helper remains available. BF16 hybrid lower peak/slower in measured fixtures; quadratic forward temporaries. Dropout/compile/graphs remain separate. [Report](bc250_a06_a07_results/README.md). |
 | **A08 — completed, bounded** | Native dense INT8 -> INT32 Lt and Torch `_int_mm` | Libraries319a235;99 direct CPU-reference cases+11 refusals,16 Torch cases/out/streams+five refusals; overflow and above-FP32 exact-range cases pass | I32 scalar/modulo32 route, four integer epilogues. Existing Torch shape restrictions retained. Quantization/QLoRA/packed/compile integration unqualified. [Report](bc250_dense_int8_a08_results/README.md). |
 | **A09 — completed, bounded** | Native Torch GPU profiler via existing Kineto/SDK | Separate USE_KINETO=1 build; seven native trace/reference/lifecycle tests and existing numerical/model/resume gates | Explicit torch.profiler contexts; CPU/GPU kernels/copies/memory correlation. Hardware counters, broad concurrency, compile/graphs and long tracing unqualified. [Report](bc250_profiler_a09_results/README.md). |
 | **B01** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
@@ -316,7 +322,8 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1–N3.7 scopes complete; N3.8 vocabulary projection audit is next. Small targeted
+N3.1–N3.8 bounded audits are recorded; next reconcile application drift and
+qualify any proposed preset through the owned trainer. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.
 

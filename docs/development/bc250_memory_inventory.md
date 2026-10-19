@@ -926,7 +926,37 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
-**N3.7 checkpoint provenance2026-10-19:** codee55d8b23a/app0f2dfa078 deployed.
+**N3.8 vocabulary audit2026-10-19:** implementationd7b7a2bc4/settlinged0946ef6/
+resourcepreflightf85831f3b. Actual1024-token BF16 forward[1024,2048]@[2048,248320]
+and input-backward[1024,248320]@[248320,2048]; all14 admitted solutions+default
+per role pass full chunked CPU FP64/guards/immutable inputs. FP64 tensor bounds
+1.916GiB/64MiB (not RSS); two2.547GB fixtures verified durable locally. Initial
+private atomics0 differed from eager Torch atomics1/32MiB workspace: raw2.443x
+backward ratio is NOT Torch gain. Corrected actualTorch/candidate isolated
+ratios1.078x forward(-339)/1.723x backward(-533). Reduction order differs.
+Experimental combined CSV only; N3.2 installed preset retained. r7 full-model
+ABBA loss/all372 gradients/CPU AdamW/RNG passes, worstgradientrelativeL2=1.446%
+<4%; strong timing transition prevents stable speed inference. r8 extra-settling
+fails global host OOM/SIGKILL with concurrent UID1000 train; retain failed log,
+not CPU segfault or VM-heap corruption. User reserves board for r9; >8GiB RAM/
+no competing GPU clients preflight and two extra full untimed steps per worker.
+r9 passes: ABBA reference5.809/5.435s versuscandidate5.352/5.352s; ratios
+1.085/1.015x still variable, no new default. Firstloss exact/all372 gradients
+worst1.446%/CPU AdamW/RNG pass; finalreference gradients exact.14 composite
+checks/41 completed train micros; eight600s guards ACK, successful gates dmesg
+identical, whole batch differs dueOOM. [Report](bc250_training_n38_results/README.md).
+Entry againstN37 has exactly two drifts: current replica/train.py removes N37
+provenance/A07 tiled CLI, bc250_ops.py only changes printed status. Current app
+preserved, all309 other protected identities match; isolated N38 model uses
+byte-exact old qualified hookf0bcb35e. Thus N37 historical deployment below is
+NOT current trainer feature qualification. EntrybaselineWS/logs/training-n38-
+entry-r2/final.json is a preservation snapshot, not application qualification.
+Next reconcile trainer features, then owned CLI fresh/resume before default
+preset decision; do not silently migrate new-provenance checkpoints. Native
+runtime/prefix/N3.2 defaults/kernel/.105 unchanged. RawWS/logs/training-n38-*;
+local kernel/artifacts/training-n38. CPU fault remains unresolved/distinct.
+
+**Historical N3.7 checkpoint provenance2026-10-19:** codee55d8b23a/app0f2dfa078 deployed.
 Supplemental JSON digest binds run.json/training.pt without changing fingerprint.
 130 selected file identities incl110 GEMM assets/15 mapped DSOs/preset/hooks/
 selected env/kernel/version metadata. New invalid/changed identity refuses before

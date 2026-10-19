@@ -1,0 +1,165 @@
+{
+  "status": "passed",
+  "checks": [
+    "worker-0-reference-372-gradients-cpu-adamw-rng",
+    "worker-1-candidate-372-gradients-cpu-adamw-rng",
+    "worker-2-candidate-372-gradients-cpu-adamw-rng",
+    "worker-3-reference-372-gradients-cpu-adamw-rng"
+  ],
+  "results": [
+    {
+      "status": "passed",
+      "mode": "reference",
+      "loss": 14.294264793395996,
+      "gradient_count": 372,
+      "cpu_adamw_updates_checked": 372,
+      "max_cpu_adamw_update_abs_error": 1.862645149230957e-09,
+      "gradients": "worker-0-reference.gradients.pt",
+      "gradient_sha256": "6f355dbbd78c5114c64f804070eed76e91dd95e41530f0979d26fae392d31879",
+      "cpu_rng_sha256": "f51c7d7b57de46bb0d74e3f6582926ee5051763045d4273b192e8abe40cc778d",
+      "gpu_rng_sha256": "68ad7e8d092054e2df132924877356f517dc74908105d19ddfd680fe76307bc2",
+      "samples": [
+        {
+          "wall_seconds": 5.830462646001251,
+          "gpu_event_ms": 5830.37060546875,
+          "loss": 13.136214256286621,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.792825375003304,
+          "gpu_event_ms": 5792.73779296875,
+          "loss": 12.907979011535645,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.809403987001133,
+          "gpu_event_ms": 5809.3330078125,
+          "loss": 12.732683181762695,
+          "peak_allocated_bytes": 5351892480
+        }
+      ],
+      "override": "/workspace/rocblas-gemm-overrides.csv",
+      "median_wall_seconds": 5.809403987001133
+    },
+    {
+      "status": "passed",
+      "mode": "candidate",
+      "loss": 14.294264793395996,
+      "gradient_count": 372,
+      "cpu_adamw_updates_checked": 372,
+      "max_cpu_adamw_update_abs_error": 1.862645149230957e-09,
+      "gradients": "worker-1-candidate.gradients.pt",
+      "gradient_sha256": "4a4f888ce428c255c04832321ee9ef254cb8b6fd06b0771cf82fb10fe0ec2d83",
+      "cpu_rng_sha256": "f51c7d7b57de46bb0d74e3f6582926ee5051763045d4273b192e8abe40cc778d",
+      "gpu_rng_sha256": "68ad7e8d092054e2df132924877356f517dc74908105d19ddfd680fe76307bc2",
+      "samples": [
+        {
+          "wall_seconds": 5.356317073001264,
+          "gpu_event_ms": 5356.2265625,
+          "loss": 13.136701583862305,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.3496918130003905,
+          "gpu_event_ms": 5349.6142578125,
+          "loss": 12.910088539123535,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.351989138001954,
+          "gpu_event_ms": 5351.91748046875,
+          "loss": 12.733619689941406,
+          "peak_allocated_bytes": 5351892480
+        }
+      ],
+      "override": "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/rocblas_gemm_n38.csv",
+      "median_wall_seconds": 5.351989138001954,
+      "max_adapter_gradient_relative_l2": 0.014459598809480667,
+      "loss_abs_error": 0.0,
+      "exact_gradients": false
+    },
+    {
+      "status": "passed",
+      "mode": "candidate",
+      "loss": 14.294264793395996,
+      "gradient_count": 372,
+      "cpu_adamw_updates_checked": 372,
+      "max_cpu_adamw_update_abs_error": 1.862645149230957e-09,
+      "gradients": "worker-2-candidate.gradients.pt",
+      "gradient_sha256": "68769604e1d12c986d25030126cd169f88c618276dfab32dc7ebf21520bf0562",
+      "cpu_rng_sha256": "f51c7d7b57de46bb0d74e3f6582926ee5051763045d4273b192e8abe40cc778d",
+      "gpu_rng_sha256": "68ad7e8d092054e2df132924877356f517dc74908105d19ddfd680fe76307bc2",
+      "samples": [
+        {
+          "wall_seconds": 5.3635166629974265,
+          "gpu_event_ms": 5363.41552734375,
+          "loss": 13.136701583862305,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.352392910001072,
+          "gpu_event_ms": 5352.296875,
+          "loss": 12.910088539123535,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.341315773999668,
+          "gpu_event_ms": 5341.23388671875,
+          "loss": 12.733619689941406,
+          "peak_allocated_bytes": 5351892480
+        }
+      ],
+      "override": "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/rocblas_gemm_n38.csv",
+      "median_wall_seconds": 5.352392910001072,
+      "max_adapter_gradient_relative_l2": 0.014459598809480667,
+      "loss_abs_error": 0.0,
+      "exact_gradients": false
+    },
+    {
+      "status": "passed",
+      "mode": "reference",
+      "loss": 14.294264793395996,
+      "gradient_count": 372,
+      "cpu_adamw_updates_checked": 372,
+      "max_cpu_adamw_update_abs_error": 1.862645149230957e-09,
+      "gradients": "worker-3-reference.gradients.pt",
+      "gradient_sha256": "24df3be282f7857ec44233ecd3cd12543494c1b3072c8c3a75b63ff632d1a634",
+      "cpu_rng_sha256": "f51c7d7b57de46bb0d74e3f6582926ee5051763045d4273b192e8abe40cc778d",
+      "gpu_rng_sha256": "68ad7e8d092054e2df132924877356f517dc74908105d19ddfd680fe76307bc2",
+      "samples": [
+        {
+          "wall_seconds": 5.434950400001981,
+          "gpu_event_ms": 5434.8623046875,
+          "loss": 13.136214256286621,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.423944830999972,
+          "gpu_event_ms": 5423.85107421875,
+          "loss": 12.907979011535645,
+          "peak_allocated_bytes": 5351892480
+        },
+        {
+          "wall_seconds": 5.4379470179992495,
+          "gpu_event_ms": 5437.85888671875,
+          "loss": 12.732683181762695,
+          "peak_allocated_bytes": 5351892480
+        }
+      ],
+      "override": "/workspace/rocblas-gemm-overrides.csv",
+      "median_wall_seconds": 5.434950400001981,
+      "max_adapter_gradient_relative_l2": 0.0,
+      "loss_abs_error": 0.0,
+      "exact_gradients": true
+    }
+  ],
+  "settle_steps": 2,
+  "baseline_csv_sha256": "1f2947a88ee69a3d3854ec7615f209dadd19292489b7df3d101c5941727846c0",
+  "candidate_csv_sha256": "ffc1b5a3f61dc8fddf2d25627558dcb5fb3621742af56c23a0ab0bf21d81f3e9",
+  "contract": "Existing model abs loss <0.015 and max adapter gradient relativeL2 <0.04; each worker CPU AdamW replay unchanged; reference repetition exact",
+  "performance": "Three warm complete steps per fresh ABBA worker; no speed gate or deployment implied",
+  "paired_wall_ratios": [
+    1.0854663261087902,
+    1.015424407622738
+  ]
+}
