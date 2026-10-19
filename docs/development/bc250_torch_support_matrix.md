@@ -7,11 +7,20 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N2.18 / practical review
+## Current cursor after N3.2 / practical review
+
+N3.2 is installed: rocBLAS/Tensile source8389197c1 repairs cold override loading;
+exact-layout BF16 NT2048x1024x6144 solution-490 is automatic through current dev
+launchers with pinned identities and BC250_GEMM_TUNING=0 opt-out. CPU GEMM,
+all372 model gradients, CPU AdamW and installed gates pass. Synthetic whole-step
+ABBA1.52–1.56x, max gradient relativeL2=2.03%\<4%, reduction order changes; no
+bitwise continuation/convergence/sustained-throughput claim. Other native ROCm
+libraries remain319a235d6. [Report](bc250_gemm_n32_results/README.md).
+Next N3.3 reprofile optimized model with exact replay and audit next measured mm.
 
 N2.1–N2.18 are complete within their recorded scopes. Installed Torch remains
-`dc8fea0` in WS/pytorch-sparse-n213, source/test `2b449c4`; native libraries
-`319a235d6`, source-documentation `c29021b40e7`. N2.13 sparse pivot marking and
+`dc8fea0` in WS/pytorch-sparse-n213, source/test `2b449c4`; other native libraries
+`319a235d6`; rocBLAS alone rebuilt at `8389197c1`. N2.13 sparse pivot marking and
 the A09 CPU-first profiler repair remain installed. N2.14 FFT output/backward,
 N2.15 RNG replay/contracts, N2.16 reductions/scans and N2.17 sorting/selection
 have bounded CPU-reference evidence. N2.18 directly qualifies scalar CK DL FP32
@@ -216,7 +225,7 @@ The following rows are not an exhaustive API or dtype promise.
 | --- | --- | --- | --- |
 | HIP allocation/copy/stream | ROCr, CLR, amdhip64, c10_hip | Native gfx1013; prior allocation/stream/churn and current probes | SDMA/experimental heap off; VMM/reset/fault migration limits remain |
 | Pointwise/reductions/indexing | ATen HIP, rocPRIM/hipCUB/Thrust | Existing P1/P2 consumers; N2.16 native1536 FP32/64 reduction/scan/custom cases, N2.17 native1960 sort/select +Torch62 incl54 finite backward | Wider types/operators/iterators/concurrency/graphs/performance unqualified |
-| Dense FP32/FP64/FP16/BF16 GEMM | hipBLAS/rocBLAS, default | All four current output/input-gradient references pass; earlier broad fixtures retained | Scalar backend, no Tensor Core throughput claim |
+| Dense FP32/FP64/FP16/BF16 GEMM | hipBLAS/rocBLAS, default | All four current output/input-gradient references pass; earlier broad fixtures retained | Scalar backend; N3.2 exact-layout BF16 preset/loader repair, no Tensor Core or universal throughput claim |
 | Optional dense Lt | hipBLASLt | Explicit hipblaslt selection output/gradients pass; N1.8 bounds retained | Floating Lt remains opt-in; dense INT8/I32 now A08-qualified, FP8 gaps remain |
 | Conv1D/2D/3D | MIOpen | A01 fixes group1 timing/workspace; installed30 output/dx/dw configurations and15 direct APIs, earlier group2 references retained | Wider tuning/types/layouts remain unqualified; no blanket convolution claim |
 | Depthwise / transpose conv | MIOpen or ATen selection | BF16 K4/C64/L65 depthwise and FP32 transpose-conv gradients pass | Does not qualify the missing CK plugin or all depths/layouts |
@@ -271,7 +280,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1 is complete after the practical review; N3.2 is next. Small targeted
+N3.1/N3.2 are complete within scope; N3.3 optimized-model attribution is next. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.
 

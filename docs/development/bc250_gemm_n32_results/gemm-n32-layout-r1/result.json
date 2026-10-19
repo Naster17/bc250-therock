@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual-layouts",
+    "finite-model-backward"
+  ],
+  "loss": 14.294264793395996,
+  "layouts": [
+    {
+      "a_shape": [
+        1024,
+        6144
+      ],
+      "b_shape": [
+        6144,
+        2048
+      ],
+      "a_stride": [
+        6144,
+        1
+      ],
+      "b_stride": [
+        1,
+        6144
+      ],
+      "a_offset": 0,
+      "b_offset": 0,
+      "dtype": "torch.bfloat16",
+      "fixture": "fixture-b0616c4ee072.pt",
+      "fixture_sha256": "488517a8a433743e81486016bb8f2c350db30b86f6e33f61fc2ea055f36f73a8",
+      "forward_mm_calls": 24,
+      "backward_mm_calls": 24
+    },
+    {
+      "a_shape": [
+        1024,
+        6144
+      ],
+      "b_shape": [
+        6144,
+        2048
+      ],
+      "a_stride": [
+        6144,
+        1
+      ],
+      "b_stride": [
+        2048,
+        1
+      ],
+      "a_offset": 0,
+      "b_offset": 0,
+      "dtype": "torch.bfloat16",
+      "fixture": "fixture-57609d01422c.pt",
+      "fixture_sha256": "974c8d2428dca01b04b003572597cd9670a2d7c977437ecd89a9235377d4aa76",
+      "forward_mm_calls": 0,
+      "backward_mm_calls": 48
+    },
+    {
+      "a_shape": [
+        1024,
+        6144
+      ],
+      "b_shape": [
+        6144,
+        2048
+      ],
+      "a_stride": [
+        1,
+        1024
+      ],
+      "b_stride": [
+        2048,
+        1
+      ],
+      "a_offset": 0,
+      "b_offset": 0,
+      "dtype": "torch.bfloat16",
+      "fixture": "fixture-9db073af72b1.pt",
+      "fixture_sha256": "a367e6c634644d4624ce02d985768e470773ab16407aff60c545c2d2a8ae7942",
+      "forward_mm_calls": 0,
+      "backward_mm_calls": 18
+    }
+  ],
+  "note": "CPU copies/saving perturb timing; audit is not a benchmark; no user data/checkpoints"
+}

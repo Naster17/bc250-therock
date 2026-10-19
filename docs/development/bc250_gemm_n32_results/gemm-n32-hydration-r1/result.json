@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "checks": [
+    "enumeration-hydrates-override"
+  ],
+  "available": [
+    -490,
+    -491,
+    -492,
+    -493,
+    -489,
+    -494,
+    -499,
+    -501
+  ],
+  "timing": {
+    "gpu_ms": 9.454950332641602,
+    "wall_ms": 9.479520666597333
+  }
+}

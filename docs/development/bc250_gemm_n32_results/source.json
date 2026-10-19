@@ -1,0 +1,21 @@
+{
+  "therock_code_revision": "62ab2437c9fd80e011b23578ffbf9208d85cda64",
+  "rocm_libraries_revision": "8389197c134a7337932021ab7137987a585664ae",
+  "helpers_sha256": {
+    "audit_gemm_n32.py": "ba2ad4a6663dff17d5a3b39bfb164381fbf99c9e0ba20879cafe286ec188df5c",
+    "gemm-n32-launcher/bc250_torch.py": "2da29b2c390fbe0019454088d55cd0f44667bb47bc1ac76b65f5cc434271ea3f",
+    "benchmark_gemm_n32.py": "0a361377bc259ad6e06fed3526189fa32c8dec248cd1f277223545b95e07ff2f",
+    "build_rocblas_gemm_n32.sh": "415ee523b51e5a70c7860f91bb115cf1a641f5a0d54f2bfc97a71d1128a4bd3a",
+    "build_rocblas_gemm_n32_on_host.py": "b62625a0a8a7a21aab6a704a5992911699bb96a43668e1b14f098211e6d1ceb2",
+    "deploy_gemm_n32_on_host.py": "47af74ff23bf7aeabb1e15778141adf80c72c5bd6caf4283e64d9d4ca3cafdb5",
+    "diagnose_override_gemm_n32.py": "a697e350e301504ba077962fa8b0409fa2e6b53260602f236c222b991b6338b7",
+    "rocblas_gemm_n32.csv": "1f2947a88ee69a3d3854ec7615f209dadd19292489b7df3d101c5941727846c0",
+    "test_gemm_launcher_n32.py": "61f623b5a06643f056acd34025523ff824783b00a990560bdd7a939c8efc7d4a",
+    "validate_gemm_optout_n32.py": "e3b86ccf53d5e8c9d321e298f203397063ebb561d174bd51a7da8897c7ad2312",
+    "validate_installed_model_gemm_n32.py": "cf63509993313cffc3d9e0728016f5333c2f05ca3e50c8bad1b3ec49b50030fc",
+    "validate_model_gemm_n32.py": "cf50d552f9e594c969f86ada77953658972f33d233edc195a752bc4dfb70d50f",
+    "validate_override_gemm_n32.py": "ece385347f3783fef97370b2a0af76f539d55b27f79d2cdf6664a9aadfddc1f7"
+  },
+  "native_torch_revision": "dc8fea0cb8b157cb415359033e4f0175d2ebfa56",
+  "unchanged_other_libraries_native_revision": "319a235d6c6496f0da37be44dfa60eaf31a29f82"
+}

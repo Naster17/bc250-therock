@@ -9,6 +9,47 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N3.2 completed and installed, 2026-10-19:** TheRock code `62ab2437c`,
+  rocBLAS/Tensile `8389197c1`, patch0033. Actual dominant logical BF16 GEMM audit
+  finds TN48/NN48/NT18 calls (checkpoint recomputation included), not132 mm calls.
+  Existing-solution CPU-double/guard/input checks pass all14/14/8 candidates.
+  Only NT M2048/N1024/K6144 lda2048/ldb1024/ldc2048 batch1 BF16/FP32compute/beta0
+  selected: solution-490, six alternating timing rounds173.797->4.841ms fixture.
+  Other layouts unchanged. Old-loader cold override internal error reproduced
+  twice: preloaded metadata lacked codeObjectFilename. Lazy hydration repair,
+  `.load().empty()` patch; isolated cold/public Torch then installed cold pass.
+  Targeted cached rocblas build r2, ccache20GiB/OMP4/max16/nativegfx1013; no GPU/
+  network, active dist read-only. Initial ThreadSafeValue compile failure and
+  prelaunch Path/string controller failure preserved, corrected; no Torch rebuild.
+  Four fresh model AB/BA workers: synthetic1024/batch1/accum1/BF16/rank16/math/
+  checkpoint, loss/RNG exact,372 clipped gradients maxrelativeL2=0.02030649\<0.04;
+  each worker's AdamW params/state CPU replay passes maxabs1.863e-9. Reference
+  repeat exact. Warm medians8.603/5.654/5.494/8.552s, ratios1.522/1.557x.
+  Installed automatic model5.507s/1.562x; no sustained dataset/convergence claim.
+  Exclusive-lock deployment changes only rocBLAS DSO/global+helper launcher/
+  preset/runtime metadata/provenance. Automatic current-dev-prefix exact-problem
+  tuning verifies CSV/DSO/110 gfx1013 assets; frozen previous unchanged. Explicit
+  `BC250_GEMM_TUNING=0` outer opt-out restores old selection, manual override wins;
+  identity mismatch falls back. Reduction order changes: no bitwise continuation
+  promise across tuning changes. [Usage](docs/development/bc250_torch_usage.md).
+  Installed cold3/core7/conv30/model4/optout2 pass;12 GPU guards ACK600s (10 passing,
+  two expected reproduced cold failures), dmesg identical whole batch. Prior193
+  identities changed only active rocBLAS aliases/runtime.json; final309 protected
+  paths, four FFT AOT DBs/user trainer/config/old packs/releases/checkpoints intact.
+  Native Torchdc8fea0/source2b449c4, other native libraries319a235d6 unchanged;
+  only rocBLAS rebuilt at8389197c1. DSO SHA85599e274e3ba5077587f09eed0ba1df611ec19b2f2b595cc3a3724752d2f516.
+  Same r2 boot d0532075-88fb-4a2f-974e-f61578d20d9f, no reboot/default BLAS/math/
+  SDMA0/heap-off/.105/BIOS/fallback change. No active agent job/container/guard;
+  free~6.13GiB. Historical CPU Python fault remains unresolved/separate from fixed
+  VM-heap/CSR and repaired loader defect. [Report](docs/development/bc250_gemm_n32_results/README.md).
+  Raw WS/logs/gemm-n32-\*, candidate WS/candidates/gemm-n32-r2, recovery
+  WS/recovery/gemm-n32-before, full local ignored kernel/artifacts/gemm-n32/remote;
+  all copied raw identities verified. Next preservation baseline
+  WS/logs/gemm-n32-deployment-r1/final.json; SOURCE_GEMM_N32.json in WS/current.
+  **Next N3.3:** reprofile optimized current model with exact profiled/unprofiled
+  loss/gradients/AdamW/RNG replay; audit the next measured dense-mm layout before
+  another candidate. Do not assume optimizer/gated-delta dominates or repeat N2.
+
 - **Practical N2 review + N3.1 completed, 2026-10-19:** TheRock code `4e76c2f01`.
   [Review](docs/development/bc250_n2_practical_review.md) separates optional BF16
   FFT/general sparse solve/CK backward/plugin/RPP and other residual scopes from
@@ -1511,7 +1552,7 @@ release claims must not override this cursor and current manifests.
   use the current K3/K4 cursor, not this historical next step. N2.1 retained.
 - **Latest completed library milestone:** N1.8 hipBLASLt short small/skinny GEMM dispatch implemented,
   installed on .104 and bounded-qualified. N1.1–N1.7 retained in their scopes.
-- **Last qualified code:** root `0115c01f06f8654b26b5a665286069caf89eda2d`,
+- **Last qualified code:** root `62ab2437c9fd80e011b23578ffbf9208d85cda64` (N3.2 launcher/qualification),
   libraries `a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8` (patches0025–0026).
 - **N1.8 contract:** K<=64 and either min(M,N)<=4 or both M,N<=32 with M*N<=512
   use one32-lane scalar subgroup/output, eight outputs/block. Physical D order
@@ -1604,19 +1645,19 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 | Item                     | Current identity                                                                                                          |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | Qualified root code      | `0115c01f06f8654b26b5a665286069caf89eda2d`                                                                                |
-| rocm-libraries           | `a6f7d3d8ba7a1d022628d8c3fdcc54235551a9b8`, ordered patches0001–0026                                                      |
+| rocm-libraries           | rocBLAS `8389197c134a7337932021ab7137987a585664ae`; other native libraries `319a235d6`; patches0001–0033                                                      |
 | rocm-systems             | `dbdb7b8d1c56316d873a9b90e548e5a72853496d`, patches0001–0003                                                              |
-| Torch                    | `4f13bf86476252e3d57b17d1c72f8512814400e9`, patches0001–0002; editable pip                                                |
+| Torch                    | native `dc8fea0cb8b157cb415359033e4f0175d2ebfa56`, source/tests `2b449c4`; editable pip                                                |
 | Triton                   | `ee65ff3b85f99d52e678b252a99c8425fa46e329`, patches0001–0004; qualified wheel retained                                    |
 | LLVM                     | Clean upstream `7667f52dd687899256a3285ab0bce3c53bc73394`                                                                 |
-| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **P2 + N1.1–N1.8 dev profile**                  |
-| ROCm/Torch/cache         | `WS/build/dist/rocm`, `WS/pytorch-work`, `WS/cache/dev-user` (uid/gid1000)                                                |
+| Active stack             | `/opt/bc250-stack/current` → `/opt/bc250-stack/dev/priority1`; legacy directory name, **N3.2 mutable dev profile; earlier qualified scopes retained**                  |
+| ROCm/Torch/cache         | `WS/build/dist/rocm`, `WS/pytorch-sparse-n213`, `WS/cache/dev-user` (uid/gid1000)                                                |
 | Runtime image ID         | `5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59`                                                        |
 | Runtime/build tags       | `localhost/bc250-stack:10.2-gfx1013-priority1-candidate`; `localhost/bc250-rocm-build:10.2-ccache`                        |
-| Source exports           | Gitless `WS/source`, `WS/pytorch-source`, `WS/pytorch-work`; GIT_REVISION + `SOURCE_N18.json` delta on N1.7/P2                |
+| Source exports           | Gitless `WS/source`, qualified Torch exports; current deltas `SOURCE_SPARSE_N213.json` / `SOURCE_GEMM_N32.json`                |
 | Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
 | Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
-| Kernel/boot              | `.104` experimental `7.2.10-bc250rocm-r3`; persistent default/retained fallback r2; new artifacts `KWS/artifacts`, old files `bc250-rocm-lab` |
+| Kernel/boot              | `.104` live `7.1.5-bc250rocm-r2`, boot d0532075; qualified r3 retained, no N3.2 reboot/boot-policy change |
 | Memory backup            | `WS/agent-memory/latest` (documentation only; preserves qualified source snapshots)                                       |
 | Training artifacts       | `WS/training-model`, `training-env-stable`, `training-validation`, `logs/training-memory/`                                |
 
@@ -1747,7 +1788,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [ ]   | N2                   | Broader scientific/primitives/RPP coverage: solver difficult/complex cases and selection, sparse formats/analysis/solves, FFT plans/layouts, RNG distributions, floating/custom/segmented algorithms, admitted CK DL conv/grouped operations. Qualify actual operations, not architecture lists.                                                                                                    |
 | [x]   | N2 practical review | Current-workload gap classification complete; stale A01/next-task documentation corrected. Broad optional scientific coverage remains open; no mandatory implementation identified before N3. |
 | [x]   | N3.1 | Current Qwen3.5 synthetic training profile:65/1024 exact loss/372 gradients/AdamW/RNG replay, corrected kernel-only correlation/shape attribution. Dense mm dominates; no runtime/default or speed claim. |
-| [ ]   | **N3.2 — next** | Audit dominant BF16 [1024,6144]@[6144,2048] rocBLAS/Tensile selection/strides; benchmark one feasible scalar candidate with fixed numerical references, paired timing and model-gradient checks before deployment. |
+| [x]   | N3.2 | Exact-layout BF16 NT solution-490 plus cold override loader repair installed; CPU GEMM/all372 model gradients/CPU AdamW/ABBA timings and installed gates pass. Synthetic whole-step1.52–1.56x; changed reduction order, no convergence/bitwise continuity claim. |
+| [ ]   | **N3.3 — next** | Reprofile optimized current model with exact capture replay; identify next dense-mm layout cost and qualify one measured candidate with fixed references before deployment. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

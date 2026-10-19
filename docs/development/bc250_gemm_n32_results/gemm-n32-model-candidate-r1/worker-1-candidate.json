@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "mode": "candidate",
+  "loss": 14.294264793395996,
+  "gradient_count": 372,
+  "cpu_adamw_updates_checked": 372,
+  "max_cpu_adamw_update_abs_error": 1.862645149230957e-09,
+  "gradients": "worker-1-candidate.gradients.pt",
+  "gradient_sha256": "68f22a34f1004ce063c584e13561575e9efcc9455966d9b06ffc894f5956744f",
+  "cpu_rng_sha256": "f51c7d7b57de46bb0d74e3f6582926ee5051763045d4273b192e8abe40cc778d",
+  "gpu_rng_sha256": "68ad7e8d092054e2df132924877356f517dc74908105d19ddfd680fe76307bc2",
+  "samples": [
+    {
+      "wall_seconds": 5.63587932199971,
+      "gpu_event_ms": 5635.779296875,
+      "loss": 13.816862106323242,
+      "peak_allocated_bytes": 5351892480
+    },
+    {
+      "wall_seconds": 5.681942620999507,
+      "gpu_event_ms": 5681.86767578125,
+      "loss": 13.443196296691895,
+      "peak_allocated_bytes": 5351892480
+    },
+    {
+      "wall_seconds": 5.653776385000128,
+      "gpu_event_ms": 5653.703125,
+      "loss": 13.136214256286621,
+      "peak_allocated_bytes": 5351892480
+    }
+  ],
+  "override": "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/rocblas_gemm_n32.csv",
+  "median_wall_seconds": 5.653776385000128
+}

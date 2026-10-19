@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checks": [
+    "explicit-optout",
+    "cpu-reference-original-path"
+  ],
+  "numerical": {
+    "relative_l2": 0.0016576992678389577,
+    "max_abs": 5.131710073651152e-07
+  },
+  "timing": {
+    "gpu_ms": 176.1513468424479,
+    "wall_ms": 176.1961856667161
+  }
+}

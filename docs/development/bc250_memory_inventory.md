@@ -485,6 +485,8 @@ library reconstruction; retained earlier manifests keep their original meaning. 
 | 0029 | A02 BF16 reduction conversions/scaling and cache-key isolation: `d375d8a2ea7` |
 | 0030 | A03 capability-aware optional CK plugin probing: `fcf7a7142af` |
 | 0031 | A08 native dense INT8/INT32 Lt, modulo arithmetic and typed contracts: `319a235d6c6` |
+| 0032 | rocRAND LFSR113 offset source-comment correction, binaries unchanged: `c29021b40e7` |
+| 0033 | Tensile preloaded override code-object hydration, cold regression and exact-layout BF16 preset: `8389197c134` |
 
 System patches: build-time ROCr hotswap default; native ROCdbgapi architecture
 registration (`fa95eec5a2`); gfx1013 safe pool default (`dbdb7b8d1c`). The first
@@ -875,7 +877,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | LLVM/Clang/device libs/COMGR/HIPRTC         | Existing upstream gfx1013 support; native compile/runtime compile, builtin probes, Triton instruction-selection checks and GPU kernels                                                                       | Not a newly written compiler target; wider builtin/debug/offload suites remain                                                                              |
 | ROCr/HIP/CLR                                | Native allocation/copy/stream/churn tests; safe pool default; VMM and async APIs retained                                                                                                                    | SDMA/reset/VM heap/fault migration are separate controlled experiments                                                                                      |
 | Low-precision atomic APIs                   | Existing HIP CAS fallback qualified by `hip_atomic_low_precision.cpp`, contention/returned values/neighbor guards                                                                                            | Do not patch working atomic headers or claim native low-precision atomic instructions                                                                       |
-| rocBLAS/Tensile + hipBLAS                   | Native identity and scalar capability/predicate patches, 570 fallback kernels; large SGEMM and four Torch precisions; P2 BLAS18                                                                              | No complete tuned database/BLAS suite. hipBLAS uses this backend, not custom new kernels.                                                                   |
+| rocBLAS/Tensile + hipBLAS                   | Native identity/scalar predicates, 570 fallback kernels; P2 BLAS18; N3.2 cold override loader repair and exact-layout BF16 NT solution-490, full CPU reference/372 model gradients/CPU AdamW/paired timing                                                                              | No complete tuned database/BLAS suite; N3.2 tunes one1024-token model layout only, changes reduction order. hipBLAS uses this backend, no new arithmetic kernel.                                                                   |
 | hipBLASLt | Prior964 C/C++ cases +N1.8 new664,403/561 regressions; f32/f16/bf16 same/mixed output, layouts/transposes/broadcast batches, host/device scalars, bias/activation/AUX/DGELU, grouped lifetime/events; tiled/register and short subgroup paths.36 paired graph timing fixtures | Subgroup K<=64 and min(M,N)<=4 or both<=32/area<=512; FP32 tree order differs. Selected graph kernel ratios1.14–1.86x, controls~flat; no whole-Torch/uncaptured latency claim. FP8/INT8/FP64/device groups/tuning unsupported. Default Torch BLAS remains rocBLAS. |
 | hipTensor generic                           | Historical154 rank-two and23 higher-rank reduction/permutation/binary/trinary checks in generic-only profile                                                                                                 | Wider rank/layout/operators remain; these counts are separate from contractions                                                                             |
 | hipTensor contraction | N1.1 real273 API cases (253 numerical +20 descriptor); N1.2 complex450 (426 numerical +24 descriptor) and273 real regressions. Same-type C32F/C64F, identity/NEG/CONJ, public complex scalars, shared/unilateral sums, padded/permuted layouts, zero/imaginary scalars, span/alias/guard bytes, in-place conjugated C/D,16-mode union with unit axes, plan lifetime and3algorithms×3workspace preferences/type with JIT NONE | N1.3:304 plan API checks +12 numerical executions across four real/complex types; pointer/size/enum guards, atomic failed setters, owning plans, zero required workspace. Scalar cache NONE/JIT NONE/autotune NONE/count0/rank0; alternative requests explicitly unsupported. Broader cache/JIT implementations remain optional. Mixed/widened complex and other complex unary ops unsupported; small-fixture timing is not general performance. |
@@ -923,6 +925,39 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**N3.2 exact-layout BF16 tuning installed2026-10-19:** TheRock code62ab2437c,
+rocBLAS/Tensile8389197c1/patch0033. Existing gfx1013 scalar solutions audited against
+actual strides: TN48/NN48/NT18 mm calls, all14/14/8 admitted candidates pass CPU
+float64 full reference/guards/input preservation. Only rocBLAS NT2048x1024x6144,
+lda2048/ldb1024/ldc2048, batch1/BF16output/FP32compute/beta0 selects-490; six-round
+fixture173.797->4.841ms. Other layouts keep default. Old loader cold override
+internal error reproduced twice; preload metadata lacked codeObjectFilename.
+Lazy hydration when missing/empty fixes cold public Torch use. Cached targeted
+rocblas r2 build, ccache20GiB/OMP4/max16/nativegfx1013/no GPU/network, active dist
+read-only; first compile/controller errors retained. No other native DSO changed.
+Actual-base synthetic1024/rank16/BF16/math/checkpoint ABBA model loss/RNG exact,
+372 clipped gradients worstrelativeL2=2.030649%\<unchanged4%; every worker CPU
+AdamW update/state pass, maxparamabs1.863e-9. Warm whole-step ratios1.522/1.557x;
+installed5.507s/1.562x. No bitwise gradient/continuation or sustained/convergence
+claim. Reference repetition exact. New launcher automatic only current mutable
+prefix, exact-problem CSV+DSO+110 gfx1013 assets pinned; mismatch fallback,
+manual override precedence, outer BC250_GEMM_TUNING=0 restores old path. Frozen
+previous unchanged. Installed cold3/core7/conv30/model4/optout2 pass,12 guards
+ACK600s including2 reproduced failures, dmesg identical whole batch. Exclusive
+lock encloses install/gates; old DSO/runtime/launchers/source retained in
+WS/recovery/gemm-n32-before, unchanged kernel pack hash-pinned. Final309 protected
+paths vs193 prior, only active rocBLAS aliases/runtime.json intentional changes;
+user trainer/config/checkpoints/four FFT AOT DBs/other libraries intact. Native
+Torchdc8fea0/source2b449c4, other native libraries319a235d6; only rocBLAS rebuilt
+at8389197c1. Same r2 boot/no reboot, .105/BIOS/boot fallbacks/math/rocBLAS backend/
+SDMA0/heap-off retained. Historical CPU fault unresolved/separate from repaired
+loader and fixed VM-heap/CSR. [Report](bc250_gemm_n32_results/README.md),
+[usage](bc250_torch_usage.md); raw WS/logs/gemm-n32-\*, full local ignored
+kernel/artifacts/gemm-n32/remote (copied SHA verified); candidate
+WS/candidates/gemm-n32-r2. SOURCE_GEMM_N32.json in WS/current; next baseline
+WS/logs/gemm-n32-deployment-r1/final.json. No active job/container/guard, free~6.13GiB.
+Next N3.3 reprofile optimized model/exact capture replay and next measured layout.
 
 **Practical N2 review / N3.1 current-model profiling2026-10-19**, TheRock code
 `4e76c2f01`: [review](bc250_n2_practical_review.md) classifies residual capabilities

@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "mode": "reference",
+  "loss": 14.294264793395996,
+  "gradient_count": 372,
+  "cpu_adamw_updates_checked": 372,
+  "max_cpu_adamw_update_abs_error": 1.862645149230957e-09,
+  "gradients": "worker-3-reference.gradients.pt",
+  "gradient_sha256": "47ef94bd9a9ba5b4468a4979a4ef8300a59e954a1eae4a31b9d2cc0576554ded",
+  "cpu_rng_sha256": "f51c7d7b57de46bb0d74e3f6582926ee5051763045d4273b192e8abe40cc778d",
+  "gpu_rng_sha256": "68ad7e8d092054e2df132924877356f517dc74908105d19ddfd680fe76307bc2",
+  "samples": [
+    {
+      "wall_seconds": 8.551587360000667,
+      "gpu_event_ms": 8551.486328125,
+      "loss": 13.816971778869629,
+      "peak_allocated_bytes": 5351892480
+    },
+    {
+      "wall_seconds": 8.543615825000415,
+      "gpu_event_ms": 8543.5361328125,
+      "loss": 13.443806648254395,
+      "peak_allocated_bytes": 5351892480
+    },
+    {
+      "wall_seconds": 8.567129990000467,
+      "gpu_event_ms": 8567.05859375,
+      "loss": 13.135784149169922,
+      "peak_allocated_bytes": 5351892480
+    }
+  ],
+  "override": null,
+  "median_wall_seconds": 8.551587360000667
+}

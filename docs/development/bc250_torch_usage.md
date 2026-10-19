@@ -14,6 +14,38 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
+
+The current mutable development prefix automatically supplies one qualified
+rocBLAS solution override through `bc250-torch` and `bc250-train`, including
+scripts that invoke those launchers. No trainer edit is needed. The preset
+matches BF16 input/output, FP32 compute, beta0, batch1, rocBLAS N,T
+M2048/N1024/K6144, lda2048/ldb1024/ldc2048. This is the backward projection
+layout found in the synthetic 1024-token Qwen3.5 LoRA audit. Other shapes keep
+their existing selection; math SDPA and the default rocBLAS backend remain.
+Direct Python environments outside these launchers do not automatically get
+this prefix preset. Frozen previous releases have no preset metadata.
+
+The launcher verifies the CSV, rocBLAS DSO and gfx1013 library assets before
+using it. Missing/changed identities disable automatic tuning with a message.
+An explicit `ROCBLAS_TENSILE_GEMM_OVERRIDE_PATH` takes precedence. To keep the
+original selection, set this on the **outer** command:
+
+```bash
+BC250_GEMM_TUNING=0 bc250-train train.py
+BC250_GEMM_TUNING=0 ~/finetune-n7/dlvenv/bin/python ~/finetune-n7/scripts/train_bc250.py --resume /path/to/checkpoint
+```
+
+The selected kernel changes floating-point reduction order. In the bounded
+1024-token synthetic model test, loss and RNG matched exactly; worst adapter
+gradient relative L2 difference was 2.03%, below the existing 4% contract.
+Each worker's AdamW update/state also passed an independent CPU replay.
+Existing checkpoints can still be resumed, but changing this setting does
+not promise bitwise continuation. Warm synthetic whole-step timing improved
+1.52–1.56x; sustained dataset throughput and convergence remain unqualified.
+See the [N3.2 report](bc250_gemm_n32_results/README.md) for CPU GEMM references,
+cold-loader repair, installed checks and reversible recovery.
+
 ## Dense INT8 matmul (A08, 2026-10-18)
 
 The selected .104 ROCm prefix now supports `torch._int_mm` through native
