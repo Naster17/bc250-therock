@@ -17,6 +17,12 @@ from bc250_torch import LaunchOptions, build_command
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--label", required=True)
+    ap.add_argument(
+        "--guard-release",
+        choices=("7.2.10-bc250rocm-r3", "7.1.5-bc250rocm-r2"),
+        default="7.2.10-bc250rocm-r3",
+        help="Explicit kernel release for the existing acknowledgement guard",
+    )
     ap.add_argument("--env", action="append", default=[])
     ap.add_argument("--release", type=Path, default=Path("/opt/bc250-stack/current"))
     ap.add_argument("--smoke", action="store_true")
@@ -33,6 +39,9 @@ def main():
     release = args.release.resolve()
     manifest = json.loads((release / "runtime.json").read_text())
     assert os.geteuid() == 0
+    assert (
+        os.uname().release == args.guard_release
+    ), "Guard release must match running kernel"
     assert Path("/sys/class/watchdog/watchdog0/state").read_text().strip() == "active"
     assert not subprocess.check_output(
         ["podman", "ps", "-q"], text=True
@@ -47,6 +56,8 @@ def main():
         [
             "python3",
             str(kws / "helpers/boot-guard.py"),
+            "--release",
+            args.guard_release,
             "--phase",
             args.label,
             "--timeout",
@@ -60,7 +71,15 @@ def main():
     for _ in range(100):
         if (guard_dir / "state.json").exists():
             break
+        if guard.poll() is not None:
+            guard_log.close()
+            raise RuntimeError(f"Guard exited before arming; see {logs / 'guard.log'}")
         time.sleep(0.05)
+    if not (guard_dir / "state.json").exists():
+        guard.terminate()
+        guard.wait(timeout=5)
+        guard_log.close()
+        raise RuntimeError(f"Guard did not arm; see {logs / 'guard.log'}")
     state = json.loads((guard_dir / "state.json").read_text())
     assert state["status"] == "armed"
     test_script = (
