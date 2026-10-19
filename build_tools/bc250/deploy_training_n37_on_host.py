@@ -29,6 +29,7 @@ if __name__ == "__main__":
     assert prior["status"] == "passed" and not prior["changed_hashes"]
     for path, expected in prior["protected_sha256"].items():
         assert sha(Path(path)) == expected, path
+    assert os.statvfs(WS).f_bavail * os.statvfs(WS).f_frsize > 512 * 1024**2
     trainer = PROJECT / "replica/train.py"
     module = PROJECT / "replica/bc250_checkpoint_provenance.py"
     assert not module.exists()
@@ -78,6 +79,7 @@ if __name__ == "__main__":
                 "n37_app_train.py",
                 module.name,
             ),
+            minimum_disk_free_bytes=512 * 1024**2,
             scratch_mounts=(
                 Path("/tmp/bc250-training-n37-r1"),
                 Path("/tmp/bc250-training-n36-r1"),
