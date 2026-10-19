@@ -1,0 +1,9 @@
+test_changed_identity_refused_without_mutation (test_checkpoint_provenance.CheckpointProvenanceTests.test_changed_identity_refused_without_mutation) ... ok
+test_legacy_requires_absent_binding_and_sidecar (test_checkpoint_provenance.CheckpointProvenanceTests.test_legacy_requires_absent_binding_and_sidecar) ... ok
+test_missing_corrupt_and_future_schema_refused (test_checkpoint_provenance.CheckpointProvenanceTests.test_missing_corrupt_and_future_schema_refused) ... ok
+test_roundtrip_and_same_identity (test_checkpoint_provenance.CheckpointProvenanceTests.test_roundtrip_and_same_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

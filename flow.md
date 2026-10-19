@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N3.7 completed and deployed, 2026-10-19:** code `e55d8b23a`, app0f2dfa078.
+  Supplemental runtime-provenance.json digest bound in run.json/training.pt;
+  existing training fingerprint unchanged.130 selected files incl110 gfx1013
+  GEMM assets +15 mapped DSOs/preset/hooks/environment/kernel/version identity.
+  New missing/corrupt/changed identity refuses before weights/output; legacy
+  preserves checks with explicit unverified-runtime warning, new saves gain
+  current provenance. Data-only preflight validates metadata, defers live runtime.
+  Candidate actual1024/rank16/accum16 masked32-record fresh2/new resume/actual
+  owned N36 legacy resume, then installed resume: all372 adapters/full AdamW/
+  scheduler/CPU+GPU+Python RNG/order/progress/run.json/loss/token counts/LR exact;
+  evaluation2 exact, installed numerical state exact pre-N37 after excluding only
+  metadata key.80 train micros/five eval forwards,26 qualified composite checks,
+  four CPU contracts local+.104; Black/Ruff-F/syntax/patch dry-run pass.
+  Eight first refusal assertions pass but original r1 batch FAILS kernel-log
+  equality: exactly XFRM+bridge network-init messages added, no GPU fault in delta.
+  Original failure retained. r2 checks original sources/protected identities/three
+  passed training gates/exact two-line delta, reruns only8 refusals in new scratch;
+  byte-identical dmesg required again, PASS. r3 guarded app install/replay PASS,
+  dmesg identical; six guards ACK600s. Whole batch dmesg NOT byte-identical.
+  Intended app changes train.py/new provenance module/usage guide only; old trainer
+  and guide backup WS/recovery/training-n37-before-r3.308 other original paths
+  unchanged; final311 protected identities match expected installed state; four
+  FFT AOT DBs/defaults/links/user data/checkpoints/profile intact. Runtime62ab2437c/
+  rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4/other libs319a235d6 retained.
+  Same r2 boot d3857b96; no native build/install/cache reset/delete/reboot/.105/
+  BIOS/fallback change. Disk fell from~5.1GiB to~1GiB observed, no reclamation.
+  Explicit RAM scratch /tmp/bc250-training-n37-r1 and refusals-r2 VOLATILE;
+  owned regular files/symlink targets exported/SHA-verified durable local
+  kernel/artifacts/training-n37/{scratch-r1,scratch-refusals-r2}; priorN35/36 kept.
+  [Report](docs/development/bc250_training_n37_results/README.md); raw WS/logs/
+  training-n37-* and local kernel/artifacts/training-n37/remote. Next baseline
+  WS/logs/training-n37-qualification-r3/final.json (311); app recovery above,
+  native recovery WS/recovery/gemm-n32-before. No active own job/container/guard.
+  CPU fault unresolved/distinct from fixed VM-heap/CSR, N3.2 loader and this log
+  guard failure. Selected eager identities only, no full image integrity/security/
+  universal determinism/real-data/convergence/speed/mid-accum/CPU-model claim.
+  **Next N3.8:** vocabulary projection audit/tuning. Read N3.3 layouts/evidence,
+  design chunked CPU-double references under bounded RAM/VRAM, audit actual
+  forward/backward admitted scalar solutions. Keep N3.2 in both model workers,
+  unchanged full-model gradient/optimizer gates before deployment. Square override
+  remains rejected/inactive; do not silently migrate new-provenance checkpoints.
+
 - **N3.6 completed, 2026-10-19:** qualification code `bee5c6ce9`.
   Actual deployed inner trainer CLI/current N3.2 preset/no preload; owned32
   exactly1024-token records with32 distinct masked-target counts72–289,
@@ -1928,7 +1970,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.4 | Square BF16 two-layout/all14-solutions-each CPU audit complete; faster-346 fails full-model gradient7.65%>4% contract, exact-output alternatives flat/slower. No runtime deployment or qualified speedup. |
 | [x]   | N3.5 | Current-preset1024/rank16 accumulation16 versus FP64 gradient sum, CPU AdamW/scheduler and exact owned fresh-process state replay qualified; test mount/CPU-oracle alias fixes, no runtime change. |
 | [x]   | N3.6 | Actual deployed inner CLI1024/rank16/accum16 masked targets; fresh/resume exact372 adapters/full state/loss/evaluation,7 checks, no production change. |
-| [ ]   | **N3.7 — next** | Compatible supplemental numerical-runtime/preset/hook provenance for new checkpoints; qualify unchanged replay/changed-runtime handling and preserve explicit legacy behavior. Vocabulary tuning remains open afterward. |
+| [x]   | N3.7 | Supplemental checkpoint runtime/preset/hook provenance deployed; exact new/legacy/installed replay, eight refusal cases, pre-N37 numerical state exact. Network-only kernel-log guard failure retained; strict refusal recheck passes. |
+| [ ]   | **N3.8 — next** | Vocabulary projection actual-layout/scalar-selection audit with chunked CPU-double references and bounded memory; retain N3.2 preset and full-model gradient/optimizer acceptance before any deployment. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

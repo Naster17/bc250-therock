@@ -1,0 +1,62 @@
+{
+  "training-n37-r1-fresh": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n37-r1-fresh",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "267e5f8b73281e05d484f1ca019ec9af",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 7504.273554295,
+    "dry_run": false
+  },
+  "training-n37-r1-resumed": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n37-r1-resumed",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "525e6705fb46e214e620c91075234736",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 7736.605586944,
+    "dry_run": false
+  },
+  "training-n37-r1-legacy": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n37-r1-legacy",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "db987cd73b4af9fe29e4234f8e6ee01b",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 7869.969519253,
+    "dry_run": false
+  },
+  "training-n37-r1-refusals": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n37-r1-refusals",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "fa7b5cf96a60c8ff63e12ad244b62a5a",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 7991.30616192,
+    "dry_run": false
+  },
+  "training-n37-r2-refusals": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n37-r2-refusals",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "01d05f5b3a367c4346fc6998ff8857a0",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 8173.560698784,
+    "dry_run": false
+  },
+  "training-n37-r3-installed": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n37-r3-installed",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "3a86860651bd932bee18a670327c31c9",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 8293.040955339,
+    "dry_run": false
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "missing",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    },
+    {
+      "name": "malformed",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    },
+    {
+      "name": "digest",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    },
+    {
+      "name": "schema",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    },
+    {
+      "name": "orphan",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    },
+    {
+      "name": "preset",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    },
+    {
+      "name": "hook",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    },
+    {
+      "name": "native",
+      "exit_code": 2,
+      "before_weights": true,
+      "no_output": true
+    }
+  ]
+}

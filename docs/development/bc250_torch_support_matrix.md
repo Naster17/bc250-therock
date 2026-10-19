@@ -7,14 +7,23 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N3.6 / practical review
+## Current cursor after N3.7 / practical review
+
+N3.7 supplemental checkpoint runtime/preset/hook provenance is deployed. New
+checkpoints reject invalid/changed identity; legacy resume remains explicit and
+compatible. Actual1024/rank16/accum16 new/legacy/installed replay exact372
+adapters/full state/loss/eval, numerical state exact N36;26 composite checks and
+four CPU contracts pass. Network-only kernel-log failure retained; strict short
+recheck passes. [Report](bc250_training_n37_results/README.md). Selected eager
+identity checks, not universal determinism/security/convergence or new speed.
+Next N3.8 bounded-memory vocabulary projection layout/reference/solution audit.
 
 N3.6 deployed inner CLI1024/rank16/accum16 masked-target replay passes:
 all372 adapters/full optimizer/scheduler/RNG/order/progress/loss/evaluation exact,
 48 training micros/three evaluation forwards, seven checks. No production change
 or new speed/convergence claim. [Report](bc250_training_n36_results/README.md).
-Next N3.7 compatible supplemental checkpoint numerical-runtime/preset/hook
-provenance; existing fingerprints do not pin these. Legacy behavior preserved.
+N3.7 now adds supplemental checkpoint numerical-runtime/preset/hook provenance;
+the original fingerprint schema stays compatible.
 
 N3.5 current-preset1024/rank16/accumulation16 qualified:372 gradients versus
 CPU FP64 sum worstrelativeL2=1.17e-8, CPU AdamW/scheduler replay and exact owned
@@ -307,7 +316,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1–N3.6 scopes complete; N3.7 checkpoint runtime provenance is next. Small targeted
+N3.1–N3.7 scopes complete; N3.8 vocabulary projection audit is next. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.
 

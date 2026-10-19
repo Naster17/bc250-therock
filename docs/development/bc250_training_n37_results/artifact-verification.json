@@ -1,0 +1,614 @@
+{
+  "verified": true,
+  "regular_files": 107,
+  "bytes": 1111909408,
+  "symlinks": 159,
+  "exact_evaluation2": {
+    "step": 2,
+    "eval_loss": 0.1256762146949768,
+    "eval_target_tokens": 72,
+    "eval_records": 1,
+    "eval_total_records": 1
+  },
+  "manifest": {
+    "scratch-r1": {
+      "files": {
+        "application/replica/bc250_checkpoint_provenance.py": {
+          "bytes": 6707,
+          "sha256": "36dddb8a3d1c44f74f9b86c7707b8c598c07468b1a362dcc73dfab44c5cf766b"
+        },
+        "application/replica/train.py": {
+          "bytes": 26604,
+          "sha256": "b9bf2587d8f3b14b3f7ca7f62bcfface0c1a72606633ac5920600c28f1f0f4c1"
+        },
+        "changed-hook/replica/bc250_ops.py": {
+          "bytes": 12979,
+          "sha256": "8c188278ee13d512ec50e5ca8ec7376dbd8f1df673fb2b23a5f36b4d27f3b58d"
+        },
+        "changed-preset.csv": {
+          "bytes": 172,
+          "sha256": "09f68fe6c327a3e6f748a658da492f5f7be8e1a16ebaccd8a682c35051687df9"
+        },
+        "data/train.jsonl": {
+          "bytes": 168788,
+          "sha256": "be8f23bff47b1389e3022f66ae49bdb95fb0b6700a50335d837dd315f2d4c766"
+        },
+        "data/val.jsonl": {
+          "bytes": 5168,
+          "sha256": "4a95a397e5b42b38f849997665237796323c24d8f6da5e1b527bc7d82e6af3c8"
+        },
+        "fixture.json": {
+          "bytes": 5403,
+          "sha256": "96a2ba50e89c5c0ee770962d25dc8339ff2ad697f18e35ad4990a0b7aa708dee"
+        },
+        "fresh/checkpoint-00000001/README.md": {
+          "bytes": 5242,
+          "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+        },
+        "fresh/checkpoint-00000001/adapter_config.json": {
+          "bytes": 1160,
+          "sha256": "02315f89399fedc59751adb71d87163da6d303697449c31b395146787d87bdc7"
+        },
+        "fresh/checkpoint-00000001/adapter_model.safetensors": {
+          "bytes": 67327104,
+          "sha256": "ea78abc71f2a64d52d22d5659a0e64be40b63cb49bd9527c9593119e27fd5512"
+        },
+        "fresh/checkpoint-00000001/chat_template.jinja": {
+          "bytes": 7755,
+          "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+        },
+        "fresh/checkpoint-00000001/run.json": {
+          "bytes": 10044,
+          "sha256": "d4dea7a23bc5a0a7f1b65514840d9428e891b8627445793d4b22ee689e54a222"
+        },
+        "fresh/checkpoint-00000001/runtime-provenance.json": {
+          "bytes": 24244,
+          "sha256": "ee348cfd3dd49e7605932b832b39970fd7fd5315f2b81d6fb725f8da7079845c"
+        },
+        "fresh/checkpoint-00000001/tokenizer.json": {
+          "bytes": 19989339,
+          "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+        },
+        "fresh/checkpoint-00000001/tokenizer_config.json": {
+          "bytes": 1467,
+          "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+        },
+        "fresh/checkpoint-00000001/training.pt": {
+          "bytes": 134875485,
+          "sha256": "698811c9aae8e86ecb9119a6032b89681b438c28ba275c10e6ae2edf32fc3c6f"
+        },
+        "fresh/checkpoint-00000002/README.md": {
+          "bytes": 5242,
+          "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+        },
+        "fresh/checkpoint-00000002/adapter_config.json": {
+          "bytes": 1160,
+          "sha256": "02315f89399fedc59751adb71d87163da6d303697449c31b395146787d87bdc7"
+        },
+        "fresh/checkpoint-00000002/adapter_model.safetensors": {
+          "bytes": 67327104,
+          "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+        },
+        "fresh/checkpoint-00000002/chat_template.jinja": {
+          "bytes": 7755,
+          "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+        },
+        "fresh/checkpoint-00000002/run.json": {
+          "bytes": 10044,
+          "sha256": "d4dea7a23bc5a0a7f1b65514840d9428e891b8627445793d4b22ee689e54a222"
+        },
+        "fresh/checkpoint-00000002/runtime-provenance.json": {
+          "bytes": 24244,
+          "sha256": "ee348cfd3dd49e7605932b832b39970fd7fd5315f2b81d6fb725f8da7079845c"
+        },
+        "fresh/checkpoint-00000002/tokenizer.json": {
+          "bytes": 19989339,
+          "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+        },
+        "fresh/checkpoint-00000002/tokenizer_config.json": {
+          "bytes": 1467,
+          "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+        },
+        "fresh/checkpoint-00000002/training.pt": {
+          "bytes": 134875485,
+          "sha256": "3e6e7f9deb95001539e95630e39f357366900e08b30dd2b47f457b803a86da9b"
+        },
+        "fresh-result.json": {
+          "bytes": 2542,
+          "sha256": "374f33f92d34f8e6c5aaef169869a6f93ab336e5cba89bb87bb26da7f0adde36"
+        },
+        "fresh.log": {
+          "bytes": 9625,
+          "sha256": "1e6bfcb93f81f9f796bedc0b6107b81098ce953a83b2ef4acd21c660c6855e5b"
+        },
+        "installed/checkpoint-00000002/README.md": {
+          "bytes": 5242,
+          "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+        },
+        "installed/checkpoint-00000002/adapter_config.json": {
+          "bytes": 1160,
+          "sha256": "4c9b185797dbbcde0c1711f78fc420716ab1d9658b888dd2291416a96c78985e"
+        },
+        "installed/checkpoint-00000002/adapter_model.safetensors": {
+          "bytes": 67327104,
+          "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+        },
+        "installed/checkpoint-00000002/chat_template.jinja": {
+          "bytes": 7755,
+          "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+        },
+        "installed/checkpoint-00000002/run.json": {
+          "bytes": 10044,
+          "sha256": "d4dea7a23bc5a0a7f1b65514840d9428e891b8627445793d4b22ee689e54a222"
+        },
+        "installed/checkpoint-00000002/runtime-provenance.json": {
+          "bytes": 24244,
+          "sha256": "ee348cfd3dd49e7605932b832b39970fd7fd5315f2b81d6fb725f8da7079845c"
+        },
+        "installed/checkpoint-00000002/tokenizer.json": {
+          "bytes": 19989339,
+          "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+        },
+        "installed/checkpoint-00000002/tokenizer_config.json": {
+          "bytes": 1467,
+          "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+        },
+        "installed/checkpoint-00000002/training.pt": {
+          "bytes": 134875485,
+          "sha256": "d824c9fb98040089c7bf1226182d9f750f6e38b953b1ceb497aa94761e988ceb"
+        },
+        "installed.log": {
+          "bytes": 9385,
+          "sha256": "610bf7b559f655bf0c2f8c202045369958acd775f0998b4e15573314299c3a3b"
+        },
+        "legacy/checkpoint-00000002/README.md": {
+          "bytes": 5242,
+          "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+        },
+        "legacy/checkpoint-00000002/adapter_config.json": {
+          "bytes": 1160,
+          "sha256": "d83fe11ec172e1f90373c34c70d6a6f1060851c8c5d0bbf5cf7a4715b4ddd708"
+        },
+        "legacy/checkpoint-00000002/adapter_model.safetensors": {
+          "bytes": 67327104,
+          "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+        },
+        "legacy/checkpoint-00000002/chat_template.jinja": {
+          "bytes": 7755,
+          "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+        },
+        "legacy/checkpoint-00000002/run.json": {
+          "bytes": 10044,
+          "sha256": "d4dea7a23bc5a0a7f1b65514840d9428e891b8627445793d4b22ee689e54a222"
+        },
+        "legacy/checkpoint-00000002/runtime-provenance.json": {
+          "bytes": 24244,
+          "sha256": "ee348cfd3dd49e7605932b832b39970fd7fd5315f2b81d6fb725f8da7079845c"
+        },
+        "legacy/checkpoint-00000002/tokenizer.json": {
+          "bytes": 19989339,
+          "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+        },
+        "legacy/checkpoint-00000002/tokenizer_config.json": {
+          "bytes": 1467,
+          "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+        },
+        "legacy/checkpoint-00000002/training.pt": {
+          "bytes": 134875485,
+          "sha256": "d824c9fb98040089c7bf1226182d9f750f6e38b953b1ceb497aa94761e988ceb"
+        },
+        "legacy-result.json": {
+          "bytes": 2463,
+          "sha256": "25f1b507a60b133dd8e614a10d52612dbcbd730beb89de8c10e111e3cea6b19c"
+        },
+        "legacy.log": {
+          "bytes": 9346,
+          "sha256": "349d734aec55070bfe22811d72eb8265ab68baf6d4d94307c28778b9b8f381f2"
+        },
+        "refusal-digest/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-digest/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "5e6daf92440ee549cc60e946fd96029bb25228f81d0c471dc05dfe04ea650723"
+        },
+        "refusal-digest.log": {
+          "bytes": 1361,
+          "sha256": "4e858e1c2237bf8819a5b9ad804e388c761dd5542e1864f230788cea2fc45563"
+        },
+        "refusal-hook/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-hook/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "d8081bfce256e706e3c119e403778764106c75b86d0b2bfa0b4967a7554b48a8"
+        },
+        "refusal-hook.log": {
+          "bytes": 1723,
+          "sha256": "75990e7647712d8968dc518947b76ca8cff087165dd384b26e9bead8c53249d9"
+        },
+        "refusal-malformed/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-malformed/runtime-provenance.json": {
+          "bytes": 1,
+          "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96"
+        },
+        "refusal-malformed.log": {
+          "bytes": 1361,
+          "sha256": "b19e5450e23cb10adafe9a55b446ecbfe5422ec58882483bf17a9762b5a7ed3a"
+        },
+        "refusal-missing/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-missing.log": {
+          "bytes": 1361,
+          "sha256": "b19e5450e23cb10adafe9a55b446ecbfe5422ec58882483bf17a9762b5a7ed3a"
+        },
+        "refusal-native/run.json": {
+          "bytes": 7107,
+          "sha256": "11b9993b4eb2f5e246580eeb876746646e9b2eadb339acf204233f1d20fc4aba"
+        },
+        "refusal-native/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "c0f6d4a842a998c65420d102d0ba2cd1ac54a8ae353035ec1b3e1f4fb0fc089d"
+        },
+        "refusal-native.log": {
+          "bytes": 1723,
+          "sha256": "75990e7647712d8968dc518947b76ca8cff087165dd384b26e9bead8c53249d9"
+        },
+        "refusal-orphan/run.json": {
+          "bytes": 7010,
+          "sha256": "5c8d4e4cd4af7eec23b9694208a139cb30ec78f815fc551024f3e43ff9002ac4"
+        },
+        "refusal-orphan/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "d8081bfce256e706e3c119e403778764106c75b86d0b2bfa0b4967a7554b48a8"
+        },
+        "refusal-orphan.log": {
+          "bytes": 1358,
+          "sha256": "a5e8c94ebff7c98d0d5128f1bb2b4fbb771648ea2228bf3887d7d9585c23d69d"
+        },
+        "refusal-preset/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-preset/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "d8081bfce256e706e3c119e403778764106c75b86d0b2bfa0b4967a7554b48a8"
+        },
+        "refusal-preset.log": {
+          "bytes": 1731,
+          "sha256": "8b7db7aae60a3dffef3f5d33bc4a02b8ff0865dd51933566e4c8e441d9d5b37d"
+        },
+        "refusal-schema/run.json": {
+          "bytes": 7107,
+          "sha256": "33a30eb102c0d998045a9026f24b934394f95238d7d70318a8f5458c93943645"
+        },
+        "refusal-schema/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "0305e3791dd03bddc405108923fa06e01085d2563af65b61d0654c3742488cd9"
+        },
+        "refusal-schema.log": {
+          "bytes": 1361,
+          "sha256": "4e858e1c2237bf8819a5b9ad804e388c761dd5542e1864f230788cea2fc45563"
+        },
+        "resumed/checkpoint-00000002/README.md": {
+          "bytes": 5242,
+          "sha256": "27ccfe1932a3e72433aff04c7f721b7bc68a67d37c25f77f94e84b37d7eda646"
+        },
+        "resumed/checkpoint-00000002/adapter_config.json": {
+          "bytes": 1160,
+          "sha256": "f46b6c3973d53c0a6536a6de8b0ab5af01abe9c3d43305e531e7f5a87da89c10"
+        },
+        "resumed/checkpoint-00000002/adapter_model.safetensors": {
+          "bytes": 67327104,
+          "sha256": "1c8fc5c2172e47b7c09b3d5d311f3190ca6590d822b0a49170fefee7d0a0bde0"
+        },
+        "resumed/checkpoint-00000002/chat_template.jinja": {
+          "bytes": 7755,
+          "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+        },
+        "resumed/checkpoint-00000002/run.json": {
+          "bytes": 10044,
+          "sha256": "d4dea7a23bc5a0a7f1b65514840d9428e891b8627445793d4b22ee689e54a222"
+        },
+        "resumed/checkpoint-00000002/runtime-provenance.json": {
+          "bytes": 24244,
+          "sha256": "ee348cfd3dd49e7605932b832b39970fd7fd5315f2b81d6fb725f8da7079845c"
+        },
+        "resumed/checkpoint-00000002/tokenizer.json": {
+          "bytes": 19989339,
+          "sha256": "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+        },
+        "resumed/checkpoint-00000002/tokenizer_config.json": {
+          "bytes": 1467,
+          "sha256": "014b0ff7a3716bdc8329a8337ed3e0ef5bc295803182d42cdc6387e90e81de62"
+        },
+        "resumed/checkpoint-00000002/training.pt": {
+          "bytes": 134875485,
+          "sha256": "d824c9fb98040089c7bf1226182d9f750f6e38b953b1ceb497aa94761e988ceb"
+        },
+        "resumed-result.json": {
+          "bytes": 2466,
+          "sha256": "da68a11cb8fb974b5ed8bc98fc2610c95609bc3bb53583306cff35b83ae6a73e"
+        },
+        "resumed.log": {
+          "bytes": 9303,
+          "sha256": "178983b9a1d654e5132a63ea8d49efbb98903b8ec5f2625e1410ea132344021e"
+        }
+      },
+      "symlinks": {
+        "application/replica/__init__.py": "/home/nik/finetune-n7/replica/__init__.py",
+        "application/replica/__main__.py": "/home/nik/finetune-n7/replica/__main__.py",
+        "application/replica/bc250_gated_delta.py": "/home/nik/finetune-n7/replica/bc250_gated_delta.py",
+        "application/replica/bc250_ops.py": "/home/nik/finetune-n7/replica/bc250_ops.py",
+        "application/replica/chat.py": "/home/nik/finetune-n7/replica/chat.py",
+        "application/replica/dataset.py": "/home/nik/finetune-n7/replica/dataset.py",
+        "application/replica/formatting.py": "/home/nik/finetune-n7/replica/formatting.py",
+        "application/replica/importer.py": "/home/nik/finetune-n7/replica/importer.py",
+        "application/replica/labeler.py": "/home/nik/finetune-n7/replica/labeler.py",
+        "application/replica/names.py": "/home/nik/finetune-n7/replica/names.py",
+        "application/replica/quality.py": "/home/nik/finetune-n7/replica/quality.py",
+        "application/replica/search.py": "/home/nik/finetune-n7/replica/search.py",
+        "application/replica/store.py": "/home/nik/finetune-n7/replica/store.py",
+        "application/replica/synthesizer.py": "/home/nik/finetune-n7/replica/synthesizer.py",
+        "changed-hook/replica/__init__.py": "/tmp/bc250-training-n37-r1/application/replica/__init__.py",
+        "changed-hook/replica/__main__.py": "/tmp/bc250-training-n37-r1/application/replica/__main__.py",
+        "changed-hook/replica/bc250_checkpoint_provenance.py": "/tmp/bc250-training-n37-r1/application/replica/bc250_checkpoint_provenance.py",
+        "changed-hook/replica/bc250_gated_delta.py": "/tmp/bc250-training-n37-r1/application/replica/bc250_gated_delta.py",
+        "changed-hook/replica/chat.py": "/tmp/bc250-training-n37-r1/application/replica/chat.py",
+        "changed-hook/replica/dataset.py": "/tmp/bc250-training-n37-r1/application/replica/dataset.py",
+        "changed-hook/replica/formatting.py": "/tmp/bc250-training-n37-r1/application/replica/formatting.py",
+        "changed-hook/replica/importer.py": "/tmp/bc250-training-n37-r1/application/replica/importer.py",
+        "changed-hook/replica/labeler.py": "/tmp/bc250-training-n37-r1/application/replica/labeler.py",
+        "changed-hook/replica/names.py": "/tmp/bc250-training-n37-r1/application/replica/names.py",
+        "changed-hook/replica/quality.py": "/tmp/bc250-training-n37-r1/application/replica/quality.py",
+        "changed-hook/replica/search.py": "/tmp/bc250-training-n37-r1/application/replica/search.py",
+        "changed-hook/replica/store.py": "/tmp/bc250-training-n37-r1/application/replica/store.py",
+        "changed-hook/replica/synthesizer.py": "/tmp/bc250-training-n37-r1/application/replica/synthesizer.py",
+        "changed-hook/replica/train.py": "/tmp/bc250-training-n37-r1/application/replica/train.py",
+        "refusal-digest/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-digest/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-digest/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-digest/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-digest/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-digest/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-digest/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt",
+        "refusal-hook/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-hook/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-hook/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-hook/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-hook/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-hook/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-hook/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt",
+        "refusal-malformed/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-malformed/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-malformed/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-malformed/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-malformed/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-malformed/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-malformed/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt",
+        "refusal-missing/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-missing/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-missing/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-missing/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-missing/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-missing/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-missing/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt",
+        "refusal-native/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-native/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-native/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-native/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-native/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-native/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-native/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt",
+        "refusal-orphan/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-orphan/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-orphan/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-orphan/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-orphan/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-orphan/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-orphan/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt",
+        "refusal-preset/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-preset/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-preset/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-preset/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-preset/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-preset/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-preset/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt",
+        "refusal-schema/README.md": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/README.md",
+        "refusal-schema/adapter_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-schema/adapter_model.safetensors": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-schema/chat_template.jinja": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-schema/tokenizer.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-schema/tokenizer_config.json": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-schema/training.pt": "/tmp/bc250-training-n37-r1/fresh/checkpoint-00000001/training.pt"
+      }
+    },
+    "scratch-refusals-r2": {
+      "files": {
+        "changed-hook/replica/bc250_ops.py": {
+          "bytes": 12979,
+          "sha256": "8c188278ee13d512ec50e5ca8ec7376dbd8f1df673fb2b23a5f36b4d27f3b58d"
+        },
+        "changed-preset.csv": {
+          "bytes": 172,
+          "sha256": "09f68fe6c327a3e6f748a658da492f5f7be8e1a16ebaccd8a682c35051687df9"
+        },
+        "refusal-digest/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-digest/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "5e6daf92440ee549cc60e946fd96029bb25228f81d0c471dc05dfe04ea650723"
+        },
+        "refusal-digest.log": {
+          "bytes": 1361,
+          "sha256": "4e858e1c2237bf8819a5b9ad804e388c761dd5542e1864f230788cea2fc45563"
+        },
+        "refusal-hook/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-hook/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "d8081bfce256e706e3c119e403778764106c75b86d0b2bfa0b4967a7554b48a8"
+        },
+        "refusal-hook.log": {
+          "bytes": 1723,
+          "sha256": "75990e7647712d8968dc518947b76ca8cff087165dd384b26e9bead8c53249d9"
+        },
+        "refusal-malformed/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-malformed/runtime-provenance.json": {
+          "bytes": 1,
+          "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96"
+        },
+        "refusal-malformed.log": {
+          "bytes": 1361,
+          "sha256": "b19e5450e23cb10adafe9a55b446ecbfe5422ec58882483bf17a9762b5a7ed3a"
+        },
+        "refusal-missing/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-missing.log": {
+          "bytes": 1361,
+          "sha256": "b19e5450e23cb10adafe9a55b446ecbfe5422ec58882483bf17a9762b5a7ed3a"
+        },
+        "refusal-native/run.json": {
+          "bytes": 7107,
+          "sha256": "11b9993b4eb2f5e246580eeb876746646e9b2eadb339acf204233f1d20fc4aba"
+        },
+        "refusal-native/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "c0f6d4a842a998c65420d102d0ba2cd1ac54a8ae353035ec1b3e1f4fb0fc089d"
+        },
+        "refusal-native.log": {
+          "bytes": 1723,
+          "sha256": "75990e7647712d8968dc518947b76ca8cff087165dd384b26e9bead8c53249d9"
+        },
+        "refusal-orphan/run.json": {
+          "bytes": 7010,
+          "sha256": "5c8d4e4cd4af7eec23b9694208a139cb30ec78f815fc551024f3e43ff9002ac4"
+        },
+        "refusal-orphan/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "d8081bfce256e706e3c119e403778764106c75b86d0b2bfa0b4967a7554b48a8"
+        },
+        "refusal-orphan.log": {
+          "bytes": 1358,
+          "sha256": "a5e8c94ebff7c98d0d5128f1bb2b4fbb771648ea2228bf3887d7d9585c23d69d"
+        },
+        "refusal-preset/run.json": {
+          "bytes": 7107,
+          "sha256": "a0cd50bf971a9c27e7f53c6884a63e9635c7b80c5b49a9522429de9252173017"
+        },
+        "refusal-preset/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "d8081bfce256e706e3c119e403778764106c75b86d0b2bfa0b4967a7554b48a8"
+        },
+        "refusal-preset.log": {
+          "bytes": 1731,
+          "sha256": "8b7db7aae60a3dffef3f5d33bc4a02b8ff0865dd51933566e4c8e441d9d5b37d"
+        },
+        "refusal-schema/run.json": {
+          "bytes": 7107,
+          "sha256": "33a30eb102c0d998045a9026f24b934394f95238d7d70318a8f5458c93943645"
+        },
+        "refusal-schema/runtime-provenance.json": {
+          "bytes": 23219,
+          "sha256": "0305e3791dd03bddc405108923fa06e01085d2563af65b61d0654c3742488cd9"
+        },
+        "refusal-schema.log": {
+          "bytes": 1361,
+          "sha256": "4e858e1c2237bf8819a5b9ad804e388c761dd5542e1864f230788cea2fc45563"
+        }
+      },
+      "symlinks": {
+        "application": "/tmp/bc250-training-n37-r1/application",
+        "changed-hook/replica/__init__.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/__init__.py",
+        "changed-hook/replica/__main__.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/__main__.py",
+        "changed-hook/replica/bc250_checkpoint_provenance.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/bc250_checkpoint_provenance.py",
+        "changed-hook/replica/bc250_gated_delta.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/bc250_gated_delta.py",
+        "changed-hook/replica/chat.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/chat.py",
+        "changed-hook/replica/dataset.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/dataset.py",
+        "changed-hook/replica/formatting.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/formatting.py",
+        "changed-hook/replica/importer.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/importer.py",
+        "changed-hook/replica/labeler.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/labeler.py",
+        "changed-hook/replica/names.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/names.py",
+        "changed-hook/replica/quality.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/quality.py",
+        "changed-hook/replica/search.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/search.py",
+        "changed-hook/replica/store.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/store.py",
+        "changed-hook/replica/synthesizer.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/synthesizer.py",
+        "changed-hook/replica/train.py": "/tmp/bc250-training-n37-refusals-r2/application/replica/train.py",
+        "fresh": "/tmp/bc250-training-n37-r1/fresh",
+        "fresh-result.json": "/tmp/bc250-training-n37-r1/fresh-result.json",
+        "refusal-digest/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-digest/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-digest/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-digest/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-digest/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-digest/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-digest/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt",
+        "refusal-hook/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-hook/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-hook/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-hook/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-hook/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-hook/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-hook/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt",
+        "refusal-malformed/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-malformed/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-malformed/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-malformed/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-malformed/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-malformed/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-malformed/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt",
+        "refusal-missing/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-missing/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-missing/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-missing/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-missing/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-missing/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-missing/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt",
+        "refusal-native/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-native/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-native/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-native/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-native/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-native/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-native/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt",
+        "refusal-orphan/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-orphan/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-orphan/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-orphan/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-orphan/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-orphan/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-orphan/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt",
+        "refusal-preset/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-preset/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-preset/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-preset/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-preset/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-preset/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-preset/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt",
+        "refusal-schema/README.md": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/README.md",
+        "refusal-schema/adapter_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_config.json",
+        "refusal-schema/adapter_model.safetensors": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/adapter_model.safetensors",
+        "refusal-schema/chat_template.jinja": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/chat_template.jinja",
+        "refusal-schema/tokenizer.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer.json",
+        "refusal-schema/tokenizer_config.json": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/tokenizer_config.json",
+        "refusal-schema/training.pt": "/tmp/bc250-training-n37-refusals-r2/fresh/checkpoint-00000001/training.pt"
+      }
+    }
+  }
+}

@@ -926,6 +926,32 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**N3.7 checkpoint provenance2026-10-19:** codee55d8b23a/app0f2dfa078 deployed.
+Supplemental JSON digest binds run.json/training.pt without changing fingerprint.
+130 selected file identities incl110 GEMM assets/15 mapped DSOs/preset/hooks/
+selected env/kernel/version metadata. New invalid/changed identity refuses before
+weights/output; legacy still resumes with explicit continuity-unverified warning
+and gains current provenance only on NEW saves. Preflight structurally validates
+sidecar/binding, defers live comparison. Actual1024/rank16/accum16 masked data:
+fresh2/new resume/owned N36 legacy/installed resume exact372 adapters/full state/
+loss/eval/progress; installed numeric state exact N36 excluding only metadata.
+80 train micros/five eval forwards,26 qualified composite checks/four CPU tests
+local+.104. Original8 refusal assertions pass but r1 guard fails two new network
+XFRM/bridge kernel messages; failure retained, no GPU fault in delta. r2 preserves
+three passed training gates/source identities, repeats only refusals requiring
+byte-identical dmesg; r3 guarded install/replay passes. Six guards ACK600s;
+whole-batch log is NOT identical.308 original paths unchanged, trainer intentionally
+updated, module/guide newly pinned;311 final hashes/four FFT AOT DBs match. Backup
+WS/recovery/training-n37-before-r3; baseline WS/logs/training-n37-qualification-r3/
+final.json; [report](bc250_training_n37_results/README.md). Same native revisions/
+r2 bootd3857b96; no native build/install/reset/delete/reboot/.105/BIOS/fallback
+edit. No own jobs. Disk~5.1GiB→~1GiB observed; RAM scratch owned regular files and
+links verified durable local kernel/artifacts/training-n37, priorN35/36 preserved.
+CPU fault unresolved/distinct from VM-heap/CSR/N3.2 loader/log guard failure.
+Selected eager metadata, no complete image/security/determinism/convergence/speed
+claim. Next N3.8 vocab forward/backward actual-layout audit and chunked CPU-double
+reference design under bounded memory; keep N3.2/model acceptance unchanged.
+
 **N3.6 actual trainer CLI2026-10-19:** codebee5c6ce9. Deployed inner CLI on
 current N3.2 preset, owned32 exactly1024-token records/32 distinct masked-target
 counts72–289/rank16/alpha32/BF16/FP32 adapters/math/checkpoint/accum16. Two fresh

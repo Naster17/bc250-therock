@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "installed_gpu_cli_exact_loss",
+      "step": {
+        "step": 2,
+        "epoch": 1,
+        "position": 32,
+        "loss": 0.07038949553197377,
+        "target_tokens": 2951,
+        "input_tokens": 16384,
+        "tps": 160.3,
+        "avg_tps": 160.3,
+        "lr": 0.0,
+        "seconds": 102.213,
+        "eta": "00m 00s",
+        "peak_allocated_bytes": 5419161600
+      }
+    },
+    {
+      "name": "installed_exact_372_adapters_full_state"
+    },
+    {
+      "name": "installed_bound_provenance_identical"
+    },
+    {
+      "name": "pre_n37_numerical_state_exact",
+      "adapter_tensors": 372
+    }
+  ]
+}
