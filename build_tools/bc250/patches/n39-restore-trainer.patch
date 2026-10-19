@@ -1,0 +1,92 @@
+--- a/replica/train.py
++++ b/replica/train.py
+@@ -55,6 +55,7 @@
+     parser.add_argument("--device", default="cuda", choices=("cuda", "cpu"), help="ROCm also uses cuda")
+     parser.add_argument("--dtype", default="bf16", choices=("bf16", "fp32"))
+     parser.add_argument("--sdpa", default="math", choices=("math", "default"))
++    parser.add_argument("--attention-backend", default="math", choices=("math", "tiled"), help="Explicit BC-250 tiled attention; math keeps existing resume fingerprints")
+     args = parser.parse_args(argv)
+     for key in ("epochs", "accumulation_steps", "rank", "alpha"):
+         if getattr(args, key) < 1:
+@@ -141,6 +142,8 @@
+                    for path in sorted(args.model.rglob("*")) if path.is_file()]
+     run_config = {key: str(value.resolve()) if isinstance(value, Path) else value
+                   for key, value in vars(args).items() if key not in ("output", "resume", "preflight", "dataset")}
++    if args.attention_backend == "math":
++        run_config.pop("attention_backend")
+     run_config.update(format_version=FORMAT_VERSION, data_sha256=data_hash.hexdigest(),
+                       model_config=config.to_dict(), model_files=model_files, total_steps=total_steps,
+                       tokenizer_sha256=tokenizer_sha256,
+@@ -159,10 +162,19 @@
+                                           "target_tokens": sum(sum(x != IGNORE_INDEX for x in row["labels"][1:]) for row in rows),
+                                           "longest": max((len(row["input_ids"]) for row in rows), default=0)}
+                                  for split, rows in data.items()}, "optimizer_steps": total_steps}, indent=2))
++    from . import bc250_checkpoint_provenance as provenance
++    saved_provenance = None
++    saved = None
+     if args.resume is not None:
+         saved = json.loads((args.resume / "run.json").read_text())
+-        if saved != {"fingerprint": fingerprint, "config": run_config}:
++        if (saved.get("fingerprint") != fingerprint or saved.get("config") != run_config
++                or set(saved) - {"fingerprint", "config", provenance.MARKER}):
+             parser.error("Resume config/data/model/tokenizer fingerprint mismatch; use the original run settings")
++    if args.resume is not None:
++        try:
++            saved_provenance = provenance.read_checkpoint(args.resume, saved, fingerprint)
++        except ValueError as error:
++            parser.error(str(error))
+     if args.preflight:
+         print("Preflight complete. No weights loaded, output written, or training started. Targets verified only when weights load.")
+         return
+@@ -186,6 +198,12 @@
+                           "architecture": getattr(properties, "gcnArchName", None),
+                           "device_memory_bytes": properties.total_memory,
+                           "runtime_packages": run_config["runtime_packages"]}), flush=True)
++    try:
++        runtime_provenance = provenance.capture(torch, __file__, fingerprint, args.device)
++        if args.resume is not None:
++            provenance.check_resume(saved_provenance, runtime_provenance)
++    except (OSError, ValueError) as error:
++        parser.error(str(error))
+     random.seed(args.seed)
+     torch.manual_seed(args.seed)
+     if torch.cuda.is_available():
+@@ -201,9 +219,16 @@
+             load_options["key_mapping"] = {r"^model.language_model\.": "model."}
+     elif text_config is not config:
+         parser.error("Unsupported composite architecture; a verified text-only loader is required")
++    attention_implementation = "sdpa"
++    if args.attention_backend == "tiled":
++        if args.device != "cuda":
++            parser.error("Tiled attention requires the native gfx1013 GPU")
++        from torch.nn.attention._gfx1013 import register_transformers_attention
++        register_transformers_attention()
++        attention_implementation = "bc250_tiled"
+     print("Loading local text-only base weights; no vision encoder will be trained", flush=True)
+     model, loading = loader.from_pretrained(args.model, config=text_config, dtype=dtype,
+-                                           attn_implementation="sdpa", local_files_only=True,
++                                           attn_implementation=attention_implementation, local_files_only=True,
+                                            trust_remote_code=False, output_loading_info=True, **load_options)
+     if loading.get("missing_keys") or loading.get("mismatched_keys") or loading.get("error_msgs"):
+         raise RuntimeError(f"Text-only weights did not load completely: {loading}")
+@@ -256,6 +281,8 @@
+     order = training_order(data["train"], args.longest_first)
+     if args.resume is not None:
+         state = torch.load(args.resume / "training.pt", map_location="cpu", weights_only=False)
++        if state.get(provenance.MARKER) != (saved or {}).get(provenance.MARKER):
++            parser.error("Training state/runtime provenance binding mismatch")
+         if state["fingerprint"] != fingerprint:
+             parser.error("Training state fingerprint mismatch")
+         epoch, position, step, order = (state[key] for key in ("epoch", "position", "step", "order"))
+@@ -309,8 +336,9 @@
+         staging = Path(tempfile.mkdtemp(prefix=".checkpoint-", dir=args.output))
+         model.save_pretrained(staging, safe_serialization=True)
+         tokenizer.save_pretrained(staging)
+-        (staging / "run.json").write_text(json.dumps({"fingerprint": fingerprint, "config": run_config}, indent=2) + "\n")
+-        torch.save({"fingerprint": fingerprint, "optimizer": optimizer.state_dict(),
++        provenance_sha256 = provenance.write_checkpoint(staging, runtime_provenance)
++        (staging / "run.json").write_text(json.dumps({"fingerprint": fingerprint, "config": run_config, provenance.MARKER: provenance_sha256}, indent=2) + "\n")
++        torch.save({"fingerprint": fingerprint, provenance.MARKER: provenance_sha256, "optimizer": optimizer.state_dict(),
+                     "scheduler": scheduler.state_dict(), "python_rng": random.getstate(),
+                     "torch_rng": torch.get_rng_state(),
+                     "cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,

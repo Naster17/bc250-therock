@@ -19,14 +19,14 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def main():
+def main(*, scratch_parent=Path("/tmp")):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--scratch-root", type=Path, required=True)
     parser.add_argument("--mode", choices=("fresh", "resumed", "legacy"), required=True)
     args = parser.parse_args()
     root = args.scratch_root
-    assert root.parent == Path("/tmp") and root.is_dir()
+    assert root.parent == scratch_parent and root.is_dir()
     application = root / "application"
     torch.set_num_threads(4)
     preset = Path("/workspace/rocblas-gemm-overrides.csv")
