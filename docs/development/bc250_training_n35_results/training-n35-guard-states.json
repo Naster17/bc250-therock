@@ -1,0 +1,32 @@
+{
+  "training-n35-r1-accum-resume": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n35-r1-accum-resume",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "307e4c3e8941a4449632fa0c729ca7f7",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 1798.531278702,
+    "dry_run": false
+  },
+  "training-n35-r2-accum-resume": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n35-r2-accum-resume",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "dc53659493aedd03f2f282f1409eec10",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 1883.972564902,
+    "dry_run": false
+  },
+  "training-n35-r3-replay": {
+    "release": "7.1.5-bc250rocm-r2",
+    "phase": "training-n35-r3-replay",
+    "boot_id": "d3857b96-1b51-4e39-8f3e-f076f0c0422a",
+    "nonce": "f4d79a4f2fcb344f0fdcdf3aa2a2d11a",
+    "timeout_seconds": 600,
+    "status": "acknowledged",
+    "deadline_monotonic": 2389.805994964,
+    "dry_run": false
+  }
+}

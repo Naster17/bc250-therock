@@ -46,6 +46,17 @@ not promise bitwise continuation. Warm synthetic whole-step timing improved
 See the [N3.2 report](bc250_gemm_n32_results/README.md) for CPU GEMM references,
 cold-loader repair, installed checks and reversible recovery.
 
+## Current-preset checkpoint qualification (N3.5)
+
+Owned synthetic Qwen3.5-2B tests now cover1024 tokens/rank16/BF16/math SDPA,
+accumulation16 and an optimizer-boundary checkpoint. Fresh-process continuation
+matches all372 adapter parameters/gradients, AdamW/scheduler state, losses and
+CPU/GPU/Python RNG exactly. Independent accumulated-gradient/CPU AdamW checks
+also pass. This qualifies the tested helper/runtime case; actual deployed CLI
+coverage at that geometry is next. It does not promise bitwise continuation
+across changed presets/backends or resume halfway through accumulation.
+[Evidence and limits](bc250_training_n35_results/README.md).
+
 ## Dense INT8 matmul (A08, 2026-10-18)
 
 The selected .104 ROCm prefix now supports `torch._int_mm` through native

@@ -7,7 +7,14 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N3.4 / practical review
+## Current cursor after N3.5 / practical review
+
+N3.5 current-preset1024/rank16/accumulation16 qualified:372 gradients versus
+CPU FP64 sum worstrelativeL2=1.17e-8, CPU AdamW/scheduler replay and exact owned
+fresh-process parameter/gradient/optimizer/RNG continuation pass. Fixture mount/
+CPU-oracle state isolation fixed; no runtime change or new speed claim.
+[Report](bc250_training_n35_results/README.md). Next N3.6 actual deployed CLI
+owned1024/rank16/accum16 integration; prior small CLI remains distinct.
 
 N3.4 square2048 mm audit complete: two layouts/all14 admitted solutions each
 pass CPU references. Faster-346 fails the full-model gradient contract7.65%>4%;
@@ -293,7 +300,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1–N3.4 audits are complete within scope; N3.5 accumulation/resume is next. Small targeted
+N3.1–N3.5 scopes complete; N3.6 actual CLI integration is next. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.
 

@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "durable_local": "kernel/artifacts/training-n35/scratch-r2",
+  "remote_volatile": "/tmp/bc250-training-n35-r2",
+  "artifacts": {
+    "checkpoint-step1.pt": {
+      "bytes": 202314845,
+      "sha256": "0199d83da37bf8e4c4b6419910ee2be8a34ba8c338d4918c6dbebbe39ba5f6b3"
+    },
+    "independent-fp64-sum.pt": {
+      "bytes": 134689353,
+      "sha256": "8286851d1d2956dafb9d36d0e3902c472d3666ffced0d165893f0d0ed3c220bb"
+    },
+    "resumed-r3-step2.pt": {
+      "bytes": 269702525,
+      "sha256": "38306f322e91c8aacaf39f969deb56a3a452d3fae6ddc4c65ed2de0780a6826d"
+    },
+    "uninterrupted-step2.pt": {
+      "bytes": 269708129,
+      "sha256": "65a3adee575ac1b19d214c189824fd3edf0bd8c9eb132d3af225af617379b75d"
+    }
+  }
+}

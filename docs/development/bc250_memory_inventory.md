@@ -926,6 +926,33 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**N3.5 accumulation16/replay2026-10-19:** code986093a3c. Current-preset actual
+Qwen3.5 synthetic1024/rank16/BF16/math/checkpoint, FP32 adapters:372 GPU accumulated
+gradients versus independent CPU FP64 sum16 pass fixed2e-6 bound, worst1.17090e-8.
+Exact losses/IDs/three RNG reference replay; independent clip, two CPU AdamW/
+scheduler updates maxparamabs1.863e-9/3.725e-9. Fresh optimizer-boundary checkpoint
+step2 matches uninterrupted372 parameters/gradients/full optimizer/scheduler/
+losses/inputs/progress/CPU+GPU+Python RNG exactly. No actual CLI/real-label/
+mid-accumulation/CPU-model/convergence/throughput claim. Mount overwritten by
+consumer setup r1 fixed; r2 CPU oracle aliases checkpoint step counter on load,
+clone/nonalias assertion fixed. r3 reuses passed first48 microbatches and immutable
+artifacts, correct fresh16/exact comparison;80 total incl failed-oracle16. Eight
+composite checks pass, three guards ACK600s, whole-batch dmesg identical,309 hashes/
+four FFT AOT DBs/links/runtime/user files unchanged. Failures/source retained.
+Entry NEW r2 boot d3857b96-1b51-4e39-8f3e-f076f0c0422a; agent did not reboot.
+Only881MiB disk: no deletes/reserve change. /tmp tmpfs preflight>2GiB scratch/
+>6GiB RAM; explicit N35-only512MiB text-log floor, other gates keep2GiB. ~836MiB
+artifacts volatile remote /tmp/bc250-training-n35-r2, durable copied/SHA-verified
+local kernel/artifacts/training-n35/scratch-r2. Logs WS/logs/training-n35-*, local
+kernel/artifacts/training-n35/remote; [report](bc250_training_n35_results/README.md).
+Next baseline WS/logs/training-n35-qualification-r3/final.json; helper backup
+WS/recovery/training-n35-before. Runtime62ab2437c/rocBLAS8389197c1/Torchdc8fea0/
+source2b449c4/other libs319a235d6 unchanged; no native build/install/persistent cache
+reset/.105/BIOS/fallback change, no own job/container/guard, disk~880MiB. Historical
+CPU fault unresolved/distinct from fixed VM-heap/CSR/repaired N3.2 loader/oracle.
+Next N3.6 actual deployed CLI owned1024/r16/acc16 resume/fingerprint qualification;
+older42-token/rank4 CLI evidence retained, user files untouched.
+
 **N3.4 square projection audit2026-10-19:** code6531025ef, no native/runtime
 change. Actual BF16 [1024,2048]@[2048,2048] TN84/NN42 mm calls, two layouts,
 all14 admitted solutions each+default CPU-double/guards/input preservation pass

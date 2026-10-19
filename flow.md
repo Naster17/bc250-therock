@@ -9,6 +9,43 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N3.5 completed, 2026-10-19:** qualification code `986093a3c`.
+  Current N3.2 preset/no preload, actual-base synthetic1024/batch1/rank16/BF16/
+  FP32 adapters/math/checkpoint/accumulation16. Independent16 scaled gradients
+  summed CPU FP64 versus GPU FP32 accumulation: all372 pass atol1e-8/rtol1e-5/
+  relativeL2<2e-6, worst1.17090e-8; losses/IDs/CPU+GPU+Python probes/RNG exact.
+  Independent global clip and two uninterrupted CPU AdamW/scheduler replays pass,
+  maxparamabs1.863e-9/3.725e-9. Owned optimizer-boundary checkpoint fresh step2
+  matches uninterrupted all372 params+gradients/full AdamW/scheduler/losses/inputs/
+  progress/three RNG exactly; resumed CPU AdamW maxabs1.863e-9. No whole-model CPU,
+  actual CLI/real data/mid-accumulation/throughput/convergence claim; labels unmasked.
+  r1 test mount overwritten by consumer setup fixed before model work. r2 first48
+  micros pass; resumed CPU oracle aliases saved CPU step tensor and fails. Clone/
+  counter-nonalias fix is test-only; r3 reuses six passed checks and unchanged
+  checkpoint/control, executes corrected fresh16, exact full-state comparison.
+  Source-origin SHA admitted explicitly; actual corrected SHA separately recorded,
+  no model/preset identity/tolerance/checkpoint/GPU arithmetic change. Total80
+  micros incl16 retained failed-oracle branch, composite8 checks pass. Three
+  guards ACK600s/dmesg identical/309 identities/four FFT AOT DBs intact.
+  Entry already on NEW r2 boot d3857b96-1b51-4e39-8f3e-f076f0c0422a; old d053
+  boot historical. Disk881MiB at entry, no deletion/reserve change. RAM-backed
+  /tmp scratch preflight>2GiB/>6GiB available RAM, explicit512MiB text-log disk
+  floor only N35; other gates retain2GiB default. Four artifacts~836MiB copied/
+  hash-verified durable local kernel/artifacts/training-n35/scratch-r2. Remote
+  /tmp/bc250-training-n35-r2 is VOLATILE across reboot, preserve local copy.
+  No native build/install/persistent cache reset/user app/.105/BIOS/fallback change.
+  Runtime62ab2437c/rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4/other native
+  libraries319a235d6 retained; no reboot by agent. No active agent job/container/
+  guard, disk~880MiB. CPU fault unresolved/separate from fixed VM-heap/CSR,
+  repaired N3.2 loader and the corrected test-oracle bug. [Report](docs/development/bc250_training_n35_results/README.md).
+  Raw WS/logs/training-n35-* and local kernel/artifacts/training-n35/remote;
+  failed sources/records preserved, helper backups WS/recovery/training-n35-before.
+  Next baseline WS/logs/training-n35-qualification-r3/final.json (309 unchanged);
+  runtime recovery remains WS/recovery/gemm-n32-before.
+  **Next N3.6:** actual deployed trainer CLI owned1024/rank16/accum16 fresh/resume
+  on current preset; inspect prior small CLI/fingerprint code, keep user data/
+  checkpoints/config untouched, RAM scratch+durable local copy while disk low.
+
 - **N3.4 audit completed, candidate rejected, 2026-10-19:** code `6531025ef`.
   Actual BF16 [1024,2048]@[2048,2048] TN42forward+42backward/NN42backward calls,
   two layouts offsets0. All14 admitted solutions each plus defaults pass full
@@ -1728,7 +1765,7 @@ inside rootful Podman; this is not the separate native-musl gfx1103 project.
 | Source exports           | Gitless `WS/source`, qualified Torch exports; current deltas `SOURCE_SPARSE_N213.json` / `SOURCE_GEMM_N32.json`                |
 | Independent P2 candidate | `/opt/bc250-stack/candidates/priority2-20261014`; passed bounded checks, not daily-release activation                     |
 | Recovery userspace       | `/opt/bc250-stack/before-dev-current` → frozen `10.2-gfx1013-20261013-4b000d542`; initial a640c9296 release also retained |
-| Kernel/boot              | `.104` live `7.1.5-bc250rocm-r2`, boot d0532075; qualified r3 retained, no N3.2 reboot/boot-policy change |
+| Kernel/boot              | `.104` live `7.1.5-bc250rocm-r2`, boot d3857b96; qualified r3 retained; new boot observed N3.5, no agent reboot |
 | Memory backup            | `WS/agent-memory/latest` (documentation only; preserves qualified source snapshots)                                       |
 | Training artifacts       | `WS/training-model`, `training-env-stable`, `training-validation`, `logs/training-memory/`                                |
 
@@ -1862,7 +1899,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.2 | Exact-layout BF16 NT solution-490 plus cold override loader repair installed; CPU GEMM/all372 model gradients/CPU AdamW/ABBA timings and installed gates pass. Synthetic whole-step1.52–1.56x; changed reduction order, no convergence/bitwise continuity claim. |
 | [x]   | N3.3 | Optimized1024 model exact replay/profile and reverse-projection CPU-reference selection audit complete; mm75.39%, reverse26.43%, modest1.09x fixture candidates left undeployed. No runtime/default/new speed claim. |
 | [x]   | N3.4 | Square BF16 two-layout/all14-solutions-each CPU audit complete; faster-346 fails full-model gradient7.65%>4% contract, exact-output alternatives flat/slower. No runtime deployment or qualified speedup. |
-| [ ]   | **N3.5 — next** | Current N3.2 preset1024-token/rank16 accumulation16 gradient/update and owned checkpoint/fresh-process resume qualification; inspect prior small CLI evidence and keep user files untouched. |
+| [x]   | N3.5 | Current-preset1024/rank16 accumulation16 versus FP64 gradient sum, CPU AdamW/scheduler and exact owned fresh-process state replay qualified; test mount/CPU-oracle alias fixes, no runtime change. |
+| [ ]   | **N3.6 — next** | Actual deployed trainer CLI owned1024/rank16/accum16 fresh/resume on current preset; inspect prior42-token CLI/fingerprints, preserve user files, RAM artifacts/local durable copies with low disk. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
