@@ -18,6 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--worker", choices=("reference", "candidate"))
+    parser.add_argument("--settle-steps", type=int, choices=(0, 2), default=0)
     args = parser.parse_args()
     if args.worker:
         return worker(
@@ -34,6 +35,7 @@ def main():
         status="running",
         checks=[],
         results=[],
+        settle_steps=args.settle_steps,
         baseline_csv_sha256=hashlib.sha256(baseline.read_bytes()).hexdigest(),
         candidate_csv_sha256=hashlib.sha256(candidate.read_bytes()).hexdigest(),
         contract="Existing model abs loss <0.015 and max adapter gradient relativeL2 <0.04; each worker CPU AdamW replay unchanged; reference repetition exact",
@@ -55,6 +57,8 @@ def main():
                 str(Path(__file__)),
                 "--worker",
                 mode,
+                "--settle-steps",
+                str(args.settle_steps),
                 "--output",
                 str(output),
             ]

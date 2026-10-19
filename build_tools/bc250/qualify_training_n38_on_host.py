@@ -18,6 +18,7 @@ if __name__ == "__main__":
             "policy-forward",
             "policy-backward",
             "model",
+            "model-stable",
         ),
         required=True,
     )
@@ -25,8 +26,15 @@ if __name__ == "__main__":
     sys.argv = [sys.argv[0], *remaining]
     if args.stage == "layout":
         gates = (("layout", "audit_vocab_n38.py", [], 2),)
-    elif args.stage == "model":
-        gates = (("model", "validate_model_vocab_n38.py", [], 4),)
+    elif args.stage in ("model", "model-stable"):
+        gates = (
+            (
+                args.stage,
+                "validate_model_vocab_n38.py",
+                ["--settle-steps", "2"] if args.stage == "model-stable" else [],
+                4,
+            ),
+        )
     else:
         role = (
             "forward"
@@ -52,7 +60,7 @@ if __name__ == "__main__":
                     "validate_model_gemm_n32.py",
                     "rocblas_gemm_n38.csv",
                 )
-                if args.stage == "model"
+                if args.stage in ("model", "model-stable")
                 else ()
             ),
         ),

@@ -102,6 +102,9 @@ def worker(args, *, app_path=None):
     )
     del gradients, before, cpu_params, cpu_optimizer
     gc.collect()
+    for _ in range(getattr(args, "settle_steps", 0)):
+        step()
+    torch.cuda.synchronize()
     for _ in range(3):
         torch.cuda.synchronize()
         torch.cuda.reset_peak_memory_stats()
