@@ -19,12 +19,12 @@ PROJECT = Path("/home/nik/finetune-n7")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument("--attempt", default="r2")
+    parser.add_argument("--attempt", default="r3")
     args, _ = parser.parse_known_args()
-    assert args.attempt == "r2" and os.geteuid() == 0
+    assert args.attempt == "r3" and os.geteuid() == 0
     assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
     prior = json.loads(
-        (WS / "logs/training-n37-qualification-r1/final.json").read_text()
+        (WS / "logs/training-n37-qualification-r2/final.json").read_text()
     )
     assert prior["status"] == "passed" and not prior["changed_hashes"]
     for path, expected in prior["protected_sha256"].items():
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     trainer = PROJECT / "replica/train.py"
     module = PROJECT / "replica/bc250_checkpoint_provenance.py"
     assert not module.exists()
-    recovery = WS / "recovery/training-n37-before-r2"
+    recovery = WS / "recovery/training-n37-before-r3"
     recovery.mkdir()
     doc = PROJECT / "BC250_TRAINING_OPS.md"
     for path in (trainer, doc):
@@ -58,12 +58,12 @@ if __name__ == "__main__":
             staged["intended_changes"][str(target)] = dict(
                 before=before_hashes[str(target)], after=sha(target)
             )
-        directory = WS / "logs/training-n37-deployment-r2"
+        directory = WS / "logs/training-n37-deployment-r3"
         directory.mkdir()
         atomic_json(directory / "final.json", staged)
         main(
             batch_id="training-n37",
-            baseline_label="training-n37-deployment-r2",
+            baseline_label="training-n37-deployment-r3",
             default_phase="extra",
             extra_gates=(
                 (
