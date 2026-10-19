@@ -8,6 +8,7 @@ import argparse
 from contextlib import contextmanager
 from collections.abc import Iterator
 import fcntl
+import hashlib
 from dataclasses import dataclass, field
 import json
 import os
@@ -62,6 +63,7 @@ INHERITED_NAMES = {
     "XDG_CACHE_HOME",
     "TORCH_HOME",
     "PYTHONFAULTHANDLER",
+    "BC250_GEMM_TUNING",
 }
 PROTECTED_PATHS = (
     Path("/workspace"),
@@ -262,6 +264,41 @@ def prepare_python_arguments(
     ]
 
 
+def qualified_gemm_override(
+    release: Path, manifest: dict, options: LaunchOptions
+) -> Path | None:
+    config = manifest.get("rocblas_gemm_tuning")
+    if (
+        not config
+        or not config.get("enabled", False)
+        or options.environment.get("BC250_GEMM_TUNING") == "0"
+        or "ROCBLAS_TENSILE_GEMM_OVERRIDE_PATH" in options.environment
+    ):
+        return None
+    path = release / "rocblas-gemm-n32.csv"
+    try:
+        identities = config["identity_sha256"]
+        if len(identities) < 2:
+            raise ValueError("Missing tuning identities")
+        files = {path: config["sha256"]}
+        for name, digest in identities.items():
+            relative = Path(name)
+            if relative.is_absolute() or ".." in relative.parts:
+                raise ValueError("Invalid tuning identity path")
+            files[release / "rocm" / relative] = digest
+        for source, digest in files.items():
+            with source.open("rb") as stream:
+                if hashlib.file_digest(stream, "sha256").hexdigest() != digest:
+                    raise ValueError("Tuning identity mismatch")
+    except (OSError, KeyError, TypeError, ValueError):
+        print(
+            "bc250-torch: GEMM tuning skipped because preset identities differ",
+            file=sys.stderr,
+        )
+        return None
+    return path
+
+
 def build_command(
     release: Path,
     manifest: dict,
@@ -319,6 +356,14 @@ def build_command(
         (Path("/etc/group"), "/etc/group", "ro"),
     ):
         command += ["-v", f"{source}:{destination}:{mode}"]
+    tuning = qualified_gemm_override(release, manifest, options)
+    if tuning is not None:
+        check_mount(tuning)
+        command += ["-v", f"{tuning}:/workspace/rocblas-gemm-overrides.csv:ro"]
+        command += [
+            "-e",
+            "ROCBLAS_TENSILE_GEMM_OVERRIDE_PATH=/workspace/rocblas-gemm-overrides.csv",
+        ]
     command += ["-w", str(workspace), "--env-file", str(environment_file)]
     fixed = {
         "HOME": str(home),

@@ -1,0 +1,33 @@
+From 8389197c134a7337932021ab7137987a585664ae Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Mon, 19 Oct 2026 11:29:34 +0200
+Subject: [PATCH] fix(tensile): hydrate code objects for preloaded GEMM
+ overrides
+
+Preloaded solution metadata can already be present in the master map while its architecture-specific code-object filename is empty. Resolve it through the lazy problem library before caching an override, including the already-present case. Read the filename through its thread-safe accessor.
+
+Validated on native gfx1013: cold Torch override reproduces HIPBLAS_STATUS_INTERNAL_ERROR before the fix; enumeration hydration and the isolated rebuilt rocBLAS cold test pass. Captured BF16 layouts pass CPU double references and guards. Four fresh Qwen3.5 model workers pass gradient/CPU AdamW/RNG checks and paired whole-step timing. Active prefix remains unchanged at this source commit.
+---
+ .../Source/lib/include/Tensile/MasterSolutionLibrary.hpp     | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/shared/tensile/Tensile/Source/lib/include/Tensile/MasterSolutionLibrary.hpp b/shared/tensile/Tensile/Source/lib/include/Tensile/MasterSolutionLibrary.hpp
+index 9525d563355..7a53810127f 100644
+--- a/shared/tensile/Tensile/Source/lib/include/Tensile/MasterSolutionLibrary.hpp
++++ b/shared/tensile/Tensile/Source/lib/include/Tensile/MasterSolutionLibrary.hpp
+@@ -246,9 +246,10 @@ namespace Tensile
+                     }
+ 
+                     std::shared_ptr<MySolution> solution = getSolutionByIndex(*sol_idx);
+-                    if(!solution)
++                    if(!solution || solution->codeObjectFilename.load().empty())
+                     {
+-                        // Load library
++                        // Preloaded metadata can lack its architecture-specific code object.
++                        // Resolve through the lazy library before caching an override.
+                         auto problem = ps.first.problem();
+                         library->findAllSolutions(problem, hardware);
+                         solution = getSolutionByIndex(*sol_idx);
+-- 
+2.56.0
+
