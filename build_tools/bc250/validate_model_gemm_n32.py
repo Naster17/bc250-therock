@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 """Fresh-process AB/BA whole-model training checks for one rocBLAS override."""
+
 import argparse
 import gc
 import hashlib
@@ -18,11 +19,11 @@ from torch.nn.attention import SDPBackend, sdpa_kernel
 import validate_qwen35_training_model as existing
 
 
-def worker(args):
+def worker(args, *, app_path=None):
     torch.manual_seed(31932)
     torch.set_num_threads(4)
     spec = importlib.util.spec_from_file_location(
-        "n32_model_app", "/home/nik/finetune-n7/replica/bc250_ops.py"
+        "n32_model_app", app_path or "/home/nik/finetune-n7/replica/bc250_ops.py"
     )
     app = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(app)
