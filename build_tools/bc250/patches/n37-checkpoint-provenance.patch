@@ -1,0 +1,57 @@
+--- a/replica/train.py
++++ b/replica/train.py
+@@ -162,10 +162,19 @@
+                                           "target_tokens": sum(sum(x != IGNORE_INDEX for x in row["labels"][1:]) for row in rows),
+                                           "longest": max((len(row["input_ids"]) for row in rows), default=0)}
+                                  for split, rows in data.items()}, "optimizer_steps": total_steps}, indent=2))
++    from . import bc250_checkpoint_provenance as provenance
++    saved_provenance = None
++    saved = None
+     if args.resume is not None:
+         saved = json.loads((args.resume / "run.json").read_text())
+-        if saved != {"fingerprint": fingerprint, "config": run_config}:
++        if (saved.get("fingerprint") != fingerprint or saved.get("config") != run_config
++                or set(saved) - {"fingerprint", "config", provenance.MARKER}):
+             parser.error("Resume config/data/model/tokenizer fingerprint mismatch; use the original run settings")
++    if args.resume is not None:
++        try:
++            saved_provenance = provenance.read_checkpoint(args.resume, saved, fingerprint)
++        except ValueError as error:
++            parser.error(str(error))
+     if args.preflight:
+         print("Preflight complete. No weights loaded, output written, or training started. Targets verified only when weights load.")
+         return
+@@ -189,6 +198,12 @@
+                           "architecture": getattr(properties, "gcnArchName", None),
+                           "device_memory_bytes": properties.total_memory,
+                           "runtime_packages": run_config["runtime_packages"]}), flush=True)
++    try:
++        runtime_provenance = provenance.capture(torch, __file__, fingerprint, args.device)
++        if args.resume is not None:
++            provenance.check_resume(saved_provenance, runtime_provenance)
++    except (OSError, ValueError) as error:
++        parser.error(str(error))
+     random.seed(args.seed)
+     torch.manual_seed(args.seed)
+     if torch.cuda.is_available():
+@@ -266,6 +281,8 @@
+     order = training_order(data["train"], args.longest_first)
+     if args.resume is not None:
+         state = torch.load(args.resume / "training.pt", map_location="cpu", weights_only=False)
++        if state.get(provenance.MARKER) != (saved or {}).get(provenance.MARKER):
++            parser.error("Training state/runtime provenance binding mismatch")
+         if state["fingerprint"] != fingerprint:
+             parser.error("Training state fingerprint mismatch")
+         epoch, position, step, order = (state[key] for key in ("epoch", "position", "step", "order"))
+@@ -319,8 +336,9 @@
+         staging = Path(tempfile.mkdtemp(prefix=".checkpoint-", dir=args.output))
+         model.save_pretrained(staging, safe_serialization=True)
+         tokenizer.save_pretrained(staging)
+-        (staging / "run.json").write_text(json.dumps({"fingerprint": fingerprint, "config": run_config}, indent=2) + "\n")
+-        torch.save({"fingerprint": fingerprint, "optimizer": optimizer.state_dict(),
++        provenance_sha256 = provenance.write_checkpoint(staging, runtime_provenance)
++        (staging / "run.json").write_text(json.dumps({"fingerprint": fingerprint, "config": run_config, provenance.MARKER: provenance_sha256}, indent=2) + "\n")
++        torch.save({"fingerprint": fingerprint, provenance.MARKER: provenance_sha256, "optimizer": optimizer.state_dict(),
+                     "scheduler": scheduler.state_dict(), "python_rng": random.getstate(),
+                     "torch_rng": torch.get_rng_state(),
+                     "cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,

@@ -77,6 +77,28 @@ bounded optimizer-boundary test, not long training quality or a new speed claim.
 Keep the numerical runtime, GEMM preset and application hooks consistent when
 resuming. Existing fingerprints cover data/model/settings/package versions but
 do not pin those additional identities; the test records them separately.
-Changed-runtime exact replay is unqualified. N3.7 will add compatible provenance
-for newly saved checkpoints; existing user checkpoints remain untouched.
+Changed-runtime exact replay is unqualified. N3.7 adds the supplemental check
+below for newly saved checkpoints; existing user checkpoints remain untouched.
 Evidence: `therock/docs/development/bc250_training_n36_results/README.md`.
+
+## Checkpoint runtime provenance (N3.7)
+
+New checkpoints contain `runtime-provenance.json`. Its digest is stored alongside
+(the unchanged) training fingerprint in `run.json` and in `training.pt`. It records
+selected native Torch/ROCm libraries, gfx1013 rocBLAS assets, the active GEMM preset,
+application hooks, selected numerical environment settings, Python/kernel/GPU
+architecture and version information. Collection happens once at process startup;
+normal updates and their arithmetic are unchanged.
+
+On resume, new checkpoints reject a missing/corrupt sidecar or a changed recorded
+runtime identity. Runtime mismatch is checked before loading model weights or
+creating the output directory. Restore the matching runtime, preset and hooks;
+do not remove provenance to bypass the check. A matching identity is an audit aid,
+not proof of universal determinism, complete image integrity or convergence.
+
+Legacy checkpoints without provenance still use their existing fingerprint and
+state checks and print an explicit warning that numerical-runtime continuity
+cannot be verified. They are never rewritten. New checkpoints saved by the resumed
+run record the current runtime. Data-only `--preflight` validates the sidecar and
+binding but defers comparison with the live numerical runtime until training;
+it does not initialize the GPU or load weights.
