@@ -17,17 +17,23 @@ from qualify_training_n39_on_host import PROJECT, preflight
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument("--attempt", default="r2")
+    parser.add_argument("--attempt", default="r3")
     args, _ = parser.parse_known_args()
-    assert args.attempt == "r2"
+    assert args.attempt == "r3"
     preflight(args.attempt)
     prior = json.loads(
-        (WS / "logs/training-n39-qualification-r1/final.json").read_text()
+        (WS / "logs/training-n39-qualification-r2/final.json").read_text()
     )
     assert prior["status"] == "passed" and not prior["changed_hashes"]
     for name, expected in prior["protected_sha256"].items():
         assert sha(Path(name)) == expected, name
     for name, expected in prior["source_sha256"].items():
+        assert sha(WS / "helpers" / name) == expected, name
+    original = json.loads(
+        (WS / "logs/training-n39-qualification-r1/final.json").read_text()
+    )
+    assert original["status"] == "passed"
+    for name, expected in original["source_sha256"].items():
         assert sha(WS / "helpers" / name) == expected, name
     unit = json.loads((WS / "logs/training-n39-candidate-unit-tests.json").read_text())
     assert unit["status"] == "passed" and unit["tests"] == 175
@@ -77,12 +83,12 @@ if __name__ == "__main__":
                 stderr=subprocess.STDOUT,
                 check=True,
             )
-        directory = WS / "logs/training-n39-deployment-r2"
+        directory = WS / "logs/training-n39-deployment-r3"
         directory.mkdir()
         atomic_json(directory / "final.json", staged)
         main(
             batch_id="training-n39",
-            baseline_label="training-n39-deployment-r2",
+            baseline_label="training-n39-deployment-r3",
             default_phase="extra",
             extra_gates=(
                 (
