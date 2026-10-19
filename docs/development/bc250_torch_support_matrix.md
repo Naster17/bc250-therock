@@ -7,7 +7,14 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N3.2 / practical review
+## Current cursor after N3.3 / practical review
+
+N3.3 optimized1024-token synthetic model exact replay passes loss/all372 gradients/
+AdamW/RNG; median5.443s, mm75.39% of kernel sum. Reverse projection26.43% audited:
+two layouts/14 admitted solutions each CPU-reference checked; best isolated1.09x,
+no demonstrated full-model benefit or deployment. Current N3.2 preset unchanged.
+[Report](bc250_training_n33_results/README.md). Next N3.4 audits square2048 mm
+layouts/selection before any full-model candidate gate.
 
 N3.2 is installed: rocBLAS/Tensile source8389197c1 repairs cold override loading;
 exact-layout BF16 NT2048x1024x6144 solution-490 is automatic through current dev
@@ -16,7 +23,7 @@ all372 model gradients, CPU AdamW and installed gates pass. Synthetic whole-step
 ABBA1.52–1.56x, max gradient relativeL2=2.03%\<4%, reduction order changes; no
 bitwise continuation/convergence/sustained-throughput claim. Other native ROCm
 libraries remain319a235d6. [Report](bc250_gemm_n32_results/README.md).
-Next N3.3 reprofile optimized model with exact replay and audit next measured mm.
+N3.3 has now completed that profile/selection audit within the scope above.
 
 N2.1–N2.18 are complete within their recorded scopes. Installed Torch remains
 `dc8fea0` in WS/pytorch-sparse-n213, source/test `2b449c4`; other native libraries
@@ -280,7 +287,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1/N3.2 are complete within scope; N3.3 optimized-model attribution is next. Small targeted
+N3.1–N3.3 are complete within scope; N3.4 square-projection selection is next. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.
 

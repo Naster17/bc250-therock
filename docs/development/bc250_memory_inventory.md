@@ -926,6 +926,34 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**N3.3 optimized-model profile / reverse GEMM audit2026-10-19:** code7838d94bc;
+installed runtime still62ab2437c/rocBLAS8389197c1/nativeTorchdc8fea0/source2b449c4,
+other native libraries319a235d6. Current automatic preset active without preload.
+Actual-base synthetic1024/batch1/accum1/BF16/rank16/math/checkpoint replay exact
+loss/372 nonzero clipped gradients/update/AdamW/RNG;36 conv/36 gated-delta calls,
+three finite warm updates median5.442552s/peak5351892480B.38296 kernels sum5.403136s,
+mm75.387%; reverse [1024,2048]@[2048,6144]26.427%, prior shape15.423%, square7.105%,
+vocab6.884%/4.333%, frozen conv7.529%. No new speed improvement claim. Reverse
+actual TN132/NN24 mm calls, two layouts, all14 admitted solutions each+default
+CPU-double/guards/immutable inputs pass unchanged tolerances, worstrelativeL2
+0.001666206. Best-339/-533 ratios1.09229/1.09099 across six alternating rounds;
+full-model benefit not demonstrated, no deployment/new preset. Generic shape/
+audit-label helpers added, four analyzer contracts/Black/Ruff-F/syntax pass.
+r1/r2 three GPU processes pass, ACK600s/dmesg unchanged; r2 controller alone
+expected3 layouts but actual2. Fixed derived count; r3/r4 seal saved gates with
+unchanged original helpers/protected identities, no GPU repeat; r4 keeps inherited
+user-file hashes. Failure/source retained, no arithmetic defect/tolerance change.
+Final309 protected files/four FFT AOT DBs/links/runtime/trainer/config unchanged.
+No build/install/cache reset/reboot/.105/BIOS/default/math/SDMA/heap/fallback change;
+same r2 boot, no running job/container/guard, free~5.92GiB. Historical CPU fault
+unresolved/separate from fixed VM-heap/CSR and repaired N3.2 cold loader.
+[Report](bc250_training_n33_results/README.md), full trace/fixtures WS/logs/training-n33-*
+and local ignored kernel/artifacts/training-n33/remote, copied SHA verified.
+Next baseline WS/logs/training-n33-qualification-r4/final.json; helper backups
+WS/recovery/training-n33-before, runtime recovery still WS/recovery/gemm-n32-before.
+Next N3.4 square2048 projection actual layout/solution audit; full-model gates
+before any new demonstrated candidate deployment.
+
 **N3.2 exact-layout BF16 tuning installed2026-10-19:** TheRock code62ab2437c,
 rocBLAS/Tensile8389197c1/patch0033. Existing gfx1013 scalar solutions audited against
 actual strides: TN48/NN48/NT18 mm calls, all14/14/8 admitted candidates pass CPU

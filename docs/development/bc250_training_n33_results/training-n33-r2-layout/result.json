@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual-layouts",
+    "finite-model-backward"
+  ],
+  "loss": 14.294264793395996,
+  "layouts": [
+    {
+      "a_shape": [
+        1024,
+        2048
+      ],
+      "b_shape": [
+        2048,
+        6144
+      ],
+      "a_stride": [
+        2048,
+        1
+      ],
+      "b_stride": [
+        1,
+        2048
+      ],
+      "a_offset": 0,
+      "b_offset": 0,
+      "dtype": "torch.bfloat16",
+      "fixture": "fixture-fea5b1905d39.pt",
+      "fixture_sha256": "096e27f914c4fb936d7f70fcdc4d462a10e3412e3188b90563f97c2dbaf33d68",
+      "forward_mm_calls": 66,
+      "backward_mm_calls": 66
+    },
+    {
+      "a_shape": [
+        1024,
+        2048
+      ],
+      "b_shape": [
+        2048,
+        6144
+      ],
+      "a_stride": [
+        2048,
+        1
+      ],
+      "b_stride": [
+        6144,
+        1
+      ],
+      "a_offset": 0,
+      "b_offset": 0,
+      "dtype": "torch.bfloat16",
+      "fixture": "fixture-c6ac394097ed.pt",
+      "fixture_sha256": "4795694f7ceeeed1cd179e549d2fe7af488f199fa38624b62f632597f9f907d5",
+      "forward_mm_calls": 0,
+      "backward_mm_calls": 24
+    }
+  ],
+  "audited_logical_shape": [
+    1024,
+    2048,
+    6144
+  ],
+  "note": "CPU copies/saving perturb timing; audit is not a benchmark; no user data/checkpoints"
+}
