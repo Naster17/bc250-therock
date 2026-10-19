@@ -18,7 +18,16 @@ import validate_qwen35_training_model as existing
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--shape",
+        type=int,
+        nargs=3,
+        default=(1024, 6144, 2048),
+        metavar=("M", "K", "N"),
+    )
     args = parser.parse_args()
+    assert min(args.shape) > 0
+    m, k, n = args.shape
     os.environ["ROCBLAS_LAYER"] = "2"
     os.environ["ROCBLAS_LOG_BENCH_PATH"] = str(args.output.parent / "rocblas-bench.log")
     torch.manual_seed(31932)
@@ -45,7 +54,7 @@ def main():
         def __torch_dispatch__(self, func, types, args=(), kwargs=None):
             if func is torch.ops.aten.mm.default:
                 a, b = args
-                if tuple(a.shape) == (1024, 6144) and tuple(b.shape) == (6144, 2048):
+                if tuple(a.shape) == (m, k) and tuple(b.shape) == (k, n):
                     metadata = dict(
                         a_shape=list(a.shape),
                         b_shape=list(b.shape),
@@ -94,6 +103,7 @@ def main():
                 checks=["actual-layouts", "finite-model-backward"],
                 loss=float(loss.detach()),
                 layouts=list(rows.values()),
+                audited_logical_shape=list(args.shape),
                 note="CPU copies/saving perturb timing; audit is not a benchmark; no user data/checkpoints",
             ),
             indent=2,

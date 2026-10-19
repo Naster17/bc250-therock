@@ -168,10 +168,12 @@ def check_reference(actual, reference):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--audit-label", default="gemm-n32-layout-r1")
     args = parser.parse_args()
+    assert Path(args.audit_label).name == args.audit_label
     torch.set_num_threads(4)
     assert torch.cuda.get_device_properties(0).gcnArchName.split(":")[0] == "gfx1013"
-    audit = args.output.parent.parent / "gemm-n32-layout-r1"
+    audit = args.output.parent.parent / args.audit_label
     layouts = json.loads((audit / "result.json").read_text())["layouts"]
     result = dict(
         status="running",
