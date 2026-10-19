@@ -23,6 +23,8 @@ def main(
     default_phase: str = "profile",
     extra_gates: tuple = (),
     additional_sources: tuple[str, ...] = (),
+    scratch_mounts: tuple[Path, ...] = (),
+    minimum_disk_free_bytes: int = 2 * 1024**3,
 ) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--attempt", default="r1")
@@ -45,7 +47,7 @@ def main(
     assert len(shape) == 3 and min(shape) > 0
     assert os.geteuid() == 0
     assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
-    assert os.statvfs(WS).f_bavail * os.statvfs(WS).f_frsize > 2 * 1024**3
+    assert os.statvfs(WS).f_bavail * os.statvfs(WS).f_frsize > minimum_disk_free_bytes
     logs = WS / ("logs/" + batch_id + "-qualification-" + args.attempt)
     logs.mkdir()
     baseline = json.loads((WS / "logs" / baseline_label / "final.json").read_text())
@@ -108,6 +110,8 @@ def main(
         reused_gpu_attempt=args.reuse_attempt,
         prefix_changed=False,
         library_or_torch_build_required=False,
+        scratch_mounts=[str(p) for p in scratch_mounts],
+        minimum_disk_free_bytes=minimum_disk_free_bytes,
     )
     atomic_json(logs / "before.json", report)
     try:
@@ -159,6 +163,8 @@ def main(
                 "--script",
                 script,
             ]
+            for path in scratch_mounts:
+                command += ["--mount-rw", str(path)]
             command += ["--test-arg=" + a for a in arguments]
             if not args.reuse_attempt:
                 with (logs / (label + ".log")).open("w") as log:

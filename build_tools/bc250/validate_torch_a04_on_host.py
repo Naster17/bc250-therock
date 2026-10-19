@@ -31,6 +31,7 @@ def main():
     ap.add_argument("--regression", action="store_true")
     ap.add_argument("--script", help="Test basename staged in WS/helpers")
     ap.add_argument("--test-arg", action="append", default=[])
+    ap.add_argument("--mount-rw", type=Path, action="append", default=[])
     ap.add_argument("--capture-core", action="store_true")
     ap.add_argument("--torch-candidate", type=Path)
     args = ap.parse_args()
@@ -94,6 +95,10 @@ def main():
             str(logs / "result.json"),
         ]
     )
+    for path in args.mount_rw:
+        path = path.resolve(strict=True)
+        assert path.is_dir()
+        options.mounts.append((str(path), "rw"))
     if args.regression:
         options.arguments = [str(kws / "helpers/torch-reference.py")]
     if args.script:
@@ -118,7 +123,7 @@ def main():
         options.arguments += ["--smoke"]
     # Preserve pinned consumers; do not install or modify any packages.
     consumers = release / "python-consumers"
-    options.mounts = [(str(consumers), "ro")]
+    options.mounts.append((str(consumers), "ro"))
     options.environment = dict(
         line.split("=", 1)
         for line in (consumers / "training.env").read_text().splitlines()
