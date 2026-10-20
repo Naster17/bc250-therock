@@ -97,10 +97,10 @@
     },
     {
       "id": "B04",
-      "feature": "torchvision / torchaudio not installed in reviewed runtime",
-      "evidence": "Package discovery absent, not a core Torch loader failure; RPP/FFTS are separate libraries",
-      "next": "Build matching pinned extensions, test needed scalar ATen/C++ ops; keep optional codecs/CPU paths explicit. No assumption that RPP/media blocks automatically accelerate them.",
-      "status": "queued"
+      "feature": "B04.1 torchvision installed; B04.2 torchaudio absent",
+      "evidence": "Pinned native torchvision0.28.0+gfx1013/Pillow13,67 candidate and67 installed CPU-reference/GPU/codec/model/core checks. Existing patched Torch unchanged. CPU codecs explicit; BF16 custom operators/GPU decode/video unqualified.",
+      "next": "B04.2 inspect pinned Torch-compatible torchaudio APIs/backends; isolated build and independent CPU/GPU audio tensor output/gradient references before installation.",
+      "status": "partially-qualified"
     },
     {
       "id": "B05",

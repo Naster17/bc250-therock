@@ -7,7 +7,7 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after N3.10 / broad support
+## Current cursor after B04.1 / broad support
 
 User direction2026-10-20: prioritize broad hardware-feasible ROCm/PyTorch and
 library/API support. Qwen/LoRA is an optional test fixture, not the scope boundary;
@@ -21,11 +21,17 @@ show actual Triton/native GPU kernels. No production defect, install or speed
 claim. [Report](bc250_compiler_n310_results/README.md). Max-autotune/dropout/
 dynamic reuse/compiled optimizers/full applications remain separate.
 
-**Next B04.1:** pin a compatible torchvision against the qualified Torch ABI,
-build native gfx1013 extensions in isolation and qualify image operators against
-CPU before deployment. Keep the current Torch wheel/native runtime. Torchaudio,
-BF16 FFT, general sparse solve, distributed/quantization/export and CK-plugin
-work remain open broad-support items; no exhaustive capability promise.
+**B04.1 installed:** pinned torchvision0.28.0+gfx1013/Pillow13 in a separate
+runtime image, existing Torch preserved.67 candidate+67 installed checks cover
+native NMS/ROI/deformable-convolution outputs/first-order gradients, CPU-reference
+transforms, CPU codecs and synthetic ResNet18. Fixed tolerances, actual GPU ROI
+trace. Indirect WebP loader issue repaired through per-codec relative RUNPATH;
+old image/release and failed evidence retained. [Report and use/rollback](bc250_vision_b041_results/README.md).
+No GPU decoding/BF16 custom operators/video/universal correctness or speed claim.
+**Next B04.2:** inspect compatible pinned torchaudio/backend requirements, then
+isolated native build and CPU/GPU audio tensor reference gates. BF16 FFT, general
+sparse solve, distributed/quantization/export and CK-plugin work remain open.
+
 
 N3.9 restores the qualified N3.7 provenance integration and A07 attention CLI
 in the current trainer. The ops helper's printed-status edit is preserved;
@@ -335,7 +341,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **B01** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
 | **B02** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
 | **B03** | Distributed build, Gloo/RCCL absent | USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected. | CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here. |
-| **B04 — next: B04.1 torchvision** | torchvision / torchaudio not installed in reviewed runtime | Package discovery absent, not a core Torch loader failure; RPP/FFTS are separate libraries | Build matching pinned extensions, test needed scalar ATen/C++ ops; keep optional codecs/CPU paths explicit. No assumption that RPP/media blocks automatically accelerate them. |
+| **B04 — next: B04.2 torchaudio** | B04.1 torchvision installed; torchaudio still absent | Native NMS/ROI/deformable ops, transforms/codecs/ResNet gradients qualified within67 candidate+67 installed checks; CPU codecs explicit | Pin compatible torchaudio, inspect audio backends and qualify real signal operations/gradients. RPP/media blocks are separate; no automatic GPU decode claim. |
 | **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; A08 now supplies a bounded dense INT8/INT32 primitive, not a low-bit model recipe | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
 | **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
@@ -344,7 +350,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1–N3.10 bounded scopes are recorded; next B04.1 torchvision integration.
+N3.1–N3.10/B04.1 bounded scopes are recorded; next B04.2 torchaudio integration.
 Any proposed preset still needs owned trainer qualification. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.

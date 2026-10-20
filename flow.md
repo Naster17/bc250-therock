@@ -9,6 +9,49 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B04.1 torchvision completed/installed2026-10-20:** prep626e19ef2,
+  integration220bd80e5. Broad support scope retained; Qwen/LoRA remains optional.
+  New preserved local Git repo sources/bc250-torchvision, release/0.28,
+  8fb87713a24951e639c494b0f2a8a81b5f8e33a6; upstream CI targets release/2.13.
+  Native0.28.0+gfx1013 against existing patched Torch2.13/HIP7.17/Python3.12/ABI1,
+  Pillow13.0.0. No vision operator source patch or replacement Torch wheel.
+  Candidate-r2 and installed-r3 each67 checks: NMS, four ROI operators, grouped
+  masked/unmasked deformable conv FP16/32/64 outputs/all promised gradients;
+  independent NMS/bilinear oracles, strided/empty cases, actual GPU ROI trace;
+  CPU PNG/JPEG/WebP+HIP transfer, four FP32 transform gradients, synthetic FP32
+  ResNet18 output/input/all62 parameter gradients, retained core7/imports.
+  MaxrelativeL2 ops0.001519/transforms5.986e-7; fixed bounds unchanged. No GPU
+  decode/BF16 custom ops/video/second-derivative/universal-model or speed claim.
+  Entry refuses exactly two changed app docs; reviewed/preserved, other311
+  identities match. entry-r2 is preservation only, not renewed trainer/doc
+  qualification. Build-r2 missing host /var/tmp fixed by workspace TMPDIR; raw
+  package-r1 output-dir failure retained. Candidate-r1 ops51 pass/codec FAIL:
+  indirect WebP libsharpyuv missing from loader search despite bundled DSO.
+  Package-r3 gives each bundled codec its own ORIGIN RUNPATH/license notices;
+  corrected candidate+installed pass. Failed images/wheels/builds/logs preserved.
+  Active image a0b85fa88c9ecfbec88a8774f19db0fbc18fcfeaa086a4e402b69aa99ba55e27;
+  original5df0a58392de remains fallback. ONLY dev runtime.json image/vision
+  metadata changed; old release/consumer site-packages untouched. Recovery
+  WS/recovery/vision-b041-before/runtime.json; locked deploy helper --rollback
+  restores exact original. Shared qualifier optional release override, old copy
+  retained.313 final identities/four FFT AOT DBs/links retained; runtimeJSON only
+  intended entry delta. Runtime62ab2437c/rocBLAS8389197c/nativeTorchdc8fea0/source
+  2b449c4/otherlibs319a235d6/N3.2 CSV/math/SDMA0/heapoff unchanged. Eight600s
+  guards ACK, each GPU batch dmesg identical. Same r2 boot48bdf727; no reboot/
+  .105/BIOS/fallback/delete change. Four Ninja jobs/10GiB memory/12GiB mem+swap,
+  ccache20GiB explicit HIP compiler caching; CPU cpp-extension wrapping bypassed,
+  initial CPU units uncached. Separate build image acdb6dc4 retained. Local
+  kernel/artifacts/vision-b041 contains SHA-verified source archive/raw+fixed
+  wheels/Pillow/109 raw log files; [report](docs/development/bc250_vision_b041_results/README.md).
+  WS/logs/vision-b041-*; active baseline vision-b041-qualification-r3/final.json.
+  Disk18,191,425,536B free observed; no own build/test/container/guard deadline;
+  root SSH closed. CPU segfault unresolved/distinct from VM-heap/CSR/N38 OOM.
+  **Next B04.2:** inspect compatible pinned torchaudio source/build/API/backend
+  requirements; independent CPU/GPU audio tensor references, isolated build/test
+  before install. No alternate Torch, codec/media acceleration assumption or
+  unrelated trainer restoration. Broader B01/B02/B03/B05/B06/B07/N2–N8 remain.
+  Remote memory snapshot WS/agent-memory/latest keyed by final memory revision.
+
 - **N3.10 broad compiler qualification completed2026-10-20:** code7c8156c57.
   **User scope:** broad hardware-feasible ROCm/PyTorch/library/API support;
   Qwen3.5/LoRA is one optional test fixture, not the port boundary. Missing broad
@@ -2104,7 +2147,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.8 | Full chunked CPU FP64 vocabulary forward/input-backward audit, matched Torch policy and full-model gates; timings variable, candidate inactive. Entry app drift and host OOM retained. |
 | [x]   | N3.9 | Qualified N37 provenance/A07 CLI restored preserving current ops edit; exact actual fresh/new/legacy/installed replay, conservative historical checkpoint refusal, app suite and guidance synchronized. |
 | [x]   | N3.10 | User-broadened generic compiled CNN/dense/gated/BatchNorm training;56 CPU-reference/optimizer/buffer/trace checks, no production defect/install/speed claim. |
-| [ ]   | **B04.1 — next** | Broad torchvision package/native image-operator integration: pin qualified Torch ABI, isolated gfx1013 build and CPU/GPU output/backward references before deployment. Torchaudio separate; do not replace Torch. |
+| [x]   | B04.1 | Pinned native torchvision installed in independent image;67 candidate+67 installed CPU-reference/operator/gradient/codec/model/core checks. CPU codecs explicit, old image/release retained. |
+| [ ]   | **B04.2 — next** | Pin compatible torchaudio against qualified Torch; inspect audio backend requirements, isolated native build and CPU/GPU signal-operation references before installation. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

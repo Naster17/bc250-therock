@@ -926,6 +926,38 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**B04.1 torchvision installed2026-10-20:** prep626e19ef2/integration220bd80e5;
+local preserved sources/bc250-torchvision release/0.28 revision8fb87713a24951e639c494b0f2a8a81b5f8e33a6.
+Native0.28.0+gfx1013/Pillow13 against qualified Torch2.13/HIP7.17/Python3.12/ABI1;
+no custom vision operator patch or replacement Torch. Candidate/installed each67
+checks: FP16/32/64 NMS/four ROI/grouped deform conv outputs/promised gradients,
+independent NMS/bilinear CPU oracles, strided/empty, actual native GPU trace,
+CPU PNG/JPEG/WebP+HIP transfer, four FP32 transform gradients, synthetic FP32
+ResNet18 output/input/all62 parameter gradients, core7/consumer imports. Fixed
+limits unchanged, maxL2 ops0.001519/transforms5.986e-7. CPU codecs explicit;
+BF16 custom ops/GPU decode/video/second-order/universal-model/speed unqualified.
+Independent active image a0b85fa88c9ecfbec88a8774f19db0fbc18fcfeaa086a4e402b69aa99ba55e27;
+old5df0a58392de and release untouched. Only dev runtime.json image/vision metadata
+changes; recoveryWS/recovery/vision-b041-before/runtime.json, locked deploy helper
+--rollback. New packages in image /opt/torch-venv; existing consumers remain
+read-only. Shared qualifier optional release override backed up. Two app-doc
+entry drifts preserved, not renewed app qualification. Failed missing /var/tmp,
+package output directory and candidate-r1 indirect libsharpyuv loader diagnostics
+retained; fixed per-codec ORIGIN RUNPATH+licenses in package-r3. Candidate-r1
+ops51 pass; corrected candidate-r2/installed-r3 all67 pass. Eight600s guards ACK,
+each GPU batch dmesg identical.313 final hashes/four AOT DBs/links retained, only
+runtimeJSON differs intentionally from entry. Native runtime62ab2437c/rocBLAS
+8389197c/nativeTorchdc8fea0/source2b449c4/otherlibs319a235d6/defaults/r2 boot48bdf727
+unchanged; no .105/BIOS/reboot/delete. Build4 Ninja/10GiB memory/12GiB mem+swap,
+20GiB ccache explicit HIP path; automatic CPU wrapping bypassed. Source/build/
+images/caches retained; SHA-verified local kernel/artifacts/vision-b041 with raw/
+repaired wheels/Pillow/source archive/109 log files. Disk18.191GB free observed.
+No own job/container/guard; root SSH closed. CPU fault unresolved/distinct from
+fixed VM-heap/CSR/N38 OOM. [Report](bc250_vision_b041_results/README.md), raw
+WS/logs/vision-b041-*, finalbaseline vision-b041-qualification-r3/final.json.
+Next B04.2 compatible pinned torchaudio/backend audit, isolated build and meaningful
+CPU/GPU audio signal references; broad port scope, no extra trainer restoration.
+
 **N3.10 broad compiler coverage2026-10-20:** user explicitly prioritizes broad
 ROCm/Torch/library support; Qwen/LoRA is one optional fixture, not scope boundary.
 Code7c8156c57 replaces proposed Qwen-only MLP audit with synthetic residual dense,

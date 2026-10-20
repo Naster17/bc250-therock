@@ -1,0 +1,477 @@
+{
+  "task": "B04.1",
+  "status": "installed and bounded-qualified",
+  "preparation_revision": "626e19ef2",
+  "integration_revision": "220bd80e5",
+  "source_revision": "8fb87713a24951e639c494b0f2a8a81b5f8e33a6",
+  "torchvision": "0.28.0+gfx1013",
+  "pillow": "13.0.0",
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "f8c181cea9e58ba5e75d910336d193a2554bc5ac0a9635b7ea82a71a8f2fac0d",
+    "image": "a0b85fa88c9ecfbec88a8774f19db0fbc18fcfeaa086a4e402b69aa99ba55e27",
+    "previous_image": "5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59",
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/vision-b041-before/runtime.json",
+    "prefix_changed": true,
+    "installed_runtime_sha256": "5881b7e91a2cc76586664f6a523f052011290d51a40ab99b1d21f6d4d4d825c0",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/vision-b041-qualification-r3/final.json",
+    "rollback_used": false
+  },
+  "wheels": {
+    "torchvision-0.28.0+gfx1013-cp312-cp312-linux_x86_64.whl": "f40142eb0c01d9ab4f394cbc24ef1d56bc54e53ca4ab6579020aa94edb234881",
+    "pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": "42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca"
+  },
+  "candidate_checks": 67,
+  "installed_checks": 67,
+  "earlier_passed_operator_checks": 51,
+  "failed_candidate_codec_gate_retained": true,
+  "guards_acknowledged": 8,
+  "guard_timeout_seconds": 600,
+  "protected_path_count": 313,
+  "changed_protected_paths_from_entry": [
+    "/opt/bc250-stack/current/runtime.json"
+  ],
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "48bdf727-b2f1-4d7b-aba5-2a0b775f1387",
+  "disk_available_bytes": 18191425536,
+  "results": {
+    "ops": {
+      "status": "passed",
+      "checks": [
+        "nms-torch.float32-0",
+        "nms-torch.float32-5",
+        "nms-torch.float32-73",
+        "batched-nms-torch.float32",
+        "roi_align-torch.float32-layout0",
+        "roi_align-torch.float32-layout1",
+        "roi_pool-torch.float32-layout0",
+        "roi_pool-torch.float32-layout1",
+        "ps_roi_align-torch.float32-layout0",
+        "ps_roi_align-torch.float32-layout1",
+        "ps_roi_pool-torch.float32-layout0",
+        "ps_roi_pool-torch.float32-layout1",
+        "nms-torch.float64-0",
+        "nms-torch.float64-5",
+        "nms-torch.float64-73",
+        "batched-nms-torch.float64",
+        "roi_align-torch.float64-layout0",
+        "roi_align-torch.float64-layout1",
+        "roi_pool-torch.float64-layout0",
+        "roi_pool-torch.float64-layout1",
+        "ps_roi_align-torch.float64-layout0",
+        "ps_roi_align-torch.float64-layout1",
+        "ps_roi_pool-torch.float64-layout0",
+        "ps_roi_pool-torch.float64-layout1",
+        "nms-torch.float16-0",
+        "nms-torch.float16-5",
+        "nms-torch.float16-73",
+        "batched-nms-torch.float16",
+        "roi_align-torch.float16-layout0",
+        "roi_align-torch.float16-layout1",
+        "roi_pool-torch.float16-layout0",
+        "roi_pool-torch.float16-layout1",
+        "ps_roi_align-torch.float16-layout0",
+        "ps_roi_align-torch.float16-layout1",
+        "ps_roi_pool-torch.float16-layout0",
+        "ps_roi_pool-torch.float16-layout1",
+        "roi_align-empty-forward-backward",
+        "roi_pool-empty-forward-backward",
+        "ps_roi_align-empty-forward-backward",
+        "ps_roi_pool-empty-forward-backward",
+        "independent-bilinear-oracle-alignedFalse-ratio2",
+        "independent-bilinear-oracle-alignedTrue-ratio2",
+        "independent-bilinear-oracle-alignedTrue-ratio0",
+        "deform-torch.float32-maskFalse",
+        "deform-torch.float32-maskTrue",
+        "deform-torch.float64-maskFalse",
+        "deform-torch.float64-maskTrue",
+        "deform-torch.float16-maskFalse",
+        "deform-torch.float16-maskTrue",
+        "zero-offset-deform-equals-convolution",
+        "profiled-native-roi-output-backward"
+      ],
+      "results": [
+        {
+          "name": "nms-torch.float32-0"
+        },
+        {
+          "name": "nms-torch.float32-5"
+        },
+        {
+          "name": "nms-torch.float32-73"
+        },
+        {
+          "name": "batched-nms-torch.float32"
+        },
+        {
+          "name": "roi_align-torch.float32-layout0",
+          "max_relative_l2": 5.703611309458112e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "roi_align-torch.float32-layout1",
+          "max_relative_l2": 5.624243140065689e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "roi_pool-torch.float32-layout0",
+          "max_relative_l2": 2.648916870510586e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "roi_pool-torch.float32-layout1",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_align-torch.float32-layout0",
+          "max_relative_l2": 9.43776349313105e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_align-torch.float32-layout1",
+          "max_relative_l2": 4.2200843910969676e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_pool-torch.float32-layout0",
+          "max_relative_l2": 6.762122987564666e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_pool-torch.float32-layout1",
+          "max_relative_l2": 5.841772514456296e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "nms-torch.float64-0"
+        },
+        {
+          "name": "nms-torch.float64-5"
+        },
+        {
+          "name": "nms-torch.float64-73"
+        },
+        {
+          "name": "batched-nms-torch.float64"
+        },
+        {
+          "name": "roi_align-torch.float64-layout0",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "roi_align-torch.float64-layout1",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "roi_pool-torch.float64-layout0",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "roi_pool-torch.float64-layout1",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_align-torch.float64-layout0",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_align-torch.float64-layout1",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_pool-torch.float64-layout0",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_pool-torch.float64-layout1",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "nms-torch.float16-0"
+        },
+        {
+          "name": "nms-torch.float16-5"
+        },
+        {
+          "name": "nms-torch.float16-73"
+        },
+        {
+          "name": "batched-nms-torch.float16"
+        },
+        {
+          "name": "roi_align-torch.float16-layout0",
+          "max_relative_l2": 0.00040811921814582803,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "roi_align-torch.float16-layout1",
+          "max_relative_l2": 0.0005367162419581585,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "roi_pool-torch.float16-layout0",
+          "max_relative_l2": 0.00011299480414351632,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "roi_pool-torch.float16-layout1",
+          "max_relative_l2": 5.938726099866495e-05,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_align-torch.float16-layout0",
+          "max_relative_l2": 0.00045278140054982175,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_align-torch.float16-layout1",
+          "max_relative_l2": 0.00040388101358543316,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_pool-torch.float16-layout0",
+          "max_relative_l2": 0.000520953786389052,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "ps_roi_pool-torch.float16-layout1",
+          "max_relative_l2": 0.00043360560503722696,
+          "gradient_tensors": 1,
+          "noncontiguous": true,
+          "trace": false
+        },
+        {
+          "name": "roi_align-empty-forward-backward"
+        },
+        {
+          "name": "roi_pool-empty-forward-backward"
+        },
+        {
+          "name": "ps_roi_align-empty-forward-backward"
+        },
+        {
+          "name": "ps_roi_pool-empty-forward-backward"
+        },
+        {
+          "name": "independent-bilinear-oracle-alignedFalse-ratio2"
+        },
+        {
+          "name": "independent-bilinear-oracle-alignedTrue-ratio2"
+        },
+        {
+          "name": "independent-bilinear-oracle-alignedTrue-ratio0"
+        },
+        {
+          "name": "deform-torch.float32-maskFalse",
+          "max_relative_l2": 1.804702430848819e-07,
+          "gradient_tensors": 4,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "deform-torch.float32-maskTrue",
+          "max_relative_l2": 1.7727496251020603e-07,
+          "gradient_tensors": 5,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "deform-torch.float64-maskFalse",
+          "max_relative_l2": 2.4653800127905663e-16,
+          "gradient_tensors": 4,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "deform-torch.float64-maskTrue",
+          "max_relative_l2": 2.6543213884820516e-16,
+          "gradient_tensors": 5,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "deform-torch.float16-maskFalse",
+          "max_relative_l2": 0.001468919299818759,
+          "gradient_tensors": 4,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "deform-torch.float16-maskTrue",
+          "max_relative_l2": 0.0015188299809158635,
+          "gradient_tensors": 5,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "zero-offset-deform-equals-convolution"
+        },
+        {
+          "name": "profiled-native-roi-output-backward",
+          "max_relative_l2": 2.612735646811289e-07,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": true
+        }
+      ],
+      "torch": "2.13.0a0+gfx1013",
+      "torchvision": "0.28.0+gfx1013",
+      "torchvision_git": "8fb87713a24951e639c494b0f2a8a81b5f8e33a6",
+      "torchvision_file": "/opt/torch-venv/lib/python3.12/site-packages/torchvision/__init__.py",
+      "group": "ops",
+      "gpu_kernel_names": [
+        "__amd_rocclr_copyBuffer.kd",
+        "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>) [clone .kd]",
+        "void vision::ops::(anonymous namespace)::roi_align_backward_kernel_impl<float>(int, float const*, float, int, int, int, int, int, int, bool, float*, float const*, int, int, int, int, int) [clone .kd]",
+        "void vision::ops::(anonymous namespace)::roi_align_forward_kernel_impl<float>(int, float const*, float, int, int, int, int, int, int, bool, float const*, float*) [clone .kd]"
+      ]
+    },
+    "integration": {
+      "status": "passed",
+      "checks": [
+        "cpu-codec-and-hip-transfer-png",
+        "cpu-codec-and-hip-transfer-jpeg",
+        "cpu-codec-and-hip-transfer-webp",
+        "transform-resize",
+        "transform-normalize",
+        "transform-affine",
+        "transform-crop",
+        "synthetic-resnet18-output-input-all-parameter-gradients",
+        "qualified-torch-version-native-ops-import"
+      ],
+      "results": [
+        {
+          "name": "cpu-codec-and-hip-transfer-png"
+        },
+        {
+          "name": "cpu-codec-and-hip-transfer-jpeg"
+        },
+        {
+          "name": "cpu-codec-and-hip-transfer-webp"
+        },
+        {
+          "name": "transform-resize",
+          "max_relative_l2": 5.985062951791696e-07,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "transform-normalize",
+          "max_relative_l2": 4.402144191009325e-08,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "transform-affine",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "transform-crop",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "noncontiguous": false,
+          "trace": false
+        },
+        {
+          "name": "synthetic-resnet18-output-input-all-parameter-gradients",
+          "parameter_tensors": 62,
+          "weights_downloaded": false
+        },
+        {
+          "name": "qualified-torch-version-native-ops-import",
+          "pillow": "13.0.0"
+        }
+      ],
+      "torch": "2.13.0a0+gfx1013",
+      "torchvision": "0.28.0+gfx1013",
+      "torchvision_git": "8fb87713a24951e639c494b0f2a8a81b5f8e33a6",
+      "torchvision_file": "/opt/torch-venv/lib/python3.12/site-packages/torchvision/__init__.py",
+      "group": "integration"
+    },
+    "core": {
+      "status": "passed",
+      "arch": "gfx1013:xnack-",
+      "checks": [
+        "gemm-output-grad-torch.float32",
+        "gemm-output-grad-torch.bfloat16",
+        "math-sdpa-output-qkv-grad-32",
+        "math-sdpa-output-qkv-grad-256",
+        "layernorm-output-grad",
+        "fft-output-grad",
+        "rng-exact-replay"
+      ],
+      "torch_path": "/workspace/pytorch-work/torch/__init__.py",
+      "transformers_path": "/opt/bc250-stack/dev/priority1/python-consumers/site-packages/transformers/__init__.py",
+      "versions": {
+        "torch": "2.13.0a0+gfx1013",
+        "triton": "3.8.0",
+        "transformers": "5.2.0",
+        "peft": "0.18.1",
+        "accelerate": "1.12.0"
+      }
+    }
+  },
+  "limitations": "Bounded outputs/first-order gradients, no universal correctness/performance claim. CPU codecs, BF16 custom ops excluded. Historical CPU segfault unresolved, distinct from fixed VM-heap/CSR and N3.8 OOM.",
+  "next": "B04.2 torchaudio ABI/backend feasibility and isolated reference qualification",
+  "running_agent_jobs": []
+}
