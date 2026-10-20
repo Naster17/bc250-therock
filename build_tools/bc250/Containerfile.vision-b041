@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MIT
+FROM localhost/bc250-pytorch-build:2.13-gfx1013
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpng-dev libjpeg-dev libwebp-dev patchelf \
+    && rm -rf /var/lib/apt/lists/*
