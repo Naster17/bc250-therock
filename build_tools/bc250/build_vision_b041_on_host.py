@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: MIT
 """Build a new isolated image/wheel under the existing exclusive prefix lock."""
 
+import argparse
 import json
+import re
 import os
 from pathlib import Path
 import subprocess
@@ -12,6 +14,10 @@ from deploy_torch_a04_on_host import atomic_json, sha
 from qualify_training_n33_on_host import WS
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--attempt", default="r3")
+    args = parser.parse_args()
+    assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
     assert os.geteuid() == 0
     assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
     prior = json.loads((WS / "logs/vision-b041-entry-r2/final.json").read_text())
@@ -20,14 +26,23 @@ if __name__ == "__main__":
         assert sha(Path(name)) == expected, name
     root = WS / "vision-b041"
     assert os.statvfs(WS).f_bavail * os.statvfs(WS).f_frsize > 8 * 1024**3
-    assert not (root / "source").exists()
-    with tarfile.open(root / "source.tar") as t:
-        t.extractall(root, filter="data")
+    if not (root / "source").exists():
+        with tarfile.open(root / "source.tar") as t:
+            t.extractall(root, filter="data")
+    assert (
+        subprocess.check_output(
+            ["git", "-C", str(root / "source"), "rev-parse", "HEAD"], text=True
+        ).strip()
+        == "8fb87713a24951e639c494b0f2a8a81b5f8e33a6"
+    )
+    temporary = root / ("tmp-" + args.attempt)
+    temporary.mkdir()
+    os.environ["TMPDIR"] = str(temporary)
     pillow = json.loads((root / "pillow-source.json").read_text())
     assert sha(root / pillow["filename"]) == pillow["sha256"]
-    logs = WS / "logs/vision-b041-build-r2"
+    logs = WS / ("logs/vision-b041-build-" + args.attempt)
     logs.mkdir()
-    build_image = "localhost/bc250-torchvision-build:b041-r2"
+    build_image = "localhost/bc250-torchvision-build:b041-" + args.attempt
     assert subprocess.run(["podman", "image", "exists", build_image]).returncode != 0
     base = subprocess.check_output(
         [
@@ -90,7 +105,7 @@ if __name__ == "__main__":
             "run",
             "--rm",
             "--name",
-            "vision-b041-build-r2",
+            "vision-b041-build-" + args.attempt,
             "--network=none",
             "--memory=10g",
             "--memory-swap=12g",

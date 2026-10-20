@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Exact qualified runtime remains an independent fallback image.
+FROM 5df0a58392de13916819f6d84342b0338ae2c2bbb2f3c21a1f3ad38be2724a59
+COPY wheels/ /opt/bc250-vision-wheels/
+RUN python -m pip install --no-deps --no-index /opt/bc250-vision-wheels/*.whl

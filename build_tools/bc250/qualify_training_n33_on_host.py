@@ -25,6 +25,7 @@ def main(
     additional_sources: tuple[str, ...] = (),
     scratch_mounts: tuple[Path, ...] = (),
     minimum_disk_free_bytes: int = 2 * 1024**3,
+    release_override: Path | None = None,
 ) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--attempt", default="r1")
@@ -42,7 +43,7 @@ def main(
         )
     assert args.phase != "extra" or extra_gates
     assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
-    assert re.fullmatch(r"training-n[0-9]+", batch_id)
+    assert re.fullmatch(r"(?:training-n[0-9]+|vision-b041)", batch_id)
     assert Path(baseline_label).name == baseline_label
     assert len(shape) == 3 and min(shape) > 0
     assert os.geteuid() == 0
@@ -112,6 +113,7 @@ def main(
         library_or_torch_build_required=False,
         scratch_mounts=[str(p) for p in scratch_mounts],
         minimum_disk_free_bytes=minimum_disk_free_bytes,
+        release_override=str(release_override) if release_override else None,
     )
     atomic_json(logs / "before.json", report)
     try:
@@ -163,6 +165,8 @@ def main(
                 "--script",
                 script,
             ]
+            if release_override is not None:
+                command += ["--release", str(release_override)]
             for path in scratch_mounts:
                 command += ["--mount-rw", str(path)]
             command += ["--test-arg=" + a for a in arguments]
