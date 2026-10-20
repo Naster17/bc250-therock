@@ -1,0 +1,37 @@
+
+
+
+def forward(self, L_self_modules_up_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_up_parameters_bias_ : torch.nn.parameter.Parameter, L_x_ : torch.Tensor, L_self_modules_down_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_down_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_bias_ : torch.nn.parameter.Parameter):
+    l_self_modules_up_parameters_weight_ = L_self_modules_up_parameters_weight_
+    l_self_modules_up_parameters_bias_ = L_self_modules_up_parameters_bias_
+    l_x_ = L_x_
+    l_self_modules_down_parameters_weight_ = L_self_modules_down_parameters_weight_
+    l_self_modules_down_parameters_bias_ = L_self_modules_down_parameters_bias_
+    l_self_modules_norm_parameters_weight_ = L_self_modules_norm_parameters_weight_
+    l_self_modules_norm_parameters_bias_ = L_self_modules_norm_parameters_bias_
+    linear = torch._C._nn.linear(l_x_, l_self_modules_up_parameters_weight_, l_self_modules_up_parameters_bias_);  l_self_modules_up_parameters_weight_ = l_self_modules_up_parameters_bias_ = None
+    silu = torch.nn.functional.silu(linear);  linear = None
+    linear_1 = torch._C._nn.linear(silu, l_self_modules_down_parameters_weight_, l_self_modules_down_parameters_bias_);  silu = l_self_modules_down_parameters_weight_ = l_self_modules_down_parameters_bias_ = None
+    add = l_x_ + linear_1;  l_x_ = linear_1 = None
+    layer_norm = torch.nn.functional.layer_norm(add, (17,), l_self_modules_norm_parameters_weight_, l_self_modules_norm_parameters_bias_, 1e-05);  add = l_self_modules_norm_parameters_weight_ = l_self_modules_norm_parameters_bias_ = None
+    return (layer_norm,)
+    
+
+
+
+
+def forward(self, L_self_modules_up_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_up_parameters_bias_ : torch.nn.parameter.Parameter, L_x_ : torch.Tensor, L_self_modules_down_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_down_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_bias_ : torch.nn.parameter.Parameter):
+    l_self_modules_up_parameters_weight_ = L_self_modules_up_parameters_weight_
+    l_self_modules_up_parameters_bias_ = L_self_modules_up_parameters_bias_
+    l_x_ = L_x_
+    l_self_modules_down_parameters_weight_ = L_self_modules_down_parameters_weight_
+    l_self_modules_down_parameters_bias_ = L_self_modules_down_parameters_bias_
+    l_self_modules_norm_parameters_weight_ = L_self_modules_norm_parameters_weight_
+    l_self_modules_norm_parameters_bias_ = L_self_modules_norm_parameters_bias_
+    linear = torch._C._nn.linear(l_x_, l_self_modules_up_parameters_weight_, l_self_modules_up_parameters_bias_);  l_self_modules_up_parameters_weight_ = l_self_modules_up_parameters_bias_ = None
+    silu = torch.nn.functional.silu(linear);  linear = None
+    linear_1 = torch._C._nn.linear(silu, l_self_modules_down_parameters_weight_, l_self_modules_down_parameters_bias_);  silu = l_self_modules_down_parameters_weight_ = l_self_modules_down_parameters_bias_ = None
+    add = l_x_ + linear_1;  l_x_ = linear_1 = None
+    layer_norm = torch.nn.functional.layer_norm(add, (17,), l_self_modules_norm_parameters_weight_, l_self_modules_norm_parameters_bias_, 1e-05);  add = l_self_modules_norm_parameters_weight_ = l_self_modules_norm_parameters_bias_ = None
+    return (layer_norm,)
+    

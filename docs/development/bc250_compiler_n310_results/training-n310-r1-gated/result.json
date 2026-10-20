@@ -1,0 +1,444 @@
+{
+  "status": "passed",
+  "family": "gated",
+  "checks": [
+    "cpu-fp64-oracle-finite-differences",
+    "torch.float32-shape0-eager-output-all-gradients-buffers-cpu-adamw",
+    "torch.float32-shape0-compiled-output-all-gradients-buffers-cpu-adamw",
+    "profiled-compiled-gpu-kernels-reference-replay",
+    "torch.float32-shape1-eager-output-all-gradients-buffers-cpu-adamw",
+    "torch.float32-shape1-compiled-output-all-gradients-buffers-cpu-adamw",
+    "torch.float16-shape0-eager-output-all-gradients-buffers-cpu-adamw",
+    "torch.float16-shape0-compiled-output-all-gradients-buffers-cpu-adamw",
+    "torch.float16-shape1-eager-output-all-gradients-buffers-cpu-adamw",
+    "torch.float16-shape1-compiled-output-all-gradients-buffers-cpu-adamw",
+    "torch.bfloat16-shape0-eager-output-all-gradients-buffers-cpu-adamw",
+    "torch.bfloat16-shape0-compiled-output-all-gradients-buffers-cpu-adamw",
+    "torch.bfloat16-shape1-eager-output-all-gradients-buffers-cpu-adamw",
+    "torch.bfloat16-shape1-compiled-output-all-gradients-buffers-cpu-adamw"
+  ],
+  "results": [
+    {
+      "mode": "eager",
+      "precision": "torch.float32",
+      "shape": [
+        2,
+        9,
+        17
+      ],
+      "input_stride": [
+        153,
+        17,
+        1
+      ],
+      "input_sha256": "9912674bdb7f5ec20ca62133c5f0425d7da1d040c26a73c4bca7589db35bcacb",
+      "max_relative_l2": 2.3749646340739573e-07,
+      "relative_l2": {
+        "output": 6.802141474968195e-08,
+        "input_gradient": 9.22552039381298e-08,
+        "scale": 1.0647746935832198e-07,
+        "gate.weight": 1.834338291197433e-07,
+        "gate.bias": 2.072485397216289e-07,
+        "up.weight": 1.8053112345830352e-07,
+        "up.bias": 2.3749646340739573e-07,
+        "down.weight": 1.4194556793641193e-07,
+        "down.bias": 8.731549897746823e-08
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "compiled",
+      "precision": "torch.float32",
+      "shape": [
+        2,
+        9,
+        17
+      ],
+      "input_stride": [
+        153,
+        17,
+        1
+      ],
+      "input_sha256": "9912674bdb7f5ec20ca62133c5f0425d7da1d040c26a73c4bca7589db35bcacb",
+      "max_relative_l2": 2.5233176839710836e-07,
+      "relative_l2": {
+        "output": 5.3623281683272974e-08,
+        "input_gradient": 6.557044391085508e-08,
+        "scale": 7.726417969046825e-08,
+        "gate.weight": 1.9082884592162803e-07,
+        "gate.bias": 2.5233176839710836e-07,
+        "up.weight": 1.475296776468439e-07,
+        "up.bias": 2.0467641907506886e-07,
+        "down.weight": 1.5698962516258966e-07,
+        "down.bias": 1.3305366026836035e-07
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "eager",
+      "precision": "torch.float32",
+      "shape": [
+        3,
+        7,
+        17
+      ],
+      "input_stride": [
+        238,
+        34,
+        2
+      ],
+      "input_sha256": "cfbc4cc7c3e44161a93fcdfeef4f1c2dcdf0219e711a62471d7e29b34a25f421",
+      "max_relative_l2": 1.7535355586854054e-07,
+      "relative_l2": {
+        "output": 5.647924401330732e-08,
+        "input_gradient": 8.103676999549291e-08,
+        "scale": 8.769884367001488e-08,
+        "gate.weight": 1.2487130804495774e-07,
+        "gate.bias": 1.62204343917942e-07,
+        "up.weight": 1.392662133850284e-07,
+        "up.bias": 1.7535355586854054e-07,
+        "down.weight": 1.4571819148539531e-07,
+        "down.bias": 1.497198894035366e-07
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "compiled",
+      "precision": "torch.float32",
+      "shape": [
+        3,
+        7,
+        17
+      ],
+      "input_stride": [
+        238,
+        34,
+        2
+      ],
+      "input_sha256": "cfbc4cc7c3e44161a93fcdfeef4f1c2dcdf0219e711a62471d7e29b34a25f421",
+      "max_relative_l2": 1.3592398485114128e-07,
+      "relative_l2": {
+        "output": 5.8413099276748636e-08,
+        "input_gradient": 6.584229600581261e-08,
+        "scale": 5.117556569929906e-08,
+        "gate.weight": 1.1341213533994684e-07,
+        "gate.bias": 1.2865492621287622e-07,
+        "up.weight": 1.0911900564755513e-07,
+        "up.bias": 1.3592398485114128e-07,
+        "down.weight": 1.263641700809541e-07,
+        "down.bias": 7.078824716352803e-08
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "eager",
+      "precision": "torch.float16",
+      "shape": [
+        2,
+        9,
+        17
+      ],
+      "input_stride": [
+        153,
+        17,
+        1
+      ],
+      "input_sha256": "df0d7e1629ac0aae28ee0252f67cc12abb7ddd22539c9df4840fecc44947ac3d",
+      "max_relative_l2": 0.000682956192985887,
+      "relative_l2": {
+        "output": 0.00014373862082243415,
+        "input_gradient": 6.650511688570386e-05,
+        "scale": 0.00021133793733256391,
+        "gate.weight": 0.0005740970972062859,
+        "gate.bias": 0.0006136905998972528,
+        "up.weight": 0.000682956192985887,
+        "up.bias": 0.0005753108160239767,
+        "down.weight": 0.0005468098050756619,
+        "down.bias": 0.0003764930260684759
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "compiled",
+      "precision": "torch.float16",
+      "shape": [
+        2,
+        9,
+        17
+      ],
+      "input_stride": [
+        153,
+        17,
+        1
+      ],
+      "input_sha256": "df0d7e1629ac0aae28ee0252f67cc12abb7ddd22539c9df4840fecc44947ac3d",
+      "max_relative_l2": 0.0007166860991650769,
+      "relative_l2": {
+        "output": 0.00014700093001001363,
+        "input_gradient": 7.792197460940888e-05,
+        "scale": 0.000220475613479028,
+        "gate.weight": 0.000587347597951165,
+        "gate.bias": 0.0007131733787207681,
+        "up.weight": 0.0007166860991650769,
+        "up.bias": 0.0006692480952984347,
+        "down.weight": 0.0005522692056473155,
+        "down.bias": 8.742972360741499e-05
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "eager",
+      "precision": "torch.float16",
+      "shape": [
+        3,
+        7,
+        17
+      ],
+      "input_stride": [
+        238,
+        34,
+        2
+      ],
+      "input_sha256": "67db323de3b1b4dffa830ba334d1a87c7d341532ca6683495fad94ca7652667c",
+      "max_relative_l2": 0.0007215674710270813,
+      "relative_l2": {
+        "output": 0.00015930119025393312,
+        "input_gradient": 6.275779259390678e-05,
+        "scale": 0.0001955364961724277,
+        "gate.weight": 0.0007215674710270813,
+        "gate.bias": 0.0005223530519704501,
+        "up.weight": 0.0006292285401183614,
+        "up.bias": 0.0004947576250099265,
+        "down.weight": 0.0006458544834803396,
+        "down.bias": 0.00032850720648592457
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "compiled",
+      "precision": "torch.float16",
+      "shape": [
+        3,
+        7,
+        17
+      ],
+      "input_stride": [
+        238,
+        34,
+        2
+      ],
+      "input_sha256": "67db323de3b1b4dffa830ba334d1a87c7d341532ca6683495fad94ca7652667c",
+      "max_relative_l2": 0.0006621385626502487,
+      "relative_l2": {
+        "output": 0.0001596862844323685,
+        "input_gradient": 6.193392412610826e-05,
+        "scale": 0.0002052733241727625,
+        "gate.weight": 0.0006621385626502487,
+        "gate.bias": 0.00035764107396647966,
+        "up.weight": 0.0006317007922841506,
+        "up.bias": 0.0004139013614109061,
+        "down.weight": 0.000545212819788094,
+        "down.bias": 4.7130306690532424e-05
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "eager",
+      "precision": "torch.bfloat16",
+      "shape": [
+        2,
+        9,
+        17
+      ],
+      "input_stride": [
+        153,
+        17,
+        1
+      ],
+      "input_sha256": "d27a7f09bdf12f6f7dcfefa3c501f9149c657bbdc9a1a4b53f7283ead58fc34e",
+      "max_relative_l2": 0.00639249538734571,
+      "relative_l2": {
+        "output": 0.0013353195307145027,
+        "input_gradient": 0.000607569634087118,
+        "scale": 0.002197494353219933,
+        "gate.weight": 0.00639249538734571,
+        "gate.bias": 0.004475928973276098,
+        "up.weight": 0.005117950501706121,
+        "up.bias": 0.005462747007561054,
+        "down.weight": 0.00557221396162244,
+        "down.bias": 0.0029565167675224937
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "compiled",
+      "precision": "torch.bfloat16",
+      "shape": [
+        2,
+        9,
+        17
+      ],
+      "input_stride": [
+        153,
+        17,
+        1
+      ],
+      "input_sha256": "d27a7f09bdf12f6f7dcfefa3c501f9149c657bbdc9a1a4b53f7283ead58fc34e",
+      "max_relative_l2": 0.005552226733963668,
+      "relative_l2": {
+        "output": 0.0013160490014684338,
+        "input_gradient": 0.0006183712638736742,
+        "scale": 0.002373793562404305,
+        "gate.weight": 0.005552226733963668,
+        "gate.bias": 0.0034111001328295427,
+        "up.weight": 0.0051323022870025286,
+        "up.bias": 0.005057578917364976,
+        "down.weight": 0.005266544453618109,
+        "down.bias": 0.00035472299369505655
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "eager",
+      "precision": "torch.bfloat16",
+      "shape": [
+        3,
+        7,
+        17
+      ],
+      "input_stride": [
+        238,
+        34,
+        2
+      ],
+      "input_sha256": "f114acfe9048fd31a842033a398a29a0ff796374972f3c41b920538c0736c1bc",
+      "max_relative_l2": 0.005439259376272593,
+      "relative_l2": {
+        "output": 0.0012188287640742903,
+        "input_gradient": 0.0004884195748054971,
+        "scale": 0.0017042637783949417,
+        "gate.weight": 0.004803168688204469,
+        "gate.bias": 0.00371498307736843,
+        "up.weight": 0.005065971133132917,
+        "up.bias": 0.005439259376272593,
+        "down.weight": 0.005046836722220244,
+        "down.bias": 0.002723287026446798
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    },
+    {
+      "mode": "compiled",
+      "precision": "torch.bfloat16",
+      "shape": [
+        3,
+        7,
+        17
+      ],
+      "input_stride": [
+        238,
+        34,
+        2
+      ],
+      "input_sha256": "f114acfe9048fd31a842033a398a29a0ff796374972f3c41b920538c0736c1bc",
+      "max_relative_l2": 0.005296413144924733,
+      "relative_l2": {
+        "output": 0.0012131636147167855,
+        "input_gradient": 0.0004955608512755734,
+        "scale": 0.001458278006006452,
+        "gate.weight": 0.004730639182355948,
+        "gate.bias": 0.003746486879561018,
+        "up.weight": 0.0050125771386570145,
+        "up.bias": 0.005296413144924733,
+        "down.weight": 0.004170715221944101,
+        "down.bias": 0.000482497617753377
+      },
+      "parameter_count": 7,
+      "buffer_count": 0,
+      "cpu_adamw_max_parameter_error": 1.4901161193847656e-08
+    }
+  ],
+  "compilation": [
+    {
+      "precision": "torch.float32",
+      "graphs": 2,
+      "generated_kernels": 17,
+      "fullgraph": true,
+      "dynamic": false
+    },
+    {
+      "precision": "torch.float16",
+      "graphs": 2,
+      "generated_kernels": 38,
+      "fullgraph": true,
+      "dynamic": false
+    },
+    {
+      "precision": "torch.bfloat16",
+      "graphs": 2,
+      "generated_kernels": 38,
+      "fullgraph": true,
+      "dynamic": false
+    }
+  ],
+  "source_sha256": "5e4d4338bd3d8d151eb962bcaeaf6e1dca6ceeb97e78d7b41edf4d726df1b9ea",
+  "reference": "CPU FP64 forward/input/all-parameter gradients with quantized upstream; finite differences; independent CPU FP32 AdamW of each GPU gradient",
+  "scope": "Synthetic modules, fullgraph Inductor forward/backward; no model packages, compiled optimizer, graph capture, stochastic layer, full application or speed claim",
+  "finite_difference_probes": [
+    {
+      "kind": "input",
+      "index": 0,
+      "exact": -0.005276681469529196,
+      "finite_difference": -0.005276681470239852
+    },
+    {
+      "kind": "input",
+      "index": 153,
+      "exact": 0.0012886197728317961,
+      "finite_difference": 0.0012886197725200943
+    },
+    {
+      "kind": "parameter",
+      "index": 0,
+      "exact": -0.0036890959980839123,
+      "finite_difference": -0.003689095998127278
+    }
+  ],
+  "gpu_kernel_names": [
+    "Cijk_Ailk_Bjlk_SB_MT128x128x8_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR0_SIA1_SU32_SUS256_SVW4_TT8_8_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+    "Cijk_Ailk_Bljk_SB_MT128x64x8_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR0_SIA1_SU32_SUS256_SVW4_TT8_4_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+    "Cijk_Alik_Bljk_SB_MT128x64x12_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA3_NLCB3_PGR1_PLR1_SIA1_SU32_SUS256_SVW4_TT8_4_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+    "__amd_rocclr_copyBuffer.kd",
+    "triton_per_fused_add_div_expand_mul_pow_sum_view_1.kd",
+    "triton_per_fused_add_mean_mul_pow_rsqrt_view_1.kd",
+    "triton_per_fused_add_mul_sum_view_0.kd",
+    "triton_per_fused_mul_silu_sum_view_4.kd",
+    "triton_per_fused_sum_view_2.kd",
+    "triton_poi_fused_add_view_5.kd",
+    "triton_poi_fused_mul_silu_silu_backward_view_3.kd",
+    "triton_poi_fused_mul_silu_view_0.kd",
+    "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int, bool)#1}) [clone .kd]"
+  ],
+  "gpu_kernel_count": 22
+}

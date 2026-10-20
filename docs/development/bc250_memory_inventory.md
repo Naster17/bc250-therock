@@ -926,6 +926,34 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**N3.10 broad compiler coverage2026-10-20:** user explicitly prioritizes broad
+ROCm/Torch/library support; Qwen/LoRA is one optional fixture, not scope boundary.
+Code7c8156c57 replaces proposed Qwen-only MLP audit with synthetic residual dense,
+gated/RMS, group2/dilation2 CNN+GroupNorm/GELU/pool/head and training BatchNorm.
+FP32/FP16-BF16 autocast with FP32 parameters, two shapes/layouts each, fullgraph
+Inductor dynamic=False.48 eager/compiled cases: CPU FP64 output/input/all-parameter
+gradients, running buffers and independent CPU AdamW;12 CPU finite-difference
+probes/four profiled CPU-reference replays.56 composite checks pass;52 GPU
+forward/backward executions/48 optimizer updates. MaxrelativeL2 dense0.004123/
+gated0.006393/CNN0.008807/BN0.004749; unchangedFP32/FP16/BF16 limits. CPU AdamW
+parametererror<=1.49e-8; BN3 buffers match.24 FX graphs/314 generated-kernel metric,
+101 GPU trace kernel records incl Triton; no eager fallback. No production defect
+reproduced/source fix/install or speed claim. Existing is_big_gpu guard excludes
+HIPmajor10 max-autotune; policy retained, not claimed physical impossibility.
+Four600s guards ACK, whole-batch dmesg identical/313 protected identities/four
+FFT AOT DBs/links retained. New r2 boot48bdf727 observed at entry (not agent
+reboot); native runtime62ab2437c/rocBLAS8389197c1/Torchdc8fea0/source2b449c4/other
+libs319a235d6 unchanged. Four compiler/CPU threads, JIT cache extended not reset;
+no .105/BIOS/fallback/delete/nativebuild/prefix/default change. Disk28.976GB free
+observed.56 files1,304,438B verified local kernel/artifacts/training-n310/remote;
+[report](bc250_compiler_n310_results/README.md); WS/logs/training-n310-* and
+baseline training-n310-qualification-r1/final.json. No own jobs/container/guard.
+Historical CPU fault unresolved/separate from VM-heap/CSR/N38 host OOM.
+Next B04.1 matching pinned torchvision native gfx1013 extension/CPU-GPU image
+operator audit, isolated build and reference gates before installation; no other
+Torch wheel. Torchaudio separate. B01/B02/B03/B05/B06/B07 and broader N2/N3/N4–8
+remain real scope even when unnecessary for Qwen; no universal-support percentage.
+
 **N3.9 trainer reconciliation2026-10-20 local/19UTC:** code9899e0659,
 continuity5a24fe4e7/guidea7fa50d00/appguidanceabb5256ab. Exact reviewed patch
 restores qualified N37 trainerb9bf2587/provenance/A07 attention CLI; keeps current

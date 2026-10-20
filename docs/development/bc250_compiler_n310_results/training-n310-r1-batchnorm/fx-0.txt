@@ -1,0 +1,39 @@
+
+
+
+def forward(self, L_x_ : torch.Tensor, L_self_modules_norm_buffers_num_batches_tracked_ : torch.Tensor, L_self_modules_norm_buffers_running_mean_ : torch.Tensor, L_self_modules_norm_buffers_running_var_ : torch.Tensor, L_self_modules_norm_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_bias_ : torch.nn.parameter.Parameter):
+    l_x_ = L_x_
+    l_self_modules_norm_buffers_num_batches_tracked_ = L_self_modules_norm_buffers_num_batches_tracked_
+    l_self_modules_norm_buffers_running_mean_ = L_self_modules_norm_buffers_running_mean_
+    l_self_modules_norm_buffers_running_var_ = L_self_modules_norm_buffers_running_var_
+    l_self_modules_norm_parameters_weight_ = L_self_modules_norm_parameters_weight_
+    l_self_modules_norm_parameters_bias_ = L_self_modules_norm_parameters_bias_
+    l_self_modules_head_parameters_weight_ = L_self_modules_head_parameters_weight_
+    l_self_modules_head_parameters_bias_ = L_self_modules_head_parameters_bias_
+    add_ = l_self_modules_norm_buffers_num_batches_tracked_.add_(1);  l_self_modules_norm_buffers_num_batches_tracked_ = add_ = None
+    batch_norm = torch.nn.functional.batch_norm(l_x_, l_self_modules_norm_buffers_running_mean_, l_self_modules_norm_buffers_running_var_, l_self_modules_norm_parameters_weight_, l_self_modules_norm_parameters_bias_, True, 0.2, 1e-05);  l_x_ = l_self_modules_norm_buffers_running_mean_ = l_self_modules_norm_buffers_running_var_ = l_self_modules_norm_parameters_weight_ = l_self_modules_norm_parameters_bias_ = None
+    silu = torch.nn.functional.silu(batch_norm);  batch_norm = None
+    mean = silu.mean((2, 3));  silu = None
+    linear = torch._C._nn.linear(mean, l_self_modules_head_parameters_weight_, l_self_modules_head_parameters_bias_);  mean = l_self_modules_head_parameters_weight_ = l_self_modules_head_parameters_bias_ = None
+    return (linear,)
+    
+
+
+
+
+def forward(self, L_x_ : torch.Tensor, L_self_modules_norm_buffers_num_batches_tracked_ : torch.Tensor, L_self_modules_norm_buffers_running_mean_ : torch.Tensor, L_self_modules_norm_buffers_running_var_ : torch.Tensor, L_self_modules_norm_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_bias_ : torch.nn.parameter.Parameter):
+    l_x_ = L_x_
+    l_self_modules_norm_buffers_num_batches_tracked_ = L_self_modules_norm_buffers_num_batches_tracked_
+    l_self_modules_norm_buffers_running_mean_ = L_self_modules_norm_buffers_running_mean_
+    l_self_modules_norm_buffers_running_var_ = L_self_modules_norm_buffers_running_var_
+    l_self_modules_norm_parameters_weight_ = L_self_modules_norm_parameters_weight_
+    l_self_modules_norm_parameters_bias_ = L_self_modules_norm_parameters_bias_
+    l_self_modules_head_parameters_weight_ = L_self_modules_head_parameters_weight_
+    l_self_modules_head_parameters_bias_ = L_self_modules_head_parameters_bias_
+    add_ = l_self_modules_norm_buffers_num_batches_tracked_.add_(1);  l_self_modules_norm_buffers_num_batches_tracked_ = add_ = None
+    batch_norm = torch.nn.functional.batch_norm(l_x_, l_self_modules_norm_buffers_running_mean_, l_self_modules_norm_buffers_running_var_, l_self_modules_norm_parameters_weight_, l_self_modules_norm_parameters_bias_, True, 0.2, 1e-05);  l_x_ = l_self_modules_norm_buffers_running_mean_ = l_self_modules_norm_buffers_running_var_ = l_self_modules_norm_parameters_weight_ = l_self_modules_norm_parameters_bias_ = None
+    silu = torch.nn.functional.silu(batch_norm);  batch_norm = None
+    mean = silu.mean((2, 3));  silu = None
+    linear = torch._C._nn.linear(mean, l_self_modules_head_parameters_weight_, l_self_modules_head_parameters_bias_);  mean = l_self_modules_head_parameters_weight_ = l_self_modules_head_parameters_bias_ = None
+    return (linear,)
+    

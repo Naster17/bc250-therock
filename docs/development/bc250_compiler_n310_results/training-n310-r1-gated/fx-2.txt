@@ -1,0 +1,53 @@
+
+
+
+def forward(self, L_self_modules_gate_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_gate_parameters_bias_ : torch.nn.parameter.Parameter, L_x_ : torch.Tensor, L_self_modules_up_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_up_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_down_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_down_parameters_bias_ : torch.nn.parameter.Parameter, L_self_parameters_scale_ : torch.nn.parameter.Parameter):
+    l_self_modules_gate_parameters_weight_ = L_self_modules_gate_parameters_weight_
+    l_self_modules_gate_parameters_bias_ = L_self_modules_gate_parameters_bias_
+    l_x_ = L_x_
+    l_self_modules_up_parameters_weight_ = L_self_modules_up_parameters_weight_
+    l_self_modules_up_parameters_bias_ = L_self_modules_up_parameters_bias_
+    l_self_modules_down_parameters_weight_ = L_self_modules_down_parameters_weight_
+    l_self_modules_down_parameters_bias_ = L_self_modules_down_parameters_bias_
+    l_self_parameters_scale_ = L_self_parameters_scale_
+    linear = torch._C._nn.linear(l_x_, l_self_modules_gate_parameters_weight_, l_self_modules_gate_parameters_bias_);  l_self_modules_gate_parameters_weight_ = l_self_modules_gate_parameters_bias_ = None
+    silu = torch.nn.functional.silu(linear);  linear = None
+    linear_1 = torch._C._nn.linear(l_x_, l_self_modules_up_parameters_weight_, l_self_modules_up_parameters_bias_);  l_self_modules_up_parameters_weight_ = l_self_modules_up_parameters_bias_ = None
+    mul = silu * linear_1;  silu = linear_1 = None
+    linear_2 = torch._C._nn.linear(mul, l_self_modules_down_parameters_weight_, l_self_modules_down_parameters_bias_);  mul = l_self_modules_down_parameters_weight_ = l_self_modules_down_parameters_bias_ = None
+    y = l_x_ + linear_2;  l_x_ = linear_2 = None
+    square = y.square()
+    mean = square.mean(-1, keepdim = True);  square = None
+    add_1 = mean + 1e-05;  mean = None
+    rsqrt = torch.rsqrt(add_1);  add_1 = None
+    mul_1 = y * rsqrt;  y = rsqrt = None
+    mul_2 = mul_1 * l_self_parameters_scale_;  mul_1 = l_self_parameters_scale_ = None
+    return (mul_2,)
+    
+
+
+
+
+def forward(self, L_self_modules_gate_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_gate_parameters_bias_ : torch.nn.parameter.Parameter, L_x_ : torch.Tensor, L_self_modules_up_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_up_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_down_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_down_parameters_bias_ : torch.nn.parameter.Parameter, L_self_parameters_scale_ : torch.nn.parameter.Parameter):
+    l_self_modules_gate_parameters_weight_ = L_self_modules_gate_parameters_weight_
+    l_self_modules_gate_parameters_bias_ = L_self_modules_gate_parameters_bias_
+    l_x_ = L_x_
+    l_self_modules_up_parameters_weight_ = L_self_modules_up_parameters_weight_
+    l_self_modules_up_parameters_bias_ = L_self_modules_up_parameters_bias_
+    l_self_modules_down_parameters_weight_ = L_self_modules_down_parameters_weight_
+    l_self_modules_down_parameters_bias_ = L_self_modules_down_parameters_bias_
+    l_self_parameters_scale_ = L_self_parameters_scale_
+    linear = torch._C._nn.linear(l_x_, l_self_modules_gate_parameters_weight_, l_self_modules_gate_parameters_bias_);  l_self_modules_gate_parameters_weight_ = l_self_modules_gate_parameters_bias_ = None
+    silu = torch.nn.functional.silu(linear);  linear = None
+    linear_1 = torch._C._nn.linear(l_x_, l_self_modules_up_parameters_weight_, l_self_modules_up_parameters_bias_);  l_self_modules_up_parameters_weight_ = l_self_modules_up_parameters_bias_ = None
+    mul = silu * linear_1;  silu = linear_1 = None
+    linear_2 = torch._C._nn.linear(mul, l_self_modules_down_parameters_weight_, l_self_modules_down_parameters_bias_);  mul = l_self_modules_down_parameters_weight_ = l_self_modules_down_parameters_bias_ = None
+    y = l_x_ + linear_2;  l_x_ = linear_2 = None
+    square = y.square()
+    mean = square.mean(-1, keepdim = True);  square = None
+    add_1 = mean + 1e-05;  mean = None
+    rsqrt = torch.rsqrt(add_1);  add_1 = None
+    mul_1 = y * rsqrt;  y = rsqrt = None
+    mul_2 = mul_1 * l_self_parameters_scale_;  mul_1 = l_self_parameters_scale_ = None
+    return (mul_2,)
+    

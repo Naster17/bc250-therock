@@ -9,6 +9,45 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **N3.10 broad compiler qualification completed2026-10-20:** code7c8156c57.
+  **User scope:** broad hardware-feasible ROCm/PyTorch/library/API support;
+  Qwen3.5/LoRA is one optional test fixture, not the port boundary. Missing broad
+  features stay in queue even when not needed by that trainer. Proposed Qwen-only
+  MLP step replaced with model-independent composed training blocks after reading
+  prior P1/compiler/dynamic-attention evidence; no repeated model checkpoint run.
+  Residual dense+LayerNorm, gated/RMS MLP, group2/dilation2 CNN+GroupNorm/GELU/
+  pooling/head, train BatchNorm. FP32/FP16-BF16 autocast with FP32 parameters;
+  two shapes/layouts (strided MLP/channels-last CNN), fullgraph dynamic=False.
+  48 eager/compiled cases compare output/input/all parameter gradients CPU FP64,
+  all running buffers and own-gradient CPU AdamW.12 CPU finite-difference probes
+  plus four profiled CPU-reference replays;56 composite checks pass.52 GPU
+  forward/backward runs/48 optimizer updates. MaximumrelativeL2 dense0.004123/
+  gated0.006393/CNN0.008807/BN0.004749; fixed precision limits unchanged. CPU AdamW
+  parametererror<=1.49e-8, BN3 buffers match.24 capturedFXgraphs/314 generated
+  kernel metric; four traces101 actual GPU kernel events incl Triton. No eager
+  fallback or new production defect/fix/install/speed claim. Ordinary compiler
+  coverage qualified; is_big_gpu max-autotune HIPmajor10 exclusion retained as
+  policy, not a proof all scalar tuning impossible. Dropout/dynamic reuse/
+  compiled optimizers/full apps/graphs/max-autotune remain separate.
+  Four600s guards ACK; whole batch dmesg identical,313 protected identities/four
+  FFT AOT DBs/links retained. New r2 boot48bdf727-b2f1-4d7b-aba5-2a0b775f1387
+  observed at ENTRY; no agent reboot. Runtime62ab2437c/rocBLAS8389197c1/native
+  Torchdc8fea0/source2b449c4/otherlibs319a235d6 unchanged. N3.2/math defaults;
+  inactive vocab/square candidates stay inactive. No nativebuild/prefix install/
+  cache reset/delete/.105/BIOS/fallback change; four CPU/compiler threads,
+  existing JIT caches extended. Disk28,975,644,672B free observed, no cleanup.
+  56 rawfiles1,304,438B SHA-verified local kernel/artifacts/training-n310/remote;
+  [report](docs/development/bc250_compiler_n310_results/README.md), rawWS/logs/
+  training-n310-*, baseline training-n310-qualification-r1/final.json. No own
+  build/test/container/export/guard deadline; root SSH closed. CPU segfault
+  remains unresolved/distinct from fixed VM-heap/CSR and retainedN38 host OOM.
+  **Next B04.1:** inspect Torch ABI/package/build configuration and existing RPP/
+  media evidence; select pinned compatible torchvision, isolated native gfx1013
+  extension build and real image-operator CPU/GPU references (NMS/ROI Align etc)
+  before deployment. No other Torch wheel; torchaudio separate. Broader N2/N3/
+  N4–N8 and B01/B02/B03/B05/B06/B07 remain scope; no universal support percentage.
+  Memory snapshot WS/agent-memory/latest keyed by final memory revision; old kept.
+
 - **N3.9 restored/deployed, 2026-10-20 local / 2026-10-19 UTC:**
   code9899e0659/continuity5a24fe4e7/guidea7fa50d00/appguidanceabb5256ab. Reviewed
   exact entry→qualifiedN37 diff; patch reconstructs trainerb9bf2587 byte-exact.
@@ -2064,7 +2103,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.7 | Supplemental checkpoint runtime/preset/hook provenance deployed; exact new/legacy/installed replay, eight refusal cases, pre-N37 numerical state exact. Network-only kernel-log guard failure retained; strict refusal recheck passes. |
 | [x]   | N3.8 | Full chunked CPU FP64 vocabulary forward/input-backward audit, matched Torch policy and full-model gates; timings variable, candidate inactive. Entry app drift and host OOM retained. |
 | [x]   | N3.9 | Qualified N37 provenance/A07 CLI restored preserving current ops edit; exact actual fresh/new/legacy/installed replay, conservative historical checkpoint refusal, app suite and guidance synchronized. |
-| [ ]   | **N3.10 — next** | Read prior compiler evidence; qualify actual nonzero-LoRA Qwen3.5 MLP eager/compiled output/input/adapter gradients under current math/N3.2 defaults. Full-trainer compilation/performance separate. |
+| [x]   | N3.10 | User-broadened generic compiled CNN/dense/gated/BatchNorm training;56 CPU-reference/optimizer/buffer/trace checks, no production defect/install/speed claim. |
+| [ ]   | **B04.1 — next** | Broad torchvision package/native image-operator integration: pin qualified Torch ABI, isolated gfx1013 build and CPU/GPU output/backward references before deployment. Torchaudio separate; do not replace Torch. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

@@ -1,0 +1,39 @@
+
+
+
+def forward(self, L_self_modules_conv_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_conv_parameters_bias_ : torch.nn.parameter.Parameter, L_x_ : torch.Tensor, L_self_modules_norm_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_bias_ : torch.nn.parameter.Parameter):
+    l_self_modules_conv_parameters_weight_ = L_self_modules_conv_parameters_weight_
+    l_self_modules_conv_parameters_bias_ = L_self_modules_conv_parameters_bias_
+    l_x_ = L_x_
+    l_self_modules_norm_parameters_weight_ = L_self_modules_norm_parameters_weight_
+    l_self_modules_norm_parameters_bias_ = L_self_modules_norm_parameters_bias_
+    l_self_modules_head_parameters_weight_ = L_self_modules_head_parameters_weight_
+    l_self_modules_head_parameters_bias_ = L_self_modules_head_parameters_bias_
+    conv2d = torch.conv2d(l_x_, l_self_modules_conv_parameters_weight_, l_self_modules_conv_parameters_bias_, (1, 1), (2, 2), (2, 2), 2);  l_x_ = l_self_modules_conv_parameters_weight_ = l_self_modules_conv_parameters_bias_ = None
+    group_norm = torch.nn.functional.group_norm(conv2d, 2, l_self_modules_norm_parameters_weight_, l_self_modules_norm_parameters_bias_, 1e-05);  conv2d = l_self_modules_norm_parameters_weight_ = l_self_modules_norm_parameters_bias_ = None
+    y = torch._C._nn.gelu(group_norm);  group_norm = None
+    adaptive_avg_pool2d = torch.nn.functional.adaptive_avg_pool2d(y, (2, 3));  y = None
+    flatten = adaptive_avg_pool2d.flatten(1);  adaptive_avg_pool2d = None
+    linear = torch._C._nn.linear(flatten, l_self_modules_head_parameters_weight_, l_self_modules_head_parameters_bias_);  flatten = l_self_modules_head_parameters_weight_ = l_self_modules_head_parameters_bias_ = None
+    return (linear,)
+    
+
+
+
+
+def forward(self, L_self_modules_conv_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_conv_parameters_bias_ : torch.nn.parameter.Parameter, L_x_ : torch.Tensor, L_self_modules_norm_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_norm_parameters_bias_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_weight_ : torch.nn.parameter.Parameter, L_self_modules_head_parameters_bias_ : torch.nn.parameter.Parameter):
+    l_self_modules_conv_parameters_weight_ = L_self_modules_conv_parameters_weight_
+    l_self_modules_conv_parameters_bias_ = L_self_modules_conv_parameters_bias_
+    l_x_ = L_x_
+    l_self_modules_norm_parameters_weight_ = L_self_modules_norm_parameters_weight_
+    l_self_modules_norm_parameters_bias_ = L_self_modules_norm_parameters_bias_
+    l_self_modules_head_parameters_weight_ = L_self_modules_head_parameters_weight_
+    l_self_modules_head_parameters_bias_ = L_self_modules_head_parameters_bias_
+    conv2d = torch.conv2d(l_x_, l_self_modules_conv_parameters_weight_, l_self_modules_conv_parameters_bias_, (1, 1), (2, 2), (2, 2), 2);  l_x_ = l_self_modules_conv_parameters_weight_ = l_self_modules_conv_parameters_bias_ = None
+    group_norm = torch.nn.functional.group_norm(conv2d, 2, l_self_modules_norm_parameters_weight_, l_self_modules_norm_parameters_bias_, 1e-05);  conv2d = l_self_modules_norm_parameters_weight_ = l_self_modules_norm_parameters_bias_ = None
+    y = torch._C._nn.gelu(group_norm);  group_norm = None
+    adaptive_avg_pool2d = torch.nn.functional.adaptive_avg_pool2d(y, (2, 3));  y = None
+    flatten = adaptive_avg_pool2d.flatten(1);  adaptive_avg_pool2d = None
+    linear = torch._C._nn.linear(flatten, l_self_modules_head_parameters_weight_, l_self_modules_head_parameters_bias_);  flatten = l_self_modules_head_parameters_weight_ = l_self_modules_head_parameters_bias_ = None
+    return (linear,)
+    
