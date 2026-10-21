@@ -1,0 +1,48 @@
+From 1ae7f5d8023e82be51b500399a37fceb45481a2b Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 21 Oct 2026 08:15:44 +0200
+Subject: [PATCH 4/4] Initialize RNNT counters with checked async memsets on
+ the consuming stream
+
+---
+ src/libtorchaudio/rnnt/workspace.h | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/src/libtorchaudio/rnnt/workspace.h b/src/libtorchaudio/rnnt/workspace.h
+index cb217e8..59c1346 100644
+--- a/src/libtorchaudio/rnnt/workspace.h
++++ b/src/libtorchaudio/rnnt/workspace.h
+@@ -5,6 +5,7 @@
+ 
+ #include <libtorchaudio/rnnt/options.h>
+ #include <torch/headeronly/util/Exception.h>
++#include <torch/csrc/stable/macros.h>
+ 
+ namespace torchaudio {
+ namespace rnnt {
+@@ -122,14 +123,18 @@ class IntWorkspace {
+   inline void ResetAlphaBetaCounters() {
+ #ifdef USE_CUDA
+     if (data_ != nullptr && options_.device_ == GPU) {
+-      cudaMemset(
++      // Counters are consumed on options_.stream_. Initializing them on the
++      // default stream does not order a non-blocking PyTorch consumer stream.
++      STD_CUDA_CHECK(cudaMemsetAsync(
+           GetPointerToAlphaCounters(),
+           0,
+-          ComputeSizeForAlphaCounters(options_) * sizeof(int));
+-      cudaMemset(
++          ComputeSizeForAlphaCounters(options_) * sizeof(int),
++          options_.stream_));
++      STD_CUDA_CHECK(cudaMemsetAsync(
+           GetPointerToBetaCounters(),
+           0,
+-          ComputeSizeForBetaCounters(options_) * sizeof(int));
++          ComputeSizeForBetaCounters(options_) * sizeof(int),
++          options_.stream_));
+     }
+ #endif // USE_CUDA
+   }
+-- 
+2.56.0
+

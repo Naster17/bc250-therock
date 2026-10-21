@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+FROM a0b85fa88c9ecfbec88a8774f19db0fbc18fcfeaa086a4e402b69aa99ba55e27
+COPY wheels/ /opt/bc250-audio-wheels/
+RUN python -m pip install --no-deps --no-index /opt/bc250-audio-wheels/*.whl

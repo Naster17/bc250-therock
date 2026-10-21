@@ -43,7 +43,7 @@ def main(
         )
     assert args.phase != "extra" or extra_gates
     assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
-    assert re.fullmatch(r"(?:training-n[0-9]+|vision-b041)", batch_id)
+    assert re.fullmatch(r"(?:training-n[0-9]+|vision-b041|audio-b042)", batch_id)
     assert Path(baseline_label).name == baseline_label
     assert len(shape) == 3 and min(shape) > 0
     assert os.geteuid() == 0
