@@ -27,6 +27,7 @@ def main(
     minimum_disk_free_bytes: int = 2 * 1024**3,
     release_override: Path | None = None,
     hip_candidate: Path | None = None,
+    include_training_app: bool = True,
 ) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--attempt", default="r1")
@@ -44,7 +45,9 @@ def main(
         )
     assert args.phase != "extra" or extra_gates
     assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
-    assert re.fullmatch(r"(?:training-n[0-9]+|vision-b041|audio-b042)", batch_id)
+    assert re.fullmatch(
+        r"(?:training-n[0-9]+|vision-b041|audio-b042|codec-b043)", batch_id
+    )
     assert Path(baseline_label).name == baseline_label
     assert len(shape) == 3 and min(shape) > 0
     assert os.geteuid() == 0
@@ -54,12 +57,13 @@ def main(
     logs.mkdir()
     baseline = json.loads((WS / "logs" / baseline_label / "final.json").read_text())
     protected = dict(baseline["protected_sha256"])
-    for path in (
+    app_paths = (
         Path("/home/nik/finetune-n7/replica/train.py"),
         Path("/home/nik/finetune-n7/replica/bc250_ops.py"),
         Path("/home/nik/finetune-n7/scripts/train_bc250.py"),
         Path("/home/nik/finetune-n7/configs/qwen35-2b-lora.json"),
-    ):
+    )
+    for path in app_paths if include_training_app else ():
         protected.setdefault(str(path), sha(path))
     for p, digest in protected.items():
         assert sha(Path(p)) == digest, p

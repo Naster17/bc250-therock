@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: MIT
+FROM 97fac19f0d5747265c4ff8328f99d2eaacaf8ff62e5092d22cda300f7130a632
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+COPY wheels/ /opt/bc250-codec-wheels/
+RUN python -m pip install --no-deps --no-index /opt/bc250-codec-wheels/*.whl

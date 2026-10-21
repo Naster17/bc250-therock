@@ -66,6 +66,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--group", choices=("dsp", "native"), required=True)
+    parser.add_argument("--codec-available", action="store_true")
     args = parser.parse_args()
     torch.set_num_threads(4)
     torch.manual_seed(4042)
@@ -342,18 +343,30 @@ def main():
             # substitute a different implementation of the public file API.
             import importlib.util
 
-            assert importlib.util.find_spec("torchcodec") is None
-            for fn, arguments in (
-                (ta.load, ("missing-owned-audio-fixture.wav",)),
-                (ta.save, ("unused-owned-audio-fixture.wav", torch.zeros(1, 16), 8000)),
-            ):
-                try:
-                    fn(*arguments)
-                except ImportError as error:
-                    assert "torchcodec" in str(error).lower()
-                else:
-                    raise AssertionError("Missing codec backend was not reported")
-            passed("native-dispatch-and-explicit-unavailable-torchcodec-file-apis")
+            if args.codec_available:
+                import torchcodec
+                from torchcodec.decoders import AudioDecoder
+                from torchcodec.encoders import AudioEncoder
+
+                assert torchcodec.__version__ == "0.17.0+gfx1013"
+                assert callable(AudioDecoder) and callable(AudioEncoder)
+                passed("native-dispatch-and-explicit-installed-codec-interface")
+            else:
+                assert importlib.util.find_spec("torchcodec") is None
+                for fn, arguments in (
+                    (ta.load, ("missing-owned-audio-fixture.wav",)),
+                    (
+                        ta.save,
+                        ("unused-owned-audio-fixture.wav", torch.zeros(1, 16), 8000),
+                    ),
+                ):
+                    try:
+                        fn(*arguments)
+                    except ImportError as error:
+                        assert "torchcodec" in str(error).lower()
+                    else:
+                        raise AssertionError("Missing codec backend was not reported")
+                passed("native-dispatch-and-explicit-unavailable-torchcodec-file-apis")
         report["status"] = "passed"
     except Exception as error:
         report.update(status="failed", error=repr(error))

@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+FROM acdb6dc417950345b995d772a7c23285dfb1a54aac8fcb33b26d5cf46ce0e6cf
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg libavcodec-dev libavformat-dev libavutil-dev libavfilter-dev \
+    libavdevice-dev libswresample-dev libswscale-dev \
+    && rm -rf /var/lib/apt/lists/*
+RUN python -m pip install --no-cache-dir scikit-build-core==0.11.6 pybind11==3.0.1
