@@ -76,10 +76,10 @@
     },
     {
       "id": "B01",
-      "feature": "BF16 FFT API input rejected",
-      "evidence": "`torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works",
-      "next": "Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional.",
-      "status": "queued"
+      "feature": "Native BF16 FFT API rejected; explicit same-device FP32 bc250_fft helper installed",
+      "evidence": "B01.1 327 final-candidate+327 installed CPU-reference/output/first-gradient/DFT/native GPU trace and retained FFT/core checks. Audit confirms direct native BF16 remains rejected in both GPU AMP contexts. OutputC64/F32 without out; BF16 leaf gradients round on cast-back.",
+      "next": "Qualified explicit fallback; no native BF16 FFT/global API/CPU fallback/performance claim. Wider plans/compile/graphs/higher derivatives separate. Proceed to B02.1 sparse-solve API review.",
+      "status": "qualified-explicit-fallback"
     },
     {
       "id": "B02",
@@ -99,7 +99,7 @@
       "id": "B04",
       "feature": "B04.1\u2013B04.5 common native vision/audio and CPU TorchCodec audio/video/JPEG/PNG/WebP installed",
       "evidence": "B04.5 image86/video55/audio46/vision9/core7 pass candidate and installed (203 each). Independent samples and encoder/decoder references, explicit HIP output/input gradients; source3eecace0 and B04.4 time-seek fix retained, no new source patch.",
-      "next": "Optional AVIF/GIF/HEIC/GPU codecs and broader format/timing coverage remain separate. Return to B01.1 BF16 FFT review; user application excluded.",
+      "next": "Optional formats/GPU codecs/wider timing coverage remain separate. Common media scopes bounded-qualified; B01.1 explicit FFT fallback installed, next B02.1 sparse-solve review.",
       "status": "partially-qualified"
     },
     {

@@ -7,7 +7,7 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after B04.5 / broad support
+## Current cursor after B01.1 / broad support
 
 User direction2026-10-20: prioritize broad hardware-feasible ROCm/PyTorch and
 library/API support. Qwen/LoRA is an optional test fixture, not the scope boundary;
@@ -47,8 +47,12 @@ and explicit HIP spatial forward/backward pass. [Report](bc250_video_b044_result
 pixels and explicit GPU spatial forward/backward. Private missing libwebpdemux
 dependency supplied with notices; GPU codecs/AVIF/GIF/HEIC remain disabled.
 [Report/use/recovery](bc250_image_b045_results/README.md).
-**Next B01.1:** review prior BF16 FFT and existing autocast/promotion; qualify any
-missing explicit FP32 helper with complex64 output/input-gradient references. BF16 FFT, general
+**B01.1 installed explicit fallback:** bc250_fft0.1.0 casts only BF16 input to
+FP32 on its current device.327 final candidate+327 installed CPU-reference/gradient/
+DFT/native GPU trace/retained FFT checks pass. No native BF16 FFT, CPU fallback
+or global torch.fft/AMP change. [Report/use/recovery](bc250_fft_b011_results/README.md).
+**Next B02.1:** inspect general sparse solve/factorization versus N2.13 triangular
+evidence; select feasible integration or explicit bounded fallback with contracts. BF16 FFT, general
 sparse solve, distributed/quantization/export and CK-plugin work remain open.
 
 
@@ -322,7 +326,7 @@ The following rows are not an exhaustive API or dtype promise.
 | Pooling/resize/activations | ATen HIP | Current pool/resize backward and existing NHWC padding fix references | More shapes/types/antialias modes unqualified |
 | Embedding, cross entropy, CTC | ATen HIP | Current CPU-float64 forward/gradient references pass | Ordinary CE still materializes full FP32 logits in Transformers |
 | RNG | hipRAND/rocRAND + Torch | N2.15 Torch state80/statistics22/contracts20/fresh continuation1; direct native68/P2 RNG28 retained | Wider generators/orderings/statistical suites/graphs/concurrent mutation/cross-version replay unqualified |
-| FFT | hipFFT/rocFFT | N2.14 complex96/real72 output+weighted gradients, independent DFT/finite differences/reuse; direct16 plans/32 executions, FFT30 retained | BF16 rejected B01; native in-place/planar/callbacks/giant/wider half plans/performance unqualified |
+| FFT | hipFFT/rocFFT | N2.14 complex96/real72 output+weighted gradients, independent DFT/finite differences/reuse; direct16 plans/32 executions, FFT30 retained | Native BF16 rejected; B01.1 opt-in FP32 helper qualified. In-place/planar/callbacks/giant/wider half plans/performance unqualified |
 | Dense solve/SVD/lstsq | hipSOLVER/rocSOLVER/rocBLAS | Current solve, singular values+gradient, full-rank gels references pass | Rank-deficient drivers and every solver algorithm not qualified |
 | Hermitian eigenvectors | Native rocSOLVER | N2.1 retained22 cases through257 and gradients | Extreme/larger/two-stage cases unqualified |
 | Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–12 isolated GPU prototype cap16/separated spectra | Production solve is host arithmetic; native full prototype still slower; broader spectra/batching/gradients unqualified |
@@ -357,8 +361,8 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A07 — head256 completed, bounded** | Explicit D<=256 tiled/hybrid attention |36 tests; actual2B training/checkpoint gates and exact per-backend fresh/resume CLI continuation | Math default. N3.9 restores the CLI option lost at N3.8 entry; helper remains available. BF16 hybrid lower peak/slower in measured fixtures; quadratic forward temporaries. Dropout/compile/graphs remain separate. [Report](bc250_a06_a07_results/README.md). |
 | **A08 — completed, bounded** | Native dense INT8 -> INT32 Lt and Torch `_int_mm` | Libraries319a235;99 direct CPU-reference cases+11 refusals,16 Torch cases/out/streams+five refusals; overflow and above-FP32 exact-range cases pass | I32 scalar/modulo32 route, four integer epilogues. Existing Torch shape restrictions retained. Quantization/QLoRA/packed/compile integration unqualified. [Report](bc250_dense_int8_a08_results/README.md). |
 | **A09 — completed, bounded** | Native Torch GPU profiler via existing Kineto/SDK | Separate USE_KINETO=1 build; seven native trace/reference/lifecycle tests and existing numerical/model/resume gates | Explicit torch.profiler contexts; CPU/GPU kernels/copies/memory correlation. Hardware counters, broad concurrency, compile/graphs and long tracing unqualified. [Report](bc250_profiler_a09_results/README.md). |
-| **B01 — next: B01.1** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
-| **B02** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
+| **B01 — explicit fallback qualified** | Native BF16 FFT still rejects; opt-in bc250_fft0.1.0 installed |327 final candidate+327 installed checks: BF16-to-FP32 compute, C64/F32 outputs, rounded BF16 leaf gradients, CPU/DFT references and native GPU trace | No global API/AMP/native BF16/CPU fallback or performance claim. Wider shapes/graphs/compile/higher gradients remain separate. |
+| **B02 — next: B02.1** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
 | **B03** | Distributed build, Gloo/RCCL absent | USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected. | CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here. |
 | **B04 — bounded common media installed** | Native vision/audio and CPU TorchCodec audio/video/JPEG/PNG/WebP decode plus JPEG/PNG encode | B04.5 203 candidate+203 installed reference/HIP interop checks; prior bounded scopes/seek repair retained | Optional AVIF/GIF/HEIC/GPU codecs and wider format/layout/timing coverage remain separate; no universal media claim. |
 | **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; A08 now supplies a bounded dense INT8/INT32 primitive, not a low-bit model recipe | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
@@ -369,7 +373,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1–N3.10/B04.1–B04.5 bounded scopes are recorded; next B01.1 BF16 FFT review.
+N3.1–N3.10/B04.1–B04.5/B01.1 bounded scopes are recorded; next B02.1 sparse solve review.
 Any proposed preset still needs owned trainer qualification. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.

@@ -1,0 +1,1526 @@
+{
+  "task": "B01.1",
+  "status": "installed explicit fallback; bounded-qualified",
+  "integration_revision": "427492188",
+  "module": "bc250_fft",
+  "helper_version": "0.1.0",
+  "module_sha256": "50bada1588a98dc2a18eb5948a231a76ec7aaede8fe6198b503c338ef9820fe6",
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "c1fd78993ec25d0866e75e69bd4cc8ef2ebe9710f9a1f08e0de33bb350a2aaea",
+    "image": "5d0a6d9cef758b2f7677a2b52b9d29ac51e24970703259a10ca8e44bee93feb1",
+    "previous_image": "94c610368d0fcf596a9f9f6355a5d5d28fd1111d54d4033c46e6b5977cae1ece",
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/fft-b011-before/runtime.json",
+    "prefix_changed": true,
+    "native_libraries_changed": false,
+    "installed_runtime_sha256": "ab9db860207e230ea704cab2bf76005d19b7c8967e59559a5a4b0088ed7f38c1",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/fft-b011-qualification-r3/final.json",
+    "rollback_used": false
+  },
+  "audit_checks": 3,
+  "prototype_candidate_checks": 327,
+  "final_candidate_checks": 327,
+  "installed_checks": 327,
+  "promotion_checks_per_gate": 245,
+  "retained_checks": {
+    "real_fft": 72,
+    "contracts": 3,
+    "core": 7
+  },
+  "verification": {
+    "status": "passed",
+    "archive_sha256": "77cf1bd74524c66727f514a7ead1ebc50469b21f51021bd82a4947430d722f4a",
+    "raw_log_files": 141,
+    "raw_log_bytes": 4140885,
+    "guards": 13,
+    "all_guards_acknowledged": true,
+    "module_sha256": "50bada1588a98dc2a18eb5948a231a76ec7aaede8fe6198b503c338ef9820fe6"
+  },
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "c646d874-ebd6-4e4b-bb77-2e47233748e0",
+  "boot_unchanged": true,
+  "agent_reboot": false,
+  "protected_stack_paths": 306,
+  "fft_aot_databases_preserved": 4,
+  "passing_batches_kernel_log_unchanged": true,
+  "disk_available_bytes": 21439528960,
+  "existing_rocm_torch_libraries_unchanged": true,
+  "user_application_scope": "finetune-n7 uninspected/unmodified/untested; owned fixtures only.",
+  "baseline": "WS/logs/fft-b011-qualification-r3/final.json",
+  "raw_remote": "WS/logs/fft-b011-*",
+  "durable_local": "kernel/artifacts/fft-b011/remote",
+  "resources": "Pure Python module image layer only; no native build, ccache operation or GPU build devices. Existing bounded GPU test/guard controller retained.",
+  "running_agent_jobs": [],
+  "root_ssh_sessions_closed": true,
+  "max_output_absolute_error": 6.403597994086851e-07,
+  "max_gradient_relative_l2": 0.0019802574957593563,
+  "original_audit": {
+    "status": "passed",
+    "checks": [
+      "outside-autocast",
+      "bf16-autocast",
+      "explicit-float-promotion-output-backward"
+    ],
+    "results": [
+      {
+        "name": "outside-autocast",
+        "outcome": "rejected",
+        "error": "Unsupported dtype BFloat16"
+      },
+      {
+        "name": "bf16-autocast",
+        "outcome": "rejected",
+        "error": "Unsupported dtype BFloat16"
+      }
+    ],
+    "torch": "2.13.0a0+gfx1013",
+    "promoted_dtype": "torch.complex64",
+    "gradient_dtype": "torch.bfloat16"
+  },
+  "retained_stage_failure": "r2 FileExistsError on reused owned tmp directory before image construction; r3 uses exist_ok, failed artifacts retained.",
+  "next": "B02.1: inspect pinned public/general sparse-solve and native factorization consumers plus N2.13 triangular evidence; select a feasible ROCm integration or explicitly bounded fallback, with memory caps, residual/singularity and promised-gradient references before implementation/deployment.",
+  "limitations": "Opt-in same-device BF16-to-FP32 input cast, C64/F32 outputs without out and inherited out semantics; BF16 leaf gradients cast back/rounded. Native torch.fft BF16 rejection and GPU autocast behavior unchanged. No native BF16 FFT, CPU fallback, all shapes/plans/devices/compile/graphs/higher derivatives/performance/stability claim. Historical unknown CPU fault unresolved/distinct from VM-heap/CSR/B04.2 queue.",
+  "promotion_results": {
+    "status": "passed",
+    "checks": [
+      "fft-backward-regular-ampFalse",
+      "fft-backward-regular-ampTrue",
+      "fft-backward-step-ampFalse",
+      "fft-backward-step-ampTrue",
+      "fft-forward-regular-ampFalse",
+      "fft-forward-regular-ampTrue",
+      "fft-forward-step-ampFalse",
+      "fft-forward-step-ampTrue",
+      "fft-ortho-regular-ampFalse",
+      "fft-ortho-regular-ampTrue",
+      "fft-ortho-step-ampFalse",
+      "fft-ortho-step-ampTrue",
+      "ifft-backward-regular-ampFalse",
+      "ifft-backward-regular-ampTrue",
+      "ifft-backward-step-ampFalse",
+      "ifft-backward-step-ampTrue",
+      "ifft-forward-regular-ampFalse",
+      "ifft-forward-regular-ampTrue",
+      "ifft-forward-step-ampFalse",
+      "ifft-forward-step-ampTrue",
+      "ifft-ortho-regular-ampFalse",
+      "ifft-ortho-regular-ampTrue",
+      "ifft-ortho-step-ampFalse",
+      "ifft-ortho-step-ampTrue",
+      "fft2-backward-regular-ampFalse",
+      "fft2-backward-regular-ampTrue",
+      "fft2-backward-step-ampFalse",
+      "fft2-backward-step-ampTrue",
+      "fft2-forward-regular-ampFalse",
+      "fft2-forward-regular-ampTrue",
+      "fft2-forward-step-ampFalse",
+      "fft2-forward-step-ampTrue",
+      "fft2-ortho-regular-ampFalse",
+      "fft2-ortho-regular-ampTrue",
+      "fft2-ortho-step-ampFalse",
+      "fft2-ortho-step-ampTrue",
+      "ifft2-backward-regular-ampFalse",
+      "ifft2-backward-regular-ampTrue",
+      "ifft2-backward-step-ampFalse",
+      "ifft2-backward-step-ampTrue",
+      "ifft2-forward-regular-ampFalse",
+      "ifft2-forward-regular-ampTrue",
+      "ifft2-forward-step-ampFalse",
+      "ifft2-forward-step-ampTrue",
+      "ifft2-ortho-regular-ampFalse",
+      "ifft2-ortho-regular-ampTrue",
+      "ifft2-ortho-step-ampFalse",
+      "ifft2-ortho-step-ampTrue",
+      "fftn-backward-regular-ampFalse",
+      "fftn-backward-regular-ampTrue",
+      "fftn-backward-step-ampFalse",
+      "fftn-backward-step-ampTrue",
+      "fftn-forward-regular-ampFalse",
+      "fftn-forward-regular-ampTrue",
+      "fftn-forward-step-ampFalse",
+      "fftn-forward-step-ampTrue",
+      "fftn-ortho-regular-ampFalse",
+      "fftn-ortho-regular-ampTrue",
+      "fftn-ortho-step-ampFalse",
+      "fftn-ortho-step-ampTrue",
+      "ifftn-backward-regular-ampFalse",
+      "ifftn-backward-regular-ampTrue",
+      "ifftn-backward-step-ampFalse",
+      "ifftn-backward-step-ampTrue",
+      "ifftn-forward-regular-ampFalse",
+      "ifftn-forward-regular-ampTrue",
+      "ifftn-forward-step-ampFalse",
+      "ifftn-forward-step-ampTrue",
+      "ifftn-ortho-regular-ampFalse",
+      "ifftn-ortho-regular-ampTrue",
+      "ifftn-ortho-step-ampFalse",
+      "ifftn-ortho-step-ampTrue",
+      "rfft-backward-regular-ampFalse",
+      "rfft-backward-regular-ampTrue",
+      "rfft-backward-step-ampFalse",
+      "rfft-backward-step-ampTrue",
+      "rfft-forward-regular-ampFalse",
+      "rfft-forward-regular-ampTrue",
+      "rfft-forward-step-ampFalse",
+      "rfft-forward-step-ampTrue",
+      "rfft-ortho-regular-ampFalse",
+      "rfft-ortho-regular-ampTrue",
+      "rfft-ortho-step-ampFalse",
+      "rfft-ortho-step-ampTrue",
+      "irfft-backward-regular-ampFalse",
+      "irfft-backward-regular-ampTrue",
+      "irfft-backward-step-ampFalse",
+      "irfft-backward-step-ampTrue",
+      "irfft-forward-regular-ampFalse",
+      "irfft-forward-regular-ampTrue",
+      "irfft-forward-step-ampFalse",
+      "irfft-forward-step-ampTrue",
+      "irfft-ortho-regular-ampFalse",
+      "irfft-ortho-regular-ampTrue",
+      "irfft-ortho-step-ampFalse",
+      "irfft-ortho-step-ampTrue",
+      "rfft2-backward-regular-ampFalse",
+      "rfft2-backward-regular-ampTrue",
+      "rfft2-backward-step-ampFalse",
+      "rfft2-backward-step-ampTrue",
+      "rfft2-forward-regular-ampFalse",
+      "rfft2-forward-regular-ampTrue",
+      "rfft2-forward-step-ampFalse",
+      "rfft2-forward-step-ampTrue",
+      "rfft2-ortho-regular-ampFalse",
+      "rfft2-ortho-regular-ampTrue",
+      "rfft2-ortho-step-ampFalse",
+      "rfft2-ortho-step-ampTrue",
+      "irfft2-backward-regular-ampFalse",
+      "irfft2-backward-regular-ampTrue",
+      "irfft2-backward-step-ampFalse",
+      "irfft2-backward-step-ampTrue",
+      "irfft2-forward-regular-ampFalse",
+      "irfft2-forward-regular-ampTrue",
+      "irfft2-forward-step-ampFalse",
+      "irfft2-forward-step-ampTrue",
+      "irfft2-ortho-regular-ampFalse",
+      "irfft2-ortho-regular-ampTrue",
+      "irfft2-ortho-step-ampFalse",
+      "irfft2-ortho-step-ampTrue",
+      "rfftn-backward-regular-ampFalse",
+      "rfftn-backward-regular-ampTrue",
+      "rfftn-backward-step-ampFalse",
+      "rfftn-backward-step-ampTrue",
+      "rfftn-forward-regular-ampFalse",
+      "rfftn-forward-regular-ampTrue",
+      "rfftn-forward-step-ampFalse",
+      "rfftn-forward-step-ampTrue",
+      "rfftn-ortho-regular-ampFalse",
+      "rfftn-ortho-regular-ampTrue",
+      "rfftn-ortho-step-ampFalse",
+      "rfftn-ortho-step-ampTrue",
+      "irfftn-backward-regular-ampFalse",
+      "irfftn-backward-regular-ampTrue",
+      "irfftn-backward-step-ampFalse",
+      "irfftn-backward-step-ampTrue",
+      "irfftn-forward-regular-ampFalse",
+      "irfftn-forward-regular-ampTrue",
+      "irfftn-forward-step-ampFalse",
+      "irfftn-forward-step-ampTrue",
+      "irfftn-ortho-regular-ampFalse",
+      "irfftn-ortho-regular-ampTrue",
+      "irfftn-ortho-step-ampFalse",
+      "irfftn-ortho-step-ampTrue",
+      "hfft-backward-regular-ampFalse",
+      "hfft-backward-regular-ampTrue",
+      "hfft-backward-step-ampFalse",
+      "hfft-backward-step-ampTrue",
+      "hfft-forward-regular-ampFalse",
+      "hfft-forward-regular-ampTrue",
+      "hfft-forward-step-ampFalse",
+      "hfft-forward-step-ampTrue",
+      "hfft-ortho-regular-ampFalse",
+      "hfft-ortho-regular-ampTrue",
+      "hfft-ortho-step-ampFalse",
+      "hfft-ortho-step-ampTrue",
+      "ihfft-backward-regular-ampFalse",
+      "ihfft-backward-regular-ampTrue",
+      "ihfft-backward-step-ampFalse",
+      "ihfft-backward-step-ampTrue",
+      "ihfft-forward-regular-ampFalse",
+      "ihfft-forward-regular-ampTrue",
+      "ihfft-forward-step-ampFalse",
+      "ihfft-forward-step-ampTrue",
+      "ihfft-ortho-regular-ampFalse",
+      "ihfft-ortho-regular-ampTrue",
+      "ihfft-ortho-step-ampFalse",
+      "ihfft-ortho-step-ampTrue",
+      "hfft2-backward-regular-ampFalse",
+      "hfft2-backward-regular-ampTrue",
+      "hfft2-backward-step-ampFalse",
+      "hfft2-backward-step-ampTrue",
+      "hfft2-forward-regular-ampFalse",
+      "hfft2-forward-regular-ampTrue",
+      "hfft2-forward-step-ampFalse",
+      "hfft2-forward-step-ampTrue",
+      "hfft2-ortho-regular-ampFalse",
+      "hfft2-ortho-regular-ampTrue",
+      "hfft2-ortho-step-ampFalse",
+      "hfft2-ortho-step-ampTrue",
+      "ihfft2-backward-regular-ampFalse",
+      "ihfft2-backward-regular-ampTrue",
+      "ihfft2-backward-step-ampFalse",
+      "ihfft2-backward-step-ampTrue",
+      "ihfft2-forward-regular-ampFalse",
+      "ihfft2-forward-regular-ampTrue",
+      "ihfft2-forward-step-ampFalse",
+      "ihfft2-forward-step-ampTrue",
+      "ihfft2-ortho-regular-ampFalse",
+      "ihfft2-ortho-regular-ampTrue",
+      "ihfft2-ortho-step-ampFalse",
+      "ihfft2-ortho-step-ampTrue",
+      "hfftn-backward-regular-ampFalse",
+      "hfftn-backward-regular-ampTrue",
+      "hfftn-backward-step-ampFalse",
+      "hfftn-backward-step-ampTrue",
+      "hfftn-forward-regular-ampFalse",
+      "hfftn-forward-regular-ampTrue",
+      "hfftn-forward-step-ampFalse",
+      "hfftn-forward-step-ampTrue",
+      "hfftn-ortho-regular-ampFalse",
+      "hfftn-ortho-regular-ampTrue",
+      "hfftn-ortho-step-ampFalse",
+      "hfftn-ortho-step-ampTrue",
+      "ihfftn-backward-regular-ampFalse",
+      "ihfftn-backward-regular-ampTrue",
+      "ihfftn-backward-step-ampFalse",
+      "ihfftn-backward-step-ampTrue",
+      "ihfftn-forward-regular-ampFalse",
+      "ihfftn-forward-regular-ampTrue",
+      "ihfftn-forward-step-ampFalse",
+      "ihfftn-forward-step-ampTrue",
+      "ihfftn-ortho-regular-ampFalse",
+      "ihfftn-ortho-regular-ampTrue",
+      "ihfftn-ortho-step-ampFalse",
+      "ihfftn-ortho-step-ampTrue",
+      "fft-fp32-pass-through",
+      "ifft-fp32-pass-through",
+      "fft2-fp32-pass-through",
+      "ifft2-fp32-pass-through",
+      "fftn-fp32-pass-through",
+      "ifftn-fp32-pass-through",
+      "rfft-fp32-pass-through",
+      "irfft-fp32-pass-through",
+      "rfft2-fp32-pass-through",
+      "irfft2-fp32-pass-through",
+      "rfftn-fp32-pass-through",
+      "irfftn-fp32-pass-through",
+      "hfft-fp32-pass-through",
+      "ihfft-fp32-pass-through",
+      "hfft2-fp32-pass-through",
+      "ihfft2-fp32-pass-through",
+      "hfftn-fp32-pass-through",
+      "ihfftn-fp32-pass-through",
+      "float64-pass-through",
+      "complex64-pass-through",
+      "native-invalid-norm-contract",
+      "native-duplicate-dim-contract",
+      "native-autograd-out-contract",
+      "native-nontensor-contract",
+      "global-bf16-rejection-unchanged-both-amp-contexts",
+      "rfft2-strided-out-guarded",
+      "hfft2-strided-out-guarded",
+      "independent-dft17-continuous-reference-finite-differences",
+      "native-gpu-fft-forward-backward-trace"
+    ],
+    "results": [
+      {
+        "name": "fft-backward-regular-ampFalse",
+        "output_max_absolute": 1.130450848436795e-07,
+        "gradient_relative_l2": 0.0017297162214420366
+      },
+      {
+        "name": "fft-backward-regular-ampTrue",
+        "output_max_absolute": 1.014794754813038e-07,
+        "gradient_relative_l2": 0.0018093478273168867
+      },
+      {
+        "name": "fft-backward-step-ampFalse",
+        "output_max_absolute": 1.0775700521084246e-07,
+        "gradient_relative_l2": 0.0017285565411913856
+      },
+      {
+        "name": "fft-backward-step-ampTrue",
+        "output_max_absolute": 1.4440790691570178e-07,
+        "gradient_relative_l2": 0.0017940458762255105
+      },
+      {
+        "name": "fft-forward-regular-ampFalse",
+        "output_max_absolute": 8.904413283907644e-09,
+        "gradient_relative_l2": 0.0013282357130558183
+      },
+      {
+        "name": "fft-forward-regular-ampTrue",
+        "output_max_absolute": 8.73101487984514e-09,
+        "gradient_relative_l2": 0.0017404051436833315
+      },
+      {
+        "name": "fft-forward-step-ampFalse",
+        "output_max_absolute": 9.611116024860984e-09,
+        "gradient_relative_l2": 0.0016724233897397604
+      },
+      {
+        "name": "fft-forward-step-ampTrue",
+        "output_max_absolute": 9.34788019825371e-09,
+        "gradient_relative_l2": 0.0014871054562122401
+      },
+      {
+        "name": "fft-ortho-regular-ampFalse",
+        "output_max_absolute": 3.6603597141029724e-08,
+        "gradient_relative_l2": 0.0017405056683526064
+      },
+      {
+        "name": "fft-ortho-regular-ampTrue",
+        "output_max_absolute": 5.048715157321894e-08,
+        "gradient_relative_l2": 0.0017491610633631025
+      },
+      {
+        "name": "fft-ortho-step-ampFalse",
+        "output_max_absolute": 3.1846073979556036e-08,
+        "gradient_relative_l2": 0.0017300131678159446
+      },
+      {
+        "name": "fft-ortho-step-ampTrue",
+        "output_max_absolute": 2.744014827788383e-08,
+        "gradient_relative_l2": 0.0017121141208751493
+      },
+      {
+        "name": "ifft-backward-regular-ampFalse",
+        "output_max_absolute": 5.729867721363351e-09,
+        "gradient_relative_l2": 0.0015862723907980898
+      },
+      {
+        "name": "ifft-backward-regular-ampTrue",
+        "output_max_absolute": 1.0198248025310077e-08,
+        "gradient_relative_l2": 0.0018383381486863555
+      },
+      {
+        "name": "ifft-backward-step-ampFalse",
+        "output_max_absolute": 9.517136885739023e-09,
+        "gradient_relative_l2": 0.0017554981740008258
+      },
+      {
+        "name": "ifft-backward-step-ampTrue",
+        "output_max_absolute": 8.838613332295204e-09,
+        "gradient_relative_l2": 0.0017759170855014656
+      },
+      {
+        "name": "ifft-forward-regular-ampFalse",
+        "output_max_absolute": 1.3619311180576626e-07,
+        "gradient_relative_l2": 0.0016246868619941657
+      },
+      {
+        "name": "ifft-forward-regular-ampTrue",
+        "output_max_absolute": 1.479940154256215e-07,
+        "gradient_relative_l2": 0.0017495117854542583
+      },
+      {
+        "name": "ifft-forward-step-ampFalse",
+        "output_max_absolute": 1.2803706771598787e-07,
+        "gradient_relative_l2": 0.0016701595490032008
+      },
+      {
+        "name": "ifft-forward-step-ampTrue",
+        "output_max_absolute": 1.6469912573268743e-07,
+        "gradient_relative_l2": 0.001678135159414517
+      },
+      {
+        "name": "ifft-ortho-regular-ampFalse",
+        "output_max_absolute": 4.319252404229389e-08,
+        "gradient_relative_l2": 0.0015503984826578836
+      },
+      {
+        "name": "ifft-ortho-regular-ampTrue",
+        "output_max_absolute": 3.442638551999772e-08,
+        "gradient_relative_l2": 0.0018654580481512993
+      },
+      {
+        "name": "ifft-ortho-step-ampFalse",
+        "output_max_absolute": 3.138719078645728e-08,
+        "gradient_relative_l2": 0.0016407815072034223
+      },
+      {
+        "name": "ifft-ortho-step-ampTrue",
+        "output_max_absolute": 3.255844997791535e-08,
+        "gradient_relative_l2": 0.0015855181563287346
+      },
+      {
+        "name": "fft2-backward-regular-ampFalse",
+        "output_max_absolute": 2.912568968588386e-07,
+        "gradient_relative_l2": 0.0015574850954549217
+      },
+      {
+        "name": "fft2-backward-regular-ampTrue",
+        "output_max_absolute": 4.6367408936743133e-07,
+        "gradient_relative_l2": 0.001588254321077465
+      },
+      {
+        "name": "fft2-backward-step-ampFalse",
+        "output_max_absolute": 5.01402762336174e-07,
+        "gradient_relative_l2": 0.001729219684744975
+      },
+      {
+        "name": "fft2-backward-step-ampTrue",
+        "output_max_absolute": 3.7095392689316477e-07,
+        "gradient_relative_l2": 0.0016959746818103337
+      },
+      {
+        "name": "fft2-forward-regular-ampFalse",
+        "output_max_absolute": 4.1949316681052145e-09,
+        "gradient_relative_l2": 0.001564922896801879
+      },
+      {
+        "name": "fft2-forward-regular-ampTrue",
+        "output_max_absolute": 4.040618169147288e-09,
+        "gradient_relative_l2": 0.001628072478058549
+      },
+      {
+        "name": "fft2-forward-step-ampFalse",
+        "output_max_absolute": 4.609604638334264e-09,
+        "gradient_relative_l2": 0.0015780916457815246
+      },
+      {
+        "name": "fft2-forward-step-ampTrue",
+        "output_max_absolute": 3.6013903031814564e-09,
+        "gradient_relative_l2": 0.0015624973368872244
+      },
+      {
+        "name": "fft2-ortho-regular-ampFalse",
+        "output_max_absolute": 3.934191023178632e-08,
+        "gradient_relative_l2": 0.0015544841845616965
+      },
+      {
+        "name": "fft2-ortho-regular-ampTrue",
+        "output_max_absolute": 4.0094442445798784e-08,
+        "gradient_relative_l2": 0.00163325410126458
+      },
+      {
+        "name": "fft2-ortho-step-ampFalse",
+        "output_max_absolute": 4.423756492080689e-08,
+        "gradient_relative_l2": 0.0016521333008888972
+      },
+      {
+        "name": "fft2-ortho-step-ampTrue",
+        "output_max_absolute": 5.0740770018323967e-08,
+        "gradient_relative_l2": 0.001582919200093049
+      },
+      {
+        "name": "ifft2-backward-regular-ampFalse",
+        "output_max_absolute": 3.5322752186196667e-09,
+        "gradient_relative_l2": 0.0018022981472381131
+      },
+      {
+        "name": "ifft2-backward-regular-ampTrue",
+        "output_max_absolute": 4.119850044897009e-09,
+        "gradient_relative_l2": 0.0015855750912831578
+      },
+      {
+        "name": "ifft2-backward-step-ampFalse",
+        "output_max_absolute": 4.415679650224366e-09,
+        "gradient_relative_l2": 0.0017299574311585985
+      },
+      {
+        "name": "ifft2-backward-step-ampTrue",
+        "output_max_absolute": 3.47803403253582e-09,
+        "gradient_relative_l2": 0.0016736145155693623
+      },
+      {
+        "name": "ifft2-forward-regular-ampFalse",
+        "output_max_absolute": 3.8809063227338184e-07,
+        "gradient_relative_l2": 0.0016668587919340444
+      },
+      {
+        "name": "ifft2-forward-regular-ampTrue",
+        "output_max_absolute": 4.1706028490734474e-07,
+        "gradient_relative_l2": 0.0018117224615367012
+      },
+      {
+        "name": "ifft2-forward-step-ampFalse",
+        "output_max_absolute": 3.689838899108584e-07,
+        "gradient_relative_l2": 0.0016271691565801067
+      },
+      {
+        "name": "ifft2-forward-step-ampTrue",
+        "output_max_absolute": 3.2469715936020283e-07,
+        "gradient_relative_l2": 0.0017052935235381417
+      },
+      {
+        "name": "ifft2-ortho-regular-ampFalse",
+        "output_max_absolute": 5.683050403622647e-08,
+        "gradient_relative_l2": 0.0017427967185455575
+      },
+      {
+        "name": "ifft2-ortho-regular-ampTrue",
+        "output_max_absolute": 5.212530057719146e-08,
+        "gradient_relative_l2": 0.0017143697739739857
+      },
+      {
+        "name": "ifft2-ortho-step-ampFalse",
+        "output_max_absolute": 3.641740581334941e-08,
+        "gradient_relative_l2": 0.001527598397252
+      },
+      {
+        "name": "ifft2-ortho-step-ampTrue",
+        "output_max_absolute": 3.8310029127463016e-08,
+        "gradient_relative_l2": 0.001527397454188426
+      },
+      {
+        "name": "fftn-backward-regular-ampFalse",
+        "output_max_absolute": 3.2705488068685296e-07,
+        "gradient_relative_l2": 0.0015859228276414012
+      },
+      {
+        "name": "fftn-backward-regular-ampTrue",
+        "output_max_absolute": 2.409257729147262e-07,
+        "gradient_relative_l2": 0.0016817074640440703
+      },
+      {
+        "name": "fftn-backward-step-ampFalse",
+        "output_max_absolute": 3.2997029151961785e-07,
+        "gradient_relative_l2": 0.0018091102929939761
+      },
+      {
+        "name": "fftn-backward-step-ampTrue",
+        "output_max_absolute": 2.4558315563777697e-07,
+        "gradient_relative_l2": 0.0015228503584652983
+      },
+      {
+        "name": "fftn-forward-regular-ampFalse",
+        "output_max_absolute": 3.816535774418538e-09,
+        "gradient_relative_l2": 0.0015340575897717736
+      },
+      {
+        "name": "fftn-forward-regular-ampTrue",
+        "output_max_absolute": 4.441024044665517e-09,
+        "gradient_relative_l2": 0.0015430339118012021
+      },
+      {
+        "name": "fftn-forward-step-ampFalse",
+        "output_max_absolute": 3.5751848016139335e-09,
+        "gradient_relative_l2": 0.0017464803626657936
+      },
+      {
+        "name": "fftn-forward-step-ampTrue",
+        "output_max_absolute": 3.306051233415877e-09,
+        "gradient_relative_l2": 0.0016080479958606247
+      },
+      {
+        "name": "fftn-ortho-regular-ampFalse",
+        "output_max_absolute": 2.6715754743838275e-08,
+        "gradient_relative_l2": 0.0016599174976511411
+      },
+      {
+        "name": "fftn-ortho-regular-ampTrue",
+        "output_max_absolute": 3.295751657568013e-08,
+        "gradient_relative_l2": 0.0015732592459623922
+      },
+      {
+        "name": "fftn-ortho-step-ampFalse",
+        "output_max_absolute": 4.000295447485699e-08,
+        "gradient_relative_l2": 0.0016614811409334507
+      },
+      {
+        "name": "fftn-ortho-step-ampTrue",
+        "output_max_absolute": 3.1977886001782495e-08,
+        "gradient_relative_l2": 0.0016464748501764962
+      },
+      {
+        "name": "ifftn-backward-regular-ampFalse",
+        "output_max_absolute": 4.123800844980567e-09,
+        "gradient_relative_l2": 0.0016218659515804918
+      },
+      {
+        "name": "ifftn-backward-regular-ampTrue",
+        "output_max_absolute": 4.244129146351529e-09,
+        "gradient_relative_l2": 0.0015396194060168847
+      },
+      {
+        "name": "ifftn-backward-step-ampFalse",
+        "output_max_absolute": 5.246318711239718e-09,
+        "gradient_relative_l2": 0.0014874593482924053
+      },
+      {
+        "name": "ifftn-backward-step-ampTrue",
+        "output_max_absolute": 2.68944671501357e-09,
+        "gradient_relative_l2": 0.0015900195115675336
+      },
+      {
+        "name": "ifftn-forward-regular-ampFalse",
+        "output_max_absolute": 2.412726561337056e-07,
+        "gradient_relative_l2": 0.0016859127110269764
+      },
+      {
+        "name": "ifftn-forward-regular-ampTrue",
+        "output_max_absolute": 2.4233485848284194e-07,
+        "gradient_relative_l2": 0.0015512912993584545
+      },
+      {
+        "name": "ifftn-forward-step-ampFalse",
+        "output_max_absolute": 2.488656394123855e-07,
+        "gradient_relative_l2": 0.001592780409539309
+      },
+      {
+        "name": "ifftn-forward-step-ampTrue",
+        "output_max_absolute": 2.7457153281806395e-07,
+        "gradient_relative_l2": 0.0017770979797029948
+      },
+      {
+        "name": "ifftn-ortho-regular-ampFalse",
+        "output_max_absolute": 3.088766953047969e-08,
+        "gradient_relative_l2": 0.0016893011649353172
+      },
+      {
+        "name": "ifftn-ortho-regular-ampTrue",
+        "output_max_absolute": 2.7529860319721203e-08,
+        "gradient_relative_l2": 0.0016188564463584115
+      },
+      {
+        "name": "ifftn-ortho-step-ampFalse",
+        "output_max_absolute": 3.375559596411989e-08,
+        "gradient_relative_l2": 0.0015889488987052085
+      },
+      {
+        "name": "ifftn-ortho-step-ampTrue",
+        "output_max_absolute": 2.7933710725709335e-08,
+        "gradient_relative_l2": 0.0015046805315740706
+      },
+      {
+        "name": "rfft-backward-regular-ampFalse",
+        "output_max_absolute": 1.656422968180361e-07,
+        "gradient_relative_l2": 0.001616864101157569
+      },
+      {
+        "name": "rfft-backward-regular-ampTrue",
+        "output_max_absolute": 1.5839556967336457e-07,
+        "gradient_relative_l2": 0.0018860364489466533
+      },
+      {
+        "name": "rfft-backward-step-ampFalse",
+        "output_max_absolute": 1.3741626898749357e-07,
+        "gradient_relative_l2": 0.0016789099737838833
+      },
+      {
+        "name": "rfft-backward-step-ampTrue",
+        "output_max_absolute": 1.133141696010161e-07,
+        "gradient_relative_l2": 0.0018113270445404993
+      },
+      {
+        "name": "rfft-forward-regular-ampFalse",
+        "output_max_absolute": 8.318316175220788e-09,
+        "gradient_relative_l2": 0.0016835367263016696
+      },
+      {
+        "name": "rfft-forward-regular-ampTrue",
+        "output_max_absolute": 9.621260678590838e-09,
+        "gradient_relative_l2": 0.0015828788933610637
+      },
+      {
+        "name": "rfft-forward-step-ampFalse",
+        "output_max_absolute": 1.0003197608613698e-08,
+        "gradient_relative_l2": 0.0016595953359054812
+      },
+      {
+        "name": "rfft-forward-step-ampTrue",
+        "output_max_absolute": 9.470037080962564e-09,
+        "gradient_relative_l2": 0.0014932839959701442
+      },
+      {
+        "name": "rfft-ortho-regular-ampFalse",
+        "output_max_absolute": 3.202392730267195e-08,
+        "gradient_relative_l2": 0.0016085699304797215
+      },
+      {
+        "name": "rfft-ortho-regular-ampTrue",
+        "output_max_absolute": 4.8058174013565095e-08,
+        "gradient_relative_l2": 0.00166696467764422
+      },
+      {
+        "name": "rfft-ortho-step-ampFalse",
+        "output_max_absolute": 3.8052560214878066e-08,
+        "gradient_relative_l2": 0.0017564245409310755
+      },
+      {
+        "name": "rfft-ortho-step-ampTrue",
+        "output_max_absolute": 3.604298369566095e-08,
+        "gradient_relative_l2": 0.0016078810980164997
+      },
+      {
+        "name": "irfft-backward-regular-ampFalse",
+        "output_max_absolute": 1.200802127176992e-08,
+        "gradient_relative_l2": 0.0017308554745255299
+      },
+      {
+        "name": "irfft-backward-regular-ampTrue",
+        "output_max_absolute": 1.50926624808978e-08,
+        "gradient_relative_l2": 0.0016419919865725658
+      },
+      {
+        "name": "irfft-backward-step-ampFalse",
+        "output_max_absolute": 1.686718587023961e-08,
+        "gradient_relative_l2": 0.001766495761978709
+      },
+      {
+        "name": "irfft-backward-step-ampTrue",
+        "output_max_absolute": 9.386733640370792e-09,
+        "gradient_relative_l2": 0.0015541870621257968
+      },
+      {
+        "name": "irfft-forward-regular-ampFalse",
+        "output_max_absolute": 2.3681778449358148e-07,
+        "gradient_relative_l2": 0.0016979960273034013
+      },
+      {
+        "name": "irfft-forward-regular-ampTrue",
+        "output_max_absolute": 1.9641515480728344e-07,
+        "gradient_relative_l2": 0.0016693815839610643
+      },
+      {
+        "name": "irfft-forward-step-ampFalse",
+        "output_max_absolute": 2.5896854971563243e-07,
+        "gradient_relative_l2": 0.001672088843118115
+      },
+      {
+        "name": "irfft-forward-step-ampTrue",
+        "output_max_absolute": 2.042795705925471e-07,
+        "gradient_relative_l2": 0.0018433091820553712
+      },
+      {
+        "name": "irfft-ortho-regular-ampFalse",
+        "output_max_absolute": 5.15711796600371e-08,
+        "gradient_relative_l2": 0.0018884366125387585
+      },
+      {
+        "name": "irfft-ortho-regular-ampTrue",
+        "output_max_absolute": 4.3287234241518036e-08,
+        "gradient_relative_l2": 0.0016319064397682982
+      },
+      {
+        "name": "irfft-ortho-step-ampFalse",
+        "output_max_absolute": 4.4852628972025244e-08,
+        "gradient_relative_l2": 0.0017082123134766576
+      },
+      {
+        "name": "irfft-ortho-step-ampTrue",
+        "output_max_absolute": 5.339272368676262e-08,
+        "gradient_relative_l2": 0.0017385060215142887
+      },
+      {
+        "name": "rfft2-backward-regular-ampFalse",
+        "output_max_absolute": 3.392992707544206e-07,
+        "gradient_relative_l2": 0.0016067094919410682
+      },
+      {
+        "name": "rfft2-backward-regular-ampTrue",
+        "output_max_absolute": 3.496839923549986e-07,
+        "gradient_relative_l2": 0.0018761163822227376
+      },
+      {
+        "name": "rfft2-backward-step-ampFalse",
+        "output_max_absolute": 4.671739115851618e-07,
+        "gradient_relative_l2": 0.0016389450101742936
+      },
+      {
+        "name": "rfft2-backward-step-ampTrue",
+        "output_max_absolute": 3.52307590307431e-07,
+        "gradient_relative_l2": 0.0015947610029866518
+      },
+      {
+        "name": "rfft2-forward-regular-ampFalse",
+        "output_max_absolute": 4.1730809133019805e-09,
+        "gradient_relative_l2": 0.0015275057815540693
+      },
+      {
+        "name": "rfft2-forward-regular-ampTrue",
+        "output_max_absolute": 4.822087316444648e-09,
+        "gradient_relative_l2": 0.0017231418322863077
+      },
+      {
+        "name": "rfft2-forward-step-ampFalse",
+        "output_max_absolute": 4.558545123818154e-09,
+        "gradient_relative_l2": 0.0016928951113211004
+      },
+      {
+        "name": "rfft2-forward-step-ampTrue",
+        "output_max_absolute": 3.0413481594249136e-09,
+        "gradient_relative_l2": 0.001652994083731152
+      },
+      {
+        "name": "rfft2-ortho-regular-ampFalse",
+        "output_max_absolute": 4.3116523918132514e-08,
+        "gradient_relative_l2": 0.0015949986608019588
+      },
+      {
+        "name": "rfft2-ortho-regular-ampTrue",
+        "output_max_absolute": 3.713340413293157e-08,
+        "gradient_relative_l2": 0.0014983840705824851
+      },
+      {
+        "name": "rfft2-ortho-step-ampFalse",
+        "output_max_absolute": 4.886705205204021e-08,
+        "gradient_relative_l2": 0.0016265986078376512
+      },
+      {
+        "name": "rfft2-ortho-step-ampTrue",
+        "output_max_absolute": 4.2148903153644605e-08,
+        "gradient_relative_l2": 0.001764087034538894
+      },
+      {
+        "name": "irfft2-backward-regular-ampFalse",
+        "output_max_absolute": 5.376757566954993e-09,
+        "gradient_relative_l2": 0.0016282624567019203
+      },
+      {
+        "name": "irfft2-backward-regular-ampTrue",
+        "output_max_absolute": 5.519280067700638e-09,
+        "gradient_relative_l2": 0.0015897847556111022
+      },
+      {
+        "name": "irfft2-backward-step-ampFalse",
+        "output_max_absolute": 4.908734196895637e-09,
+        "gradient_relative_l2": 0.0014597114638335035
+      },
+      {
+        "name": "irfft2-backward-step-ampTrue",
+        "output_max_absolute": 5.585882222047811e-09,
+        "gradient_relative_l2": 0.001545561843107513
+      },
+      {
+        "name": "irfft2-forward-regular-ampFalse",
+        "output_max_absolute": 5.898223935929536e-07,
+        "gradient_relative_l2": 0.0016117027366464882
+      },
+      {
+        "name": "irfft2-forward-regular-ampTrue",
+        "output_max_absolute": 5.929375652691249e-07,
+        "gradient_relative_l2": 0.00162242298552181
+      },
+      {
+        "name": "irfft2-forward-step-ampFalse",
+        "output_max_absolute": 4.3595739862567484e-07,
+        "gradient_relative_l2": 0.0016577274313995273
+      },
+      {
+        "name": "irfft2-forward-step-ampTrue",
+        "output_max_absolute": 6.403597994086851e-07,
+        "gradient_relative_l2": 0.001600418856414983
+      },
+      {
+        "name": "irfft2-ortho-regular-ampFalse",
+        "output_max_absolute": 6.126767210234974e-08,
+        "gradient_relative_l2": 0.001699492421512716
+      },
+      {
+        "name": "irfft2-ortho-regular-ampTrue",
+        "output_max_absolute": 7.643281974001326e-08,
+        "gradient_relative_l2": 0.0016358674045118882
+      },
+      {
+        "name": "irfft2-ortho-step-ampFalse",
+        "output_max_absolute": 5.2947022488591955e-08,
+        "gradient_relative_l2": 0.0014560848426986653
+      },
+      {
+        "name": "irfft2-ortho-step-ampTrue",
+        "output_max_absolute": 4.757099492103123e-08,
+        "gradient_relative_l2": 0.0018161833198237487
+      },
+      {
+        "name": "rfftn-backward-regular-ampFalse",
+        "output_max_absolute": 2.3899297078846414e-07,
+        "gradient_relative_l2": 0.0016231371370730985
+      },
+      {
+        "name": "rfftn-backward-regular-ampTrue",
+        "output_max_absolute": 2.900721662661319e-07,
+        "gradient_relative_l2": 0.0017293995686506233
+      },
+      {
+        "name": "rfftn-backward-step-ampFalse",
+        "output_max_absolute": 2.48178266418709e-07,
+        "gradient_relative_l2": 0.001767344477630138
+      },
+      {
+        "name": "rfftn-backward-step-ampTrue",
+        "output_max_absolute": 2.9915438238831123e-07,
+        "gradient_relative_l2": 0.0016891068388214152
+      },
+      {
+        "name": "rfftn-forward-regular-ampFalse",
+        "output_max_absolute": 4.9617226844027115e-09,
+        "gradient_relative_l2": 0.0016058726480629008
+      },
+      {
+        "name": "rfftn-forward-regular-ampTrue",
+        "output_max_absolute": 4.786128422001433e-09,
+        "gradient_relative_l2": 0.0016469649404171087
+      },
+      {
+        "name": "rfftn-forward-step-ampFalse",
+        "output_max_absolute": 3.0040519108499854e-09,
+        "gradient_relative_l2": 0.00163079964042706
+      },
+      {
+        "name": "rfftn-forward-step-ampTrue",
+        "output_max_absolute": 3.745945482941976e-09,
+        "gradient_relative_l2": 0.001836126174466667
+      },
+      {
+        "name": "rfftn-ortho-regular-ampFalse",
+        "output_max_absolute": 3.0221376608631716e-08,
+        "gradient_relative_l2": 0.0016510121710654533
+      },
+      {
+        "name": "rfftn-ortho-regular-ampTrue",
+        "output_max_absolute": 2.8951212343453454e-08,
+        "gradient_relative_l2": 0.0017008615578032091
+      },
+      {
+        "name": "rfftn-ortho-step-ampFalse",
+        "output_max_absolute": 4.116885122511836e-08,
+        "gradient_relative_l2": 0.0015025798804170092
+      },
+      {
+        "name": "rfftn-ortho-step-ampTrue",
+        "output_max_absolute": 2.9617721183864616e-08,
+        "gradient_relative_l2": 0.0013923767380613654
+      },
+      {
+        "name": "irfftn-backward-regular-ampFalse",
+        "output_max_absolute": 6.027301123479045e-09,
+        "gradient_relative_l2": 0.0015658918201288568
+      },
+      {
+        "name": "irfftn-backward-regular-ampTrue",
+        "output_max_absolute": 5.502911702703894e-09,
+        "gradient_relative_l2": 0.001404090131851757
+      },
+      {
+        "name": "irfftn-backward-step-ampFalse",
+        "output_max_absolute": 6.105742411666171e-09,
+        "gradient_relative_l2": 0.0018687334948216878
+      },
+      {
+        "name": "irfftn-backward-step-ampTrue",
+        "output_max_absolute": 4.140696112375775e-09,
+        "gradient_relative_l2": 0.0016383481409351416
+      },
+      {
+        "name": "irfftn-forward-regular-ampFalse",
+        "output_max_absolute": 4.018436774444467e-07,
+        "gradient_relative_l2": 0.0015885755806485345
+      },
+      {
+        "name": "irfftn-forward-regular-ampTrue",
+        "output_max_absolute": 3.0464794331663825e-07,
+        "gradient_relative_l2": 0.0015891494115204258
+      },
+      {
+        "name": "irfftn-forward-step-ampFalse",
+        "output_max_absolute": 2.7495898269336294e-07,
+        "gradient_relative_l2": 0.0019802574957593563
+      },
+      {
+        "name": "irfftn-forward-step-ampTrue",
+        "output_max_absolute": 3.107075707831086e-07,
+        "gradient_relative_l2": 0.0013747985450357004
+      },
+      {
+        "name": "irfftn-ortho-regular-ampFalse",
+        "output_max_absolute": 3.4152847550039667e-08,
+        "gradient_relative_l2": 0.0015678895826353586
+      },
+      {
+        "name": "irfftn-ortho-regular-ampTrue",
+        "output_max_absolute": 5.396857738482197e-08,
+        "gradient_relative_l2": 0.001780791872503388
+      },
+      {
+        "name": "irfftn-ortho-step-ampFalse",
+        "output_max_absolute": 4.6759848215671695e-08,
+        "gradient_relative_l2": 0.001638668255379963
+      },
+      {
+        "name": "irfftn-ortho-step-ampTrue",
+        "output_max_absolute": 4.6398046293916195e-08,
+        "gradient_relative_l2": 0.0016587804570362115
+      },
+      {
+        "name": "hfft-backward-regular-ampFalse",
+        "output_max_absolute": 2.137536285751196e-07,
+        "gradient_relative_l2": 0.0015776410757884917
+      },
+      {
+        "name": "hfft-backward-regular-ampTrue",
+        "output_max_absolute": 2.4650108088053457e-07,
+        "gradient_relative_l2": 0.0015892524928911608
+      },
+      {
+        "name": "hfft-backward-step-ampFalse",
+        "output_max_absolute": 1.65013664954472e-07,
+        "gradient_relative_l2": 0.0016214506321100234
+      },
+      {
+        "name": "hfft-backward-step-ampTrue",
+        "output_max_absolute": 1.4945305037983303e-07,
+        "gradient_relative_l2": 0.0015858386733804408
+      },
+      {
+        "name": "hfft-forward-regular-ampFalse",
+        "output_max_absolute": 1.4337050935342432e-08,
+        "gradient_relative_l2": 0.0015025517182501004
+      },
+      {
+        "name": "hfft-forward-regular-ampTrue",
+        "output_max_absolute": 8.62268226264895e-09,
+        "gradient_relative_l2": 0.0019507538649980575
+      },
+      {
+        "name": "hfft-forward-step-ampFalse",
+        "output_max_absolute": 1.4940743309210802e-08,
+        "gradient_relative_l2": 0.0016335863681899833
+      },
+      {
+        "name": "hfft-forward-step-ampTrue",
+        "output_max_absolute": 1.5543911852100578e-08,
+        "gradient_relative_l2": 0.0016379099245214489
+      },
+      {
+        "name": "hfft-ortho-regular-ampFalse",
+        "output_max_absolute": 7.3345260254154e-08,
+        "gradient_relative_l2": 0.0016920052234053297
+      },
+      {
+        "name": "hfft-ortho-regular-ampTrue",
+        "output_max_absolute": 5.755079507396843e-08,
+        "gradient_relative_l2": 0.001711323948698293
+      },
+      {
+        "name": "hfft-ortho-step-ampFalse",
+        "output_max_absolute": 4.160040911749263e-08,
+        "gradient_relative_l2": 0.001797589413342074
+      },
+      {
+        "name": "hfft-ortho-step-ampTrue",
+        "output_max_absolute": 4.270172263010075e-08,
+        "gradient_relative_l2": 0.0015327008704107022
+      },
+      {
+        "name": "ihfft-backward-regular-ampFalse",
+        "output_max_absolute": 7.82227897919316e-09,
+        "gradient_relative_l2": 0.001653832383949601
+      },
+      {
+        "name": "ihfft-backward-regular-ampTrue",
+        "output_max_absolute": 9.40361414731782e-09,
+        "gradient_relative_l2": 0.0016329565473259628
+      },
+      {
+        "name": "ihfft-backward-step-ampFalse",
+        "output_max_absolute": 1.3056330668434815e-08,
+        "gradient_relative_l2": 0.0015101540041113988
+      },
+      {
+        "name": "ihfft-backward-step-ampTrue",
+        "output_max_absolute": 6.9539108861855415e-09,
+        "gradient_relative_l2": 0.0015253582401905902
+      },
+      {
+        "name": "ihfft-forward-regular-ampFalse",
+        "output_max_absolute": 1.2374075771697934e-07,
+        "gradient_relative_l2": 0.0015713855764850025
+      },
+      {
+        "name": "ihfft-forward-regular-ampTrue",
+        "output_max_absolute": 1.1762572889800424e-07,
+        "gradient_relative_l2": 0.0015407156714924764
+      },
+      {
+        "name": "ihfft-forward-step-ampFalse",
+        "output_max_absolute": 1.7322088578832808e-07,
+        "gradient_relative_l2": 0.0016249026473660216
+      },
+      {
+        "name": "ihfft-forward-step-ampTrue",
+        "output_max_absolute": 1.3489348604372234e-07,
+        "gradient_relative_l2": 0.001643709149978392
+      },
+      {
+        "name": "ihfft-ortho-regular-ampFalse",
+        "output_max_absolute": 3.3680338515444996e-08,
+        "gradient_relative_l2": 0.001510409515400688
+      },
+      {
+        "name": "ihfft-ortho-regular-ampTrue",
+        "output_max_absolute": 4.009493411826598e-08,
+        "gradient_relative_l2": 0.0016789551007771113
+      },
+      {
+        "name": "ihfft-ortho-step-ampFalse",
+        "output_max_absolute": 3.23685844455641e-08,
+        "gradient_relative_l2": 0.001548279283507164
+      },
+      {
+        "name": "ihfft-ortho-step-ampTrue",
+        "output_max_absolute": 3.1353519754936696e-08,
+        "gradient_relative_l2": 0.0016261688391359813
+      },
+      {
+        "name": "hfft2-backward-regular-ampFalse",
+        "output_max_absolute": 4.845646781603818e-07,
+        "gradient_relative_l2": 0.0015639958068068079
+      },
+      {
+        "name": "hfft2-backward-regular-ampTrue",
+        "output_max_absolute": 5.589727241073206e-07,
+        "gradient_relative_l2": 0.0015339254231501172
+      },
+      {
+        "name": "hfft2-backward-step-ampFalse",
+        "output_max_absolute": 5.51430894724092e-07,
+        "gradient_relative_l2": 0.0016567909462189927
+      },
+      {
+        "name": "hfft2-backward-step-ampTrue",
+        "output_max_absolute": 6.001331902538709e-07,
+        "gradient_relative_l2": 0.0017380879619195888
+      },
+      {
+        "name": "hfft2-forward-regular-ampFalse",
+        "output_max_absolute": 6.09828892939035e-09,
+        "gradient_relative_l2": 0.0016123148122358737
+      },
+      {
+        "name": "hfft2-forward-regular-ampTrue",
+        "output_max_absolute": 5.820471049577947e-09,
+        "gradient_relative_l2": 0.0016510613013401311
+      },
+      {
+        "name": "hfft2-forward-step-ampFalse",
+        "output_max_absolute": 6.635692675893701e-09,
+        "gradient_relative_l2": 0.0015847537459716542
+      },
+      {
+        "name": "hfft2-forward-step-ampTrue",
+        "output_max_absolute": 7.269061019776757e-09,
+        "gradient_relative_l2": 0.0016326231696764783
+      },
+      {
+        "name": "hfft2-ortho-regular-ampFalse",
+        "output_max_absolute": 7.97674391539438e-08,
+        "gradient_relative_l2": 0.0018286638990001782
+      },
+      {
+        "name": "hfft2-ortho-regular-ampTrue",
+        "output_max_absolute": 5.38881901879229e-08,
+        "gradient_relative_l2": 0.0017164961668698845
+      },
+      {
+        "name": "hfft2-ortho-step-ampFalse",
+        "output_max_absolute": 4.066870047669813e-08,
+        "gradient_relative_l2": 0.0013935203233317792
+      },
+      {
+        "name": "hfft2-ortho-step-ampTrue",
+        "output_max_absolute": 5.675887759792886e-08,
+        "gradient_relative_l2": 0.0016329775974697524
+      },
+      {
+        "name": "ihfft2-backward-regular-ampFalse",
+        "output_max_absolute": 5.184816998879359e-09,
+        "gradient_relative_l2": 0.0015086371903075173
+      },
+      {
+        "name": "ihfft2-backward-regular-ampTrue",
+        "output_max_absolute": 3.877750734631559e-09,
+        "gradient_relative_l2": 0.0015727793458542973
+      },
+      {
+        "name": "ihfft2-backward-step-ampFalse",
+        "output_max_absolute": 4.817878307059068e-09,
+        "gradient_relative_l2": 0.001727223348322886
+      },
+      {
+        "name": "ihfft2-backward-step-ampTrue",
+        "output_max_absolute": 2.8687782876178097e-09,
+        "gradient_relative_l2": 0.0017174874785702652
+      },
+      {
+        "name": "ihfft2-forward-regular-ampFalse",
+        "output_max_absolute": 5.809732615208723e-07,
+        "gradient_relative_l2": 0.0015375677281255838
+      },
+      {
+        "name": "ihfft2-forward-regular-ampTrue",
+        "output_max_absolute": 5.205147279449764e-07,
+        "gradient_relative_l2": 0.0017241316665996742
+      },
+      {
+        "name": "ihfft2-forward-step-ampFalse",
+        "output_max_absolute": 3.559288723893419e-07,
+        "gradient_relative_l2": 0.0015069147276732771
+      },
+      {
+        "name": "ihfft2-forward-step-ampTrue",
+        "output_max_absolute": 3.8638255064578595e-07,
+        "gradient_relative_l2": 0.0016311581897341335
+      },
+      {
+        "name": "ihfft2-ortho-regular-ampFalse",
+        "output_max_absolute": 4.2105280137771274e-08,
+        "gradient_relative_l2": 0.0017600919967105425
+      },
+      {
+        "name": "ihfft2-ortho-regular-ampTrue",
+        "output_max_absolute": 4.973119043351675e-08,
+        "gradient_relative_l2": 0.0017225050962065356
+      },
+      {
+        "name": "ihfft2-ortho-step-ampFalse",
+        "output_max_absolute": 3.384443827157411e-08,
+        "gradient_relative_l2": 0.0016554648088474557
+      },
+      {
+        "name": "ihfft2-ortho-step-ampTrue",
+        "output_max_absolute": 5.990368230158704e-08,
+        "gradient_relative_l2": 0.0015753471473091928
+      },
+      {
+        "name": "hfftn-backward-regular-ampFalse",
+        "output_max_absolute": 3.690057800431745e-07,
+        "gradient_relative_l2": 0.0016642838303931851
+      },
+      {
+        "name": "hfftn-backward-regular-ampTrue",
+        "output_max_absolute": 3.915169681789621e-07,
+        "gradient_relative_l2": 0.0019367278019161572
+      },
+      {
+        "name": "hfftn-backward-step-ampFalse",
+        "output_max_absolute": 2.645681087543039e-07,
+        "gradient_relative_l2": 0.0017470936323520435
+      },
+      {
+        "name": "hfftn-backward-step-ampTrue",
+        "output_max_absolute": 2.3339508570252576e-07,
+        "gradient_relative_l2": 0.0018093951723555063
+      },
+      {
+        "name": "hfftn-forward-regular-ampFalse",
+        "output_max_absolute": 9.664196727598995e-09,
+        "gradient_relative_l2": 0.0017661117371950996
+      },
+      {
+        "name": "hfftn-forward-regular-ampTrue",
+        "output_max_absolute": 6.0041118951636996e-09,
+        "gradient_relative_l2": 0.0015664955416541423
+      },
+      {
+        "name": "hfftn-forward-step-ampFalse",
+        "output_max_absolute": 7.805095902924108e-09,
+        "gradient_relative_l2": 0.0015365734000881502
+      },
+      {
+        "name": "hfftn-forward-step-ampTrue",
+        "output_max_absolute": 5.280991713374483e-09,
+        "gradient_relative_l2": 0.0017110115056511927
+      },
+      {
+        "name": "hfftn-ortho-regular-ampFalse",
+        "output_max_absolute": 4.442194451170778e-08,
+        "gradient_relative_l2": 0.0017932767984091271
+      },
+      {
+        "name": "hfftn-ortho-regular-ampTrue",
+        "output_max_absolute": 4.693700927926869e-08,
+        "gradient_relative_l2": 0.001604956655451029
+      },
+      {
+        "name": "hfftn-ortho-step-ampFalse",
+        "output_max_absolute": 3.577554841260877e-08,
+        "gradient_relative_l2": 0.0017489243009184243
+      },
+      {
+        "name": "hfftn-ortho-step-ampTrue",
+        "output_max_absolute": 4.778671669480872e-08,
+        "gradient_relative_l2": 0.0016476151526058544
+      },
+      {
+        "name": "ihfftn-backward-regular-ampFalse",
+        "output_max_absolute": 5.039811667553685e-09,
+        "gradient_relative_l2": 0.00184698204279749
+      },
+      {
+        "name": "ihfftn-backward-regular-ampTrue",
+        "output_max_absolute": 5.060611170994255e-09,
+        "gradient_relative_l2": 0.0016269806810205027
+      },
+      {
+        "name": "ihfftn-backward-step-ampFalse",
+        "output_max_absolute": 5.346050741396458e-09,
+        "gradient_relative_l2": 0.0015393037099585866
+      },
+      {
+        "name": "ihfftn-backward-step-ampTrue",
+        "output_max_absolute": 5.865784216695838e-09,
+        "gradient_relative_l2": 0.0016549021440696082
+      },
+      {
+        "name": "ihfftn-forward-regular-ampFalse",
+        "output_max_absolute": 3.0348402626453406e-07,
+        "gradient_relative_l2": 0.001599870861871005
+      },
+      {
+        "name": "ihfftn-forward-regular-ampTrue",
+        "output_max_absolute": 2.397521338780603e-07,
+        "gradient_relative_l2": 0.0017005949013386154
+      },
+      {
+        "name": "ihfftn-forward-step-ampFalse",
+        "output_max_absolute": 2.642011405880498e-07,
+        "gradient_relative_l2": 0.0017593767434672483
+      },
+      {
+        "name": "ihfftn-forward-step-ampTrue",
+        "output_max_absolute": 2.3342376000986467e-07,
+        "gradient_relative_l2": 0.001758368037303992
+      },
+      {
+        "name": "ihfftn-ortho-regular-ampFalse",
+        "output_max_absolute": 3.31685930873237e-08,
+        "gradient_relative_l2": 0.0015909485375956887
+      },
+      {
+        "name": "ihfftn-ortho-regular-ampTrue",
+        "output_max_absolute": 4.4505851881665256e-08,
+        "gradient_relative_l2": 0.0017006834124003445
+      },
+      {
+        "name": "ihfftn-ortho-step-ampFalse",
+        "output_max_absolute": 3.302412177462387e-08,
+        "gradient_relative_l2": 0.0016221124785509178
+      },
+      {
+        "name": "ihfftn-ortho-step-ampTrue",
+        "output_max_absolute": 3.286005250345233e-08,
+        "gradient_relative_l2": 0.0017645631211680567
+      },
+      {
+        "name": "fft-fp32-pass-through"
+      },
+      {
+        "name": "ifft-fp32-pass-through"
+      },
+      {
+        "name": "fft2-fp32-pass-through"
+      },
+      {
+        "name": "ifft2-fp32-pass-through"
+      },
+      {
+        "name": "fftn-fp32-pass-through"
+      },
+      {
+        "name": "ifftn-fp32-pass-through"
+      },
+      {
+        "name": "rfft-fp32-pass-through"
+      },
+      {
+        "name": "irfft-fp32-pass-through"
+      },
+      {
+        "name": "rfft2-fp32-pass-through"
+      },
+      {
+        "name": "irfft2-fp32-pass-through"
+      },
+      {
+        "name": "rfftn-fp32-pass-through"
+      },
+      {
+        "name": "irfftn-fp32-pass-through"
+      },
+      {
+        "name": "hfft-fp32-pass-through"
+      },
+      {
+        "name": "ihfft-fp32-pass-through"
+      },
+      {
+        "name": "hfft2-fp32-pass-through"
+      },
+      {
+        "name": "ihfft2-fp32-pass-through"
+      },
+      {
+        "name": "hfftn-fp32-pass-through"
+      },
+      {
+        "name": "ihfftn-fp32-pass-through"
+      },
+      {
+        "name": "float64-pass-through"
+      },
+      {
+        "name": "complex64-pass-through"
+      },
+      {
+        "name": "native-invalid-norm-contract"
+      },
+      {
+        "name": "native-duplicate-dim-contract"
+      },
+      {
+        "name": "native-autograd-out-contract"
+      },
+      {
+        "name": "native-nontensor-contract"
+      },
+      {
+        "name": "global-bf16-rejection-unchanged-both-amp-contexts"
+      },
+      {
+        "name": "rfft2-strided-out-guarded"
+      },
+      {
+        "name": "hfft2-strided-out-guarded"
+      },
+      {
+        "name": "independent-dft17-continuous-reference-finite-differences",
+        "finite_difference_errors": [
+          3.313738172749936e-13,
+          2.508201979445346e-13,
+          1.3356538097752946e-12
+        ],
+        "output_max_absolute": 6.780982716446029e-08,
+        "gradient_relative_l2": 0.0015720775168356702
+      },
+      {
+        "name": "native-gpu-fft-forward-backward-trace",
+        "gpu_kernel_count": 32,
+        "fft_kernel_names": [
+          "fft_rtc_back_len_17_factors_17_wgs_120_tpt_1_dim_1_i32_sp_op_CI_CI_unitstride_sbrr_dirReg.kd",
+          "fft_rtc_fwd_len_17_factors_17_wgs_120_tpt_1_dim_1_i32_sp_ip_CI_unitstride_sbrr_dirReg.kd",
+          "void at::native::_fft_conjugate_copy_kernel<c10::complex<float>, OffsetCalculator<1, long, false>, at::native::HermitianSymmetryOffsetCalculator<long> >(long, c10::complex<float>*, c10::complex<float> const*, OffsetCalculator<1, long, false>, at::native::HermitianSymmetryOffsetCalculator<long>) [clone .kd]"
+        ],
+        "output_max_absolute": 6.780982716446029e-08,
+        "gradient_relative_l2": 0.0015720775168356702
+      }
+    ],
+    "module_file": "/opt/torch-venv/lib/python3.12/site-packages/bc250_fft.py",
+    "helper_version": "0.1.0",
+    "limits": {
+      "output_rtol": 0.0005,
+      "output_atol": 0.0005,
+      "gradient_rtol": 0.02,
+      "gradient_atol": 2e-05,
+      "gradient_relative_l2": 0.004
+    }
+  }
+}

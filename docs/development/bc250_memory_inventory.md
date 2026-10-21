@@ -888,7 +888,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
-| rocFFT/hipFFT                               | Existing native backend/AOT cache; P2 FFT30 plus N2.14 public complex96/real72 output+weighted gradients+guarded out, three independent checks and16 direct advanced plans/32 executions | No production defect found; native in-place/planar/callbacks/giant plans and broader performance remain; BF16 promotion B01 separate |
+| rocFFT/hipFFT                               | Existing native backend/AOT cache; P2 FFT30 plus N2.14 public complex96/real72 output+weighted gradients+guarded out, three independent checks and16 direct advanced plans/32 executions | No production defect found; native in-place/planar/callbacks/giant plans and broader performance remain; B01.1 explicit FP32 promotion helper qualified; native BF16 FFT still unavailable |
 | rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 native eigh22; N2.2 nonsymmetric eig16 host-LAPACK compatibility only. Native nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and performance remain                                                                                         |
 | rocSPARSE/hipSPARSE | Existing native backend: P2 Torch25+legacy16; N2.13 public triangular433 and direct generic96 fixtures/192 solves, exact pivot NaN policy in Torch | More formats/analyses/general factorization remain; BSR public int64 is bounded downcast, triangular autograd/performance unqualified; old corruption fix was CLR |
 | rocALUTION                                  | CG40 ordinary cases andfive fresh-process200 passes after pool-default fix                                                                                                                                   | Larger systems, other solvers/preconditioners/concurrency remain                                                                                            |
@@ -925,6 +925,31 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B01.1 explicit BF16 FFT fallback installed2026-10-21:** code427492188,
+bc250_fft0.1.0. Audit3 confirms GPU BF16 FFT rejects outside/inside AMP while
+explicit float promotion works/backpropagates; existing sources/no old helper
+reviewed. Opt-in18 FFT adapters promote only BF16 to FP32 on same device; C64/F32
+outputs without out, inherited native out/other-dtype contracts and cast-back
+BF16 leaf gradients. No global torch.fft change/native BF16 FFT/CPU fallback.
+Final candidate/installed327 each: new245 (216 ops/norms/layouts/AMP CPU-double
+output/all-leaf grads; non-BF16/contract/out guards; explicit DFT/finite differences/
+32-kernel native FFT trace), retained real72/contracts3/core7. Maxoutput6.404e-7,
+gradrelativeL2.001981<.004; fixed bounds. Initial dynamic candidate327 pass,
+explicit export assignment fixes lint visibility; full final replay. Owned temp
+stage-r2 failure retained/r3 fixed.13 guards ACK/all gates+batch dmesg identical,
+306 stack hashes/four AOT DBs/links retained. PurePython image layer/no native
+build/cache reset/ROCm/Torch/default change; image5d0a6d9cef758b2f7677a2b52b9d29ac51e24970703259a10ca8e44bee93feb1.
+RecoveryWS/recovery/fft-b011-before/runtime.json via locked deploy helper rollback,
+old94c610 image/history retained; rollback unused. User application excluded,
+same r2 bootc646d874/no agent reboot/.105/BIOS/delete. Local artifacts/fft-b011
+under kernel preserve modules/recovery/141 SHA-verified raw logs4,140,885B/13 guards.
+BaselineWS/logs/fft-b011-qualification-r3/final.json; no own jobs/root SSH closed,
+disk21.440GB observed. Unknown CPU fault unresolved/distinct from VM-heap/CSR/
+B04.2 queue. [Report/use/recovery](bc250_fft_b011_results/README.md). No memory/
+speed/all-device/shape/compile/graph/higher-grad/stability claim. **Next B02.1:**
+review sparse solve/factorization APIs versus N2.13 triangular evidence before
+choosing native integration or bounded explicit fallback with reference contracts.
 
 **B04.5 CPU common image codecs installed2026-10-21:** code93a601b36,
 TorchCodec source3eecace0 unchanged, no new source patch. JPEG/PNG/WebP enabled,

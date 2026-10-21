@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B01.1 explicit BF16 FFT fallback installed2026-10-21:** code427492188,
+  bc250_fft0.1.0 moduleSHA50bada1588a98dc2a18eb5948a231a76ec7aaede8fe6198b503c338ef9820fe6.
+  Audit3 proves GPU rfft2 BF16 rejects outside/inside BF16 AMP, explicit float
+  conversion works/backpropagates. Qualified native SpectralOps/_refs rejectBF16;
+  FFT FP32 autocast registrations are CPU-side, no old helper found. Added
+  **opt-in** bc250_fft18 complex/real/Hermitian forward/inverse1D/2D/nD adapters:
+  only BF16 input cast differentiably to FP32 on existing device; no native BF16
+  FFT/CPU fallback/global monkeypatch/default behavior change. Without out result
+  C64/F32; leaf gradients retain dtype/rounding. Other inputs/out follow native
+  semantics. Extra conversion allocation, no speed/peak-memory claim.
+  Final candidate-r4/installed-r3 each327 checks: new245, retained N2.14 real72/
+  contracts3/core7. New216=18ops*3norms*2layouts*2AMP, CPU-double output/all-leaf
+  gradients/crop-pad/strides/unused storage/private streams;20 non-BF16 controls,
+  five native contracts, two guarded outs, independent DFT17+continuous-reference
+  finite differences, actual native GPU FFT forward/backward trace32 kernels.
+  Maxoutput6.404e-7/gradientrelativeL2.001981<.004; fixed outputrtol/atol5e-4,
+  BF16 gradientrtol.02/atol2e-5. No discrete-quantization derivative claim.
+  Earlier dynamic-export candidate-r2 also327 pass; explicit named exports fix
+  static lint visibility, unchanged suite rerun. Stage-r2 owned tmp FileExistsError
+  retained/fixed exist_ok in r3; no numerical gate/tolerance relaxed. AllBlack/
+  Ruff-F/AST/diff checks pass. Thirteen600s guards ACK/all gate+batch dmesg same.
+  Image5d0a6d9cef758b2f7677a2b52b9d29ac51e24970703259a10ca8e44bee93feb1;
+  runtimeJSONab9db860207e230ea704cab2bf76005d19b7c8967e59559a5a4b0088ed7f38c1.
+  PurePython image module layer only; no native build/ccache operation/Torch or
+  ROCm DSO/kpack/default changes. Previous94c610 image/source/build/cache history
+  retained. RecoveryWS/recovery/fft-b011-before/runtime.json+old shared helper,
+  locked deploy_fft_b011_on_host.py --rollback restores exact old metadata/image,
+  unused.306 stack hashes/four FFT AOT DBs/links retained; user finetune-n7 stays
+  uninspected/unmodified/untested, include_training_app=False. Same r2 bootc646d874,
+  no agent reboot/.105/BIOS/fallback/delete. Unknown CPU fault unresolved/distinct
+  from VM-heap/CSR/B04.2 queue. No universal shapes/devices/compile/graphs/higher
+  derivatives/performance/stability claim. Local kernel/artifacts/fft-b011 holds
+  modules/controller variant/recovery/141 raw logs4,140,885B/13 guards; archive
+  77cf1bd7 SHA-verified. [Report/use/recovery](docs/development/bc250_fft_b011_results/README.md).
+  BaselineWS/logs/fft-b011-qualification-r3/final.json, rawWS/logs/fft-b011-*;
+  disk21,439,528,960B observed. No own build/test/container/guard/export running,
+  root SSH closed. Remote memory snapshot keyed by final memory revision.
+  **Next B02.1:** inspect pinned general sparse-solve/factorization consumers and
+  N2.13 triangular evidence. Choose feasible ROCm integration or explicit bounded
+  fallback with memory caps/residual/singularity/promised-gradient references
+  before coding. Ordinary torch.fft BF16 API rejection remains unchanged.
+
 - **B04.5 CPU image codecs completed/installed2026-10-21:** code93a601b36,
   TorchCodec0.17.0+gfx1013 source3eecace02076800cf6aa9be6364ed2f1f611548d
   unchanged; no new source patch/Torch rebuild. JPEG/PNG/WebP ON, IMAGE default/
@@ -2343,7 +2385,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B04.3 | CPU TorchCodec/FFmpeg audio load/save installed;136 candidate+136 installed file/reference/GPU interoperability and retained regression checks. User application excluded; existing ROCm/Torch retained. |
 | [x]   | B04.4 | CPU video decode/seek/encode and exact single-frame VFR timestamp repair installed;108 candidate+108 installed reference/audio/core checks, explicit HIP forward/backward interop. |
 | [x]   | B04.5 | CPU JPEG/PNG/WebP decode and PNG/JPEG encode installed;203 candidate+203 installed image/reference/HIP interop/retained regressions. Other formats/GPU codecs remain separate. |
-| [ ]   | **B01.1 — next** | Audit prior BF16 FFT/autocast/promotion evidence; qualify any missing explicit FP32 promotion helper with complex64 output/input-gradient references. |
+| [x]   | B01.1 | Explicit same-device BF16-to-FP32 bc250_fft helper installed;327 final candidate+327 installed references/gradients/native trace/retained FFT gates. Native API remains unchanged. |
+| [ ]   | **B02.1 — next** | Inspect general sparse-solve/factorization consumers and N2.13 triangular evidence; select feasible native integration or explicit bounded fallback with memory/residual/singularity/gradient contracts. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
