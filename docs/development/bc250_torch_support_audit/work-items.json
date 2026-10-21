@@ -97,9 +97,9 @@
     },
     {
       "id": "B04",
-      "feature": "B04.1 torchvision and B04.2 native torchaudio installed; B04.3 TorchCodec file backend absent",
-      "evidence": "Vision67 candidate+67 installed; audio142 candidate+142 installed+48 post-user-reboot composite checks. GPU DSP/IIR/RNNT outputs and first-order gradients, exact CTC alignment; demonstrated CLR cold-hostcall queue CPU crash repaired. Bounded scopes; existing Torch retained; no GPU codec/universal stability/speed claim.",
-      "next": "B04.3 inspect pinned TorchCodec ABI/FFmpeg requirements; isolated CPU audio file load/save reference qualification before installation.",
+      "feature": "B04.1 vision/B04.2 native audio/B04.3 CPU audio file IO installed; B04.4 CPU video unqualified",
+      "evidence": "Native torchvision/torchaudio retained; CPU TorchCodec0.17.0+gfx1013/FFmpeg6.1.1 installed.136 candidate+136 installed codec/reference/GPU resample forward-backward and retained regressions pass. Existing ROCm/Torch unchanged; application excluded by user request. No GPU codec/video/image/all-codec/speed claim.",
+      "next": "B04.4 inspect pinned CPU video APIs, owned raw-frame decode/seek/encode reference fixtures with explicit HIP transfer. CUDA/image codec builds remain off pending separate qualification.",
       "status": "partially-qualified"
     },
     {

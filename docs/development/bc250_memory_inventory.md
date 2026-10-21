@@ -926,6 +926,38 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**B04.3 CPU audio file codec installed2026-10-21:** code9c5199ccb; preserved
+sources/bc250-torchcodec v0.17.0 d9dc54238e173000bc3969eb3959777026ff9ae8,
+no source patches, all471 tracked files match archive. CPU FFmpeg6.1.1, CUDA/image
+codecs disabled; qualified Torch2.13/HIP7.17/Python3.12/ABI1 retained. Public
+load/save now available through bc250-torch/train, CPU decode/explicit HIP tensor
+transfer/CPU save. Existing normalized-FP32 and legacy-option warning contracts
+unchanged. Candidate136/installed136 checks: file46 (independent PCM16/24 RIFF,
+FLAC, MP3 CLI comparison, views/crops/empty/metadata/file-like input, independent
+saved PCM, warnings/refusals and GPU resample output/input-gradient+CPU save),
+DSP34/native40/vision9/core7. Exact PCM and owned MP3 CLI match, fixed precision
+limits retained. Ten600s guards ACK, each GPU gate/both passing batches dmesg
+identical; no universal codec/model/video/image/GPU codec/long-stability/speed
+claim. Image dcd025fbee1ffd180b9ff4f3ab8b753f2415d8a58914d77506ea12d4777a88d7;
+only dev image/codec metadata changed. Existing native ROCm/Torch/kpacks/defaults
+and B04.2 CLR repair retained. Old97fac image/release/builds/caches kept; recovery
+WS/recovery/codec-b043-before/runtime.json, locked deploy helper --rollback.
+Initial app-doc/path/arch/preflight failures retained; no failed GPU gate hidden.
+Build4 Ninja/4 CPUs/8GiB RAM/10GiB mem+swap/20GiB ccache/no GPU devices; private
+FFmpeg development packaging, N8 release/license disposition still separate.
+**User direction:** stay out of finetune-n7; eight historical app identities
+excluded without further reads.306 stack paths/four AOT DBs/links retained,
+shared qualifier include_training_app=False/current stack baseline required;
+no app edits/tests/checkpoint migration or renewed qualification. Boot8ea98081
+observed at entry, same r2 during gates; no agent reboot/.105/BIOS/deletion.
+Local kernel/artifacts/codec-b043 preserves source/wheel/proof/build manifests/
+recovery/145 SHA-verified raw logs3,703,497B. BaselineWS/logs/codec-b043-qualification-r3/
+final.json; no own jobs/root SSH closed; disk34.927GB observed. Historical unknown
+CPU fault unresolved/distinct from VM-heap/CSR and B04.2 queue defect.
+[Report/use/recovery](bc250_codec_b043_results/README.md). **Next B04.4:** pinned
+CPU video APIs with owned raw-frame decode/seek/encode references/HIP transfer;
+CUDA/image codec builds remain off until separately qualified.
+
 **B04.2 torchaudio installed2026-10-21:** native2.11.0+gfx1013,
 source1ae7f5d8023e82be51b500399a37fceb45481a2b (upstream34c52a67), integrationd75350905/
 controllers7bf89b571. Existing patched Torch retained. ROCm build/current-stream

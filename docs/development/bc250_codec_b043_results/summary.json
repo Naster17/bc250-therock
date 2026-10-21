@@ -1,0 +1,345 @@
+{
+  "task": "B04.3",
+  "status": "installed and bounded-qualified",
+  "integration_revision": "9c5199ccb",
+  "source_revision": "d9dc54238e173000bc3969eb3959777026ff9ae8",
+  "source_patches": [],
+  "torchcodec": "0.17.0+gfx1013",
+  "torch": "2.13.0a0+gfx1013",
+  "torchaudio": "2.11.0+gfx1013",
+  "source_archive_git_matching_files": 471,
+  "wheel_sha256": "5850732408eaf7ef372d570be4a8367948e69181e9b4eb58f6d833462f2c7780",
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "5f2ff6801ead12218188b53571973ba3e021c9b8bc70f4a1016eebca06e4467b",
+    "image": "dcd025fbee1ffd180b9ff4f3ab8b753f2415d8a58914d77506ea12d4777a88d7",
+    "previous_image": "97fac19f0d5747265c4ff8328f99d2eaacaf8ff62e5092d22cda300f7130a632",
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/codec-b043-before/runtime.json",
+    "prefix_changed": true,
+    "native_libraries_changed": false,
+    "installed_runtime_sha256": "f902e0bc3f7c4275db9ea7f7a2234f29fcc6fd9d78b449bf95666b00ed8ccd96",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/codec-b043-qualification-r3/final.json",
+    "rollback_used": false
+  },
+  "candidate_composite_checks": 136,
+  "installed_composite_checks": 136,
+  "guard_count": 10,
+  "guard_timeout_seconds": 600,
+  "all_guards_acknowledged": true,
+  "passing_batches_kernel_log_unchanged": true,
+  "protected_stack_paths": 306,
+  "excluded_user_application_paths": 8,
+  "user_scope": "Leave finetune-n7 uninspected/unmodified/untested; use owned stack fixtures. Two initial app-doc preservation refusals retained; eight app identities excluded after latest user direction.",
+  "fft_aot_databases_preserved": 4,
+  "boot_id": "8ea98081-ca52-4869-ae8f-cf8072362d80",
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_changed_at_entry": true,
+  "agent_reboot": false,
+  "agent_deletion": false,
+  "disk_available_bytes": 34926919680,
+  "active_preservation_baseline": "WS/logs/codec-b043-qualification-r3/final.json",
+  "old_image_retained": true,
+  "existing_rocm_torch_libraries_unchanged": true,
+  "hip_sha256": "a1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b",
+  "rocm_systems_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+  "historical_cpu_fault_unresolved": true,
+  "vm_heap_fix_unchanged": true,
+  "resources": {
+    "jobs": 4,
+    "cpus": 4,
+    "memory": "8g",
+    "memory_swap": "10g",
+    "ccache": "20G",
+    "build_gpu_devices": false
+  },
+  "ffmpeg_library_versions": {
+    "libavfilter": [
+      9,
+      12,
+      100
+    ],
+    "libavutil": [
+      58,
+      29,
+      100
+    ],
+    "libavcodec": [
+      60,
+      31,
+      102
+    ],
+    "libavformat": [
+      60,
+      16,
+      100
+    ],
+    "ffmpeg_version": "6.1.1-3ubuntu5"
+  },
+  "mapped_codec_dsos": 10,
+  "verification": {
+    "status": "passed",
+    "archive_sha256": "b52252d23c892c260c9aa82cc6a321965df4ac93aea7acf5e30ea3f67efa4323",
+    "archive_bytes": 5222400,
+    "raw_log_files": 145,
+    "raw_log_bytes": 3703497,
+    "wheel_sha256": "5850732408eaf7ef372d570be4a8367948e69181e9b4eb58f6d833462f2c7780"
+  },
+  "audio_results": {
+    "status": "passed",
+    "checks": [
+      "pcm16-1ch-8000-load-path",
+      "pcm16-1ch-8000-load-filelike",
+      "pcm16-1ch-8000-channels-last",
+      "pcm16-1ch-8000-crop-channels-first-True",
+      "pcm16-1ch-8000-crop-channels-first-False",
+      "pcm16-1ch-8000-empty-offset0-count0",
+      "pcm16-1ch-8000-empty-offset5000-count-1",
+      "pcm16-1ch-8000-direct-decoder-metadata",
+      "pcm16-2ch-16000-load-path",
+      "pcm16-2ch-16000-load-filelike",
+      "pcm16-2ch-16000-channels-last",
+      "pcm16-2ch-16000-crop-channels-first-True",
+      "pcm16-2ch-16000-crop-channels-first-False",
+      "pcm16-2ch-16000-empty-offset0-count0",
+      "pcm16-2ch-16000-empty-offset5000-count-1",
+      "pcm16-2ch-16000-direct-decoder-metadata",
+      "pcm24-2ch-16000-load-path",
+      "pcm24-2ch-16000-load-filelike",
+      "pcm24-2ch-16000-channels-last",
+      "pcm24-2ch-16000-crop-channels-first-True",
+      "pcm24-2ch-16000-crop-channels-first-False",
+      "pcm24-2ch-16000-empty-offset0-count0",
+      "pcm24-2ch-16000-empty-offset5000-count-1",
+      "pcm24-2ch-16000-direct-decoder-metadata",
+      "independent-reference-load-path",
+      "independent-reference-load-filelike",
+      "independent-reference-channels-last",
+      "independent-reference-crop-channels-first-True",
+      "independent-reference-crop-channels-first-False",
+      "independent-reference-empty-offset0-count0",
+      "independent-reference-empty-offset5000-count-1",
+      "independent-reference-direct-decoder-metadata",
+      "mp3-decode-versus-ffmpeg-cli",
+      "save-channels-first-strided-wav-independent-pcm",
+      "save-channels-last-wav-independent-pcm",
+      "save-mono-1d-wav-independent-pcm",
+      "save-channels-first-strided-flac-independent-pcm",
+      "save-channels-last-flac-independent-pcm",
+      "save-mono-1d-flac-independent-pcm",
+      "direct-encoder-bytes-public-loader",
+      "public-normalize-false-warning-and-normalized-result",
+      "refuse-missing-file",
+      "refuse-malformed-file",
+      "refuse-zero-sample-rate",
+      "refuse-invalid-rank",
+      "cpu-codec-hip-resample-forward-backward-explicit-cpu-save"
+    ],
+    "results": [
+      {
+        "name": "pcm16-1ch-8000-load-path"
+      },
+      {
+        "name": "pcm16-1ch-8000-load-filelike"
+      },
+      {
+        "name": "pcm16-1ch-8000-channels-last"
+      },
+      {
+        "name": "pcm16-1ch-8000-crop-channels-first-True"
+      },
+      {
+        "name": "pcm16-1ch-8000-crop-channels-first-False"
+      },
+      {
+        "name": "pcm16-1ch-8000-empty-offset0-count0"
+      },
+      {
+        "name": "pcm16-1ch-8000-empty-offset5000-count-1"
+      },
+      {
+        "name": "pcm16-1ch-8000-direct-decoder-metadata"
+      },
+      {
+        "name": "pcm16-2ch-16000-load-path"
+      },
+      {
+        "name": "pcm16-2ch-16000-load-filelike"
+      },
+      {
+        "name": "pcm16-2ch-16000-channels-last"
+      },
+      {
+        "name": "pcm16-2ch-16000-crop-channels-first-True"
+      },
+      {
+        "name": "pcm16-2ch-16000-crop-channels-first-False"
+      },
+      {
+        "name": "pcm16-2ch-16000-empty-offset0-count0"
+      },
+      {
+        "name": "pcm16-2ch-16000-empty-offset5000-count-1"
+      },
+      {
+        "name": "pcm16-2ch-16000-direct-decoder-metadata"
+      },
+      {
+        "name": "pcm24-2ch-16000-load-path"
+      },
+      {
+        "name": "pcm24-2ch-16000-load-filelike"
+      },
+      {
+        "name": "pcm24-2ch-16000-channels-last"
+      },
+      {
+        "name": "pcm24-2ch-16000-crop-channels-first-True"
+      },
+      {
+        "name": "pcm24-2ch-16000-crop-channels-first-False"
+      },
+      {
+        "name": "pcm24-2ch-16000-empty-offset0-count0"
+      },
+      {
+        "name": "pcm24-2ch-16000-empty-offset5000-count-1"
+      },
+      {
+        "name": "pcm24-2ch-16000-direct-decoder-metadata"
+      },
+      {
+        "name": "independent-reference-load-path"
+      },
+      {
+        "name": "independent-reference-load-filelike"
+      },
+      {
+        "name": "independent-reference-channels-last"
+      },
+      {
+        "name": "independent-reference-crop-channels-first-True"
+      },
+      {
+        "name": "independent-reference-crop-channels-first-False"
+      },
+      {
+        "name": "independent-reference-empty-offset0-count0"
+      },
+      {
+        "name": "independent-reference-empty-offset5000-count-1"
+      },
+      {
+        "name": "independent-reference-direct-decoder-metadata"
+      },
+      {
+        "name": "mp3-decode-versus-ffmpeg-cli",
+        "max_absolute_error": 0.0
+      },
+      {
+        "name": "save-channels-first-strided-wav-independent-pcm"
+      },
+      {
+        "name": "save-channels-last-wav-independent-pcm"
+      },
+      {
+        "name": "save-mono-1d-wav-independent-pcm"
+      },
+      {
+        "name": "save-channels-first-strided-flac-independent-pcm"
+      },
+      {
+        "name": "save-channels-last-flac-independent-pcm"
+      },
+      {
+        "name": "save-mono-1d-flac-independent-pcm"
+      },
+      {
+        "name": "direct-encoder-bytes-public-loader"
+      },
+      {
+        "name": "public-normalize-false-warning-and-normalized-result"
+      },
+      {
+        "name": "refuse-missing-file"
+      },
+      {
+        "name": "refuse-malformed-file"
+      },
+      {
+        "name": "refuse-zero-sample-rate"
+      },
+      {
+        "name": "refuse-invalid-rank"
+      },
+      {
+        "name": "cpu-codec-hip-resample-forward-backward-explicit-cpu-save"
+      }
+    ],
+    "torch": "2.13.0a0+gfx1013",
+    "torchaudio": "2.11.0+gfx1013",
+    "torchcodec": "0.17.0+gfx1013",
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "decoding_device": "cpu",
+    "gpu_codec_claim": false,
+    "fixture_sha256": {
+      "save-mono-1d.wav": "4d6efd5fee8029e44e746812cb8e55d911790e34d934b520068f2a0cfcc1a3f4",
+      "pcm16-2ch-16000.wav": "32defb77c11052906dce07525aab4f68bd22b13a2c6ac73691b09af8004ec95d",
+      "save-channels-first-strided.wav": "7c5297aa1626b68b61f19747de188824fb0e0c6a28048711bcef3ebdcd5f8365",
+      "pcm24-2ch-16000.wav": "3ae0ef1f8c11cbd9045fb9b006292fc8b2124c2b40da6f40b785f9686ad81c59",
+      "gpu-result-explicit-cpu-transfer.wav": "6687d2f66d01e7edd601a79f7a623b28d9bb3b89a41b19fd7b284904761ae457",
+      "save-channels-first-strided.flac": "da049c7f9ac298452bc42be8b93e531500ab255d4cc7210cad678fd35f97ab0d",
+      "save-mono-1d.flac": "a3ce44029d22c051de6257ffa6cf0541857536643dcf7bd04f435d4b65be20f4",
+      "save-channels-last.wav": "1c836091955bbb8da4e6e5495578cadc37752fa3967ef68b6151109d0e1faa32",
+      "pcm16-1ch-8000.wav": "6936b05bb423f1798bb007be1fcf0149f609e0a910eff9659d73b8a39527e4b0",
+      "reference.mp3": "78ab5fd1a0be8d67a9ba33e9c643d5c766877ae7cf12cfc760962e96f36c94d9",
+      "save-channels-last.flac": "b3672ee2d3558bdb4e31e72c1a30d0bcbb9c60cfbe7dc21971072cf47b9532ec",
+      "independent-reference.flac": "f87dd6e817e765411d08ddf7d99d15825598b6a857e0028ff02b4bc3b54ce339"
+    },
+    "ffmpeg_library_versions": {
+      "libavfilter": [
+        9,
+        12,
+        100
+      ],
+      "libavutil": [
+        58,
+        29,
+        100
+      ],
+      "libavcodec": [
+        60,
+        31,
+        102
+      ],
+      "libavformat": [
+        60,
+        16,
+        100
+      ],
+      "ffmpeg_version": "6.1.1-3ubuntu5"
+    },
+    "cxx11_abi": true,
+    "mapped_codec_sha256": {
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_core6.so": "e4dacb56bccf6ee064040657dfb964706a79baeb5e2dbf128540e2a564d9e5f1",
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_custom_ops6.so": "f3212c872418704d65aad49b50fa4b77f830cd6e018c4a35f92eaff61af95af4",
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_image.so": "fac4dc3fe1f782617c8853ba9499ceef53e35c13abc85ec9b3bef677760fcf2f",
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_pybind_ops.so": "7a2bb57ca6a09b9c27aff2afa66cd5175378ffd7a09d1e81a21b1ee8f85305e3",
+      "/usr/lib/x86_64-linux-gnu/libavcodec.so.60.31.102": "8231c9aecba7d02c132de0e16195ccb3e8002a235a5f364b3635df09e7f513e0",
+      "/usr/lib/x86_64-linux-gnu/libavfilter.so.9.12.100": "863ec5f6b0d32cbc64a10048e987a2bba79e3852abc73dfcb9a435158fc75f24",
+      "/usr/lib/x86_64-linux-gnu/libavformat.so.60.16.100": "5f0970c52b7723037a7f6357cc1931879513449f742240fff7c37ceb7175ac9f",
+      "/usr/lib/x86_64-linux-gnu/libavutil.so.58.29.100": "11b0836441b899e1b2183fc10eda5a5f637c03547fdfe5b97774e2cbd5aeb72c",
+      "/usr/lib/x86_64-linux-gnu/libswresample.so.4.12.100": "d6ca325614995109ee64b2b2e7dc2d2e5a6a67daba26fed101f0a44b65abc1b1",
+      "/usr/lib/x86_64-linux-gnu/libswscale.so.7.5.100": "a2122c6342e9457a9b7faab2d3f7018f3634fdac4d0b25b8ea974eae0277d78c"
+    }
+  },
+  "failures_retained": [
+    "deps-r1 and build-r3 app-document preservation refusal, no source or user-app mutation",
+    "build-r1 missing ROCm CMake path, fixed with qualified ROCM_PATH/HIP_PATH",
+    "build-r2 competing UID1000 train preflight refusal; process exited and user confirmed free board",
+    "build-r4 missing PYTORCH_ROCM_ARCH, fixed to native gfx1013; build-r5 succeeds"
+  ],
+  "next": "B04.4: inspect pinned TorchCodec CPU video APIs and qualify owned raw-frame decode/seek/encode reference fixtures with explicit HIP transfer; keep CUDA/image codec builds off until separate qualification.",
+  "running_agent_jobs": [],
+  "root_ssh_sessions_closed": true,
+  "limits": "CPU FFmpeg6 audio file IO and bounded first-order GPU signal interoperability; no GPU codec, video/image decode, differentiable file IO, all-codec/model/shape, sustained stability or speed claim. Private-development distro FFmpeg packaging; N8 release dependency/license review remains."
+}

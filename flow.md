@@ -9,6 +9,58 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B04.3 TorchCodec completed/installed2026-10-21:** integration9c5199ccb,
+  upstream v0.17.0 d9dc54238e173000bc3969eb3959777026ff9ae8, preserved local Git
+  sources/bc250-torchcodec branch users/Naster17/gfx1013-codec. No source patch;
+  source archive matches all471 tracked files. CPU FFmpeg6.1.1 audio codec build,
+  CUDA/image codecs off; existing Torch2.13/HIP7.17/Python3.12/ABI1 retained.
+  torchaudio.load/save now available by default through bc250-torch/train; decode
+  on CPU, explicit HIP transfer for tensor ops and CPU transfer before saving.
+  Public normalized-FP32/ignored legacy-option warnings remain upstream behavior.
+  Candidate-r1/installed-r3 each136 composite checks: files46, DSP34, native40,
+  vision integration9/core7. Independent PCM16 mono/stereo/PCM24 RIFF, FLAC,
+  paths/file-like/layout/crop/empty/metadata, MP3 versus separate FFmpeg CLI,
+  WAV/FLAC save/independent parsed PCM, encoded bytes/warnings/refusals, actual
+  GPU resample output/weighted input gradient against CPU double and CPU save.
+  Exact PCM/owned MP3 CLI match; unchanged resample rtol.002/atol3e-5 and retained
+  audio gates. No GPU codec/video/image/file-I/O gradient/all-codec/model/speed
+  or sustained-stability claim. Existing torchvision image path stays available.
+  **User scope2026-10-21:** leave finetune-n7 uninspected/unmodified/untested;
+  use owned stack fixtures. Two initial app-doc preservation refusals retained;
+  user then excluded application. Eight old app identities excluded without
+  further reads;306 stack identities/four FFT AOT DBs/links retained. Shared
+  qualifier explicit include_training_app=False; historical default preserved.
+  Future stack batches use this scope and current306-path baseline, not old
+  app-bound snapshots; no trainer qualification/checkpoint migration claimed.
+  Image dcd025fbee1ffd180b9ff4f3ab8b753f2415d8a58914d77506ea12d4777a88d7;
+  runtimeJSON f902e0bc3f7c4275db9ea7f7a2234f29fcc6fd9d78b449bf95666b00ed8ccd96.
+  Wheel5850732408eaf7ef372d570be4a8367948e69181e9b4eb58f6d833462f2c7780.
+  Only dev image/codec metadata changed; ROCm/Torch DSO/kpack bytes unchanged,
+  B04.2 HIPa1162308/systems1f9609fd6/base62ab2437c, nativeTorchdc8fea0/source
+  2b449c4/rocBLAS8389197c/otherlibs319a235d6/N3.2/math/SDMA0/heapoff retained.
+  Old97fac image/release/builds/caches retained. RecoveryWS/recovery/codec-b043-before/
+  runtime.json; exclusive-lock deploy_codec_b043_on_host.py --rollback restores
+  exact prior metadata/image. Old shared helper backed up; rollback unused.
+  Build-r1 missing ROCm CMake path/r4 missing native arch fixed in build config;
+  r2 competing UID1000 train refused before build, process exited/user confirmed
+  board free; r3 app-doc refusal retained. Corrected build-r5 succeeds:4 Ninja/
+  4 CPUs/8GiB RAM/10GiB mem+swap/shared20GiB ccache, no build GPU devices. Private
+  distro-FFmpeg development wheel; release dependency/license packaging staysN8.
+  Ten600s guards ACK; each GPU gate/both whole passing batches dmesg identical.
+  New r2 boot8ea98081-ca52-4869-ae8f-cf8072362d80 observed at ENTRY, unchanged
+  across tests. No agent reboot/.105/BIOS/fallback/delete changes. Historical
+  unknown CPU fault unresolved/distinct from fixed VM-heap/CSR and B04.2 queue.
+  Local kernel/artifacts/codec-b043 has source/proof/wheel/build inventories/
+  recovery/145 raw logs3,703,497B. Fsynced export archiveb52252d2 SHA-verified.
+  [Report/use/recovery](docs/development/bc250_codec_b043_results/README.md),
+  rawWS/logs/codec-b043-*, baseline codec-b043-qualification-r3/final.json.
+  Disk34,926,919,680B observed; no own build/test/container/guard/export running,
+  root SSH sessions closed. Remote memory snapshot keyed by final memory revision.
+  **Next B04.4:** inspect pinned TorchCodec CPU video APIs; owned raw-frame
+  decode/seek/encode reference fixtures with explicit HIP transfer before broader
+  claims. CUDA/image codecs remain off pending separate qualification. Broad
+  B01/B02/B03/B05/B06/B07/N2–N8 remain; Qwen/LoRA is optional and excluded now.
+
 - **B04.2 torchaudio completed/installed2026-10-21:** integrationd75350905,
   runtime controllers7bf89b571. Preserved source sources/bc250-torchaudio,
   upstream34c52a67 / port1ae7f5d8023e82be51b500399a37fceb45481a2b;
@@ -2203,7 +2255,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.10 | User-broadened generic compiled CNN/dense/gated/BatchNorm training;56 CPU-reference/optimizer/buffer/trace checks, no production defect/install/speed claim. |
 | [x]   | B04.1 | Pinned native torchvision installed in independent image;67 candidate+67 installed CPU-reference/operator/gradient/codec/model/core checks. CPU codecs explicit, old image/release retained. |
 | [x]   | B04.2 | Native torchaudio installed;142 candidate/142 installed/48 post-user-reboot checks. Signal outputs/first-order gradients/stream behavior plus demonstrated CLR cold-hostcall queue repair qualified within recorded bounds. |
-| [ ]   | **B04.3 — next** | Pin TorchCodec against qualified Torch; inspect FFmpeg/ABI requirements and qualify CPU audio file loading/saving with owned reference fixtures before installation. |
+| [x]   | B04.3 | CPU TorchCodec/FFmpeg audio load/save installed;136 candidate+136 installed file/reference/GPU interoperability and retained regression checks. User application excluded; existing ROCm/Torch retained. |
+| [ ]   | **B04.4 — next** | Inspect pinned TorchCodec CPU video APIs; owned raw-frame decode/seek/encode references and explicit HIP transfer. CUDA/image codec builds remain off until separately qualified. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
