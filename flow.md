@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B04.5 CPU image codecs completed/installed2026-10-21:** code93a601b36,
+  TorchCodec0.17.0+gfx1013 source3eecace02076800cf6aa9be6364ed2f1f611548d
+  unchanged; no new source patch/Torch rebuild. JPEG/PNG/WebP ON, IMAGE default/
+  CUDA/nvJPEG OFF; AVIF/GIF/HEIC remain disabled by build choice, not hardware
+  impossibility. Existing build libs JPEG2.1.5/PNG1.6.43/WebP1.3.2 reused. Runtime
+  missing libwebpdemux2 supplied from exact build image under /opt/bc250-codec-
+  sysdeps with copyright/loader cache; private copy not dpkg-registered. DSO
+  SHA f31bf01638c352533e18720676db66fcb190a622db5bf617558a49bc445d0b83.
+  Candidate-r1/installed-r3 each203 checks: image86/video55/audio46/vision9/core7.
+  PNG8 gray/alpha/RGB/RGBA independent serialized samples, PNG16 precision/scaling,
+  orientation6, JPEG cross-Pillow references, exact lossless WebP static/animated
+  pixels, PNG/JPEG encoder views/output forms, refusals and explicit GPU spatial
+  output/input-gradient versus CPU double then CPU encode. All pass first gates;
+  fixed exact PNG/WebP, JPEG<=2 crossdecoder/MAE<20 owned encoded fixtures, GPU
+  rtol2e-6 atol2e-7. CPU codecs only; explicit GPU JPEG refusal. No WebP encode/
+  AVIF/GIF/HEIC/palette/interlace/all orientation/animation timing/HDR/security/
+  universal stability or performance claim. Historical CPU fault unresolved,
+  distinct from fixed VM-heap/CSR/B04.2 queue; B04.4 time-seek repair retained.
+  Image94c610368d0fcf596a9f9f6355a5d5d28fd1111d54d4033c46e6b5977cae1ece;
+  runtimeJSONc1fd78993ec25d0866e75e69bd4cc8ef2ebe9710f9a1f08e0de33bb350a2aaea;
+  wheel0551a76dcc4c9cc950cd8045855ae7a235c9b0f8c6edd220396828a88d19e09d.
+  Only codec wheel/private image dependency/new image/dev metadata changed;
+  existing native ROCm/Torch/kpacks/N3.2/math/SDMA0/heapoff unchanged. Old87875
+  image/source/build/cache/checkpoint/release history retained. RecoveryWS/recovery/
+  image-b045-before/runtime.json plus original shared helper; locked deploy helper
+  --rollback restores exact old metadata/image, unused.4 Ninja/4 CPUs/8GiB RAM/
+  10GiB mem+swap/shared20GiB ccache, no build GPU devices; private N8 packaging.
+  Ten600s guards ACK, every gate/both passing batches dmesg identical.306 stack
+  hashes/four FFT AOT DBs/links retained; finetune-n7 uninspected/unmodified/
+  untested, include_training_app=False. Same r2 bootc646d874; no agent reboot/
+  .105/BIOS/fallback/delete. Local kernel/artifacts/image-b045 holds source/wheel/
+  private sysdeps/notices/loader config/build manifests/recovery/218 raw logs
+  2,870,579B/ten guards; archive97879a5e SHA-verified. [Report/use/recovery](docs/development/bc250_image_b045_results/README.md).
+  BaselineWS/logs/image-b045-qualification-r3/final.json; rawWS/logs/image-b045-*.
+  Disk21,467,881,472B observed; no own build/test/container/guard/export running,
+  root SSH closed. Remote memory snapshot keyed by final memory revision.
+  **Next B01.1:** return to remaining ordered support gaps. Read N2.14/B01 BF16
+  FFT evidence and current autocast/promotion paths; implement a missing explicit
+  FP32 helper only if needed, CPU-reference complex64 outputs/input gradients.
+  Common media coverage above is bounded; optional image formats remain separate.
+  Broad B01/B02/B03/B05/B06/B07/N2–N8 remain; user application stays excluded.
+
 - **B04.4 CPU video completed/installed2026-10-21:** code22f796252,
   TorchCodec source3eecace02076800cf6aa9be6364ed2f1f611548d over d9dc5423.
   Initial unchanged runtime passes40 checks then FAILS single-frame VFR time
@@ -2300,7 +2342,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B04.2 | Native torchaudio installed;142 candidate/142 installed/48 post-user-reboot checks. Signal outputs/first-order gradients/stream behavior plus demonstrated CLR cold-hostcall queue repair qualified within recorded bounds. |
 | [x]   | B04.3 | CPU TorchCodec/FFmpeg audio load/save installed;136 candidate+136 installed file/reference/GPU interoperability and retained regression checks. User application excluded; existing ROCm/Torch retained. |
 | [x]   | B04.4 | CPU video decode/seek/encode and exact single-frame VFR timestamp repair installed;108 candidate+108 installed reference/audio/core checks, explicit HIP forward/backward interop. |
-| [ ]   | **B04.5 — next** | Inspect pinned CPU image codec dependencies/flags; enable feasible TorchCodec JPEG/PNG/WebP and qualify owned independent pixel references. GPU codecs remain off. |
+| [x]   | B04.5 | CPU JPEG/PNG/WebP decode and PNG/JPEG encode installed;203 candidate+203 installed image/reference/HIP interop/retained regressions. Other formats/GPU codecs remain separate. |
+| [ ]   | **B01.1 — next** | Audit prior BF16 FFT/autocast/promotion evidence; qualify any missing explicit FP32 promotion helper with complex64 output/input-gradient references. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

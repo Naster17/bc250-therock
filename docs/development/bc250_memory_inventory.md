@@ -926,6 +926,31 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**B04.5 CPU common image codecs installed2026-10-21:** code93a601b36,
+TorchCodec source3eecace0 unchanged, no new source patch. JPEG/PNG/WebP enabled,
+CUDA/nvJPEG/image-default off; AVIF/GIF/HEIC disabled as build choice. Missing
+runtime libwebpdemux2 copied from existing build image to private image lib dir,
+not dpkg-registered; exact DSO/copyright/loader config exported locally. Candidate/
+installed each203 checks: image86/video55/audio46/vision9/core7. Independent PNG8/
+16 samples, modes/dtypes/orientation6, JPEG Pillow comparisons, exact WebP pixels/
+animation, PNG/JPEG encoder forms/views, refusals and GPU spatial output/input
+backward+CPU save pass fixed gates. CPU codecs, explicit GPU JPEG rejection;
+other formats/palette/interlace/all EXIF/timing/HDR/security/performance/universal
+stability unqualified. [Report/use/recovery](bc250_image_b045_results/README.md).
+Image94c610368d0fcf596a9f9f6355a5d5d28fd1111d54d4033c46e6b5977cae1ece;
+old87875 retained, existing ROCm/Torch/defaults/kpacks/B04.4 repair unchanged.
+Locked rollbackWS/recovery/image-b045-before/runtime.json, old helper preserved;
+rollback unused.4 Ninja/CPUs/8GiB RAM/10GiB mem+swap/shared20GiB ccache/no build
+GPU devices; private N8 packaging boundary. Ten guards ACK600s/all gate+batch
+dmesg identical/306 stack hashes/four AOT DBs/links retained. User application
+excluded/uninspected/unmodified/untested. Same r2 bootc646d874/no agent reboot/
+.105/BIOS/delete. Local kernel/artifacts/image-b045 source/wheel/sysdeps/notices/
+recovery/build manifests/218 SHA-verified raw logs2,870,579B/ten guards. Baseline
+WS/logs/image-b045-qualification-r3/final.json; no own jobs/root SSH closed;
+disk21.468GB observed. Unknown CPU fault unresolved/distinct from VM-heap/CSR/
+B04.2 queue. **Next B01.1:** review BF16 FFT/promotion/autocast before implementing
+any missing explicit FP32 helper; complex64 output/input-gradient references.
+
 **B04.4 CPU video/seek repair installed2026-10-21:** code22f796252/source
 3eecace02076800cf6aa9be6364ed2f1f611548d, reviewable TorchCodec patch preserved.
 Original runtime passes40 checks then scalar VFR time seek fails across packet

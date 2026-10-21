@@ -1,0 +1,495 @@
+{
+  "task": "B04.5",
+  "status": "installed and bounded-qualified",
+  "integration_revision": "93a601b36",
+  "source_revision": "3eecace02076800cf6aa9be6364ed2f1f611548d",
+  "new_source_patches": [],
+  "torchcodec": "0.17.0+gfx1013",
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "4cf699ed5c85b6eccf76b04976ca6abc9c83bd0449474ff8f28b2031a6a5cb92",
+    "image": "94c610368d0fcf596a9f9f6355a5d5d28fd1111d54d4033c46e6b5977cae1ece",
+    "previous_image": "87875c40998bf083ecbc991e7dbe00b4e5549755b84d0f5b36d470167ab5de6d",
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/image-b045-before/runtime.json",
+    "prefix_changed": true,
+    "native_libraries_changed": false,
+    "installed_runtime_sha256": "c1fd78993ec25d0866e75e69bd4cc8ef2ebe9710f9a1f08e0de33bb350a2aaea",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/image-b045-qualification-r3/final.json",
+    "rollback_used": false
+  },
+  "candidate_checks": 203,
+  "installed_checks": 203,
+  "image_checks_per_gate": 86,
+  "retained_checks": {
+    "video": 55,
+    "audio": 46,
+    "vision": 9,
+    "core": 7
+  },
+  "verification": {
+    "status": "passed",
+    "archive_sha256": "97879a5e175576bd8ba8cececf6e29267ed192d7fc03d7b11f9b58820e4947a2",
+    "raw_log_files": 218,
+    "raw_log_bytes": 2870579,
+    "guards": 10,
+    "all_guards_acknowledged": true,
+    "wheel_sha256": "0551a76dcc4c9cc950cd8045855ae7a235c9b0f8c6edd220396828a88d19e09d",
+    "sysdeps": {
+      "etc/ld.so.conf.d/bc250-codec-images.conf": "4f4fc981083ab787a89d2ea7e30d70e68319611299ee88b692583e9176c64363",
+      "opt/bc250-codec-sysdeps/lib/libwebpdemux.so.2": "f31bf01638c352533e18720676db66fcb190a622db5bf617558a49bc445d0b83",
+      "opt/bc250-codec-sysdeps/lib/libwebpdemux.so.2.0.14": "f31bf01638c352533e18720676db66fcb190a622db5bf617558a49bc445d0b83",
+      "opt/bc250-codec-sysdeps/licenses/libwebpdemux2/copyright": "eee23313fcb4cac326f7a3a5c646474062440bd8665f706747b2eba33d72e97f"
+    }
+  },
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "c646d874-ebd6-4e4b-bb77-2e47233748e0",
+  "boot_unchanged": true,
+  "agent_reboot": false,
+  "protected_stack_paths": 306,
+  "fft_aot_databases_preserved": 4,
+  "passing_batches_kernel_log_unchanged": true,
+  "disk_available_bytes": 21467881472,
+  "existing_rocm_torch_libraries_unchanged": true,
+  "user_application_scope": "finetune-n7 remains uninspected/unmodified/untested; owned stack fixtures only.",
+  "baseline": "WS/logs/image-b045-qualification-r3/final.json",
+  "raw_remote": "WS/logs/image-b045-*",
+  "durable_local": "kernel/artifacts/image-b045/remote",
+  "resources": {
+    "jobs": 4,
+    "cpus": 4,
+    "memory": "8g",
+    "memory_swap": "10g",
+    "ccache": "20G",
+    "build_gpu_devices": false
+  },
+  "flags": {
+    "ENABLE_CUDA": false,
+    "IMAGE_DEFAULT": false,
+    "JPEG": true,
+    "PNG": true,
+    "WEBP": true,
+    "NVJPEG": false
+  },
+  "runtime_dependency": {
+    "name": "libwebpdemux2",
+    "version": "1.3.2-0.4build3",
+    "from_image": "c6d3a1131bc2dbd2bb29e466a23e49c2bee0c979a536874ecf5616bf1cc5b75e",
+    "private_directory": "/opt/bc250-codec-sysdeps/lib",
+    "copyright_preserved": true,
+    "source_distro_package_not_registered_in_runtime_dpkg": true
+  },
+  "running_agent_jobs": [],
+  "root_ssh_sessions_closed": true,
+  "next": "B01.1: inspect prior N2.14/B01 BF16 FFT evidence and existing autocast/promotion paths; implement a missing explicit FP32 promotion helper only if needed, qualifying complex64 outputs and input gradients with independent references.",
+  "limitations": "CPU common image decoding and JPEG/PNG encoding, bounded modes/dtypes/orientation6/animated WebP pixels and explicit HIP spatial output/input gradient. No GPU codec/WebP encoding/AVIF/GIF/HEIC/all-layout/palette/interlace/animation-timing/HDR/security/performance/universal stability claim. Historical unknown Python CPU fault unresolved and distinct from fixed VM-heap/CSR/B04.2 queue; B04.4 timestamp repair retained.",
+  "image_results": {
+    "status": "passed",
+    "checks": [
+      "png1-independent-bytes",
+      "png1-automatic-path",
+      "png1-encoded-tensor",
+      "png1-rgb-mode",
+      "png1-rgba-mode",
+      "png1-uint16-promotion",
+      "png2-independent-bytes",
+      "png2-automatic-path",
+      "png2-encoded-tensor",
+      "png2-rgb-mode",
+      "png2-rgba-mode",
+      "png2-uint16-promotion",
+      "png3-independent-bytes",
+      "png3-automatic-path",
+      "png3-encoded-tensor",
+      "png3-rgb-mode",
+      "png3-rgba-mode",
+      "png3-uint16-promotion",
+      "png4-independent-bytes",
+      "png4-automatic-path",
+      "png4-encoded-tensor",
+      "png4-rgb-mode",
+      "png4-rgba-mode",
+      "png4-uint16-promotion",
+      "png16-1-native-auto",
+      "png16-1-automatic-preserved",
+      "png16-1-uint8-scaling",
+      "png16-3-native-auto",
+      "png16-3-automatic-preserved",
+      "png16-3-uint8-scaling",
+      "png-independent-exif-orientation6",
+      "jpeg-L-path-versus-pillow",
+      "jpeg-L-bytes-versus-pillow",
+      "jpeg-L-tensor-versus-pillow",
+      "jpeg-L-automatic-versus-pillow",
+      "jpeg-L-uint16-promotion",
+      "jpeg-RGB-path-versus-pillow",
+      "jpeg-RGB-bytes-versus-pillow",
+      "jpeg-RGB-tensor-versus-pillow",
+      "jpeg-RGB-automatic-versus-pillow",
+      "jpeg-RGB-uint16-promotion",
+      "webp-3-path-independent-pixels",
+      "webp-3-bytes-independent-pixels",
+      "webp-3-tensor-independent-pixels",
+      "webp-3-automatic",
+      "webp-4-path-independent-pixels",
+      "webp-4-bytes-independent-pixels",
+      "webp-4-tensor-independent-pixels",
+      "webp-4-automatic",
+      "webp-two-frame-animation-pixels",
+      "webp-animation-automatic",
+      "encode-png-1-contiguous-path",
+      "encode-png-1-contiguous-filelike",
+      "encode-png-1-contiguous-tensor",
+      "encode-png-1-strided-path",
+      "encode-png-1-strided-filelike",
+      "encode-png-1-strided-tensor",
+      "encode-png-3-contiguous-path",
+      "encode-png-3-contiguous-filelike",
+      "encode-png-3-contiguous-tensor",
+      "encode-png-3-strided-path",
+      "encode-png-3-strided-filelike",
+      "encode-png-3-strided-tensor",
+      "encode-jpg-1-contiguous-path",
+      "encode-jpg-1-contiguous-filelike",
+      "encode-jpg-1-contiguous-tensor",
+      "encode-jpg-1-strided-path",
+      "encode-jpg-1-strided-filelike",
+      "encode-jpg-1-strided-tensor",
+      "encode-jpg-3-contiguous-path",
+      "encode-jpg-3-contiguous-filelike",
+      "encode-jpg-3-contiguous-tensor",
+      "encode-jpg-3-strided-path",
+      "encode-jpg-3-strided-filelike",
+      "encode-jpg-3-strided-tensor",
+      "refuse-corrupt-png",
+      "refuse-corrupt-jpeg",
+      "refuse-corrupt-webp",
+      "refuse-invalid-mode",
+      "refuse-encoded-dtype",
+      "refuse-jpeg-quality",
+      "refuse-png-rank",
+      "refuse-png-channels",
+      "explicit-unavailable-gpu-jpeg",
+      "cpu-image-to-hip-spatial-forward-backward",
+      "hip-result-explicit-cpu-png-independent-pixels"
+    ],
+    "results": [
+      {
+        "name": "png1-independent-bytes"
+      },
+      {
+        "name": "png1-automatic-path"
+      },
+      {
+        "name": "png1-encoded-tensor"
+      },
+      {
+        "name": "png1-rgb-mode"
+      },
+      {
+        "name": "png1-rgba-mode"
+      },
+      {
+        "name": "png1-uint16-promotion"
+      },
+      {
+        "name": "png2-independent-bytes"
+      },
+      {
+        "name": "png2-automatic-path"
+      },
+      {
+        "name": "png2-encoded-tensor"
+      },
+      {
+        "name": "png2-rgb-mode"
+      },
+      {
+        "name": "png2-rgba-mode"
+      },
+      {
+        "name": "png2-uint16-promotion"
+      },
+      {
+        "name": "png3-independent-bytes"
+      },
+      {
+        "name": "png3-automatic-path"
+      },
+      {
+        "name": "png3-encoded-tensor"
+      },
+      {
+        "name": "png3-rgb-mode"
+      },
+      {
+        "name": "png3-rgba-mode"
+      },
+      {
+        "name": "png3-uint16-promotion"
+      },
+      {
+        "name": "png4-independent-bytes"
+      },
+      {
+        "name": "png4-automatic-path"
+      },
+      {
+        "name": "png4-encoded-tensor"
+      },
+      {
+        "name": "png4-rgb-mode"
+      },
+      {
+        "name": "png4-rgba-mode"
+      },
+      {
+        "name": "png4-uint16-promotion"
+      },
+      {
+        "name": "png16-1-native-auto"
+      },
+      {
+        "name": "png16-1-automatic-preserved"
+      },
+      {
+        "name": "png16-1-uint8-scaling"
+      },
+      {
+        "name": "png16-3-native-auto"
+      },
+      {
+        "name": "png16-3-automatic-preserved"
+      },
+      {
+        "name": "png16-3-uint8-scaling"
+      },
+      {
+        "name": "png-independent-exif-orientation6"
+      },
+      {
+        "name": "jpeg-L-path-versus-pillow"
+      },
+      {
+        "name": "jpeg-L-bytes-versus-pillow"
+      },
+      {
+        "name": "jpeg-L-tensor-versus-pillow"
+      },
+      {
+        "name": "jpeg-L-automatic-versus-pillow"
+      },
+      {
+        "name": "jpeg-L-uint16-promotion"
+      },
+      {
+        "name": "jpeg-RGB-path-versus-pillow"
+      },
+      {
+        "name": "jpeg-RGB-bytes-versus-pillow"
+      },
+      {
+        "name": "jpeg-RGB-tensor-versus-pillow"
+      },
+      {
+        "name": "jpeg-RGB-automatic-versus-pillow"
+      },
+      {
+        "name": "jpeg-RGB-uint16-promotion"
+      },
+      {
+        "name": "webp-3-path-independent-pixels"
+      },
+      {
+        "name": "webp-3-bytes-independent-pixels"
+      },
+      {
+        "name": "webp-3-tensor-independent-pixels"
+      },
+      {
+        "name": "webp-3-automatic"
+      },
+      {
+        "name": "webp-4-path-independent-pixels"
+      },
+      {
+        "name": "webp-4-bytes-independent-pixels"
+      },
+      {
+        "name": "webp-4-tensor-independent-pixels"
+      },
+      {
+        "name": "webp-4-automatic"
+      },
+      {
+        "name": "webp-two-frame-animation-pixels"
+      },
+      {
+        "name": "webp-animation-automatic"
+      },
+      {
+        "name": "encode-png-1-contiguous-path"
+      },
+      {
+        "name": "encode-png-1-contiguous-filelike"
+      },
+      {
+        "name": "encode-png-1-contiguous-tensor"
+      },
+      {
+        "name": "encode-png-1-strided-path"
+      },
+      {
+        "name": "encode-png-1-strided-filelike"
+      },
+      {
+        "name": "encode-png-1-strided-tensor"
+      },
+      {
+        "name": "encode-png-3-contiguous-path"
+      },
+      {
+        "name": "encode-png-3-contiguous-filelike"
+      },
+      {
+        "name": "encode-png-3-contiguous-tensor"
+      },
+      {
+        "name": "encode-png-3-strided-path"
+      },
+      {
+        "name": "encode-png-3-strided-filelike"
+      },
+      {
+        "name": "encode-png-3-strided-tensor"
+      },
+      {
+        "name": "encode-jpg-1-contiguous-path"
+      },
+      {
+        "name": "encode-jpg-1-contiguous-filelike"
+      },
+      {
+        "name": "encode-jpg-1-contiguous-tensor"
+      },
+      {
+        "name": "encode-jpg-1-strided-path"
+      },
+      {
+        "name": "encode-jpg-1-strided-filelike"
+      },
+      {
+        "name": "encode-jpg-1-strided-tensor"
+      },
+      {
+        "name": "encode-jpg-3-contiguous-path"
+      },
+      {
+        "name": "encode-jpg-3-contiguous-filelike"
+      },
+      {
+        "name": "encode-jpg-3-contiguous-tensor"
+      },
+      {
+        "name": "encode-jpg-3-strided-path"
+      },
+      {
+        "name": "encode-jpg-3-strided-filelike"
+      },
+      {
+        "name": "encode-jpg-3-strided-tensor"
+      },
+      {
+        "name": "refuse-corrupt-png"
+      },
+      {
+        "name": "refuse-corrupt-jpeg"
+      },
+      {
+        "name": "refuse-corrupt-webp"
+      },
+      {
+        "name": "refuse-invalid-mode"
+      },
+      {
+        "name": "refuse-encoded-dtype"
+      },
+      {
+        "name": "refuse-jpeg-quality"
+      },
+      {
+        "name": "refuse-png-rank"
+      },
+      {
+        "name": "refuse-png-channels"
+      },
+      {
+        "name": "explicit-unavailable-gpu-jpeg"
+      },
+      {
+        "name": "cpu-image-to-hip-spatial-forward-backward"
+      },
+      {
+        "name": "hip-result-explicit-cpu-png-independent-pixels"
+      }
+    ],
+    "torch": "2.13.0a0+gfx1013",
+    "torchcodec": "0.17.0+gfx1013",
+    "codec_device": "cpu",
+    "gpu_codec_claim": false,
+    "mapped_codec_sha256": {
+      "/opt/bc250-codec-sysdeps/lib/libwebpdemux.so.2": "f31bf01638c352533e18720676db66fcb190a622db5bf617558a49bc445d0b83",
+      "/opt/torch-venv/lib/python3.12/site-packages/pillow.libs/libjpeg-6dc8d115.so.62.4.0": "cc04bc42fd6296e81d24d13955fb95bd829624f6c74105eaf4a7fcf2ce42e048",
+      "/opt/torch-venv/lib/python3.12/site-packages/pillow.libs/libsharpyuv-0066295b.so.0.1.2": "8abd5c39ee3b26330288b2e833d4d9b5d4b5ed4c881649057354df17326b6996",
+      "/opt/torch-venv/lib/python3.12/site-packages/pillow.libs/libwebp-51b0b3f7.so.7.2.0": "6a97159a7c36acacb112618eb74720c97bbab4ecc499a8bfeb495dd726285259",
+      "/opt/torch-venv/lib/python3.12/site-packages/pillow.libs/libwebpdemux-9fe2abcc.so.2.0.17": "5d728787db553c48c74dccd93d2763ec88234850a5f2f821df11483c8d28d2a7",
+      "/opt/torch-venv/lib/python3.12/site-packages/pillow.libs/libwebpmux-8fb1c9f6.so.3.1.2": "6bdb41f738f088e7420374d67a4a6523cc4786f340d355d2bf4f124dcf3d5820",
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_core6.so": "d6bf631a878be6cc1b785bff1bd7d601c32d049c8e627f31caa62fb05d548027",
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_custom_ops6.so": "d71459313d8aaf51ab5249258ff3bd0bd36d109f1f934f0d933cc50548a12745",
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_image.so": "64ec07b11bec47c01b0ed153f25b497d6fa6a064d433c728a03c542767f2cc78",
+      "/opt/torch-venv/lib/python3.12/site-packages/torchcodec/libtorchcodec_pybind_ops.so": "492f3456f6ffa42ca7aa54d32c8708f960ae40e3ce1b9fc62fe07e46c1dc1a26",
+      "/usr/lib/x86_64-linux-gnu/libjpeg.so.8.2.2": "ac09f2cd6f8a3b8e3cb123999ce275f9bcbe31c6cf9e20212c8f297772591d15",
+      "/usr/lib/x86_64-linux-gnu/libpng16.so.16.43.0": "89c0c6569a8c00480d451401ad4c0a74942e62dc57f229a970592fdc5adb29e8",
+      "/usr/lib/x86_64-linux-gnu/libsharpyuv.so.0.0.1": "b2e62799e5dbd783a0671d53be99f7c6489567a5332a1e8f471e6bb250f294dc",
+      "/usr/lib/x86_64-linux-gnu/libwebp.so.7.1.8": "9664db51ec65209078abbb8bc7b699888a43ecc2f3c74ce8dd4e497175aa5bf0",
+      "/usr/lib/x86_64-linux-gnu/libwebpmux.so.3.0.13": "97e04dbba80ea27d0258584452efda0fa41bfa598bbca52eb4e120fcb6300962"
+    },
+    "fixture_sha256": {
+      "RGB.jpg": "e47ee5948bae1d11e90d5077ffd086ea15dba7819e5a2a3d7a00881170664ffe",
+      "encoded-jpg-1-strided-tensor.jpg": "a3073baa4a548a5cd699a2e3d0fbb417863099e8b9544469d00cc8ce9d3c8ec0",
+      "encoded-jpg-1-strided-filelike.jpg": "a3073baa4a548a5cd699a2e3d0fbb417863099e8b9544469d00cc8ce9d3c8ec0",
+      "encoded-jpg-3-strided-filelike.jpg": "d52ead0e0acb5ef39761134ecbe6e164318485d2802d401148b1cf8b705db3c4",
+      "independent-4ch.png": "1ca2b7589ca2c1364afe050bb517b73e682da4e4d2a1c2fa94ba865a0fa42a9c",
+      "independent16-3ch.png": "17bb98e7e282df90b5047efb01f679c32e54ed20c6fa17058de3b18e970d90c3",
+      "lossless-3.webp": "d798de92be2c4ef922ec581533214b42b287876272fad8e6dee8dfbe386690fd",
+      "encoded-png-1-contiguous-path.png": "6032c0e324d6fd342a8cd7cc0b4f841d3c6f6d58ea86dd9f6680c5f96623aa51",
+      "processed.png": "400f6d06b8ec7b7ae7c90c58b212ec50d2657466538d5bd0af917fb70fd9fafa",
+      "encoded-jpg-1-contiguous-path.jpg": "ea920b46ccb816d2fcfd7408b29e0e556fac7bb117dc0cab2cd262ef9b04159f",
+      "L.jpg": "ea920b46ccb816d2fcfd7408b29e0e556fac7bb117dc0cab2cd262ef9b04159f",
+      "encoded-png-1-contiguous-tensor.png": "6032c0e324d6fd342a8cd7cc0b4f841d3c6f6d58ea86dd9f6680c5f96623aa51",
+      "encoded-jpg-1-contiguous-tensor.jpg": "ea920b46ccb816d2fcfd7408b29e0e556fac7bb117dc0cab2cd262ef9b04159f",
+      "animated.webp": "d97659f694585054024648c954a50a404e44bca7666c6a4bcfc6d63845e09043",
+      "encoded-jpg-3-contiguous-path.jpg": "166ecc4ff23765aa06def995e2958fc3a6f2932a1b7b857eabc2c77663fe753e",
+      "encoded-jpg-3-contiguous-filelike.jpg": "166ecc4ff23765aa06def995e2958fc3a6f2932a1b7b857eabc2c77663fe753e",
+      "encoded-png-3-strided-path.png": "afa3be2b9a3e280d6664bbe9615ff3b50d1d26b5130397d9ce4bcfdd6263a622",
+      "independent16-1ch.png": "3fa823574c5ade7c25b9b903f1fce5bc1449f116a6b8b6bcc8cd3b71785ee074",
+      "encoded-png-3-contiguous-path.png": "6ed4cb9af8a6ce3694a91d8127f0520b532ee4044058fe2dc873a8b58365db7c",
+      "independent-3ch.png": "0b5e28c2048c51955b26609e26fb15ec12d1229be8074a8b4a260e606d4e29de",
+      "encoded-png-3-contiguous-tensor.png": "6ed4cb9af8a6ce3694a91d8127f0520b532ee4044058fe2dc873a8b58365db7c",
+      "encoded-png-1-contiguous-filelike.png": "6032c0e324d6fd342a8cd7cc0b4f841d3c6f6d58ea86dd9f6680c5f96623aa51",
+      "encoded-png-1-strided-path.png": "0aa0f49a1fab494dbf9e814a502c735720b1a36016cec75502115779a6cc4fc6",
+      "encoded-png-1-strided-filelike.png": "0aa0f49a1fab494dbf9e814a502c735720b1a36016cec75502115779a6cc4fc6",
+      "encoded-png-3-strided-filelike.png": "afa3be2b9a3e280d6664bbe9615ff3b50d1d26b5130397d9ce4bcfdd6263a622",
+      "independent-1ch.png": "7e2bdc2957ab16efa657dbb1a29ba7134ce988142c39073f604d3ca7a3c82cb0",
+      "encoded-jpg-3-strided-path.jpg": "d52ead0e0acb5ef39761134ecbe6e164318485d2802d401148b1cf8b705db3c4",
+      "encoded-png-3-contiguous-filelike.png": "6ed4cb9af8a6ce3694a91d8127f0520b532ee4044058fe2dc873a8b58365db7c",
+      "lossless-4.webp": "f66e834eb2fabe882dcf0259bcfe4d1986c70ee1231c8b2b89cb9331cd3198a3",
+      "encoded-jpg-3-strided-tensor.jpg": "d52ead0e0acb5ef39761134ecbe6e164318485d2802d401148b1cf8b705db3c4",
+      "encoded-jpg-1-strided-path.jpg": "a3073baa4a548a5cd699a2e3d0fbb417863099e8b9544469d00cc8ce9d3c8ec0",
+      "encoded-png-1-strided-tensor.png": "0aa0f49a1fab494dbf9e814a502c735720b1a36016cec75502115779a6cc4fc6",
+      "independent-2ch.png": "7de2d3421614222703a01e17ad595dbb35bb2c03c2b138e5d9a68d47a6a5a37f",
+      "encoded-jpg-1-contiguous-filelike.jpg": "ea920b46ccb816d2fcfd7408b29e0e556fac7bb117dc0cab2cd262ef9b04159f",
+      "encoded-png-3-strided-tensor.png": "afa3be2b9a3e280d6664bbe9615ff3b50d1d26b5130397d9ce4bcfdd6263a622",
+      "encoded-jpg-3-contiguous-tensor.jpg": "166ecc4ff23765aa06def995e2958fc3a6f2932a1b7b857eabc2c77663fe753e"
+    }
+  }
+}

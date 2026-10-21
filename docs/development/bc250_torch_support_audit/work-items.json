@@ -97,9 +97,9 @@
     },
     {
       "id": "B04",
-      "feature": "B04.1 vision/B04.2 native audio/B04.3 CPU audio/B04.4 CPU video installed; TorchCodec image builds off",
-      "evidence": "B04.4 CPU video55/audio46/core7 each candidate/installed (108 each). Exact single-frame VFR packet-gap seek repaired via scanned index; independent RGB/PTS/encoder references and HIP spatial forward/backward. Previous audio/vision scopes retained; no GPU codec/universal/video-speed claim.",
-      "next": "B04.5 inspect pinned CPU image flags/dependencies; enable feasible TorchCodec JPEG/PNG/WebP and owned independent pixel references. GPU codec paths stay off; user application excluded.",
+      "feature": "B04.1\u2013B04.5 common native vision/audio and CPU TorchCodec audio/video/JPEG/PNG/WebP installed",
+      "evidence": "B04.5 image86/video55/audio46/vision9/core7 pass candidate and installed (203 each). Independent samples and encoder/decoder references, explicit HIP output/input gradients; source3eecace0 and B04.4 time-seek fix retained, no new source patch.",
+      "next": "Optional AVIF/GIF/HEIC/GPU codecs and broader format/timing coverage remain separate. Return to B01.1 BF16 FFT review; user application excluded.",
       "status": "partially-qualified"
     },
     {

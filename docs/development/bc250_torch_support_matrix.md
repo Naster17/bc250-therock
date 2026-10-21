@@ -7,7 +7,7 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after B04.4 / broad support
+## Current cursor after B04.5 / broad support
 
 User direction2026-10-20: prioritize broad hardware-feasible ROCm/PyTorch and
 library/API support. Qwen/LoRA is an optional test fixture, not the scope boundary;
@@ -42,8 +42,13 @@ excluded as requested. [Report/use/recovery](bc250_codec_b043_results/README.md)
 installed runtime (108 each); exact single-frame VFR gap seeking repaired using
 the scanned presentation index. Independent lossless pixel/PTS/encoder references
 and explicit HIP spatial forward/backward pass. [Report](bc250_video_b044_results/README.md).
-**Next B04.5:** feasible CPU TorchCodec JPEG/PNG/WebP flags/dependencies and owned
-independent pixel references. GPU codecs stay off. BF16 FFT, general
+**B04.5 installed:** CPU JPEG/PNG/WebP decoding and PNG/JPEG encoding enabled;
+203 candidate+203 installed image/video/audio/vision/core checks pass, independent
+pixels and explicit GPU spatial forward/backward. Private missing libwebpdemux
+dependency supplied with notices; GPU codecs/AVIF/GIF/HEIC remain disabled.
+[Report/use/recovery](bc250_image_b045_results/README.md).
+**Next B01.1:** review prior BF16 FFT and existing autocast/promotion; qualify any
+missing explicit FP32 helper with complex64 output/input-gradient references. BF16 FFT, general
 sparse solve, distributed/quantization/export and CK-plugin work remain open.
 
 
@@ -352,10 +357,10 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A07 — head256 completed, bounded** | Explicit D<=256 tiled/hybrid attention |36 tests; actual2B training/checkpoint gates and exact per-backend fresh/resume CLI continuation | Math default. N3.9 restores the CLI option lost at N3.8 entry; helper remains available. BF16 hybrid lower peak/slower in measured fixtures; quadratic forward temporaries. Dropout/compile/graphs remain separate. [Report](bc250_a06_a07_results/README.md). |
 | **A08 — completed, bounded** | Native dense INT8 -> INT32 Lt and Torch `_int_mm` | Libraries319a235;99 direct CPU-reference cases+11 refusals,16 Torch cases/out/streams+five refusals; overflow and above-FP32 exact-range cases pass | I32 scalar/modulo32 route, four integer epilogues. Existing Torch shape restrictions retained. Quantization/QLoRA/packed/compile integration unqualified. [Report](bc250_dense_int8_a08_results/README.md). |
 | **A09 — completed, bounded** | Native Torch GPU profiler via existing Kineto/SDK | Separate USE_KINETO=1 build; seven native trace/reference/lifecycle tests and existing numerical/model/resume gates | Explicit torch.profiler contexts; CPU/GPU kernels/copies/memory correlation. Hardware counters, broad concurrency, compile/graphs and long tracing unqualified. [Report](bc250_profiler_a09_results/README.md). |
-| **B01** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
+| **B01 — next: B01.1** | BF16 FFT API input rejected | `torch.fft.rfft2(BFloat16)` rejects, whereas FP16 tested power-of-two plan works | Explicit FP32 promotion helper with complex64 result/gradient contract is feasible; no native complex-BF16 type or universal FFT speed claim. Core API change optional. |
 | **B02** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
 | **B03** | Distributed build, Gloo/RCCL absent | USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected. | CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here. |
-| **B04 — next: B04.5 CPU images** | Native vision/audio, CPU TorchCodec audio and bounded video installed | B04.4 108 candidate+108 installed reference/GPU interop checks, exact scalar VFR timestamp repair; previous vision/audio scopes retained | Enable feasible TorchCodec CPU JPEG/PNG/WebP and owned pixel references. GPU codecs off; torchvision images available. |
+| **B04 — bounded common media installed** | Native vision/audio and CPU TorchCodec audio/video/JPEG/PNG/WebP decode plus JPEG/PNG encode | B04.5 203 candidate+203 installed reference/HIP interop checks; prior bounded scopes/seek repair retained | Optional AVIF/GIF/HEIC/GPU codecs and wider format/layout/timing coverage remain separate; no universal media claim. |
 | **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; A08 now supplies a bounded dense INT8/INT32 primitive, not a low-bit model recipe | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
 | **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |
 | **B07** | MIOpen CK grouped-convolution plugin | Still absent by architecture/build capability. A03 skips expected default probe; explicit path retains diagnostics. | Optional scalar/generic plugin port; working HIP-direct/legacy reduction routes remain distinct. No kernels are supplied by a flag or diagnostic change. |
@@ -364,7 +369,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 A01–A09 are completed within their recorded bounded scopes, including the later
 CPU-first profiler repair. B-items remain optional workload/integration
 expansions. N2.1–N2.18 are bounded milestones, not exhaustive library support.
-N3.1–N3.10/B04.1–B04.4 bounded scopes are recorded; next B04.5 CPU image references.
+N3.1–N3.10/B04.1–B04.5 bounded scopes are recorded; next B01.1 BF16 FFT review.
 Any proposed preset still needs owned trainer qualification. Small targeted
 tests cannot prove that no hidden defect exists; the evidence and retained
 runners make new workload-specific probes reproducible.
