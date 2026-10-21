@@ -1,0 +1,54 @@
+From 045081cdbac490c46824e53995c771d1ccddc3c5 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 21 Oct 2026 07:57:31 +0200
+Subject: [PATCH 3/4] Keep IIR kernel launch outside the dispatch macro during
+ hipify
+
+---
+ src/libtorchaudio/iir_cuda.cu | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/src/libtorchaudio/iir_cuda.cu b/src/libtorchaudio/iir_cuda.cu
+index d3d967e..2f14e19 100644
+--- a/src/libtorchaudio/iir_cuda.cu
++++ b/src/libtorchaudio/iir_cuda.cu
+@@ -35,6 +35,21 @@ __global__ void iir_cu_kernel(
+   }
+ }
+ 
++// Keep the launch outside dispatch macros: hipify must parse its commas before
++// the C++ preprocessor expands THO_DISPATCH_V2 / AT_WRAP.
++template <typename scalar_t>
++void launch_iir(
++    Tensor in, Tensor a_flipped, Tensor padded_out,
++    dim3 blocks, dim3 threads) {
++  iir_cu_kernel<scalar_t><<<
++      blocks, threads, 0,
++      libtorchaudio::cuda::getCurrentCUDAStream(in.get_device_index())>>>(
++      torchaudio::packed_accessor_size_t<scalar_t, 3>(in),
++      torchaudio::packed_accessor_size_t<scalar_t, 2>(a_flipped),
++      torchaudio::packed_accessor_size_t<scalar_t, 3>(padded_out));
++  STD_CUDA_KERNEL_LAUNCH_CHECK();
++}
++
+ Tensor cuda_lfilter_core_loop(
+     Tensor in,
+     Tensor a_flipped,
+@@ -71,13 +86,7 @@ Tensor cuda_lfilter_core_loop(
+ 
+   THO_DISPATCH_V2(
+       in.scalar_type(), "iir_cu_loop", AT_WRAP([&] {
+-        iir_cu_kernel<scalar_t><<<
+-            blocks, threads, 0,
+-            libtorchaudio::cuda::getCurrentCUDAStream(in.get_device_index())>>>(
+-            torchaudio::packed_accessor_size_t<scalar_t, 3>(in),
+-            torchaudio::packed_accessor_size_t<scalar_t, 2>(a_flipped),
+-            torchaudio::packed_accessor_size_t<scalar_t, 3>(padded_out));
+-        STD_CUDA_KERNEL_LAUNCH_CHECK();
++        launch_iir<scalar_t>(in, a_flipped, padded_out, blocks, threads);
+         }), AT_FLOATING_TYPES);
+   return padded_out;
+ }
+-- 
+2.56.0
+

@@ -1,0 +1,60 @@
+From 8f0f90f895869721062d5cee7672997fece982c3 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 21 Oct 2026 07:56:31 +0200
+Subject: [PATCH 2/4] Make IIR launches hipify-safe on the current stream and
+ guard RNNT device
+
+---
+ src/libtorchaudio/iir_cuda.cu         | 7 +++++--
+ src/libtorchaudio/rnnt/gpu/compute.cu | 4 +++-
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/src/libtorchaudio/iir_cuda.cu b/src/libtorchaudio/iir_cuda.cu
+index 658bca4..d3d967e 100644
+--- a/src/libtorchaudio/iir_cuda.cu
++++ b/src/libtorchaudio/iir_cuda.cu
+@@ -1,3 +1,4 @@
++#include <libtorchaudio/cuda_utils.h>
+ #include <libtorchaudio/utils.h>
+ #include <torch/csrc/stable/accelerator.h>
+ #include <torch/csrc/stable/macros.h>
+@@ -70,10 +71,12 @@ Tensor cuda_lfilter_core_loop(
+ 
+   THO_DISPATCH_V2(
+       in.scalar_type(), "iir_cu_loop", AT_WRAP([&] {
+-        (iir_cu_kernel<scalar_t><<<blocks, threads>>>(
++        iir_cu_kernel<scalar_t><<<
++            blocks, threads, 0,
++            libtorchaudio::cuda::getCurrentCUDAStream(in.get_device_index())>>>(
+             torchaudio::packed_accessor_size_t<scalar_t, 3>(in),
+             torchaudio::packed_accessor_size_t<scalar_t, 2>(a_flipped),
+-            torchaudio::packed_accessor_size_t<scalar_t, 3>(padded_out)));
++            torchaudio::packed_accessor_size_t<scalar_t, 3>(padded_out));
+         STD_CUDA_KERNEL_LAUNCH_CHECK();
+         }), AT_FLOATING_TYPES);
+   return padded_out;
+diff --git a/src/libtorchaudio/rnnt/gpu/compute.cu b/src/libtorchaudio/rnnt/gpu/compute.cu
+index 7e99fec..7a492aa 100644
+--- a/src/libtorchaudio/rnnt/gpu/compute.cu
++++ b/src/libtorchaudio/rnnt/gpu/compute.cu
+@@ -2,6 +2,7 @@
+ #include <libtorchaudio/cuda_utils.h>
+ #include <libtorchaudio/utils.h>
+ 
++#include <torch/csrc/stable/accelerator.h>
+ #include <torch/csrc/stable/library.h>
+ #include <torch/csrc/stable/ops.h>
+ #include <torch/headeronly/core/Dispatch_v2.h>
+@@ -94,7 +95,8 @@ std::tuple<Tensor, Tensor> compute(
+   options.clamp_ = clamp;
+   options.fusedLogSmax_ = fused_log_softmax;
+   options.stream_ = libtorchaudio::cuda::getCurrentCUDAStream(logits.get_device_index());
+-  cudaSetDevice(logits.get_device());
++  const torch::stable::accelerator::DeviceGuard device_guard(
++      logits.get_device_index());
+   options.device_ = GPU;
+ 
+   Tensor costs = torch::stable::new_empty(logits, {options.batchSize_ * options.nHypos_});
+-- 
+2.56.0
+

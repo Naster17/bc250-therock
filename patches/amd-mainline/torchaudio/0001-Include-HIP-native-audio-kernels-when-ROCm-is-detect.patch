@@ -1,0 +1,80 @@
+From f86141b621e9c5ed875c583868350848a3d75486 Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 21 Oct 2026 07:53:49 +0200
+Subject: [PATCH 1/4] Include HIP native audio kernels when ROCm is detected
+
+---
+ src/libtorchaudio/utils.cpp      |  4 ++--
+ tools/setup_helpers/extension.py | 11 +++++++----
+ 2 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/src/libtorchaudio/utils.cpp b/src/libtorchaudio/utils.cpp
+index 3fb5326..d635acb 100644
+--- a/src/libtorchaudio/utils.cpp
++++ b/src/libtorchaudio/utils.cpp
+@@ -1,6 +1,6 @@
+ #include <libtorchaudio/utils.h>
+ 
+-#ifdef USE_CUDA
++#if defined(USE_CUDA) && !defined(USE_ROCM)
+ #include <cuda.h>
+ #endif
+ 
+@@ -15,7 +15,7 @@ bool is_align_available() {
+ }
+ 
+ std::optional<int64_t> cuda_version() {
+-#ifdef USE_CUDA
++#if defined(USE_CUDA) && !defined(USE_ROCM)
+   return CUDA_VERSION;
+ #else
+   return {};
+diff --git a/tools/setup_helpers/extension.py b/tools/setup_helpers/extension.py
+index 447dd50..780d12a 100644
+--- a/tools/setup_helpers/extension.py
++++ b/tools/setup_helpers/extension.py
+@@ -67,10 +67,13 @@ def get_ext_modules():
+ 
+     extension = CppExtension
+ 
+-    if _USE_CUDA:
++    if _USE_CUDA or _USE_ROCM:
+         extension = CUDAExtension
+         extra_compile_args["cxx"].append("-DUSE_CUDA")
+         extra_compile_args["nvcc"] = ["-O2", "-DUSE_CUDA"]
++        if _USE_ROCM:
++            extra_compile_args["cxx"].append("-DUSE_ROCM")
++            extra_compile_args["nvcc"].append("-DUSE_ROCM")
+ 
+     sources = [
+         "utils.cpp",
+@@ -78,7 +81,7 @@ def get_ext_modules():
+         "overdrive.cpp",
+     ]
+ 
+-    if _USE_CUDA:
++    if _USE_CUDA or _USE_ROCM:
+         sources.append("iir_cuda.cu")
+ 
+     if _BUILD_RNNT:
+@@ -88,7 +91,7 @@ def get_ext_modules():
+                 "rnnt/compute.cpp",
+             ]
+         )
+-        if _USE_CUDA:
++        if _USE_CUDA or _USE_ROCM:
+             sources.append("rnnt/gpu/compute.cu")
+ 
+     if _BUILD_ALIGN:
+@@ -99,7 +102,7 @@ def get_ext_modules():
+                 "forced_align/compute.cpp",
+             ]
+         )
+-        if _USE_CUDA:
++        if _USE_CUDA or _USE_ROCM:
+             sources.append("forced_align/gpu/compute.cu")
+ 
+     modules = [
+-- 
+2.56.0
+
