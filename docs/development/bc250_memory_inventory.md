@@ -926,6 +926,32 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**B04.4 CPU video/seek repair installed2026-10-21:** code22f796252/source
+3eecace02076800cf6aa9be6364ed2f1f611548d, reviewable TorchCodec patch preserved.
+Original runtime passes40 checks then scalar VFR time seek fails across packet
+length gaps; exact/custom modes now use scanned next-PTS index like batch API,
+approximate/packet durations unchanged. Candidate108/installed108 checks: video55,
+retained audio46/core7. Nine-frame26x18 independent exact RGB FFV1/H264-RGB I/P,
+layouts/index/time/range/batch/source forms, prescribed VFR PTS, encoder views/
+bytes/filelike/incremental chunks versus FFmpeg CLI, refusals and actual HIP
+spatial output/input gradients plus CPU encode. No GPU codec/B-frame/YUV/HDR/
+all-format/custom-mapping/approximate-VFR/speed/stability claim. Image codecs off.
+Image87875c40998bf083ecbc991e7dbe00b4e5549755b84d0f5b36d470167ab5de6d;
+only codec wheel/new image/runtime metadata changed, existing ROCm/Torch/defaults/
+B04.2 CLR repair retained. Locked rollbackWS/recovery/video-b044-before/runtime.json,
+old dcd025 image/source/build/cache kept. Seven guards ACK600s incl failed gate;
+passing gates/whole batches dmesg identical,306 stack hashes/four AOT DBs/links
+retained. User application uninspected/unmodified/untested; owned fixtures only.
+Build4 CPUs/Ninja/8GiB RAM/10GiB mem+swap/shared20GiB ccache/no GPU devices;
+existing dependency image reused, private packaging N8 remains. Entry bootc646d874
+same r2 during tests; no agent reboot/.105/BIOS/delete. Local artifacts/video-b044
+under kernel retain source/wheel/recovery/build manifests/130 SHA-verified raw
+logs2,536,706B/seven guards. BaselineWS/logs/video-b044-qualification-r3/final.json;
+no own jobs/root SSH closed, disk21.589GB observed. Unknown CPU fault remains
+unresolved/distinct from VM-heap/CSR/B04.2 queue and this timestamp semantic defect.
+[Report/use/recovery](bc250_video_b044_results/README.md). **Next B04.5:** feasible
+CPU TorchCodec JPEG/PNG/WebP image paths and independent owned pixel references.
+
 **B04.3 CPU audio file codec installed2026-10-21:** code9c5199ccb; preserved
 sources/bc250-torchcodec v0.17.0 d9dc54238e173000bc3969eb3959777026ff9ae8,
 no source patches, all471 tracked files match archive. CPU FFmpeg6.1.1, CUDA/image

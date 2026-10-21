@@ -97,9 +97,9 @@
     },
     {
       "id": "B04",
-      "feature": "B04.1 vision/B04.2 native audio/B04.3 CPU audio file IO installed; B04.4 CPU video unqualified",
-      "evidence": "Native torchvision/torchaudio retained; CPU TorchCodec0.17.0+gfx1013/FFmpeg6.1.1 installed.136 candidate+136 installed codec/reference/GPU resample forward-backward and retained regressions pass. Existing ROCm/Torch unchanged; application excluded by user request. No GPU codec/video/image/all-codec/speed claim.",
-      "next": "B04.4 inspect pinned CPU video APIs, owned raw-frame decode/seek/encode reference fixtures with explicit HIP transfer. CUDA/image codec builds remain off pending separate qualification.",
+      "feature": "B04.1 vision/B04.2 native audio/B04.3 CPU audio/B04.4 CPU video installed; TorchCodec image builds off",
+      "evidence": "B04.4 CPU video55/audio46/core7 each candidate/installed (108 each). Exact single-frame VFR packet-gap seek repaired via scanned index; independent RGB/PTS/encoder references and HIP spatial forward/backward. Previous audio/vision scopes retained; no GPU codec/universal/video-speed claim.",
+      "next": "B04.5 inspect pinned CPU image flags/dependencies; enable feasible TorchCodec JPEG/PNG/WebP and owned independent pixel references. GPU codec paths stay off; user application excluded.",
       "status": "partially-qualified"
     },
     {

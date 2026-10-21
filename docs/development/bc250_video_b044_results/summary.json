@@ -1,0 +1,328 @@
+{
+  "task": "B04.4",
+  "status": "installed and bounded-qualified",
+  "integration_revision": "22f796252",
+  "source_revision": "3eecace02076800cf6aa9be6364ed2f1f611548d",
+  "base_revision": "d9dc54238e173000bc3969eb3959777026ff9ae8",
+  "torchcodec": "0.17.0+gfx1013",
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "f902e0bc3f7c4275db9ea7f7a2234f29fcc6fd9d78b449bf95666b00ed8ccd96",
+    "image": "87875c40998bf083ecbc991e7dbe00b4e5549755b84d0f5b36d470167ab5de6d",
+    "previous_image": "dcd025fbee1ffd180b9ff4f3ab8b753f2415d8a58914d77506ea12d4777a88d7",
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/video-b044-before/runtime.json",
+    "prefix_changed": true,
+    "native_libraries_changed": false,
+    "installed_runtime_sha256": "4cf699ed5c85b6eccf76b04976ca6abc9c83bd0449474ff8f28b2031a6a5cb92",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/video-b044-qualification-r3/final.json",
+    "rollback_used": false
+  },
+  "candidate_checks": 108,
+  "installed_checks": 108,
+  "video_checks_per_gate": 55,
+  "retained_audio_checks": 46,
+  "retained_core_checks": 7,
+  "original_failed_gate_checks_completed": 40,
+  "original_failure": "Exact single-frame VFR timestamp seeking accepted the next frame when packet duration ended before the next PTS; batch/index references differ. Fixed by using scanned index for exact/custom mappings; approximate path unchanged.",
+  "verification": {
+    "status": "passed",
+    "archive_sha256": "8295c64f69c482a1bc4de090cc6d3bdef3539673c61b10b6eb763f18fc4934f3",
+    "raw_log_files": 130,
+    "raw_log_bytes": 2536706,
+    "guards": 7,
+    "all_guards_acknowledged": true,
+    "wheel_sha256": "72eee43277a2806684efa1f485f951567e935582a02bb731ced6f24ca65ef8f3"
+  },
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "c646d874-ebd6-4e4b-bb77-2e47233748e0",
+  "boot_changed_at_entry": true,
+  "agent_reboot": false,
+  "protected_stack_paths": 306,
+  "fft_aot_databases_preserved": 4,
+  "passing_batches_kernel_log_unchanged": true,
+  "disk_available_bytes": 21589233664,
+  "existing_rocm_torch_libraries_unchanged": true,
+  "user_application_scope": "finetune-n7 remains uninspected/unmodified/untested; owned stack fixtures only.",
+  "baseline": "WS/logs/video-b044-qualification-r3/final.json",
+  "raw_remote": "WS/logs/video-b044-*",
+  "durable_local": "kernel/artifacts/video-b044/remote",
+  "resources": {
+    "jobs": 4,
+    "cpus": 4,
+    "memory": "8g",
+    "memory_swap": "10g",
+    "ccache": "20G",
+    "build_gpu_devices": false
+  },
+  "running_agent_jobs": [],
+  "root_ssh_sessions_closed": true,
+  "next": "B04.5: inspect pinned CPU image codec build flags/dependencies; enable and qualify feasible TorchCodec JPEG/PNG/WebP paths with owned independent pixel references, keeping GPU codec paths off.",
+  "limitations": "Bounded CPU FFV1/H264-RGB lossless clips, exact/scanned timestamp seeking and explicit HIP spatial forward/backward; not GPU video, approximate VFR correctness, B-frame/YUV/HDR/all-codec/long-stream/performance/universal stability. Image codecs remain disabled; historical unknown Python CPU fault unresolved, distinct from VM-heap/CSR and B04.2 queue repair.",
+  "video_results": {
+    "status": "passed",
+    "checks": [
+      "ffv1-NCHW-metadata",
+      "ffv1-NCHW-all-pixels-pts-duration",
+      "ffv1-NCHW-backward-forward-seeks-and-negative-index",
+      "ffv1-NCHW-unsorted-duplicate-batch",
+      "ffv1-NCHW-index-range",
+      "ffv1-NCHW-slice",
+      "ffv1-NCHW-timestamp-seek",
+      "ffv1-NCHW-timestamp-batch",
+      "ffv1-NHWC-metadata",
+      "ffv1-NHWC-all-pixels-pts-duration",
+      "ffv1-NHWC-backward-forward-seeks-and-negative-index",
+      "ffv1-NHWC-unsorted-duplicate-batch",
+      "ffv1-NHWC-index-range",
+      "ffv1-NHWC-slice",
+      "ffv1-NHWC-timestamp-seek",
+      "ffv1-NHWC-timestamp-batch",
+      "ffv1-source-bytes",
+      "ffv1-source-filelike",
+      "ffv1-source-tensor",
+      "libx264rgb-NCHW-metadata",
+      "libx264rgb-NCHW-all-pixels-pts-duration",
+      "libx264rgb-NCHW-backward-forward-seeks-and-negative-index",
+      "libx264rgb-NCHW-unsorted-duplicate-batch",
+      "libx264rgb-NCHW-index-range",
+      "libx264rgb-NCHW-slice",
+      "libx264rgb-NCHW-timestamp-seek",
+      "libx264rgb-NCHW-timestamp-batch",
+      "libx264rgb-NHWC-metadata",
+      "libx264rgb-NHWC-all-pixels-pts-duration",
+      "libx264rgb-NHWC-backward-forward-seeks-and-negative-index",
+      "libx264rgb-NHWC-unsorted-duplicate-batch",
+      "libx264rgb-NHWC-index-range",
+      "libx264rgb-NHWC-slice",
+      "libx264rgb-NHWC-timestamp-seek",
+      "libx264rgb-NHWC-timestamp-batch",
+      "libx264rgb-source-bytes",
+      "libx264rgb-source-filelike",
+      "libx264rgb-source-tensor",
+      "variable-pts-all-pixels-and-independent-pts",
+      "variable-pts-index-seeks",
+      "variable-pts-time-seeks",
+      "encode-ffv1-contiguous-independent-pixels",
+      "encode-ffv1-strided-independent-pixels",
+      "encode-libx264rgb-contiguous-independent-pixels",
+      "encode-libx264rgb-strided-independent-pixels",
+      "encode-tensor-decode-exact",
+      "encode-filelike-decode-exact",
+      "incremental-two-chunk-encode-independent-pixels",
+      "refuse-missing-file",
+      "refuse-invalid-order",
+      "refuse-invalid-index",
+      "refuse-invalid-dtype",
+      "refuse-zero-frame-rate",
+      "cpu-video-to-hip-spatial-forward-backward",
+      "hip-result-explicit-cpu-encode-independent-pixels"
+    ],
+    "results": [
+      {
+        "name": "ffv1-NCHW-metadata"
+      },
+      {
+        "name": "ffv1-NCHW-all-pixels-pts-duration"
+      },
+      {
+        "name": "ffv1-NCHW-backward-forward-seeks-and-negative-index"
+      },
+      {
+        "name": "ffv1-NCHW-unsorted-duplicate-batch"
+      },
+      {
+        "name": "ffv1-NCHW-index-range"
+      },
+      {
+        "name": "ffv1-NCHW-slice"
+      },
+      {
+        "name": "ffv1-NCHW-timestamp-seek"
+      },
+      {
+        "name": "ffv1-NCHW-timestamp-batch"
+      },
+      {
+        "name": "ffv1-NHWC-metadata"
+      },
+      {
+        "name": "ffv1-NHWC-all-pixels-pts-duration"
+      },
+      {
+        "name": "ffv1-NHWC-backward-forward-seeks-and-negative-index"
+      },
+      {
+        "name": "ffv1-NHWC-unsorted-duplicate-batch"
+      },
+      {
+        "name": "ffv1-NHWC-index-range"
+      },
+      {
+        "name": "ffv1-NHWC-slice"
+      },
+      {
+        "name": "ffv1-NHWC-timestamp-seek"
+      },
+      {
+        "name": "ffv1-NHWC-timestamp-batch"
+      },
+      {
+        "name": "ffv1-source-bytes"
+      },
+      {
+        "name": "ffv1-source-filelike"
+      },
+      {
+        "name": "ffv1-source-tensor"
+      },
+      {
+        "name": "libx264rgb-NCHW-metadata"
+      },
+      {
+        "name": "libx264rgb-NCHW-all-pixels-pts-duration"
+      },
+      {
+        "name": "libx264rgb-NCHW-backward-forward-seeks-and-negative-index"
+      },
+      {
+        "name": "libx264rgb-NCHW-unsorted-duplicate-batch"
+      },
+      {
+        "name": "libx264rgb-NCHW-index-range"
+      },
+      {
+        "name": "libx264rgb-NCHW-slice"
+      },
+      {
+        "name": "libx264rgb-NCHW-timestamp-seek"
+      },
+      {
+        "name": "libx264rgb-NCHW-timestamp-batch"
+      },
+      {
+        "name": "libx264rgb-NHWC-metadata"
+      },
+      {
+        "name": "libx264rgb-NHWC-all-pixels-pts-duration"
+      },
+      {
+        "name": "libx264rgb-NHWC-backward-forward-seeks-and-negative-index"
+      },
+      {
+        "name": "libx264rgb-NHWC-unsorted-duplicate-batch"
+      },
+      {
+        "name": "libx264rgb-NHWC-index-range"
+      },
+      {
+        "name": "libx264rgb-NHWC-slice"
+      },
+      {
+        "name": "libx264rgb-NHWC-timestamp-seek"
+      },
+      {
+        "name": "libx264rgb-NHWC-timestamp-batch"
+      },
+      {
+        "name": "libx264rgb-source-bytes"
+      },
+      {
+        "name": "libx264rgb-source-filelike"
+      },
+      {
+        "name": "libx264rgb-source-tensor"
+      },
+      {
+        "name": "variable-pts-all-pixels-and-independent-pts"
+      },
+      {
+        "name": "variable-pts-index-seeks"
+      },
+      {
+        "name": "variable-pts-time-seeks"
+      },
+      {
+        "name": "encode-ffv1-contiguous-independent-pixels"
+      },
+      {
+        "name": "encode-ffv1-strided-independent-pixels"
+      },
+      {
+        "name": "encode-libx264rgb-contiguous-independent-pixels"
+      },
+      {
+        "name": "encode-libx264rgb-strided-independent-pixels"
+      },
+      {
+        "name": "encode-tensor-decode-exact"
+      },
+      {
+        "name": "encode-filelike-decode-exact"
+      },
+      {
+        "name": "incremental-two-chunk-encode-independent-pixels"
+      },
+      {
+        "name": "refuse-missing-file"
+      },
+      {
+        "name": "refuse-invalid-order"
+      },
+      {
+        "name": "refuse-invalid-index"
+      },
+      {
+        "name": "refuse-invalid-dtype"
+      },
+      {
+        "name": "refuse-zero-frame-rate"
+      },
+      {
+        "name": "cpu-video-to-hip-spatial-forward-backward"
+      },
+      {
+        "name": "hip-result-explicit-cpu-encode-independent-pixels"
+      }
+    ],
+    "torch": "2.13.0a0+gfx1013",
+    "torchcodec": "0.17.0+gfx1013",
+    "codec_device": "cpu",
+    "gpu_codec_claim": false,
+    "fixture_picture_types": {
+      "ffv1": [
+        "I",
+        "I",
+        "I",
+        "I",
+        "I",
+        "I",
+        "I",
+        "I",
+        "I"
+      ],
+      "libx264rgb": [
+        "I",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "I",
+        "P",
+        "P"
+      ]
+    },
+    "fixture_sha256": {
+      "encoded-ffv1-strided.mkv": "7e8027421670e76b3c37fd14f9f737160abd861d23306b0fcc6ea73f8f5f7f15",
+      "encoded-libx264rgb-contiguous.mkv": "55871b470f0e60cfe4f9b4abe9d475d35bdbfdb196e6f539fe56a47c49c298ca",
+      "reference.rgb24": "98f3619b7c9b8e29fa542f1dc651459e28e48cdcdadc1bdb0b7dd2163e5330b0",
+      "encoded-ffv1-contiguous.mkv": "267b82e9eac5370f35571f3074b3543f11f14be11967be769938c3cc2a12c301",
+      "libx264rgb.mkv": "5fe02d9a97112158685b6f30f5769be6b974153257cf0d9a9d82697892ab2b59",
+      "ffv1.mkv": "65ff82f16c3d03e6133ff15b783373e9e6f172eb9586633d805a4d573ac86c5b",
+      "variable-pts.mkv": "c1ac61b3566bd9bc676c23c7920fd3a19a8fbb5543e1ddc14a15a93904820f13",
+      "processed.mkv": "b05352fab354558bbe3af2d07537841abdbf7bb6a5bf3662692adfc96189d7b1",
+      "incremental.mkv": "6262f83b683c6e1f01ad25141b7d6bfbb406d1fffdff8c2b7c73a881156fd08d",
+      "encoded-libx264rgb-strided.mkv": "6fd202bad89d528aa40e15a7cd9ec3f1c496b81c5e753bea7d1b28fbe493a4ea"
+    }
+  }
+}
