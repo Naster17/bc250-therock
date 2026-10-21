@@ -7,7 +7,7 @@ exact errors, build flags, ELF dependencies and all3520 dispatcher names are in
 [the audit evidence](bc250_torch_support_audit/README.md). Dispatcher registrations
 are not architecture coverage or a support percentage.
 
-## Current cursor after B01.1 / broad support
+## Current cursor after B02.1 / broad support
 
 User direction2026-10-20: prioritize broad hardware-feasible ROCm/PyTorch and
 library/API support. Qwen/LoRA is an optional test fixture, not the scope boundary;
@@ -51,9 +51,17 @@ dependency supplied with notices; GPU codecs/AVIF/GIF/HEIC remain disabled.
 FP32 on its current device.327 final candidate+327 installed CPU-reference/gradient/
 DFT/native GPU trace/retained FFT checks pass. No native BF16 FFT, CPU fallback
 or global torch.fft/AMP change. [Report/use/recovery](bc250_fft_b011_results/README.md).
-**Next B02.1:** inspect general sparse solve/factorization versus N2.13 triangular
-evidence; select feasible integration or explicit bounded fallback with contracts. BF16 FFT, general
-sparse solve, distributed/quantization/export and CK-plugin work remain open.
+**B02.1 installed explicit fallback:** bc250_sparse0.1.0 solves small canonical
+CSR systems through GPU densification/LU with first stored-value/RHS gradients,
+size/storage admission and finite/singular/residual checks.381 candidate+381
+installed checks pass, including unchanged fixed CPU-double/analytic/finite-
+difference/AMP/stream/invalid-input gates and a135-kernel trace. Direct CSR parts
+support real/complex value gradients; the CSR wrapper supports real values and
+all four RHS dtypes. No native public API/scalable sparse factorization/CPU solve/
+performance claim. [Report/use/recovery](bc250_sparse_b021_results/README.md).
+**Next B03.1:** inspect distributed build/Gloo/RCCL paths and select bounded local
+CPU process-group readiness first. Native BF16 FFT, scalable sparse factorization,
+distributed/quantization/export and CK-plugin work remain open.
 
 
 N3.9 restores the qualified N3.7 provenance integration and A07 attention CLI
@@ -331,7 +339,8 @@ The following rows are not an exhaustive API or dtype promise.
 | Hermitian eigenvectors | Native rocSOLVER | N2.1 retained22 cases through257 and gradients | Extreme/larger/two-stage cases unqualified |
 | Nonsymmetric eig | hipSOLVER DnXgeev -> host LAPACK | N2.2 host compatibility16; N2.3–12 isolated GPU prototype cap16/separated spectra | Production solve is host arithmetic; native full prototype still slower; broader spectra/batching/gradients unqualified |
 | Structured sparse matmul | Torch hipSPARSELt | A04 forward plus follow-up38 floating first-order gradient tests; public FP16/BF16 matmul/linear source-weight/input/bias gradients | Scalar native packs; integer backward/higher-order/graphs/compile unqualified. Training slower in measured small fixtures; keep explicit |
-| Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | General sparse solve absent B02; not every format/dtype/backward |
+| Sparse COO/CSR/CSC/BSR matmul | hipSPARSE/rocSPARSE + ATen | Current CSR/CSC/BSR output refs and retained COO/CSR/triangular suites | Native general sparse API absent; B02.1 small explicit fallback separate; not every format/dtype/backward |
+| Explicit small CSR general solve | bc250_sparse -> GPU scatter/dense LU/adjoint | B02.1:253 new cases plus128 retained pass candidate and installed; four dtypes, fixed-sparsity values/RHS first gradients, indices/layouts/AMP/streams/refusals/trace | n<=1024, RHS<=64, major-storage estimate<=64MiB; O(n²)/O(n³), host status sync; no native torch.sparse.spsolve, scalable sparse factorization, higher gradients/compile/graphs/performance claim |
 | Sparse CSR/BSR triangular solve | generic hipSPARSE SpSV/SpSM and block APIs | N2.13:433 public +96 direct fixtures; real/complex/indices/layouts/streams, exact pivot NaNs | Public BSR64 downcasts within tested bounds; direct raw singular policy, general sparse factorization/B02, solve autograd/compile/graphs/performance unqualified |
 | SDPA math | ATen HIP + BLAS | Current forward/QKV gradients and prior long/model/AMP gates | Quadratic attention memory; default retained |
 | Optional tiled SDPA | Patched scalar Triton helper, explicit D<=256 |36 A07 tests and actual2B nonzero-adapter train/checkpoint gates | BF16 D>128 training uses math-forward/tiled-backward hybrid: quadratic forward temporary, linear saved state. Dropout/compile/graphs remain unsupported; math default. |

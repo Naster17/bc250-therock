@@ -1,0 +1,1326 @@
+{
+  "task": "B02.1 explicit bounded CSR solve fallback",
+  "status": "installed and bounded-qualified",
+  "integration_revision": "d2c3ea10525192ea374018c650b4e323b9d65f20",
+  "module": "build_tools/bc250/runtime/bc250_sparse.py",
+  "helper_version": "0.1.0",
+  "module_sha256": "272cc68c8e898e9f8eed5816a55b5ae9e2076861b575304713daae47f0b300a6",
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "ab9db860207e230ea704cab2bf76005d19b7c8967e59559a5a4b0088ed7f38c1",
+    "image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+    "previous_image": "5d0a6d9cef758b2f7677a2b52b9d29ac51e24970703259a10ca8e44bee93feb1",
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/sparse-b021-before/runtime.json",
+    "prefix_changed": true,
+    "native_libraries_changed": false,
+    "installed_runtime_sha256": "f09cae594646107e8101e2bc383e4ee7257a3c3354c218805a9a6350091f35b1",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/sparse-b021-qualification-r5/final.json",
+    "rollback_used": false
+  },
+  "audit_checks": 8,
+  "recovery_checks": 7,
+  "final_candidate_checks": 381,
+  "installed_checks": 381,
+  "new_solve_checks_per_gate": 253,
+  "retained_checks": {
+    "triangular_edge": 80,
+    "sparse": 41,
+    "core": 7
+  },
+  "verification": {
+    "status": "passed",
+    "archive_sha256": "8b05a494be5e539e8709fb5b52391bd63b511c8de48e93842758b76aff3dfab5",
+    "archive_bytes": 5672960,
+    "raw_log_files": 154,
+    "raw_log_bytes": 4956287,
+    "guards": 16,
+    "all_guards_acknowledged": true,
+    "module_sha256": "272cc68c8e898e9f8eed5816a55b5ae9e2076861b575304713daae47f0b300a6",
+    "candidate_and_installed_preservation_passed": true
+  },
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "c646d874-ebd6-4e4b-bb77-2e47233748e0",
+  "boot_unchanged": true,
+  "agent_reboot": false,
+  "protected_stack_paths": 306,
+  "fft_aot_databases_preserved": 4,
+  "passing_batches_kernel_log_unchanged": true,
+  "disk_available_bytes": 21405282304,
+  "existing_rocm_torch_libraries_unchanged": true,
+  "user_application_scope": "Leave finetune-n7 uninspected/unmodified/untested; include_training_app=False, stack-only306-path baseline.",
+  "baseline": "WS/logs/sparse-b021-qualification-r5/final.json",
+  "raw_remote": "WS/logs/sparse-b021-*",
+  "durable_local": "kernel/artifacts/sparse-b021/remote",
+  "resources": {
+    "native_build": false,
+    "ccache_operation": false,
+    "image_build_memory_bytes": 1073741824,
+    "image_build_network": "none",
+    "gpu_guard_seconds": 600,
+    "minimum_disk_free_bytes": 4294967296,
+    "torch_threads": 4
+  },
+  "running_agent_jobs": [],
+  "root_ssh_sessions_closed": true,
+  "max_output_absolute_error": 4.0101908111783666e-07,
+  "max_absolute_residual": 7.806724110967099e-07,
+  "native_public_api": "torch.sparse.spsolve remains rejected in ROCm; no global dispatch change",
+  "arithmetic": "GPU scatter densification, native dense LU and explicit first adjoint solve/product; host synchronizations for metadata/info/residual scalar checks; no CPU linear solve",
+  "admission": {
+    "max_n": 1024,
+    "max_rhs": 64,
+    "max_dense_bytes_ceiling": 67108864,
+    "estimate": "element_size*(8*n*n+6*n*nrhs); major dense storage estimate only, not total allocator/native workspace guarantee",
+    "dtypes": [
+      "float32",
+      "float64",
+      "complex64",
+      "complex128"
+    ],
+    "indices": [
+      "int32",
+      "int64"
+    ],
+    "structure": "canonical unbatched zero-based CSR; sorted unique columns; fixed sparsity"
+  },
+  "tolerances": {
+    "single_output_and_all_leaf_gradient_rtol": 0.0003,
+    "single_atol": 3e-06,
+    "double_output_and_all_leaf_gradient_rtol": 2e-10,
+    "double_atol": 2e-12,
+    "runtime_normalized_residual_bound": "64*eps(input real dtype)",
+    "finite_difference_atol": 1e-08
+  },
+  "results": [
+    {
+      "name": "matrix-torch.float32-torch.int32-1-1-regular-ampFalse",
+      "output_max_abs": 2.840050028485308e-09,
+      "residual_max_abs": 5.673278735685017e-09
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-1-1-regular-ampTrue",
+      "output_max_abs": 1.8378369659455274e-09,
+      "residual_max_abs": 3.775944890094252e-09
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-1-1-step-ampFalse",
+      "output_max_abs": 7.79379860649243e-09,
+      "residual_max_abs": 1.5268199149431894e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-1-1-step-ampTrue",
+      "output_max_abs": 1.4526646663348686e-08,
+      "residual_max_abs": 2.9327530626233056e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-1-3-regular-ampFalse",
+      "output_max_abs": 4.918334850501083e-09,
+      "residual_max_abs": 1.00297654626047e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-1-3-regular-ampTrue",
+      "output_max_abs": 1.66869674744774e-08,
+      "residual_max_abs": 3.217959232415524e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-1-3-step-ampFalse",
+      "output_max_abs": 1.1890689932680942e-08,
+      "residual_max_abs": 2.143853805591789e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-1-3-step-ampTrue",
+      "output_max_abs": 1.2493775236599447e-08,
+      "residual_max_abs": 2.5042425022547832e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-1-regular-ampFalse",
+      "output_max_abs": 3.047327901128938e-08,
+      "residual_max_abs": 6.26322802510515e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-1-regular-ampTrue",
+      "output_max_abs": 1.96199665403185e-08,
+      "residual_max_abs": 4.116799257047887e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-1-step-ampFalse",
+      "output_max_abs": 3.4029012274672255e-08,
+      "residual_max_abs": 7.065043527987314e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-1-step-ampTrue",
+      "output_max_abs": 4.2706133462910856e-08,
+      "residual_max_abs": 8.083457503360592e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-3-regular-ampFalse",
+      "output_max_abs": 2.8706673926848225e-08,
+      "residual_max_abs": 5.544825398828834e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-3-regular-ampTrue",
+      "output_max_abs": 6.595230228612081e-08,
+      "residual_max_abs": 1.3449556401923246e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-3-step-ampFalse",
+      "output_max_abs": 1.3447551849843364e-07,
+      "residual_max_abs": 2.524764548539338e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-7-3-step-ampTrue",
+      "output_max_abs": 5.5853960123641855e-08,
+      "residual_max_abs": 1.1025537682840536e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-1-regular-ampFalse",
+      "output_max_abs": 1.8987871808207046e-07,
+      "residual_max_abs": 3.583669523354871e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-1-regular-ampTrue",
+      "output_max_abs": 1.8374777410734566e-07,
+      "residual_max_abs": 3.820666560905295e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-1-step-ampFalse",
+      "output_max_abs": 3.4276575755498584e-07,
+      "residual_max_abs": 6.719806622257352e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-1-step-ampTrue",
+      "output_max_abs": 2.1023095742034315e-07,
+      "residual_max_abs": 4.3123645032672187e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-3-regular-ampFalse",
+      "output_max_abs": 2.280005061416901e-07,
+      "residual_max_abs": 4.831298159313491e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-3-regular-ampTrue",
+      "output_max_abs": 3.6103168410406283e-07,
+      "residual_max_abs": 7.723029571415907e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-3-step-ampFalse",
+      "output_max_abs": 2.3278855654229602e-07,
+      "residual_max_abs": 4.5399797299339184e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int32-33-3-step-ampTrue",
+      "output_max_abs": 3.164385102838452e-07,
+      "residual_max_abs": 6.499158731188004e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-1-regular-ampFalse",
+      "output_max_abs": 3.2590812271138248e-09,
+      "residual_max_abs": 6.901981208784491e-09
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-1-regular-ampTrue",
+      "output_max_abs": 1.2089217016342246e-08,
+      "residual_max_abs": 2.2969288693275303e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-1-step-ampFalse",
+      "output_max_abs": 3.0508144066576648e-09,
+      "residual_max_abs": 6.024198029308536e-09
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-1-step-ampTrue",
+      "output_max_abs": 1.3458550829348326e-08,
+      "residual_max_abs": 2.608135218906682e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-3-regular-ampFalse",
+      "output_max_abs": 5.789666523980941e-09,
+      "residual_max_abs": 1.0905424119300733e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-3-regular-ampTrue",
+      "output_max_abs": 1.6260595203654304e-08,
+      "residual_max_abs": 3.224640465759876e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-3-step-ampFalse",
+      "output_max_abs": 3.11276920905712e-09,
+      "residual_max_abs": 6.455273648953153e-09
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-1-3-step-ampTrue",
+      "output_max_abs": 1.1917059339339175e-08,
+      "residual_max_abs": 2.4490361738571664e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-1-regular-ampFalse",
+      "output_max_abs": 2.4237104989666136e-08,
+      "residual_max_abs": 4.695506561347429e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-1-regular-ampTrue",
+      "output_max_abs": 2.4289695144119605e-08,
+      "residual_max_abs": 4.840869571864914e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-1-step-ampFalse",
+      "output_max_abs": 1.0745597411876417e-08,
+      "residual_max_abs": 2.1754004819740658e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-1-step-ampTrue",
+      "output_max_abs": 2.4188882674636147e-08,
+      "residual_max_abs": 5.213016152083583e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-3-regular-ampFalse",
+      "output_max_abs": 3.7127051766283614e-08,
+      "residual_max_abs": 7.282691782961592e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-3-regular-ampTrue",
+      "output_max_abs": 9.064813433212748e-08,
+      "residual_max_abs": 1.8174970328743711e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-3-step-ampFalse",
+      "output_max_abs": 4.4946500965536984e-08,
+      "residual_max_abs": 8.865113665379454e-08
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-7-3-step-ampTrue",
+      "output_max_abs": 5.746198961098514e-08,
+      "residual_max_abs": 1.151882584871089e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-1-regular-ampFalse",
+      "output_max_abs": 2.482802194947453e-07,
+      "residual_max_abs": 4.5950271498895745e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-1-regular-ampTrue",
+      "output_max_abs": 2.166025441230346e-07,
+      "residual_max_abs": 3.3837153834426204e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-1-step-ampFalse",
+      "output_max_abs": 1.7872201940605237e-07,
+      "residual_max_abs": 2.909486280788798e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-1-step-ampTrue",
+      "output_max_abs": 2.0577216297557044e-07,
+      "residual_max_abs": 4.164092999303648e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-3-regular-ampFalse",
+      "output_max_abs": 2.991877479097127e-07,
+      "residual_max_abs": 5.195949270841993e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-3-regular-ampTrue",
+      "output_max_abs": 2.592175660787177e-07,
+      "residual_max_abs": 5.443776633917707e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-3-step-ampFalse",
+      "output_max_abs": 2.5358146260590075e-07,
+      "residual_max_abs": 5.552259996211006e-07
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-33-3-step-ampTrue",
+      "output_max_abs": 2.435522407084889e-07,
+      "residual_max_abs": 4.781394826736118e-07
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-1-regular-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-1-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-1-step-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-1-step-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-3-regular-ampFalse",
+      "output_max_abs": 6.938893903907228e-18,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-3-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-3-step-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-1-3-step-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-1-regular-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 2.7755575615628914e-17
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-1-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 4.440892098500626e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-1-step-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-1-step-ampTrue",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-3-regular-ampFalse",
+      "output_max_abs": 5.551115123125783e-17,
+      "residual_max_abs": 4.440892098500626e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-3-regular-ampTrue",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-3-step-ampFalse",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-7-3-step-ampTrue",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 5.551115123125783e-17
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-1-regular-ampFalse",
+      "output_max_abs": 4.440892098500626e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-1-regular-ampTrue",
+      "output_max_abs": 4.440892098500626e-16,
+      "residual_max_abs": 1.7763568394002505e-15
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-1-step-ampFalse",
+      "output_max_abs": 2.220446049250313e-16,
+      "residual_max_abs": 1.3322676295501878e-15
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-1-step-ampTrue",
+      "output_max_abs": 2.220446049250313e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-3-regular-ampFalse",
+      "output_max_abs": 6.661338147750939e-16,
+      "residual_max_abs": 1.5543122344752192e-15
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-3-regular-ampTrue",
+      "output_max_abs": 5.551115123125783e-16,
+      "residual_max_abs": 1.1102230246251565e-15
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-3-step-ampFalse",
+      "output_max_abs": 6.661338147750939e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int32-33-3-step-ampTrue",
+      "output_max_abs": 4.440892098500626e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-1-regular-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-1-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-1-step-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-1-step-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-3-regular-ampFalse",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 5.551115123125783e-17
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-3-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-3-step-ampFalse",
+      "output_max_abs": 5.551115123125783e-17,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-1-3-step-ampTrue",
+      "output_max_abs": 5.551115123125783e-17,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-1-regular-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 2.7755575615628914e-17
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-1-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-1-step-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-1-step-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-3-regular-ampFalse",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-3-regular-ampTrue",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-3-step-ampFalse",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-7-3-step-ampTrue",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-1-regular-ampFalse",
+      "output_max_abs": 2.220446049250313e-16,
+      "residual_max_abs": 6.661338147750939e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-1-regular-ampTrue",
+      "output_max_abs": 2.220446049250313e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-1-step-ampFalse",
+      "output_max_abs": 2.220446049250313e-16,
+      "residual_max_abs": 6.661338147750939e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-1-step-ampTrue",
+      "output_max_abs": 3.3306690738754696e-16,
+      "residual_max_abs": 6.661338147750939e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-3-regular-ampFalse",
+      "output_max_abs": 4.440892098500626e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-3-regular-ampTrue",
+      "output_max_abs": 4.440892098500626e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-3-step-ampFalse",
+      "output_max_abs": 4.440892098500626e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.float64-torch.int64-33-3-step-ampTrue",
+      "output_max_abs": 6.661338147750939e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-1-regular-ampFalse",
+      "output_max_abs": 2.1611082181274044e-08,
+      "residual_max_abs": 4.372340199730773e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-1-regular-ampTrue",
+      "output_max_abs": 4.9939470864183696e-08,
+      "residual_max_abs": 1.0469190963502531e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-1-step-ampFalse",
+      "output_max_abs": 1.9393525237004655e-08,
+      "residual_max_abs": 3.959613960912013e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-1-step-ampTrue",
+      "output_max_abs": 2.6685223877980277e-08,
+      "residual_max_abs": 5.161805188021606e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-3-regular-ampFalse",
+      "output_max_abs": 2.4731027075849177e-08,
+      "residual_max_abs": 4.60074814109572e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-3-regular-ampTrue",
+      "output_max_abs": 2.6053863936588654e-08,
+      "residual_max_abs": 5.257760712448067e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-3-step-ampFalse",
+      "output_max_abs": 2.8412082046535603e-08,
+      "residual_max_abs": 5.77662014112536e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-1-3-step-ampTrue",
+      "output_max_abs": 3.257436217017244e-08,
+      "residual_max_abs": 6.541207920366592e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-1-regular-ampFalse",
+      "output_max_abs": 3.561364577257562e-08,
+      "residual_max_abs": 7.155603999393452e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-1-regular-ampTrue",
+      "output_max_abs": 6.190573166015292e-08,
+      "residual_max_abs": 1.1624764361145078e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-1-step-ampFalse",
+      "output_max_abs": 3.991778380726303e-08,
+      "residual_max_abs": 8.287703632216176e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-1-step-ampTrue",
+      "output_max_abs": 6.456263752380435e-08,
+      "residual_max_abs": 1.3103623380110246e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-3-regular-ampFalse",
+      "output_max_abs": 8.399832383717755e-08,
+      "residual_max_abs": 1.6218528554366306e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-3-regular-ampTrue",
+      "output_max_abs": 6.579826133055507e-08,
+      "residual_max_abs": 1.2841043458406734e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-3-step-ampFalse",
+      "output_max_abs": 6.981528995362287e-08,
+      "residual_max_abs": 1.4527724222757643e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-7-3-step-ampTrue",
+      "output_max_abs": 8.082354160847981e-08,
+      "residual_max_abs": 1.4866142789070673e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-1-regular-ampFalse",
+      "output_max_abs": 3.2278751310637095e-07,
+      "residual_max_abs": 6.072860631103493e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-1-regular-ampTrue",
+      "output_max_abs": 1.052165321396869e-07,
+      "residual_max_abs": 2.0634367624667474e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-1-step-ampFalse",
+      "output_max_abs": 1.561661453942032e-07,
+      "residual_max_abs": 3.196106170701868e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-1-step-ampTrue",
+      "output_max_abs": 2.8802903209103614e-07,
+      "residual_max_abs": 6.092729800107064e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-3-regular-ampFalse",
+      "output_max_abs": 2.0426646285769393e-07,
+      "residual_max_abs": 4.3153141872698425e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-3-regular-ampTrue",
+      "output_max_abs": 4.0101908111783666e-07,
+      "residual_max_abs": 7.806724110967099e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-3-step-ampFalse",
+      "output_max_abs": 2.466573632301148e-07,
+      "residual_max_abs": 4.707285113180961e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int32-33-3-step-ampTrue",
+      "output_max_abs": 3.635616148896012e-07,
+      "residual_max_abs": 7.556667411820959e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-1-regular-ampFalse",
+      "output_max_abs": 1.1203418267110861e-08,
+      "residual_max_abs": 2.220919191306329e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-1-regular-ampTrue",
+      "output_max_abs": 5.608912445579179e-09,
+      "residual_max_abs": 1.0919604141259761e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-1-step-ampFalse",
+      "output_max_abs": 3.4084492593844834e-08,
+      "residual_max_abs": 6.543460233458252e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-1-step-ampTrue",
+      "output_max_abs": 5.521650424351212e-08,
+      "residual_max_abs": 1.154740237945389e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-3-regular-ampFalse",
+      "output_max_abs": 4.2747774200127694e-08,
+      "residual_max_abs": 8.67048267674082e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-3-regular-ampTrue",
+      "output_max_abs": 2.757744881550097e-08,
+      "residual_max_abs": 5.646613117529294e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-3-step-ampFalse",
+      "output_max_abs": 4.107018722588295e-08,
+      "residual_max_abs": 7.733271385887351e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-1-3-step-ampTrue",
+      "output_max_abs": 3.075510188708448e-08,
+      "residual_max_abs": 6.047423001283602e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-1-regular-ampFalse",
+      "output_max_abs": 6.057251290618645e-08,
+      "residual_max_abs": 1.1497880075655825e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-1-regular-ampTrue",
+      "output_max_abs": 3.4976828177088756e-08,
+      "residual_max_abs": 6.943585358805323e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-1-step-ampFalse",
+      "output_max_abs": 7.873434398578087e-08,
+      "residual_max_abs": 1.577602615197982e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-1-step-ampTrue",
+      "output_max_abs": 3.207508591607871e-08,
+      "residual_max_abs": 6.428899802908943e-08
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-3-regular-ampFalse",
+      "output_max_abs": 6.44190252444687e-08,
+      "residual_max_abs": 1.2729242822147973e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-3-regular-ampTrue",
+      "output_max_abs": 6.995036491158735e-08,
+      "residual_max_abs": 1.3762014325687656e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-3-step-ampFalse",
+      "output_max_abs": 6.008310874946957e-08,
+      "residual_max_abs": 1.1888095905500486e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-7-3-step-ampTrue",
+      "output_max_abs": 8.779758116788724e-08,
+      "residual_max_abs": 1.777878077308159e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-1-regular-ampFalse",
+      "output_max_abs": 1.2049776151740698e-07,
+      "residual_max_abs": 2.328643370551988e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-1-regular-ampTrue",
+      "output_max_abs": 1.97705454975335e-07,
+      "residual_max_abs": 3.767976036888376e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-1-step-ampFalse",
+      "output_max_abs": 1.828577849089537e-07,
+      "residual_max_abs": 4.1060699036199677e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-1-step-ampTrue",
+      "output_max_abs": 2.2975258077595856e-07,
+      "residual_max_abs": 4.4445796633904027e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-3-regular-ampFalse",
+      "output_max_abs": 2.755919613152945e-07,
+      "residual_max_abs": 5.686141561122465e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-3-regular-ampTrue",
+      "output_max_abs": 3.014804820660218e-07,
+      "residual_max_abs": 6.239404952854698e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-3-step-ampFalse",
+      "output_max_abs": 1.5789815624719133e-07,
+      "residual_max_abs": 3.0790022688762877e-07
+    },
+    {
+      "name": "matrix-torch.complex64-torch.int64-33-3-step-ampTrue",
+      "output_max_abs": 1.8415184844403378e-07,
+      "residual_max_abs": 3.938151340071843e-07
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-1-regular-ampFalse",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-1-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-1-step-ampFalse",
+      "output_max_abs": 1.7554167342883506e-16,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-1-step-ampTrue",
+      "output_max_abs": 1.5700924586837752e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-3-regular-ampFalse",
+      "output_max_abs": 1.2412670766236366e-16,
+      "residual_max_abs": 1.1188630228279524e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-3-regular-ampTrue",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-3-step-ampFalse",
+      "output_max_abs": 5.551115123125783e-17,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-1-3-step-ampTrue",
+      "output_max_abs": 8.441528768080324e-17,
+      "residual_max_abs": 1.1188630228279524e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-1-regular-ampFalse",
+      "output_max_abs": 1.716587549445839e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-1-regular-ampTrue",
+      "output_max_abs": 7.850462293418876e-17,
+      "residual_max_abs": 2.237726045655905e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-1-step-ampFalse",
+      "output_max_abs": 1.1188630228279524e-16,
+      "residual_max_abs": 4.577566798522237e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-1-step-ampTrue",
+      "output_max_abs": 1.2412670766236366e-16,
+      "residual_max_abs": 1.1443916996305594e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-3-regular-ampFalse",
+      "output_max_abs": 2.482534153247273e-16,
+      "residual_max_abs": 4.440892098500626e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-3-regular-ampTrue",
+      "output_max_abs": 2.482534153247273e-16,
+      "residual_max_abs": 4.577566798522237e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-3-step-ampFalse",
+      "output_max_abs": 2.482534153247273e-16,
+      "residual_max_abs": 2.482534153247273e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-7-3-step-ampTrue",
+      "output_max_abs": 1.2412670766236366e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-1-regular-ampFalse",
+      "output_max_abs": 7.114312260401321e-16,
+      "residual_max_abs": 9.485749680535094e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-1-regular-ampTrue",
+      "output_max_abs": 7.021666937153402e-16,
+      "residual_max_abs": 9.42055475210265e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-1-step-ampFalse",
+      "output_max_abs": 5.578801654593729e-16,
+      "residual_max_abs": 6.684427777288335e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-1-step-ampTrue",
+      "output_max_abs": 3.554447978966673e-16,
+      "residual_max_abs": 1.4432899320127035e-15
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-3-regular-ampFalse",
+      "output_max_abs": 4.449557262054371e-16,
+      "residual_max_abs": 9.930136612989092e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-3-regular-ampTrue",
+      "output_max_abs": 3.510833468576701e-16,
+      "residual_max_abs": 7.021666937153402e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-3-step-ampFalse",
+      "output_max_abs": 5.578801654593729e-16,
+      "residual_max_abs": 1.1157603309187458e-15
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int32-33-3-step-ampTrue",
+      "output_max_abs": 7.021666937153402e-16,
+      "residual_max_abs": 1.6910413304902302e-15
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-1-regular-ampFalse",
+      "output_max_abs": 6.206335383118183e-17,
+      "residual_max_abs": 0.0
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-1-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-1-step-ampFalse",
+      "output_max_abs": 1.1102230246251565e-16,
+      "residual_max_abs": 2.482534153247273e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-1-step-ampTrue",
+      "output_max_abs": 6.206335383118183e-17,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-3-regular-ampFalse",
+      "output_max_abs": 7.152448122690996e-18,
+      "residual_max_abs": 1.3877787807814457e-17
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-3-regular-ampTrue",
+      "output_max_abs": 0.0,
+      "residual_max_abs": 5.551115123125783e-17
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-3-step-ampFalse",
+      "output_max_abs": 1.2412670766236366e-16,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-1-3-step-ampTrue",
+      "output_max_abs": 5.551115123125783e-17,
+      "residual_max_abs": 1.1102230246251565e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-1-regular-ampFalse",
+      "output_max_abs": 1.1188630228279524e-16,
+      "residual_max_abs": 2.482534153247273e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-1-regular-ampTrue",
+      "output_max_abs": 2.482534153247273e-16,
+      "residual_max_abs": 4.577566798522237e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-1-step-ampFalse",
+      "output_max_abs": 1.2412670766236366e-16,
+      "residual_max_abs": 2.220446049250313e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-1-step-ampTrue",
+      "output_max_abs": 2.220446049250313e-16,
+      "residual_max_abs": 3.3766115072321297e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-3-regular-ampFalse",
+      "output_max_abs": 2.482534153247273e-16,
+      "residual_max_abs": 2.482534153247273e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-3-regular-ampTrue",
+      "output_max_abs": 2.2887833992611187e-16,
+      "residual_max_abs": 4.440892098500626e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-3-step-ampFalse",
+      "output_max_abs": 2.2887833992611187e-16,
+      "residual_max_abs": 4.47545209131181e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-7-3-step-ampTrue",
+      "output_max_abs": 2.2887833992611187e-16,
+      "residual_max_abs": 2.2887833992611187e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-1-regular-ampFalse",
+      "output_max_abs": 3.433175098891678e-16,
+      "residual_max_abs": 4.710277376051325e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-1-regular-ampTrue",
+      "output_max_abs": 4.518280359883027e-16,
+      "residual_max_abs": 7.021666937153402e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-1-step-ampFalse",
+      "output_max_abs": 5.661048867003676e-16,
+      "residual_max_abs": 9.155133597044475e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-1-step-ampTrue",
+      "output_max_abs": 4.002966042486721e-16,
+      "residual_max_abs": 1.3323399077344022e-15
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-3-regular-ampFalse",
+      "output_max_abs": 5.578801654593729e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-3-regular-ampTrue",
+      "output_max_abs": 3.433175098891678e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-3-step-ampFalse",
+      "output_max_abs": 4.577566798522237e-16,
+      "residual_max_abs": 8.671119018262734e-16
+    },
+    {
+      "name": "matrix-torch.complex128-torch.int64-33-3-step-ampTrue",
+      "output_max_abs": 5.555016879717332e-16,
+      "residual_max_abs": 8.881784197001252e-16
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.float32-torch.int32"
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.float32-torch.int64"
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.float64-torch.int32"
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.float64-torch.int64"
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.complex64-torch.int32"
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.complex64-torch.int64"
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.complex128-torch.int32"
+    },
+    {
+      "name": "pivot-analytic-wrapper-torch.complex128-torch.int64"
+    },
+    {
+      "name": "diagonal-analytic-torch.float32-65-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.float32-257-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.float64-65-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.float64-257-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.complex64-65-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.complex64-257-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.complex128-65-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.complex128-257-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.float32-1024-1"
+    },
+    {
+      "name": "diagonal-analytic-torch.float32-3-64"
+    },
+    {
+      "name": "diagonal-analytic-torch.float64-3-64"
+    },
+    {
+      "name": "diagonal-analytic-torch.complex64-3-64"
+    },
+    {
+      "name": "diagonal-analytic-torch.complex128-3-64"
+    },
+    {
+      "name": "inclusive-budget-boundary",
+      "budget": 176
+    },
+    {
+      "name": "finite-differences-torch.float64",
+      "max_error": 6.952327602505193e-12
+    },
+    {
+      "name": "finite-differences-torch.complex128",
+      "max_error": 1.1881634565114041e-11
+    },
+    {
+      "name": "refusal-cpu",
+      "error": "a and b must be on the same GPU"
+    },
+    {
+      "name": "refusal-coo",
+      "error": "a must be an unbatched 2D CSR tensor"
+    },
+    {
+      "name": "refusal-dense",
+      "error": "a must be an unbatched 2D CSR tensor"
+    },
+    {
+      "name": "refusal-rectangular",
+      "error": "a must be square with 1..1024 rows"
+    },
+    {
+      "name": "refusal-b-shape",
+      "error": "b must be a strided vector or matrix with n rows"
+    },
+    {
+      "name": "refusal-b-dim",
+      "error": "b must be a strided vector or matrix with n rows"
+    },
+    {
+      "name": "refusal-b-empty",
+      "error": "b must have 1..64 right hand sides"
+    },
+    {
+      "name": "refusal-b-65rhs",
+      "error": "b must have 1..64 right hand sides"
+    },
+    {
+      "name": "refusal-bf16",
+      "error": "a and b must have the same FP32/FP64/C64/C128 dtype"
+    },
+    {
+      "name": "refusal-dtype-mismatch",
+      "error": "a and b must have the same FP32/FP64/C64/C128 dtype"
+    },
+    {
+      "name": "refusal-budget-bool",
+      "error": "max_dense_bytes must be an integer in 1..67108864"
+    },
+    {
+      "name": "refusal-budget-zero",
+      "error": "max_dense_bytes must be an integer in 1..67108864"
+    },
+    {
+      "name": "refusal-budget-raise",
+      "error": "max_dense_bytes must be an integer in 1..67108864"
+    },
+    {
+      "name": "refusal-budget-small",
+      "error": "dense storage estimate 176 exceeds budget 1"
+    },
+    {
+      "name": "refusal-too-large",
+      "error": "CSR must have 1..1024 rows"
+    },
+    {
+      "name": "refusal-zero-n",
+      "error": "CSR must have 1..1024 rows"
+    },
+    {
+      "name": "refusal-index-dtype",
+      "error": "CSR indices must have matching int32/int64 dtype"
+    },
+    {
+      "name": "refusal-index-count",
+      "error": "CSR must have matching scalar columns/values and at most n*n entries"
+    },
+    {
+      "name": "refusal-index-range",
+      "error": "CSR column indices must be within 0..n-1"
+    },
+    {
+      "name": "refusal-index-duplicate",
+      "error": "CSR columns must be sorted and unique within each row"
+    },
+    {
+      "name": "refusal-index-unsorted",
+      "error": "CSR columns must be sorted and unique within each row"
+    },
+    {
+      "name": "refusal-crow-invalid",
+      "error": "CSR row pointers must start at zero and end at nnz"
+    },
+    {
+      "name": "refusal-nan-values",
+      "error": "values and b must contain only finite values"
+    },
+    {
+      "name": "refusal-inf-rhs",
+      "error": "values and b must contain only finite values"
+    },
+    {
+      "name": "refusal-singular-torch.float32",
+      "error": "singular matrix: LU zero pivot 2"
+    },
+    {
+      "name": "refusal-empty-torch.float32",
+      "error": "singular matrix: LU zero pivot 1"
+    },
+    {
+      "name": "refusal-singular-torch.float64",
+      "error": "singular matrix: LU zero pivot 2"
+    },
+    {
+      "name": "refusal-empty-torch.float64",
+      "error": "singular matrix: LU zero pivot 1"
+    },
+    {
+      "name": "refusal-singular-torch.complex64",
+      "error": "singular matrix: LU zero pivot 2"
+    },
+    {
+      "name": "refusal-empty-torch.complex64",
+      "error": "singular matrix: LU zero pivot 1"
+    },
+    {
+      "name": "refusal-singular-torch.complex128",
+      "error": "singular matrix: LU zero pivot 2"
+    },
+    {
+      "name": "refusal-empty-torch.complex128",
+      "error": "singular matrix: LU zero pivot 1"
+    },
+    {
+      "name": "refusal-residual",
+      "error": "normalized solve residual exceeds 64*eps"
+    },
+    {
+      "name": "refusal-nonfinite-output",
+      "error": "nonfinite solution"
+    },
+    {
+      "name": "refusal-native-api-unchanged",
+      "error": "Calling linear solver with sparse tensors requires compiling PyTorch with CUDA cuDSS and is not supported in ROCm build."
+    },
+    {
+      "name": "matrix-torch.float32-torch.int64-17-3-step-ampFalse",
+      "output_max_abs": 1.0476350509325272e-07,
+      "residual_max_abs": 2.0223218299975088e-07
+    },
+    {
+      "name": "gpu-forward-backward-trace",
+      "gpu_kernel_count": 135,
+      "solver_kernel_names": [
+        "void rocsolver::v33800::laswp_kernel<float, int, float*>(int, float*, long, int, int, long, int, int, int const*, long, int, long) [clone .kd]"
+      ]
+    }
+  ],
+  "failures_retained": [
+    {
+      "path": "logs/sparse-b021-audit-r1/gpu.log",
+      "failure": "Podman terminal create failed before Python; missing /var/tmp"
+    },
+    {
+      "path": "logs/sparse-b021-audit-r2/gpu.log",
+      "failure": "same pre-Python terminal launch failure; standard /var/tmp restored mode1777; minimal terminal launch/audit thereafter pass"
+    },
+    {
+      "path": "logs/sparse-b021-audit-r3/result.json",
+      "failure": "complex compressed sparse constructor autograd unsupported; parts/scatter path selected"
+    },
+    {
+      "path": "logs/sparse-b021-r1-general/result.json",
+      "failure": "BF16 ambient AMP backward rounds FP32 value gradient beyond unchanged bound; explicit AMP-disabled first adjoint fixes"
+    },
+    {
+      "path": "logs/sparse-b021-r2-general/result.json",
+      "failure": "complex CSR values-view isfinite raises Sparse CSR tensors do not have strides; non-differentiable wrapper values copied"
+    },
+    {
+      "path": "logs/sparse-b021-r3-general/gpu.log",
+      "failure": "native GPU invariant checker on out-of-range columns triggers device exception/process cleanup abort+segfault; final helper replaces checker with safe predicates before index consumption",
+      "kernel_log_changed": true
+    },
+    {
+      "path": "logs/sparse-b021-recovery-r1/result.json",
+      "status": "passed",
+      "checks": 7,
+      "kernel_log_unchanged": true,
+      "reboot": false
+    }
+  ],
+  "limitations": [
+    "Small O(n^2) storage/O(n^3) dense fallback only; no scalable sparse initial factorizer or native public API integration.",
+    "spsolve wrapper: real value gradients and all four RHS dtypes; complex matrix-value gradients require solve_csr parts API.",
+    "First derivatives only; no compile/graphs/batching/out/right solve/factor reuse or performance/total-memory/universal-stability claim.",
+    "Native malformed-CSR device assertions outside the helper remain unchanged.",
+    "Historical unknown Python CPU fault remains unresolved and distinct from the known invalid-metadata assertion cleanup crash and fixed VM-heap/CSR/B04.2 queue defects."
+  ],
+  "next": "B03.1: inspect the qualified Torch distributed build configuration and pinned Gloo/RCCL paths; select bounded local CPU process-group readiness first, preserving native gfx1013 and .105. Multi-board/P2P/XGMI coverage requires separate work and authorization.",
+  "native_sparse_factorization": "B02 remains open beyond the explicit bounded fallback; pinned QR densifies, refactor APIs require initial factors, Cholesky path uses host symbolic analysis."
+}

@@ -890,7 +890,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
 | rocFFT/hipFFT                               | Existing native backend/AOT cache; P2 FFT30 plus N2.14 public complex96/real72 output+weighted gradients+guarded out, three independent checks and16 direct advanced plans/32 executions | No production defect found; native in-place/planar/callbacks/giant plans and broader performance remain; B01.1 explicit FP32 promotion helper qualified; native BF16 FFT still unavailable |
 | rocSOLVER/hipSOLVER                         | Existing native/BLAS backend; P2 solver32 plus N2.1 complex Hermitian eigenvectors22: batch2/17–257, triangles/strides/streams, repeated subspaces and CPU gradients                                                                                                          | N2.1 native eigh22; N2.2 nonsymmetric eig16 host-LAPACK compatibility only. Native nonsymmetric eig, extreme scaling/conditioning, larger/two-stage and performance remain                                                                                         |
-| rocSPARSE/hipSPARSE | Existing native backend: P2 Torch25+legacy16; N2.13 public triangular433 and direct generic96 fixtures/192 solves, exact pivot NaN policy in Torch | More formats/analyses/general factorization remain; BSR public int64 is bounded downcast, triangular autograd/performance unqualified; old corruption fix was CLR |
+| rocSPARSE/hipSPARSE | Existing native backend: P2 Torch25+legacy16; N2.13 public triangular433 and direct generic96 fixtures/192 solves, exact pivot NaN policy in Torch | B02.1 small explicit GPU dense solve/first gradients separate; native general factorization/more formats remain; BSR64 bounded downcast, triangular autograd/performance unqualified; old corruption fix was CLR |
 | rocALUTION                                  | CG40 ordinary cases andfive fresh-process200 passes after pool-default fix                                                                                                                                   | Larger systems, other solvers/preconditioners/concurrency remain                                                                                            |
 | rocRAND/hipRAND                             | Native dispatch; P2 RNG28; N2.15 Torch state80/statistics22/contracts20/fresh continuation1 and direct native68 incl CPU Philox, offsets/streams and LFSR113 source-comment repair | No arithmetic defect reproduced; broader generators/orderings, large statistical suites, graphs/concurrent mutation/cross-version replay remain |
 | OpenCL                                      | Native CL1.2 kernels, LDS/atomics/images/events/profiling checked                                                                                                                                            | OpenCL2 completeness and other feature combinations remain                                                                                                  |
@@ -925,6 +925,46 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B02.1 explicit bounded CSR solve installed2026-10-21:** coded2c3ea105,
+bc250_sparse0.1.0 SHA272cc68c8e898e9f8eed5816a55b5ae9e2076861b575304713daae47f0b300a6.
+Pinned general Torch API rejects ROCm; hipSOLVER QR densifies, CSRRF requires
+initial factors; existing N2.13 triangular solves do not supply factorization.
+Opt-in GPU dense-LU fallback, canonical square CSR1..1024/RHS1..64, four dtypes,
+major-dense-storage estimate<=64MiB (not total allocator/workspace cap). Safe GPU
+metadata predicates before index consumption, finite/zero-pivot/FP64 residual
+checks; explicit AMP-disabled first adjoint. Parts API supports complex/real
+stored-value and RHS gradients; CSR wrapper real value/all RHS gradients,
+complex values copied to avoid native CSR view bug. Native public API unchanged;
+no CPU solve/scalable sparse/factor reuse/performance claim.
+Candidate-r4/installed-r5 each381 checks=new253/triangular-edge80/sparse41/core7.
+New192 CPU-double output/all-leaf grads (four dtypes/two indices/three sizes/two
+RHS/layouts/AMP), eight pivot/analytic/wrapper,13 diagonal65/257/1024/RHS64,
+one exact budget, two finite differences,35 refusal/contract checks, one traced
+fixture+135-kernel trace. Maxoutput4.011e-7/absolute residual7.807e-7 in fixtures;
+fixed single rtol3e-4/atol3e-6, double2e-10/2e-12, FD<1e-8 (max1.189e-11).
+Initial launch failures: missing /var/tmp restored1777. Audit3 complex constructor
+grad rejection retained; revised audit8 passes. Candidate-r1 AMP gradient rounding,
+r2 complex CSR values-view error and r3 native invariant-checker device assertion/
+cleanup139+libc fault retained; helper precision/copy/safe predicates fix their
+respective paths. Fresh-process core7 recovery passes, no reboot. This known
+assertion cleanup trigger does not resolve historical unknown Python CPU faults;
+VM-heap/CSR/B04.2 queue defects remain distinct. Native bad-CSR assertions unchanged.
+Image506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349;
+runtimeJSONf09cae594646107e8101e2bc383e4ee7257a3c3354c218805a9a6350091f35b1.
+PurePython image layer/no native build/ccache operation; old5d0a6 image/history/
+Torch/ROCm/defaults retained. Locked rollback via deploy_sparse_b021_on_host.py
+--rollback restores exact WS/recovery/sparse-b021-before/runtime.json; unused.
+Sixteen600s guards ACK; all eight accepted gate dmesg+two whole batches identical;
+306 stack hashes/four AOT DBs/links preserved. User application excluded; same r2
+bootc646d874, no agent reboot/.105/BIOS/delete. Local kernel/artifacts/sparse-b021
+has variants/recovery/154 SHA-verified raw logs4,956,287B/16 guards/archive8b05a494.
+BaselineWS/logs/sparse-b021-qualification-r5/final.json; disk21,405,282,304B observed.
+No own jobs/root SSH closed. [Report/use/recovery](bc250_sparse_b021_results/README.md).
+**Next B03.1:** inspect Torch distributed/Gloo/RCCL configuration; select bounded
+local CPU process-group readiness first, .105 unchanged. Native large sparse
+factorization remains open; compile/graphs/higher gradients/universal stability
+and hardware collectives are unqualified.
 
 **B01.1 explicit BF16 FFT fallback installed2026-10-21:** code427492188,
 bc250_fft0.1.0. Audit3 confirms GPU BF16 FFT rejects outside/inside AMP while

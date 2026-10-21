@@ -9,6 +9,56 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B02.1 explicit bounded CSR solve installed2026-10-21:** coded2c3ea105,
+  bc250_sparse0.1.0 SHA272cc68c8e898e9f8eed5816a55b5ae9e2076861b575304713daae47f0b300a6.
+  Pinned Torch general API rejects ROCm; hipSOLVER QR already densifies, CSRRF
+  needs initial factors, N2.13 triangular is separate. Added opt-in spsolve/CSR
+  parts API: same-GPU scatter/dense LU, explicit first adjoint with AMP disabled,
+  canonical square1..1024/RHS1..64/four data types/two indices. Major storage
+  estimate<=64MiB before densification, not total allocator/native workspace cap;
+  finite/zero-pivot/FP64 normalized residual checks. Parts API supports complex/
+  real stored-value+RHS gradients; CSR wrapper real values/all RHS types, complex
+  value gradients explicitly use parts API. No CPU solver/global override/native
+  public API/scalable sparse factorization/factor reuse/performance claim.
+  Candidate-r4/installed-r5 each381=new253+N2.13 edge80+sparse41+core7. New192
+  CPU-double output/all-leaf gradients across dtype/index/shape/RHS/layout/AMP,
+  eight pivot/analytic/wrapper,13 larger analytic diagonal65/257/1024/RHS64,
+  exact budget boundary/two directional FD/35 refusals+contracts/traced fixture/
+  actual native GPU trace135 kernels. Fixed single rtol3e-4 atol3e-6, double
+  rtol2e-10 atol2e-12; maxoutput4.011e-7, absolute residual7.807e-7; FDmax1.189e-11
+  <1e-8. Residual not conditioning/forward-error guarantee; first derivatives only.
+  Entry pre-Python Podman terminal failure from missing /var/tmp fixed mkdir1777;
+  no package/runtime replacement. Initial audit complex CSR constructor autograd
+  rejection retained; revised parts audit8 pass. Failed candidate-r1 AMP gradient
+  rounding fixed explicit adjoint; r2 complex CSR values-view fixed detached copy;
+  r3 native GPU invariant checker on invalid columns asserts/aborts/cleanup139+
+  libc fault. Final helper uses safe GPU predicates before indirect consumption,
+  passes unchanged refusals. Fresh-process core7 recovery passes without reboot.
+  Known assertion cleanup trigger does not identify/fix historical unknown CPU
+  segfault; native malformed-CSR assertions outside helper unchanged. VM-heap/CSR/
+  B04.2 queue defects remain distinct. No numerical tolerance relaxed.
+  Image506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349;
+  runtimeJSONf09cae594646107e8101e2bc383e4ee7257a3c3354c218805a9a6350091f35b1.
+  PurePython image layer only/no native build/ccache operation/Torch/ROCm DSO/
+  kpack/default changes. Previous5d0a6 image/source/build/cache/release history
+  retained; recoveryWS/recovery/sparse-b021-before/runtime.json+old qualifier,
+  locked deploy_sparse_b021_on_host.py --rollback restores exact metadata/image,
+  unused. Sixteen600s guards ACK; eight accepted gate dmesg/two whole batches
+  identical.306 stack hashes/four AOT DBs/links retained; user finetune-n7 remains
+  uninspected/unmodified/untested, include_training_app=False. Same r2 bootc646d874,
+  no agent reboot/.105/BIOS/fallback/delete. Local kernel/artifacts/sparse-b021
+  preserves variants/recovery/154 raw logs4,956,287B/16 guards/archive8b05a494
+  SHA-verified. [Report/use/recovery](docs/development/bc250_sparse_b021_results/README.md).
+  BaselineWS/logs/sparse-b021-qualification-r5/final.json, rawWS/logs/sparse-b021-*;
+  disk21,405,282,304B observed. No own build/test/container/guard/export running,
+  root SSH closed. Remote memory snapshot keyed by final memory revision.
+  **Next B03.1:** inspect qualified Torch distributed build configuration and
+  pinned Gloo/RCCL paths; select bounded local CPU process-group readiness first.
+  Preserve .105/native gfx1013. Multi-board/P2P/XGMI coverage separate. Native
+  general sparse factorization remains open; no compile/graphs/higher derivative/
+  total-memory/universal-stability claim. Work-item cursor refreshed; stale B05
+  missing-A08 note corrected (native dense INT8/INT32 Lt already qualified).
+
 - **B01.1 explicit BF16 FFT fallback installed2026-10-21:** code427492188,
   bc250_fft0.1.0 moduleSHA50bada1588a98dc2a18eb5948a231a76ec7aaede8fe6198b503c338ef9820fe6.
   Audit3 proves GPU rfft2 BF16 rejects outside/inside BF16 AMP, explicit float
@@ -2386,7 +2436,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B04.4 | CPU video decode/seek/encode and exact single-frame VFR timestamp repair installed;108 candidate+108 installed reference/audio/core checks, explicit HIP forward/backward interop. |
 | [x]   | B04.5 | CPU JPEG/PNG/WebP decode and PNG/JPEG encode installed;203 candidate+203 installed image/reference/HIP interop/retained regressions. Other formats/GPU codecs remain separate. |
 | [x]   | B01.1 | Explicit same-device BF16-to-FP32 bc250_fft helper installed;327 final candidate+327 installed references/gradients/native trace/retained FFT gates. Native API remains unchanged. |
-| [ ]   | **B02.1 — next** | Inspect general sparse-solve/factorization consumers and N2.13 triangular evidence; select feasible native integration or explicit bounded fallback with memory/residual/singularity/gradient contracts. |
+| [x]   | B02.1 | Explicit bounded GPU dense-LU CSR solve installed;381 candidate+381 installed output/first-gradient/analytic/FD/refusal/trace/retained sparse gates. Native general API/large sparse factorization unchanged. |
+| [ ]   | **B03.1 — next** | Inspect Torch distributed/Gloo/RCCL configuration and select bounded local CPU process-group readiness; .105/multi-board work remains excluded. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

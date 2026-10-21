@@ -83,10 +83,10 @@
     },
     {
       "id": "B02",
-      "feature": "Public general sparse linear solve unavailable on ROCm",
-      "evidence": "`torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver N2.13 qualifies triangular CSR/BSR solves and marks exact singular pivots as NaN in Torch; it does not add general factorization/spsolve.",
-      "next": "Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback.",
-      "status": "queued"
+      "feature": "General sparse solve: explicit small GPU dense fallback; native API unavailable",
+      "evidence": "B02.1 bc250_sparse0.1.0 installed;381 candidate+381 installed checks,253 new real/complex output/stored-value/RHS first-gradient/analytic/finite-difference/refusal/GPU-trace cases plus retained sparse128. Explicit canonical CSR-to-dense GPU LU, dimension/RHS/budget bounds. Native torch.sparse.spsolve remains rejected; no scalable sparse factorization claim.",
+      "next": "B02 native general factorization/large sparse support remains open; no inference from bounded dense fallback. Next ordered task B03.1 local CPU process-group readiness review.",
+      "status": "partially-qualified"
     },
     {
       "id": "B03",
@@ -99,13 +99,13 @@
       "id": "B04",
       "feature": "B04.1\u2013B04.5 common native vision/audio and CPU TorchCodec audio/video/JPEG/PNG/WebP installed",
       "evidence": "B04.5 image86/video55/audio46/vision9/core7 pass candidate and installed (203 each). Independent samples and encoder/decoder references, explicit HIP output/input gradients; source3eecace0 and B04.4 time-seek fix retained, no new source patch.",
-      "next": "Optional formats/GPU codecs/wider timing coverage remain separate. Common media scopes bounded-qualified; B01.1 explicit FFT fallback installed, next B02.1 sparse-solve review.",
+      "next": "Optional formats/GPU codecs/wider timing coverage remain separate. Common media scopes bounded-qualified; B01.1 FFT and B02.1 bounded sparse helpers installed; next B03.1 distributed readiness review.",
       "status": "partially-qualified"
     },
     {
       "id": "B05",
       "feature": "torchao / bitsandbytes / packed low-bit model kernels not qualified",
-      "evidence": "Packages absent from reviewed runtime; scalar dense INT8 route also missing A08",
+      "evidence": "Optional packages/packed low-bit recipes remain unqualified. Native dense INT8/INT32 Lt A08 is already bounded-qualified and must not be repeated as a missing backend.",
       "next": "Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable.",
       "status": "queued"
     },
@@ -131,7 +131,7 @@
       "status": "queued"
     }
   ],
-  "next": "N2.7: resume recorded small Schur substage profile and one bounded device-side QR/similarity iteration; retain CPU/residual/failure gates and default host-LAPACK production dispatch. Check disk capacity first.",
+  "next": "B03.1: inspect the qualified Torch distributed build configuration and pinned Gloo/RCCL paths; select bounded local CPU process-group readiness first, preserving native gfx1013 and .105. Multi-board/P2P/XGMI coverage requires separate work and authorization.",
   "N2.7": "next, selected A01-A09 bounded scopes completed",
   "completed_primary_items": [
     "A01",
@@ -144,11 +144,20 @@
     "A08",
     "A09"
   ],
-  "next_primary_item": "N2.7",
+  "next_primary_item": "B03.1",
   "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08",
   "current_n2_workstream": {
-    "completed": "N2.13 sparse triangular coverage and pivot NaNs",
-    "next": "N2.14 FFT plans/layouts and odd-length real transforms",
-    "evidence": "../bc250_sparse_n213_results/README.md"
+    "completed": "N2.18 and practical gap review; broader optional scientific coverage remains open",
+    "next": "Follow canonical flow.md: B03.1 distributed readiness review; do not restart earlier completed N2 items.",
+    "evidence": "../bc250_memory_inventory.md"
+  },
+  "historical_cursor_before_b021": {
+    "next": "N2.7: resume recorded small Schur substage profile and one bounded device-side QR/similarity iteration; retain CPU/residual/failure gates and default host-LAPACK production dispatch. Check disk capacity first.",
+    "next_primary_item": "N2.7",
+    "current_n2_workstream": {
+      "completed": "N2.13 sparse triangular coverage and pivot NaNs",
+      "next": "N2.14 FFT plans/layouts and odd-length real transforms",
+      "evidence": "../bc250_sparse_n213_results/README.md"
+    }
   }
 }
