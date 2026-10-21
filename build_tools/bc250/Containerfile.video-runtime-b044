@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+FROM dcd025fbee1ffd180b9ff4f3ab8b753f2415d8a58914d77506ea12d4777a88d7
+COPY wheels/ /opt/bc250-video-wheels/
+RUN python -m pip install --force-reinstall --no-deps --no-index /opt/bc250-video-wheels/*.whl
