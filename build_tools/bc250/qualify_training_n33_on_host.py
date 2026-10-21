@@ -26,6 +26,7 @@ def main(
     scratch_mounts: tuple[Path, ...] = (),
     minimum_disk_free_bytes: int = 2 * 1024**3,
     release_override: Path | None = None,
+    hip_candidate: Path | None = None,
 ) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--attempt", default="r1")
@@ -109,6 +110,8 @@ def main(
         baseline_label=baseline_label,
         phase=args.phase,
         reused_gpu_attempt=args.reuse_attempt,
+        hip_candidate=str(hip_candidate) if hip_candidate else None,
+        hip_candidate_sha256=sha(hip_candidate) if hip_candidate else None,
         prefix_changed=False,
         library_or_torch_build_required=False,
         scratch_mounts=[str(p) for p in scratch_mounts],
@@ -165,6 +168,8 @@ def main(
                 "--script",
                 script,
             ]
+            if hip_candidate is not None:
+                command += ["--hip-candidate", str(hip_candidate)]
             if release_override is not None:
                 command += ["--release", str(release_override)]
             for path in scratch_mounts:
@@ -196,6 +201,9 @@ def main(
         report["changed_hashes"] = [
             p for p, digest in protected.items() if sha(Path(p)) != digest
         ]
+        report["hip_candidate_unchanged"] = (
+            not hip_candidate or sha(hip_candidate) == report["hip_candidate_sha256"]
+        )
         report["source_hashes_unchanged"] = all(
             sha(WS / "helpers" / n) == d for n, d in source.items()
         )
@@ -215,6 +223,7 @@ def main(
         assert Path("/proc/sys/kernel/random/boot_id").read_text().strip() == boot
         if (
             report["changed_hashes"]
+            or not report["hip_candidate_unchanged"]
             or not report["source_hashes_unchanged"]
             or not report["links_unchanged"]
             or not report["kernel_log_unchanged_entire_batch"]

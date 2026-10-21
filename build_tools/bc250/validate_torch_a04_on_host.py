@@ -34,6 +34,7 @@ def main():
     ap.add_argument("--mount-rw", type=Path, action="append", default=[])
     ap.add_argument("--capture-core", action="store_true")
     ap.add_argument("--torch-candidate", type=Path)
+    ap.add_argument("--hip-candidate", type=Path)
     args = ap.parse_args()
     ws = Path("/home/nik/bc250work/rocm-10.2-gfx1013")
     kws = Path("/home/nik/bc250work/kernel-r3-7.2.10")
@@ -154,6 +155,14 @@ def main():
             for item in args.env:
                 command[image_index:image_index] = ["-e", item]
                 image_index += 2
+            if args.hip_candidate:
+                candidate = args.hip_candidate.resolve(strict=True)
+                assert candidate.is_file()
+                command[image_index:image_index] = [
+                    "-v",
+                    str(candidate)
+                    + ":/workspace/build/dist/rocm/lib/libamdhip64.so.7.17.0-0000000:ro",
+                ]
             if args.torch_candidate:
                 matches = [
                     i

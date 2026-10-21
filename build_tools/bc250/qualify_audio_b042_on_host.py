@@ -30,6 +30,8 @@ if __name__ == "__main__":
         baseline_label="audio-b042-entry-r1",
         default_phase="extra",
         release_override=candidate,
+        hip_candidate=WS
+        / "audio-b042/runtime-candidate-r1/libamdhip64.so.7.17.0-0000000",
         extra_gates=(
             ("dsp", "validate_audio_b042.py", ["--group", "dsp"], 34),
             ("native", "validate_audio_b042.py", ["--group", "native"], 40),
