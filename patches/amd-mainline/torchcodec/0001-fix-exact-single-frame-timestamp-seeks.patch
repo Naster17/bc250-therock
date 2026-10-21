@@ -1,0 +1,31 @@
+From 3eecace02076800cf6aa9be6364ed2f1f611548d Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Wed, 21 Oct 2026 17:54:37 +0200
+Subject: [PATCH] Fix exact timestamp single-frame seeks across packet duration
+ gaps
+
+---
+ src/torchcodec/_core/SingleStreamDecoder.cpp | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/torchcodec/_core/SingleStreamDecoder.cpp b/src/torchcodec/_core/SingleStreamDecoder.cpp
+index 1cfede38..049dc861 100644
+--- a/src/torchcodec/_core/SingleStreamDecoder.cpp
++++ b/src/torchcodec/_core/SingleStreamDecoder.cpp
+@@ -722,6 +722,13 @@ FrameBatchOutput SingleStreamDecoder::get_frames_in_range(
+ 
+ FrameOutput SingleStreamDecoder::get_frame_played_at(double seconds) {
+   validate_active_stream(AVMEDIA_TYPE_VIDEO);
++  if (seek_mode_ == SeekMode::exact ||
++      seek_mode_ == SeekMode::custom_frame_mappings) {
++    // A frame remains displayed until the next presentation timestamp, even
++    // when packet durations leave gaps. Match the batch timestamp API's
++    // scanned index instead of accepting the next decoded frame in a gap.
++    return get_frame_at_index(seconds_to_index_lower_bound(seconds));
++  }
+   StreamInfo& stream_info = stream_infos_[active_stream_index_];
+   double last_decoded_start_time =
+       pts_to_seconds(last_decoded_av_frame_pts_, stream_info.time_base);
+-- 
+2.56.0
+
