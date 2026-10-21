@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT
+FROM 87875c40998bf083ecbc991e7dbe00b4e5549755b84d0f5b36d470167ab5de6d
+# Same distro libwebp ABI as the base image; retain exact dependency and notices.
+COPY --from=c6d3a1131bc2dbd2bb29e466a23e49c2bee0c979a536874ecf5616bf1cc5b75e /usr/lib/x86_64-linux-gnu/libwebpdemux.so.2* /opt/bc250-codec-sysdeps/lib/
+COPY --from=c6d3a1131bc2dbd2bb29e466a23e49c2bee0c979a536874ecf5616bf1cc5b75e /usr/share/doc/libwebpdemux2/ /opt/bc250-codec-sysdeps/licenses/libwebpdemux2/
+RUN printf '%s\n' /opt/bc250-codec-sysdeps/lib > /etc/ld.so.conf.d/bc250-codec-images.conf && ldconfig
+COPY wheels/ /opt/bc250-image-wheels/
+RUN python -m pip install --force-reinstall --no-deps --no-index /opt/bc250-image-wheels/*.whl
