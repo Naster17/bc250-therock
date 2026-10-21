@@ -1,0 +1,630 @@
+{
+  "task": "B04.2",
+  "status": "installed and bounded-qualified",
+  "audio_source_revision": "1ae7f5d8023e82be51b500399a37fceb45481a2b",
+  "audio_upstream": "34c52a67e8941bbd8e6adaca0eb0b9eabec11d78",
+  "rocm_systems_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+  "integration_revision": "d75350905",
+  "queue_fix_controller_revision": "7bf89b571",
+  "torchaudio": "2.11.0+gfx1013",
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "5881b7e91a2cc76586664f6a523f052011290d51a40ab99b1d21f6d4d4d825c0",
+    "previous_library_sha256": "e9878e9fc4efaa8dd443709a3321ffe7c07a68e090b7dc7eb6e2ec6a91290d50",
+    "previous_source_sha256": "c87d34b1cbba30226bdace35653a12e8c0d6e29afc606db3fc1c2d7fc917685c",
+    "image": "97fac19f0d5747265c4ff8328f99d2eaacaf8ff62e5092d22cda300f7130a632",
+    "previous_image": "a0b85fa88c9ecfbec88a8774f19db0fbc18fcfeaa086a4e402b69aa99ba55e27",
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/audio-b042-before",
+    "prefix_changed": true,
+    "installed_runtime_sha256": "5f2ff6801ead12218188b53571973ba3e021c9b8bc70f4a1016eebca06e4467b",
+    "installed_library_sha256": "a1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b",
+    "installed_source_sha256": "529d54938692778b5696abaff5abe45c77080292564d1a61650ba910c741369c",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/audio-b042-qualification-r5/final.json",
+    "rollback_used": false
+  },
+  "candidate_composite_checks": 142,
+  "installed_composite_checks": 142,
+  "postboot_composite_checks": 48,
+  "guard_count": 26,
+  "all_guards_acknowledged": true,
+  "guard_timeout_seconds": 600,
+  "protected_paths_final": 314,
+  "fft_aot_databases_preserved": 4,
+  "boot_before_user_reboot": "efd16227-e452-4939-acbc-a6db47673788",
+  "boot_after_user_reboot": "c81853b2-fba0-4e30-ab67-0c7e06f221bd",
+  "kernel": "7.1.5-bc250rocm-r2",
+  "user_confirmed_reboot": true,
+  "agent_reboot": false,
+  "whole_batch_kernel_log_unchanged": false,
+  "passing_candidate_installed_postboot_logs_unchanged": true,
+  "concurrent_host_oom_retained": true,
+  "historical_cpu_fault_unresolved": true,
+  "vm_heap_fix_unchanged": true,
+  "source_archive_plus_incremental_bundles": "kernel/artifacts/audio-b042/source.tar + source-r2/r3/r4.bundle and patches",
+  "raw_remote": "WS/logs/audio-b042-*",
+  "durable_local": "kernel/artifacts/audio-b042/remote",
+  "active_preservation_baseline": "WS/logs/audio-b042-qualification-r6/final.json",
+  "disk_available_bytes": 17554157568,
+  "next": "B04.3: TorchCodec CPU audio file backend, ABI/FFmpeg requirements and owned load/save reference fixtures; preserve native gfx1013 signal operators.",
+  "running_agent_jobs": [],
+  "limitations": "Bounded tensor signal/first-order gradient/native hostcall initialization qualification; not all shapes/types/models, actual printf service, universal stability/performance. File load/save still requires uninstalled TorchCodec; no GPU codec claim.",
+  "audio_results": {
+    "dsp": {
+      "status": "passed",
+      "checks": [
+        "independent-dft-power-gradient-torch.float32",
+        "spectrogram-torch.float32-stridedFalse",
+        "mel-torch.float32-stridedFalse",
+        "mfcc-torch.float32-stridedFalse",
+        "resample-down-torch.float32-stridedFalse",
+        "resample-up-torch.float32-stridedFalse",
+        "deltas-torch.float32-stridedFalse",
+        "gain-torch.float32-stridedFalse",
+        "preemphasis-torch.float32-stridedFalse",
+        "spectrogram-torch.float32-stridedTrue",
+        "mel-torch.float32-stridedTrue",
+        "mfcc-torch.float32-stridedTrue",
+        "resample-down-torch.float32-stridedTrue",
+        "resample-up-torch.float32-stridedTrue",
+        "deltas-torch.float32-stridedTrue",
+        "gain-torch.float32-stridedTrue",
+        "preemphasis-torch.float32-stridedTrue",
+        "independent-dft-power-gradient-torch.float64",
+        "spectrogram-torch.float64-stridedFalse",
+        "mel-torch.float64-stridedFalse",
+        "mfcc-torch.float64-stridedFalse",
+        "resample-down-torch.float64-stridedFalse",
+        "resample-up-torch.float64-stridedFalse",
+        "deltas-torch.float64-stridedFalse",
+        "gain-torch.float64-stridedFalse",
+        "preemphasis-torch.float64-stridedFalse",
+        "spectrogram-torch.float64-stridedTrue",
+        "mel-torch.float64-stridedTrue",
+        "mfcc-torch.float64-stridedTrue",
+        "resample-down-torch.float64-stridedTrue",
+        "resample-up-torch.float64-stridedTrue",
+        "deltas-torch.float64-stridedTrue",
+        "gain-torch.float64-stridedTrue",
+        "preemphasis-torch.float64-stridedTrue"
+      ],
+      "results": [
+        {
+          "name": "independent-dft-power-gradient-torch.float32",
+          "max_relative_l2": 1.7862937125427334e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "spectrogram-torch.float32-stridedFalse",
+          "max_relative_l2": 1.786293712241277e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mel-torch.float32-stridedFalse",
+          "max_relative_l2": 1.2343114237403834e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mfcc-torch.float32-stridedFalse",
+          "max_relative_l2": 1.236660210357044e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-down-torch.float32-stridedFalse",
+          "max_relative_l2": 1.2352557043065256e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-up-torch.float32-stridedFalse",
+          "max_relative_l2": 3.7622219068142665e-06,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "deltas-torch.float32-stridedFalse",
+          "max_relative_l2": 1.0959894338651366e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "gain-torch.float32-stridedFalse",
+          "max_relative_l2": 3.1769746671166796e-08,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "preemphasis-torch.float32-stridedFalse",
+          "max_relative_l2": 1.2332026617956472e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "spectrogram-torch.float32-stridedTrue",
+          "max_relative_l2": 1.786293712241277e-07,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mel-torch.float32-stridedTrue",
+          "max_relative_l2": 1.2343114237403834e-07,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mfcc-torch.float32-stridedTrue",
+          "max_relative_l2": 1.236660210357044e-07,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-down-torch.float32-stridedTrue",
+          "max_relative_l2": 1.2352557043065256e-07,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-up-torch.float32-stridedTrue",
+          "max_relative_l2": 3.7622219068142665e-06,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "deltas-torch.float32-stridedTrue",
+          "max_relative_l2": 1.0959894338651366e-07,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "gain-torch.float32-stridedTrue",
+          "max_relative_l2": 3.1769746671166796e-08,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "preemphasis-torch.float32-stridedTrue",
+          "max_relative_l2": 1.2332026617956472e-07,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "independent-dft-power-gradient-torch.float64",
+          "max_relative_l2": 6.737501945865292e-16,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "spectrogram-torch.float64-stridedFalse",
+          "max_relative_l2": 2.547233919619731e-16,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mel-torch.float64-stridedFalse",
+          "max_relative_l2": 1.9182726368379512e-16,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mfcc-torch.float64-stridedFalse",
+          "max_relative_l2": 2.3475113426339714e-15,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-down-torch.float64-stridedFalse",
+          "max_relative_l2": 2.8292303753984415e-16,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-up-torch.float64-stridedFalse",
+          "max_relative_l2": 1.1568628829156835e-14,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "deltas-torch.float64-stridedFalse",
+          "max_relative_l2": 2.4638347194340315e-16,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "gain-torch.float64-stridedFalse",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "preemphasis-torch.float64-stridedFalse",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "spectrogram-torch.float64-stridedTrue",
+          "max_relative_l2": 2.547233919619731e-16,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mel-torch.float64-stridedTrue",
+          "max_relative_l2": 1.992598095602528e-16,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "mfcc-torch.float64-stridedTrue",
+          "max_relative_l2": 2.3475827528991026e-15,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-down-torch.float64-stridedTrue",
+          "max_relative_l2": 2.8292303753984415e-16,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "resample-up-torch.float64-stridedTrue",
+          "max_relative_l2": 1.1568628829156835e-14,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "deltas-torch.float64-stridedTrue",
+          "max_relative_l2": 2.4638347194340315e-16,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "gain-torch.float64-stridedTrue",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "preemphasis-torch.float64-stridedTrue",
+          "max_relative_l2": 0.0,
+          "gradient_tensors": 1,
+          "strided": true,
+          "nondefault_stream": false
+        }
+      ],
+      "group": "dsp",
+      "torch": "2.13.0a0+gfx1013",
+      "torchaudio": "2.11.0+gfx1013",
+      "source_revision": "1ae7f5d8023e82be51b500399a37fceb45481a2b",
+      "torchaudio_file": "/opt/torch-venv/lib/python3.12/site-packages/torchaudio/__init__.py"
+    },
+    "native": {
+      "status": "passed",
+      "checks": [
+        "iir-torch.float32-order1-stridedFalse-streamFalse",
+        "iir-torch.float32-order1-stridedFalse-streamTrue",
+        "iir-torch.float32-order1-stridedTrue-streamFalse",
+        "iir-torch.float32-order1-stridedTrue-streamTrue",
+        "iir-torch.float32-order3-stridedFalse-streamFalse",
+        "iir-torch.float32-order3-stridedFalse-streamTrue",
+        "iir-torch.float32-order3-stridedTrue-streamFalse",
+        "iir-torch.float32-order3-stridedTrue-streamTrue",
+        "iir-torch.float64-order1-stridedFalse-streamFalse",
+        "iir-torch.float64-order1-stridedFalse-streamTrue",
+        "iir-torch.float64-order1-stridedTrue-streamFalse",
+        "iir-torch.float64-order1-stridedTrue-streamTrue",
+        "iir-torch.float64-order3-stridedFalse-streamFalse",
+        "iir-torch.float64-order3-stridedFalse-streamTrue",
+        "iir-torch.float64-order3-stridedTrue-streamFalse",
+        "iir-torch.float64-order3-stridedTrue-streamTrue",
+        "profiled-iir-current-stream-output-all-gradients",
+        "rnnt-torch.float32-fusedFalse-time4",
+        "rnnt-torch.float32-fusedFalse-time35",
+        "rnnt-torch.float32-fusedTrue-time4",
+        "rnnt-torch.float32-fusedTrue-time35",
+        "rnnt-torch.float16-fusedFalse-time4",
+        "rnnt-torch.float16-fusedFalse-time35",
+        "rnnt-torch.float16-fusedTrue-time4",
+        "rnnt-torch.float16-fusedTrue-time35",
+        "rnnt-oracle-versus-enumerated-paths-and-gradients",
+        "forced-align-torch.float32-torch.int32-time7",
+        "forced-align-torch.float32-torch.int32-time105",
+        "forced-align-torch.float32-torch.int64-time7",
+        "forced-align-torch.float32-torch.int64-time105",
+        "forced-align-torch.float64-torch.int32-time7",
+        "forced-align-torch.float64-torch.int32-time105",
+        "forced-align-torch.float64-torch.int64-time7",
+        "forced-align-torch.float64-torch.int64-time105",
+        "forced-align-torch.float16-torch.int32-time7",
+        "forced-align-torch.float16-torch.int32-time105",
+        "forced-align-torch.float16-torch.int64-time7",
+        "forced-align-torch.float16-torch.int64-time105",
+        "independent-enumerated-ctc-viterbi-path",
+        "native-dispatch-and-explicit-unavailable-torchcodec-file-apis"
+      ],
+      "results": [
+        {
+          "name": "iir-torch.float32-order1-stridedFalse-streamFalse",
+          "max_relative_l2": 1.0958133996027223e-07,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float32-order1-stridedFalse-streamTrue",
+          "max_relative_l2": 1.0958133996027223e-07,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "iir-torch.float32-order1-stridedTrue-streamFalse",
+          "max_relative_l2": 1.0958133996027223e-07,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float32-order1-stridedTrue-streamTrue",
+          "max_relative_l2": 1.0958133996027223e-07,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": true
+        },
+        {
+          "name": "iir-torch.float32-order3-stridedFalse-streamFalse",
+          "max_relative_l2": 1.3063958565875292e-07,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float32-order3-stridedFalse-streamTrue",
+          "max_relative_l2": 1.3063958565875292e-07,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "iir-torch.float32-order3-stridedTrue-streamFalse",
+          "max_relative_l2": 1.3063958565875292e-07,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float32-order3-stridedTrue-streamTrue",
+          "max_relative_l2": 1.3063958565875292e-07,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": true
+        },
+        {
+          "name": "iir-torch.float64-order1-stridedFalse-streamFalse",
+          "max_relative_l2": 2.1218138462792932e-16,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float64-order1-stridedFalse-streamTrue",
+          "max_relative_l2": 2.1218138462792932e-16,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "iir-torch.float64-order1-stridedTrue-streamFalse",
+          "max_relative_l2": 2.1218138462792932e-16,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float64-order1-stridedTrue-streamTrue",
+          "max_relative_l2": 2.1218138462792932e-16,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": true
+        },
+        {
+          "name": "iir-torch.float64-order3-stridedFalse-streamFalse",
+          "max_relative_l2": 3.287884070244152e-16,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float64-order3-stridedFalse-streamTrue",
+          "max_relative_l2": 3.287884070244152e-16,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "iir-torch.float64-order3-stridedTrue-streamFalse",
+          "max_relative_l2": 3.287884070244152e-16,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": false
+        },
+        {
+          "name": "iir-torch.float64-order3-stridedTrue-streamTrue",
+          "max_relative_l2": 3.287884070244152e-16,
+          "gradient_tensors": 3,
+          "strided": true,
+          "nondefault_stream": true
+        },
+        {
+          "name": "profiled-iir-current-stream-output-all-gradients",
+          "max_relative_l2": 2.297679191556333e-07,
+          "gradient_tensors": 3,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "rnnt-torch.float32-fusedFalse-time4",
+          "max_relative_l2": 2.8386043790246374e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "rnnt-torch.float32-fusedFalse-time35",
+          "max_relative_l2": 5.199758474950915e-06,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "rnnt-torch.float32-fusedTrue-time4",
+          "max_relative_l2": 6.16341197431576e-07,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "rnnt-torch.float32-fusedTrue-time35",
+          "max_relative_l2": 7.049295864586059e-06,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "rnnt-torch.float16-fusedFalse-time4",
+          "max_relative_l2": 0.0002756075475013951,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "rnnt-torch.float16-fusedFalse-time35",
+          "max_relative_l2": 0.0003230700912667776,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "rnnt-torch.float16-fusedTrue-time4",
+          "max_relative_l2": 0.00033461023213142644,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": false
+        },
+        {
+          "name": "rnnt-torch.float16-fusedTrue-time35",
+          "max_relative_l2": 0.000319185139445843,
+          "gradient_tensors": 1,
+          "strided": false,
+          "nondefault_stream": true
+        },
+        {
+          "name": "rnnt-oracle-versus-enumerated-paths-and-gradients"
+        },
+        {
+          "name": "forced-align-torch.float32-torch.int32-time7"
+        },
+        {
+          "name": "forced-align-torch.float32-torch.int32-time105"
+        },
+        {
+          "name": "forced-align-torch.float32-torch.int64-time7"
+        },
+        {
+          "name": "forced-align-torch.float32-torch.int64-time105"
+        },
+        {
+          "name": "forced-align-torch.float64-torch.int32-time7"
+        },
+        {
+          "name": "forced-align-torch.float64-torch.int32-time105"
+        },
+        {
+          "name": "forced-align-torch.float64-torch.int64-time7"
+        },
+        {
+          "name": "forced-align-torch.float64-torch.int64-time105"
+        },
+        {
+          "name": "forced-align-torch.float16-torch.int32-time7"
+        },
+        {
+          "name": "forced-align-torch.float16-torch.int32-time105"
+        },
+        {
+          "name": "forced-align-torch.float16-torch.int64-time7"
+        },
+        {
+          "name": "forced-align-torch.float16-torch.int64-time105"
+        },
+        {
+          "name": "independent-enumerated-ctc-viterbi-path"
+        },
+        {
+          "name": "native-dispatch-and-explicit-unavailable-torchcodec-file-apis"
+        }
+      ],
+      "group": "native",
+      "torch": "2.13.0a0+gfx1013",
+      "torchaudio": "2.11.0+gfx1013",
+      "source_revision": "1ae7f5d8023e82be51b500399a37fceb45481a2b",
+      "torchaudio_file": "/opt/torch-venv/lib/python3.12/site-packages/torchaudio/__init__.py",
+      "gpu_trace": {
+        "kernel_names": [
+          "Cijk_Ailk_Bljk_SB_MT128x64x8_SN_AMAS0_BL0_BS1_GLVWA1_GLVWB1_GRVW1_GSU1_GSUASB_K1_LRVW1_NLCA1_NLCB1_PGR0_PLR0_SIA1_SU32_SUS256_SVW4_TT8_4_USFGRO0_VAW1_VS1_VW1_VWB1_WG16_16_1_WGM8.kd",
+          "__amd_rocclr_copyBuffer.kd",
+          "naive_conv_ab_nonpacked_fwd_nchw_float_float_float_0.kd",
+          "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float> > const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float> > const&)::{lambda(int, bool)#1}) [clone .kd]",
+          "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int, bool)#1}) [clone .kd]",
+          "void at::native::index_elementwise_kernel<128, 4, at::native::flip_kernel_impl<at::native::OpaqueType<4> >(at::TensorIterator&)::{lambda(int)#1}>(long, at::native::flip_kernel_impl<at::native::OpaqueType<4> >(at::TensorIterator&)::{lambda(int)#1}) [clone .kd]",
+          "void at::native::reduce_kernel<256, 2, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4>) [clone .kd]",
+          "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4>) [clone .kd]",
+          "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>) [clone .kd]",
+          "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>) [clone .kd]",
+          "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>) [clone .kd]",
+          "void at::native::vectorized_elementwise_kernel<4, at::native::neg_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::neg_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>) [clone .kd]",
+          "void iir_cu_kernel<float>(torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::HeaderOnlyArrayRef<long>, float, 2ul, torch::headeronly::RestrictPtrTraits, unsigned long>, torch::headeronly::detail::HeaderOnlyIndexBoundsCheck<3ul, unsigned long>, float, 3ul, torch::headeronly::RestrictPtrTraits, unsigned long>, torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::HeaderOnlyArrayRef<long>, float, 1ul, torch::headeronly::RestrictPtrTraits, unsigned long>, torch::headeronly::detail::HeaderOnlyIndexBoundsCheck<2ul, unsigned long>, float, 2ul, torch::headeronly::RestrictPtrTraits, unsigned long>, torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::HeaderOnlyArrayRef<long>, float, 2ul, torch::headeronly::RestrictPtrTraits, unsigned long>, torch::headeronly::detail::HeaderOnlyIndexBoundsCheck<3ul, unsigned long>, float, 3ul, torch::headeronly::RestrictPtrTraits, unsigned long>) [clone .kd]"
+        ],
+        "native_iir_launches": 2,
+        "streams": [
+          1
+        ]
+      }
+    }
+  }
+}

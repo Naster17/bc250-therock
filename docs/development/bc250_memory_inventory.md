@@ -926,6 +926,38 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+**B04.2 torchaudio installed2026-10-21:** native2.11.0+gfx1013,
+source1ae7f5d8023e82be51b500399a37fceb45481a2b (upstream34c52a67), integrationd75350905/
+controllers7bf89b571. Existing patched Torch retained. ROCm build/current-stream
+IIR/hipify/RNNT guard+counter patches preserved. Reproduced RNNT cold-hostcall
+CPU crash traced with machine-code-matched HIP symbols to reclaimed internal
+transfer queue in occupied-bitfield fill. CLR1f9609fd69c4923291f58934495520fe62e66ef8
+locks/reacquires/checks transfer queue through fill; counter fix alone failed.
+Candidate142/installed142/post-user-reboot48 composite checks pass: DSP34,
+native40 (IIR waveform/coefficient gradients, RNNT CPU DP/enumerated cost and
+logit gradients, exact CTC alignment, actual GPU/current-stream trace), retained
+vision60/core7 and direct60-stream hostcall-initialization probe. No actual printf
+service/all-shape/second-derivative/speed claim; TorchCodec load/save still absent.
+Image97fac19f0d5747265c4ff8328f99d2eaacaf8ff62e5092d22cda300f7130a632,
+HIP SHAa1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b.
+Runtime base62ab2437c plus this CLR delta; Torch/rocBLAS/otherlibs/N3.2/math/SDMA0/
+heapoff unchanged. Locked rollback restores image metadata/HIP/source together:
+WS/recovery/audio-b042-before, deploy_audio_b042_on_host.py --rollback. Old image,
+release/builds/caches retained; content-bound checkpoints may detect changed HIP,
+no silent migration.26 guards ACK600s; passing r4/r5/r6 dmesg identical, whole
+session differs due retained RNNT faults and concurrent external+own staging OOM.
+No exclusive-causality claim. User confirmed rebootefd16227 -> c81853b2, same r2;
+installed hashes and48 postboot checks pass. No agent reboot/.105/BIOS changes.
+314 final protected paths/four FFT AOT DBs/links retained. One entry app-doc drift
+preserved without trainer requalification. Local kernel/artifacts/audio-b042 has
+source/bundles/patches/both wheels/native recovery/symbols/301 SHA-verified raw
+logs; interrupted empty export-r1 kept, fsynced export-r2 verified. No own jobs,
+root SSH closed. Disk17.55GB observed. Historical unknown CPU fault remains
+unresolved/distinct from fixed VM-heap/CSR and this queue defect.
+[Report/use/recovery](bc250_audio_b042_results/README.md), baseline
+WS/logs/audio-b042-qualification-r6/final.json. **Next B04.3:** pinned TorchCodec
+ABI/FFmpeg/CPU file load-save reference qualification before installation.
+
 **B04.1 torchvision installed2026-10-20:** prep626e19ef2/integration220bd80e5;
 local preserved sources/bc250-torchvision release/0.28 revision8fb87713a24951e639c494b0f2a8a81b5f8e33a6.
 Native0.28.0+gfx1013/Pillow13 against qualified Torch2.13/HIP7.17/Python3.12/ABI1;

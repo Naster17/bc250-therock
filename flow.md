@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-20 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-21 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,60 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B04.2 torchaudio completed/installed2026-10-21:** integrationd75350905,
+  runtime controllers7bf89b571. Preserved source sources/bc250-torchaudio,
+  upstream34c52a67 / port1ae7f5d8023e82be51b500399a37fceb45481a2b;
+  native2.11.0+gfx1013 against existing Torch2.13/HIP7.17/Python3.12/ABI1.
+  Four audio patches: detected ROCm build, current-stream IIR launch outside
+  dispatch macro, RNNT device-index guard and stream-ordered counter resets.
+  Demonstrated cold hostcall CPU crash fixed in CLR: reclaimed internal transfer
+  queue was null during direct occupied-bitfield fill. Lock execution/reacquire
+  queue/check before synchronous fill; systems1f9609fd69c4923291f58934495520fe62e66ef8.
+  Original HIP machine-code-matched symbolication retained; RNNT counter fix
+  alone still failed. Not a claim all historical Python CPU faults are solved.
+  Candidate142 (141 main+direct HIP probe1), installed142, user-reboot replay48
+  composite checks pass. DSP34 includes explicit CPU DFT output/gradient;
+  native40 includes IIR waveform/coefficient gradients, RNNT FP16/32 logits
+  gradients against CPU FP64 DP/enumeration, forced alignment exact CTC paths,
+  actual native GPU/current-stream trace. Retained vision60/core7 pass. Direct
+  HIP probe60 cold streams/384 checked words; no actual printf/assert service.
+  Fixed limits unchanged; maxrelativeL2 DSP3.7623e-6/native3.3462e-4. No speed,
+  universal-model/stability/second-derivative or GPU codec claim. TorchCodec
+  absent: torchaudio.load/save explicitly remain unavailable, next B04.3.
+  Image97fac19f0d5747265c4ff8328f99d2eaacaf8ff62e5092d22cda300f7130a632;
+  HIP SHAa1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b.
+  Only dev runtime.json/image plus HIP DSO and exact CLR source changed;
+  runtime base62ab2437c/Torchdc8fea0/source2b449c4/rocBLAS8389197c/otherlibs319a235d6
+  and N3.2/math/SDMA0/heapoff retained. No matching external HIP kpack found;
+  other packs untouched. RecoveryWS/recovery/audio-b042-before; exclusive-lock
+  deploy_audio_b042_on_host.py --rollback restores image metadata/DSO/source
+  together. Old image/release/source/builds/caches retained. Existing content-bound
+  checkpoints may refuse changed HIP identity; no silent migration/app changes.
+  Initial build hipify failures/early RNNT CPU crashes retained. Separate concurrent
+  qwen15_training/real_qwen15_vul global host OOM killed external and own staging
+  processes; user reserved board, resource/GPU-client preflight added, later pass.
+  No exclusive-causality claim.26 guards ACK600s; passing r4/r5/r6 batches each
+  dmesg identical, whole session differs due retained faults/OOM. Historical CPU
+  fault remains unresolved/distinct from fixed VM-heap/CSR and this queue path.
+  User explicitly confirmed reboot during evidence copy: bootefd16227 ->
+  c81853b2-fba0-4e30-ab67-0c7e06f221bd, still7.1.5-bc250rocm-r2. Postboot
+  identities match and48 checks pass; no agent reboot/.105/BIOS/fallback changes.
+  Audio build4 Ninja/10GiB RAM/12GiB mem+swap/20GiB ccache explicit HIP compiler;
+  CPU wrapper bypass retained. Isolated runtime one TU/link6GiB/8GiB swapbound/
+  4 CPUs, no active build mutation before qualification. Local SHA-verified
+  kernel/artifacts/audio-b042: source+incremental Git bundles/patches/both wheels,
+  candidate/native recovery/symbols and301 raw logs9,240,283B. Reboot-interrupted
+  empty evidence-r1 retained; fsynced evidence-r2 exported/verified successfully.
+  [Report](docs/development/bc250_audio_b042_results/README.md), rawWS/logs/audio-b042-*.
+  Active preservationbaseline WS/logs/audio-b042-qualification-r6/final.json:
+  314 protected paths/four FFT AOT DBs/links retained. One changed entry app doc
+  preserved without trainer requalification. Disk17,554,157,568B free observed.
+  No own running build/test/container/guard/export; root SSH sessions closed.
+  **Next B04.3:** inspect pinned TorchCodec ABI/FFmpeg requirements; isolated CPU
+  audio file load/save reference fixtures before installation. Preserve qualified
+  native audio signal operators. Broader B01/B02/B03/B05/B06/B07/N2–N8 remain.
+  Remote memory snapshot WS/agent-memory/latest keyed by final memory revision.
 
 - **B04.1 torchvision completed/installed2026-10-20:** prep626e19ef2,
   integration220bd80e5. Broad support scope retained; Qwen/LoRA remains optional.
@@ -2148,7 +2202,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | N3.9 | Qualified N37 provenance/A07 CLI restored preserving current ops edit; exact actual fresh/new/legacy/installed replay, conservative historical checkpoint refusal, app suite and guidance synchronized. |
 | [x]   | N3.10 | User-broadened generic compiled CNN/dense/gated/BatchNorm training;56 CPU-reference/optimizer/buffer/trace checks, no production defect/install/speed claim. |
 | [x]   | B04.1 | Pinned native torchvision installed in independent image;67 candidate+67 installed CPU-reference/operator/gradient/codec/model/core checks. CPU codecs explicit, old image/release retained. |
-| [ ]   | **B04.2 — next** | Pin compatible torchaudio against qualified Torch; inspect audio backend requirements, isolated native build and CPU/GPU signal-operation references before installation. |
+| [x]   | B04.2 | Native torchaudio installed;142 candidate/142 installed/48 post-user-reboot checks. Signal outputs/first-order gradients/stream behavior plus demonstrated CLR cold-hostcall queue repair qualified within recorded bounds. |
+| [ ]   | **B04.3 — next** | Pin TorchCodec against qualified Torch; inspect FFmpeg/ABI requirements and qualify CPU audio file loading/saving with owned reference fixtures before installation. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
