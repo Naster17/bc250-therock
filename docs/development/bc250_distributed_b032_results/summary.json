@@ -1,0 +1,70 @@
+{
+  "task": "B03.2",
+  "status": "bounded-qualified on installed runtime; no runtime changes",
+  "code_revision": "418db3a905859b0aa4ba14d72484128cfde080a1",
+  "runtime_sha256": "32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0",
+  "image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+  "torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031",
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "2db1c7c2-1b0e-47ac-a153-bc06aaa9973c",
+  "verification": {
+    "status": "passed",
+    "archive_sha256": "8cdbb0e540800d7619f57a9067c1119ee686102266889156e710ee429db772d8",
+    "archive_bytes": 2048000,
+    "gates": 6,
+    "total_checks": 108,
+    "gpu_checks": 41,
+    "protected_paths": 318,
+    "guards": 6,
+    "raw_log_files": 73,
+    "raw_log_bytes": 1659204,
+    "runtime_unchanged": true,
+    "source_hashes_verified": true,
+    "two_worker_reports_verified": true
+  },
+  "source": {
+    "torch_revision": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+    "gloo_revision": "bcd1672ee07538123ea8f4fac76832efc58fb8ef",
+    "rccl_source_container_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+    "files": {
+      "torch/torch/csrc/distributed/c10d/ProcessGroupGloo.cpp": "4c28259532ffbea14ce2973c22702ed1ca350d163c1d9473de76187bd01847a8",
+      "torch/torch/csrc/distributed/c10d/ProcessGroupGlooCuda.cpp": "a8285ab39768698282d8171466280a767b33e32e03a0f7c049589dc0d22d6f79",
+      "torch/torch/csrc/distributed/c10d/ProcessGroupGlooDetail.hpp": "8000fe39065b62497d9ead72e0d1e736ad0a6244802d42388db7adf50892e46f",
+      "torch/third_party/gloo/gloo/transport/device.h": "cc4b5e3e5c666521a12f6211c24e8530316ee6342c97fce526cf17e68188c075",
+      "torch/third_party/gloo/gloo/transport/tcp/device.h": "5226eec9cd4a073a52b22a47e83ffd5acbfed1d84c4e6e8c07c2431a832035e7",
+      "therock/rocm-systems/projects/rccl/CMakeLists.txt": "39d74860941b52918fb2505648a82f108ebac14f45e4b1018d44d12b2f9075ac",
+      "therock/rocm-systems/projects/rccl/src/include/device.h": "3948c13c56e33dbb0075d8b2544e380d1a99d864430e55101ba35ea65ce5b0df"
+    }
+  },
+  "gates": [
+    {
+      "label": "distributed-b032-r1-gpu",
+      "checks": 41
+    },
+    {
+      "label": "distributed-b032-r1-cpu",
+      "checks": 31
+    },
+    {
+      "label": "distributed-b032-r1-compiled-dense",
+      "checks": 14
+    },
+    {
+      "label": "distributed-b032-r1-compiled-cnn",
+      "checks": 14
+    },
+    {
+      "label": "distributed-b032-r1-profiler",
+      "checks": 1
+    },
+    {
+      "label": "distributed-b032-r1-core",
+      "checks": 7
+    }
+  ],
+  "disk_available_bytes": 31316955136,
+  "native_build_required": false,
+  "ccache_operation": false,
+  "running_agent_jobs": [],
+  "next": "B03.3: bounded independent native RCCL configure/build feasibility for gfx1013 and single-device readiness. Keep current Gloo/Torch and .105 unchanged; no multi-GPU collective/scaling/P2P/XGMI proof from one GPU."
+}

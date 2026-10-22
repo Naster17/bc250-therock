@@ -9,6 +9,38 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B03.2 Gloo GPU tensor/DDP qualification completed2026-10-22:** code418db3a90.
+  Existing native Torch2b449c4/B03.1 handles bounded HIP tensors; no runtime patch/
+  native rebuild/ccache/default change. Two independent ranks share physicalcuda0,
+  explicit Gloo TCP/loopback; collectives copy via pinned CPU buffers, model math/
+  gradients remain GPU. Source inspection precedes testing; TCP hasGPUDirectfalse,
+  GPU send/recv raw-pointer path left unexecuted/unqualified.
+  Installed-r1 passes108/6 gates: newGPU41+CPU31+compiled dense14/CNN14+profiler1/
+  core7. GPU24 SUM=eight dtypes*factors1/17/1025, exactly representable values,
+  offset guards/private stream async wait+immediate consumption; FP64 product/
+  min/max/AVG, broadcast and six gather/scatter/reduce/alltoall paths, FP32/64
+  analytic functional first gradients, FP32/64 GPU DDP SGDmomentum+AdamW/two
+  updates against independent CPU same-dtype global-batch output/params/gradients.
+  Fixed tolerances unchanged. Legacy functional/reduce-scatter deprecation warnings
+  retained; newer functional API/BF16 DDP/checkpoint recovery/RPC/GPU send-recv/
+  non-loopback/multi-device/scaling/throughput/higher gradients unqualified.
+  318 hashes/four AOT DBs/links unchanged; six600s guards ACK, every accepted gate
+  and whole-batch dmesg identical. Active image506f3b26/runtimeJSON32fd4559/
+  WS/pytorch-distributed-b031/native Torch2b449c4/ROCm/defaults retained.
+  Initial user miner preflight refusal, user freed board; process untouched.
+  Same r2 boot2db1c7c2; no reboot/.105/BIOS/fallback/user finetune-n7 inspection/
+  modification/test/delete. Unknown CPU segfault unresolved/distinct from VM-heap/
+  CSR/B04.2 queue. Local kernel/artifacts/distributed-b032 holds73 raw logs
+  1,659,204B/six guards/helpers; archive8cdbb0e5 SHA-verified2,048,000B.
+  [Report/use/limits](docs/development/bc250_distributed_b032_results/README.md).
+  BaselineWS/logs/distributed-b032-qualification-r1/final.json (318 paths);
+  shared-helper backupWS/recovery/distributed-b032-before. No own jobs/root SSH
+  closed; final revision memory snapshot on .104. **Next B03.3:** independent
+  native gfx1013 RCCL configure/build feasibility and single-device readiness.
+  Pinned source accepts explicit target compiler checks/non-GFX9 wave32 branch;
+  no build/runtime support proof yet. Keep current Gloo/Torch, .105 and defaults;
+  RCCL/Torch NCCL still off, no multi-GPU/P2P/XGMI/GDA/SDMA/scaling claim.
+
 - **B03.1 native local CPU Gloo installed2026-10-22:** integration8e6416f39
   (initial toolingedeabcf4b), patched Torch source/native2b449c4abe36b896a6efb2a68e7a42d9922d5696.
   Independent WS/pytorch-distributed-b031 native build exit0; distributed/Gloo/
@@ -2478,8 +2510,9 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B04.5 | CPU JPEG/PNG/WebP decode and PNG/JPEG encode installed;203 candidate+203 installed image/reference/HIP interop/retained regressions. Other formats/GPU codecs remain separate. |
 | [x]   | B01.1 | Explicit same-device BF16-to-FP32 bc250_fft helper installed;327 final candidate+327 installed references/gradients/native trace/retained FFT gates. Native API remains unchanged. |
 | [x]   | B02.1 | Explicit bounded GPU dense-LU CSR solve installed;381 candidate+381 installed output/first-gradient/analytic/FD/refusal/trace/retained sparse gates. Native general API/large sparse factorization unchanged. |
-| [x]   | B03.1 | Native distributed/Gloo/libuv local CPU readiness installed;31 two-rank references/first gradients/DDP checks; candidate1082+installed1082 retained GPU regressions. RCCL/MPI off; GPU distributed/RPC/multi-board unqualified. |
-| [ ]   | **B03.2 — next** | Inspect pinned Gloo HIP tensor handling and native RCCL applicability; select bounded single-board GPU tensor/software-transport probe. No .105/multi-board/P2P/XGMI claims. |
+| [x]   | B03.1 | Native distributed/Gloo/libuv local CPU readiness installed;31 two-rank references/first gradients/DDP checks; candidate1082+installed1082 retained GPU regressions. RCCL/MPI off; GPU scope is recorded in B03.2, RPC/multi-board unqualified. |
+| [x]   | B03.2 | Existing Gloo HIP host-staged collectives and FP32/64 GPU DDP bounded-qualified with41 GPU+67 retained checks; no runtime change. One GPU/two ranks, no scaling claim. |
+| [ ]   | **B03.3 — next** | Independent native gfx1013 RCCL configure/build feasibility and single-device readiness. Current Gloo/Torch and .105 preserved; no multi-GPU/P2P/XGMI/GDA/SDMA/scaling claims. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

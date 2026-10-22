@@ -28,9 +28,28 @@ bc250-torch --env GLOO_SOCKET_IFNAME=lo -m torch.distributed.run \
 ```
 
 Keep this qualified model/tensor path on CPU and use bounded thread counts.
-GPU distributed/RCCL, RPC, non-loopback networks, multi-board scaling and
-distributed checkpoint recovery remain separate. Frozen old prefixes retain
+GPU Gloo qualification is described below; RCCL, RPC, non-loopback networks,
+multi-board scaling and distributed checkpoint recovery remain separate. Frozen old prefixes retain
 their previous build. [Evidence, boundaries and rollback](bc250_distributed_b031_results/README.md).
+
+## Gloo GPU tensors and DDP on one board (B03.2)
+
+The development Torch's Gloo backend also passes bounded GPU tensor collectives,
+first gradients and FP32/FP64 GPU DDP reference tests. Two processes share the
+single BC-250 GPU; communication/reduction uses pinned CPU staging while the
+model runs on HIP. Explicitly select `backend="gloo"`, `cuda:0` in both ranks,
+and `DistributedDataParallel(model, device_ids=[0])` in an owned script:
+
+```bash
+bc250-torch --env GLOO_SOCKET_IFNAME=lo --env GLOO_DEVICE_TRANSPORT=TCP \
+  -m torch.distributed.run --standalone --nnodes=1 --nproc-per-node=2 \
+  /path/to/owned_gpu_ddp.py
+```
+
+Use bounded thread counts and allow memory for both processes. No throughput or
+multi-GPU scaling improvement is established. GPU send/recv, RPC, BF16 DDP,
+distributed checkpoint recovery and other networks/devices remain unqualified;
+RCCL is still absent. [Exact tested APIs and limits](bc250_distributed_b032_results/README.md).
 
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 

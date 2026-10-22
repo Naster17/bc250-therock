@@ -1,0 +1,8 @@
+/workspace/pytorch-work/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.reduce_scatter_tensor` is deprecated. Please use `torch.distributed.reduce_scatter_single` instead.
+  return func(*args, **kwargs)
+/workspace/pytorch-work/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.reduce_scatter_tensor` is deprecated. Please use `torch.distributed.reduce_scatter_single` instead.
+  return func(*args, **kwargs)
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_distributed_b032.py:128: FutureWarning: torch.distributed.nn.functional.all_reduce is deprecated, use torch.distributed._functional_collectives.all_reduce instead.
+  y = all_reduce(x)
+/home/nik/bc250work/rocm-10.2-gfx1013/helpers/validate_distributed_b032.py:128: FutureWarning: torch.distributed.nn.functional.all_reduce is deprecated, use torch.distributed._functional_collectives.all_reduce instead.
+  y = all_reduce(x)

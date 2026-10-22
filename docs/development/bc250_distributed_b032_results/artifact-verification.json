@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "archive_sha256": "8cdbb0e540800d7619f57a9067c1119ee686102266889156e710ee429db772d8",
+  "archive_bytes": 2048000,
+  "gates": 6,
+  "total_checks": 108,
+  "gpu_checks": 41,
+  "protected_paths": 318,
+  "guards": 6,
+  "raw_log_files": 73,
+  "raw_log_bytes": 1659204,
+  "runtime_unchanged": true,
+  "source_hashes_verified": true,
+  "two_worker_reports_verified": true
+}

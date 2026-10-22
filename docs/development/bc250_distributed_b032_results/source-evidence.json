@@ -1,0 +1,14 @@
+{
+  "torch_revision": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+  "gloo_revision": "bcd1672ee07538123ea8f4fac76832efc58fb8ef",
+  "rccl_source_container_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+  "files": {
+    "torch/torch/csrc/distributed/c10d/ProcessGroupGloo.cpp": "4c28259532ffbea14ce2973c22702ed1ca350d163c1d9473de76187bd01847a8",
+    "torch/torch/csrc/distributed/c10d/ProcessGroupGlooCuda.cpp": "a8285ab39768698282d8171466280a767b33e32e03a0f7c049589dc0d22d6f79",
+    "torch/torch/csrc/distributed/c10d/ProcessGroupGlooDetail.hpp": "8000fe39065b62497d9ead72e0d1e736ad0a6244802d42388db7adf50892e46f",
+    "torch/third_party/gloo/gloo/transport/device.h": "cc4b5e3e5c666521a12f6211c24e8530316ee6342c97fce526cf17e68188c075",
+    "torch/third_party/gloo/gloo/transport/tcp/device.h": "5226eec9cd4a073a52b22a47e83ffd5acbfed1d84c4e6e8c07c2431a832035e7",
+    "therock/rocm-systems/projects/rccl/CMakeLists.txt": "39d74860941b52918fb2505648a82f108ebac14f45e4b1018d44d12b2f9075ac",
+    "therock/rocm-systems/projects/rccl/src/include/device.h": "3948c13c56e33dbb0075d8b2544e380d1a99d864430e55101ba35ea65ce5b0df"
+  }
+}
