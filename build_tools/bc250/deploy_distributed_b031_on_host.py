@@ -57,7 +57,7 @@ assert args.code_revision is not None and re.fullmatch(
 )
 preflight("distributed-b031-install")
 qualified = json.loads(
-    (WS / "logs/distributed-b031-qualification-r1/final.json").read_text()
+    (WS / "logs/distributed-b031-qualification-r2/final.json").read_text()
 )
 assert qualified["status"] == "passed"
 assert [g["checks"] for g in qualified["gates"]] == [g[3] for g in GATES]
@@ -78,10 +78,10 @@ manifest[
 ] += "; B03.1 local CPU Gloo distributed build, RCCL/MPI off; GPU distributed unqualified"
 manifest["distributed_b031"].update(
     status="candidate-qualified; installed outcome in deployment evidence",
-    installed_evidence=str(WS / "logs/distributed-b031-qualification-r2/final.json"),
+    installed_evidence=str(WS / "logs/distributed-b031-qualification-r3/final.json"),
     deployment_evidence=str(WS / "logs/distributed-b031-deployment-r1/final.json"),
     integration_revision=args.code_revision,
-    candidate_evidence=str(WS / "logs/distributed-b031-qualification-r1/final.json"),
+    candidate_evidence=str(WS / "logs/distributed-b031-qualification-r2/final.json"),
     previous_torch_target=old_target,
 )
 logs = WS / "logs/distributed-b031-deployment-r1"
@@ -123,7 +123,7 @@ try:
     qualified["links"]["/opt/bc250-stack/current/torch"] = str(source)
     qualified["status"] = "installation-preservation-baseline"
     atomic_json(baseline / "final.json", qualified)
-    sys.argv = [sys.argv[0], "--attempt", "r2"]
+    sys.argv = [sys.argv[0], "--attempt", "r3"]
     main(
         batch_id="distributed-b031",
         baseline_label=baseline.name,
@@ -136,7 +136,7 @@ try:
     report.update(
         status="passed",
         installed_evidence=str(
-            WS / "logs/distributed-b031-qualification-r2/final.json"
+            WS / "logs/distributed-b031-qualification-r3/final.json"
         ),
         rollback_used=False,
     )

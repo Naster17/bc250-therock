@@ -11,7 +11,7 @@ import tarfile
 from qualify_training_n33_on_host import WS
 
 qualified = json.loads(
-    (WS / "logs/distributed-b031-qualification-r2/final.json").read_text()
+    (WS / "logs/distributed-b031-qualification-r3/final.json").read_text()
 )
 assert qualified["status"] == "passed"
 path = Path("/home/nik/bc250work/distributed-b031-evidence-r1.tar")

@@ -20,7 +20,12 @@ GATES = (
     ("vision-ops", "validate_vision_b041.py", ["--group", "ops"], 51),
     ("vision-integration", "validate_vision_b041.py", ["--group", "integration"], 9),
     ("audio-dsp", "validate_audio_b042.py", ["--group", "dsp"], 34),
-    ("audio-native", "validate_audio_b042.py", ["--group", "native"], 40),
+    (
+        "audio-native",
+        "validate_audio_b042.py",
+        ["--group", "native", "--codec-available"],
+        40,
+    ),
     ("image", "validate_image_b045.py", [], 86),
     ("video", "validate_video_b044.py", [], 55),
     ("files", "validate_codec_b043.py", [], 46),
