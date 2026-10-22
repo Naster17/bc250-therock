@@ -1,0 +1,1 @@
+AllReduce RING/TREE LL/SIMPLE Sum/Prod/MinMax i8/u8/i32/u32/i64/u64/f16/f32/f64/bf16|Reduce RING LL/SIMPLE Sum i8/u8/i32/u32/i64/u64/f16/f32/f64/bf16|ReduceScatter RING LL/SIMPLE Sum i8/u8/i32/u32/i64/u64/f16/f32/f64/bf16|Broadcast RING LL/SIMPLE|AllGather RING LL/SIMPLE|SendRecv

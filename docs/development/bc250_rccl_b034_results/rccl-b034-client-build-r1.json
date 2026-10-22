@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "command": [
+    "podman",
+    "run",
+    "--name",
+    "bc250-rccl-b034-client-r1",
+    "--network=none",
+    "--cpus=2",
+    "--memory=4g",
+    "--memory-swap=5g",
+    "-v",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/source:/workspace/source:ro",
+    "-v",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build:/workspace/build:ro",
+    "-v",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/helpers:/workspace/helpers:ro",
+    "-v",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/cache:/workspace/cache:rw",
+    "-v",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/rccl-b034:/workspace/rccl:rw",
+    "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+    "bash",
+    "/workspace/helpers/compile_rccl_readiness_b034.sh"
+  ]
+}

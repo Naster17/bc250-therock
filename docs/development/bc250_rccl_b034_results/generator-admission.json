@@ -1,0 +1,28 @@
+{
+  "total_specializations": 864,
+  "admitted_gfx1013": 375,
+  "guarded_out": 489,
+  "admitted_by_collective": {
+    "AllReduce": 270,
+    "Broadcast": 6,
+    "Reduce": 45,
+    "AllGather": 6,
+    "ReduceScatter": 45,
+    "SendRecv": 3
+  },
+  "admitted_by_protocol": {
+    "SIMPLE": 201,
+    "LL": 174
+  },
+  "admitted_by_storage_type": {
+    "u8": 48,
+    "u32": 48,
+    "u64": 48,
+    "f16": 48,
+    "f32": 48,
+    "f64": 48,
+    "bf16": 72,
+    "i8": 15
+  },
+  "note": "Admission for this pinned generator: explicit positive architecture guards; confirm actual build filtering before treating this as compiled evidence."
+}

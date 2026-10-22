@@ -1,0 +1,8 @@
+{
+  "rocm_systems_revision": "38fd6ba67d0aa7491d3efaee3da98da4eb0a5727",
+  "source_archive_sha256": "c85aafb880bc45dfea8c1bdf472a686c6accdc266564f08247fbc11f654191fc",
+  "native_arch": "gfx1013",
+  "kernel_filter": "AllReduce RING/TREE LL/SIMPLE Sum/Prod/MinMax i8/u8/i32/u32/i64/u64/f16/f32/f64/bf16|Reduce RING LL/SIMPLE Sum i8/u8/i32/u32/i64/u64/f16/f32/f64/bf16|ReduceScatter RING LL/SIMPLE Sum i8/u8/i32/u32/i64/u64/f16/f32/f64/bf16|Broadcast RING LL/SIMPLE|AllGather RING LL/SIMPLE|SendRecv",
+  "source": "Pinned source already includes B03.3 no-tracing fixes; no reapplication.",
+  "generated_files": 905
+}

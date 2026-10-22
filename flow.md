@@ -9,6 +9,41 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B03.4 broader isolated native RCCL completed2026-10-22:** tools7ea133762;
+  source38fd6ba67d unchanged (B03.3 fixes already included). Native gfx1013 build
+  compiles375 specialized objects: AllReduce270/Reduce45/ReduceScatter45/
+  Broadcast6/AllGather6/SendRecv3; SIMPLE201/LL174, Ring/Tree typed filter.
+  905 generated files/864 entries:375 admitted/489 guarded out. LL128 retains
+  upstream gfx1013 exclusion; FP8/PAT/symmetric/rocSHMEM/GIN/MSCCL/ROCTX/Python
+  outside selection. Compilation is not multi-rank/protocol runtime proof.
+  Build/client exit0; isolated629/4 gates=native550+Gloo GPU41/CPU31/core7.
+  Native120 PreMulSum +420 AllReduceWithBias CPU references:ten types,17/257/1025,
+  in/out, host/device scalars; bias offset5/guards/unchanged inputs and bias.
+  Integer comparisons remain integer incl uint64 modulo wrap; small exact float
+  values only. Six identity/four metadata-lifecycle checks separate. One physical
+  GPU/rank1/private stream/loaded DSO verified; no RCCL autograd/Torch integration/
+  multi-GPU/transport/scaling/speed claim. No new production source defect/fix.
+  328 protected paths/four AOT DBs/links unchanged; four600s guards ACK, gate and
+  batch dmesg identical. CandidateWS/rccl-b034/install-r1 isolated, B03.3 preserved;
+  Torch NCCL off. Active image506f/runtime32fd4559/Torch2b449c4/HIPa1162308/native
+  systems1f9609/ROCm/N3.2/math/SDMA0/heapoff unchanged. Build4CPUs/4jobs/one link/
+  10GiB RAM/12GiB mem+swap; client2CPUs/4GiB/5GiB; no GPU/network during compile.
+  Shared20GiB ccache/no reset covers standard CXX/client; custom RCCLDEV/device
+  link bypass launcher, no batch cache speed claim. Same r2 boot2db1c7c2/no reboot/
+  .105/BIOS/fallback/user app touch/deletion. Unknown CPU fault unresolved/distinct
+  from fixed VM-heap/CSR/B04.2 queue. Local kernel/artifacts/rccl-b034 has source/
+  native DSO/client/50 raw logs1,353,457B/four guards/recovery; archive15,267,840B
+  SHA d6f1bd4944c3bec967c4729b553f59d502ae2a1a9c1911575ef0dba0ff489d4e verified.
+  DSO ca790dc73b76a94a7dc97538608cd94b789e73cc18d756b0631111c18230583e.
+  [Report/reproduce/boundaries](docs/development/bc250_rccl_b034_results/README.md).
+  BaselineWS/logs/rccl-b034-qualification-r1/final.json; helper backupWS/recovery/
+  rccl-b034-before. All build/test jobs complete; no running own containers/root
+  SSH. Historical running-build-checkpoint.json is superseded by final reports.
+  **Next B03.5:** inspect pinned Torch NCCL/RCCL consumers/FindNCCL/API requirements;
+  prepare independent NCCL-enabled Torch candidate against isolated RCCL and
+  one-device/rank1 output+first-gradient tests before deployment. Keep current
+  runtime/Gloo and .105; no full-library/multi-GPU/performance claim.
+
 - **B03.3 isolated native RCCL feasibility/readiness completed2026-10-22:**
   tools7e7896b10; RCCL source38fd6ba67d over1f9609fd6, includingc653cbc33c.
   Native gfx1013 restricted build succeeds; ONLY_FUNCS=AllReduce RING SIMPLE Sum

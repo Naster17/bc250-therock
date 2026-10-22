@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "archive_sha256": "d6f1bd4944c3bec967c4729b553f59d502ae2a1a9c1911575ef0dba0ff489d4e",
+  "archive_bytes": 15267840,
+  "checks": 629,
+  "gates": 4,
+  "native_checks": 550,
+  "premul_checks": 120,
+  "bias_checks": 420,
+  "identity_checks": 6,
+  "metadata_lifecycle_checks": 4,
+  "specialized_objects": 375,
+  "protected_paths": 328,
+  "guards": 4,
+  "raw_log_files": 50,
+  "raw_log_bytes": 1353457,
+  "native_rccl_sha256": "ca790dc73b76a94a7dc97538608cd94b789e73cc18d756b0631111c18230583e",
+  "native_client_sha256": "045d440216f288b1211163260ff8c87d703d1d6a3d3c70b15f3cb68f151abd0a",
+  "runtime_unchanged": true,
+  "source_hashes_verified": true
+}
