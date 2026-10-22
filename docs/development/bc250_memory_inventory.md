@@ -899,6 +899,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipFile                                     | Five synchronous/asynchronous compatibility I/O roundtrips                                                                                                                                                   | Not a direct-storage/DMA fast-path claim; registration/concurrency/ordering remain                                                                          |
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
+| Torch distributed / Gloo | B03.1 native build installed:31 local CPU two-rank stores/collectives/first gradients/DDP references; candidate1082+installed1082 including retained native GPU gates | Loopback CPU scope; GPU distributed/RPC/non-loopback/checkpoint recovery unqualified. B03.2 inspect Gloo HIP/RCCL; .105 unchanged. |
 | RCCL/rocSHMEM/MPI                           | Future applicability work, not built in current profile                                                                                                                                                      | Local readiness/software transports first; no XGMI/GDA/P2P/SDMA claims; two-board work deferred                                                             |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
@@ -925,6 +926,36 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B03.1 native local CPU Gloo installed2026-10-22:** integration8e6416f39,
+patched Torch source/native2b449c4. Independent native build exit0; distributed/
+Gloo/TensorPipe+libuv ON, NCCL(RCCL)/MPI/UCC/ibverbs/TLS OFF. Pinned dependency
+files verified (Gloo276/TensorPipe292/libuv467), existing Gloo HIP guard conversion
+retained as reconstruction evidence, not a new runtime repair. CPU-only31 checks
+without GPU; candidate-r2/installed-r3 each1082/18 gates (new31+retained1051).
+Two loopback CPU ranks/torchrun/stores/eight SUM dtypes/collectives/analytic first
+gradients and FP32/64 DDP SGDmomentum+AdamW/two updates versus independent global
+batch references. GPU distributed/RPC/non-loopback/multi-board/checkpoint recovery
+and performance remain unqualified. Candidate-r1 historical absent-codec assertion
+fixed by selecting existing --codec-available; numerical tolerances unchanged.
+Native Torch DSOs changed; image506f3b26/ROCm/kpacks/N3.2/math/SDMA0/heapoff retained.
+RuntimeJSON32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0.
+Prior306 hashes pass, installed318 includes new/recovery identities and intentional
+runtime metadata update; four AOT DBs preserved.47 guards ACK/accepted gates and
+passing whole batches dmesg identical. Exact old link/runtime recovery in
+WS/recovery/distributed-b031-before; locked deploy helper --rollback unused.
+Build4jobs/4CPUs/one link/10GiB RAM/12GiB mem+swap/shared20GiB ccache/no reset/noGPU.
+New r2 boot2db1c7c2 observed after build, no agent reboot/cause unknown; miner
+preflight refusal preserved, user freed GPU before qualification. User application/
+.105/BIOS/fallback/old source/build/cache/image/release untouched. Unknown CPU fault
+unresolved/distinct from VM-heap/CSR/B04.2 queue/B02 assertion cleanup. Local
+kernel/artifacts/distributed-b031: source/native payload/579 raw logs15,615,864B/
+47 guards/recovery; archive7e53e0ed SHA-verified. BaselineWS/logs/distributed-b031-
+qualification-r3/final.json. No own jobs/root SSH closed.
+[Report/use/recovery](bc250_distributed_b031_results/README.md).
+**Next B03.2:** inspect pinned Gloo HIP tensor handling/native RCCL applicability;
+select bounded single-board GPU tensor/software-transport probe, no .105/multi-
+board/P2P/XGMI claims.
 
 **B02.1 explicit bounded CSR solve installed2026-10-21:** coded2c3ea105,
 bc250_sparse0.1.0 SHA272cc68c8e898e9f8eed5816a55b5ae9e2076861b575304713daae47f0b300a6.

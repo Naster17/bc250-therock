@@ -59,9 +59,13 @@ difference/AMP/stream/invalid-input gates and a135-kernel trace. Direct CSR part
 support real/complex value gradients; the CSR wrapper supports real values and
 all four RHS dtypes. No native public API/scalable sparse factorization/CPU solve/
 performance claim. [Report/use/recovery](bc250_sparse_b021_results/README.md).
-**Next B03.1:** inspect distributed build/Gloo/RCCL paths and select bounded local
-CPU process-group readiness first. Native BF16 FFT, scalable sparse factorization,
-distributed/quantization/export and CK-plugin work remain open.
+**B03.1 installed:** native Gloo/TensorPipe/libuv build, local CPU process groups,
+31 two-rank store/collective/first-gradient/DDP checks; full candidate and installed
+regression gates recorded in [the report](bc250_distributed_b031_results/README.md).
+**Next B03.2:** inspect pinned Gloo HIP tensor handling and native RCCL applicability;
+select a bounded single-board GPU-tensor/software-transport probe. GPU distributed,
+RPC and multi-board scaling remain unqualified. Native BF16 FFT, scalable sparse
+factorization, quantization/export and CK-plugin work remain open.
 
 
 N3.9 restores the qualified N3.7 provenance integration and A07 attention CLI
@@ -371,8 +375,8 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A08 — completed, bounded** | Native dense INT8 -> INT32 Lt and Torch `_int_mm` | Libraries319a235;99 direct CPU-reference cases+11 refusals,16 Torch cases/out/streams+five refusals; overflow and above-FP32 exact-range cases pass | I32 scalar/modulo32 route, four integer epilogues. Existing Torch shape restrictions retained. Quantization/QLoRA/packed/compile integration unqualified. [Report](bc250_dense_int8_a08_results/README.md). |
 | **A09 — completed, bounded** | Native Torch GPU profiler via existing Kineto/SDK | Separate USE_KINETO=1 build; seven native trace/reference/lifecycle tests and existing numerical/model/resume gates | Explicit torch.profiler contexts; CPU/GPU kernels/copies/memory correlation. Hardware counters, broad concurrency, compile/graphs and long tracing unqualified. [Report](bc250_profiler_a09_results/README.md). |
 | **B01 — explicit fallback qualified** | Native BF16 FFT still rejects; opt-in bc250_fft0.1.0 installed |327 final candidate+327 installed checks: BF16-to-FP32 compute, C64/F32 outputs, rounded BF16 leaf gradients, CPU/DFT references and native GPU trace | No global API/AMP/native BF16/CPU fallback or performance claim. Wider shapes/graphs/compile/higher gradients remain separate. |
-| **B02 — next: B02.1** | Public general sparse linear solve unavailable on ROCm | `torch.sparse.spsolve` requires CUDA cuDSS in this source; direct rocSPARSE triangular solves are not a general factorization solver | Design a real ROCm solve/factorization integration or clearly bounded documented fallback. Qualify residuals, singular/info and gradients where promised. Large sparse memory/performance cannot be inferred from dense fallback. |
-| **B03** | Distributed build, Gloo/RCCL absent | USE_DISTRIBUTED/GLOO/NCCL off; no librccl.so. One GPU on .104; .105 remains protected. | CPU process-group/software transport first; then native gfx1013 RCCL applicability and isolated local process tests. Multi-board/P2P/XGMI require separate hardware/authorization and cannot be qualified here. |
+| **B02 — explicit bounded fallback qualified** | Native public general sparse solve still rejects ROCm; opt-in bc250_sparse GPU dense-LU fallback installed | B02.1 candidate/installed381 each; canonical n<=1024/RHS<=64/major dense estimate<=64MiB, first value/RHS gradients, residual/pivot/refusal/trace checks | No scalable sparse factorization/global API change; memory estimate is not total peak. [Report](bc250_sparse_b021_results/README.md). |
+| **B03 — local CPU readiness qualified** | Native distributed/Gloo/TensorPipe/libuv enabled; RCCL/MPI off | B03.1 local two-rank CPU stores/collectives/first gradients/DDP SGD-momentum and AdamW, FP32/FP64 references; full retained GPU regressions | B03.2 Gloo HIP/RCCL applicability next. GPU distributed/RPC/non-loopback/multi-board/P2P/XGMI remain unqualified; .105 unchanged. [Report](bc250_distributed_b031_results/README.md). |
 | **B04 — bounded common media installed** | Native vision/audio and CPU TorchCodec audio/video/JPEG/PNG/WebP decode plus JPEG/PNG encode | B04.5 203 candidate+203 installed reference/HIP interop checks; prior bounded scopes/seek repair retained | Optional AVIF/GIF/HEIC/GPU codecs and wider format/layout/timing coverage remain separate; no universal media claim. |
 | **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; A08 now supplies a bounded dense INT8/INT32 primitive, not a low-bit model recipe | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
 | **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |

@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-21 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-22 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,47 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B03.1 native local CPU Gloo installed2026-10-22:** integration8e6416f39
+  (initial toolingedeabcf4b), patched Torch source/native2b449c4abe36b896a6efb2a68e7a42d9922d5696.
+  Independent WS/pytorch-distributed-b031 native build exit0; distributed/Gloo/
+  TensorPipe+bundled libuv ON, NCCL(RCCL)/MPI/UCC/ibverbs/TLS OFF. CPU-only31
+  checks pass without GPU devices. Candidate-r2/installed-r3 each1082 checks/18
+  gates: new31 +retained1051 sparse/FFT/vision/audio/codecs/compiled dense+CNN/
+  profiler/core. Two local ranks/torchrun, three stores incl libuv TCP, eight SUM
+  dtypes/other collectives/subgroup/CPU send-recv, analytic first gradients,
+  FP32/64 DDP SGDmomentum+AdamW/two updates versus independent global-batch
+  model/all params+gradients. Loopback CPU only; GPU distributed/RPC/network/
+  multi-board/higher gradients/checkpoint recovery/performance unqualified.
+  Candidate-r1 retained: audio numerical checks pass, historical missing-codec
+  expectation fails; selected existing --codec-available flag, no tolerance change.
+  Gloo bcd1672/TensorPipe2b4cd910/libuv5152db2 pinned,276/292/467 tracked regular
+  files verified; existing host Gloo legacy HIP guard delta captured as patch,
+  not newly applied/runtime repair. Native source archivecfe2e98b preserved locally.
+  Build4 Ninja/4CPUs/one link/10GiB RAM/12GiB mem+swap/shared20GiB ccache/no reset,
+  no GPU; build image28ad36e6. Old sources/builds/caches/images/releases retained.
+  Active image506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349
+  unchanged; runtimeJSON32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0.
+  Torch DSOs changed, ROCm/kpacks/N3.2/math/SDMA0/heapoff defaults unchanged.
+  306 prior hashes passed before install; installed318 includes recovery/new native
+  identities and intentional runtime JSON update; four AOT DBs retained.
+  47 acknowledged600s guards; accepted gate and two passing whole-batch dmesg
+  identical. Exact oldTorchlink/runtime in WS/recovery/distributed-b031-before;
+  locked deploy_distributed_b031_on_host.py --rollback available, unused.
+  New boot2db1c7c2 observed after build, still r2; no agent reboot, cause unknown.
+  Miner initially blocked preflight, left untouched; user freed board before GPU
+  tests. .105/BIOS/boot fallback/user finetune-n7 untouched, include_training_app=False.
+  Historical unknown CPU segfault unresolved/distinct from VM-heap/CSR/B04.2
+  queue and B02 known assertion cleanup trigger. No universal correctness/speed claim.
+  Local kernel/artifacts/distributed-b031 holds source/native payload/579 raw logs
+  15,615,864B/47 guards/recovery; archive7e53e0ed SHA-verified552,079,360B.
+  [Report/use/recovery](docs/development/bc250_distributed_b031_results/README.md).
+  BaselineWS/logs/distributed-b031-qualification-r3/final.json; rawWS/logs/
+  distributed-b031-*; disk58,211,602,432B observed.
+  No own build/test/container/guard/export running; root SSH closed. Remote memory
+  snapshot keyed by final memory revision. **Next B03.2:** inspect pinned Gloo HIP
+  tensor handling/native RCCL applicability and select a bounded single-board GPU
+  tensor/software-transport probe; no .105/multi-board/P2P/XGMI claims.
 
 - **B02.1 explicit bounded CSR solve installed2026-10-21:** coded2c3ea105,
   bc250_sparse0.1.0 SHA272cc68c8e898e9f8eed5816a55b5ae9e2076861b575304713daae47f0b300a6.
@@ -2437,7 +2478,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B04.5 | CPU JPEG/PNG/WebP decode and PNG/JPEG encode installed;203 candidate+203 installed image/reference/HIP interop/retained regressions. Other formats/GPU codecs remain separate. |
 | [x]   | B01.1 | Explicit same-device BF16-to-FP32 bc250_fft helper installed;327 final candidate+327 installed references/gradients/native trace/retained FFT gates. Native API remains unchanged. |
 | [x]   | B02.1 | Explicit bounded GPU dense-LU CSR solve installed;381 candidate+381 installed output/first-gradient/analytic/FD/refusal/trace/retained sparse gates. Native general API/large sparse factorization unchanged. |
-| [ ]   | **B03.1 — next** | Inspect Torch distributed/Gloo/RCCL configuration and select bounded local CPU process-group readiness; .105/multi-board work remains excluded. |
+| [x]   | B03.1 | Native distributed/Gloo/libuv local CPU readiness installed;31 two-rank references/first gradients/DDP checks; candidate1082+installed1082 retained GPU regressions. RCCL/MPI off; GPU distributed/RPC/multi-board unqualified. |
+| [ ]   | **B03.2 — next** | Inspect pinned Gloo HIP tensor handling and native RCCL applicability; select bounded single-board GPU tensor/software-transport probe. No .105/multi-board/P2P/XGMI claims. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |

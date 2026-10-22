@@ -1,0 +1,156 @@
+{
+  "task": "B03.1",
+  "status": "installed and bounded-qualified",
+  "integration_revision": "8e6416f394f83b9ba4269eb3ec7fce63c995be98",
+  "source": {
+    "torch_revision": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+    "gloo_revision": "bcd1672ee07538123ea8f4fac76832efc58fb8ef",
+    "tensorpipe_revision": "2b4cd91092d335a697416b2a3cb398283246849d",
+    "libuv_revision": "5152db2cbfeb5582e9c27c5ea1dba2cd9e10759b",
+    "source_archive_sha256": "cfe2e98bbc915dd29a8d6b7a6eb9a5f169a2b900dbe6f512ee0f0bdcec03e95c",
+    "native_arch": "gfx1013",
+    "source": "qualified patched torch/ alias; no fresh upstream replacement"
+  },
+  "deployment": {
+    "status": "passed",
+    "previous_runtime_sha256": "f09cae594646107e8101e2bc383e4ee7257a3c3354c218805a9a6350091f35b1",
+    "previous_torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-sparse-n213",
+    "torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031",
+    "image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+    "image_changed": false,
+    "rocm_libraries_changed": false,
+    "torch_libraries_changed": true,
+    "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/distributed-b031-before",
+    "integration_revision": "8e6416f394f83b9ba4269eb3ec7fce63c995be98",
+    "installed_runtime_sha256": "32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0",
+    "installed_evidence": "/home/nik/bc250work/rocm-10.2-gfx1013/logs/distributed-b031-qualification-r3/final.json",
+    "rollback_used": false
+  },
+  "scope": "Two local CPU Gloo ranks; native GPU regressions retained. GPU distributed/RPC/multi-board remain unqualified.",
+  "gates": [
+    {
+      "label": "distributed",
+      "checks": 31
+    },
+    {
+      "label": "sparse",
+      "checks": 253
+    },
+    {
+      "label": "triangular",
+      "checks": 80
+    },
+    {
+      "label": "sparse-legacy",
+      "checks": 41
+    },
+    {
+      "label": "fft-promotion",
+      "checks": 245
+    },
+    {
+      "label": "fft-real",
+      "checks": 72
+    },
+    {
+      "label": "fft-contracts",
+      "checks": 3
+    },
+    {
+      "label": "vision-ops",
+      "checks": 51
+    },
+    {
+      "label": "vision-integration",
+      "checks": 9
+    },
+    {
+      "label": "audio-dsp",
+      "checks": 34
+    },
+    {
+      "label": "audio-native",
+      "checks": 40
+    },
+    {
+      "label": "image",
+      "checks": 86
+    },
+    {
+      "label": "video",
+      "checks": 55
+    },
+    {
+      "label": "files",
+      "checks": 46
+    },
+    {
+      "label": "compiled-dense",
+      "checks": 14
+    },
+    {
+      "label": "compiled-cnn",
+      "checks": 14
+    },
+    {
+      "label": "profiler",
+      "checks": 1
+    },
+    {
+      "label": "core",
+      "checks": 7
+    }
+  ],
+  "verification": {
+    "status": "passed",
+    "archive_sha256": "7e53e0edc5c94b871c734e900670291e75d3a9ae315d95c2699de45d81713f83",
+    "archive_bytes": 552079360,
+    "candidate_gates": 18,
+    "candidate_checks": 1082,
+    "installed_gates": 18,
+    "installed_checks": 1082,
+    "cpu_only_checks": 31,
+    "guards": 47,
+    "raw_log_files": 579,
+    "raw_log_bytes": 15615864,
+    "protected_before": 306,
+    "protected_after": 318,
+    "native_payload_sha256": {
+      "torch/_C.cpython-312-x86_64-linux-gnu.so": "1ec597fb398c8fe5484b83a9c747ae5c7c46411ce3e15e479660c726429d3330",
+      "torch/lib/libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+      "torch/lib/libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+      "torch/lib/libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+      "torch/lib/libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+      "torch/lib/libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+      "torch/lib/libtorch_cpu.so": "9586351bda1617acaefacacedd938435464cd92337df1ec3e61044c453478195",
+      "torch/lib/libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+      "torch/lib/libtorch_hip.so": "6f4a07d336c97cdd19e4f00236b64e4a7402daf4941ebe0e12430ed87a6582bc",
+      "torch/lib/libtorch_python.so": "6c125c6aa40632a7688703273ccbcc2ef84447ff2f501d8509997e669eae6fe9"
+    },
+    "recovery_verified": true,
+    "failed_candidate_preserved": true
+  },
+  "build": {
+    "image": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+    "container": "bc250-distributed-b031-build",
+    "resources": {
+      "cpus": 4,
+      "ninja_jobs": 4,
+      "link_jobs": 1,
+      "memory_gib": 10,
+      "memory_swap_gib": 12,
+      "shared_ccache_gib": 20
+    },
+    "gpu_exposed": false
+  },
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "2db1c7c2-1b0e-47ac-a153-bc06aaa9973c",
+  "disk_available_bytes": 58211602432,
+  "failed_attempt": {
+    "label": "candidate-r1",
+    "reason": "Historical audio gate was invoked without its existing --codec-available option; numerical checks passed before interface expectation failed.",
+    "numerical_tolerances_relaxed": false
+  },
+  "next": "B03.2: inspect pinned Gloo HIP tensor handling and native RCCL applicability; select bounded single-board GPU-tensor/software-transport probe. No .105/multi-board/P2P/XGMI claims.",
+  "running_agent_jobs": []
+}

@@ -14,6 +14,24 @@ developer venv remains available. See [bc250_release_20261013.md](bc250_release_
 `.104`. Python itself runs as `nik` (UID/GID 1000). The ROCm and Torch runtime
 files are read-only; your project and data files use host bind mounts.
 
+## Local CPU distributed execution (B03.1)
+
+The current development Torch build includes native Gloo process groups and
+libuv TCPStore. Two local CPU ranks pass collective/first-gradient and DDP
+FP32/FP64 SGD-momentum/AdamW checks against independent references. This is
+explicit functionality; existing scripts are not distributed automatically.
+For an owned CPU DDP script that initializes `backend="gloo"`:
+
+```bash
+bc250-torch --env GLOO_SOCKET_IFNAME=lo -m torch.distributed.run \
+  --standalone --nnodes=1 --nproc-per-node=2 /path/to/owned_cpu_ddp.py
+```
+
+Keep this qualified model/tensor path on CPU and use bounded thread counts.
+GPU distributed/RCCL, RPC, non-loopback networks, multi-board scaling and
+distributed checkpoint recovery remain separate. Frozen old prefixes retain
+their previous build. [Evidence, boundaries and rollback](bc250_distributed_b031_results/README.md).
+
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
 The current mutable development prefix automatically supplies one qualified
