@@ -899,8 +899,9 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipFile                                     | Five synchronous/asynchronous compatibility I/O roundtrips                                                                                                                                                   | Not a direct-storage/DMA fast-path claim; registration/concurrency/ordering remain                                                                          |
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
-| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. Next B03.3 independent RCCL feasibility; .105 unchanged. |
-| RCCL/rocSHMEM/MPI                           | Future applicability work, not built in current profile                                                                                                                                                      | Local readiness/software transports first; no XGMI/GDA/P2P/SDMA claims; two-board work deferred                                                             |
+| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.3 isolated RCCL readiness complete; B03.4 broader kernel build next, .105 unchanged. |
+| RCCL | B03.3 isolated restricted native gfx1013 build;82 one-rank arithmetic/copy/lifecycle checks +79 retained pass; no-tracing compile fixes | Not installed/Torch NCCL off. Next B03.4 broaden types/protocols. No multi-GPU/Ring-runtime/P2P/XGMI/GDA/SDMA/scaling proof. |
+| rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
 | rocRoller/emulation/other optional projects | No blanket qualification                                                                                                                                                                                     | Audit pinned API/instruction applicability before enablement; CPU fallback must be identified                                                               |
@@ -926,6 +927,29 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B03.3 isolated native RCCL feasibility/readiness completed2026-10-22:** tools7e7896b10,
+RCCL source38fd6ba67d over1f9609fd6 (c653 NVTX_NO_IMPL header-selection/no-op macro,
+38fd direct iostream/CRLF preserved). r1 duplicate full/stub types and r2 missing
+std::cerr declaration failed; r3/client build exit0, failures/originals preserved.
+Explicit gfx1013/filtered FP32 Ring-SIMPLE build, no spoofing. One-rank/CE/DDA code
+also compiles; symmetric/rocSHMEM/GIN/MSCCL/ROCTX/Python off. No full-library or
+multi-rank Ring correctness claim. Isolated161/4 gates=native82+Gloo GPU41/CPU31/
+core7. Native72 oneRankReduce PreMulSum cases/six dtypes/three sizes/in-out/host-
+device scalars/CPU exact output/input guards/non-default stream, six identity
+copies/group and four metadata/lifecycle checks. DSO path/version/gfx1013 verified.
+323 hashes/four AOT DBs/links pass; four guards ACK/gate+batch dmesg identical.
+DSO4af5420f outside active prefix; Torch NCCL off. Active image506f/runtimeJSON
+32fd4559/Torch2b449c4/HIPa1162308/native systems1f9609/ROCm/defaults unchanged.
+4jobs/4CPUs/one link/10GiB RAM/12GiB mem+swap/shared20GiB ccache/no reset/noGPU;
+client2CPUs/4GiB/5GiB mem+swap/noGPU. Same r2 boot2db1c7c2/no reboot/.105/BIOS/
+fallback/app touch/delete. Unknown CPU fault remains distinct/unresolved.
+Local kernel/artifacts/rccl-b033 source/native/client/55 logs1,495,447B/four guards/
+recovery/archive3ee65ba1 verified11,816,960B. BaselineWS/logs/rccl-b033-qualification-
+r1/final.json; no own jobs/root SSH closed. [Report](bc250_rccl_b033_results/README.md).
+**Next B03.4:** broaden isolated native RCCL kernel types/protocols beyond FP32
+Ring/SIMPLE and qualify feasible single-device operations before Torch NCCL
+integration; no multi-GPU/P2P/XGMI/GDA/SDMA transport/scaling proof from one GPU.
 
 **B03.2 Gloo HIP host-staged collectives/GPU DDP qualified2026-10-22:** code418db3a90.
 No production patch/native build/ccache/runtime/default change. Two ranks share

@@ -9,6 +9,41 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B03.3 isolated native RCCL feasibility/readiness completed2026-10-22:**
+  tools7e7896b10; RCCL source38fd6ba67d over1f9609fd6, includingc653cbc33c.
+  Native gfx1013 restricted build succeeds; ONLY_FUNCS=AllReduce RING SIMPLE Sum
+  f32, symmetric/rocSHMEM/GIN/MSCCL/ROCTX/Python/upstream tests off. Mandatory
+  one-rank/CE/DDA code also compiled. No spoofing/full-RCCL or Ring-runtime claim.
+  Build-r1 device link succeeds/host duplicate nccl_domain fails; c653 honors
+  NVTX_NO_IMPL in direct full-header includes/adds no-op range macro. Build-r2
+  missing std::cerr declaration fails;38fd adds direct iostream (CRLF retained).
+  Build-r3/client-r1 exit0; original source/failed logs/build/cache preserved.
+  Qualification-r1=161/4 gates: native82 +GPU Gloo41/CPU Gloo31/core7. Native72
+  PreMulSum actual oneRankReduce GPU arithmetic: six dtypes*three sizes17/257/1025*
+  in-out*host-device scalars, exact CPU outputs/input+output guards/private stream;
+  six one-rank identity-copy/group cases and four metadata/lifecycle checks.
+  Loaded candidate DSO/version/native-device identity verified. No autograd/
+  exceptional-value/overflow/full rounding/multi-GPU/network/scaling/speed claim.
+  323 protected paths/four AOT DBs/links match, four600s guards ACK, every accepted
+  gate+whole batch dmesg identical. CandidateWS/rccl-b033/install-r1 outside active
+  prefix; Torch NCCL still off. Active image506f/runtimeJSON32fd4559/Torch2b449c4/
+  HIPa1162308/systems1f9609 native/ROCm/N3.2/math/SDMA0/heapoff unchanged.
+  Build4jobs/4CPUs/one link/10GiB RAM/12GiB mem+swap/shared20GiB ccache/no reset;
+  client2CPUs/4GiB/5GiB mem+swap; both no GPU/network. No source/build/cache delete.
+  Same r2 boot2db1c7c2/no agent reboot/.105/BIOS/fallback/user app touch.
+  Unknown CPU fault unresolved/distinct from VM-heap/CSR/B04.2 queue; fixes are
+  compile-only. Local kernel/artifacts/rccl-b033 holds source archive/native DSO/
+  client/55 raw logs1,495,447B/four guards/recovery. Archive3ee65ba1 verified
+  11,816,960B; DSO4af5420f76dacb1a88ffb42109563a977dc10ee4b2dba8b790e13d8fa13376f0.
+  [Report/reproduce/boundaries](docs/development/bc250_rccl_b033_results/README.md).
+  BaselineWS/logs/rccl-b033-qualification-r1/final.json; source backupWS/recovery/
+  rccl-b033-source-before, helper backup rccl-b033-before. No own jobs/root SSH
+  closed; revision-keyed memory snapshot. **Next B03.4:** broaden isolated native
+  gfx1013 RCCL build beyond FP32 Ring/SIMPLE; inspect admitted type/protocol
+  combinations and qualify feasible single-device operations before Torch NCCL
+  integration. Keep current prefix/.105/defaults; no multi-GPU/P2P/XGMI/GDA/SDMA
+  transport/scaling proof from one GPU.
+
 - **B03.2 Gloo GPU tensor/DDP qualification completed2026-10-22:** code418db3a90.
   Existing native Torch2b449c4/B03.1 handles bounded HIP tensors; no runtime patch/
   native rebuild/ccache/default change. Two independent ranks share physicalcuda0,
@@ -2512,7 +2547,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B02.1 | Explicit bounded GPU dense-LU CSR solve installed;381 candidate+381 installed output/first-gradient/analytic/FD/refusal/trace/retained sparse gates. Native general API/large sparse factorization unchanged. |
 | [x]   | B03.1 | Native distributed/Gloo/libuv local CPU readiness installed;31 two-rank references/first gradients/DDP checks; candidate1082+installed1082 retained GPU regressions. RCCL/MPI off; GPU scope is recorded in B03.2, RPC/multi-board unqualified. |
 | [x]   | B03.2 | Existing Gloo HIP host-staged collectives and FP32/64 GPU DDP bounded-qualified with41 GPU+67 retained checks; no runtime change. One GPU/two ranks, no scaling claim. |
-| [ ]   | **B03.3 — next** | Independent native gfx1013 RCCL configure/build feasibility and single-device readiness. Current Gloo/Torch and .105 preserved; no multi-GPU/P2P/XGMI/GDA/SDMA/scaling claims. |
+| [x]   | B03.3 | Isolated restricted native gfx1013 RCCL build and82 single-device references/lifecycle checks plus79 retained pass; no-tracing header/direct-include compile fixes. Not installed/Torch NCCL off. |
+| [ ]   | **B03.4 — next** | Broaden isolated native RCCL beyond FP32 Ring/SIMPLE; inspect type/protocol combinations and qualify feasible single-device operations before Torch NCCL integration. Current prefix/.105 preserved; no multi-GPU/scaling claims. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
