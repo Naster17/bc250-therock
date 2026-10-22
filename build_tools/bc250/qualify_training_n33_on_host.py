@@ -46,7 +46,7 @@ def main(
     assert args.phase != "extra" or extra_gates
     assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
     assert re.fullmatch(
-        r"(?:training-n[0-9]+|vision-b041|audio-b042|codec-b043|video-b044|image-b045|fft-b011|sparse-b021|distributed-b031|distributed-b032|rccl-b033)",
+        r"(?:training-n[0-9]+|vision-b041|audio-b042|codec-b043|video-b044|image-b045|fft-b011|sparse-b021|distributed-b031|distributed-b032|rccl-b033|rccl-b034)",
         batch_id,
     )
     assert Path(baseline_label).name == baseline_label
