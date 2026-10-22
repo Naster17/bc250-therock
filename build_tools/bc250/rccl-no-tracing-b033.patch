@@ -1,0 +1,48 @@
+diff --git a/projects/rccl/src/algorithms/dda/ipc/ipc_init.cu b/projects/rccl/src/algorithms/dda/ipc/ipc_init.cu
+index 73faafd67d..f442cdbf1b 100644
+--- a/projects/rccl/src/algorithms/dda/ipc/ipc_init.cu
++++ b/projects/rccl/src/algorithms/dda/ipc/ipc_init.cu
+@@ -15,6 +15,7 @@
+ #include "algorithms/dda/ipc/ipc_mem_handler.h"
+ 
+ #include <cuda_runtime.h>
++#include <iostream>
+ 
+ using nccl_dda_detail::DdaIpcBarrierState;
+ using nccl_dda_detail::ddaMaxNBlocksForScratch;
+diff --git a/projects/rccl/src/include/nvtx.h b/projects/rccl/src/include/nvtx.h
+index 62b083a0bd..5cb1cc3ed7 100644
+--- a/projects/rccl/src/include/nvtx.h
++++ b/projects/rccl/src/include/nvtx.h
+@@ -8,6 +8,10 @@
+ #ifndef NCCL_NVTX_H_
+ #define NCCL_NVTX_H_
+ 
++#ifdef NVTX_NO_IMPL
++#include "nvtx_stub.h"
++#else
++
+ #include "nvtx3/nvtx3.hpp"
+ #include "roctx.h"
+ 
+@@ -251,6 +255,8 @@ private:
+   } while (0)
+ #endif
+ 
++#endif // NVTX_NO_IMPL
++
+ extern void initNvtxRegisteredEnums();
+ 
+ #endif
+diff --git a/projects/rccl/src/include/nvtx_stub.h b/projects/rccl/src/include/nvtx_stub.h
+index d3933719af..38fcd67f58 100644
+--- a/projects/rccl/src/include/nvtx_stub.h
++++ b/projects/rccl/src/include/nvtx_stub.h
+@@ -16,6 +16,7 @@ struct nccl_domain {
+ #define NVTX3_FUNC_RANGE_IN(domain)
+ #define nvtxNameOsThreadA(syscall, thread)
+ #define NVTX3_FUNC_WITH_PARAMS(N, T, P)
++#define NCCL_NVTX3_FUNC_RANGE
+ #define NVTX3_PAYLOAD(...) __VA_ARGS__
+ #define NVTX3_RANGE(T)
+ #define NVTX3_RANGE_ADD_PAYLOAD(N, S, P)
