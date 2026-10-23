@@ -1,0 +1,11 @@
+{
+  "tools": "ddc2933cb1f496c04de9ff4f15cfb7c3ca968980",
+  "torch_native": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+  "hip_clr_native": "1f9609fd69c4923291f58934495520fe62e66ef8",
+  "rocblas_native": "8389197c134a7337932021ab7137987a585664ae",
+  "kernel_image": "84995f1a85188cde56910729214b0a68a7e402da",
+  "amdgpu_module": "0957f1aa4717bb5ea19545bdcb01d6899e94bb9f",
+  "triton": "ee65ff3b85f99d52e678b252a99c8425fa46e329",
+  "image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+  "native_payload_rebuilt": false
+}

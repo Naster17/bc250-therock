@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "archives": {
+    "packaging-sources.tar.gz": {
+      "sha256": "033f96c7c553831a0ceb099302001345c50dfffc74cc8a5907bcc21bf17f3f78",
+      "bytes": 1881827038,
+      "entries": 4867,
+      "git_entries": 359,
+      "public_pem": []
+    },
+    "sources.tar.gz": {
+      "sha256": "ffb35aa79b8e1cd749382b24a8222acf5e79255fc5327d7bf4de99b587d861d2",
+      "bytes": 4611976257,
+      "entries": 540714,
+      "git_entries": 21398,
+      "public_pem": []
+    }
+  },
+  "miopen_source_files_compared": 460,
+  "git_verification": {
+    "status": "passed",
+    "revision": "b578bcd410d0641337ce0f34be055b88560f5c24",
+    "fsck_exit": 0
+  },
+  "key_material_files_omitted": 13,
+  "generated_artifacts": "Object/shared/static libraries, wheels, signing keys omitted; root-only usr/initramfs_data.cpio unreadable and excluded. r2 boot artifacts retained separately."
+}

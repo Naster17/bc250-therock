@@ -1,0 +1,12 @@
+{
+  "path": "/opt/bc250-stack/releases/10.2-gfx1013-20261023-host105/healthchecks",
+  "sha256": {
+    "ready_migrated_kernel.py": "e108738922676798206346da9de1aedf2c8f6f4df9840deaf53e999b7aa0d638",
+    "qualify_migrated_host.py": "6d22ae335ee3a73526636ac1f79b9f6cb4e0751ba53db8d2d744be3e95d6d393",
+    "migrate_reference_host.py": "a8302cc52392520404915255111878ab3c163498699d71ff045fc376b8202dd2",
+    "bc250_torch.py": "2da29b2c390fbe0019454088d55cd0f44667bb47bc1ac76b65f5cc434271ea3f",
+    "validate_cleanup_runtime.py": "f9ce34b40843617e8de01b5a40a34ba96d9e2cb80c14f2d1c61943dc26723323"
+  },
+  "data": "/var/lib/bc250-stack/host105",
+  "console": "/var/log/bc250-host105-ready.log"
+}

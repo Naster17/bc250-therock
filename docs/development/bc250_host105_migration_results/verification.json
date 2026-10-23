@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "evidence_sha256": "532eb6bb0b72fefba524e3ddd2cbe87136c8d0cfd381df2977a3caa784a618e1",
+  "main_checks": 656,
+  "boot_id": "e3d322db-a221-47a1-9ab4-9a48b84574a5",
+  "runtime_sha256": "c5da85ef459e9e586904a2870d68545a911805d0c7d93016cb4a3f9b96cc608b",
+  "local_operational_sources_match": true,
+  "migration_tools_lint_syntax": 13,
+  "local_legacy_archives_verified": true,
+  "legacy_git_fsck": true,
+  "next": "Resume B03.8 after final memory sync",
+  "local_runtime_archive_native_match": true
+}

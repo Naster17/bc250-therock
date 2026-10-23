@@ -76,7 +76,7 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 | MFMA/WMMA                           | No usable native path. Never whitelist another architecture or enable matrix-only engines to bypass this. Scalar implementations of the mathematics remain possible.             |
 | Wave64 / XNACK+                     | Compiler/runtime registration exists; our board execution/fault migration is unqualified                                                                                         |
 | SDMA                                | Keep `HSA_ENABLE_SDMA=0`; ROCr also intentionally defaults gfx1013 user SDMA off. Explicit override is an experiment, not a supported default.                                   |
-| VMM / async pools                   | APIs retained; fixed-VA two-backing VMM remap fails on both r2/r3 (K5). Experimental VM heap default stays disabled.                                                                                                     |
+| VMM / async pools                   | APIs retained; K5 bounded r3 fixed-VA remap passed with the qualified override. Historical r2/original-r3 failures remain evidence; experimental VM heap stays disabled.                                                                                                     |
 | GPU reset                           | Current boot and live parameter `amdgpu.gpu_recovery=0`; reset behavior unqualified                                                                                              |
 | Media                               | DRM VCN decode/encode, JPEG, UVD and VCE queries return −EINVAL with zero exposed rings. Current driver exposure is not proof silicon lacks every media block.                   |
 | Profiling                           | API/kernel/copy tracing works. Hardware counter tables, PC sampling, ATT and SPM are unqualified.                                                                                |
@@ -84,7 +84,20 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 
 ## Kernel, unlock, cooling and recovery
 
-Latest live observation2026-10-19 (N2.18): .104 already running fallback
+Current host105 deployment (M105.1,2026-10-23): explicit user authorization ended
+its old-reference role. `.105` runs the independent `.104` daily snapshot
+(Torch2b449c4/image506f/HIP1f9609), signed r3 image84995f1/module0957f1, with
+`bc250-host105-r3-release` default and retained r2.656 target checks/nine gates,
+three promoted normal boots,15s idle deadline→r2/SSH/GPU smoke, and final
+post-retirement boot pass.69,229 file/link entries match before/after cleanup;
+36 legacy directories/five containers/eight images retired after verified local
+source/Git archives, plus old public download cache. Free root space~101GiB.
+Operational healthchecks live in the root-owned versioned release; state is
+`/var/lib/bc250-stack/host105`. Cgroups/watchdog persist. `.104` remains r2 boot
+2db1c7c2/runtime32fd4559, unchanged. [Deployment, exact scope and recovery](bc250_host105_migration_results/README.md).
+
+
+Historical observation2026-10-19 (N2.18): .104 already running fallback
 `7.1.5-bc250rocm-r2`, boot `d0532075-88fb-4a2f-974e-f61578d20d9f`.
 No reboot or boot-policy change in N2.18; reason for the intervening reboot is
 not established by this batch. The test launcher accepts an explicit r2/r3
@@ -95,7 +108,7 @@ Previously qualified experimental kernel: `7.2.10-bc250rocm-r3`, six guarded
 one-shot boots2026-10-15. Qualified module0957f1aa4: bounded GPU/Torch/VMM and prior SVM
 milestones pass; HPD init dummy errors and two IRQ ASSERT WARNs repaired below.
 Physical display/hotplug and broader failure/recovery remain unqualified.
-Persistent default/retained fallback and .105 reference remain
+The retained r2 fallback is
 `7.1.5-bc250rocm-r2 #2 SMP PREEMPT_DYNAMIC` (built2026-09-16). Its recovered
 original configuration is `bc250stack/kernel/configs/r2.config`; r3 migrated
 config/diff and evidence are in `bc250stack/kernel/r3/evidence/`. Do not infer
@@ -2074,12 +2087,13 @@ hiptensor_scalar, hipsparselt_scalar, p1_hipblaslt/p1_ck_tile/p1_torch_compiled,
 p2_communication/p2_tensor_sparse/p2_primitives. The P2 communication agent was
 redirected to math coverage; its name is not proof RCCL was ported.
 
-`.105` remains the old reference; read-only audit found Alpine 3.24.2/current r2 kernel,
+Historical `.105` reference audit (superseded by M105.1 migration2026-10-23) found Alpine 3.24.2/r2 kernel,
 legacy sources under `/home/nik/bc250work/rocm-libraries-gfx1013`, branch
 `gfx1013-cyanskillfish`, revision `b578bcd410d0641337ce0f34be055b88560f5c24`.
 Other retained legacy work: `/home/nik/bc250-stack`, `pytorch-build-gfx1013`,
 `research-handoff`, `bc250-rocm-lab`, `bc250-gfx1013-fix`. Do not copy old patches
-blindly or upgrade/prune/reconfigure the host. Its private cgroup2 mount namespace
+blindly. M105.1 explicitly authorizes the recorded replacement and retirement;
+the old unique sources/Git/modified MIOpen files are archived locally. Its private cgroup2 mount namespace
 benchmark workaround was ephemeral, not persistent migration.
 
 ## Historical documents and how to avoid stale tasks

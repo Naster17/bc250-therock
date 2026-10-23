@@ -9,6 +9,51 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **M105.1 user-authorized deployment/retirement completed2026-10-23:** tools
+  ddc2933cb. `.105` is now a deployment host, ending its old-reference role.
+  Independent release `/opt/bc250-stack/releases/10.2-gfx1013-20261023-host105`,
+  current symlink; image506f3b26 tagged `localhost/bc250-stack:10.2-gfx1013-20261023-host105`.
+  Native Torch2b449c4/NCCLoff/Glooon, HIP1f9609/HIP DSOa1162308, rocBLAS8389197,
+  remaining libraries319a235d6 retained from daily `.104`; no native rebuild.
+  Signed K6 image84995f1/module0957f1 installed; kernel7.2.10-bc250rocm-r3,
+  build IDs57f7c52d/b97bca56; default `bc250-host105-r3-release`. GRUB saves r2
+  next_entry before Linux; SSH/cooling/NIC/nowayout-feeder/module identity/GPU7
+  readiness ACKs and clears it only after success. Late runtime guards explicitly
+  select r2 before emergency reset. Root-owned release `healthchecks/`, operational
+  state `/var/lib/bc250-stack/host105`, console `/var/log/bc250-host105-ready.log`;
+  retain KWS artifacts/private firmware/helpers, r2 files/modules and control lock
+  `/opt/bc250-stack/migration-control/.runtime.lock`. Cgroups/watchdog boot enabled.
+  Main656/nine gates pass: core7/CPU Gloo31/CSR253/FFT245/vision51/audio40/
+  compiled dense14/CNN14/profiler1. Each accepted gate dmesg identical/600s guard ACK.
+  Eight supplemental GPU7 smokes and final ordinary launcher exact forward/gradient
+  pass. Three normal promoted r3 boots; intentional15s idle expiry→r2/SSH/new-stack
+  GPU7→normal r3 qualified. Final boot e3d322db-a221-47a1-9ab4-9a48b84574a5,
+  runtime SHAc5da85ef459e9e586904a2870d68545a911805d0c7d93016cb4a3f9b96cc608b.
+  Early harness consumer-mount failure and OCI refusal after lost manual cgroups
+  mount preserved; mount corrected/service persisted, recovery passed before ACK.
+  Persisted GPU/runtime guardians19 ACK/one intentional expiry; no armed guard.
+  All69,229 ROCm/Torch entries match before/after retirement and local runtime
+  recovery archive. Old unique sources/Git/modified MIOpen archived locally;
+  460 source hashes compared, b578 Git full fsck passes.36 old directories/five
+  stopped containers/eight selected7.2.4 images retired; public6.18 downloads and
+  own transfer archives removed. Free~101GiB (108477546496B vs~47.7GiB initially).
+  Preserve user apps/models/checkpoints, Docker/unrelated images/home caches,
+  historical small research records and native board-control/SMI utilities.
+  No BIOS or finetune-n7 inspection/modification/test; `.104` runtime32fd4559/
+  Torch2b/HIPa116/r2 boot2db1c7c2 unchanged; only small export/memory files added.
+  No universal/performance/multi-board/sustained or arbitrary/pre-watchdog hang
+  claim; Python CPU fault unresolved/distinct from VM-heap/CSR/hostcall fixes.
+  Raw local `kernel/artifacts/migration-105-20261023/`, target WS
+  `/home/nik/bc250work/migration-105-20261023/final.json`; evidence archiveSHA
+  532eb6bb0b72fefba524e3ddd2cbe87136c8d0cfd381df2977a3caa784a618e1.
+  [Usage, identities, archive/recovery scope](docs/development/bc250_host105_migration_results/README.md).
+  Board build/test/container jobs complete; no own jobs remain after final sync.
+  **Next B03.8:** resume bounded opt-in single-device RCCL packaging on `.104`,
+  read-only DSO loading/mounts and explicit window/CUMEM/P2P/IB settings. Daily
+  Gloo/NCCL-off and `.105` production snapshot remain selected; cross-board
+  distributed execution/scaling still requires its own qualification.
+
+
 - **B03.7 isolated FP8/API admission guards completed2026-10-23:** tools819bb624f;
   Torch14cfef2d8c overf807099 overade6fcc; RCCL38fd6/B03.4 unchanged. Independent
   WS/pytorch-rccl-b037, releaseWS/rccl-b037/candidate-release-r2, not daily prefix.
@@ -2522,10 +2567,13 @@ matrix backend is not. CPU fallbacks must be labeled.
 - English communication/code/docs. Work locally, transfer explicit changed files,
   build/test/install on `.104`. User authorizes development/kernel experiments;
   retain SSH/boot fallback. No push/publish without explicit instruction.
-- `.105` is the preserved old-stack reference. Read-only comparison is authorized;
-  do not upgrade it until `.104` is stable and the user authorizes migration.
+- User authorized `.105` migration/legacy retirement2026-10-23 (M105.1 complete).
+  It is now a deployment host; preserve the selected production snapshot, r2
+  recovery, operational healthchecks and unrelated user files. Further deployment
+  follows the current task scope and its recorded exclusive control lock.
 - Preserve releases, sources, caches, build objects, images, models/checkpoints,
-  kernel/initramfs/GRUB recovery and unrelated untracked `src/`.
+  kernel/initramfs/GRUB recovery and unrelated untracked `src/`. M105.1 is the
+  explicit exception for the inspected `.105` legacy stack, with unique work archived.
 - Use bounded meaningful CPU-compared GPU tests. Reuse objects/ccache, group commits
   at milestones, keep routine documentation short. No automatic long soaks.
 - Do not run `fetch_sources.py`, reset submodules, expunge or prune as a resume step.
@@ -2709,7 +2757,7 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [ ]   | **B03.4 — next** | Broaden isolated native RCCL beyond FP32 Ring/SIMPLE; inspect type/protocol combinations and qualify feasible single-device operations before Torch NCCL integration. Current prefix/.105 preserved; no multi-GPU/scaling claims. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
-| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration/two-board distributed tests wait for explicit later authorization and stability.                                                                                                  |
+| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
 | [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |

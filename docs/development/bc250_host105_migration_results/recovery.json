@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "expired_guard": {
+    "release": "7.2.10-bc250rocm-r3",
+    "phase": "migration-fallback-test",
+    "boot_id": "42e0cc05-67e0-4fb4-84f1-7e274cb109c7",
+    "nonce": "f3b0077ac2fc9cfdd90517421295945e",
+    "timeout_seconds": 15,
+    "status": "expired",
+    "deadline_monotonic": 77.112713921,
+    "dry_run": false,
+    "fallback_selection": "r2 armed"
+  },
+  "recovered_kernel": "7.1.5-bc250rocm-r2",
+  "recovered_boot_id": "6dcb6603-c47b-48d1-9b57-d1d518014429",
+  "core_checks": 7,
+  "next_entry_consumed": true,
+  "persistent_default": "bc250-host105-r3-release",
+  "hardware_watchdog_countdown_tested": false,
+  "limits": "15s idle GPU guardian emergency reset and SSH/r2 return; not arbitrary hardware hangs or pre-watchdog proof"
+}

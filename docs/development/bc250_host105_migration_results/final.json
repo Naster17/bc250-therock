@@ -1,0 +1,276 @@
+{
+  "status": "complete",
+  "hostname": "bc500",
+  "kernel": "7.2.10-bc250rocm-r3",
+  "boot_id": "e3d322db-a221-47a1-9ab4-9a48b84574a5",
+  "release": "/opt/bc250-stack/releases/10.2-gfx1013-20261023-host105",
+  "image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+  "runtime_sha256": "c5da85ef459e9e586904a2870d68545a911805d0c7d93016cb4a3f9b96cc608b",
+  "kernel_build_id": "57f7c52d9c7ac0ac21c67d6e6efc3e08c12bbfde",
+  "module_build_id": "b97bca56793aecea35967385d0c68d4186ecd121",
+  "torch_revision": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+  "hip_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+  "readiness": {
+    "status": "passed",
+    "kernel": "7.2.10-bc250rocm-r3",
+    "boot_id": "e3d322db-a221-47a1-9ab4-9a48b84574a5",
+    "core_checks": 7,
+    "saved_fallback_before_readiness": "bc250-rocm-r2-kernel",
+    "watchdog_identity": "SP5100 TCO timer",
+    "fan_rpm": 12244,
+    "source_sha256": "e108738922676798206346da9de1aedf2c8f6f4df9840deaf53e999b7aa0d638",
+    "module_build_id": "b97bca56793aecea35967385d0c68d4186ecd121",
+    "fallback": "r2 selected before every r3 entry; cleared only after successful readiness",
+    "limits": "Bounded boot readiness; arbitrary early hardware hangs remain outside proof"
+  },
+  "main_qualification": {
+    "status": "passed",
+    "kernel": "7.2.10-bc250rocm-r3",
+    "boot_id": "ddefdc8d-52a5-412b-a483-22c5d623c72c",
+    "runtime_sha256": "659c9ed13f56020d7d5a71e57563860ff35d3b2525e44ab24019c4a7ab6028d9",
+    "gates": [
+      {
+        "name": "core",
+        "checks": 7,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "distributed",
+        "checks": 31,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "sparse",
+        "checks": 253,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "fft",
+        "checks": 245,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "vision",
+        "checks": 51,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "audio",
+        "checks": 40,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "compiled-dense",
+        "checks": 14,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "compiled-cnn",
+        "checks": 14,
+        "status": "passed",
+        "dmesg_unchanged": true
+      },
+      {
+        "name": "profiler",
+        "checks": 1,
+        "status": "passed",
+        "dmesg_unchanged": true
+      }
+    ],
+    "checks": 656,
+    "scope": "One target board; bounded CPU-reference outputs/first derivatives/optimizer updates and compile/profiler checks"
+  },
+  "retirement": {
+    "status": "passed",
+    "deleted_paths": [
+      "/home/nik/bc250work/rocm-libraries-gfx1013",
+      "/home/nik/bc250work/alpine-rocm-7.1",
+      "/home/nik/bc250work/alpine-rocm-aports",
+      "/home/nik/bc250work/rocm-cmake-7.2.4",
+      "/home/nik/bc250work/pytorch-build-dist",
+      "/home/nik/bc250work/pytorch-build-gfx1013",
+      "/home/nik/bc250work/bc250-rocm-profile",
+      "/home/nik/bc250work/bc250-rocm",
+      "/home/nik/bc250work/bc250-gfx1013-fix",
+      "/home/nik/bc250work/bc250-vulkan-v33",
+      "/home/nik/bc250work/research-handoff",
+      "/home/nik/bc250work/third-party",
+      "/home/nik/bc250work/apkbuild",
+      "/home/nik/bc250work/distro",
+      "/home/nik/bc250work/pytorch-venv",
+      "/home/nik/bc250work/python-dev",
+      "/home/nik/bc250work/rocm-rt-libs",
+      "/home/nik/bc250work/rocm-smi-prefix",
+      "/home/nik/bc250work/openmp-prefix",
+      "/home/nik/bc250work/hipdnn-deps-prefix",
+      "/home/nik/bc250work/syslibs-fallback",
+      "/home/nik/bc250work/rocm-headers-gfx1013",
+      "/home/nik/bc250work/hipblas-build-gfx1013",
+      "/home/nik/bc250work/hipblaslt-build-gfx1013",
+      "/home/nik/bc250work/hipdnn-build-gfx1013",
+      "/home/nik/bc250work/hipfft-build-gfx1013",
+      "/home/nik/bc250work/miopen-build-gfx1013",
+      "/home/nik/bc250work/rocalution-build-gfx1013",
+      "/home/nik/bc250work/rocblas-build-gfx1013",
+      "/home/nik/bc250work/rocfft-build-gfx1013",
+      "/home/nik/bc250work/rocrand-build-gfx1013",
+      "/home/nik/bc250work/rocsolver-build-gfx1013",
+      "/home/nik/bc250work/rocsparse-build-gfx1013",
+      "/home/nik/bc250work/roctracer-build-gfx1013",
+      "/home/nik/bc250work/rpp-build-gfx1013",
+      "/home/nik/bc250-stack"
+    ],
+    "removed_containers": [
+      "bc250-shell-probe",
+      "bc250-rocm-stable-r1",
+      "bc250-dist-fix",
+      "bc250-dist-keep2",
+      "bc250-dist-repack"
+    ],
+    "removed_images": [
+      "6a30463535e5",
+      "bae305af904c",
+      "2ff377d288ab",
+      "cd9f0f9bd955",
+      "ee46e00a52a6",
+      "750be6bbacd6",
+      "3168a3a7a790",
+      "494e7120a3d8"
+    ],
+    "disk_free_before": 27881689088,
+    "fallback_hashes": {
+      "/home/nik/bc250work/bc250-rocm-lab/vmlinuz-7.1.5-bc250rocm-r2": "792f904835f27574b680d2fd5cfd7e42b348fb3a3d9b39d8e8c87348873c3b0d",
+      "/home/nik/bc250work/bc250-rocm-lab/initramfs-7.1.5-bc250rocm-r2": "c0c8f9de84f41a082e67b4db25733e704ad5eb74852b1e7ebd1f44f38202e912"
+    },
+    "retained": [
+      "r2 and distro boot fallbacks/modules",
+      "native cooling/governor/core-unlock/SMI utilities",
+      "Docker storage and unrelated base images",
+      "user applications/models and home caches"
+    ],
+    "disk_free_after": 103013879808
+  },
+  "fallback_hashes": {
+    "/home/nik/bc250work/bc250-rocm-lab/vmlinuz-7.1.5-bc250rocm-r2": "792f904835f27574b680d2fd5cfd7e42b348fb3a3d9b39d8e8c87348873c3b0d",
+    "/home/nik/bc250work/bc250-rocm-lab/initramfs-7.1.5-bc250rocm-r2": "c0c8f9de84f41a082e67b4db25733e704ad5eb74852b1e7ebd1f44f38202e912"
+  },
+  "retired_public_downloads": {
+    "/home/nik/bc250work/alpine-rocm/sources/patch-6.18.50.patch.xz": "6fd09493299dfeb0e85a535833048b850af0b2664817ce1a3e11af74f238729b",
+    "/home/nik/bc250work/alpine-rocm/sources/linux-6.18.tar.xz": "9106a4605da9e31ff17659d958782b815f9591ab308d03b0ee21aad6c7dced4b"
+  },
+  "guard_states": [
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/recovery-expiry/state.json",
+      "phase": "migration-fallback-test",
+      "status": "expired"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/compiled-dense/guard/state.json",
+      "phase": "compiled-dense",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/fft/guard/state.json",
+      "phase": "fft",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/audio/guard/state.json",
+      "phase": "audio",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/compiled-cnn/guard/state.json",
+      "phase": "compiled-cnn",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/sparse/guard/state.json",
+      "phase": "sparse",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/distributed/guard/state.json",
+      "phase": "distributed",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/profiler/guard/state.json",
+      "phase": "profiler",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r3/vision/guard/state.json",
+      "phase": "vision",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/recovery-r2/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/trial-gpu-load/guard/state.json",
+      "phase": "migration-gpu-load",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/trial-gpu-load/core-retry/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/trial-gpu-load/core/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/promoted-boot-42e0cc05-67e0-4fb4-84f1-7e274cb109c7/core/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r2/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/promoted-boot-ea197fae-c94a-4b97-8669-c79ceac0348a/core/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/home/nik/bc250work/migration-105-20261023/qualification-r2-retry/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/var/lib/bc250-stack/host105/promoted-boot-e3d322db-a221-47a1-9ab4-9a48b84574a5/core/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    },
+    {
+      "path": "/var/lib/bc250-stack/host105/post-retirement-core/core/guard/state.json",
+      "phase": "core",
+      "status": "acknowledged"
+    }
+  ],
+  "disk_free_bytes": 108477546496,
+  "limits": [
+    "Bounded one-board tests; no universal correctness, performance, long-soak or multi-board qualification",
+    "Historical Python CPU fault remains unresolved, distinct from VM-heap/CSR/hostcall fixes",
+    "Idle deadline emergency return to r2 tested; arbitrary/pre-watchdog hardware hangs unqualified"
+  ]
+}

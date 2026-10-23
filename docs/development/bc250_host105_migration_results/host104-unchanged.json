@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "runtime_sha256": "32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0",
+  "torch_target": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031",
+  "boot_id": "2db1c7c2-1b0e-47ac-a153-bc06aaa9973c",
+  "kernel": "7.1.5-bc250rocm-r2",
+  "hip_sha256": "a1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b"
+}

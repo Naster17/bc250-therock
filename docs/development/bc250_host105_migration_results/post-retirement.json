@@ -1,0 +1,20 @@
+{
+  "status": "passed_final_boot_pending",
+  "removed_owned_transfers": [
+    "/home/nik/bc250work/migration-105-20261023/runtime.tar.gz",
+    "/home/nik/bc250work/migration-105-20261023/image.tar.gz",
+    "/home/nik/bc250work/migration-105-20261023/image-direct.tar.gz",
+    "/home/nik/bc250work/migration-105-20261023/kernel.tar.gz",
+    "/home/nik/bc250work/migration-105-20261023/consumers-launchers.tar.gz",
+    "/home/nik/bc250work/migration-105-20261023/initramfs-r3"
+  ],
+  "native_files_and_symlinks": {
+    "rocm": 24664,
+    "torch": 44565
+  },
+  "disk_free_before": 103013793792,
+  "disk_free_after": 108320387072,
+  "module_build_id": "b97bca56793aecea35967385d0c68d4186ecd121",
+  "image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+  "runtime_sha256": "c5da85ef459e9e586904a2870d68545a911805d0c7d93016cb4a3f9b96cc608b"
+}
