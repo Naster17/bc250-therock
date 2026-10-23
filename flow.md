@@ -9,6 +9,16 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **M105.2 future-update guide completed2026-10-23:** workspace
+  [HOST105_UPDATE.md](../HOST105_UPDATE.md) describes matched .104 exports,
+  independent candidate staging, target qualification, the explicit .105 control
+  lock/idle-board requirement, atomic activation/rollback and separate guarded
+  kernel updates. It records the boot-health package's fixed original-release
+  dependency and the single-use migration-helper limits. Documentation only;
+  no runtime/kernel/default/qualification change. Guide copied to both hosts;
+  M105.1 evidence remains authoritative. **Next B03.8 unchanged.**
+
+
 - **M105.1 user-authorized deployment/retirement completed2026-10-23:** tools
   ddc2933cb. `.105` is now a deployment host, ending its old-reference role.
   Independent release `/opt/bc250-stack/releases/10.2-gfx1013-20261023-host105`,

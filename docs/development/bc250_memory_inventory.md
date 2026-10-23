@@ -92,6 +92,8 @@ three promoted normal boots,15s idle deadline→r2/SSH/GPU smoke, and final
 post-retirement boot pass.69,229 file/link entries match before/after cleanup;
 36 legacy directories/five containers/eight images retired after verified local
 source/Git archives, plus old public download cache. Free root space~101GiB.
+Future update/rollback procedure: [HOST105_UPDATE.md](../../../HOST105_UPDATE.md);
+it distinguishes the administrative lock from draining production workloads.
 Operational healthchecks live in the root-owned versioned release; state is
 `/var/lib/bc250-stack/host105`. Cgroups/watchdog persist. `.104` remains r2 boot
 2db1c7c2/runtime32fd4559, unchanged. [Deployment, exact scope and recovery](bc250_host105_migration_results/README.md).
