@@ -15,7 +15,7 @@ At the end of each meaningful batch, or before a handoff with work running, upda
 flow.md once with task status, revisions, evidence, failures, next action and exact
 job/log paths. Update affected inventory entries when capabilities/plans change.
 Preserve historical evidence; never store credentials. Group commits at milestones.
-Respect the recorded .104 development authority, .105 preservation, recovery and
+Respect the recorded .104 development and authorized .105 deployment roles, recovery and
 user-owned untracked src/ constraints. Documentation-only memory updates do not
 require ROCm/Torch rebuilds or GPU requalification.
 
