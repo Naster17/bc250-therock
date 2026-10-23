@@ -215,6 +215,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--worker", action="store_true")
+    parser.add_argument("--nccl-available", action="store_true")
     parser.add_argument("--directory", type=Path)
     args = parser.parse_args()
     if args.worker:
@@ -225,7 +226,8 @@ def main():
     report = dict(status="running", checks=[], workers=[])
     try:
         assert dist.is_available() and dist.is_gloo_available()
-        assert not dist.is_nccl_available() and not dist.is_mpi_available()
+        assert dist.is_nccl_available() == args.nccl_available
+        assert not dist.is_mpi_available()
         report["checks"].append("build-feature-contract")
         for name, store in (
             ("hash", dist.HashStore()),
