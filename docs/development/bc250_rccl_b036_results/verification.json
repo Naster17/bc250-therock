@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "archive_bytes": 6543360,
+  "archive_sha256": "d083ff68a56bee95053784c7943da4cfcd4c63c7000c0a5880af6ab5cb49e31b",
+  "checks": 1365,
+  "gates": 21,
+  "new_contract_checks": 178,
+  "host_refusals": 20,
+  "ddp_analytic_composites": 4,
+  "protected_paths": 340,
+  "guards": 21,
+  "raw_log_files": 257,
+  "raw_log_bytes": 5386517,
+  "runtime_unchanged": true,
+  "candidate_binaries_unchanged": true,
+  "native_build_required": false,
+  "ccache_operation": false,
+  "source_hashes_verified": true
+}

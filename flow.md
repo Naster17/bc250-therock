@@ -9,6 +9,43 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B03.6 isolated public RCCL contracts/broader regression completed2026-10-23:**
+  tools9dc76a795; unchanged candidate Torchade6fcc/RCCL38fd6/B03.4 DSOca790dc7,
+  candidate libtorch_hip7f9e69a4. No production defect/fix/native library rebuild/
+  ccache operation/default change. R1 passes1365/21 gates: newcontracts178 +old
+  RCCL64/GPU Gloo41 +existing18-gate1082 stack suite. Contract128 identity cases=
+  eight types*17/257*disjoint-output/exact-alias*four collective wrappers; eight
+  broadcasts/five zero counts/four availability predicates/12 low-level refusals.
+  Three communicator init/nontrivial FP32 PreMulSum/destroy cycles, subgroup,
+  cross-private-stream event handoff; eight PG host refusals incl fnuzFP8/boolAVG/
+  bitwise; four BF16/FP32 analytical DDP composites (bucket views off/on, no_sync,
+  two microbatches/two SGD updates); loaded DSO verified. Independent exact CPU
+  refs/offset5/guards/unchanged inputs; DDP constant1/8/identity/power-of-two case
+  only. Ordinary rank1 reductions are identities, not transport proof. No broad
+  BF16/FP8/higher-gradient/partial-overlap/graphs/registration/multi-device/
+  protocol/transport/scaling/speed claim. No numerical tolerances weakened.
+  Retained1082 includes CPU Gloo31/sparse253/triangular80/legacy41/FFT245+72+3/
+  vision51+9/audio34+40/image86/video55/files46/compiled14+14/profiler1/core7.
+  All340 protected hashes/four AOT DBs/links unchanged against B03.5;21 guards ACK,
+  accepted gates+whole-batch dmesg identical. Active Torch2b449c4/NCCLoff/image506f/
+  runtime32fd4559/HIPa116/native systems1f9609/ROCm/N3.2/math/SDMA0/heapoff retained.
+  B03.5 release-r3 reused, not deployed; native artifacts remain B03.5/B03.4.
+  Source audit: low-level FP8 storage maps uint8 (not numeric FP8 reduction proof),
+  availability predicate lacks full dtype/hardware eligibility; fnuz PG refusals
+  tested, e4m3fn/e5m2 version admission and excluded APIs remain unaudited at runtime.
+  Same r2 boot2db1c7c2/no reboot/.105/BIOS/fallback/user application inspection/
+  modification/test/deletion. Unknown CPU fault unresolved/distinct from fixed
+  VM-heap/CSR/B04.2 queue. Local kernel/artifacts/rccl-b036: archive6,543,360B SHA
+  d083ff68a56bee95053784c7943da4cfcd4c63c7000c0a5880af6ab5cb49e31b verified;
+  257 raw logs5,386,517B/21 guards/helpers/recovery, no duplicate native payloads.
+  [Report/reproduce/boundaries](docs/development/bc250_rccl_b036_results/README.md).
+  BaselineWS/logs/rccl-b036-qualification-r1/final.json; helper backupWS/recovery/
+  rccl-b036-before. No own jobs/containers/root SSH remain; revision memory sync.
+  **Next B03.7:** audit/guard excluded or version-admitted public paths (FP8
+  reductions versus byte-copy semantics; symmetric/registration/offload APIs),
+  then determine concrete bounded single-device promotion profile. Keep daily
+  prefix unchanged; one physical GPU cannot qualify multi-device correctness.
+
 - **B03.5 isolated Torch RCCL integration completed2026-10-23:** toolsce089950f;
   Torch source/candidateade6fcc1ae over2b449c4, RCCL38fd6ba67d/B03.4 unchanged.
   ROCm find_package(rccl)/USE_NCCL=1/USE_SYSTEM_NCCL=1, headers2.32.3 exceed2.23;

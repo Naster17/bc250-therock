@@ -899,8 +899,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipFile                                     | Five synchronous/asynchronous compatibility I/O roundtrips                                                                                                                                                   | Not a direct-storage/DMA fast-path claim; registration/concurrency/ordering remain                                                                          |
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
-| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.5 isolated Torch/RCCL64/172 checks complete; B03.6 contracts/regression next, .105 unchanged. |
-| RCCL | B03.4 375 typed specialized objects/550 native checks; B03.5 isolated Torch consumer64+108 retained pass, BF16 scalar fix ade6fcc | Daily Torch NCCL off; isolated candidate only. Next B03.6 public contracts/full regression. No multi-GPU/protocol transport/scaling/speed proof. |
+| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.6 isolated Torch/RCCL178/1365 checks complete; B03.7 excluded-API audit next, .105 unchanged. |
+| RCCL | B03.4 375 objects/550 native; B03.5 Torch64/BF16 fix; B03.6 public178/1365 broader regression pass | Daily NCCL off; isolated candidate. Next B03.7 excluded/version-admitted API guards/promotion profile. No multi-device/transport/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
@@ -927,6 +927,33 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B03.6 isolated public RCCL contracts/broader regressions completed2026-10-23:**
+tools9dc76a795, candidate Torchade6fcc/RCCL38fd6/B03.4 unchanged. No production
+patch/native library rebuild/ccache operation/default change. R1 passes1365/21:
+178 contracts+RCCL64/GPU Gloo41+retained18-gate1082. New178:128 low-level identities
+(eighttypes/twosizes/disjoint-output vs exact-alias/fourcollectives),8 broadcasts,
+5zero wrappers/4availability/12host refusals;3 PG PreMulSum/init/destroy cycles,
+subgroup/event handoff,8PG host refusals,4 BF16/FP32 analytic DDP composites
+(bucket views/no_sync/two microbatches/two SGD updates),loadedDSO. Exact CPU refs/
+offset guards/private streams. Small DDP constant1/8/identity case; no broad BF16/
+FP8/partial-overlap/higher-gradient/graphs/registration/transport/multi-device/
+protocol/scaling/speed claim. No tolerances weakened.340 protected paths/four AOT
+DBs/links unchanged vs B03.5;21 guards ACK/gate+batch dmesg identical. Daily
+Torch2b449c4/NCCLoff/image506f/runtime32fd4559/HIPa116/native systems1f9609/ROCm/
+defaults unchanged. Isolated B03.5 release-r3 reused; no deployment. Native payloads
+remain verified B03.5/B03.4 artifacts. Source audit notes low-level FP8 mapsuint8,
+not numeric FP8 proof; fnuz PG host refusals tested, e4m3fn/e5m2 version admission/
+symmetric/registration/offload remain separate. Same r2 boot2db1c7c2/no reboot/
+.105/BIOS/fallback/user application inspection/modification/test/deletion. Unknown
+CPU fault unresolved/distinct from VM-heap/CSR/B04.2 queue. SHA-verified6,543,360B
+archive/257 raw logs5,386,517B/21guards/helpers/recovery local kernel/artifacts/
+rccl-b036. BaselineWS/logs/rccl-b036-qualification-r1/final.json, helper backup
+WS/recovery/rccl-b036-before; no own jobs/root SSH.
+[Report/reproduce/limits](bc250_rccl_b036_results/README.md).
+**Next B03.7:** audit/guard excluded/version-admitted FP8 arithmetic versus byte
+copy and symmetric/registration/offload paths; define bounded single-device
+promotion profile while daily prefix stays unchanged. No multi-device proof.
 
 **B03.5 isolated Torch/RCCL integration completed2026-10-23:** toolsce089950f;
 source/candidate Torchade6fcc1ae over2b449c4, RCCL38fd6/B03.4 candidate unchanged.

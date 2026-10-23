@@ -1,0 +1,32 @@
+{
+  "status": "source-reviewed-selected-contracts-qualified-runtime-results-separate",
+  "torch_revision": "ade6fcc1ae7574b2f5ad285c8a2c592af1e3e99c",
+  "rccl_source_revision": "38fd6ba67d0aa7491d3efaee3da98da4eb0a5727",
+  "source_sha256": {
+    "torch/torch/cuda/nccl.py": "46449e0f67e40cb6428695f40b48e9360f2b5fdc02a61a3504386535ff413406",
+    "torch/torch/csrc/cuda/nccl.cpp": "c465c0c9f9d7a446fac1433c6ed5b54d2ee9e4db68ed284df6c463d5e3ad7134",
+    "torch/torch/csrc/cuda/python_nccl.cpp": "2de83439cf46987f92a237fc27a92c6a7aa7ca78439cf4647497c444d0f73942",
+    "torch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp": "685cc8ee8aa909882a1020e66ffdfd3899315a3d6d35276f78254f6a07eb9a2b",
+    "therock/rocm-systems/projects/rccl/src/device/onerank.cu": "c87b74b97281656b3c4ad1c84586516083fac95f8330d9d444f2a46760c1cd5a"
+  },
+  "qualified_selection": [
+    "eight low-level tensor dtypes; disjoint output/exact alias; rank1 identity copies",
+    "zero-count five collective wrappers",
+    "host refusals for invalid sequence/CPU/stride/dtype/size/device/stream/root/type",
+    "process-group CPU/stride/bitwise/bool-AVG/fnuz FP8 refusal",
+    "three communicator cycles/subgroup/nontrivial FP32 PreMulSum",
+    "event handoff across private streams",
+    "BF16/FP32 analytic DDP no_sync accumulation/bucket views"
+  ],
+  "unqualified": [
+    "partial overlap (only exact alias is covered)",
+    "FP8 arithmetic: low-level wrapper maps FP8 storage to uint8; this is not numeric FP8 reduction support",
+    "process-group e4m3fn/e5m2 version admission requires separate native applicability audit",
+    "symmetric/registration/offload/shrink/graphs/concurrent use",
+    "multi-device/transport/protocol/scaling/performance/long training/higher gradients"
+  ],
+  "promotion": "candidate remains isolated; version/API admission is not complete feature support",
+  "native_build_required": false,
+  "ccache_operation": false,
+  "user_application_scope": "uninspected/unmodified/untested"
+}
