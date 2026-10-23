@@ -65,13 +65,13 @@ regression gates recorded in [the report](bc250_distributed_b031_results/README.
 **B03.2 qualified on installed runtime:**41 host-staged GPU tensor/first-gradient/
 FP32-FP64 DDP checks plus67 retained checks pass; two ranks share one GPU.
 No runtime code/default changes. [Report](bc250_distributed_b032_results/README.md).
-**B03.6 isolated Torch/RCCL contracts:**178 new checks/1365 total across21 gates
-pass on unchanged candidate, including BF16 analytical DDP/no_sync/bucket views
-and broader sparse/FFT/media/compiler regressions. Active runtime unchanged/daily
-NCCL off; no multi-device/transport/scaling proof.
-[Evidence and limits](bc250_rccl_b036_results/README.md).
-**Next B03.7:** audit/guard excluded or version-admitted FP8/symmetric/registration/
-offload paths and define the bounded promotion profile; keep daily prefix intact.
+**B03.7 isolated RCCL guards/profile:**76 new/1441 total checks pass. Torch14cf
+refuses unsupported FP8 arithmetic and preserves selected bit copies; generic
+registration and state-only suspend/resume readiness checked. Daily runtime
+unchanged/NCCL off. No multi-device/symmetric/offload-payload/performance claim.
+[Evidence and profile](bc250_rccl_b037_results/README.md).
+**Next B03.8:** bounded opt-in runtime packaging/DSO loading and ordinary-launch
+output/backward checks, retaining daily Gloo/NCCL-off and rollback.
 
 
 N3.9 restores the qualified N3.7 provenance integration and A07 attention CLI
@@ -382,7 +382,7 @@ runtime deployment. Keep item IDs stable so subsequent requests can name them.
 | **A09 — completed, bounded** | Native Torch GPU profiler via existing Kineto/SDK | Separate USE_KINETO=1 build; seven native trace/reference/lifecycle tests and existing numerical/model/resume gates | Explicit torch.profiler contexts; CPU/GPU kernels/copies/memory correlation. Hardware counters, broad concurrency, compile/graphs and long tracing unqualified. [Report](bc250_profiler_a09_results/README.md). |
 | **B01 — explicit fallback qualified** | Native BF16 FFT still rejects; opt-in bc250_fft0.1.0 installed |327 final candidate+327 installed checks: BF16-to-FP32 compute, C64/F32 outputs, rounded BF16 leaf gradients, CPU/DFT references and native GPU trace | No global API/AMP/native BF16/CPU fallback or performance claim. Wider shapes/graphs/compile/higher gradients remain separate. |
 | **B02 — explicit bounded fallback qualified** | Native public general sparse solve still rejects ROCm; opt-in bc250_sparse GPU dense-LU fallback installed | B02.1 candidate/installed381 each; canonical n<=1024/RHS<=64/major dense estimate<=64MiB, first value/RHS gradients, residual/pivot/refusal/trace checks | No scalable sparse factorization/global API change; memory estimate is not total peak. [Report](bc250_sparse_b021_results/README.md). |
-| **B03 — local CPU and bounded GPU readiness qualified** | Native Gloo/libuv; B03.2 host-staged GPU collectives and FP32/64 GPU DDP on one GPU/two ranks | CPU31/GPU41 references; B03.2 total108 checks, unchanged runtime | B03.6 isolated contracts178/1365 total pass; daily NCCL off. B03.7 excluded-API guard/promotion-profile audit next. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified; .105 unchanged. [Report](bc250_distributed_b032_results/README.md). |
+| **B03 — local CPU and bounded GPU readiness qualified** | Native Gloo/libuv; B03.2 host-staged GPU collectives and FP32/64 GPU DDP on one GPU/two ranks | CPU31/GPU41 references; B03.2 total108 checks, unchanged runtime | B03.7 guards/profile76/1441 pass; daily NCCL off. B03.8 opt-in packaging next. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified; .105 unchanged. [Report](bc250_distributed_b032_results/README.md). |
 | **B04 — bounded common media installed** | Native vision/audio and CPU TorchCodec audio/video/JPEG/PNG/WebP decode plus JPEG/PNG encode | B04.5 203 candidate+203 installed reference/HIP interop checks; prior bounded scopes/seek repair retained | Optional AVIF/GIF/HEIC/GPU codecs and wider format/layout/timing coverage remain separate; no universal media claim. |
 | **B05** | torchao / bitsandbytes / packed low-bit model kernels not qualified | Packages absent from reviewed runtime; A08 now supplies a bounded dense INT8/INT32 primitive, not a low-bit model recipe | Select one actual inference/training quantization recipe, audit ROCm/triton instructions/packing and gradients, port scalar dequantize+GEMM if needed. Native tensor-core FP8/INT4 throughput is unavailable. |
 | **B06** | ONNX export/runtime packages absent | onnx/onnxruntime not in reviewed runtime; unrelated to eager Torch availability | Optional export and runtime build/EP audit with version-specific model checks. Not necessary to repair ordinary LoRA training. |

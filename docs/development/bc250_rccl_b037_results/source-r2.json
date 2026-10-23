@@ -1,0 +1,12 @@
+{
+  "torch_revision": "14cfef2d8c5e8c2c40e3b24587233227ea8dadc3",
+  "base_revision": "ade6fcc1ae7574b2f5ad285c8a2c592af1e3e99c",
+  "native_arch": "gfx1013",
+  "source": "Preserved B03.5 production source/build plus exact tracked source overlay; no reset",
+  "source_sha256": {
+    "torch/csrc/cuda/nccl.cpp": "f197f6c6343928452d3582b1a7962516bd5493467430bbc1706232f112379313",
+    "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp": "d23f68c7beb27e27151b7cec3dd801041a43afc55997d205b95250c32554d320",
+    "test/distributed/test_nccl.py": "277f4b0ecba9708038730987b653eef01a12752b71c4c44f24b560826ccd132c",
+    "test/distributed/test_c10d_ops_nccl.py": "5833f1a8ed07c27cc7ce5ac569eb09127b84fb3337666692cb91d95c097d932d"
+  }
+}

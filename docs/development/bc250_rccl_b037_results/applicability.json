@@ -1,0 +1,40 @@
+{
+  "torch_revision": "14cfef2d8c5e8c2c40e3b24587233227ea8dadc3",
+  "rccl_source_revision": "38fd6ba67d0aa7491d3efaee3da98da4eb0a5727",
+  "source_sha256": {
+    "torch/torch/csrc/cuda/nccl.cpp": "f197f6c6343928452d3582b1a7962516bd5493467430bbc1706232f112379313",
+    "torch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp": "d23f68c7beb27e27151b7cec3dd801041a43afc55997d205b95250c32554d320",
+    "torch/torch/csrc/distributed/c10d/NCCLUtils.cpp": "77165aace714645f24a89461a034d935f40488a0c558bdcc1c625d1943f9fe73",
+    "torch/torch/csrc/distributed/c10d/cuda/utils.cpp": "2a142e77363f2084df06a2a9cabb4ef9ab75c7db43ddbab2007fc5e7815ab6d7",
+    "torch/torch/csrc/distributed/c10d/symm_mem/nccl_dev_cap.hpp": "303f8511b0fb386edc2c7f162365a3d9560ed4bd5616f3e025f035973bde4656",
+    "torch/torch/csrc/distributed/c10d/symm_mem/NCCLSymmetricMemory.cu": "afdac320ab0efea8faba9774c39bdc6b5223b65331a9edb5c685001739047d48",
+    "therock/rocm-systems/projects/rccl/src/register/register.cc": "ca38546c601ddab8f08e582ba925984f16ba859b134c2de4feb054f6f46e4eaa",
+    "therock/rocm-systems/projects/rccl/src/dev_runtime.cc": "66815e28a758eed8bf27d67db34264482df5b0f4a182df9461fb4672c3c1ed74",
+    "therock/rocm-systems/projects/rccl/src/mem_manager.cc": "154271458d938160d03c10f8e64cf258b8ca178e19e79dc49d58aeac4748a28c"
+  },
+  "profile": {
+    "target": "native gfx1013; one device/rank only qualified",
+    "numeric_types": "FP16 BF16 FP32 FP64 and selected integers in retained gates",
+    "fp8_numeric": "low-level refused before communicator; gfx1013 PG reductions refused before enqueue",
+    "fp8_copy": "four formats/byte patterns including every8-bit encoding,17/257 guards; no FP8 numeric arithmetic",
+    "multicast": "supports_tensor_alloc false; existing allocator refusal",
+    "generic_registration": "one default MemPool, existing and later allocation, PreMulSum CPU refs/deregister; no zero-copy/transport speed claim",
+    "symmetric_window": "NCCL_WIN_ENABLE=0 returns success/null; skipped registration is NOT functional symmetric support",
+    "symmetric_device_api": "Torch NCCL_HAS_SYMMEM_DEVICE_SUPPORT excludes ROCm; full symmetric tensor rendezvous unqualified",
+    "offload": "suspend/resume state changes and post-resume arithmetic; zero tracked bytes, no memory relocation/reclamation proof",
+    "still_unqualified": [
+      "multi-device/multi-rank communication",
+      "Ring/Tree/LL runtime/scaling/performance",
+      "actual offload payload relocation",
+      "graphs/concurrent registration/shrink/device symmetric APIs",
+      "other GPU architectures for new source guard"
+    ]
+  },
+  "promotion_requirements": [
+    "Keep active prefix unchanged in B03.7",
+    "Package RCCL DSO/mount/loading into an explicit opt-in profile; current test-only extra mount is not ordinary-launch integration",
+    "Preserve safe defaults and explicit NCCL_WIN_ENABLE=0/CUMEM0/P2Pdisabled/IBdisabled for qualified single-device profile",
+    "Scope runtime metadata/docs to qualified subset and retain current daily Gloo/NCCL-off rollback",
+    "Qualify packaged opt-in launcher using owned fixtures before considering daily promotion"
+  ]
+}

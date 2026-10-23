@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "scope": "targeted source-only, not full upstream CI",
+  "spin": "0.18",
+  "lintrunner": "0.12.7",
+  "initial": {
+    "files": [
+      "torch/csrc/cuda/nccl.cpp",
+      "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+      "test/distributed/test_nccl.py"
+    ],
+    "linters": [
+      "CLANGFORMAT",
+      "NEWLINE",
+      "INCLUDE",
+      "RUFF",
+      "FLAKE8",
+      "PYFMT",
+      "TESTOWNERS",
+      "TEST_HAS_MAIN"
+    ],
+    "apply": true
+  },
+  "followup": {
+    "files": [
+      "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp"
+    ],
+    "linters": [
+      "CLANGFORMAT",
+      "NEWLINE",
+      "INCLUDE"
+    ],
+    "apply": true
+  }
+}

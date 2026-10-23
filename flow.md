@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B03.7 isolated FP8/API admission guards completed2026-10-23:** tools819bb624f;
+  Torch14cfef2d8c overf807099 overade6fcc; RCCL38fd6/B03.4 unchanged. Independent
+  WS/pytorch-rccl-b037, releaseWS/rccl-b037/candidate-release-r2, not daily prefix.
+  Low-level FP8 numeric AllReduce/Reduce/ReduceScatter now refuse before comm;
+  existing uint8 mapping remains for byte copies. PG helper checks actual HIP
+  device and refuses FP8 on filtered gfx1013; other devices retain prior version
+  policy. Initialf807 builds; r1 passes33 then missing PG Reduce refusal fails.
+  14cf adds Reduce/_reduce_oop guards; rebuild-r2 passes, compiled follow-up
+  source diff verified exactly six guard lines. Failed source/native libs saved
+  WS/recovery/rccl-b037-reduce-before; release-r1 link is reused build, not frozen.
+  Targeted spin/lintrunner-a initial8/follow-up3 pass; standard device-generic
+  regression added, full upstream CI not run. No multi-GPU wrong-result repro.
+  Qualification-r2=1441/22 gates: new76+retained1365. New15 lowlevel/20 PG FP8
+  numeric refusals/five formats;32 guarded raw-bit copy refs/four formats*17/257*
+  two APIs*two copyops cover all256 encodings. Existing multicast capabilityfalse/
+  allocatorrefusal, generic MemPool register/PreMulSum/later allocation/deregister,
+  explicit window optout success+NULL, stats/suspend-resume0-1-0/post arithmetic,
+  device/loaded DSO/lifecycle pass.36 refusals total. Memory tracked counters all
+  zero: no actual offload payload relocation/reclamation or speed proof. Symmetric
+  window skip is not functional symmetric support. Full symmetric device API/
+  graphs/concurrency/shrink/multi-device/protocol/transport/scaling unqualified.
+  356 protected paths/four AOT DBs/links unchanged incl prior340;22 accepted guards
+  ACK/gate+batch dmesg match, all23 incl r1 guard ACK. Candidate libtorch_hip
+  eb405cb1031343e6; native DSO/client payloads SHA-verified local, prior B03.5/B03.4
+  preserved. Active Torch2b449c4/NCCLoff/image506f/runtime32fd4559/HIPa116/native
+  systems1f9609/ROCm/N3.2/math/SDMA0/heapoff unchanged. Build4CPU/4jobs/one link/
+  10GiB RAM/12GiB mem+swap/shared20GiB ccache/no reset/noGPU/no network; cumulative
+  cache stats not timing. Same r2 boot2db1c7c2/no reboot/.105/BIOS/fallback/user
+  application inspection/modification/test/deletion. Unknown CPU fault unresolved/
+  distinct from fixed VM-heap/CSR/B04.2 queue. Local kernel/artifacts/rccl-b037:
+  archive1,083,504,640B SHA963a1d6416ae1aaca62565253250b1e29812def7bc22cbd83688f9db8c225ff8,
+  291 raw logs8,996,665B/native/23guards/recovery/source/bundle verification.
+  [Report/profile/reproduce](docs/development/bc250_rccl_b037_results/README.md).
+  BaselineWS/logs/rccl-b037-qualification-r2/final.json; helper/metadata backup
+  WS/recovery/rccl-b037-before. No own jobs/containers/root SSH remain; final
+  reports override historical running-job checkpoint. Revision memory sync.
+  **Next B03.8:** package bounded opt-in single-device profile with read-only
+  RCCL DSO loading/mounts and explicit window/CUMEM/P2P/IB settings; qualify ordinary
+  packaged launch output/backward with owned fixtures. Test-only extra mount is
+  not ordinary launcher integration. Keep daily NCCL-off/Gloo runtime+rollback;
+  no full-backend/multi-device/offload-payload/symmetric-device claim.
+
 - **B03.6 isolated public RCCL contracts/broader regression completed2026-10-23:**
   tools9dc76a795; unchanged candidate Torchade6fcc/RCCL38fd6/B03.4 DSOca790dc7,
   candidate libtorch_hip7f9e69a4. No production defect/fix/native library rebuild/

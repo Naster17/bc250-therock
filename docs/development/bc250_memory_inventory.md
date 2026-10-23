@@ -899,8 +899,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipFile                                     | Five synchronous/asynchronous compatibility I/O roundtrips                                                                                                                                                   | Not a direct-storage/DMA fast-path claim; registration/concurrency/ordering remain                                                                          |
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
-| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.6 isolated Torch/RCCL178/1365 checks complete; B03.7 excluded-API audit next, .105 unchanged. |
-| RCCL | B03.4 375 objects/550 native; B03.5 Torch64/BF16 fix; B03.6 public178/1365 broader regression pass | Daily NCCL off; isolated candidate. Next B03.7 excluded/version-admitted API guards/promotion profile. No multi-device/transport/scaling/speed proof. |
+| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 opt-in packaging next, .105 unchanged. |
+| RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off. B03.8 opt-in packaging next; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
@@ -927,6 +927,36 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B03.7 isolated FP8/API admission guards completed2026-10-23:** tools819bb624f,
+Torch14cfef2 overf807099/ade6fcc; RCCL38fd6/B03.4 unchanged. Lowlevel FP8 numeric
+reductions reject before comm while byte-copy remains; filtered gfx1013 PG FP8
+admission uses actual HIP device, other-device policy retained. f807 build passes,
+r1 fails missing PG Reduce refusal after33 checks.14cf fixes Reduce/_reduce_oop;
+rebuild-r2 passes; exact six-line hipified follow-up delta verified. Failed source/
+all native libs preservedWS/recovery/rccl-b037-reduce-before, r1 release reused.
+Initial8/followup3 targeted spin/lintrunner-a pass; devicegeneric test added, not
+full CI. R2=1441/22 gates:new76+retained1365. New36 refusals (15 lowFP8/20 PG/
+multicastallocator),32 guarded raw-bit FP8copy refs/all256 encodings/four formats/
+17+257; generic MemPool registration/PreMulSum/later allocation/deregister; window
+optout success/NULL; stats/suspend-resume0-1-0/post-GPU refs; device/DSO/lifecycle.
+Tracked offload bytes allzero: no payload relocation/reclamation/speed proof.
+Symmetric window skip is not functional support; full symmetric device/graphs/
+concurrency/shrink/multi-device/transport/protocol/scaling unqualified.356 protected
+paths/four AOT DBs/links unchanged incl old340;22 accepted guards ACK/gate+batch
+dmesg same;23 total incl failure ACK. CandidateWS/pytorch-rccl-b037/release-r2
+isolated, libtorch_hipeb405cb1. Active Torch2b449c4/NCCLoff/image506f/runtime32fd/
+HIPa116/native systems1f9609/ROCm/defaults unchanged.4CPU/4jobs/one link/10GiB/
+12GiB/shared20GiB ccache/no reset/no GPU/network compile. Same r2 boot2db1c7c2,
+no reboot/.105/BIOS/fallback/user application touch/deletion. Unknown CPU fault
+distinct/unresolved. SHA-verified1,083,504,640B archive/291 rawlogs8,996,665B/native/
+23guards/recovery local kernel/artifacts/rccl-b037. BaselineWS/logs/rccl-b037-
+qualification-r2/final.json; helper backupWS/recovery/rccl-b037-before. No own jobs/
+root SSH; historical running checkpoint superseded.
+[Report/profile/reproduce](bc250_rccl_b037_results/README.md).
+**Next B03.8:** package opt-in bounded single-device runtime, RCCL DSO RO mounts/
+loading and explicit window/CUMEM/P2P/IB settings; ordinary-launch output/backward
+qualification using owned fixtures. Keep daily prefix/Gloo/NCCL-off and rollback.
 
 **B03.6 isolated public RCCL contracts/broader regressions completed2026-10-23:**
 tools9dc76a795, candidate Torchade6fcc/RCCL38fd6/B03.4 unchanged. No production
