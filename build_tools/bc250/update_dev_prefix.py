@@ -2,6 +2,7 @@
 # Copyright Advanced Micro Devices, Inc., or its affiliates.
 # SPDX-License-Identifier: MIT
 """Run an explicit prefix-update command while excluding bc250-torch workloads."""
+
 import argparse
 import json
 import os
@@ -26,7 +27,12 @@ def main() -> None:
     if os.geteuid() != 0:
         raise RuntimeError("Run through doas on the host")
     release = args.release.resolve(strict=True)
-    if not json.loads((release / "runtime.json").read_text()).get("mutable", False):
+    manifest = json.loads((release / "runtime.json").read_text())
+    if manifest.get("rccl_single_profile"):
+        raise RuntimeError(
+            "Update the dependent RCCL profile through its daily prefix lock"
+        )
+    if not manifest.get("mutable", False):
         raise RuntimeError("Only mutable developer prefixes can be updated")
     with runtime_lock(release / ".runtime.lock", exclusive=True):
         raise SystemExit(subprocess.call(command))

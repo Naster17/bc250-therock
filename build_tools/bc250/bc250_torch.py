@@ -29,6 +29,18 @@ class LaunchOptions:
     environment: dict[str, str] = field(default_factory=dict)
     shm_size: str = "1g"
     shell: bool = False
+    runtime_profile: str = "daily"
+
+
+RCCL_SINGLE_ENVIRONMENT = {
+    "NCCL_WIN_ENABLE": "0",
+    "NCCL_CUMEM_ENABLE": "0",
+    "NCCL_CUMEM_HOST_ENABLE": "0",
+    "NCCL_P2P_DISABLE": "1",
+    "NCCL_IB_DISABLE": "1",
+    "NCCL_SOCKET_IFNAME": "lo",
+    "TORCH_NCCL_ASYNC_ERROR_HANDLING": "1",
+}
 
 
 PROTECTED_ENVIRONMENT = {
@@ -115,6 +127,11 @@ def launcher_help() -> None:
         "--launcher-help", action="store_true", help="show this launcher help"
     )
     parser.add_argument(
+        "--runtime-profile",
+        choices=("daily", "rccl-single"),
+        help="explicit opt-in RCCL rank-one profile; default: daily",
+    )
+    parser.add_argument(
         "--mount",
         metavar="PATH",
         action="append",
@@ -180,12 +197,15 @@ def parse_launcher_arguments(
             "--env",
             "--env-file",
             "--shm-size",
+            "--runtime-profile",
         ):
             break
         if index + 1 >= len(arguments):
             raise ValueError(f"Missing value for {argument}")
         value = arguments[index + 1]
-        if argument.startswith("--mount"):
+        if argument == "--runtime-profile":
+            options.runtime_profile = value
+        elif argument.startswith("--mount"):
             path = Path(value).expanduser().absolute()
             check_mount(path)
             options.mounts.append(
@@ -217,6 +237,8 @@ def parse_launcher_arguments(
 
 
 def validate_options(options: LaunchOptions) -> None:
+    if options.runtime_profile not in ("daily", "rccl-single"):
+        raise ValueError("Unknown runtime profile")
     if not re.fullmatch(r"[1-9][0-9]*[bkmgBKMG]?", options.shm_size):
         raise ValueError("Shared memory size must be positive, e.g. 1g or 512m")
     for name, value in options.environment.items():
@@ -225,6 +247,49 @@ def validate_options(options: LaunchOptions) -> None:
         if mode not in ("rw", "ro"):
             raise ValueError(f"Invalid mount mode: {mode}")
         check_mount(Path(source))
+
+
+def selected_release(options: LaunchOptions) -> Path:
+    path = (
+        Path("/opt/bc250-stack/current")
+        if options.runtime_profile == "daily"
+        else Path("/opt/bc250-stack/profiles/rccl-single")
+    )
+    return path.resolve(strict=True)
+
+
+def qualified_rccl_profile(
+    release: Path, manifest: dict, options: LaunchOptions
+) -> bool:
+    """Fail closed on mismatched native payloads or broadened opt-in settings."""
+    config = manifest.get("rccl_single_profile")
+    if not config:
+        if options.runtime_profile == "rccl-single":
+            raise ValueError("Selected release has no qualified RCCL profile")
+        return False
+    if options.runtime_profile != "rccl-single":
+        raise ValueError("RCCL profile requires explicit --runtime-profile rccl-single")
+    if config["environment"] != RCCL_SINGLE_ENVIRONMENT:
+        raise ValueError("RCCL profile settings differ from the qualified subset")
+    for name, value in RCCL_SINGLE_ENVIRONMENT.items():
+        if name in options.environment and options.environment[name] != value:
+            raise ValueError(f"The qualified RCCL profile controls {name}")
+    identities = config["identity_sha256"]
+    required = {"torch/torch/lib/libtorch_hip.so", "rccl/lib/librccl.so.1.0"}
+    if not required.issubset(identities):
+        raise ValueError("Missing RCCL/Torch profile identities")
+    for name, digest in identities.items():
+        relative = Path(name)
+        if relative.is_absolute() or ".." in relative.parts:
+            raise ValueError("Invalid RCCL profile identity path")
+        with (release / relative).open("rb") as stream:
+            if hashlib.file_digest(stream, "sha256").hexdigest() != digest:
+                raise ValueError(f"RCCL profile identity mismatch: {name}")
+    library = release / "rccl/lib/librccl.so.1.0"
+    for name in ("librccl.so", "librccl.so.1"):
+        if (library.parent / name).resolve(strict=True) != library.resolve(strict=True):
+            raise ValueError("RCCL profile SONAME link mismatch")
+    return True
 
 
 def prepare_python_arguments(
@@ -308,6 +373,7 @@ def build_command(
     groups: list[int],
     environment_file: Path,
 ) -> list[str]:
+    rccl_profile = qualified_rccl_profile(release, manifest, options)
     arguments, script_mounts = (
         (options.arguments, [])
         if options.shell
@@ -378,6 +444,10 @@ def build_command(
         "TRITON_CACHE_DIR": "/workspace/user-cache/triton",
         "TORCHINDUCTOR_CACHE_DIR": "/workspace/user-cache/inductor",
     }
+    if rccl_profile:
+        command += ["-v", f"{release / 'rccl'}:/workspace/rccl:ro"]
+        fixed["LD_LIBRARY_PATH"] = "/workspace/rccl/lib:" + fixed["LD_LIBRARY_PATH"]
+        fixed.update(RCCL_SINGLE_ENVIRONMENT)
     if "TORCHINDUCTOR_COMPILE_THREADS" not in options.environment:
         fixed["TORCHINDUCTOR_COMPILE_THREADS"] = "4"
     if "PYTHONFAULTHANDLER" not in options.environment:
@@ -466,21 +536,28 @@ def main() -> None:
     if "--launcher-help" in arguments[:1]:
         launcher_help()
         return
-    release = Path("/opt/bc250-stack/current").resolve(strict=True)
-    manifest = json.loads((release / "runtime.json").read_text())
-    if not manifest["validated"]:
-        raise RuntimeError("The selected BC-250 release has not passed validation")
+    daily = Path("/opt/bc250-stack/current").resolve(strict=True)
+    daily_manifest = json.loads((daily / "runtime.json").read_text())
     if arguments[:1] == ["--_context"]:
         if os.geteuid() != 0 or len(arguments) != 2:
             raise ValueError(
                 "Private launcher contexts are only accepted after elevation"
             )
-        options, workspace = read_context(Path(arguments[1]), manifest["uid"])
+        options, workspace = read_context(Path(arguments[1]), daily_manifest["uid"])
     else:
         workspace = Path.cwd().resolve()
         options = parse_launcher_arguments(arguments, dict(os.environ))
         if not options.shell:
             prepare_python_arguments(options.arguments, workspace)
+    release = selected_release(options)
+    manifest = json.loads((release / "runtime.json").read_text())
+    if not manifest["validated"]:
+        raise RuntimeError("The selected BC-250 release has not passed validation")
+    if (manifest["uid"], manifest["gid"]) != (
+        daily_manifest["uid"],
+        daily_manifest["gid"],
+    ):
+        raise ValueError("Runtime profile belongs to a different host user")
     if os.geteuid() != 0:
         if os.geteuid() != manifest["uid"]:
             raise RuntimeError("This release belongs to a different host user")
@@ -506,12 +583,17 @@ def main() -> None:
         path.write_text(
             "".join(f"{name}={value}\n" for name, value in options.environment.items())
         )
+        # Profile dependencies share the daily mutable ROCm prefix. Acquire its
+        # lock before identity checks and keep it until the workload exits.
+        if daily_manifest.get("mutable", False):
+            with runtime_lock(daily / ".runtime.lock"):
+                command = build_command(
+                    release, manifest, workspace, home, options, groups, path
+                )
+                raise SystemExit(exit_status(run_process(command)))
         command = build_command(
             release, manifest, workspace, home, options, groups, path
         )
-        if manifest.get("mutable", False):
-            with runtime_lock(release / ".runtime.lock"):
-                raise SystemExit(exit_status(run_process(command)))
         raise SystemExit(exit_status(run_process(command)))
 
 

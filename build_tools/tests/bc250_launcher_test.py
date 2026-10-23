@@ -7,6 +7,7 @@ import tempfile
 import json
 import os
 import unittest
+import hashlib
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "bc250/bc250_torch.py"
@@ -72,6 +73,73 @@ class LauncherPathsTest(unittest.TestCase):
 
 
 class LauncherWorkflowsTest(unittest.TestCase):
+    def test_profile_survives_context_and_stops_at_script_arguments(self):
+        options = launcher.parse_launcher_arguments(
+            ["--env", "CUSTOM=x", "--runtime-profile", "rccl-single", "-c", "pass"], {}
+        )
+        self.assertEqual(options.runtime_profile, "rccl-single")
+        self.assertEqual(options.arguments, ["-c", "pass"])
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "context.json"
+            path.write_text(
+                json.dumps({"options": vars(options), "workspace": directory})
+            )
+            path.chmod(0o600)
+            recovered, _ = launcher.read_context(path, os.getuid())
+            self.assertEqual(recovered.runtime_profile, "rccl-single")
+        with self.assertRaises(ValueError):
+            launcher.parse_launcher_arguments(["--runtime-profile", "unknown"], {})
+        default = launcher.parse_launcher_arguments(
+            ["-c", "pass", "--runtime-profile", "rccl-single"], {}
+        )
+        self.assertEqual(default.runtime_profile, "daily")
+
+    def test_rccl_profile_mount_settings_and_identity_refusals(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            release = home / "release"
+            identities = {}
+            for name in ("torch/torch/lib/libtorch_hip.so", "rccl/lib/librccl.so.1.0"):
+                path = release / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"fixture")
+                identities[name] = hashlib.sha256(b"fixture").hexdigest()
+            for name in ("librccl.so", "librccl.so.1"):
+                (release / "rccl/lib" / name).symlink_to("librccl.so.1.0")
+            manifest = dict(
+                uid=os.getuid(),
+                gid=os.getgid(),
+                image="test-image",
+                rccl_single_profile=dict(
+                    environment=dict(launcher.RCCL_SINGLE_ENVIRONMENT),
+                    identity_sha256=identities,
+                ),
+            )
+            options = launcher.LaunchOptions(
+                arguments=["-c", "pass"], runtime_profile="rccl-single"
+            )
+            command = launcher.build_command(
+                release, manifest, home, home, options, [], home / "env"
+            )
+            self.assertIn(f"{release / 'rccl'}:/workspace/rccl:ro", command)
+            self.assertIn(
+                "LD_LIBRARY_PATH=/workspace/rccl/lib:/workspace/build/dist/rocm/lib:/workspace/build/dist/rocm/lib/llvm/lib",
+                command,
+            )
+            for name, value in launcher.RCCL_SINGLE_ENVIRONMENT.items():
+                self.assertIn(f"{name}={value}", command)
+                options.environment = {name: "unsafe"}
+                with self.assertRaises(ValueError):
+                    launcher.qualified_rccl_profile(release, manifest, options)
+            options.environment = {}
+            options.runtime_profile = "daily"
+            with self.assertRaises(ValueError):
+                launcher.qualified_rccl_profile(release, manifest, options)
+            options.runtime_profile = "rccl-single"
+            (release / "rccl/lib/librccl.so.1.0").write_bytes(b"mismatch")
+            with self.assertRaises(ValueError):
+                launcher.qualified_rccl_profile(release, manifest, options)
+
     def test_launcher_options_stop_at_python_or_script_arguments(self):
         options = launcher.parse_launcher_arguments(
             ["--shm-size", "2g", "-u", "train.py", "--mount", "model-output"], {}

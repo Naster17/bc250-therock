@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 
-def worker(output):
+def worker(output, packaged=False):
     import ctypes
     import torch
     import torch.distributed as dist
@@ -142,7 +142,9 @@ def worker(output):
             passed("generic-pool-register-new-allocation-premul-deregister")
             del tensor, later, pool
             libpath = Path(
-                "/home/nik/bc250work/rocm-10.2-gfx1013/rccl-b034/install-r1/lib/librccl.so"
+                "/workspace/rccl/lib/librccl.so"
+                if packaged
+                else "/home/nik/bc250work/rocm-10.2-gfx1013/rccl-b034/install-r1/lib/librccl.so"
             )
             library = ctypes.CDLL(str(libpath))
             register = library.ncclCommWindowRegister
@@ -220,7 +222,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--worker", action="store_true")
+    parser.add_argument(
+        "--packaged",
+        action="store_true",
+        help="Use ordinary launcher configuration without test overrides",
+    )
     args = parser.parse_args()
+    if args.packaged:
+        worker(args.output, packaged=True)
+        return
     if args.worker:
         worker(args.output)
         return
