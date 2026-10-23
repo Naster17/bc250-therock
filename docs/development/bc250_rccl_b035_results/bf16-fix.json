@@ -1,0 +1,9 @@
+{
+  "torch_revision": "ade6fcc1ae7574b2f5ad285c8a2c592af1e3e99c",
+  "base_revision": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+  "file": "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+  "before_sha256": "bf4210311fe0c2a61ac9ccfcda0656edb281b985109881315e0b5dfd6beec9cc",
+  "after_sha256": "685cc8ee8aa909882a1020e66ffdfd3899315a3d6d35276f78254f6a07eb9a2b",
+  "reason": "BF16 scalar storage matches reduction dtype; reproduced host scalar zero in isolated rank1 Torch RCCL baseline after31 passing checks",
+  "production_source_change": "float -> at::BFloat16 template specialization only"
+}

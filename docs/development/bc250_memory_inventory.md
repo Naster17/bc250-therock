@@ -899,8 +899,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipFile                                     | Five synchronous/asynchronous compatibility I/O roundtrips                                                                                                                                                   | Not a direct-storage/DMA fast-path claim; registration/concurrency/ordering remain                                                                          |
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
-| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.4 isolated RCCL550/629 checks complete; B03.5 Torch integration next, .105 unchanged. |
-| RCCL | B03.4 isolated native gfx1013 build:375 LL/SIMPLE typed specialized objects,550 one-rank references +79 retained pass; source38fd6 includes B03.3 build fixes | Not installed/Torch NCCL off. Next B03.5 isolated Torch integration. No multi-GPU/Ring-Tree-LL runtime/P2P/XGMI/GDA/SDMA/scaling proof. |
+| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.5 isolated Torch/RCCL64/172 checks complete; B03.6 contracts/regression next, .105 unchanged. |
+| RCCL | B03.4 375 typed specialized objects/550 native checks; B03.5 isolated Torch consumer64+108 retained pass, BF16 scalar fix ade6fcc | Daily Torch NCCL off; isolated candidate only. Next B03.6 public contracts/full regression. No multi-GPU/protocol transport/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
@@ -927,6 +927,39 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B03.5 isolated Torch/RCCL integration completed2026-10-23:** toolsce089950f;
+source/candidate Torchade6fcc1ae over2b449c4, RCCL38fd6/B03.4 candidate unchanged.
+Native gfx1013 consumer build/link succeeds with USE_NCCL/SYSTEM_NCCL=1; ROCm
+find_package(rccl),2.32.3>=2.23,42 declared called APIs export (lexical scope only).
+Reproduced BF16 host PreMulSum zero after31 passing checks; float template passed
+wrong scalar bytes. Torchade6fcc uses at::BFloat16 and adds BF16 regression loop.
+Eight spin linters/lintrunner-a pass. First GPU negative is host only; corrected
+host/device refs pass. R2 native64/GPU Gloo41 pass then old CPU NCCL-off contract
+fails; explicit --nccl-available fixture option retains default/numerical checks.
+R3 passes172/seven gates:64 RCCL+41 GPU Gloo+31 CPU+14dense+14CNN+1profiler+7core.
+RCCL rank1/one physical GPU:24 offset/stream SUM identities,24 PreMulSum fourfloat
+CPU refs,10 other identities,2 FP32/64 analytical gradients,2 two-step SGD/DDP
+CPU refs,2 metadata/loaded DSO/lifecycle composites. No multi-GPU/transport/full-
+protocol/library/scaling/speed/higher-gradient claim; small exact float inputs.
+340 protected paths/four AOT DBs/links unchanged; seven accepted guards ACK and
+all accepted gate/batch dmesg identical. All11 guards incl failed runs preserved.
+CandidateWS/pytorch-rccl-b035/releaseWS/rccl-b035/candidate-release-r3 isolated;
+active Torch2b449c4/image506f/runtime32fd4559/HIPa116/native systems1f9609/ROCm/
+defaults unchanged, daily NCCL off. Original native/source recoveryWS/recovery/
+rccl-b035-bf16-before; shared helpers/metadata recoveryrccl-b035-before. R1/r2
+release links target the reused build, original payloads are in recovery. Exact
+production overlay over retained2b archive; upstream test change local/bundle.
+4CPU/4jobs/one link/10GiB/12GiB/shared20GiB ccache/no reset/no GPU/network compile.
+Same r2 boot2db1c7c2, no reboot/.105/BIOS/fallback/user application touch/deletion.
+Unknown CPU fault distinct/unresolved. SHA-verified1,080,432,640B archive/142 raw
+logs6,797,890B/native/11 guards under local kernel/artifacts/rccl-b035; hipified
+source delta verified only intended scalar type. No jobs/root SSH remain.
+BaselineWS/logs/rccl-b035-qualification-r3/final.json.
+[Report/reproduce/boundaries](bc250_rccl_b035_results/README.md).
+**Next B03.6:** isolated public out/type/alias/error/stream/lifecycle contracts and
+BF16 DDP where applicable; broader stack regression before promotion. Keep daily
+runtime/.105 and explicitly audit filtered/excluded API paths.
 
 **B03.4 broader isolated native RCCL completed2026-10-22:** tools7ea133762,
 source38fd6ba67d unchanged;375 specialized objects: SIMPLE201/LL174. Ring/Tree typed filter,905 generated files,

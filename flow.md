@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-22 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-23 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,50 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B03.5 isolated Torch RCCL integration completed2026-10-23:** toolsce089950f;
+  Torch source/candidateade6fcc1ae over2b449c4, RCCL38fd6ba67d/B03.4 unchanged.
+  ROCm find_package(rccl)/USE_NCCL=1/USE_SYSTEM_NCCL=1, headers2.32.3 exceed2.23;
+  42 lexically called declared APIs exported, actual consumer builds/links native
+  gfx1013. libtorch_hip RUNPATH names isolated B03.4 DSO, loaded path verified.
+  R1 passes31 initial checks then reproduces BF16 host PreMulSum zero/nonzero
+  reference failure: float scalar template supplies low two bytes to BF16 API.
+  ade6fcc uses at::BFloat16 and adds BF16 upstream regression-loop coverage;
+  source also explains old device tensor float-pointer mismatch (negative GPU
+  reproduction was host only). Corrected host/device scalar refs pass. Eight
+  targeted spin linters and lintrunner -a pass; no full CI/multi-GPU test claim.
+  R2 builds/64 RCCL+41 GPU Gloo pass; CPU Gloo old NCCL-off fixture contract fails.
+  Opt-in --nccl-available fixes fixture; default off and numerical checks retained.
+  R3 passes172/7 gates: RCCL64/GPU Gloo41/CPU31/compiled dense14/CNN14/profiler1/
+  core7. RCCL one rank/device:24 SUM offset guards/stream identities,24 nontrivial
+  PreMulSum fourfloat types*three sizes*host-device scalars,10 other identities,
+  FP32/64 functional first gradients and two DDP SGD/momentum updates,2metadata/
+  DSO/lifecycle composites. Small exact inputs/fixed tolerances; no broad numeric/
+  multi-GPU/transport/protocol/scaling/speed/higher-gradient/full-library claim.
+  340 protected paths/four AOT DBs/links unchanged; seven accepted600s guards ACK,
+  accepted gate+batch dmesg identical. All11 guards incl failed runs ACK/preserved.
+  CandidateWS/pytorch-rccl-b035 +WS/rccl-b035/candidate-release-r3 ISOLATED;
+  active Torch2b449c4/image506f/runtime32fd4559/HIPa1162308/native systems1f9609/
+  ROCm/N3.2/math/SDMA0/heapoff unchanged, daily NCCL off. Original failed source/
+  all Torch lib payloads backed upWS/recovery/rccl-b035-bf16-before before rebuild;
+  r1/r2 release links point at reused candidate, not immutable old payloads.
+  Existing active sources/builds/B03.3/B03.4/caches retained. Compile4CPU/4jobs/
+  one link/10GiB RAM/12GiB mem+swap/shared20GiB ccache/no reset/noGPU/no network;
+  no cache performance claim. Same r2 boot2db1c7c2/no reboot/.105/BIOS/fallback/
+  user application inspection/modification/test/deletion. Unknown Python CPU fault
+  unresolved/distinct from fixed VM-heap/CSR/B04.2 queue. Source is retained2b
+  archive+exact production C++ overlay; upstream test change remains local/bundle.
+  Local kernel/artifacts/rccl-b035: SHA-verified archive1,080,432,640B/142 raw logs
+  6,797,890B/native/failed payloads/11 guards/recovery; compiled hipified source
+  delta verified only intended specialization. Candidate libtorch_hip7f9e69a479fbaffc.
+  [Report/reproduce/limits](docs/development/bc250_rccl_b035_results/README.md).
+  BaselineWS/logs/rccl-b035-qualification-r3/final.json; helper/metadata backup
+  WS/recovery/rccl-b035-before. No own jobs/containers/root SSH remain; final
+  reports supersede historical running-build checkpoint. Revision memory sync.
+  **Next B03.6:** isolated one-device Torch/RCCL consumer contracts: public out-of-
+  place/type/alias/error paths, stream/lifecycle behavior, BF16 DDP where feasible;
+  broader stack regression before considering promotion. Explicitly audit filtered/
+  excluded API paths. Keep daily runtime/.105; one GPU cannot prove multi-device.
 
 - **B03.4 broader isolated native RCCL completed2026-10-22:** tools7ea133762;
   source38fd6ba67d unchanged (B03.3 fixes already included). Native gfx1013 build

@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "scope": "targeted source-only, not full CI",
+  "spin": "0.18",
+  "lintrunner": "0.12.7",
+  "files": [
+    "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+    "test/distributed/test_c10d_ops_nccl.py"
+  ],
+  "linters": [
+    "CLANGFORMAT",
+    "NEWLINE",
+    "INCLUDE",
+    "RUFF",
+    "FLAKE8",
+    "PYFMT",
+    "TESTOWNERS",
+    "TEST_HAS_MAIN"
+  ],
+  "apply_run": true,
+  "command": "PYTORCH_LINT_SKIP_CODEGEN=1 uv run --offline --no-project --python 3.12 --with spin==0.18 spin lint -- -a --take=CLANGFORMAT,NEWLINE,INCLUDE,RUFF,FLAKE8,PYFMT,TESTOWNERS,TEST_HAS_MAIN torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp test/distributed/test_c10d_ops_nccl.py"
+}

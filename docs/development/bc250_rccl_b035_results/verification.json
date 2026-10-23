@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "archive_bytes": 1080432640,
+  "archive_sha256": "605d091e0bfbd1602c4576002425e6daed77cb78c4fd22000e9289bac81dc18b",
+  "checks": 172,
+  "gates": 7,
+  "torch_rccl_checks": 64,
+  "protected_paths": 340,
+  "guards": 11,
+  "raw_log_files": 142,
+  "raw_log_bytes": 6797890,
+  "runtime_unchanged": true,
+  "source_hashes_verified": true,
+  "hipified_source_delta_verified": true,
+  "failed_native_payloads_preserved": true,
+  "candidate_native_sha256": {
+    "libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+    "libtorch_cpu.so": "8a1b0e1fecef7afc9309d0460b2fbd13df20b8bd667d7036c58a341a020e5346",
+    "libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+    "libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+    "libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+    "libtorch_python.so": "f47a0cf7604ea6c329bf8c611c62bdab9121b9ea23a7f0320962d86411357275",
+    "libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+    "libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+    "libtorch_hip.so": "7f9e69a479fbaffc96a20eb0bd468e0b8e33ff2918e77cf3956f14723c671006"
+  },
+  "candidate_shim_sha256": {
+    "_C.cpython-312-x86_64-linux-gnu.so": "1ec597fb398c8fe5484b83a9c747ae5c7c46411ce3e15e479660c726429d3330"
+  }
+}

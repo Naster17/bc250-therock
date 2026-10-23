@@ -1,0 +1,26 @@
+diff --git a/test/distributed/test_c10d_ops_nccl.py b/test/distributed/test_c10d_ops_nccl.py
+index 3daf424..38df418 100644
+--- a/test/distributed/test_c10d_ops_nccl.py
++++ b/test/distributed/test_c10d_ops_nccl.py
+@@ -197,7 +197,7 @@ class ProcessGroupNCCLOpTest(MultiProcContinuousTest):
+ 
+         # Premul Sum
+         if torch.cuda.nccl.version() >= (2, 11, 1):
+-            for dtype in torch.half, torch.float, torch.double:
++            for dtype in torch.half, torch.bfloat16, torch.float, torch.double:
+                 for factor in (
+                     3.0,
+                     torch.tensor([5.0], device=local_device_id, dtype=dtype),
+diff --git a/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp b/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp
+index 7eee36c..e6be6d7 100644
+--- a/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp
++++ b/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp
+@@ -115,7 +115,7 @@ ncclRedOpRAII getNcclReduceOp(
+         case ncclFloat:
+           return unpackPreMulSum<float, ncclFloat>(reduceOp, comm);
+         case ncclBfloat16:
+-          return unpackPreMulSum<float, ncclBfloat16>(reduceOp, comm);
++          return unpackPreMulSum<at::BFloat16, ncclBfloat16>(reduceOp, comm);
+         case ncclDouble:
+           return unpackPreMulSum<double, ncclDouble>(reduceOp, comm);
+         default:
