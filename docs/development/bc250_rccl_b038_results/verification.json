@@ -1,0 +1,177 @@
+{
+  "status": "passed",
+  "gates": 26,
+  "checks": 1461,
+  "context_checks": 5,
+  "cpu_refusals": 9,
+  "daily_lock_exclusion": true,
+  "protected_paths": 372,
+  "changed_hashes": [],
+  "links_unchanged": true,
+  "kernel_log_unchanged_entire_batch": true,
+  "boot_id": "2db1c7c2-1b0e-47ac-a153-bc06aaa9973c",
+  "boot_unchanged": true,
+  "daily_runtime_sha256": "32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0",
+  "profile_sha256": "42eb7631d6b760b0fabed37c35ac57c9e02dbc2a7ae44780efd63c5e61a815b9",
+  "profile": "/opt/bc250-stack/dev/rccl-single-b038",
+  "registry": "/opt/bc250-stack/profiles/rccl-single",
+  "registry_target": "/opt/bc250-stack/dev/rccl-single-b038",
+  "torch_revision": "14cfef2d8c5e8c2c40e3b24587233227ea8dadc3",
+  "image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+  "native_identity_sha256": {
+    "rccl/lib/librccl.so.1.0": "ca790dc73b76a94a7dc97538608cd94b789e73cc18d756b0631111c18230583e",
+    "torch/torch/lib/libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+    "torch/torch/lib/libtorch_cpu.so": "8a1b0e1fecef7afc9309d0460b2fbd13df20b8bd667d7036c58a341a020e5346",
+    "torch/torch/lib/libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+    "torch/torch/lib/libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+    "torch/torch/lib/libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+    "torch/torch/lib/libtorch_python.so": "f47a0cf7604ea6c329bf8c611c62bdab9121b9ea23a7f0320962d86411357275",
+    "torch/torch/lib/libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+    "torch/torch/lib/libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+    "torch/torch/lib/libtorch_hip.so": "eb405cb1031343e643acc05acf74cecea8c5a9acc8bb571425bfe04023a6e744",
+    "torch/GIT_REVISION": "f7254adae12dba32b0e6769b02520337da9430be17f88cf0b303a0c4f0423ba2"
+  },
+  "source_sha256": {
+    "bc250_torch.py": "c5167f171eefb6df728eea2c1063f2af1ca1317a03ea8d69ab67f36a700f6106",
+    "update_dev_prefix.py": "8ec1a4c9ef94de25f81cbd8ae8adf495cb9f592cb3d16f18915d7ac366385c65",
+    "package_rccl_b038_on_host.py": "df8b89583bfcf8faa54b8796f438d4091f7c829fc6b11065e0f88ab5ccb492fe",
+    "qualify_rccl_b038_on_host.py": "14809ceea47c2d275fca3a138c9dc2cbbca690a77d6f997027bcbdfafdfd85bd",
+    "qualify_rccl_b038_context_on_host.py": "d397c5d89c7324bc0a9f11abc19b8e0bc7008c1524132dba7161e08b5c8a663a",
+    "export_rccl_b038_on_host.py": "703737178c6f07537f8e971bb7ddb0504adf7dab4979feea91aee877f1a91a9a",
+    "validate_rccl_b038.py": "f388da1ea6e961ed605462c4a7b7ca0a3b2056ef06478b33aaf520cfb696e45f",
+    "validate_rccl_b035.py": "48d3f22240099ec26394703645826015da586fe915e12c7609c6ea0df39afc39",
+    "validate_rccl_b036.py": "02734d8b4c4eb5acb4bbc2483a786fa89bdb8cfd275d952682e5ac349cbcf741",
+    "validate_rccl_b037.py": "9219727452cc3aac42db9c46c57bc26e136ab482ec4782a2b3ca31ae2c3dc16b"
+  },
+  "guards": [
+    {
+      "label": "rccl-b038-r1-packaged-torch",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-packaged-train",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-guards",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-contracts",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-torch-rccl",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-gpu-gloo",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-distributed",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-sparse",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-triangular",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-sparse-legacy",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-fft-promotion",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-fft-real",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-fft-contracts",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-vision-ops",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-vision-integration",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-audio-dsp",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-audio-native",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-image",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-video",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-files",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-compiled-dense",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-compiled-cnn",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-profiler",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-core",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-daily-torch",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-daily-train",
+      "status": "acknowledged"
+    },
+    {
+      "label": "rccl-b038-r1-private-context",
+      "status": "acknowledged"
+    }
+  ],
+  "running_containers": [],
+  "native_build_required": false,
+  "host105_touched": false,
+  "profile_links": {
+    "torch": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b037",
+    "rocblas-gemm-n32.csv": "/opt/bc250-stack/dev/priority1/rocblas-gemm-n32.csv",
+    "cache": "/opt/bc250-stack/dev/priority1/cache",
+    "python-consumers": "/opt/bc250-stack/dev/priority1/python-consumers",
+    "rocm": "/opt/bc250-stack/dev/priority1/rocm"
+  },
+  "disk_available_bytes": 10487361536,
+  "code_revision": "36cabf9be01522bf071e090655ca88558bf70f20",
+  "archive": {
+    "sha256": "64beea0d3b9396f84207d5d055786b4028f7a9009612fd3f1d656a549f6a2efa",
+    "bytes": 7580482
+  },
+  "raw_log_files": 284,
+  "raw_log_bytes": 6078114,
+  "local_bc250_tests": 29,
+  "static_checks": "Ruff E4,E7,E9,F and format; no full repository lint claim",
+  "rollback": "verified backup identities retained; rollback not executed"
+}

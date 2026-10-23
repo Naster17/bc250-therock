@@ -49,7 +49,36 @@ bc250-torch --env GLOO_SOCKET_IFNAME=lo --env GLOO_DEVICE_TRANSPORT=TCP \
 Use bounded thread counts and allow memory for both processes. No throughput or
 multi-GPU scaling improvement is established. GPU send/recv, RPC, BF16 DDP,
 distributed checkpoint recovery and other networks/devices remain unqualified;
-RCCL is still absent. [Exact tested APIs and limits](bc250_distributed_b032_results/README.md).
+RCCL remains off in the daily profile; the explicit B03.8 profile below is separate. [Exact tested APIs and limits](bc250_distributed_b032_results/README.md).
+
+## Opt-in RCCL on .104 (B03.8)
+
+The daily runtime remains NCCL-off/Gloo-on. The separate native gfx1013 profile
+is explicitly selected per invocation:
+
+```bash
+bc250-torch --runtime-profile rccl-single /path/to/owned_script.py
+bc250-train --runtime-profile rccl-single /path/to/owned_script.py
+```
+
+The script must explicitly initialize `backend="nccl"` with rank0/world_size1
+and `cuda:0`. The frozen training consumers remain available through
+`bc250-train`; no application is automatically converted to distributed training.
+Omit the option, or use `--runtime-profile daily`, to retain daily behavior.
+
+The launcher verifies the packaged RCCL and native Torch identities, mounts
+RCCL read-only at `/workspace/rccl`, and holds the daily runtime lock. It fixes
+`NCCL_WIN_ENABLE=0`, both CUMEM settings0, P2P/IB disabled, socket interface`lo`,
+and asynchronous error handling1. Conflicting explicit overrides are refused.
+Hash verification adds startup I/O; this is a functionality profile, with no
+speedup claim. Update or unregister this dependent profile only under the
+**daily** prefix's exclusive update lock, not an independent profile lock.
+
+Only one GPU/rank is qualified. The375-object filtered library is not a full
+RCCL backend; numeric FP8, symmetric device execution, actual offload-payload
+relocation, multi-device transport and scaling remain unqualified/unsupported
+as recorded. `.105` does not receive this profile.
+[Acceptance, identities and rollback](bc250_rccl_b038_results/README.md).
 
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 

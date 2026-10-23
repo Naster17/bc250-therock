@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "refusals": [
+    {
+      "name": "NCCL_WIN_ENABLE",
+      "returncode": 2,
+      "stderr": "bc250-torch: The qualified RCCL profile controls NCCL_WIN_ENABLE\n"
+    },
+    {
+      "name": "NCCL_CUMEM_ENABLE",
+      "returncode": 2,
+      "stderr": "bc250-torch: The qualified RCCL profile controls NCCL_CUMEM_ENABLE\n"
+    },
+    {
+      "name": "NCCL_CUMEM_HOST_ENABLE",
+      "returncode": 2,
+      "stderr": "bc250-torch: The qualified RCCL profile controls NCCL_CUMEM_HOST_ENABLE\n"
+    },
+    {
+      "name": "NCCL_P2P_DISABLE",
+      "returncode": 2,
+      "stderr": "bc250-torch: The qualified RCCL profile controls NCCL_P2P_DISABLE\n"
+    },
+    {
+      "name": "NCCL_IB_DISABLE",
+      "returncode": 2,
+      "stderr": "bc250-torch: The qualified RCCL profile controls NCCL_IB_DISABLE\n"
+    },
+    {
+      "name": "NCCL_SOCKET_IFNAME",
+      "returncode": 2,
+      "stderr": "bc250-torch: The qualified RCCL profile controls NCCL_SOCKET_IFNAME\n"
+    },
+    {
+      "name": "TORCH_NCCL_ASYNC_ERROR_HANDLING",
+      "returncode": 2,
+      "stderr": "bc250-torch: The qualified RCCL profile controls TORCH_NCCL_ASYNC_ERROR_HANDLING\n"
+    },
+    {
+      "name": "unknown-profile",
+      "returncode": 2,
+      "stderr": "bc250-torch: Unknown runtime profile\n"
+    },
+    {
+      "name": "independent-profile-update-lock",
+      "returncode": 1,
+      "stderr": "Traceback (most recent call last):\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/update_dev_prefix.py\", line 42, in <module>\n    main()\n  File \"/home/nik/bc250work/rocm-10.2-gfx1013/helpers/update_dev_prefix.py\", line 32, in main\n    raise RuntimeError(\nRuntimeError: Update the dependent RCCL profile through its daily prefix lock\n"
+    }
+  ],
+  "gate": {
+    "label": "rccl-b038-r1-private-context",
+    "checks": 5,
+    "command": [
+      "python3",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/helpers/qualify_rccl_b038_context_on_host.py",
+      "--context-worker",
+      "--output",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/logs/rccl-b038-r1-private-context/result.json"
+    ],
+    "guard": {
+      "release": "7.1.5-bc250rocm-r2",
+      "phase": "rccl-b038-r1-private-context",
+      "boot_id": "2db1c7c2-1b0e-47ac-a153-bc06aaa9973c",
+      "nonce": "96f1c87e693a8fe060257546fdc2269b",
+      "timeout_seconds": 600,
+      "status": "acknowledged",
+      "deadline_monotonic": 124809.150158629,
+      "dry_run": false
+    }
+  },
+  "daily_lock_exclusion": true
+}

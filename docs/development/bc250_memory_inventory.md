@@ -914,8 +914,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipFile                                     | Five synchronous/asynchronous compatibility I/O roundtrips                                                                                                                                                   | Not a direct-storage/DMA fast-path claim; registration/concurrency/ordering remain                                                                          |
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
-| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 opt-in packaging next, .105 unchanged. |
-| RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off. B03.8 opt-in packaging next; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
+| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
+| RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B03.8 explicit rccl-single installed/qualified on .104; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
@@ -942,6 +942,36 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B03.8 ordinary-launch opt-in RCCL completed2026-10-23:** code36cabf9be.
+`.104` registry `/opt/bc250-stack/profiles/rccl-single` points to
+`/opt/bc250-stack/dev/rccl-single-b038`. Both installed launchers accept
+`--runtime-profile rccl-single`; omit it for unchanged daily Torch2b449c4/NCCLoff/
+Glooon/runtime32fd4559/image506f/HIPa116/r2 boot2db1c7c2. ProfileTorch14cf/native
+libtorch_hipeb405cb1 and copied RCCLca790dc7/SONAME links; manifest42eb7631.
+Reuses daily ROCm/cache/consumers, not relocatable independent release. Native
+identity verification, RO `/workspace/rccl`, controlled LD path and fixed
+window0/CUMEMboth0/P2Poff/IBoff/lo/async-error1; conflicting overrides refused.
+Private user-owned context preserves selection. Daily SH lock before hash checks
+through launch; updater rejects independent profile locks (use daily EX).
+Ordinary1461/26 pass:old1441 plus packaged5/6 and daily4/5; retained22 gates use
+installed bc250-train without test-only RCCL mount/env injection. Supplemental
+private-context5, nine CPU refusals and live lock exclusion pass. Local29 tests
+and selected Ruff checks/format pass.372 protected hashes/four AOT DBs/links
+retained; two launcher copies intentionally replaced/backed up.27 guards ACK,
+accepted per-gate/main batch dmesg identical. No native rebuild/ccache operation/
+reboot/.105 connection/user application touch/deletion. Rollback helper retained,
+not exercised; profiles/builds/cache/source preserved. Local kernel/artifacts/
+rccl-b038:7,580,482B archiveSHA64beea0d3b9396f84207d5d055786b4028f7a9009612fd3f1d656a549f6a2efa,
+284 rawlogs6,078,114B/profileDSO/recovery/27guards/source verified. Unknown CPU
+fault distinct/unresolved. Rank-one/single-GPU only: no transport/scaling/full
+backend/speed/symmetric device/actual offload payload claim. WS/logs/rccl-b038-
+qualification-r1/final.json +WS/logs/rccl-b038-context.json; no own jobs/containers/
+armed guards at handoff. [Use/results/recovery](bc250_rccl_b038_results/README.md).
+**Next B05.1:** audit A08/pinned low-bit paths on .104, select an owned bounded
+weight-only quantization recipe and independent output/gradient references;
+keep daily defaults/.105, no architecture spoofing/new Torch wheel.
+
 
 **B03.7 isolated FP8/API admission guards completed2026-10-23:** tools819bb624f,
 Torch14cfef2 overf807099/ade6fcc; RCCL38fd6/B03.4 unchanged. Lowlevel FP8 numeric

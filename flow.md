@@ -9,6 +9,44 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B03.8 ordinary-launch opt-in RCCL completed2026-10-23:** code36cabf9be.
+  `.104` registry `/opt/bc250-stack/profiles/rccl-single` →
+  `/opt/bc250-stack/dev/rccl-single-b038`; select `--runtime-profile rccl-single`
+  in installed bc250-torch/bc250-train. Default/daily remains Torch2b449c4,
+  NCCLoff/Glooon/runtime32fd4559/image506f/HIPa116/native systems1f9609/r2.
+  Profile reuses B03.7 Torch14cf/libtorch_hipeb405cb1 and independently copies
+  RCCLca790dc7 plus relative SONAME links; shares daily ROCm/cache/consumers.
+  Not an independent relocatable release. ManifestSHA42eb7631; identity checks
+  cover nine Torch DSOs/GIT_REVISION/RCCL and links before ordinary launch.
+  RO `/workspace/rccl`, controlled LD path, window/CUMEMboth0/P2Poff/IBoff/lo/
+  async-error1; explicit conflicting environment refused. User-owned private
+  context retains selection. Daily SH lock covers hash checks and process;
+  updater now refuses an independent profile lock: use daily EX for updates.
+  Ordinary26-gate1461 pass (old1441+new20): packaged torch5/train6, all22 B03.7
+  gates through bc250-train without harness library/env injection, daily4/5.
+  Extra private-context5 pass; nine installed CPU refusals (seven settings,
+  unknown profile, wrong update lock), live ordinary-launch daily EX exclusion
+  pass. Local29 BC250 tests and selected Ruff checks/format pass; no full CI.
+  372 protected hashes/four AOT DBs/links retained; two launcher copies intentionally
+  changed with originals backed up.27 guards ACK, each accepted gate and main
+  batch dmesg identical; same boot2db1c7c2/no reboot. No native build/ccache reset/
+  BIOS/fallback/user application touch/deletion; `.105` not contacted or changed.
+  No multi-device/transport/scaling/full-backend/speed/higher-gradient/symmetric
+  device/actual offload-payload claim. Numeric FP8 refused, byte copies retained;
+  unknown Python CPU fault unresolved/distinct from VM-heap/CSR/hostcall fixes.
+  Raw WS/logs/rccl-b038-*; mainfinal WS/logs/rccl-b038-qualification-r1/final.json,
+  supplemental WS/logs/rccl-b038-context.json; recoveryWS/recovery/rccl-b038-before.
+  Local kernel/artifacts/rccl-b038: archive7,580,482B SHA64beea0d3b9396f84207d5d055786b4028f7a9009612fd3f1d656a549f6a2efa,
+  284 raw logs6,078,114B/profileDSO/recovery/27guards/source verified. Rollback
+  helper restores launcher/unregisters profile; not exercised. Jobs complete,
+  no own build/test/container/armed guard at handoff; memory sync to `.104` only.
+  [Use/evidence/rollback](docs/development/bc250_rccl_b038_results/README.md).
+  **Next B05.1:** on `.104`, audit current A08 dense INT8 and pinned low-bit
+  Torch/Triton/package paths, then select one stack-owned bounded weight-only
+  quantization recipe with CPU output/gradient references. Do not reinstall Torch
+  or infer matrix instructions from package flags; keep daily defaults and `.105`.
+
+
 - **M105.2 future-update guide completed2026-10-23:** workspace
   [HOST105_UPDATE.md](../HOST105_UPDATE.md) describes matched .104 exports,
   independent candidate staging, target qualification, the explicit .105 control
@@ -2764,7 +2802,12 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B03.1 | Native distributed/Gloo/libuv local CPU readiness installed;31 two-rank references/first gradients/DDP checks; candidate1082+installed1082 retained GPU regressions. RCCL/MPI off; GPU scope is recorded in B03.2, RPC/multi-board unqualified. |
 | [x]   | B03.2 | Existing Gloo HIP host-staged collectives and FP32/64 GPU DDP bounded-qualified with41 GPU+67 retained checks; no runtime change. One GPU/two ranks, no scaling claim. |
 | [x]   | B03.3 | Isolated restricted native gfx1013 RCCL build and82 single-device references/lifecycle checks plus79 retained pass; no-tracing header/direct-include compile fixes. Not installed/Torch NCCL off. |
-| [ ]   | **B03.4 — next** | Broaden isolated native RCCL beyond FP32 Ring/SIMPLE; inspect type/protocol combinations and qualify feasible single-device operations before Torch NCCL integration. Current prefix/.105 preserved; no multi-GPU/scaling claims. |
+| [x]   | B03.4 | Broader isolated375-object native RCCL;629 single-device/retained checks. No protocol/transport/scaling claim. |
+| [x]   | B03.5 | Isolated native Torch RCCL integration and BF16 PreMulSum scalar correction;172 checks. Daily NCCL off. |
+| [x]   | B03.6 | Bounded public contracts, first gradients/DDP and retained stack regression;1365 checks. |
+| [x]   | B03.7 | Numeric FP8 admission guards, raw-bit copy and memory API readiness;1441 checks. No real offload payload/symmetric device claim. |
+| [x]   | B03.8 | Explicit ordinary-launch rccl-single profile on .104;1461/26 gates plus private-context5, nine CPU refusals and lock exclusion pass. Daily NCCL-off preserved; .105 untouched. |
+| [ ]   | **B05.1 — next** | Audit A08/pinned low-bit paths and select one owned bounded weight-only quantization recipe with CPU output/gradient references; no matrix-hardware or automatic speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

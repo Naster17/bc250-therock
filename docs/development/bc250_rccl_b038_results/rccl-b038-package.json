@@ -1,0 +1,22 @@
+{
+  "status": "packaged-not-qualified",
+  "profile": "/opt/bc250-stack/dev/rccl-single-b038",
+  "registry": "/opt/bc250-stack/profiles/rccl-single",
+  "profile_sha256": "42eb7631d6b760b0fabed37c35ac57c9e02dbc2a7ae44780efd63c5e61a815b9",
+  "launcher_sha256": "c5167f171eefb6df728eea2c1063f2af1ca1317a03ea8d69ab67f36a700f6106",
+  "daily_runtime_sha256": "32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0",
+  "native_identity_sha256": {
+    "rccl/lib/librccl.so.1.0": "ca790dc73b76a94a7dc97538608cd94b789e73cc18d756b0631111c18230583e",
+    "torch/torch/lib/libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+    "torch/torch/lib/libtorch_cpu.so": "8a1b0e1fecef7afc9309d0460b2fbd13df20b8bd667d7036c58a341a020e5346",
+    "torch/torch/lib/libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+    "torch/torch/lib/libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+    "torch/torch/lib/libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+    "torch/torch/lib/libtorch_python.so": "f47a0cf7604ea6c329bf8c611c62bdab9121b9ea23a7f0320962d86411357275",
+    "torch/torch/lib/libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+    "torch/torch/lib/libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+    "torch/torch/lib/libtorch_hip.so": "eb405cb1031343e643acc05acf74cecea8c5a9acc8bb571425bfe04023a6e744",
+    "torch/GIT_REVISION": "f7254adae12dba32b0e6769b02520337da9430be17f88cf0b303a0c4f0423ba2"
+  },
+  "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/rccl-b038-before"
+}
