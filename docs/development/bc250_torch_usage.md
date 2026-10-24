@@ -80,6 +80,23 @@ relocation, multi-device transport and scaling remain unqualified/unsupported
 as recorded. `.105` does not receive this profile.
 [Acceptance, identities and rollback](bc250_rccl_b038_results/README.md).
 
+## Experimental weight-only INT8 recipe (B05.1, .104)
+
+An explicitly imported prototype in `WS/helpers/bc250_quant_b051.py` now provides
+`pack(frozen_gpu_weight)` and `linear(input, packed_weight, bias=None)`, with
+bounded GPU forward/input/bias first gradients. It is **not installed** in the
+runtime and does not convert applications automatically. It is not packed INT4,
+NF4, a TorchAO/bitsandbytes backend or a complete QLoRA recipe.
+
+The native weight-only primitive currently gives wrong results for strided
+activations or strided FP32 scales and has no input derivative. The prototype
+normalizes those layouts and supplies its own input derivative; the native
+operator defects remain queued for B05.2. Default launchers and native operators
+are unchanged. Two small forward fixtures were about3.2× slower than resident
+dense FP32, while fresh packed weight payload was about1.97× smaller than FP16.
+No model speed/quality or total-memory improvement is established.
+[Exact API, bounds, CPU references, timings and limitations](bc250_quant_b051_results/README.md).
+
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
 The current mutable development prefix automatically supplies one qualified

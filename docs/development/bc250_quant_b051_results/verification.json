@@ -1,0 +1,223 @@
+{
+  "status": "passed",
+  "checks": 110,
+  "gates": 6,
+  "protected_paths": 377,
+  "changed_hashes": [],
+  "links_unchanged": true,
+  "aot_caches": [
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/build/library/src/rocfft_kernel_cache_gfx1013.db",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/build/library/src/rocfft_temp_cache.db",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/dist/lib/rocfft/rocfft_kernel_cache_gfx1013.db",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/stage/lib/rocfft/rocfft_kernel_cache_gfx1013.db"
+  ],
+  "source_sha256": {
+    "audit_quant_b051.py": "54e1c60f58a0d41b259de5bac7aa2f6d8a4a5b0000b32698469f364cc54f1954",
+    "bc250_quant_b051.py": "54c983733d66213070436a2ec75775fa96383f5053b5ad788d17c2b0ae75e6da",
+    "validate_quant_b051.py": "a383b2d8f8573277890c3664efb585869924741a5294ae2391abaee060ae87de",
+    "qualify_quant_b051_on_host.py": "b5936a655f15d9374db766d3846de2b7e8338bbc2313a12cc31fa5b044c4beb9",
+    "export_quant_b051_on_host.py": "ea3633feb233eb82298d6ace60bb3f0d51aa0bd48612a3ea1f806837b9786591"
+  },
+  "torch_source_sha256": {
+    "GIT_REVISION": "62260dd5810d2219909eef24edd54177dbc39c137b9208f285a08cbb43d2547d",
+    "aten/src/ATen/native/cuda/int8mm.cu": "7f084841d830ac257507ea0d2d1df7aefc57ff3e4e84113177f1e23b6632d846",
+    "aten/src/ATen/native/cuda/int4mm.cu": "02dde40cf3cee27a2c3ab2c202b13febb8428074a928ba9c1a577317a8b2d020",
+    "aten/src/ATen/native/native_functions.yaml": "e721207b2901592203121128dee1fea7d5544f1727b0ba5abce943d833f2061a",
+    "tools/autograd/derivatives.yaml": "5a0a7c7775fe801206fea8be5d7fb214756e817b880c68ba32f88dfa909a3cef"
+  },
+  "native_torch_revision": "2b449c4abe36b896a6efb2a68e7a42d9922d5696",
+  "packages": {
+    "torchao": false,
+    "bitsandbytes": false
+  },
+  "triton": "3.8.0",
+  "torch": "2.13.0a0+gfx1013",
+  "hip": "7.17.0",
+  "native_findings": [
+    {
+      "name": "existing-native-weight-int8-torch.float32",
+      "status": "passed"
+    },
+    {
+      "name": "existing-native-weight-int8-torch.float16",
+      "status": "passed"
+    },
+    {
+      "name": "existing-native-weight-int8-torch.bfloat16",
+      "status": "passed"
+    },
+    {
+      "name": "native-strided-input-defect",
+      "status": "reproduced",
+      "mismatched_elements": 15,
+      "actual": [
+        [
+          3.5,
+          7.0,
+          10.5,
+          14.0,
+          17.5
+        ],
+        [
+          3.5,
+          7.0,
+          10.5,
+          14.0,
+          17.5
+        ],
+        [
+          3.5,
+          7.0,
+          10.5,
+          14.0,
+          17.5
+        ]
+      ],
+      "expected": [
+        [
+          10.5,
+          21.0,
+          31.5,
+          42.0,
+          52.5
+        ],
+        [
+          10.5,
+          21.0,
+          31.5,
+          42.0,
+          52.5
+        ],
+        [
+          10.5,
+          21.0,
+          31.5,
+          42.0,
+          52.5
+        ]
+      ]
+    },
+    {
+      "name": "native-strided-scale-defect",
+      "status": "reproduced",
+      "mismatched_elements": 12
+    },
+    {
+      "name": "native-input-gradient-unavailable",
+      "status": "expected-refusal",
+      "error": "derivative for aten::_weight_int8pack_mm is not implemented"
+    },
+    {
+      "name": "native-packed-int4-gfx1013-refusal",
+      "status": "expected-refusal",
+      "error": "_convert_weight_to_int4pack_cuda is only supported on AMD gpu arch greater than or equal to CDNA2"
+    }
+  ],
+  "prototype_checks": 71,
+  "prototype_timings": [
+    {
+      "shape": [
+        8,
+        128,
+        256
+      ],
+      "pairs_ms": [
+        {
+          "recipe": 0.2964236666684883,
+          "resident-dense": 0.08821333331828403
+        },
+        {
+          "resident-dense": 0.072655666637426,
+          "recipe": 0.2604530000098748
+        },
+        {
+          "recipe": 0.240054666657367,
+          "resident-dense": 0.0822240000009818
+        }
+      ],
+      "packed_weight_bytes": 33280,
+      "fp16_weight_bytes": 65536,
+      "fp32_weight_bytes": 131072,
+      "scope": "3 alternating pairs,3 eager calls; recipe includes validations/host sync; baseline resident dequantized FP32 weight; forward only, no model claim"
+    },
+    {
+      "shape": [
+        32,
+        256,
+        256
+      ],
+      "pairs_ms": [
+        {
+          "recipe": 0.25819499997699796,
+          "resident-dense": 0.08513466665741969
+        },
+        {
+          "resident-dense": 0.07463166665881242,
+          "recipe": 0.2581623333526295
+        },
+        {
+          "recipe": 0.24000833335927987,
+          "resident-dense": 0.08133599999382568
+        }
+      ],
+      "packed_weight_bytes": 66560,
+      "fp16_weight_bytes": 131072,
+      "fp32_weight_bytes": 262144,
+      "scope": "3 alternating pairs,3 eager calls; recipe includes validations/host sync; baseline resident dequantized FP32 weight; forward only, no model claim"
+    }
+  ],
+  "kernel_names": [
+    "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]",
+    "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]"
+  ],
+  "guards": [
+    {
+      "label": "quant-b051-audit-r1",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b051-audit-r2",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b051-prototype-r1",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b051-r1-compiled-dense",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b051-r1-core",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b051-r1-daily",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b051-r1-opt-in",
+      "status": "acknowledged"
+    }
+  ],
+  "boot_id": "5c04afbb-ff2f-4f4b-9eac-8238bb9288fc",
+  "kernel": "7.1.5-bc250rocm-r2",
+  "kernel_log_unchanged_including_failed_probe": true,
+  "daily_runtime_sha256": "32fd45595989e09597dbb0fcfc8992595e8861c0581a49827fcf965e35a865e0",
+  "opt_in_runtime_sha256": "42eb7631d6b760b0fabed37c35ac57c9e02dbc2a7ae44780efd63c5e61a815b9",
+  "native_build_required": false,
+  "default_changed": false,
+  "installed": false,
+  "host105_contacted": false,
+  "running_jobs": [],
+  "running_containers": [],
+  "code_revision": "c4383972c8b59f06e436f84bcb57c203cd11c523",
+  "archive": {
+    "sha256": "6051eee04658afdb81fd017087ae01f2b268843303202965a57906447ebb2f41",
+    "bytes": 475903
+  },
+  "raw_log_files": 63,
+  "raw_log_bytes": 1497225,
+  "local_bc250_tests": 29,
+  "static_checks": "Ruff E4,E7,E9,F and format; five Python sources parsed"
+}

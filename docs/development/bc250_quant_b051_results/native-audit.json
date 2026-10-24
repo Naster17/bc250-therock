@@ -1,0 +1,90 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "existing-native-weight-int8-torch.float32",
+      "status": "passed"
+    },
+    {
+      "name": "existing-native-weight-int8-torch.float16",
+      "status": "passed"
+    },
+    {
+      "name": "existing-native-weight-int8-torch.bfloat16",
+      "status": "passed"
+    },
+    {
+      "name": "native-strided-input-defect",
+      "status": "reproduced",
+      "mismatched_elements": 15,
+      "actual": [
+        [
+          3.5,
+          7.0,
+          10.5,
+          14.0,
+          17.5
+        ],
+        [
+          3.5,
+          7.0,
+          10.5,
+          14.0,
+          17.5
+        ],
+        [
+          3.5,
+          7.0,
+          10.5,
+          14.0,
+          17.5
+        ]
+      ],
+      "expected": [
+        [
+          10.5,
+          21.0,
+          31.5,
+          42.0,
+          52.5
+        ],
+        [
+          10.5,
+          21.0,
+          31.5,
+          42.0,
+          52.5
+        ],
+        [
+          10.5,
+          21.0,
+          31.5,
+          42.0,
+          52.5
+        ]
+      ]
+    },
+    {
+      "name": "native-strided-scale-defect",
+      "status": "reproduced",
+      "mismatched_elements": 12
+    },
+    {
+      "name": "native-input-gradient-unavailable",
+      "status": "expected-refusal",
+      "error": "derivative for aten::_weight_int8pack_mm is not implemented"
+    },
+    {
+      "name": "native-packed-int4-gfx1013-refusal",
+      "status": "expected-refusal",
+      "error": "_convert_weight_to_int4pack_cuda is only supported on AMD gpu arch greater than or equal to CDNA2"
+    }
+  ],
+  "torch": "2.13.0a0+gfx1013",
+  "hip": "7.17.0",
+  "triton": "3.8.0",
+  "packages": {
+    "torchao": false,
+    "bitsandbytes": false
+  }
+}

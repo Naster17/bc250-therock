@@ -915,6 +915,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
+| Weight-only quantization | B05.1 explicit frozen W8 helper:110/6 audit/prototype/regression checks; input/bias/owned-adapter first gradients, safe layouts, bounded GPU native path | Not installed; native layout bugs remain B05.2. Packed weight payload smaller/slower small forward fixtures; no packed INT4/NF4/full QLoRA/model quality/speed/peak-memory claim. |
 | RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B03.8 explicit rccl-single installed/qualified on .104; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
@@ -942,6 +943,44 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B05.1 native low-bit audit/W8 prototype completed2026-10-24:** codec4383972c.
+Existing generic HIP `_weight_int8pack_mm` contiguous FP32/FP16/BF16 references
+pass; strided activation15/15 and strided FP32 scales12/15 wrong outputs
+reproduced. Native bugs **not fixed**; input backward explicitly refuses. Native
+packed INT4 gfx1013 conversion refuses CDNA2 gate; no architecture spoofing.
+TorchAO/bitsandbytes absent/Triton3.8 available; no external low-bit package claim.
+INT8/INT4 source hashes match active Torch2b and patched source14cf.
+Explicit helperWS/helpers/bc250_quant_b051.py: frozen per-channel INT8/FP32 scales,
+round-even/clamp[-127,127]/zero-row1, safe normalized native HIP forward/custom
+first input derivative via scaled upstream/transposed bytes; bias/owned adapter
+first grads. No full float base materialization, integer/scale/base/higher grads.
+Input dtype retained under AMP/bias after native output cast; finite validation
+host sync. Dimensions4096/weight4M/activation-output1M/MAC128M caps; not total
+allocator bounds. Not installed/default, not packed INT4/NF4/full QLoRA.
+Audit7+prototype71+core7+compiled14+daily5+opt-in6=110/six accepted gates.36
+CPU scalar-pack/double output/input/bias composites, byte/tie/zero/guard/private
+stream/FD/adapter/AMP/25refusals/two native GPU kernel trace checks pass. Initial
+collector's null-gradient assumption failed at explicit refusal; corrected
+collector/backend unchanged, failed source/result preserved.29 local tests and
+selected Ruff checks pass;377 protected hashes/four AOT DBs/links retained.
+Seven guards ACK including failure, per-gate/batch/all-run dmesg identical.
+Recipe medians0.26045/0.25816ms vs dense0.08222/0.08134ms (two small FP32 shapes,
+3 alternating pairs*3 eager calls incl validations/sync); ~3.2x slower. Fresh
+packed payload33,280/66,560B vs FP16 65,536/131,072B (~1.97x smaller), excludes
+caller-retained base/temporaries/activations/allocator. No model quality/speed/
+peak-memory claim. Daily runtime32fd/Torch2b/HIPa116/image506f and opt-in14cf/
+RCCLca790/profile42eb retained. R2 boot5c04afbb-ff2f-4f4b-9eac-8238bb9288fc,
+new since B03.8; cause not investigated/no agent reboot. No native build/ccache
+operation/.105 connection/user application touch/deletion. Local artifacts
+kernel/artifacts/quant-b051:475,903B archiveSHA6051eee04658afdb81fd017087ae01f2b268843303202965a57906447ebb2f41,
+63 rawlogs1,497,225B/five helper hashes/native source/seven guards verified.
+WS/logs/quant-b051-qualification-r1/final.json; no own jobs/containers/armed guard.
+Unknown CPU fault distinct/unresolved. [Report/API/limits](bc250_quant_b051_results/README.md).
+**Next B05.2:** native activation/scale layout fix in qualified Torch, isolated
+resource/ccache-bounded pip build and independent layout regressions; preserve
+native backward refusal/daily/opt-in/.105/fallbacks. No model auto-quantization.
+
 
 **B03.8 ordinary-launch opt-in RCCL completed2026-10-23:** code36cabf9be.
 `.104` registry `/opt/bc250-stack/profiles/rccl-single` points to

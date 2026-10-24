@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-23 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-24 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,50 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B05.1 native low-bit audit/W8 prototype completed2026-10-24:** codec4383972c.
+  Existing Torch `_weight_int8pack_mm` generic HIP passes contiguous FP32/FP16/
+  BF16 references, but strided activation15/15 and strided FP32 scale12/15
+  wrong results reproduced. **Native defects remain unfixed.** Native backward
+  explicitly refuses; native packed INT4 conversion rejects gfx1013 via CDNA2
+  gate. TorchAO/bitsandbytes absent; Triton3.8 available is not kernel admission.
+  Source INT8/INT4 hashes match patched local Torch14cf and active native2b.
+  Explicit `WS/helpers/bc250_quant_b051.py` prototype: frozen per-channel W8,
+  FP32 scales/round-even/clamp[-127,127]/zero-row1, normalized layouts, native HIP
+  forward and custom first input derivative using scaled upstream/transposed
+  INT8. Bias/owned adapter first gradients; no integer/scale/base/higher grads.
+  Bounds dimensions4096/weight4M/activation-output1M/MAC128M; finite checks sync
+  host. Output retains explicit input dtype under AMP, bias after output cast.
+  No full floating weight retained/materialized by helper; source weights kept
+  by caller still consume memory. Prototype only, **not installed/default**.
+  Audit7/prototype71/core7/compiled dense14/daily5/opt-in6=110/six accepted gates.
+  Scalar CPU packing/CPU-double forward+input/bias refs,36 dtype/layout composites,
+  all256 bytes/ties/zero rows/guards/private stream/six exact finite differences,
+  owned FP32/BF16 adapter refs/AMP/25 refusals/two native GPU trace events pass.
+  Initial collector assumed null gradient; explicit derivative error retained,
+  corrected collector records refusal. No tolerance/backend change. Seven guards
+  including failed probe ACK; accepted/batch/all-run dmesg match.377 protected
+  hashes/four AOT DBs/links retained;29 local tests/selected Ruff checks pass.
+  Three alternating pairs/three eager calls: shapes8x128x256/32x256x256 recipe
+  medians0.26045/0.25816ms versus resident-dense0.08222/0.08134ms (~3.2x slower).
+  Fresh packed payload33,280/66,560B vs FP16 65,536/131,072B (~1.97x smaller),
+  not total/peak/process memory or model-quality/training-speed qualification.
+  Daily Torch2b/NCCLoff/Glooon/image506f/runtime32fd/HIPa116 and opt-in14cf/
+  RCCLca790/profile42eb retained. Current r2 boot5c04afbb-ff2f-4f4b-9eac-8238bb9288fc
+  observed new since B03.8; reboot cause not investigated/no agent reboot.
+  No native rebuild/ccache operation/prefix replacement/.105 contact/user app
+  inspection/modification/test/deletion; Python CPU fault distinct/unresolved.
+  WS/logs/quant-b051-qualification-r1/final.json, audit-r2/prototype-r1; local
+  kernel/artifacts/quant-b051 archive475,903B SHA6051eee04658afdb81fd017087ae01f2b268843303202965a57906447ebb2f41,
+  63 rawlogs1,497,225B/five source hashes/native source/seven guards verified.
+  No own build/test/container/armed guard at handoff; memory sync `.104` only.
+  [API/evidence/limits](docs/development/bc250_quant_b051_results/README.md).
+  **Next B05.2:** fix demonstrated native INT8 activation/FP32-scale layout handling
+  in qualified Torch; isolated pip build with recorded ccache/resource bounds and
+  independent layout/output regression references. Preserve native unsupported
+  backward boundary, custom W8 derivative, daily Gloo/opt-in RCCL/.105/fallbacks;
+  no model quantization activation or speculative INT4 gate bypass.
+
 
 - **B03.8 ordinary-launch opt-in RCCL completed2026-10-23:** code36cabf9be.
   `.104` registry `/opt/bc250-stack/profiles/rccl-single` →
@@ -2807,7 +2851,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B03.6 | Bounded public contracts, first gradients/DDP and retained stack regression;1365 checks. |
 | [x]   | B03.7 | Numeric FP8 admission guards, raw-bit copy and memory API readiness;1441 checks. No real offload payload/symmetric device claim. |
 | [x]   | B03.8 | Explicit ordinary-launch rccl-single profile on .104;1461/26 gates plus private-context5, nine CPU refusals and lock exclusion pass. Daily NCCL-off preserved; .105 untouched. |
-| [ ]   | **B05.1 — next** | Audit A08/pinned low-bit paths and select one owned bounded weight-only quantization recipe with CPU output/gradient references; no matrix-hardware or automatic speed claim. |
+| [x]   | B05.1 | Audited native low-bit paths; two native layout defects reproduced, backward/INT4 refusals retained. Isolated frozen W8 first-gradient recipe110/6 checks passes; smaller weight payload/slower small forward fixtures, not installed. |
+| [ ]   | **B05.2 — next** | Repair native weight-only INT8 activation/FP32-scale layout handling; isolated Torch build and independent layout regressions. Preserve daily/opt-in/fallbacks; native backward remains refused, no INT4 gate bypass. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

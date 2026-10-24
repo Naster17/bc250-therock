@@ -1,0 +1,234 @@
+{
+  "status": "passed",
+  "checks": [
+    "pack-output-input-bias-grad-guards-torch.float32-1-5-7-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float32-1-5-7-strided",
+    "pack-output-input-bias-grad-guards-torch.float32-1-5-7-batched",
+    "pack-output-input-bias-grad-guards-torch.float32-3-9-17-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float32-3-9-17-strided",
+    "pack-output-input-bias-grad-guards-torch.float32-3-9-17-batched",
+    "pack-output-input-bias-grad-guards-torch.float32-6-13-64-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float32-6-13-64-strided",
+    "pack-output-input-bias-grad-guards-torch.float32-6-13-64-batched",
+    "pack-output-input-bias-grad-guards-torch.float32-2-17-129-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float32-2-17-129-strided",
+    "pack-output-input-bias-grad-guards-torch.float32-2-17-129-batched",
+    "pack-output-input-bias-grad-guards-torch.float16-1-5-7-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float16-1-5-7-strided",
+    "pack-output-input-bias-grad-guards-torch.float16-1-5-7-batched",
+    "pack-output-input-bias-grad-guards-torch.float16-3-9-17-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float16-3-9-17-strided",
+    "pack-output-input-bias-grad-guards-torch.float16-3-9-17-batched",
+    "pack-output-input-bias-grad-guards-torch.float16-6-13-64-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float16-6-13-64-strided",
+    "pack-output-input-bias-grad-guards-torch.float16-6-13-64-batched",
+    "pack-output-input-bias-grad-guards-torch.float16-2-17-129-contiguous",
+    "pack-output-input-bias-grad-guards-torch.float16-2-17-129-strided",
+    "pack-output-input-bias-grad-guards-torch.float16-2-17-129-batched",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-1-5-7-contiguous",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-1-5-7-strided",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-1-5-7-batched",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-3-9-17-contiguous",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-3-9-17-strided",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-3-9-17-batched",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-6-13-64-contiguous",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-6-13-64-strided",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-6-13-64-batched",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-2-17-129-contiguous",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-2-17-129-strided",
+    "pack-output-input-bias-grad-guards-torch.bfloat16-2-17-129-batched",
+    "round-even-zero-row-symmetric-endpoints",
+    "all256-signed-byte-values-output-gradient",
+    "private-stream-handoff-and-six-exact-finite-differences",
+    "owned-frozen-base-adapter-all-first-gradients-torch.float32",
+    "owned-frozen-base-adapter-all-first-gradients-torch.bfloat16",
+    "explicit-input-dtype-under-amp",
+    "higher-derivatives-not-advertised",
+    "refuse-trainable-base",
+    "refuse-cpu-base",
+    "refuse-double-base",
+    "refuse-nonfinite-base",
+    "refuse-rank-base",
+    "refuse-empty-base",
+    "refuse-oversized-base",
+    "refuse-cpu-input",
+    "refuse-double-input",
+    "refuse-wrong-k",
+    "refuse-empty-input",
+    "refuse-nonfinite-input",
+    "refuse-oversized-input",
+    "refuse-format-version",
+    "refuse-unknown-format",
+    "refuse-wrong-values-dtype",
+    "refuse-wrong-scale-dtype",
+    "refuse-wrong-scale-shape",
+    "refuse-trainable-scale",
+    "refuse-zero-scale",
+    "refuse-negative-scale",
+    "refuse-nonfinite-scale",
+    "refuse-cpu-values",
+    "refuse-bias-shape",
+    "refuse-bias-dtype",
+    "native-weight-only-forward-and-backward-kernel-trace",
+    "bounded-paired-forward-timing-8-128-256",
+    "bounded-paired-forward-timing-32-256-256"
+  ],
+  "errors": [
+    {
+      "name": "trainable-base",
+      "error": "Pack an explicitly frozen FP16/BF16/FP32 weight"
+    },
+    {
+      "name": "cpu-base",
+      "error": "The prototype requires native gfx1013 HIP tensors"
+    },
+    {
+      "name": "double-base",
+      "error": "Pack an explicitly frozen FP16/BF16/FP32 weight"
+    },
+    {
+      "name": "nonfinite-base",
+      "error": "Weight must be finite"
+    },
+    {
+      "name": "rank-base",
+      "error": "Weight must be a nonempty 2D matrix with dimensions <=4096"
+    },
+    {
+      "name": "empty-base",
+      "error": "Weight must be a nonempty 2D matrix with dimensions <=4096"
+    },
+    {
+      "name": "oversized-base",
+      "error": "Weight exceeds the prototype storage bound"
+    },
+    {
+      "name": "cpu-input",
+      "error": "The prototype requires native gfx1013 HIP tensors"
+    },
+    {
+      "name": "double-input",
+      "error": "Input must have matching K and FP16/BF16/FP32 dtype"
+    },
+    {
+      "name": "wrong-k",
+      "error": "Input must have matching K and FP16/BF16/FP32 dtype"
+    },
+    {
+      "name": "empty-input",
+      "error": "Activation/output/work exceeds the bounded prototype"
+    },
+    {
+      "name": "nonfinite-input",
+      "error": "Inputs must be finite"
+    },
+    {
+      "name": "oversized-input",
+      "error": "Activation/output/work exceeds the bounded prototype"
+    },
+    {
+      "name": "format-version",
+      "error": "Unknown frozen INT8 weight format"
+    },
+    {
+      "name": "unknown-format",
+      "error": "Unknown frozen INT8 weight format"
+    },
+    {
+      "name": "wrong-values-dtype",
+      "error": "Frozen INT8 values and FP32 row scales must share the input device"
+    },
+    {
+      "name": "wrong-scale-dtype",
+      "error": "Frozen INT8 values and FP32 row scales must share the input device"
+    },
+    {
+      "name": "wrong-scale-shape",
+      "error": "Frozen INT8 values and FP32 row scales must share the input device"
+    },
+    {
+      "name": "trainable-scale",
+      "error": "Frozen INT8 values and FP32 row scales must share the input device"
+    },
+    {
+      "name": "zero-scale",
+      "error": "Scales must be finite and positive"
+    },
+    {
+      "name": "negative-scale",
+      "error": "Scales must be finite and positive"
+    },
+    {
+      "name": "nonfinite-scale",
+      "error": "Scales must be finite and positive"
+    },
+    {
+      "name": "cpu-values",
+      "error": "Frozen INT8 values and FP32 row scales must share the input device"
+    },
+    {
+      "name": "bias-shape",
+      "error": "Bias must match output dimension, input device and input dtype"
+    },
+    {
+      "name": "bias-dtype",
+      "error": "Bias must match output dimension, input device and input dtype"
+    }
+  ],
+  "timings": [
+    {
+      "shape": [
+        8,
+        128,
+        256
+      ],
+      "pairs_ms": [
+        {
+          "recipe": 0.2964236666684883,
+          "resident-dense": 0.08821333331828403
+        },
+        {
+          "resident-dense": 0.072655666637426,
+          "recipe": 0.2604530000098748
+        },
+        {
+          "recipe": 0.240054666657367,
+          "resident-dense": 0.0822240000009818
+        }
+      ],
+      "packed_weight_bytes": 33280,
+      "fp16_weight_bytes": 65536,
+      "fp32_weight_bytes": 131072,
+      "scope": "3 alternating pairs,3 eager calls; recipe includes validations/host sync; baseline resident dequantized FP32 weight; forward only, no model claim"
+    },
+    {
+      "shape": [
+        32,
+        256,
+        256
+      ],
+      "pairs_ms": [
+        {
+          "recipe": 0.25819499997699796,
+          "resident-dense": 0.08513466665741969
+        },
+        {
+          "resident-dense": 0.07463166665881242,
+          "recipe": 0.2581623333526295
+        },
+        {
+          "recipe": 0.24000833335927987,
+          "resident-dense": 0.08133599999382568
+        }
+      ],
+      "packed_weight_bytes": 66560,
+      "fp16_weight_bytes": 131072,
+      "fp32_weight_bytes": 262144,
+      "scope": "3 alternating pairs,3 eager calls; recipe includes validations/host sync; baseline resident dequantized FP32 weight; forward only, no model claim"
+    }
+  ],
+  "kernel_names": [
+    "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]",
+    "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]"
+  ]
+}
