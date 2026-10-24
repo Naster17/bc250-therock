@@ -915,7 +915,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
-| Weight-only quantization | B05.1 explicit frozen W8 helper:110/6 audit/prototype/regression checks; input/bias/owned-adapter first gradients, safe layouts, bounded GPU native path | W8 helper not installed; B05.2/B05.3 fix native layouts in both daily/RCCL cohorts; B05.4 reduces valid-path validation reads2→1 with bounded latency/reference evidence; B05.5 explicit module/state/CPU-checkpoint resume295/10 qualified; optional helper only. Packed weight payload smaller/slower small forward fixtures; no packed INT4/NF4/full QLoRA/model quality/speed/peak-memory claim. |
+| Weight-only quantization | B05.6 public opt-in `bc250_quant 0.1.0` installed on .104 daily/RCCL imagee2821cf8:817 candidate+817 installed checks, CPU-reference first gradients/state/AdamW resume and actual B05.5 checkpoint compatibility | Explicit frozen W8 only; native layouts fixed in both a524 cohorts, module first input/bias gradients via unchanged helper. TorchAO/bitsandbytes/NF4/packed INT4/full QLoRA remain absent/unqualified; native direct backward refuses. No model-quality/speed/peak-memory claim. [Use/recovery](bc250_quant_b056_results/README.md). |
 | RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
@@ -943,6 +943,36 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B05.6 W8 runtime packaging completed2026-10-24:** final toolsabd8a4e04,
+public optional bc250_quant0.1.0. Core copy6832ff9e exact; modulea18e988f changes
+only import to relative. Pure wheelMIT/provenance/RECORD, local/host SHAfa71248b;
+imagee2821cf8507467b22323272439d636f7c0918e27b8aa2790a5f524b10165a184
+retains base506f layers. Dailyruntime5a3a4c2f/profile6101835b now select that image;
+native Torcha524/HIP/ROCm/math/SDMA0/heapoff/N3.2 unchanged. Both old manifests/
+images retained; daily EX promotion/accept/rollback, SH candidate/ordinary gates.
+817 candidate+817 installed checks/32 accepted gates: both cohorts public imports/
+RECORD/source identity, W8 module71+recipe71, consumers5/6, core7/FFT245/sparse253;
+nine actual old B05.5 checkpoint output/first-gradient/reverse roundtrips. No math/
+tolerance change. Initial stageunsupported --cpus twice; final RAM1GiB/quota2/
+networkoff/pullnever/pure Python only. Consumeraccelerate thencoretransformers
+refuse under wrong plain-Torch test launcher, no GPU error; both generations
+restored twice. Final retained fixtures use qualified bc250-train; W8 suites
+bc250-torch. Prior candidate808+808/installed146+303 and both failures/old tools/
+rollback records retained.457 protected hashes/four AOT DBs/links, same r2bootc6a50cfa,
+per-gate/batch/export kernel logs unchanged;81 total guards ACK (32 accepted/49prior).
+29 local tests/Ruff/wheel reproducibility/RECORD/license checks pass. No native
+build/ccache reset/source/cache/image deletion/kernel/BIOS/user-app/.105 work.
+Native direct backward/INT4 still refuse, broader TorchAO/NF4/full QLoRA/compiled/
+model quality/speed/peak-memory claims absent; unknown CPU fault distinct/unresolved.
+Local kernel/artifacts/quant-b056 archive4,165,410B SHAd57be371cd444afd56739af693c35c5477a1843125dde6475af944275a09aef5;
+790 rawfiles18,442,720B/nine tools/wheel/images/recovery/81 guards verified.
+No own jobs/containers/armed guards at handoff; memory sync .104 only.
+Raw WS/logs/quant-b056-{candidate,installed}-r3/final.json; recovery WS/recovery/
+quant-b056-before. [Package/API/evidence/rollback](bc250_quant_b056_results/README.md).
+**Next B06.1:** audit pinned ONNX export/runtime execution-provider applicability,
+then bounded isolated export/CPU-reference/GPU-interoperability qualification;
+CPU export/runtime availability does not qualify a GPU execution provider.
 
 **B05.5 explicit frozen-W8 module/state completed2026-10-24:** code
   e1543d1cf75dc679edcba1b2963e6515eb28a1cc. New optional WS/helpers/

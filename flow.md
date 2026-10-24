@@ -9,6 +9,39 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B05.6 optional W8 package installed2026-10-24:** final toolsabd8a4e04
+  (initialaee53dcc0/runnersc9de6be11 retained). bc250_quant0.1.0 public exports
+  FrozenW8Linear/FrozenInt8Weight/pack/linear; explicit opt-in, no model/dispatch
+  conversion. Core6832ff9e exact/modulea18e988f only relative import changes;
+  wheelMIT/provenance/RECORD SHAfa71248bb32fbc0718873511dd90e159c3f07e0fc8412d40935b04dd36eeae36.
+  Imagee2821cf8507467b22323272439d636f7c0918e27b8aa2790a5f524b10165a184 retains
+  base506f layers; dailyruntime5a3a4c2f/profile6101835b select it under daily EX lock.
+  Old image/manifests retained at WS/recovery/quant-b056-before, rollback exercised
+  twice after runner refusals. Native Torcha524/both payloads/HIP/ROCm/kernel/
+  math SDPA/SDMA0/heapoff/N3.2 unchanged. No native build/ccache reset/deletion/
+  user-app/.105 work. StageRAM1GiB/CPUquota2/networkoff/pullnever; two --cpus
+  syntax refusals before build retained. No package/kernel arithmetic defect found.
+ 817 candidate+817 installed/32 accepted gates: public import/RECORD/source identity,
+  both cohorts module71+recipe71, consumers5/6, core7/FFT245/sparse253, nine actual
+  B05.5 checkpoint output/first-gradient/reverse roundtrips. Initial consumer
+  accelerate and later coretransformers refuse under incorrect plain-Torch runner;
+  prior candidate808+808/installed146+303 and failures preserved, both rollback
+  records exact. Final retained fixtures bc250-train, public W8 suites bc250-torch.
+  Same wheel/image/tolerances throughout;29 local tests/Ruff/wheel determinism pass.
+ 457 protected hashes/four AOT DBs/links retained with deliberate manifest updates/
+  recovery pinned;81 guards ACK (32 accepted/49prior). Same r2bootc6a50cfa,
+  per-gate/batch/export kernel logs identical. No native backward/INT4 admission,
+  TorchAO/NF4/full QLoRA/compiled W8/model-quality/speed/peak-memory claim; CPU
+  segfault remains distinct/unresolved. Raw WS/logs/quant-b056-{candidate,installed}-r3/
+  final.json; local kernel/artifacts/quant-b056 archive4,165,410B
+  SHAd57be371cd444afd56739af693c35c5477a1843125dde6475af944275a09aef5,
+ 790 rawfiles18,442,720B/nine tools/wheel/images/recovery/81 guards verified.
+  No own jobs/containers/armed guards at handoff; memory sync `.104` only.
+  [Package/use/results/rollback](docs/development/bc250_quant_b056_results/README.md).
+  **Next B06.1:** audit pinned ONNX export/runtime execution-provider applicability,
+  then bounded isolated export/CPU-reference/GPU-interoperability qualification.
+  Keep W8 package/native defaults/.105; CPU runtime does not qualify GPU provider.
+
 - **B05.5 explicit frozen-W8 module/state completed2026-10-24:** code
   e1543d1cf75dc679edcba1b2963e6515eb28a1cc. New optional WS/helpers/
   bc250_quant_b055.py FrozenW8Linear; explicit frozen standard nn.Linear conversion,
@@ -3009,7 +3042,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B05.3 | Matched RCCL Torch layout repair selected after1732 candidate+371 ordinary checks; daily B05.2 unchanged. Both cohorts use a524 source; old profile/recovery retained. |
 | [x]   | B05.4 | Strict helper validation normal scalar reads2→1;475 current-boot checks, matched outputs/gradients/errors, bounded paired latency gains. Rejected slower list-copy experiment retained; native cohorts/defaults unchanged. |
 | [x]   | B05.5 | Explicit frozen-W8 module/versioned state, FP32 scale-preserving moves, CPU-reference first gradients and exact owned adapter AdamW resume;295 checks/ten gates. Optional helper only, no native/default/image update. |
-| [ ]   | **B05.6 — next** | Independent optional helper/module runtime packaging; public import/state/gradient and retained-consumer qualification before locked promotion. Dense defaults/old images retained; no automatic model conversion/full QLoRA claim. |
+| [x]   | B05.6 | Public opt-in bc250_quant0.1.0 installed in both .104 runtime cohorts;817 candidate+817 ordinary installed checks, actual B05.5 checkpoint compatibility; identity rollback exercised after test-runner refusals. Native/defaults/.105 preserved. |
+| [ ]   | **B06.1 — next** | Pinned ONNX export/runtime and execution-provider applicability audit; bounded independent export/CPU-reference/GPU-interoperability candidate. CPU runtime availability is not GPU-provider support. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

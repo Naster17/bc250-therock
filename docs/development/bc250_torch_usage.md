@@ -84,10 +84,12 @@ explicit selection/settings apply. [Matched update/rollback](bc250_quant_b053_re
 
 ## Experimental weight-only INT8 recipe (B05.1, .104)
 
-An explicitly imported prototype in `WS/helpers/bc250_quant_b051.py` now provides
-`pack(frozen_gpu_weight)` and `linear(input, packed_weight, bias=None)`, with
-bounded GPU forward/input/bias first gradients. It is **not installed** in the
-runtime and does not convert applications automatically. It is not packed INT4,
+The .104 runtime now installs the optional `bc250_quant 0.1.0` package (B05.6).
+`from bc250_quant import pack, linear, FrozenW8Linear` works in scripts run through
+`bc250-torch` or `bc250-train`, including the explicit `rccl-single` profile.
+It provides bounded GPU forward/input/bias first gradients. Import/conversion is
+explicit; ordinary Torch models are not automatically converted. The earlier
+`WS/helpers/bc250_quant_b051.py` interface remains available unchanged. It is not packed INT4,
 NF4, a TorchAO/bitsandbytes backend or a complete QLoRA recipe.
 
 B05.2 fixes native strided-activation/FP32-scale wrong results in the daily
@@ -109,14 +111,13 @@ measurements, not training/model gains or proof of beating dense GEMM.
 
 ### Explicit frozen-W8 module and checkpoints (B05.5)
 
-`WS/helpers/bc250_quant_b055.py` adds `FrozenW8Linear`. It is an optional
-helper file, not an installed package or automatic replacement. In an owned
-script placed alongside the helper (or with that directory explicitly on its
-Python search path):
+`FrozenW8Linear` is installed in the public optional package on .104 (B05.6).
+Run an owned script with `bc250-torch script.py` or `bc250-train script.py`;
+no helper-directory `PYTHONPATH` is needed:
 
 ```python
 import torch
-from bc250_quant_b055 import FrozenW8Linear
+from bc250_quant import FrozenW8Linear
 
 source = torch.nn.Linear(128, 64, device="cuda", dtype=torch.bfloat16)
 source.weight.requires_grad_(False)  # Explicitly freeze before conversion.
@@ -143,6 +144,14 @@ Invalid own-module payload is validated before copying its tensors. Loading a
 larger parent model is not globally transactional. As with ordinary modules,
 train/eval mode and the optimizer are managed separately by the caller.
 [Contracts, tested bounds, checkpoint resume and limitations](bc250_quant_b055_results/README.md).
+
+B05.6 preserves B05.5 state v1 in both directions: existing helper checkpoints
+load through the public API, and public state loads through the retained helper.
+The distribution copies the qualified core exactly and changes only the module's
+internal import to a relative package import. Native Torch backward/INT4 limits
+and helper bounds remain. This package does not install TorchAO/bitsandbytes or
+provide full QLoRA/model-quality/speed guarantees.
+[Package identities, acceptance and rollback](bc250_quant_b056_results/README.md).
 
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 

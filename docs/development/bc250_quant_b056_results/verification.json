@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "candidate_checks": 817,
+  "installed_checks": 817,
+  "gates": 32,
+  "protected_paths": 457,
+  "source_sha256": {
+    "build_quant_b056.py": "c56fe47286ac5443cd167e9f21335de2bdebb2980dabce3432c63d6ad17a3b49",
+    "stage_quant_b056_on_host.py": "2f32bb321255a1d635078670947df3c4cd7e4e1ef043474a55eff2e84722d7f3",
+    "qualify_quant_b056_on_host.py": "db9967e1ba4f1be9c2ebd5ffcfaf531cae86b7134940b0061f482f4f06fb4a25",
+    "validate_quant_b056.py": "67172f88a401c638c4110063b25000f335fca536b7f3733710e2eff741ed4d46",
+    "validate_quant_b056_compat.py": "870eceb583d68ba685d4076f1b25664d86c02ce97b43e88ee92582a562d3337b",
+    "deploy_quant_b056_on_host.py": "ed72ee20e48cd52076f29111560a6647085032c9c969102e4b0537c306de5915",
+    "export_quant_b056_on_host.py": "d15174d930075480bad8ef4a1d5095d1104fe8134a411606eec420b823216179",
+    "bc250_quant_b051.py": "6832ff9e58104236d877a455fdfe90f11b3803198732497d6dd4ac77242fd319",
+    "bc250_quant_b055.py": "a18e988fab0e9cf816c94cd21cffdb151661a443a77a14c92d5cdd02f0bbd168"
+  },
+  "daily_runtime_sha256": "5a3a4c2f79341bc8ea666cc8f911449821d315ffbff1012244f8a3d851ac5cc5",
+  "profile_sha256": "6101835ba283a9ee7f098aa37d7398dd796c6d663e18089bd3c2790c1a8eb8e0",
+  "image": "e2821cf8507467b22323272439d636f7c0918e27b8aa2790a5f524b10165a184",
+  "previous_image": "506f3b262fa5fe8c29b9babec07b03078dd6f85492a9ac2cffc65955297e4349",
+  "base_layers_preserved": true,
+  "wheel_sha256": "fa71248bb32fbc0718873511dd90e159c3f07e0fc8412d40935b04dd36eeae36",
+  "wheel_bytes": 7594,
+  "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/quant-b056-before",
+  "boot_id": "c6a50cfa-a368-4ba5-ab28-66250b4f1f1f",
+  "acknowledged_guards": 81,
+  "accepted_guards": 32,
+  "historical_guards": 49,
+  "rollback_exercised": true,
+  "native_libraries_changed": false,
+  "host105_contacted": false,
+  "running_jobs": [],
+  "rollback_used": false,
+  "code_revision": "abd8a4e04ecaa2584129a621ee4322295ebbd542",
+  "archive": {
+    "sha256": "d57be371cd444afd56739af693c35c5477a1843125dde6475af944275a09aef5",
+    "bytes": 4165410
+  },
+  "raw_log_files": 790,
+  "raw_log_bytes": 18442720,
+  "local_bc250_tests": 29
+}
