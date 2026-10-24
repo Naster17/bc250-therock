@@ -915,8 +915,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
-| MIGraphX | B06.3 source35b40656d/isolated CMake6a7c5b7; strict DPP0 C++17 declaration guard fixed, real HIPRTC modules/default subwave/block CPU references;93 checks twice. Minimal GPU configure previously passed | Full backend/provider not built/installed. Ordinary-space16GiB planning gate refuses current~1GiB; BF16 heuristic, native parser/binding prerequisites remain unqualified. FP8/MX/Lt stay excluded. [Repair/scope/budget](bc250_migraphx_b063_results/README.md). |
-| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.2 header/configure admission audit complete; strict-JIT/graph work remains B06.3. [Use/results](bc250_onnx_b061_results/README.md). |
+| MIGraphX | B06.4 source622ea3f2a/isolated CMake6a7c5b7; full minimal FP32 GPU backend built with no-Lt query repair.22 native pointwise/reduction/GEMM/convolution references plus22 retained checks pass twice; durable external build/cache retained | Isolated candidate only; no installed backend/parser/bindings/ORT GPU EP. BF16 heuristic unqualified, FP8/MX/Lt/CK/MLIR dispatch off. Root space remains low; reconnect documented build storage. [Results/replay/scope](bc250_migraphx_b064_results/README.md). |
+| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.4 isolated FP32 MIGraphX graph backend qualified; native ONNX parser work remains B06.5, no ORT GPU EP. [Use/results](bc250_onnx_b061_results/README.md). |
 | Weight-only quantization | B05.6 public opt-in `bc250_quant 0.1.0` installed on .104 daily/RCCL imagee2821cf8:817 candidate+817 installed checks, CPU-reference first gradients/state/AdamW resume and actual B05.5 checkpoint compatibility | Explicit frozen W8 only; native layouts fixed in both a524 cohorts, module first input/bias gradients via unchanged helper. TorchAO/bitsandbytes/NF4/packed INT4/full QLoRA remain absent/unqualified; native direct backward refuses. No model-quality/speed/peak-memory claim. [Use/recovery](bc250_quant_b056_results/README.md). |
 | RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
@@ -945,6 +945,50 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B06.4 isolated MIGraphX FP32 graphs completed2026-10-25:** source
+ 622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83 over35b40656d; toolsf8635babe.
+  Full minimal GPU backend/HIPRTC driver/owned C++17 fixture built on .104.
+  Reproduced Lt-disabled lowering.cpp:288 missing gfx_default_rocblas; exported
+  queries now exist in both configurations, return true without Lt, enabled
+  implementation preserved. New upstream-style test; both compile configurations
+  syntax-pass and both no-Lt overloads execute/pass. No whitelist/BF16/FP8 change.
+  Native gfx1013 wave32 FP32 graph gate22: strided+broadcast pointwise/ReLU,
+  row sums17/33/129/513, rocBLAS GEMM K7/17, MIOpen3x3 conv N1/2, changed-input
+  second evaluation of ten compiled graphs. CPU-double outputs/host-input guards,
+  actual GPU lowered ops, explicit HIP copies; fast_math false/tune off. Not GPU
+  allocation-canary/autograd/model/performance/all-dtype or provider qualification.
+  Core7/ONNXaudit4/daily5/RCCL6=44 perpass,88/two passes/ten ACK guard records;
+  final frozen-tool recheck after export-only audit additions, no math relaxation.
+ 537 protected hashes/four AOT DBs/links, per-gate/final/unmount kernel logs match;
+  same r2bootc6a50cfa.4,782 sourcefiles/172 pinned CMakefiles match archives.
+  Five device objects nativegfx1013/no MFMA/WMMA; loader resolves candidate and
+  selected native ROCm/SQLite libs (Lt may load transitively; dispatch remains off).
+ 29 local tests/Black/pycompile/shell/changed C++ formatting pass; Ruff absent,
+  full upstream CI not run. Source repair bundle reconstructed/fsck passes.
+  Root~1GiB ordinary space required separate durable workstation backing at
+  tmp/migraphx-b064/20261025-storage/durable (~109GiB available), SSHFS slave over
+  existing SSH/no new listener/key/boot mount. File fsync/mmap/rename/symlink/local
+  lock pass. SSHFS3.7.6/FUSE3.18.3 installed, existing r2 FUSE module loaded;
+  inherited APK .105 mirror index request refused, no .105 state/deployment change.
+  Source copied read-only on native disk; build/cache external. FourCPU/jobs4,
+  link1/RAM10GiB/mem+swap12GiB/noGPU/network/read-only build root; independent
+ 2GiB ccache/no reset/old shared cache untouched. Build~426MiB/cache~43MiB;
+  external16GiB admission/14GiB growth limit and root768MiB floor/two-hour bound.
+  Source-root wrapper configuration failure, slow-network-source owned stop,
+  no-Lt compiler failure and initial fixture include diagnostic all retained.
+  Disabled-MLIR unused host warnings remain. No deletion/reserve policy change.
+  Active ROCm/Torch/image/defaults/boot/fallback/BIOS/user apps unchanged; Python
+  CPU fault distinct/unresolved. Raw accepted external logs-build-r4/logs-fixture-r1,
+  WS/logs/migraphx-b064-qualification-r2; local kernel/artifacts/migraphx-b064 archive
+ 67,753,287B SHAb3c1f4576ec1e9bef91458def557080d340e99ea4cfbf7742d72820f48230c32,
+ 154 rawfiles14,184,780B plus patch/bundle/verification/cleanup. No owned jobs,
+  containers/armed guards; temporary mount/relay closed, backing artifacts retained.
+  [Scope/replay/storage/results](bc250_migraphx_b064_results/README.md).
+  **Next B06.5:** reconnect documented durable storage; audit/build pinned native
+  ONNX parser prerequisites, then small ONNX→gfx1013 FP32 graphs against independent
+  CPU references. Preserve CPU ORT/Torch defaults; parser/bindings/ORT GPU provider,
+  BF16/FP8/CK/MLIR and larger-model coverage remain separate admissions.
 
 **B06.3 strict MIGraphX C++17 repair completed2026-10-24:** source
  35b40656df72d075a69b155273cf0cc121009683 over95672916e; toolsa03d0e38a.

@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-24 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-25 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,50 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B06.4 isolated MIGraphX FP32 graphs completed2026-10-25:** source
+ 622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83 over35b40656d; toolsf8635babe.
+  Full minimal GPU backend/HIPRTC driver/owned C++17 fixture built on .104.
+  Reproduced Lt-disabled lowering.cpp:288 missing gfx_default_rocblas; exported
+  queries now exist in both configurations, return true without Lt, enabled
+  implementation preserved. New upstream-style test; both compile configurations
+  syntax-pass and both no-Lt overloads execute/pass. No whitelist/BF16/FP8 change.
+  Native gfx1013 wave32 FP32 graph gate22: strided+broadcast pointwise/ReLU,
+  row sums17/33/129/513, rocBLAS GEMM K7/17, MIOpen3x3 conv N1/2, changed-input
+  second evaluation of ten compiled graphs. CPU-double outputs/host-input guards,
+  actual GPU lowered ops, explicit HIP copies; fast_math false/tune off. Not GPU
+  allocation-canary/autograd/model/performance/all-dtype or provider qualification.
+  Core7/ONNXaudit4/daily5/RCCL6=44 perpass,88/two passes/ten ACK guard records;
+  final frozen-tool recheck after export-only audit additions, no math relaxation.
+ 537 protected hashes/four AOT DBs/links, per-gate/final/unmount kernel logs match;
+  same r2bootc6a50cfa.4,782 sourcefiles/172 pinned CMakefiles match archives.
+  Five device objects nativegfx1013/no MFMA/WMMA; loader resolves candidate and
+  selected native ROCm/SQLite libs (Lt may load transitively; dispatch remains off).
+ 29 local tests/Black/pycompile/shell/changed C++ formatting pass; Ruff absent,
+  full upstream CI not run. Source repair bundle reconstructed/fsck passes.
+  Root~1GiB ordinary space required separate durable workstation backing at
+  tmp/migraphx-b064/20261025-storage/durable (~109GiB available), SSHFS slave over
+  existing SSH/no new listener/key/boot mount. File fsync/mmap/rename/symlink/local
+  lock pass. SSHFS3.7.6/FUSE3.18.3 installed, existing r2 FUSE module loaded;
+  inherited APK .105 mirror index request refused, no .105 state/deployment change.
+  Source copied read-only on native disk; build/cache external. FourCPU/jobs4,
+  link1/RAM10GiB/mem+swap12GiB/noGPU/network/read-only build root; independent
+ 2GiB ccache/no reset/old shared cache untouched. Build~426MiB/cache~43MiB;
+  external16GiB admission/14GiB growth limit and root768MiB floor/two-hour bound.
+  Source-root wrapper configuration failure, slow-network-source owned stop,
+  no-Lt compiler failure and initial fixture include diagnostic all retained.
+  Disabled-MLIR unused host warnings remain. No deletion/reserve policy change.
+  Active ROCm/Torch/image/defaults/boot/fallback/BIOS/user apps unchanged; Python
+  CPU fault distinct/unresolved. Raw accepted external logs-build-r4/logs-fixture-r1,
+  WS/logs/migraphx-b064-qualification-r2; local kernel/artifacts/migraphx-b064 archive
+ 67,753,287B SHAb3c1f4576ec1e9bef91458def557080d340e99ea4cfbf7742d72820f48230c32,
+ 154 rawfiles14,184,780B plus patch/bundle/verification/cleanup. No owned jobs,
+  containers/armed guards; temporary mount/relay closed, backing artifacts retained.
+  [Scope/replay/storage/results](docs/development/bc250_migraphx_b064_results/README.md).
+  **Next B06.5:** reconnect documented durable storage; audit/build pinned native
+  ONNX parser prerequisites, then small ONNX→gfx1013 FP32 graphs against independent
+  CPU references. Preserve CPU ORT/Torch defaults; parser/bindings/ORT GPU provider,
+  BF16/FP8/CK/MLIR and larger-model coverage remain separate admissions.
 
 - **B06.3 strict MIGraphX C++17 repair completed2026-10-24:** source
  35b40656df72d075a69b155273cf0cc121009683 over95672916e; toolsa03d0e38a.
@@ -3155,7 +3199,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.1 | Pinned modern ONNX export/CPU runtime installed on .104:181 candidate+181 installed checks plus early33, CPU/GPU-origin graphs/independent references/explicit HIP interop, retained W8/compiler/consumers. ONNX GPU/autograd unqualified. |
 | [x]   | B06.2 | Pinned MIGraphX audit:30 native header CPU-reference checks,52 total/five gates; minimal GPU configure passes with isolated pinned CMake. Strict DPP0 JIT issue/feature risks and disk/reserve budget remain; no full backend/provider installed. |
 | [x]   | B06.3 | Strict C++17 DPP declaration guard repair; actual HIPRTC old-failure reproduction/patched module execution, default subwave and block references;93 checks twice. Feature predicates exercised, explicit full-build budget refuses current space; no backend/provider install. |
-| [ ]   | **B06.4 — next** | Establish durable ordinary build space, then minimal isolated FP32 GPU graph backend build and independent pointwise/reduction/GEMM/convolution references. Preserve artifacts/rescue reserves/runtime/.105; no unqualified low-precision/provider admission. |
+| [x]   | B06.4 | Durable external build storage; full minimal FP32 GPU backend built, Lt-disabled default-query compile defect repaired.22 native graph/reference cases plus22 retained checks pass twice; no runtime/provider install. |
+| [ ]   | **B06.5 — next** | Reconnect durable storage; audit/build pinned native ONNX parser prerequisites, then ONNX→gfx1013 FP32 graph/CPU references. Preserve CPU ORT/Torch defaults; no unqualified bindings/ORT GPU EP/low-precision admission. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
