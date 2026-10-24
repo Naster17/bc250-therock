@@ -11,6 +11,7 @@ from pathlib import Path
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--nccl-available", action="store_true")
     args = parser.parse_args()
     import torch
 
@@ -45,10 +46,8 @@ def main():
 
     try:
         assert torch.cuda.get_device_properties(0).gcnArchName.startswith("gfx1013:")
-        assert (
-            not torch.distributed.is_nccl_available()
-            and torch.distributed.is_gloo_available()
-        )
+        assert torch.distributed.is_nccl_available() == args.nccl_available
+        assert torch.distributed.is_gloo_available()
         passed("native-device-and-candidate-backend")
         for dtype, (m, n, k), xlayout, slayout, wlayout in itertools.product(
             (torch.float32, torch.float16, torch.bfloat16),

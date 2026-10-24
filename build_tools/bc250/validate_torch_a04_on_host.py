@@ -25,6 +25,9 @@ def main():
     )
     ap.add_argument("--env", action="append", default=[])
     ap.add_argument("--release", type=Path, default=Path("/opt/bc250-stack/current"))
+    ap.add_argument(
+        "--runtime-profile", choices=("daily", "rccl-single"), default="daily"
+    )
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--installed", action="store_true")
     ap.add_argument("--integration", action="store_true")
@@ -41,13 +44,13 @@ def main():
     release = args.release.resolve()
     manifest = json.loads((release / "runtime.json").read_text())
     assert os.geteuid() == 0
-    assert (
-        os.uname().release == args.guard_release
-    ), "Guard release must match running kernel"
+    assert os.uname().release == args.guard_release, (
+        "Guard release must match running kernel"
+    )
     assert Path("/sys/class/watchdog/watchdog0/state").read_text().strip() == "active"
-    assert not subprocess.check_output(
-        ["podman", "ps", "-q"], text=True
-    ).strip(), "Preserve other workloads"
+    assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip(), (
+        "Preserve other workloads"
+    )
     logs = ws / "logs" / args.label
     logs.mkdir()
     os.chown(logs, manifest["uid"], manifest["gid"])
@@ -90,11 +93,12 @@ def main():
         else "validate_tiled_sdpa.py"
     )
     options = LaunchOptions(
+        runtime_profile=args.runtime_profile,
         arguments=[
             str(ws / "helpers" / test_script),
             "--output",
             str(logs / "result.json"),
-        ]
+        ],
     )
     for path in args.mount_rw:
         path = path.resolve(strict=True)
