@@ -9,6 +9,45 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B05.3 matched RCCL native layout repair selected2026-10-24:** tools411e72917;
+  no new Torch source edit, both cohorts usea5249802372882dedccb91d3fd4d73be9fcdf2bd.
+  Independent WS/pytorch-quant-b053 from protected B03.7 RCCL14cf source/build
+  +full two-file tracked delta; generated HIP matches exactly two contiguous
+  calls. Pip exit0; NCCLon/systemNCCLon/Glooon;4CPU/4jobs/link1/RAM10GiB/
+  memory+swap12GiB/shared20GiB ccache/no reset/noGPU/noNetwork. Initial~4.8GiB
+  free/copy~3GiB; source-size+1.25GiB reserve and post-copy floor enforced,
+  observed~1.8GiB before export. No old source/build/cache deletion/reset.
+  Shared validator adds explicit --nccl-available and internal harness explicit
+  --runtime-profile; defaults/math/refusals unchanged, original helper backups
+  pinned. Candidate1732/24=layouts220+recipe71+retained1441, normal profile RO
+  RCCL/identity/environment controls, no test-only library/env injection. Ordinary
+ 371/5=layouts220/train6/RCCL64/guards76/daily5.29 guards ACK, per-gate/batch/final
+  dmesg identical;434 protected hashes/four AOT DBs retained with intentional
+  helper updates and registry switch;29 local tests/selected Ruff/shell checks pass.
+  `/opt/bc250-stack/profiles/rccl-single` →`/opt/bc250-stack/dev/rccl-single-b053`,
+  profile446f345e1438f093967a495c816859f4505bd06869dbea382842c2f081f14fd7,
+  libtorch_hipa31cbb159d3edfb4b7e1cc59dfcc325db185c4c540e1fcaa952e09e833335533.
+  RCCLca790 unchanged. Daily B05.2 native2f276/runtime561f014e/image506f/HIPa116/
+  ROCm/N3.2/math/SDMA0/heapoff unchanged. Both selected .104 cohorts now contain
+  the layout repair; old14cf/profile42eb/source/build remain for rollback.
+  WS/recovery/quant-b053-before stores old registry/profile/helpers; locked atomic
+  registry rollback retained/not exercised. Same r2 boot5c04afbb/no reboot/.105
+  contact/BIOS/fallback/user-app inspection/modification/test/deletion.
+  Native backward/INT4 still refuse; W8 helper not installed/no model conversion.
+  Filtered375-object RCCL still one physical GPU/rank1; no numeric FP8/fullbackend/
+  symmetric-device/real offload-payload/multi-device/transport/scaling/speed/
+  universal correctness/stability claim; unknown CPU fault distinct/unresolved.
+  WS/logs/quant-b053-qualification-r1/final.json +quant-b053-ordinary.json; local
+  kernel/artifacts/quant-b053 archive200,536,100B SHA171924233619ce789f958f195d275b6fd07e4522b45a54ed883a015212710eb6,
+  332 rawlogs8,370,556B/native/RCCL/source/eight tools/recovery/29guards verified.
+  No own jobs/containers/armed guard at handoff; memory sync `.104` only.
+  [Use/results/rollback](docs/development/bc250_quant_b053_results/README.md).
+  **Next B05.4:** profile strict W8 validation/native forward/backward overhead on
+  corrected cohorts; implement measured bounded optimization with independent
+  CPU/gradient/error-contract references and paired timing. Preserve default/
+  opt-in/old artifacts/.105; no check weakening or model-speed inference.
+
+
 - **B05.2 native weight-only INT8 layout repair installed2026-10-24:**
   Torcha5249802372882dedccb91d3fd4d73be9fcdf2bd over14cf; tools506ae3b9e.
   FP32 conversion preserves strides; native row-major kernel now receives
@@ -2895,7 +2934,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B03.8 | Explicit ordinary-launch rccl-single profile on .104;1461/26 gates plus private-context5, nine CPU refusals and lock exclusion pass. Daily NCCL-off preserved; .105 untouched. |
 | [x]   | B05.1 | Audited native low-bit paths; two native layout defects reproduced, backward/INT4 refusals retained. Isolated frozen W8 first-gradient recipe110/6 checks passes; smaller weight payload/slower small forward fixtures, not installed. |
 | [x]   | B05.2 | Native activation/FP32-scale layout fix installed in daily NCCL-off Torch after947 candidate+231 ordinary checks. Old RCCL profile remains unfixed; native backward/INT4 refusal retained. |
-| [ ]   | **B05.3 — next** | Check disk/resources and repair the independent RCCL-enabled native cohort; exact layout/retained RCCL-gradient qualification, matched opt-in manifest/ordinary acceptance/rollback. Preserve daily/.105/fallbacks. |
+| [x]   | B05.3 | Matched RCCL Torch layout repair selected after1732 candidate+371 ordinary checks; daily B05.2 unchanged. Both cohorts use a524 source; old profile/recovery retained. |
+| [ ]   | **B05.4 — next** | Measure strict W8 validation/native forward/backward overhead and implement a bounded optimization with independent numeric/gradient/error-contract references and paired timings. Preserve defaults/.105; no check weakening or model-speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

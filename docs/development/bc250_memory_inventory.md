@@ -915,8 +915,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
-| Weight-only quantization | B05.1 explicit frozen W8 helper:110/6 audit/prototype/regression checks; input/bias/owned-adapter first gradients, safe layouts, bounded GPU native path | W8 helper not installed; B05.2 fixes native daily layouts, older RCCL cohort remains for B05.3. Packed weight payload smaller/slower small forward fixtures; no packed INT4/NF4/full QLoRA/model quality/speed/peak-memory claim. |
-| RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B03.8 explicit rccl-single installed/qualified on .104; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
+| Weight-only quantization | B05.1 explicit frozen W8 helper:110/6 audit/prototype/regression checks; input/bias/owned-adapter first gradients, safe layouts, bounded GPU native path | W8 helper not installed; B05.2/B05.3 fix native layouts in both daily/RCCL cohorts; B05.4 measures strict W8 overhead. Packed weight payload smaller/slower small forward fixtures; no packed INT4/NF4/full QLoRA/model quality/speed/peak-memory claim. |
+| RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
@@ -943,6 +943,36 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B05.3 matched RCCL layout repair selected2026-10-24:** tools411e72917,
+Torch sourcea524 unchanged. Independent WS/pytorch-quant-b053 from protected14cf
+RCCL build+two-file full tracked overlay; generated HIP exactly two contiguous
+calls. Pip exit0/4CPU/4jobs/link1/10GiB RAM/12GiB memory+swap/shared20GiB ccache/
+no reset/noGPU/noNet. Initial~4.8GiB disk/~3GiB copy,1.25GiB floor enforced;
+~1.8GiB before archive. No old source/build/cache deleted. Shared validator/harness
+explicit backend/profile selector only; original helper hashes/backups preserved.
+Candidate1732/24 plus ordinary371/5 pass, exact layout220/W8recipe71/retained
+RCCL1441, public native220/consumers6/RCCL64/guards76/daily5.434 protected hashes/
+four AOT DBs retained; intentional helper changes/registry switch,29 guards ACK/
+per-gate/batch/final dmesg identical;29 local tests/selected Ruff/shell checks pass.
+Registry `/opt/bc250-stack/profiles/rccl-single` →`/opt/bc250-stack/dev/rccl-single-b053`;
+profile446f345e1438f093967a495c816859f4505bd06869dbea382842c2f081f14fd7,
+libtorch_hipa31cbb15; RCCLca790 unchanged. Default daily native2f276/runtime561f/
+Torchsourcea524/NCCLoff/image506f/HIPa116/ROCm/defaults unchanged. Both selected
+cohorts now contain native layout fix; old14cf/profile42eb and old builds retained.
+RecoveryWS/recovery/quant-b053-before/old registry/profile/helpers; locked rollback
+not exercised. Same r2 boot5c04afbb/no reboot/.105/user-app/BIOS/fallback/delete.
+Native backward/INT4 still unsupported, W8 not installed/no auto model conversion.
+No numeric FP8/multi-device/protocol/transport/scaling/symmetric device/actual
+payload offload/speed/universal claim; historical CPU fault distinct/unresolved.
+Local kernel/artifacts/quant-b053:200,536,100B archiveSHA171924233619ce789f958f195d275b6fd07e4522b45a54ed883a015212710eb6,
+332 rawlogs8,370,556B/native/source/eight tools/recovery/29guards verified.
+WS/logs/quant-b053-qualification-r1/final.json and quant-b053-ordinary.json;
+no own jobs/containers/armed guard. [Report/use/recovery](bc250_quant_b053_results/README.md).
+**Next B05.4:** measured strict W8 validation/native forward/backward overhead,
+bounded optimization with CPU/gradient/error-contract references and paired timing;
+keep defaults/artifacts/.105 and error checks, no model speed claim.
+
 
 **B05.2 native INT8 layout correction installed2026-10-24:** Torcha5249802372882dedccb91d3fd4d73be9fcdf2bd,
 tools506ae3b9e. Generic `_weight_int8pack_mm` now normalizes converted FP32

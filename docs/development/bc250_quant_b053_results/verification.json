@@ -1,0 +1,202 @@
+{
+  "status": "passed",
+  "candidate_checks": 1732,
+  "ordinary_checks": 371,
+  "guards": [
+    {
+      "label": "quant-b053-r1-layouts",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-recipe",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-guards",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-contracts",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-torch-rccl",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-gpu-gloo",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-distributed",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-sparse",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-triangular",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-sparse-legacy",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-fft-promotion",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-fft-real",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-fft-contracts",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-vision-ops",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-vision-integration",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-audio-dsp",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-audio-native",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-image",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-video",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-files",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-compiled-dense",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-compiled-cnn",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-profiler",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-r1-core",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-installed-layouts",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-installed-train",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-installed-rccl",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-installed-guards",
+      "status": "acknowledged"
+    },
+    {
+      "label": "quant-b053-installed-daily",
+      "status": "acknowledged"
+    }
+  ],
+  "protected_paths": 434,
+  "links": {
+    "/opt/bc250-stack/current": "/opt/bc250-stack/dev/priority1",
+    "/opt/bc250-stack/previous": "/opt/bc250-stack/releases/10.2-gfx1013-20261013-4b000d542",
+    "/opt/bc250-stack/current/torch": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-quant-b052",
+    "/opt/bc250-stack/current/rocm": "/home/nik/bc250work/rocm-10.2-gfx1013/build/dist/rocm",
+    "/opt/bc250-stack/profiles/rccl-single": "/opt/bc250-stack/dev/rccl-single-b053"
+  },
+  "aot_caches": [
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/build/library/src/rocfft_kernel_cache_gfx1013.db",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/build/library/src/rocfft_temp_cache.db",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/dist/lib/rocfft/rocfft_kernel_cache_gfx1013.db",
+    "/home/nik/bc250work/rocm-10.2-gfx1013/build/math-libs/rocFFT/stage/lib/rocfft/rocfft_kernel_cache_gfx1013.db"
+  ],
+  "daily_runtime_sha256": "561f014e31c4ca0bba73861d56125e4e18124867904b7c23cff8d7e0fa36d2a1",
+  "profile": "/opt/bc250-stack/dev/rccl-single-b053",
+  "profile_sha256": "446f345e1438f093967a495c816859f4505bd06869dbea382842c2f081f14fd7",
+  "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+  "native_sha256": {
+    "libtorch.so": "35f181c48a58e46fb004d74ed0fdaac45442ee4c8b2783f03b4dd1368eb8b3c7",
+    "libtorch_cpu.so": "8a1b0e1fecef7afc9309d0460b2fbd13df20b8bd667d7036c58a341a020e5346",
+    "libcaffe2_nvrtc.so": "52453c3ef7232cea9d3b7f8ca8c86a93a69d7bfa0f9f6cfd05bee51148b37d27",
+    "libshm.so": "7f3c6d10c81c2522ab95b27a068ada4ec0dc3b73bc5730943274469fa5e1de3e",
+    "libc10.so": "02f03e93b903b91f816ebc98dd08bef3a6fad2784e7c06051adfdbb3ea692c98",
+    "libtorch_python.so": "f47a0cf7604ea6c329bf8c611c62bdab9121b9ea23a7f0320962d86411357275",
+    "libtorch_global_deps.so": "264067daedcce4fe925fe83eceff3975758609563351cf2ede8eefdb6bed3f4f",
+    "libc10_hip.so": "1b2e14fb2939387093b46f595ade8c5c4d058dc90f555a445b15f7f2f8af90f2",
+    "libtorch_hip.so": "a31cbb159d3edfb4b7e1cc59dfcc325db185c4c540e1fcaa952e09e833335533"
+  },
+  "generated_hip_sha256": "1f4cc0a5a24a368da5b7f0c344f4c5c3a60ebb74523681b1551ea4dc14a580a4",
+  "source": {
+    "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+    "base_revision": "14cfef2d8c5e8c2c40e3b24587233227ea8dadc3",
+    "native_arch": "gfx1013",
+    "source": "qualified patched torch/ alias; full two-file delta over RCCL B03.7 cohort; NCCL on/Gloo on",
+    "source_sha256": {
+      "aten/src/ATen/native/cuda/int8mm.cu": "99f105302ff49de19e22d8b5e8dd6ef66dc0167995055b1523a05f09da260b1e",
+      "test/test_linalg.py": "594b87c3cbd532007527af5ee0ae2edc4aaeb07aa31b955b05b29243025ffd4c"
+    }
+  },
+  "rccl_sha256": "ca790dc73b76a94a7dc97538608cd94b789e73cc18d756b0631111c18230583e",
+  "environment": {
+    "NCCL_WIN_ENABLE": "0",
+    "NCCL_CUMEM_ENABLE": "0",
+    "NCCL_CUMEM_HOST_ENABLE": "0",
+    "NCCL_P2P_DISABLE": "1",
+    "NCCL_IB_DISABLE": "1",
+    "NCCL_SOCKET_IFNAME": "lo",
+    "TORCH_NCCL_ASYNC_ERROR_HANDLING": "1"
+  },
+  "source_sha256": {
+    "build_quant_b053_on_host.py": "41ab62a68d299c2c4ca3b9893dc4e95a3cbd918ff21cab2fbbdec1938295c7e1",
+    "build_torch_b053.sh": "7e86a0fd88b44c498c424aed84e0981f5d91504b2df286ba54fc886631f59faa",
+    "qualify_quant_b053_on_host.py": "bef6e28b1b1178156c0e9c40ace5bf9de9ac04401ca801261b83981c604816dd",
+    "deploy_quant_b053_on_host.py": "fdd3b4fcba8df46ed283fbbec0da490815ae72a524489d547f856a508c5b1b11",
+    "qualify_quant_b053_ordinary.py": "feee14f83c845b544ba613b613e002e9be8f3e2db1634a762a6fd8942d10f16a",
+    "export_quant_b053_on_host.py": "aeea30dcf52ebf10f41ec19cb1ca4bdcda23327845c4305e033c2c856b6c33b0",
+    "validate_quant_b052.py": "9af154ccc063e54617bc89e8eac2e8706f309e94f203a3370e5595bee7b1b901",
+    "validate_torch_a04_on_host.py": "8aa4d470ea1d7bfd216ecdd91d547dc3a533b7587092ebebb4e57c60fe7abba6"
+  },
+  "build_image": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+  "build_returncode": 0,
+  "build_container": "bc250-quant-b053-build",
+  "kernel": "7.1.5-bc250rocm-r2",
+  "boot_id": "5c04afbb-ff2f-4f4b-9eac-8238bb9288fc",
+  "kernel_log_unchanged_including_ordinary": true,
+  "running_jobs": [],
+  "host105_contacted": false,
+  "rollback": "Old profile preserved; identity-guarded registry restore retained, not exercised",
+  "disk_available_bytes": 1950916608,
+  "code_revision": "411e72917cb6b10d8cb36b7c99127720f03ed163",
+  "archive": {
+    "sha256": "171924233619ce789f958f195d275b6fd07e4522b45a54ed883a015212710eb6",
+    "bytes": 200536100
+  },
+  "raw_log_files": 332,
+  "raw_log_bytes": 8370556,
+  "local_bc250_tests": 29,
+  "static_checks": "Selected Ruff E4,E7,E9,F/format and shell syntax pass; no new Torch source changes/full CI"
+}

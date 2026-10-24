@@ -77,7 +77,9 @@ speedup claim. Update or unregister this dependent profile only under the
 Only one GPU/rank is qualified. The375-object filtered library is not a full
 RCCL backend; numeric FP8, symmetric device execution, actual offload-payload
 relocation, multi-device transport and scaling remain unqualified/unsupported
-as recorded. `.105` does not receive this profile.
+as recorded. B05.3 updates the opt-in Torch cohort with the native INT8 layout fix; the same
+explicit selection/settings apply. [Matched update/rollback](bc250_quant_b053_results/README.md).
+`.105` does not receive this profile.
 [Acceptance, identities and rollback](bc250_rccl_b038_results/README.md).
 
 ## Experimental weight-only INT8 recipe (B05.1, .104)
@@ -89,8 +91,8 @@ runtime and does not convert applications automatically. It is not packed INT4,
 NF4, a TorchAO/bitsandbytes backend or a complete QLoRA recipe.
 
 B05.2 fixes native strided-activation/FP32-scale wrong results in the daily
-Torch build automatically. The older `rccl-single` profile still needs this
-correction. The prototype normalizes layouts in both profiles and supplies its
+Torch build automatically. B05.3 also fixes the `rccl-single` native cohort.
+[Matched profile qualification](bc250_quant_b053_results/README.md). The prototype normalizes layouts in both profiles and supplies its
 own input derivative; native backward remains unsupported. No quantization/model
 routing is enabled automatically.
 [Native fix, qualification and rollback](bc250_quant_b052_results/README.md). Two small forward fixtures were about3.2× slower than resident
