@@ -9,6 +9,36 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B05.5 explicit frozen-W8 module/state completed2026-10-24:** code
+  e1543d1cf75dc679edcba1b2963e6515eb28a1cc. New optional WS/helpers/
+  bc250_quant_b055.py FrozenW8Linear; explicit frozen standard nn.Linear conversion,
+  copied bias/policy, no floating-base reference, INT8+FP32 persistent buffers.
+  Matching explicit FP16/BF16/FP32 compute, first input/bias gradients via unchanged
+  helper6832ff9e; CPU storage/load, native gfx1013 forward/conversion. Dtype/device
+  moves preserve exact scales as FP32. State v1 plain metadata+tensors validates
+  before own-module copies; complete fields even strictFalse/assignTrue refused.
+  Parent model loading not globally transactional; no higher/base/scale gradients.
+  295/10 ordinary gates:32 module+36 state+3 owned adapter AdamW/resume eachcohort,
+  retained recipe71 eachcohort+daily5/opt-in6. Independent scalar CPU packing,
+  CPU-double outputs/input and bias gradients; nine roundtrips/24 malformed states,
+  exact continuous-vs-CPU-checkpoint model/optimizer step2. No numerical relaxation
+  or production defect found.29 local tests/selected Ruff checks pass.
+ 445 protected hashes/four AOT DBs/links retained; allten guards ACK, per-gate/batch/
+  export dmesg identical. Same r2 bootc6a50cfa-a368-4ba5-ab28-66250b4f1f1f.
+  Daily561f/profile446f/Torcha524 unchanged. No active-prefix update/build/ccache/
+  package/image/default/native/kernel change, deletion/.105 contact/user app work.
+  Module only explicitly imported from helper directory; not installed/default.
+  Native direct backward/INT4 refuse; no TorchAO/NF4/full QLoRA/model-speed/quality/
+  peak-memory/long-run claim. Historical CPU fault distinct/unresolved.
+  Raw WS/logs/quant-b055-qualification-r1/final.json; local kernel/artifacts/
+  quant-b055 archive510,746B SHA2c0099691e7744e37f4623a269df593d90a48009731bd56de969bc5cbc1b57e7,
+  96 rawfiles2,070,943B/six tools/ten guards verified. No own jobs/containers/armed
+  guard at handoff; memory snapshot synced to `.104` only.
+  [Usage/contracts/evidence](docs/development/bc250_quant_b055_results/README.md).
+  **Next B05.6:** package explicit W8 helper/module in independent optional runtime
+  candidate, public imports/state/gradient/retained-consumer gates before locked
+  promotion. Keep dense defaults/old images; no automatic conversion/full QLoRA.
+
 - **B05.4 strict W8 validation optimization completed2026-10-24:** code917b2823a.
   Explicit helperWS/helpers/bc250_quant_b051.py updated under daily EX lock,
   not an image/site-package/native-prefix change. Normal path reads scalar
@@ -2978,7 +3008,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B05.2 | Native activation/FP32-scale layout fix installed in daily NCCL-off Torch after947 candidate+231 ordinary checks. Old RCCL profile remains unfixed; native backward/INT4 refusal retained. |
 | [x]   | B05.3 | Matched RCCL Torch layout repair selected after1732 candidate+371 ordinary checks; daily B05.2 unchanged. Both cohorts use a524 source; old profile/recovery retained. |
 | [x]   | B05.4 | Strict helper validation normal scalar reads2→1;475 current-boot checks, matched outputs/gradients/errors, bounded paired latency gains. Rejected slower list-copy experiment retained; native cohorts/defaults unchanged. |
-| [ ]   | **B05.5 — next** | Explicit owned frozen-W8 nn.Module conversion and versioned state/checkpoint roundtrip, independent output/input/bias/adapter first gradients. Preserve strict validation/FP32 scales/bounds/opt-in behavior; no full-model QLoRA/quality/speed claim. |
+| [x]   | B05.5 | Explicit frozen-W8 module/versioned state, FP32 scale-preserving moves, CPU-reference first gradients and exact owned adapter AdamW resume;295 checks/ten gates. Optional helper only, no native/default/image update. |
+| [ ]   | **B05.6 — next** | Independent optional helper/module runtime packaging; public import/state/gradient and retained-consumer qualification before locked promotion. Dense defaults/old images retained; no automatic model conversion/full QLoRA claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

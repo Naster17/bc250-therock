@@ -107,6 +107,43 @@ backward old/new latency ratios across daily/RCCL cohorts. These are helper-only
 measurements, not training/model gains or proof of beating dense GEMM.
 [Measurements, error contracts and helper rollback](bc250_quant_b054_results/README.md).
 
+### Explicit frozen-W8 module and checkpoints (B05.5)
+
+`WS/helpers/bc250_quant_b055.py` adds `FrozenW8Linear`. It is an optional
+helper file, not an installed package or automatic replacement. In an owned
+script placed alongside the helper (or with that directory explicitly on its
+Python search path):
+
+```python
+import torch
+from bc250_quant_b055 import FrozenW8Linear
+
+source = torch.nn.Linear(128, 64, device="cuda", dtype=torch.bfloat16)
+source.weight.requires_grad_(False)  # Explicitly freeze before conversion.
+layer = FrozenW8Linear.from_float(source)
+del source  # Conversion does not remove the caller's floating source.
+x = torch.randn(4, 128, device="cuda", dtype=torch.bfloat16, requires_grad=True)
+layer(x).float().square().mean().backward()
+torch.save(layer.cpu().state_dict(), "frozen-w8.pt")
+restored = FrozenW8Linear.from_state_dict(
+    torch.load("frozen-w8.pt", map_location="cpu", weights_only=True), device="cuda"
+)
+```
+
+Convert and choose device/dtype **before constructing an optimizer**. Bias values
+and trainability are copied; the floating base is not retained by the module.
+Only bias is a possible module parameter; INT8 weights and FP32 scales are
+persistent buffers. FP16/BF16/FP32 moves keep scales FP32 without rounding them
+through the compute dtype. Forward requires matching input dtype even under AMP.
+CPU storage/load is allowed; conversion and forward require native gfx1013 GPU.
+
+State v1 records shape, compute dtype and bias policy. Loading requires complete
+matching metadata/payload even with `strict=False`; `assign=True` is refused.
+Invalid own-module payload is validated before copying its tensors. Loading a
+larger parent model is not globally transactional. As with ordinary modules,
+train/eval mode and the optimizer are managed separately by the caller.
+[Contracts, tested bounds, checkpoint resume and limitations](bc250_quant_b055_results/README.md).
+
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
 The current mutable development prefix automatically supplies one qualified
