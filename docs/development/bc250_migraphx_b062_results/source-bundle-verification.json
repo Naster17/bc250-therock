@@ -1,0 +1,14 @@
+{
+  "migraphx": {
+    "revision": "95672916ed289d4be9d230a9be732e1bbad97e8c",
+    "sha256": "293f808f44ab9c142a3b96ce0d7d3b55f6a0d7c60417c6c1b0aecf96fafca37b",
+    "bytes": 28499973,
+    "fresh_clone_and_connectivity_check": "passed"
+  },
+  "rocm_cmake": {
+    "revision": "6a7c5b73b8882c74f8f7060e2633f230dabb7b63",
+    "sha256": "9f667626d4a827e242be77802329a2be23814a558bb3908acac7d9d0bfe963d3",
+    "bytes": 419273,
+    "fresh_clone_and_connectivity_check": "passed"
+  }
+}

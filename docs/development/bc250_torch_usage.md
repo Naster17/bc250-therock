@@ -195,6 +195,10 @@ ONNX training/autograd, GPU execution providers and quantized W8 export remain
 unqualified. Existing Torch GPU math/backward and optional W8/FFT/sparse helpers
 are preserved. [Pinned packages, reference tests, applicability and recovery](bc250_onnx_b061_results/README.md).
 
+B06.2 independently qualifies native MIGraphX pointwise/reduction header probes and
+minimal GPU configure. It installs no graph backend/provider; the CPU behavior
+above is unchanged. [Feasibility, limits and pending strict-JIT issue](bc250_migraphx_b062_results/README.md).
+
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
 The current mutable development prefix automatically supplies one qualified

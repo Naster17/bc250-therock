@@ -915,7 +915,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
-| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; MIGraphX applicability is next B06.2. [Use/results](bc250_onnx_b061_results/README.md). |
+| MIGraphX | B06.2 source9567291/isolated CMake6a7c5b7;30 native pointwise/reduction header references,52 total/five gates; minimal GPU configure resolves existing rocBLAS/MIOpen/HIPRTC | Full backend/provider not built/installed; strict DPP0 C++17 issue, BF16 admission review, native ONNX/Python prerequisites and explicit full-build space budget remain. Default DPP1 strict compile passes. [Audit](bc250_migraphx_b062_results/README.md). |
+| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.2 header/configure admission audit complete; strict-JIT/graph work remains B06.3. [Use/results](bc250_onnx_b061_results/README.md). |
 | Weight-only quantization | B05.6 public opt-in `bc250_quant 0.1.0` installed on .104 daily/RCCL imagee2821cf8:817 candidate+817 installed checks, CPU-reference first gradients/state/AdamW resume and actual B05.5 checkpoint compatibility | Explicit frozen W8 only; native layouts fixed in both a524 cohorts, module first input/bias gradients via unchanged helper. TorchAO/bitsandbytes/NF4/packed INT4/full QLoRA remain absent/unqualified; native direct backward refuses. No model-quality/speed/peak-memory claim. [Use/recovery](bc250_quant_b056_results/README.md). |
 | RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
@@ -944,6 +945,44 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B06.2 MIGraphX admission audit completed2026-10-24:** toolsa8a6d2327.
+  New unmodified source95672916ed289d4be9d230a9be732e1bbad97e8c (rocm-10.1,
+  no upstream10.2 tag seen); isolated required rocm-cmake6a7c5b7, existingbase10155
+  unchanged.4,780 sourcefiles match staged archive. Full Git reconstruction bundles
+  fresh-clone/fsck pass (initial shallow bundle failed, parent history fetched;
+  working tree/revision unchanged). No signature qualification of lightweight tag.
+  Native gfx1013 wave32 unchanged headers: FP32/FP16 strided+broadcast pointwise
+  and12 reduction lengths/CPU-double/guards, DPP1+scalar/LDS DPP0=30 checks.
+  Device objects nativegfx1013/no MFMA/WMMA in these kernels. Retained core7/
+  ONNXaudit4/daily5/RCCL6 bring52/five gates;29 local tests/Ruff pass.
+  Minimal GPU configuration passes with new isolated pinned CMake dependency;
+  old dependency refused missing rocm_add_version_resource. GPU/HIPRTC/rocBLAS/
+  MIOpen ON; Lt/CK/MLIR/AMDMLSS/Eigen/ONNX/TF/Python OFF. Configure is not a build/
+  link/graph proof; no MIGraphX backend/provider installed. BF16 predicate currently
+  admitsgfx1013 without dedicated validation (risk, not reproduced numeric bug);
+  Lt whitelist excludesgfx1013; FP8/MX remain excluded. DPP0 AOT numerics pass but
+  strict C++17 compile refuses unguarded subwave_reduce reference; DPP1 strictpass.
+  JIT uses C++17/Werror, so scalar fallback strict JIT remains unresolved.
+  Build4CPU/RAM10GiB/mem+swap12GiB/shared20GiB ccache/no reset/noGPU/network.
+  Initial fat-object disassembly error corrected via offload-bundle extraction;
+  wrapper path TypeError before build retained. No math/tolerance relaxation.
+  Ordinary available1,234,112,512B vs totalfree26,614,734,848B incl reserved; no
+  reserve policy change/full build started. Need explicit build/reserve budget.
+ 489 protected hashes/four AOT DBs/links, per-gate/batch/export kernel logs match,
+  fiveguards ACK; same r2bootc6a50cfa. Dailyruntimea9a5/profiledb55/image1bb4/
+  nativeTorcha524/ROCm/HIP/W8/CPUORT/defaults unchanged. No prefix/image/package/
+  kernel/BIOS/user-app/.105/source/cache/prior-artifact deletion. CPU fault distinct/
+  unresolved. Raw WS/logs/migraphx-b062-{build-r1,build-r2,configure-r1,probe-r1,
+  qualification-r1}; binaries WS/tmp/migraphx-b062/20261024-r2/tmp. Local
+  kernel/artifacts/migraphx-b062 archive8,720,498B
+  SHA28b8390813ccdb72afe0c1fef2e7ee08c3810d93a88ddedfe95afab1ee9ac540,
+  69 rawlogs1,525,263B/eight tools/source archives/hashmap/objects/configure/fiveguards
+  verified, full source bundles retained. No own jobs/containers/armed guards running;
+  memory sync `.104` only. [Findings/replay](bc250_migraphx_b062_results/README.md).
+  **Next B06.3:** fix/test strict C++17 DPP-disabled declaration boundary, preserve
+  DPP default, establish gfx1013 feature-admission tests and explicit durable disk/
+  reserve budget before minimal FP32 GPU graph build. No BF16/FP8/CK/MLIR/EP claim.
 
 **B06.1 ONNX export/CPU runtime installed2026-10-24:** tools6ae431c9a.
   Pinned onnx1.23.2/onnxscript0.7.2/onnx-ir1.1.0/onnxruntime1.31.0 CPU,

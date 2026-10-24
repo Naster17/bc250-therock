@@ -9,6 +9,44 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.2 MIGraphX admission audit completed2026-10-24:** toolsa8a6d2327.
+  New unmodified source95672916ed289d4be9d230a9be732e1bbad97e8c (rocm-10.1,
+  no upstream10.2 tag seen); isolated required rocm-cmake6a7c5b7, existingbase10155
+  unchanged.4,780 sourcefiles match staged archive. Full Git reconstruction bundles
+  fresh-clone/fsck pass (initial shallow bundle failed, parent history fetched;
+  working tree/revision unchanged). No signature qualification of lightweight tag.
+  Native gfx1013 wave32 unchanged headers: FP32/FP16 strided+broadcast pointwise
+  and12 reduction lengths/CPU-double/guards, DPP1+scalar/LDS DPP0=30 checks.
+  Device objects nativegfx1013/no MFMA/WMMA in these kernels. Retained core7/
+  ONNXaudit4/daily5/RCCL6 bring52/five gates;29 local tests/Ruff pass.
+  Minimal GPU configuration passes with new isolated pinned CMake dependency;
+  old dependency refused missing rocm_add_version_resource. GPU/HIPRTC/rocBLAS/
+  MIOpen ON; Lt/CK/MLIR/AMDMLSS/Eigen/ONNX/TF/Python OFF. Configure is not a build/
+  link/graph proof; no MIGraphX backend/provider installed. BF16 predicate currently
+  admitsgfx1013 without dedicated validation (risk, not reproduced numeric bug);
+  Lt whitelist excludesgfx1013; FP8/MX remain excluded. DPP0 AOT numerics pass but
+  strict C++17 compile refuses unguarded subwave_reduce reference; DPP1 strictpass.
+  JIT uses C++17/Werror, so scalar fallback strict JIT remains unresolved.
+  Build4CPU/RAM10GiB/mem+swap12GiB/shared20GiB ccache/no reset/noGPU/network.
+  Initial fat-object disassembly error corrected via offload-bundle extraction;
+  wrapper path TypeError before build retained. No math/tolerance relaxation.
+  Ordinary available1,234,112,512B vs totalfree26,614,734,848B incl reserved; no
+  reserve policy change/full build started. Need explicit build/reserve budget.
+ 489 protected hashes/four AOT DBs/links, per-gate/batch/export kernel logs match,
+  fiveguards ACK; same r2bootc6a50cfa. Dailyruntimea9a5/profiledb55/image1bb4/
+  nativeTorcha524/ROCm/HIP/W8/CPUORT/defaults unchanged. No prefix/image/package/
+  kernel/BIOS/user-app/.105/source/cache/prior-artifact deletion. CPU fault distinct/
+  unresolved. Raw WS/logs/migraphx-b062-{build-r1,build-r2,configure-r1,probe-r1,
+  qualification-r1}; binaries WS/tmp/migraphx-b062/20261024-r2/tmp. Local
+  kernel/artifacts/migraphx-b062 archive8,720,498B
+  SHA28b8390813ccdb72afe0c1fef2e7ee08c3810d93a88ddedfe95afab1ee9ac540,
+  69 rawlogs1,525,263B/eight tools/source archives/hashmap/objects/configure/fiveguards
+  verified, full source bundles retained. No own jobs/containers/armed guards running;
+  memory sync `.104` only. [Findings/replay](docs/development/bc250_migraphx_b062_results/README.md).
+  **Next B06.3:** fix/test strict C++17 DPP-disabled declaration boundary, preserve
+  DPP default, establish gfx1013 feature-admission tests and explicit durable disk/
+  reserve budget before minimal FP32 GPU graph build. No BF16/FP8/CK/MLIR/EP claim.
+
 - **B06.1 ONNX export/CPU runtime installed2026-10-24:** tools6ae431c9a.
   Pinned onnx1.23.2/onnxscript0.7.2/onnx-ir1.1.0/onnxruntime1.31.0 CPU,
   ml-dtypes0.6.0/protobuf7.36.2/flatbuffers25.12.19; exact PyPI wheel hashes/
@@ -3079,7 +3117,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B05.5 | Explicit frozen-W8 module/versioned state, FP32 scale-preserving moves, CPU-reference first gradients and exact owned adapter AdamW resume;295 checks/ten gates. Optional helper only, no native/default/image update. |
 | [x]   | B05.6 | Public opt-in bc250_quant0.1.0 installed in both .104 runtime cohorts;817 candidate+817 ordinary installed checks, actual B05.5 checkpoint compatibility; identity rollback exercised after test-runner refusals. Native/defaults/.105 preserved. |
 | [x]   | B06.1 | Pinned modern ONNX export/CPU runtime installed on .104:181 candidate+181 installed checks plus early33, CPU/GPU-origin graphs/independent references/explicit HIP interop, retained W8/compiler/consumers. ONNX GPU/autograd unqualified. |
-| [ ]   | **B06.2 — next** | Pinned MIGraphX source/dependency/gfx1013 instruction and generic/scalar applicability audit; check build headroom before isolated GPU-provider experiments. CPU ORT and native defaults retained; no architecture spoof. |
+| [x]   | B06.2 | Pinned MIGraphX audit:30 native header CPU-reference checks,52 total/five gates; minimal GPU configure passes with isolated pinned CMake. Strict DPP0 JIT issue/feature risks and disk/reserve budget remain; no full backend/provider installed. |
+| [ ]   | **B06.3 — next** | Fix/test strict C++17 DPP-disabled header declaration boundary; gfx1013 feature-admission tests and explicit disk/reserve budget before minimal FP32 GPU graph build. Preserve runtime/native defaults; no unsupported ISA/provider admission. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
