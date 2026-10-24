@@ -9,6 +9,42 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.3 strict MIGraphX C++17 repair completed2026-10-24:** source
+ 35b40656df72d075a69b155273cf0cc121009683 over95672916e; toolsa03d0e38a.
+  DPP-only subwave/wave declarations now share the implementation guard; no
+  arithmetic/default-DPP change or new subwave fallback. DPP0 block/LDS retained;
+  unsupported subwave request deliberately refuses. Real HIPRTC reproduces old
+  DPP0 C++17/Werror failure; patched DPP1/DPP0 compile without diagnostics and
+  loaded modules match CPU-double/guards at33/129/513. Native gate71 includes
+  retained30,30 subwave width/length cases,new upstream-style block test and10
+  JIT compile/execute checks. Retained core7/ONNXaudit4/daily5/RCCL6=93 perpass,
+  two passes186/ten ACK guards. Final HIPRTC scratch explicitly under WS/tmp.
+ 507 protected hashes/four AOT DBs/links and kernel logs unchanged; same r2boot
+  c6a50cfa. Extracted native AOT objects contain no MFMA/WMMA in tested kernels.
+  Actual unchanged feature predicates compiled/executed: gfx1013 FP8/MX/Lt false,
+  BF16 true remains unqualified admission risk, not reproduced numeric failure.
+  Source4781 files verified; committed unit-test reflow whitespace-only/hash-pair
+  retained, reducer header exact. Fresh reconstruction from preserved upstream
+  bundle plus repair bundle/fsck passes.29 local tests/Black/pycompile/shell/new
+  unit clang-format pass; Ruff unavailable, full upstream CI not run.
+  Builds4CPU/RAM10GiB/mem+swap12GiB/shared20GiB ccache/no reset/noGPU/network.
+  Test-wrapper return and host-client AMD-platform omissions fixed before GPU;
+  stale baseline-controller path refused before GPU, all attempts retained.
+  Provisional full-build budget12GiB+cache2GiB+ordinary rescue floor2GiB=16GiB;
+  current ordinary1,110,757,376B vs totalfree26,491,379,712B incl reserved, before
+  archive. Budget refused/unmeasured footprint; no reserve policy/deletion change.
+  No backend/provider installation/runtime/prefix/image/default/kernel/BIOS/.105/
+  user-app work. CPU segfault distinct/unresolved. Raw WS/logs/migraphx-b063-*,
+  accepted build-r4/qualification-r2; local kernel/artifacts/migraphx-b063 archive
+ 17,326,170B SHA6f5225f873fdbfe4ab7b94ee61820b419cfcf2b37f3aa8b50eefe2bc8100496f,
+ 147 rawfiles9,752,884B plus patch/bundle/verification. No own jobs/containers/
+  armed guards running; .104 memory sync only.
+  [Scope/evidence/budget](docs/development/bc250_migraphx_b063_results/README.md).
+  **Next B06.4:** establish durable build storage satisfying ordinary-space budget
+  without deleting retained artifacts or consuming rescue reserves, then build
+  minimal isolated FP32 GPU backend and reference-test actual pointwise/reduction/
+  GEMM/convolution graphs. No BF16/FP8/CK/MLIR/parser/bindings/provider admission.
+
 - **B06.2 MIGraphX admission audit completed2026-10-24:** toolsa8a6d2327.
   New unmodified source95672916ed289d4be9d230a9be732e1bbad97e8c (rocm-10.1,
   no upstream10.2 tag seen); isolated required rocm-cmake6a7c5b7, existingbase10155
@@ -3118,7 +3154,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B05.6 | Public opt-in bc250_quant0.1.0 installed in both .104 runtime cohorts;817 candidate+817 ordinary installed checks, actual B05.5 checkpoint compatibility; identity rollback exercised after test-runner refusals. Native/defaults/.105 preserved. |
 | [x]   | B06.1 | Pinned modern ONNX export/CPU runtime installed on .104:181 candidate+181 installed checks plus early33, CPU/GPU-origin graphs/independent references/explicit HIP interop, retained W8/compiler/consumers. ONNX GPU/autograd unqualified. |
 | [x]   | B06.2 | Pinned MIGraphX audit:30 native header CPU-reference checks,52 total/five gates; minimal GPU configure passes with isolated pinned CMake. Strict DPP0 JIT issue/feature risks and disk/reserve budget remain; no full backend/provider installed. |
-| [ ]   | **B06.3 — next** | Fix/test strict C++17 DPP-disabled header declaration boundary; gfx1013 feature-admission tests and explicit disk/reserve budget before minimal FP32 GPU graph build. Preserve runtime/native defaults; no unsupported ISA/provider admission. |
+| [x]   | B06.3 | Strict C++17 DPP declaration guard repair; actual HIPRTC old-failure reproduction/patched module execution, default subwave and block references;93 checks twice. Feature predicates exercised, explicit full-build budget refuses current space; no backend/provider install. |
+| [ ]   | **B06.4 — next** | Establish durable ordinary build space, then minimal isolated FP32 GPU graph backend build and independent pointwise/reduction/GEMM/convolution references. Preserve artifacts/rescue reserves/runtime/.105; no unqualified low-precision/provider admission. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
