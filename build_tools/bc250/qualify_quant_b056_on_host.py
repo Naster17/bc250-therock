@@ -82,7 +82,7 @@ def main():
     protected[stage["wheel"]] = stage["wheel_sha256"]
     for item in stage["candidates"].values():
         protected[str(Path(item["release"]) / "runtime.json")] = item["runtime_sha256"]
-    logs = WS / ("logs/quant-b056-" + phase + "-r1")
+    logs = WS / ("logs/quant-b056-" + phase + "-r2")
     logs.mkdir()
     before = subprocess.check_output(["dmesg"])
     (logs / "kernel-before.log").write_bytes(before)
@@ -102,9 +102,16 @@ def main():
             for name, digest in protected.items():
                 assert sha(Path(name)) == digest, name
             for name, cohort, script, arguments, count in cases():
-                label = "quant-b056-" + phase + "-r1-" + name
+                label = "quant-b056-" + phase + "-r2-" + name
                 if args.installed:
-                    command = ["/usr/local/bin/bc250-torch"]
+                    command = [
+                        "/usr/local/bin/"
+                        + (
+                            "bc250-train"
+                            if name.endswith("-consumers")
+                            else "bc250-torch"
+                        )
+                    ]
                     if cohort == "rccl":
                         command += ["--runtime-profile", "rccl-single"]
                     command += [str(WS / "helpers" / script), *arguments]

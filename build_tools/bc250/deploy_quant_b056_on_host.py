@@ -54,7 +54,7 @@ def main():
             record.update(status="rolled-back", rollback_used=True)
         else:
             result = json.loads(
-                (WS / "logs/quant-b056-installed-r1/final.json").read_text()
+                (WS / "logs/quant-b056-installed-r2/final.json").read_text()
             )
             assert (
                 result["status"] == "passed"
@@ -67,7 +67,7 @@ def main():
         print("QUANT_B056_" + ("ROLLBACK" if args.rollback else "ACCEPT") + "_PASS")
         return
     assert not RECORD.exists()
-    qualified = json.loads((WS / "logs/quant-b056-candidate-r1/final.json").read_text())
+    qualified = json.loads((WS / "logs/quant-b056-candidate-r2/final.json").read_text())
     assert (
         qualified["status"] == "passed"
         and sum(g["checks"] for g in qualified["gates"]) == 808

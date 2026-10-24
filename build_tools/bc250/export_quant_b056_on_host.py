@@ -32,7 +32,7 @@ def main():
     assert deployed["status"] == "passed"
     reports = {
         phase: json.loads(
-            (WS / ("logs/quant-b056-" + phase + "-r1/final.json")).read_text()
+            (WS / ("logs/quant-b056-" + phase + "-r2/final.json")).read_text()
         )
         for phase in ("candidate", "installed")
     }
@@ -47,11 +47,15 @@ def main():
     assert all(os.readlink(p) == v for p, v in installed["links"].items())
     assert (
         subprocess.check_output(["dmesg"])
-        == (WS / "logs/quant-b056-candidate-r1/kernel-before.log").read_bytes()
+        == (WS / "logs/quant-b056-candidate-r2/kernel-before.log").read_bytes()
     )
     guards = [g["label"] for r in reports.values() for g in r["gates"]]
     for phase in ("candidate", "installed"):
-        label = "quant-b056-" + phase + "-compat-r1"
+        label = (
+            "quant-b056-"
+            + phase
+            + ("-compat-r1" if phase == "candidate" else "-compat-r2")
+        )
         folder = WS / "logs" / label
         result = json.loads((folder / "result.json").read_text())
         assert result["status"] == "passed" and len(result["checks"]) == 9
@@ -59,6 +63,12 @@ def main():
         assert exit_state["returncode"] == 0 and exit_state["kernel_log_unchanged"]
         guards.append(label)
     assert len(guards) == 32
+    accepted_guards = list(guards)
+    historical = []
+    for pattern in ("quant-b056-candidate-r1-*", "quant-b056-installed-r1-*"):
+        historical.extend(p.name for p in (WS / "logs").glob(pattern) if p.is_dir())
+    assert len(historical) == 21
+    guards.extend(historical)
     for label in guards:
         guard = json.loads((Path("/run") / label / "state.json").read_text())
         assert (
@@ -90,7 +100,10 @@ def main():
         wheel_bytes=Path(stage["wheel"]).stat().st_size,
         recovery=stage["recovery"],
         boot_id=installed["boot_id"],
-        acknowledged_guards=32,
+        acknowledged_guards=len(guards),
+        accepted_guards=len(accepted_guards),
+        historical_guards=len(historical),
+        rollback_exercised=True,
         native_libraries_changed=False,
         host105_contacted=False,
         running_jobs=[],
@@ -102,8 +115,10 @@ def main():
         for label in guards:
             tar.add(WS / "logs" / label, arcname="logs/" + label)
             tar.add(Path("/run") / label, arcname="guards/" + label)
+        for name in ("quant-b056-candidate-r1", "quant-b056-installed-r1"):
+            tar.add(WS / "logs" / name, arcname="logs/" + name)
         for phase in ("candidate", "installed"):
-            name = "quant-b056-" + phase + "-r1"
+            name = "quant-b056-" + phase + "-r2"
             tar.add(WS / "logs" / name, arcname="logs/" + name)
         for p in sorted((WS / "logs").glob("quant-b056-stage-*")):
             tar.add(p, arcname="logs/" + p.name)
