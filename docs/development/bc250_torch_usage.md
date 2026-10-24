@@ -153,6 +153,48 @@ and helper bounds remain. This package does not install TorchAO/bitsandbytes or
 provide full QLoRA/model-quality/speed guarantees.
 [Package identities, acceptance and rollback](bc250_quant_b056_results/README.md).
 
+## ONNX export and explicit CPU inference (B06.1, .104)
+
+The runtime image now provides pinned ONNX1.23.2, ONNX Script0.7.2,
+ONNX IR1.1.0 and ONNX Runtime1.31.0. They are available through `bc250-torch`
+and `bc250-train`, including the explicit `rccl-single` profile.
+The modern `dynamo=True` exporter is qualified for owned FP32 dense, CNN and
+gated/normalization fixtures, exporting from both CPU and native gfx1013 tensors.
+
+```python
+import numpy as np
+import onnxruntime as ort
+import torch
+
+model = torch.nn.Sequential(torch.nn.Linear(8, 12), torch.nn.ReLU(),
+                            torch.nn.Linear(12, 4)).eval().cuda()
+x = torch.randn(3, 8, device="cuda")
+program = torch.onnx.export(model, (x,), dynamo=True, opset_version=18,
+                            input_names=["x"], output_names=["y"])
+program.save("owned-example.onnx", external_data=False)
+options = ort.SessionOptions()
+options.intra_op_num_threads = options.inter_op_num_threads = 1
+session = ort.InferenceSession("owned-example.onnx", sess_options=options,
+                               providers=["CPUExecutionProvider"])
+session.disable_fallback()
+y_cpu = session.run(["y"], {"x": x.cpu().numpy()})[0]
+y_gpu = torch.from_numpy(np.array(y_cpu, copy=True)).cuda()
+```
+
+**ONNX Runtime inference here runs on CPU.** The example explicitly transfers
+results back to Torch GPU. It does not connect autograd through ONNX Runtime;
+subsequent GPU operations can compute gradients with respect to a new Torch leaf.
+There is no installed/qualified ROCm or MIGraphX execution provider. Always check
+`ort.get_available_providers()` before requiring another provider; naming a missing
+provider alone can allow ONNX Runtime to fall back to CPU. The retired ROCm EP
+is not a flag that can enable gfx1013 in this runtime.
+
+Tested dynamic batches1/3/4 use Torch export bounds1–4. ONNX symbolic dimensions
+do not enforce those Torch bounds at inference. Other dtypes/models/operators,
+ONNX training/autograd, GPU execution providers and quantized W8 export remain
+unqualified. Existing Torch GPU math/backward and optional W8/FFT/sparse helpers
+are preserved. [Pinned packages, reference tests, applicability and recovery](bc250_onnx_b061_results/README.md).
+
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
 The current mutable development prefix automatically supplies one qualified

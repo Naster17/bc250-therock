@@ -1,0 +1,169 @@
+{
+  "status": "passed",
+  "candidate_checks": 181,
+  "installed_checks": 181,
+  "early_probe_checks": 33,
+  "gates": 22,
+  "protected_paths": 477,
+  "source_sha256": {
+    "fetch_onnx_b061.py": "6df020c88b8f1597ff974f2ab1ff4e523df97031f036cd954e0585e705b85313",
+    "stage_onnx_b061_on_host.py": "396fe613cb7b11496a9764482c666b754939737d43ae3cec2eb809afc271a741",
+    "qualify_onnx_b061_on_host.py": "44f6b7b36453b5c0245e82ef0f5150cea87d9459026b6c95077b2fc82d8310d4",
+    "deploy_onnx_b061_on_host.py": "c8f7dff7de0e7b67b394d72ed04ea4c75d78f09e79c548e773b6fe6f8c3257d6",
+    "export_onnx_b061_on_host.py": "11e92468f956263a18ded1e8dc2c8afad53b9717bfa0c70718af57a503d4c278",
+    "validate_onnx_b061.py": "174dad9da0534e467bf18650f174bfb46c032351cab166c4d880cfdaa57d7fe9",
+    "onnx_b061_packages.json": "ef80ef97ed32cbbabe3e0533a2a182d74d01acc9f281a74a3c92d175348a9d20"
+  },
+  "daily_runtime_sha256": "a9a5afe3a808bd3ea348663746665fc6e792d1005c68f4e7b6df89bbe7c1b465",
+  "profile_sha256": "db556925af537b2f8e4d9e9cbfd475750a06c6f9e71b0226c7280dbae6c19005",
+  "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+  "previous_image": "e2821cf8507467b22323272439d636f7c0918e27b8aa2790a5f524b10165a184",
+  "base_layers_preserved": true,
+  "packages": {
+    "onnx": {
+      "version": "1.23.2",
+      "filename": "onnx-1.23.2-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/87/56/21509a657f9a73ab0ca307d325043f49ca6c4ff6bf79edeb9e159190d44d/onnx-1.23.2-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "7abf381d278f31ac62487fddedc9dd42da842dce94d5d43536836ee3efdf4a2b",
+      "bytes": 8881633,
+      "requires_dist": [
+        "numpy>=1.23.2",
+        "protobuf>=6.31.1",
+        "typing_extensions>=4.7.1",
+        "ml_dtypes>=0.5.4",
+        "Pillow>=12.2.0; extra == \"reference\""
+      ],
+      "requires_python": ">=3.10"
+    },
+    "onnxscript": {
+      "version": "0.7.2",
+      "filename": "onnxscript-0.7.2-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/b9/3b/06260997cdc41138e58718588a6c87d0eb342bbe0dda8a6aae91d163c384/onnxscript-0.7.2-py3-none-any.whl",
+      "sha256": "d0e7121c6a1eefd608058928e111cbdb76709f70d269ff0d07aee493bd1d13c9",
+      "bytes": 754215,
+      "requires_dist": [
+        "ml_dtypes",
+        "numpy",
+        "onnx_ir<2,>=0.1.16",
+        "onnx>=1.17",
+        "packaging",
+        "typing_extensions>=4.10"
+      ],
+      "requires_python": ">=3.9"
+    },
+    "onnx-ir": {
+      "version": "1.1.0",
+      "filename": "onnx_ir-1.1.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/eb/80/1a63440081d94e25b96be6b29119f41119fe5c9521063edbdb7baeeb9589/onnx_ir-1.1.0-py3-none-any.whl",
+      "sha256": "76cc313a788c073b75271c1b6abb172aaf90fcc6335ed40f9f3238b2064a2fa3",
+      "bytes": 192241,
+      "requires_dist": [
+        "numpy",
+        "onnx>=1.16",
+        "typing_extensions>=4.10",
+        "ml_dtypes>=0.5.0",
+        "sympy>=1.13",
+        "packaging"
+      ],
+      "requires_python": ">=3.9"
+    },
+    "onnxruntime": {
+      "version": "1.31.0",
+      "filename": "onnxruntime-1.31.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/6c/44/1e9e762b95b7da0a8424913a1ed7c38cdaf88624a3c41ddba24ebac88bc9/onnxruntime-1.31.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "sha256": "5e129d6c56abd53e659cb70f00a108d6824086470ff99c2e47a82e5786563db3",
+      "bytes": 23760984,
+      "requires_dist": [
+        "flatbuffers",
+        "numpy>=1.21.6",
+        "packaging",
+        "protobuf>=4.25.8",
+        "sympy; extra == \"symbolic\"",
+        "ml_dtypes; extra == \"quantization\""
+      ],
+      "requires_python": ">=3.11"
+    },
+    "ml-dtypes": {
+      "version": "0.6.0",
+      "filename": "ml_dtypes-0.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/c7/f9/7d76c1eae866f5d4636401b31b6d6dd90e4b4ced1fa7cfdfcca9c60e4bd3/ml_dtypes-0.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "3b4a480aa8fd54a1805b8ac10f3f91763926a74f73c0c364c10f9231854f4170",
+      "bytes": 409890,
+      "requires_dist": [
+        "numpy>=2.0.0",
+        "numpy>=2.1.0; python_version >= \"3.13\"",
+        "numpy>=2.3.0; python_version >= \"3.14\"",
+        "absl-py; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "pytest-xdist; extra == \"dev\"",
+        "pylint>=2.6.0; extra == \"dev\"",
+        "pyink; extra == \"dev\""
+      ],
+      "requires_python": ">=3.10"
+    },
+    "protobuf": {
+      "version": "7.36.2",
+      "filename": "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/db/f3/3996583dd2906297a637af12114deddf7658af6e683fedb83be061983fb5/protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+      "sha256": "89f23aa53c24553a2416fd4fd1ec06f74fa42b14b546d8883128813f775bbfd2",
+      "bytes": 343223,
+      "requires_dist": null,
+      "requires_python": ">=3.10"
+    },
+    "flatbuffers": {
+      "version": "25.12.19",
+      "filename": "flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "sha256": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4",
+      "bytes": 26661,
+      "requires_dist": null,
+      "requires_python": null
+    }
+  },
+  "recovery": "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/onnx-b061-before",
+  "boot_id": "c6a50cfa-a368-4ba5-ab28-66250b4f1f1f",
+  "acknowledged_guards": 23,
+  "native_libraries_changed": false,
+  "host105_contacted": false,
+  "running_jobs": [],
+  "rollback_used": false,
+  "scope": "Modern ONNX export and explicit CPUExecutionProvider inference; host transfer to/from native Torch GPU, no ONNX GPU provider or ONNX autograd",
+  "code_revision": "6ae431c9a2ebbe745af54306701ad42261779afc",
+  "archive": {
+    "sha256": "fb55f104f7c83fea3812c3a09acf05de56983df4636c0ae28e984accf3029e44",
+    "bytes": 35255852
+  },
+  "local_bc250_tests": 29,
+  "raw_log_files": 284,
+  "raw_log_bytes": 5296329,
+  "provider_inventory": {
+    "onnx-b061-candidate-r1-daily-audit": [
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "onnx-b061-candidate-r1-rccl-audit": [
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "onnx-b061-installed-r1-daily-audit": [
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "onnx-b061-installed-r1-rccl-audit": [
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "torch_preimported_at_script_entry": {
+    "onnx-b061-candidate-r1-daily-order": false,
+    "onnx-b061-candidate-r1-rccl-order": false,
+    "onnx-b061-installed-r1-daily-order": false,
+    "onnx-b061-installed-r1-rccl-order": false
+  },
+  "new_native_cpu_packages": [
+    "onnx",
+    "onnxruntime",
+    "ml-dtypes",
+    "protobuf"
+  ]
+}

@@ -9,6 +9,41 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.1 ONNX export/CPU runtime installed2026-10-24:** tools6ae431c9a.
+  Pinned onnx1.23.2/onnxscript0.7.2/onnx-ir1.1.0/onnxruntime1.31.0 CPU,
+  ml-dtypes0.6.0/protobuf7.36.2/flatbuffers25.12.19; exact PyPI wheel hashes/
+  licenses retained. Torchsourcea524 requires torch_2_11 exporter API, verified;
+  modern dynamo/opset18, no legacy fallback. Existing NumPy/SymPy/packaging/
+  typing_extensions versions preserved. Offline hash-required/nodeps image build,
+  RAM1GiB/quota2/networkoff/pullnever; no native ROCm/Torch build/ccache operation.
+  Image1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5
+  retains W8imagee282 layers; dailyruntimea9a5afe3/profiledb556925 select it under
+  daily EX lock. Recovery WS/recovery/onnx-b061-before restores prior W8 manifests;
+  old images/candidates retained, identity rollback not exercised this batch.
+ 181 candidate+181 installed/22 gates plus33 early export-probe checks. Bothcohorts
+  audit4/export33/ORT-first2: six CPU/GPU-origin dense/CNN/gated+LayerNorm exports,
+  batches1/3/4, CPU-double/ONNX NumPy/HIP eager references, host transfer then Torch
+  GPU leaf first gradients; three native input refusals; actual ORT node profiles
+  CPU only. Available Azure+CPU EP; only CPU selected, Azure unqualified; native
+  GPU OrtValue allocation refuses. ORT sessions before Torch import/GEMM backward/
+  FFT pass (script-entry Torch absent). Retained W8recipe71/core7/compiled14/
+  consumers5+6 pass. No ONNX GPU/autograd/training/W8-export/model-speed claim.
+  Old ROCm EP removed upstream1.23; MIGraphX not qualified/registered, separateport.
+  Initial qualifier stale report name refuses before GPU, old evidence untouched;
+  corrected without math/tolerance changes.29 local tests/Ruff pass.
+ 477 protected hashes/four AOT DBs/links pinned with manifest/recovery changes;
+ 23 guards ACK, per-gate/batch/export kernel logs identical; same r2bootc6a50cfa.
+  Native Torch/HIP/ROCm/math/SDMA0/heapoff/N3.2/defaults retained; no kernel/BIOS/
+  user-app/.105/source/cache/image deletion. CPU segfault distinct/unresolved.
+  Raw WS/logs/onnx-b061-{candidate,installed}-r1/final.json; local kernel/artifacts/
+  onnx-b061 archive35,255,852B SHAfb55f104f7c83fea3812c3a09acf05de56983df4636c0ae28e984accf3029e44,
+ 284 rawfiles5,296,329B/seven source+manifest files/seven wheels/models/profiles/
+  recovery/23 guards verified. No own jobs/containers/armed guards at handoff;
+  memory sync `.104` only. [Use/scope/evidence](docs/development/bc250_onnx_b061_results/README.md).
+  **Next B06.2:** audit pinned MIGraphX source/dependencies, gfx1013 instruction/
+  generic/scalar applicability and build headroom before any isolated GPU-provider
+  experiment. Keep CPU ORT/W8/native defaults/.105; no architecture spoof.
+
 - **B05.6 optional W8 package installed2026-10-24:** final toolsabd8a4e04
   (initialaee53dcc0/runnersc9de6be11 retained). bc250_quant0.1.0 public exports
   FrozenW8Linear/FrozenInt8Weight/pack/linear; explicit opt-in, no model/dispatch
@@ -3043,7 +3078,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B05.4 | Strict helper validation normal scalar reads2→1;475 current-boot checks, matched outputs/gradients/errors, bounded paired latency gains. Rejected slower list-copy experiment retained; native cohorts/defaults unchanged. |
 | [x]   | B05.5 | Explicit frozen-W8 module/versioned state, FP32 scale-preserving moves, CPU-reference first gradients and exact owned adapter AdamW resume;295 checks/ten gates. Optional helper only, no native/default/image update. |
 | [x]   | B05.6 | Public opt-in bc250_quant0.1.0 installed in both .104 runtime cohorts;817 candidate+817 ordinary installed checks, actual B05.5 checkpoint compatibility; identity rollback exercised after test-runner refusals. Native/defaults/.105 preserved. |
-| [ ]   | **B06.1 — next** | Pinned ONNX export/runtime and execution-provider applicability audit; bounded independent export/CPU-reference/GPU-interoperability candidate. CPU runtime availability is not GPU-provider support. |
+| [x]   | B06.1 | Pinned modern ONNX export/CPU runtime installed on .104:181 candidate+181 installed checks plus early33, CPU/GPU-origin graphs/independent references/explicit HIP interop, retained W8/compiler/consumers. ONNX GPU/autograd unqualified. |
+| [ ]   | **B06.2 — next** | Pinned MIGraphX source/dependency/gfx1013 instruction and generic/scalar applicability audit; check build headroom before isolated GPU-provider experiments. CPU ORT and native defaults retained; no architecture spoof. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
