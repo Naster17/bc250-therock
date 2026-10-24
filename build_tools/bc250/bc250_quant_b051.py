@@ -126,9 +126,11 @@ def linear(
         raise ValueError(
             "Frozen INT8 values and FP32 row scales must share the input device"
         )
-    if not bool(torch.isfinite(scales).all() & (scales > 0).all()):
-        raise ValueError("Scales must be finite and positive")
-    if not bool(torch.isfinite(inputs).all()):
+    scale_valid = (torch.isfinite(scales) & (scales > 0)).all()
+    input_valid = torch.isfinite(inputs).all()
+    if not bool(scale_valid & input_valid):
+        if not bool(scale_valid):
+            raise ValueError("Scales must be finite and positive")
         raise ValueError("Inputs must be finite")
     if bias is not None and (
         bias.shape != (n,) or bias.device != inputs.device or bias.dtype != inputs.dtype
