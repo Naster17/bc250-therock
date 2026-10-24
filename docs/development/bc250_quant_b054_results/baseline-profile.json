@@ -1,0 +1,506 @@
+{
+  "status": "passed",
+  "checks": [
+    "profile-components-cpu-output-gradient-[8, 128, 256]",
+    "profile-components-cpu-output-gradient-[32, 256, 256]",
+    "profile-components-cpu-output-gradient-[8, 512, 1024]",
+    "two-strict-validation-scalar-reads"
+  ],
+  "shapes": [
+    {
+      "shape": [
+        8,
+        128,
+        256
+      ],
+      "measurements": {
+        "scale_check": {
+          "samples_ms": [
+            0.09193559999403078,
+            0.08200900010706391,
+            0.08351739998033736
+          ],
+          "median_ms": 0.08351739998033736
+        },
+        "input_check": {
+          "samples_ms": [
+            0.06938299993635155,
+            0.06503080003312789,
+            0.058290800006943755
+          ],
+          "median_ms": 0.06503080003312789
+        },
+        "native_forward": {
+          "samples_ms": [
+            0.04397000011522323,
+            0.043635400288621895,
+            0.04373600022518076
+          ],
+          "median_ms": 0.04373600022518076
+        },
+        "native_backward": {
+          "samples_ms": [
+            0.044579400127986446,
+            0.04783280019182712,
+            0.04776780006068293
+          ],
+          "median_ms": 0.04776780006068293
+        },
+        "strict_forward": {
+          "samples_ms": [
+            0.25399160003871657,
+            0.2530554000259144,
+            0.23828039993532002
+          ],
+          "median_ms": 0.2530554000259144
+        },
+        "strict_forward_backward": {
+          "samples_ms": [
+            0.4856535997532774,
+            0.4740272001072299,
+            0.47140539973042905
+          ],
+          "median_ms": 0.4740272001072299
+        }
+      },
+      "packed_payload_bytes": 33280
+    },
+    {
+      "shape": [
+        32,
+        256,
+        256
+      ],
+      "measurements": {
+        "scale_check": {
+          "samples_ms": [
+            0.0886593999894103,
+            0.08252940024249256,
+            0.08269219979410991
+          ],
+          "median_ms": 0.08269219979410991
+        },
+        "input_check": {
+          "samples_ms": [
+            0.060987399774603546,
+            0.06024039976182394,
+            0.05967899996903725
+          ],
+          "median_ms": 0.06024039976182394
+        },
+        "native_forward": {
+          "samples_ms": [
+            0.05216739991737995,
+            0.05206079986237455,
+            0.05213719996390864
+          ],
+          "median_ms": 0.05213719996390864
+        },
+        "native_backward": {
+          "samples_ms": [
+            0.07127120006771293,
+            0.07185600006778259,
+            0.07188560011854861
+          ],
+          "median_ms": 0.07185600006778259
+        },
+        "strict_forward": {
+          "samples_ms": [
+            0.24437259999103844,
+            0.2406526000413578,
+            0.23972520029929
+          ],
+          "median_ms": 0.2406526000413578
+        },
+        "strict_forward_backward": {
+          "samples_ms": [
+            0.46843360032653436,
+            0.4686988002504222,
+            0.4690663998189848
+          ],
+          "median_ms": 0.4686988002504222
+        }
+      },
+      "packed_payload_bytes": 66560
+    },
+    {
+      "shape": [
+        8,
+        512,
+        1024
+      ],
+      "measurements": {
+        "scale_check": {
+          "samples_ms": [
+            0.0994998001260683,
+            0.09996400003728922,
+            0.09781439985090401
+          ],
+          "median_ms": 0.0994998001260683
+        },
+        "input_check": {
+          "samples_ms": [
+            0.07194599966169335,
+            0.07055379974190146,
+            0.0705861999449553
+          ],
+          "median_ms": 0.0705861999449553
+        },
+        "native_forward": {
+          "samples_ms": [
+            0.19865419999405276,
+            0.19886299996869639,
+            0.19889119976141956
+          ],
+          "median_ms": 0.19886299996869639
+        },
+        "native_backward": {
+          "samples_ms": [
+            0.3788044003158575,
+            0.3770348001125967,
+            0.38194799999473616
+          ],
+          "median_ms": 0.3788044003158575
+        },
+        "strict_forward": {
+          "samples_ms": [
+            0.39263200014829636,
+            0.38324020024447236,
+            0.38634080010524485
+          ],
+          "median_ms": 0.38634080010524485
+        },
+        "strict_forward_backward": {
+          "samples_ms": [
+            0.7793777996994322,
+            0.7953473999805283,
+            0.7913958001154242
+          ],
+          "median_ms": 0.7913958001154242
+        }
+      },
+      "packed_payload_bytes": 526336
+    }
+  ],
+  "operators": [
+    {
+      "name": "strict-w8-forward-backward",
+      "count": 1,
+      "self_cpu_us": 9144.943000000001,
+      "device_us": 263.3189999999995
+    },
+    {
+      "name": "aten::isfinite",
+      "count": 2,
+      "self_cpu_us": 23.08799999999792,
+      "device_us": 25.0
+    },
+    {
+      "name": "aten::abs",
+      "count": 4,
+      "self_cpu_us": 166.39500000000044,
+      "device_us": 10.734000000000378
+    },
+    {
+      "name": "aten::empty",
+      "count": 6,
+      "self_cpu_us": 39.794999999998254,
+      "device_us": 0
+    },
+    {
+      "name": "aten::resize_",
+      "count": 2,
+      "self_cpu_us": 12.634000000000015,
+      "device_us": 0
+    },
+    {
+      "name": "hipLaunchKernel",
+      "count": 18,
+      "self_cpu_us": 283.83500000000276,
+      "device_us": 0
+    },
+    {
+      "name": "strict-w8-forward-backward",
+      "count": 1,
+      "self_cpu_us": 0,
+      "device_us": 878.6779999999999
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::AbsFunctor<float>, std::array<char*, 2ul> >(int, at::native::AbsFunctor<float>, std::array<char*, 2ul>) [clone .kd]",
+      "count": 2,
+      "self_cpu_us": 0,
+      "device_us": 5.367000000000189
+    },
+    {
+      "name": "aten::ne",
+      "count": 2,
+      "self_cpu_us": 44.669999999998254,
+      "device_us": 7.17200000000048
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::AUnaryFunctor<float, float, bool, at::native::(anonymous namespace)::CompareEqFunctor<float> >, std::array<char*, 2ul> >(int, at::native::AUnaryFunctor<float, float, bool, at::native::(anonymous namespace)::CompareEqFunctor<float> >, std::array<char*, 2ul>) [clone .kd]",
+      "count": 2,
+      "self_cpu_us": 0,
+      "device_us": 7.17200000000048
+    },
+    {
+      "name": "aten::eq",
+      "count": 2,
+      "self_cpu_us": 20.299000000000888,
+      "device_us": 6.971999999999753
+    },
+    {
+      "name": "aten::mul",
+      "count": 3,
+      "self_cpu_us": 97.83899999999812,
+      "device_us": 9.013999999999214
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, bool, at::native::(anonymous namespace)::CompareEqFunctor<float> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, bool, at::native::(anonymous namespace)::CompareEqFunctor<float> >, std::array<char*, 3ul>) [clone .kd]",
+      "count": 2,
+      "self_cpu_us": 0,
+      "device_us": 6.971999999999753
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<16, at::native::BinaryFunctor<bool, bool, bool, at::native::binary_internal::MulFunctor<bool> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<bool, bool, bool, at::native::binary_internal::MulFunctor<bool> >, std::array<char*, 3ul>) [clone .kd]",
+      "count": 2,
+      "self_cpu_us": 0,
+      "device_us": 5.488999999999578
+    },
+    {
+      "name": "aten::all",
+      "count": 3,
+      "self_cpu_us": 45.29500000000007,
+      "device_us": 23.921000000000276
+    },
+    {
+      "name": "aten::as_strided",
+      "count": 4,
+      "self_cpu_us": 9.363999999999578,
+      "device_us": 0
+    },
+    {
+      "name": "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<bool, at::native::func_wrapper_t<bool, at::native::and_kernel_cuda(at::TensorIterator&)::{lambda()#1}::operator()() const::{lambda()#12}::operator()() const::{lambda(bool, bool)#1}>, unsigned int, bool, 4, 4> >(at::native::ReduceOp<bool, at::native::func_wrapper_t<bool, at::native::and_kernel_cuda(at::TensorIterator&)::{lambda()#1}::operator()() const::{lambda()#12}::operator()() const::{lambda(bool, bool)#1}>, unsigned int, bool, 4, 4>) [clone .kd]",
+      "count": 3,
+      "self_cpu_us": 0,
+      "device_us": 23.921000000000276
+    },
+    {
+      "name": "aten::gt",
+      "count": 1,
+      "self_cpu_us": 14.962000000001353,
+      "device_us": 6.9320000000006985
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::compare_scalar_kernel<float>(at::TensorIteratorBase&, at::native::(anonymous namespace)::OpType, float)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::compare_scalar_kernel<float>(at::TensorIteratorBase&, at::native::(anonymous namespace)::OpType, float)::{lambda(float)#1}, std::array<char*, 2ul>) [clone .kd]",
+      "count": 1,
+      "self_cpu_us": 0,
+      "device_us": 6.9320000000006985
+    },
+    {
+      "name": "aten::__and__",
+      "count": 1,
+      "self_cpu_us": 3.129000000000815,
+      "device_us": 5.529999999998836
+    },
+    {
+      "name": "aten::bitwise_and",
+      "count": 1,
+      "self_cpu_us": 18.24999999999818,
+      "device_us": 5.529999999998836
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<16, at::native::BinaryFunctor<bool, bool, bool, at::native::BitwiseAndFunctor<bool> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<bool, bool, bool, at::native::BitwiseAndFunctor<bool> >, std::array<char*, 3ul>) [clone .kd]",
+      "count": 1,
+      "self_cpu_us": 0,
+      "device_us": 5.529999999998836
+    },
+    {
+      "name": "aten::is_nonzero",
+      "count": 2,
+      "self_cpu_us": 3.7549999999991996,
+      "device_us": 0
+    },
+    {
+      "name": "aten::item",
+      "count": 2,
+      "self_cpu_us": 5.072999999998501,
+      "device_us": 0
+    },
+    {
+      "name": "aten::_local_scalar_dense",
+      "count": 2,
+      "self_cpu_us": 9.868000000002212,
+      "device_us": 0
+    },
+    {
+      "name": "hipStreamSynchronize",
+      "count": 2,
+      "self_cpu_us": 39.172999999998865,
+      "device_us": 0
+    },
+    {
+      "name": "aten::reshape",
+      "count": 4,
+      "self_cpu_us": 11.908000000001266,
+      "device_us": 0
+    },
+    {
+      "name": "aten::view",
+      "count": 4,
+      "self_cpu_us": 43.77800000000025,
+      "device_us": 0
+    },
+    {
+      "name": "_Linear",
+      "count": 1,
+      "self_cpu_us": 71.62199999999939,
+      "device_us": 201.9359999999997
+    },
+    {
+      "name": "aten::_weight_int8pack_mm",
+      "count": 2,
+      "self_cpu_us": 36.810999999999694,
+      "device_us": 377.42199999999866
+    },
+    {
+      "name": "aten::to",
+      "count": 8,
+      "self_cpu_us": 3.293999999999869,
+      "device_us": 0
+    },
+    {
+      "name": "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]",
+      "count": 2,
+      "self_cpu_us": 0,
+      "device_us": 377.42199999999866
+    },
+    {
+      "name": "hipDevicePrimaryCtxGetState",
+      "count": 1,
+      "self_cpu_us": 1.5630000000001019,
+      "device_us": 0
+    },
+    {
+      "name": "autograd::engine::evaluate_function: ViewBackward0",
+      "count": 2,
+      "self_cpu_us": 35.8119999999999,
+      "device_us": 0
+    },
+    {
+      "name": "ViewBackward0",
+      "count": 2,
+      "self_cpu_us": 12.912999999996828,
+      "device_us": 0
+    },
+    {
+      "name": "autograd::engine::evaluate_function: _LinearBackward",
+      "count": 1,
+      "self_cpu_us": 10.582000000000335,
+      "device_us": 358.7439999999988
+    },
+    {
+      "name": "_LinearBackward",
+      "count": 1,
+      "self_cpu_us": 213.5,
+      "device_us": 358.7439999999988
+    },
+    {
+      "name": "void at::native::elementwise_kernel_manual_unroll<128, 4, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int, bool)#1}) [clone .kd]",
+      "count": 1,
+      "self_cpu_us": 0,
+      "device_us": 3.524999999999636
+    },
+    {
+      "name": "aten::numpy_T",
+      "count": 1,
+      "self_cpu_us": 2.3479999999999563,
+      "device_us": 0
+    },
+    {
+      "name": "aten::permute",
+      "count": 1,
+      "self_cpu_us": 8.240999999999985,
+      "device_us": 0
+    },
+    {
+      "name": "aten::contiguous",
+      "count": 1,
+      "self_cpu_us": 2.606000000001586,
+      "device_us": 178.05099999999948
+    },
+    {
+      "name": "aten::clone",
+      "count": 1,
+      "self_cpu_us": 16.83599999999933,
+      "device_us": 178.05099999999948
+    },
+    {
+      "name": "aten::empty_like",
+      "count": 1,
+      "self_cpu_us": 3.7450000000008004,
+      "device_us": 0
+    },
+    {
+      "name": "aten::copy_",
+      "count": 1,
+      "self_cpu_us": 17.60399999999936,
+      "device_us": 178.05099999999948
+    },
+    {
+      "name": "void at::native::elementwise_kernel_manual_unroll<128, 8, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#2}::operator()() const::{lambda(signed char)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#2}::operator()() const::{lambda(signed char)#1} const&)::{lambda(int, bool)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#2}::operator()() const::{lambda(signed char)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#2}::operator()() const::{lambda(signed char)#1} const&)::{lambda(int, bool)#1}) [clone .kd]",
+      "count": 1,
+      "self_cpu_us": 0,
+      "device_us": 178.05099999999948
+    },
+    {
+      "name": "aten::ones",
+      "count": 1,
+      "self_cpu_us": 5.71100000000115,
+      "device_us": 1.6820000000006985
+    },
+    {
+      "name": "aten::fill_",
+      "count": 1,
+      "self_cpu_us": 13.14600000000064,
+      "device_us": 1.6820000000006985
+    },
+    {
+      "name": "autograd::engine::evaluate_function: torch::autograd::AccumulateGrad",
+      "count": 1,
+      "self_cpu_us": 3.7520000000004075,
+      "device_us": 0
+    },
+    {
+      "name": "torch::autograd::AccumulateGrad",
+      "count": 1,
+      "self_cpu_us": 7.879000000000815,
+      "device_us": 0
+    },
+    {
+      "name": "aten::detach",
+      "count": 1,
+      "self_cpu_us": 1.4129999999986467,
+      "device_us": 0
+    },
+    {
+      "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>) [clone .kd]",
+      "count": 1,
+      "self_cpu_us": 0,
+      "device_us": 1.6820000000006985
+    },
+    {
+      "name": "detach",
+      "count": 1,
+      "self_cpu_us": 3.4140000000006694,
+      "device_us": 0
+    },
+    {
+      "name": "hipDeviceSynchronize",
+      "count": 2,
+      "self_cpu_us": 105.8140000000003,
+      "device_us": 2.32300000000032
+    }
+  ],
+  "scalar_reads": 2
+}

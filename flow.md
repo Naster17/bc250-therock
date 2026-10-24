@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B05.4 strict W8 validation optimization completed2026-10-24:** code917b2823a.
+  Explicit helperWS/helpers/bc250_quant_b051.py updated under daily EX lock,
+  not an image/site-package/native-prefix change. Normal path reads scalar
+  conjunction of scale/input validity once; failure re-reads scale flag to keep
+  scale-first errors. Checks/limits/messages/dtype policy preserved. Pack/_Linear
+  ASTs unchanged; no native math/backward/persistent-storage change. New helper
+  SHA6832ff9e58104236d877a455fdfe90f11b3803198732497d6dd4ac77242fd319 vsold54c98373.
+  Baseline profile:~0.14–0.17ms strict data checks, two scalar reads/stream syncs.
+  First tensor-list candidate slower(~0.82–0.91 forward ratio); rejected/not
+  promoted. Its trace assertion assumes one explicit sync but copy path records
+  zero;89 prior checks pass, failure/source/raw trace retained, no numeric/error
+  assertion weakened. Scalar variant passes90 early comparisons; short timing
+  noisy, extended15 alternating pairs*30 calls/thread1/four-CPU affinity used.
+  Daily forward ratios1.075/1.077/1.145, forward+backward1.029/1.033/1.080;
+  RCCL1.077/1.080/1.145 and1.030/1.029/1.075 (three FP32 shapes).15/15 forward
+  pairs favor candidate;12–15 FB pairs. Helper wall-latency only, no dense/model/
+  training-speed or memory claim. Trace native kernels2 retained, valid scalar
+  reads/explicit stream syncs2→1. Bitwise old/new output/input/bias grads/pack,
+  independent CPU refs,60 data-state+12 combined-error-priority cases pass.
+  Current boot candidate/comparison333/6 +actual helper post-update142/2=475/8;
+  retained recipe71/cohort,25 refusals/AMP/FD/adapter/stream/layout contracts.
+ 442 protected hashes/four AOT DBs/links retained with old-helper backup pinned;
+ 29 local tests/selected Ruff checks pass. RecoveryWS/recovery/quant-b054-before,
+  identity-guarded helper rollback not exercised. No native build/ccache reset/
+  Torch/ROCm/images/runtime-manifest/default/profile/user-app/.105 changes.
+  User confirmed restart while longer run staged, no job started then; SSH returns
+  r2 bootc6a50cfa-a368-4ba5-ab28-66250b4f1f1f. Extended comparisons/current gates
+  all after reboot; eight current states ACK, three old5c04 guard ACK logs retained
+  (/run cleared). Per-gate logs invariant in each boot/current whole batch matches;
+  no cross-boot dmesg identity claim/no agent reboot. CPU fault distinct/unresolved.
+  Daily561f/profile446f/nativea524 cohorts preserved. Raw WS/logs/quant-b054-*;
+  final qualification-r1/final.json +ordinary.json. Local kernel/artifacts/quant-b054
+  archive626,696B SHA75a22a82c56d551f55d878d6ec67edd8241a0f2c66b9b9ac3ae8aa4969609418,
+  104 rawlogs2,968,279B/eight tools/versions/traces/recovery/current guards verified.
+  No own jobs/containers/armed guard at handoff; memory sync `.104` only.
+  [Measurements/API/recovery](docs/development/bc250_quant_b054_results/README.md).
+  **Next B05.5:** explicit owned frozen-W8 nn.Module conversion +versioned state/
+  checkpoint roundtrip; independent output/input/bias/adapter first-gradient refs.
+  Keep strict checks/FP32 scales/bounds/opt-in/defaults/.105/user apps; no full-model
+  QLoRA, quality or model-speed claim.
+
+
 - **B05.3 matched RCCL native layout repair selected2026-10-24:** tools411e72917;
   no new Torch source edit, both cohorts usea5249802372882dedccb91d3fd4d73be9fcdf2bd.
   Independent WS/pytorch-quant-b053 from protected B03.7 RCCL14cf source/build
@@ -2935,7 +2977,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B05.1 | Audited native low-bit paths; two native layout defects reproduced, backward/INT4 refusals retained. Isolated frozen W8 first-gradient recipe110/6 checks passes; smaller weight payload/slower small forward fixtures, not installed. |
 | [x]   | B05.2 | Native activation/FP32-scale layout fix installed in daily NCCL-off Torch after947 candidate+231 ordinary checks. Old RCCL profile remains unfixed; native backward/INT4 refusal retained. |
 | [x]   | B05.3 | Matched RCCL Torch layout repair selected after1732 candidate+371 ordinary checks; daily B05.2 unchanged. Both cohorts use a524 source; old profile/recovery retained. |
-| [ ]   | **B05.4 — next** | Measure strict W8 validation/native forward/backward overhead and implement a bounded optimization with independent numeric/gradient/error-contract references and paired timings. Preserve defaults/.105; no check weakening or model-speed claim. |
+| [x]   | B05.4 | Strict helper validation normal scalar reads2→1;475 current-boot checks, matched outputs/gradients/errors, bounded paired latency gains. Rejected slower list-copy experiment retained; native cohorts/defaults unchanged. |
+| [ ]   | **B05.5 — next** | Explicit owned frozen-W8 nn.Module conversion and versioned state/checkpoint roundtrip, independent output/input/bias/adapter first gradients. Preserve strict validation/FP32 scales/bounds/opt-in behavior; no full-model QLoRA/quality/speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

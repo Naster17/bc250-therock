@@ -1,0 +1,1090 @@
+{
+  "status": "passed",
+  "checks": [
+    "explicit-native-profile",
+    "bitwise-pack-output-input-bias-grad-torch.float32-contiguous",
+    "bitwise-pack-output-input-bias-grad-torch.float32-strided",
+    "bitwise-pack-output-input-bias-grad-torch.float32-batched",
+    "bitwise-pack-output-input-bias-grad-torch.float16-contiguous",
+    "bitwise-pack-output-input-bias-grad-torch.float16-strided",
+    "bitwise-pack-output-input-bias-grad-torch.float16-batched",
+    "bitwise-pack-output-input-bias-grad-torch.bfloat16-contiguous",
+    "bitwise-pack-output-input-bias-grad-torch.bfloat16-strided",
+    "bitwise-pack-output-input-bias-grad-torch.bfloat16-batched",
+    "error-value-priority-torch.float32-(1.0, 1.0)-None",
+    "error-value-priority-torch.float32-(1.0, 1.0)-nan",
+    "error-value-priority-torch.float32-(1.0, 1.0)-inf",
+    "error-value-priority-torch.float32-(1.0, 1.0)--inf",
+    "error-value-priority-torch.float32-(0.0, 1.0)-None",
+    "error-value-priority-torch.float32-(0.0, 1.0)-nan",
+    "error-value-priority-torch.float32-(0.0, 1.0)-inf",
+    "error-value-priority-torch.float32-(0.0, 1.0)--inf",
+    "error-value-priority-torch.float32-(-1.0, 1.0)-None",
+    "error-value-priority-torch.float32-(-1.0, 1.0)-nan",
+    "error-value-priority-torch.float32-(-1.0, 1.0)-inf",
+    "error-value-priority-torch.float32-(-1.0, 1.0)--inf",
+    "error-value-priority-torch.float32-(nan, 1.0)-None",
+    "error-value-priority-torch.float32-(nan, 1.0)-nan",
+    "error-value-priority-torch.float32-(nan, 1.0)-inf",
+    "error-value-priority-torch.float32-(nan, 1.0)--inf",
+    "error-value-priority-torch.float32-(inf, 1.0)-None",
+    "error-value-priority-torch.float32-(inf, 1.0)-nan",
+    "error-value-priority-torch.float32-(inf, 1.0)-inf",
+    "error-value-priority-torch.float32-(inf, 1.0)--inf",
+    "scale-input-bias-error-priority-torch.float32-False-False",
+    "scale-input-bias-error-priority-torch.float32-False-True",
+    "scale-input-bias-error-priority-torch.float32-True-False",
+    "scale-input-bias-error-priority-torch.float32-True-True",
+    "error-value-priority-torch.float16-(1.0, 1.0)-None",
+    "error-value-priority-torch.float16-(1.0, 1.0)-nan",
+    "error-value-priority-torch.float16-(1.0, 1.0)-inf",
+    "error-value-priority-torch.float16-(1.0, 1.0)--inf",
+    "error-value-priority-torch.float16-(0.0, 1.0)-None",
+    "error-value-priority-torch.float16-(0.0, 1.0)-nan",
+    "error-value-priority-torch.float16-(0.0, 1.0)-inf",
+    "error-value-priority-torch.float16-(0.0, 1.0)--inf",
+    "error-value-priority-torch.float16-(-1.0, 1.0)-None",
+    "error-value-priority-torch.float16-(-1.0, 1.0)-nan",
+    "error-value-priority-torch.float16-(-1.0, 1.0)-inf",
+    "error-value-priority-torch.float16-(-1.0, 1.0)--inf",
+    "error-value-priority-torch.float16-(nan, 1.0)-None",
+    "error-value-priority-torch.float16-(nan, 1.0)-nan",
+    "error-value-priority-torch.float16-(nan, 1.0)-inf",
+    "error-value-priority-torch.float16-(nan, 1.0)--inf",
+    "error-value-priority-torch.float16-(inf, 1.0)-None",
+    "error-value-priority-torch.float16-(inf, 1.0)-nan",
+    "error-value-priority-torch.float16-(inf, 1.0)-inf",
+    "error-value-priority-torch.float16-(inf, 1.0)--inf",
+    "scale-input-bias-error-priority-torch.float16-False-False",
+    "scale-input-bias-error-priority-torch.float16-False-True",
+    "scale-input-bias-error-priority-torch.float16-True-False",
+    "scale-input-bias-error-priority-torch.float16-True-True",
+    "error-value-priority-torch.bfloat16-(1.0, 1.0)-None",
+    "error-value-priority-torch.bfloat16-(1.0, 1.0)-nan",
+    "error-value-priority-torch.bfloat16-(1.0, 1.0)-inf",
+    "error-value-priority-torch.bfloat16-(1.0, 1.0)--inf",
+    "error-value-priority-torch.bfloat16-(0.0, 1.0)-None",
+    "error-value-priority-torch.bfloat16-(0.0, 1.0)-nan",
+    "error-value-priority-torch.bfloat16-(0.0, 1.0)-inf",
+    "error-value-priority-torch.bfloat16-(0.0, 1.0)--inf",
+    "error-value-priority-torch.bfloat16-(-1.0, 1.0)-None",
+    "error-value-priority-torch.bfloat16-(-1.0, 1.0)-nan",
+    "error-value-priority-torch.bfloat16-(-1.0, 1.0)-inf",
+    "error-value-priority-torch.bfloat16-(-1.0, 1.0)--inf",
+    "error-value-priority-torch.bfloat16-(nan, 1.0)-None",
+    "error-value-priority-torch.bfloat16-(nan, 1.0)-nan",
+    "error-value-priority-torch.bfloat16-(nan, 1.0)-inf",
+    "error-value-priority-torch.bfloat16-(nan, 1.0)--inf",
+    "error-value-priority-torch.bfloat16-(inf, 1.0)-None",
+    "error-value-priority-torch.bfloat16-(inf, 1.0)-nan",
+    "error-value-priority-torch.bfloat16-(inf, 1.0)-inf",
+    "error-value-priority-torch.bfloat16-(inf, 1.0)--inf",
+    "scale-input-bias-error-priority-torch.bfloat16-False-False",
+    "scale-input-bias-error-priority-torch.bfloat16-False-True",
+    "scale-input-bias-error-priority-torch.bfloat16-True-False",
+    "scale-input-bias-error-priority-torch.bfloat16-True-True",
+    "paired-unchanged-result-8-128-256-backwardFalse",
+    "paired-unchanged-result-8-128-256-backwardTrue",
+    "paired-unchanged-result-32-256-256-backwardFalse",
+    "paired-unchanged-result-32-256-256-backwardTrue",
+    "paired-unchanged-result-8-512-1024-backwardFalse",
+    "paired-unchanged-result-8-512-1024-backwardTrue",
+    "baseline-native-kernels-validation-sync-count",
+    "candidate-native-kernels-validation-sync-count"
+  ],
+  "timings": [
+    {
+      "shape": [
+        8,
+        128,
+        256
+      ],
+      "backward": false,
+      "pairs_ms": [
+        {
+          "baseline": 0.22523353333288773,
+          "candidate": 0.20632790000073933
+        },
+        {
+          "candidate": 0.20618846666688265,
+          "baseline": 0.22191390000045885
+        },
+        {
+          "baseline": 0.21990543333269366,
+          "candidate": 0.20525493333423128
+        },
+        {
+          "candidate": 0.20488449999997252,
+          "baseline": 0.2210554999995414
+        },
+        {
+          "baseline": 0.22017863333398205,
+          "candidate": 0.20488386666670522
+        },
+        {
+          "candidate": 0.2052773333332425,
+          "baseline": 0.22085596666651477
+        },
+        {
+          "baseline": 0.2204575999996905,
+          "candidate": 0.20515486666662733
+        },
+        {
+          "candidate": 0.20747179999981805,
+          "baseline": 0.2215286333334158
+        },
+        {
+          "baseline": 0.22041469999957522,
+          "candidate": 0.20685839999998734
+        },
+        {
+          "candidate": 0.20567883333342252,
+          "baseline": 0.22165126666682985
+        },
+        {
+          "baseline": 0.2204810333334232,
+          "candidate": 0.20490590000008524
+        },
+        {
+          "candidate": 0.20454699999940354,
+          "baseline": 0.22092820000049565
+        },
+        {
+          "baseline": 0.22014389999943282,
+          "candidate": 0.2057911333328851
+        },
+        {
+          "candidate": 0.2053945999999011,
+          "baseline": 0.2213301000002351
+        },
+        {
+          "baseline": 0.2198957333329569,
+          "candidate": 0.20550116666602966
+        }
+      ],
+      "medians_ms": {
+        "baseline": 0.22085596666651477,
+        "candidate": 0.2053945999999011
+      },
+      "ratio": 1.0752764029172195
+    },
+    {
+      "shape": [
+        8,
+        128,
+        256
+      ],
+      "backward": true,
+      "pairs_ms": [
+        {
+          "baseline": 0.41531236666685345,
+          "candidate": 0.4052258333331338
+        },
+        {
+          "candidate": 0.4261628333334026,
+          "baseline": 0.41776606666701355
+        },
+        {
+          "baseline": 0.4119295000000041,
+          "candidate": 0.40313936666696765
+        },
+        {
+          "candidate": 0.4037898999996514,
+          "baseline": 0.4168291333333703
+        },
+        {
+          "baseline": 0.4121851666667453,
+          "candidate": 0.4109563666664447
+        },
+        {
+          "candidate": 0.4048007333333696,
+          "baseline": 0.4178071666662693
+        },
+        {
+          "baseline": 0.4162893666659784,
+          "candidate": 0.4052761333336245
+        },
+        {
+          "candidate": 0.4044232000002997,
+          "baseline": 0.4171166333340655
+        },
+        {
+          "baseline": 0.4127003333337598,
+          "candidate": 0.4036908999997498
+        },
+        {
+          "candidate": 0.40427329999962086,
+          "baseline": 0.417832633333622
+        },
+        {
+          "baseline": 0.4116905333338157,
+          "candidate": 0.4033359333334374
+        },
+        {
+          "candidate": 0.4032844666672493,
+          "baseline": 0.41806023333303227
+        },
+        {
+          "baseline": 0.4118146333325967,
+          "candidate": 0.41045603333410935
+        },
+        {
+          "candidate": 0.40526056666673566,
+          "baseline": 0.41856140000030945
+        },
+        {
+          "baseline": 0.41263919999986837,
+          "candidate": 0.4027722666667917
+        }
+      ],
+      "medians_ms": {
+        "baseline": 0.4162893666659784,
+        "candidate": 0.4044232000002997
+      },
+      "ratio": 1.0293409642811537
+    },
+    {
+      "shape": [
+        32,
+        256,
+        256
+      ],
+      "backward": false,
+      "pairs_ms": [
+        {
+          "baseline": 0.22490966666737222,
+          "candidate": 0.207617466666458
+        },
+        {
+          "candidate": 0.2069014999998823,
+          "baseline": 0.223359600000587
+        },
+        {
+          "baseline": 0.22259583333360902,
+          "candidate": 0.20697443333309215
+        },
+        {
+          "candidate": 0.20737406666645106,
+          "baseline": 0.22335740000016813
+        },
+        {
+          "baseline": 0.2230792666665593,
+          "candidate": 0.20708339999941927
+        },
+        {
+          "candidate": 0.20705479999965823,
+          "baseline": 0.22316106666645888
+        },
+        {
+          "baseline": 0.22347330000040225,
+          "candidate": 0.20712486666714844
+        },
+        {
+          "candidate": 0.20680873333371133,
+          "baseline": 0.22350469999992129
+        },
+        {
+          "baseline": 0.2224805666666422,
+          "candidate": 0.20674316666694872
+        },
+        {
+          "candidate": 0.2062464000005093,
+          "baseline": 0.22287930000004508
+        },
+        {
+          "baseline": 0.2223704333327229,
+          "candidate": 0.20703736666594827
+        },
+        {
+          "candidate": 0.20666953333261517,
+          "baseline": 0.22258893333268284
+        },
+        {
+          "baseline": 0.22275993333285746,
+          "candidate": 0.20673406666655106
+        },
+        {
+          "candidate": 0.2070130666661877,
+          "baseline": 0.2224026000002747
+        },
+        {
+          "baseline": 0.22278576666584135,
+          "candidate": 0.2066983000001225
+        }
+      ],
+      "medians_ms": {
+        "baseline": 0.22287930000004508,
+        "candidate": 0.20697443333309215
+      },
+      "ratio": 1.0768445957832704
+    },
+    {
+      "shape": [
+        32,
+        256,
+        256
+      ],
+      "backward": true,
+      "pairs_ms": [
+        {
+          "baseline": 0.4163851666665626,
+          "candidate": 0.4067777333337593
+        },
+        {
+          "candidate": 0.40558350000026167,
+          "baseline": 0.4168490666662213
+        },
+        {
+          "baseline": 0.41502003333372767,
+          "candidate": 0.40623576666689587
+        },
+        {
+          "candidate": 0.407345100000119,
+          "baseline": 0.41932173333331474
+        },
+        {
+          "baseline": 0.41455276666605795,
+          "candidate": 0.40561173333344414
+        },
+        {
+          "candidate": 0.4058043000005303,
+          "baseline": 0.4225065000004709
+        },
+        {
+          "baseline": 0.4170859666667563,
+          "candidate": 0.4056234999997817
+        },
+        {
+          "candidate": 0.4049705999998802,
+          "baseline": 0.42036250000023756
+        },
+        {
+          "baseline": 0.4161190999999083,
+          "candidate": 0.4056352333331385
+        },
+        {
+          "candidate": 0.4050247666668838,
+          "baseline": 0.41968820000022333
+        },
+        {
+          "baseline": 0.41953960000000734,
+          "candidate": 0.4239914000000529
+        },
+        {
+          "candidate": 0.42305623333334097,
+          "baseline": 0.4258993999997074
+        },
+        {
+          "baseline": 0.4202978000004502,
+          "candidate": 0.42142596666678855
+        },
+        {
+          "candidate": 0.42316413333386055,
+          "baseline": 0.4278694666671375
+        },
+        {
+          "baseline": 0.4215990999995256,
+          "candidate": 0.4221896666668575
+        }
+      ],
+      "medians_ms": {
+        "baseline": 0.41953960000000734,
+        "candidate": 0.40623576666689587
+      },
+      "ratio": 1.0327490448275085
+    },
+    {
+      "shape": [
+        8,
+        512,
+        1024
+      ],
+      "backward": false,
+      "pairs_ms": [
+        {
+          "baseline": 0.349132866666461,
+          "candidate": 0.30963379999964974
+        },
+        {
+          "candidate": 0.30864156666628634,
+          "baseline": 0.34723763333299
+        },
+        {
+          "baseline": 0.34770503333353037,
+          "candidate": 0.3092155999998643
+        },
+        {
+          "candidate": 0.3092637666658978,
+          "baseline": 0.34752779999962513
+        },
+        {
+          "baseline": 0.3480784000004178,
+          "candidate": 0.3089605333334096
+        },
+        {
+          "candidate": 0.2698937999999392,
+          "baseline": 0.3065381333338261
+        },
+        {
+          "baseline": 0.3068384000007048,
+          "candidate": 0.26803163333302865
+        },
+        {
+          "candidate": 0.2674827666661865,
+          "baseline": 0.30714616666690137
+        },
+        {
+          "baseline": 0.3075505999997101,
+          "candidate": 0.268594966667024
+        },
+        {
+          "candidate": 0.26757006666665956,
+          "baseline": 0.307487366666237
+        },
+        {
+          "baseline": 0.3074315333331394,
+          "candidate": 0.26840970000042336
+        },
+        {
+          "candidate": 0.26736246666606195,
+          "baseline": 0.3065160666665179
+        },
+        {
+          "baseline": 0.30714513333407467,
+          "candidate": 0.26801796666688915
+        },
+        {
+          "candidate": 0.2683337666667285,
+          "baseline": 0.30685939999936335
+        },
+        {
+          "baseline": 0.3067173333325475,
+          "candidate": 0.26766330000024635
+        }
+      ],
+      "medians_ms": {
+        "baseline": 0.3074315333331394,
+        "candidate": 0.26840970000042336
+      },
+      "ratio": 1.1453816063005715
+    },
+    {
+      "shape": [
+        8,
+        512,
+        1024
+      ],
+      "backward": true,
+      "pairs_ms": [
+        {
+          "baseline": 0.6368322333334694,
+          "candidate": 0.5410926666665242
+        },
+        {
+          "candidate": 0.5236415000003566,
+          "baseline": 0.5611720666668892
+        },
+        {
+          "baseline": 0.5584719000002755,
+          "candidate": 0.5247589666661648
+        },
+        {
+          "candidate": 0.518222766666554,
+          "baseline": 0.5626948666664097
+        },
+        {
+          "baseline": 0.5586824333335016,
+          "candidate": 0.5238579999996773
+        },
+        {
+          "candidate": 0.5218361333334087,
+          "baseline": 0.5634970666667035
+        },
+        {
+          "baseline": 0.5568703666663547,
+          "candidate": 0.5054792666669528
+        },
+        {
+          "candidate": 0.49378100000012637,
+          "baseline": 0.5314161333330958
+        },
+        {
+          "baseline": 0.527463833333286,
+          "candidate": 0.4912171999999752
+        },
+        {
+          "candidate": 0.49173303333323776,
+          "baseline": 0.5325097666665594
+        },
+        {
+          "baseline": 0.5314274999998739,
+          "candidate": 0.4901288000003963
+        },
+        {
+          "candidate": 0.4907846333338739,
+          "baseline": 0.5335038333337631
+        },
+        {
+          "baseline": 0.5310100999992073,
+          "candidate": 0.49255399999973787
+        },
+        {
+          "candidate": 0.48849720000040026,
+          "baseline": 0.5315048999998832
+        },
+        {
+          "baseline": 0.5285975000001978,
+          "candidate": 0.4907881333338082
+        }
+      ],
+      "medians_ms": {
+        "baseline": 0.5335038333337631,
+        "candidate": 0.49378100000012637
+      },
+      "ratio": 1.0804462572144868
+    }
+  ],
+  "errors": [
+    {
+      "dtype": "torch.float32",
+      "scales": "(1.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(1.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(1.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(0.0, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(0.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(0.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(0.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(-1.0, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(-1.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(-1.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(-1.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(nan, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(nan, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(nan, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(nan, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(inf, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(inf, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(inf, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float32",
+      "scales": "(inf, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(1.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(1.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(1.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(0.0, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(0.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(0.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(0.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(-1.0, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(-1.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(-1.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(-1.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(nan, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(nan, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(nan, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(nan, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(inf, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(inf, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(inf, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.float16",
+      "scales": "(inf, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(1.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(1.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(1.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Inputs must be finite"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(0.0, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(0.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(0.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(0.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(-1.0, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(-1.0, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(-1.0, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(-1.0, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(nan, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(nan, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(nan, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(nan, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(inf, 1.0)",
+      "input": "None",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(inf, 1.0)",
+      "input": "nan",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(inf, 1.0)",
+      "input": "inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "scales": "(inf, 1.0)",
+      "input": "-inf",
+      "outcome": [
+        "ValueError",
+        "Scales must be finite and positive"
+      ]
+    }
+  ],
+  "traces": [
+    {
+      "name": "baseline",
+      "scalar_reads": 2,
+      "stream_syncs": 2,
+      "kernels": [
+        "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]",
+        "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]"
+      ]
+    },
+    {
+      "name": "candidate",
+      "scalar_reads": 1,
+      "stream_syncs": 1,
+      "kernels": [
+        "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]",
+        "at::native::weight_int8pack_mm_kernel(float const*, signed char const*, float const*, float*, int, int, int) [clone .kd]"
+      ]
+    }
+  ],
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "pairs": 15,
+  "calls": 30
+}

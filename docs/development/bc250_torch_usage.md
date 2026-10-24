@@ -100,6 +100,13 @@ dense FP32, while fresh packed weight payload was about1.97× smaller than FP16.
 No model speed/quality or total-memory improvement is established.
 [Exact API, bounds, CPU references, timings and limitations](bc250_quant_b051_results/README.md).
 
+B05.4 updates this explicit helper with one normal-path validation scalar read
+instead of two, preserving finite checks/error priority and first gradients.
+Three FP32 paired fixtures show1.075–1.145× forward and1.029–1.080× forward+
+backward old/new latency ratios across daily/RCCL cohorts. These are helper-only
+measurements, not training/model gains or proof of beating dense GEMM.
+[Measurements, error contracts and helper rollback](bc250_quant_b054_results/README.md).
+
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
 The current mutable development prefix automatically supplies one qualified
