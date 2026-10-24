@@ -32,7 +32,7 @@ def main():
     assert deployed["status"] == "passed"
     reports = {
         phase: json.loads(
-            (WS / ("logs/quant-b056-" + phase + "-r2/final.json")).read_text()
+            (WS / ("logs/quant-b056-" + phase + "-r3/final.json")).read_text()
         )
         for phase in ("candidate", "installed")
     }
@@ -47,14 +47,14 @@ def main():
     assert all(os.readlink(p) == v for p, v in installed["links"].items())
     assert (
         subprocess.check_output(["dmesg"])
-        == (WS / "logs/quant-b056-candidate-r2/kernel-before.log").read_bytes()
+        == (WS / "logs/quant-b056-candidate-r3/kernel-before.log").read_bytes()
     )
     guards = [g["label"] for r in reports.values() for g in r["gates"]]
     for phase in ("candidate", "installed"):
         label = (
             "quant-b056-"
             + phase
-            + ("-compat-r1" if phase == "candidate" else "-compat-r2")
+            + ("-compat-r1" if phase == "candidate" else "-compat-r3")
         )
         folder = WS / "logs" / label
         result = json.loads((folder / "result.json").read_text())
@@ -65,9 +65,14 @@ def main():
     assert len(guards) == 32
     accepted_guards = list(guards)
     historical = []
-    for pattern in ("quant-b056-candidate-r1-*", "quant-b056-installed-r1-*"):
+    for pattern in (
+        "quant-b056-candidate-r1-*",
+        "quant-b056-installed-r1-*",
+        "quant-b056-candidate-r2-*",
+        "quant-b056-installed-r2-*",
+    ):
         historical.extend(p.name for p in (WS / "logs").glob(pattern) if p.is_dir())
-    assert len(historical) == 21
+    assert len(historical) == 49
     guards.extend(historical)
     for label in guards:
         guard = json.loads((Path("/run") / label / "state.json").read_text())
@@ -115,10 +120,15 @@ def main():
         for label in guards:
             tar.add(WS / "logs" / label, arcname="logs/" + label)
             tar.add(Path("/run") / label, arcname="guards/" + label)
-        for name in ("quant-b056-candidate-r1", "quant-b056-installed-r1"):
+        for name in (
+            "quant-b056-candidate-r1",
+            "quant-b056-installed-r1",
+            "quant-b056-candidate-r2",
+            "quant-b056-installed-r2",
+        ):
             tar.add(WS / "logs" / name, arcname="logs/" + name)
         for phase in ("candidate", "installed"):
-            name = "quant-b056-" + phase + "-r2"
+            name = "quant-b056-" + phase + "-r3"
             tar.add(WS / "logs" / name, arcname="logs/" + name)
         for p in sorted((WS / "logs").glob("quant-b056-stage-*")):
             tar.add(p, arcname="logs/" + p.name)
