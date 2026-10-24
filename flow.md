@@ -9,6 +9,48 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B05.2 native weight-only INT8 layout repair installed2026-10-24:**
+  Torcha5249802372882dedccb91d3fd4d73be9fcdf2bd over14cf; tools506ae3b9e.
+  FP32 conversion preserves strides; native row-major kernel now receives
+  contiguous activations/scales. Generated HIP delta verified exactly two calls;
+  arithmetic/output cast unchanged.18-config device-generic regression added,
+  eight spin/lintrunner checks pass (existing unused import removed); no full CI.
+  Independent WS/pytorch-quant-b052: daily2b source/build copied +full six-file
+  source overlay, immutable third-party RO; pip-only build exit0,4CPU/4jobs/link1/
+  RAM10GiB/mem+swap12GiB/shared20GiB ccache/no reset/noGPU/noNetwork. Existing
+  caches/source/builds retained. Postcheck initially rejects normal automatic HIP
+  translation of two NCCL files; bytes match protected B03.7 exactly, NCCLoff.
+  CMake0/1 vsOFF/ON spelling seal check corrected; original failures and early
+  qualification refusal retained. No compiler retry or numerical relaxation.
+  Candidate947/11 gates: native220 (216 exact dtype/layout/guard composites,
+  private stream/device/backward+INT4 boundaries), W8 recipe71, core7/sparse253/
+  FFT245/compiled14+14/profiler1/Gloo31/vision51/audio40. Ordinary231/3 gates:
+  daily native220/train-consumers5/unchanged RCCL6.14 guards ACK, accepted/batch/
+  final dmesg identical;402 protected hashes/four AOT DBs/links retained with
+  deliberate daily Torch/runtime update and old metadata pinned to recovery.
+  Active daily →WS/pytorch-quant-b052, native Torcha524/NCCLoff/Glooon,
+  libtorch_hip2f2761cd7f259612863406ab0e85d7b1b5ce8b59a32655bf9ac7db9359d0df27,
+  runtime561f014e31c4ca0bba73861d56125e4e18124867904b7c23cff8d7e0fa36d2a1.
+  Image506f/HIPa116/ROCm/N3.2/math/SDMA0/heapoff unchanged. Recovery
+  WS/recovery/quant-b052-before/runtime.json=32fd4559, old2b build/source kept;
+  locked identity-guarded rollback helper retained/not exercised. No model
+  conversion/W8 package installation/native backward/INT4/performance/universal
+  claim. **Opt-in RCCL14cf/profile42eb remains old and unfixed**, still launches;
+  its W8 helper normalization remains needed. Unknown CPU fault distinct/unresolved.
+  Same r2 boot5c04afbb/no reboot/.105 connection/BIOS/fallback/user app touch.
+  Raw WS/logs/quant-b052-*, candidatefinal qualification-r1/final.json,
+  installed WS/logs/quant-b052-ordinary.json; local kernel/artifacts/quant-b052
+  archive193,263,147B SHAfce8095e5c163f36d100f9730137faad0fcd06b98014448e1f17db729a002288,
+  153 rawlogs5,516,695B/native payloads/eight tools/source/recovery/14 guards
+  SHA-verified.29 local BC250 tests/selected helper Ruff checks pass. No own jobs/
+  containers/armed guards at handoff; memory sync `.104` only.
+  [Use/evidence/recovery](docs/development/bc250_quant_b052_results/README.md).
+  **Next B05.3:** check disk/resource headroom; independent RCCL-enabled Torch
+  candidate with same layout fix, exact layouts +retained RCCL/gradient contracts,
+  then locked matched opt-in profile identities/ordinary acceptance/rollback.
+  Preserve new daily Torch, older candidates/caches/fallbacks/user apps and `.105`.
+
+
 - **B05.1 native low-bit audit/W8 prototype completed2026-10-24:** codec4383972c.
   Existing Torch `_weight_int8pack_mm` generic HIP passes contiguous FP32/FP16/
   BF16 references, but strided activation15/15 and strided FP32 scale12/15
@@ -2852,7 +2894,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B03.7 | Numeric FP8 admission guards, raw-bit copy and memory API readiness;1441 checks. No real offload payload/symmetric device claim. |
 | [x]   | B03.8 | Explicit ordinary-launch rccl-single profile on .104;1461/26 gates plus private-context5, nine CPU refusals and lock exclusion pass. Daily NCCL-off preserved; .105 untouched. |
 | [x]   | B05.1 | Audited native low-bit paths; two native layout defects reproduced, backward/INT4 refusals retained. Isolated frozen W8 first-gradient recipe110/6 checks passes; smaller weight payload/slower small forward fixtures, not installed. |
-| [ ]   | **B05.2 — next** | Repair native weight-only INT8 activation/FP32-scale layout handling; isolated Torch build and independent layout regressions. Preserve daily/opt-in/fallbacks; native backward remains refused, no INT4 gate bypass. |
+| [x]   | B05.2 | Native activation/FP32-scale layout fix installed in daily NCCL-off Torch after947 candidate+231 ordinary checks. Old RCCL profile remains unfixed; native backward/INT4 refusal retained. |
+| [ ]   | **B05.3 — next** | Check disk/resources and repair the independent RCCL-enabled native cohort; exact layout/retained RCCL-gradient qualification, matched opt-in manifest/ordinary acceptance/rollback. Preserve daily/.105/fallbacks. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

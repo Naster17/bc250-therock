@@ -88,11 +88,12 @@ bounded GPU forward/input/bias first gradients. It is **not installed** in the
 runtime and does not convert applications automatically. It is not packed INT4,
 NF4, a TorchAO/bitsandbytes backend or a complete QLoRA recipe.
 
-The native weight-only primitive currently gives wrong results for strided
-activations or strided FP32 scales and has no input derivative. The prototype
-normalizes those layouts and supplies its own input derivative; the native
-operator defects remain queued for B05.2. Default launchers and native operators
-are unchanged. Two small forward fixtures were about3.2× slower than resident
+B05.2 fixes native strided-activation/FP32-scale wrong results in the daily
+Torch build automatically. The older `rccl-single` profile still needs this
+correction. The prototype normalizes layouts in both profiles and supplies its
+own input derivative; native backward remains unsupported. No quantization/model
+routing is enabled automatically.
+[Native fix, qualification and rollback](bc250_quant_b052_results/README.md). Two small forward fixtures were about3.2× slower than resident
 dense FP32, while fresh packed weight payload was about1.97× smaller than FP16.
 No model speed/quality or total-memory improvement is established.
 [Exact API, bounds, CPU references, timings and limitations](bc250_quant_b051_results/README.md).
