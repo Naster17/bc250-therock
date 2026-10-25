@@ -93,6 +93,14 @@ def main():
                                 path,
                                 arcname="build-logs/" + folder.name + "/" + path.name,
                             )
+            transfer = WS / "tmp/migraphx-b063/memory-transfer"
+            for pattern in (
+                "build-b067-*.log",
+                "consumer-b067-*.log",
+                "package-b067-*.log",
+            ):
+                for path in sorted(transfer.glob(pattern)):
+                    tar.add(path, arcname="controller-logs/" + path.name)
             for gate in qualified["gates"]:
                 tar.add(Path("/run") / gate["label"], arcname="guards/" + gate["label"])
             for path in sorted((WS / "helpers").glob("*migraphx*b067*")):

@@ -60,9 +60,16 @@ def main():
             assert sha(installed_license) == sha(source_license)
         else:
             shutil.copyfile(source_license, installed_license)
-        # Upstream installs libraries one level deeper than the HIPRTC lookup's
-        # bin fallback. Keep the existing isolated compiler-process route.
-        (sdk / "lib/migraphx/bin").symlink_to("../../bin")
+        # Installed libraries use lib/migraphx/lib, while upstream installs
+        # the helper under prefix/bin. A verified sibling copy preserves the
+        # isolated JIT route without parent-traversing symlinks on SSHFS.
+        shutil.copy2(
+            sdk / "bin/migraphx-hiprtc-driver",
+            sdk / "lib/migraphx/lib/migraphx-hiprtc-driver",
+        )
+        assert sha(sdk / "bin/migraphx-hiprtc-driver") == sha(
+            sdk / "lib/migraphx/lib/migraphx-hiprtc-driver"
+        )
         info = sdk / "share/bc250-sdk"
         info.mkdir(parents=True)
         resources = STORAGE / "resources"
@@ -95,7 +102,7 @@ def main():
             automatic_torch_dispatch=False,
             ort_gpu_provider=False,
             autograd=False,
-            jit_compiler_process_link="lib/migraphx/bin -> ../../bin",
+            jit_compiler_process="lib/migraphx/lib/migraphx-hiprtc-driver (verified sibling copy)",
         )
         atomic_json(info / "manifest.json", manifest)
         hashes, links = {}, {}

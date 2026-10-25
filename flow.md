@@ -29,21 +29,23 @@ release claims must not override this cursor and current manifests.
   r4 successful old-source SDK. Alias-aware scans verify every expected digest
   while caching unchanged resolved files; alias-conflict/retarget/drift checks pass.
   Packaging-r1 refused wrapper-derived broken share/doc/migraphx/LICENSE link;
-  r2 materializes only that verified source license and still audits other links.
-  **Running:** package controllerPID22150, command python3 WS/helpers/
-  package_migraphx_b067_on_host.py --install STORAGE/sdk-r5 --attempt r2;
-  WS/tmp/migraphx-b063/memory-transfer/package-b067-r2.log and STORAGE/package-r2.
+  r2 materialized that verified license but SSHFS refused parent-traversing bin
+  directory readlink (EPERM). r3 uses a verified sibling helper copy at
+  lib/migraphx/lib/migraphx-hiprtc-driver, avoiding that transport limitation.
+  **Running:** package controllerPID22687, command python3 WS/helpers/
+  package_migraphx_b067_on_host.py --install STORAGE/sdk-r5 --attempt r3;
+  WS/tmp/migraphx-b063/memory-transfer/package-b067-r3.log and STORAGE/package-r3.
   No build/consumer/GPU container running. Root SSH session19259; SSHFS PID13907;
   local bridge15912/SSH15946/SFTP15947, tool session83750. Preserve mount until done.
   Root free observed~772MiB then~55GiB during r5; no cleanup/reserve-policy change
   by these tools. New transfer source archive bytes verified on durable storage;
   its original incoming filename is now an alias, native source view remains.
-  **Next:** await package-r2 final; verify two extracts (one path with spaces),
-  then run qualify_migraphx_b067_on_host.py --attempt r1 --package STORAGE/package-r2
+  **Next:** await package-r3 final; verify two extracts (one path with spaces),
+  then run qualify_migraphx_b067_on_host.py --attempt r1 --package STORAGE/package-r3
   --consumer STORAGE/consumer-r2/build/consumer. Prepared134 checks/eight guarded
   gates: two private minimal-mount SDK Python50/CAPI+CLI6 pairs, retained core7/
   ONNX4/daily5/RCCL6. Require original builds absent, actual HIPRTC child from SDK
-  (compatibility link lib/migraphx/bin -> ../../bin), selected native SQLite and
+  (verified sibling helper copy), selected native SQLite and
   unchanged protected files/links/kernel logs. Export helper accepts matching
   --attempt; archive/sdk evidence still pending. No active runtime/default/boot/
   user-app/.105 changes. Historical Python CPU fault remains separate/unresolved.

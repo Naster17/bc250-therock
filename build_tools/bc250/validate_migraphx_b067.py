@@ -282,7 +282,8 @@ def main():
     assert proc.returncode == 0
     evidence = json.loads(observed.read_text())
     assert (
-        str(storage / "bin/migraphx-hiprtc-driver") in evidence["driver_executables"]
+        str(storage / "lib/migraphx/lib/migraphx-hiprtc-driver")
+        in evidence["driver_executables"]
     ), evidence
     report = json.loads(args.output.read_text())
     report["checks"].append("relocated-isolated-hiprtc-driver-observed")
