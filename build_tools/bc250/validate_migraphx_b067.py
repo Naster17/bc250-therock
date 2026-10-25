@@ -202,7 +202,18 @@ def worker(args, storage, baseline):
             for line in Path("/proc/self/maps").read_text().splitlines()
             if any(
                 k in line
-                for k in ("migraphx", "protobuf", "absl", "onnxruntime", "libamdhip64")
+                for k in (
+                    "migraphx",
+                    "protobuf",
+                    "absl",
+                    "onnxruntime",
+                    "libamdhip64",
+                    "libsqlite3",
+                    "libMIOpen",
+                    "librocblas",
+                    "libhiprtc",
+                    "libhsa-runtime64",
+                )
             )
         ]
         maps = "\n".join(report["maps"])
@@ -211,6 +222,11 @@ def worker(args, storage, baseline):
                 str(storage / "lib/migraphx/lib") in line and library in line
                 for line in maps.splitlines()
             ), library
+        assert any(
+            "/workspace/build/dist/rocm/lib/rocm_sysdeps/lib/" in line
+            and "libsqlite3" in line
+            for line in maps.splitlines()
+        )
         assert len(report["checks"]) == 49
         report["status"] = "passed"
     except BaseException as error:

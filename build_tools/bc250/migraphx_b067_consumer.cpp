@@ -51,6 +51,14 @@ int main(int argc, char **argv) {
         if (name == "pointwise")
           params.add("b", migraphx::argument(shapes["b"], bias.data()));
         const auto outputs = p.eval(params);
+        if (outputs.size() != 1)
+          throw std::runtime_error("Output count mismatch");
+        const auto shape = outputs[0].get_shape();
+        const std::vector<std::size_t> expected_shape{
+            3, name == "pointwise" ? 17UL : 5UL};
+        if (shape.type() != migraphx_shape_float_type or
+            shape.lengths() != expected_shape)
+          throw std::runtime_error("Output shape/type mismatch");
         auto actual = outputs[0].as_vector<float>();
         auto reference = read_values<double>(folder + "cpu-" + suffix + ".f64");
         auto ort = read_values<float>(folder + "ort-" + suffix + ".f32");

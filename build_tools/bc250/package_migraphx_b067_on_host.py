@@ -38,7 +38,28 @@ def main():
         ort_gpu_provider=False,
     )
     with runtime_lock(Path("/opt/bc250-stack/current/.runtime.lock")):
-        shutil.copytree(args.install, sdk, symlinks=True)
+        # The external build wrapper's LICENSE link was copied literally by
+        # upstream install. Materialize only this known license from source;
+        # reject other broken/escaping links during the manifest audit below.
+        staged_license = args.install / "share/doc/migraphx/LICENSE"
+        skip_license = staged_license.is_symlink()
+        if skip_license:
+            assert os.readlink(staged_license) == "source/LICENSE"
+
+        def ignore(folder, names):
+            return (
+                {"LICENSE"}
+                if skip_license and Path(folder) == staged_license.parent
+                else set()
+            )
+
+        shutil.copytree(args.install, sdk, symlinks=True, ignore=ignore)
+        installed_license = sdk / "share/doc/migraphx/LICENSE"
+        source_license = STORAGE / "resources/licenses/bc250-migraphx-LICENSE"
+        if installed_license.exists():
+            assert sha(installed_license) == sha(source_license)
+        else:
+            shutil.copyfile(source_license, installed_license)
         # Upstream installs libraries one level deeper than the HIPRTC lookup's
         # bin fallback. Keep the existing isolated compiler-process route.
         (sdk / "lib/migraphx/bin").symlink_to("../../bin")

@@ -94,7 +94,7 @@ def main():
         (WS / "helpers", "/workspace/helpers", "ro"),
         (WS / "migraphx-b062/rocm-cmake", "/workspace/deps", "ro"),
         (STORAGE, "/workspace/task", "rw"),
-        (WS / "tmp/migraphx-b064/20261025-source-r4", "/workspace/task/source", "ro"),
+        (WS / "tmp/migraphx-b067/source-r5", "/workspace/task/source", "ro"),
         (WS / "tmp/migraphx-b066/pybind11", "/workspace/pybind", "ro"),
         (STORAGE.parent / "b065/dependencies", "/workspace/task/dependencies", "ro"),
         (logs, "/workspace/logs", "rw"),

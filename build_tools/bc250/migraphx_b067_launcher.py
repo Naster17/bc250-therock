@@ -20,10 +20,12 @@ def main():
     env = dict(os.environ)
     env["BC250_MIGRAPHX_SDK"] = str(root)
     env["PYTHONPATH"] = str(root / "lib") + ":" + env.get("PYTHONPATH", "")
+    rocm = Path(env.get("ROCM_PATH", "/workspace/build/dist/rocm"))
     env["LD_LIBRARY_PATH"] = ":".join(
         (
             str(root / "lib"),
             str(root / "lib/migraphx/lib"),
+            str(rocm / "lib/rocm_sysdeps/lib"),
             env.get("LD_LIBRARY_PATH", ""),
         )
     )
