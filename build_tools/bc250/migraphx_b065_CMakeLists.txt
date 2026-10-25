@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: MIT
+cmake_minimum_required(VERSION 3.20)
+project(bc250_migraphx_b065 LANGUAGES C CXX)
+add_subdirectory(source migraphx)
+foreach(probe IN ITEMS probe_migraphx_b064 probe_migraphx_b065)
+  add_executable(${probe} ${probe}.cpp)
+  set_target_properties(${probe} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS OFF)
+  target_link_libraries(${probe} PRIVATE migraphx_gpu migraphx_onnx)
+endforeach()

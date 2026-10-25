@@ -9,6 +9,38 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.5 IN PROGRESS2026-10-25 (08:25 UTC checkpoint):** native parser work,
+  not yet GPU-qualified. MIGraphX622ea3f2a unchanged; separate full clean sources
+  Abseil20250512.0 bc257a88f7c1939f24e0379f14a3589e926c950c and Protobufv30.0
+  d295af5c3002c08e1bfd9d7f9e175d0a4d015f1e (annotated tag2c82161c) cloned under
+  therock/sources/bc250-migraphx-{abseil,protobuf}. Existing profiler Abseil202601
+  and Torch protobuf preserved. Abseil private build/install passes; Protobuf
+  currently~287/505, no compiler error. Five owned IR10/opset18 FP32 models and
+  two inputs each pass CPU-double vs explicit CPU ORT references (10 checks).
+  New .104 r2 boot e955931f-5edb-42e5-8f14-eafc2fbaf361, watchdog active, resource
+  preflight passed. No agent reboot/.105 contact/prefix/image/user-app changes.
+  Reconnected B06.4 SSHFS backing; new data under local
+  tmp/migraphx-b064/20261025-storage/durable/b065, remote STORAGE=
+  WS/tmp/migraphx-b064/20261025-storage/mount/b065. Source inputs read-only on
+  WS/tmp/migraphx-b065/{abseil,protobuf}; root~839MiB ordinary, floor768MiB;
+  external16GiB admission/14GiB growth bound, fourCPU/jobs4/link1/RAM10GiB/
+  mem+swap12GiB/read-only build root/networkoff/noGPU/private2GiB ccache/no reset.
+  **Running:** .104 controllerPID6918 executes python3 WS/helpers/
+  build_migraphx_b065_on_host.py --phase protobuf; container
+  a460b490551b (bc250-migraphx-b065-protobuf-r1), Podman child7073.
+  Controller WS/logs/migraphx-b065-protobuf-controller-r1.log; build/configure/
+  progress/final at STORAGE/logs-protobuf-r1/. SSHFS rootPID4238; local relay
+  python3 therock/build_tools/bc250/bridge_migraphx_b064.py --log-directory
+  tmp/migraphx-b065/20261025 (SSH311219/SFTP311220), bridge.log there.
+  Preserve running build/mount and all artifacts. No GPU guard armed yet.
+  Initial protobuf staging raced archive creation (EOF before build); completed
+  archive SHA verified, re-extraction succeeded. CPU model launcher TTY stop was
+  resumed cleanly; models-generation.json passed. No numerical relaxation.
+  **Resume:** inspect Proto final/exit and CPU model report; once built run
+  build_migraphx_b065_on_host.py --phase parser (helpers/fixtures prepared), then
+  qualify_migraphx_b065_on_host.py (planned65/six guarded gates) and export helper.
+  Do not mark native parser, bindings or GPU ORT provider qualified prematurely.
+
 - **B06.4 isolated MIGraphX FP32 graphs completed2026-10-25:** source
  622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83 over35b40656d; toolsf8635babe.
   Full minimal GPU backend/HIPRTC driver/owned C++17 fixture built on .104.
