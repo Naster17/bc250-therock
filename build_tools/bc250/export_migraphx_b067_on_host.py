@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 """Seal relocated SDK evidence while retaining the distributable archive separately."""
 import argparse
+import re
 import json
 import os
 from pathlib import Path
@@ -11,14 +12,17 @@ import tarfile
 from bc250_torch import runtime_lock
 from build_migraphx_b067_on_host import verify_hashes
 from deploy_torch_a04_on_host import atomic_json, sha
-from package_migraphx_b067_on_host import STORAGE
+from package_migraphx_b067_on_host import STORAGE as DEFAULT_STORAGE
 from qualify_training_n33_on_host import WS
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--attempt", required=True, choices=("r1", "r2", "r3"))
+    parser.add_argument("--attempt", required=True)
+    parser.add_argument("--storage", type=Path, default=DEFAULT_STORAGE)
     args = parser.parse_args()
+    assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
+    storage = args.storage
     logs = WS / "logs"
     qualified = json.loads(
         (
@@ -48,7 +52,7 @@ def main():
                 state["status"] == "acknowledged"
                 and state["boot_id"] == qualified["boot_id"]
             )
-        source = json.loads((STORAGE / "source-r5.json").read_text())
+        source = json.loads((storage / "source-r5.json").read_text())
         for name, digest in source["source_sha256"].items():
             assert sha(WS / "tmp/migraphx-b067/source-r5" / name) == digest, name
 
@@ -70,15 +74,17 @@ def main():
             links=len(qualified["links"]),
             boot_id=qualified["boot_id"],
             root_space=free(WS),
-            durable_space=free(STORAGE),
+            durable_space=free(storage),
             runtime_changed=False,
             ort_gpu_provider=False,
             installed=False,
             package=qualified["package"],
+            external_preservation=qualified.get("external_preservation"),
+            storage=str(storage),
             source_archive_sha256=source["archive_sha256"],
             host105_contacted=False,
         )
-        dest = STORAGE / ("export-" + args.attempt)
+        dest = storage / ("export-" + args.attempt)
         dest.mkdir()
         atomic_json(dest / "verification.json", report)
         archive = dest / "evidence.tar.gz"
@@ -86,7 +92,7 @@ def main():
             for path in sorted(logs.glob("*migraphx-b067*")):
                 tar.add(path, arcname="host-logs/" + path.name)
             for pattern in ("logs-*", "consumer-*"):
-                for folder in sorted(STORAGE.glob(pattern)):
+                for folder in sorted(storage.glob(pattern)):
                     for path in sorted(folder.iterdir()):
                         if path.is_file():
                             tar.add(
@@ -101,12 +107,15 @@ def main():
             ):
                 for path in sorted(transfer.glob(pattern)):
                     tar.add(path, arcname="controller-logs/" + path.name)
-            for gate in qualified["gates"]:
-                tar.add(Path("/run") / gate["label"], arcname="guards/" + gate["label"])
+            for directory in sorted(Path("/run").glob("migraphx-b067-*")):
+                if directory.is_dir():
+                    state = json.loads((directory / "state.json").read_text())
+                    assert state["status"] == "acknowledged", str(directory)
+                    tar.add(directory, arcname="guards/" + directory.name)
             for path in sorted((WS / "helpers").glob("*migraphx*b067*")):
                 if path.is_file():
                     tar.add(path, arcname="helpers/" + path.name)
-            tar.add(STORAGE / "source-r5.json", arcname="source-r5.json")
+            tar.add(storage / "source-r5.json", arcname="source-r5.json")
             tar.add(dest / "verification.json", arcname="verification.json")
         atomic_json(
             dest / "archive.json",

@@ -172,7 +172,7 @@ def worker(args, storage, baseline):
         # Run all consumers after MIGraphX to catch import/symbol or runtime damage.
         options = ort.SessionOptions()
         options.intra_op_num_threads = options.inter_op_num_threads = 1
-        folder = storage.parent / "b065/models-r2/constant"
+        folder = storage / "share/bc250-sdk/fixtures/constant"
         session = ort.InferenceSession(
             str(folder / "model.onnx"),
             sess_options=options,
@@ -208,7 +208,7 @@ def worker(args, storage, baseline):
                     "absl",
                     "onnxruntime",
                     "libamdhip64",
-                    "libsqlite3",
+                    "sqlite3",
                     "libMIOpen",
                     "librocblas",
                     "libhiprtc",
@@ -224,7 +224,7 @@ def worker(args, storage, baseline):
             ), library
         assert any(
             "/workspace/build/dist/rocm/lib/rocm_sysdeps/lib/" in line
-            and "libsqlite3" in line
+            and "librocm_sysdeps_sqlite3.so" in line
             for line in maps.splitlines()
         )
         assert len(report["checks"]) == 49

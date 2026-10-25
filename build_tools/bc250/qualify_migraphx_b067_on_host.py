@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 """Qualify archive relocation with only extracted SDKs, runtime and owned fixtures mounted."""
 import argparse
+import re
 import json
 import os
 from pathlib import Path
@@ -11,7 +12,7 @@ import subprocess
 from bc250_torch import LaunchOptions, build_command, runtime_lock
 from build_migraphx_b067_on_host import verify_hashes
 from deploy_torch_a04_on_host import atomic_json, sha
-from package_migraphx_b067_on_host import STORAGE
+from package_migraphx_b067_on_host import STORAGE as DEFAULT_STORAGE
 from qualify_rccl_b038_on_host import gate
 from qualify_training_n33_on_host import WS
 from qualify_training_n39_on_host import preflight
@@ -19,20 +20,36 @@ from qualify_training_n39_on_host import preflight
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--attempt", required=True, choices=("r1", "r2", "r3"))
+    parser.add_argument("--attempt", required=True)
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--consumer", type=Path, required=True)
+    parser.add_argument("--storage", type=Path, default=DEFAULT_STORAGE)
+    parser.add_argument("--external-receipt", type=Path)
     args = parser.parse_args()
+    assert re.fullmatch(r"r[1-9][0-9]*", args.attempt)
+    storage = args.storage
     preflight("migraphx-b067-qualification")
-    assert args.package.parent == STORAGE
+    assert args.package.parent == storage
     packaged = json.loads((args.package / "final.json").read_text())
     assert packaged["status"] == "packaged-not-qualified"
     assert sha(Path(packaged["archive"])) == packaged["archive_sha256"]
-    assert args.consumer.is_file() and args.consumer.is_relative_to(STORAGE)
+    assert args.consumer.is_file() and args.consumer.is_relative_to(storage)
     baseline = json.loads(
         (WS / "logs/migraphx-b066-qualification-r2/final.json").read_text()
     )
+    external = WS / "tmp/migraphx-b064/20261025-storage/mount"
     protected = dict(baseline["protected_sha256"])
+    external_receipt = None
+    if args.external_receipt:
+        external_expected = {
+            p: d for p, d in protected.items() if Path(p).is_relative_to(external)
+        }
+        external_receipt = json.loads(args.external_receipt.read_text())
+        assert external_receipt["status"] == "passed"
+        assert external_receipt["verified_sha256"] == external_expected
+        protected = {p: d for p, d in protected.items() if p not in external_expected}
+        protected[str(args.external_receipt)] = sha(args.external_receipt)
+
     for path in (WS / "helpers").glob("*migraphx*b067*"):
         if path.is_file():
             protected[str(path)] = sha(path)
@@ -64,6 +81,8 @@ def main():
         boot_id=Path("/proc/sys/kernel/random/boot_id").read_text().strip(),
         runtime_changed=False,
         package=packaged,
+        external_preservation=external_receipt,
+        storage=str(storage),
     )
     try:
         with runtime_lock(Path("/opt/bc250-stack/current/.runtime.lock")):
@@ -71,10 +90,11 @@ def main():
             for number, name in enumerate(packaged["roots"]):
                 sdk = Path(name)
                 for kind, count in (("python", 50), ("consumer", 6)):
-                    scratch = STORAGE / (
+                    scratch = storage / (
                         "runtime-" + args.attempt + "-" + str(number) + "-" + kind
                     )
                     scratch.mkdir()
+                    os.chown(scratch, manifest["uid"], manifest["gid"])
                     label = (
                         "migraphx-b067-" + args.attempt + "-" + str(number) + "-" + kind
                     )
