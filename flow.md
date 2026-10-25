@@ -9,6 +9,33 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.7 in progress (2026-10-25):** isolated SDK packaging/relocation, not installed
+  or GPU-qualified yet. MIGraphX remains622ea3f2a. New tools checkpoint404339ad0;
+  additional package/consumer/relocation gates staged locally and in WS/helpers.
+  External durable storage reconnected: local tmp/migraphx-b064/20261025-storage/
+  durable/b067, remote WS/tmp/migraphx-b064/20261025-storage/mount/b067 (STORAGE).
+  B06.6 build/cache/header copies retained; original builds untouched. Interrupted
+  first transport caused pre-build hash Socket-not-connected; empty staged wrapper
+  caused r2/r3 unknown target before compilation. Wrapper restored from B06.6;
+  checksums and explicit configure now required. Alias-aware preservation scan
+  checks every digest while caching unchanged resolved files; local conflict/
+  retarget/content-drift checks pass. FourCPU/jobs4/link1/RAM10GiB/mem+swap12GiB/
+  private2GiB ccache/no reset/no build GPU/network; prior storage/floor bounds kept.
+  **Running:** root controllerPID15950, container bc250-migraphx-b067-sdk-r4,
+  command python3 WS/helpers/build_migraphx_b067_on_host.py --phase sdk --attempt r4;
+  log WS/tmp/migraphx-b063/memory-transfer/build-b067-r4.log and STORAGE/logs-sdk-r4.
+  188-step targets C API/driver/Python/HIPRTC linked; normal install sdk-r4 is running
+  (not yet accepted). Root SSH tool session19259; SSHFS PID13907; local bridge
+  PID15912/SSH15946/SFTP15947, tool session83750. Keep transport until work finishes.
+  **Next:** await r4 final, configure external stable-API consumer against sdk-r4
+  to reproduce generated config advertising nonexistent migraphx::migraphx_c vs
+  exported migraphx::c; then repair source if reproduced, reconfigure/install to
+  fresh prefix. Prepare source/license metadata and archive; qualify two extracts
+  (one with spaces) with original build trees unmounted. SDK compatibility link
+  lib/migraphx/bin -> ../../bin planned for installed HIPRTC lookup; require actual
+  child-driver observation. Prepared gates target134/eight guards, not run yet.
+  No active runtime/default/boot/user-app/.105 changes or GPU numerical result.
+
 - **B06.6 Python MIGraphX bindings completed 2026-10-25:** source remains
   622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83; pinned private pybind11 2.12.0
   3e9dfa2866941655c56877882565e7577de6fc7b. Python 3.12.3 extension/support

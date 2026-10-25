@@ -18,6 +18,39 @@ from qualify_training_n39_on_host import preflight
 STORAGE = WS / "tmp/migraphx-b064/20261025-storage/mount/b067"
 
 
+def verify_hashes(expected):
+    """Check every recorded digest, reading an unchanged symlink target once."""
+    seen = {}
+    changed = []
+    for name, digest in expected.items():
+        target = Path(name).resolve(strict=True)
+        before = target.stat()
+        key = (
+            str(target),
+            before.st_ino,
+            before.st_size,
+            before.st_mtime_ns,
+            before.st_ctime_ns,
+        )
+        if key not in seen:
+            seen[key] = sha(target)
+            after = target.stat()
+            assert (
+                before.st_ino,
+                before.st_size,
+                before.st_mtime_ns,
+                before.st_ctime_ns,
+            ) == (
+                after.st_ino,
+                after.st_size,
+                after.st_mtime_ns,
+                after.st_ctime_ns,
+            ), name
+        if seen[key] != digest:
+            changed.append(name)
+    return changed
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--phase", choices=("sdk",), required=True)
@@ -88,8 +121,7 @@ def main():
         protected_sha256=baseline["protected_sha256"],
     )
     with runtime_lock(Path("/opt/bc250-stack/current/.runtime.lock")):
-        for path, digest in baseline["protected_sha256"].items():
-            assert sha(Path(path)) == digest, path
+        assert not verify_hashes(baseline["protected_sha256"])
         start = time.monotonic()
         try:
             with (logs / "controller.log").open("w") as stream:
@@ -132,9 +164,7 @@ def main():
             report.update(status="failed", error=repr(error))
             raise
         finally:
-            report["changed_hashes"] = [
-                p for p, d in baseline["protected_sha256"].items() if sha(Path(p)) != d
-            ]
+            report["changed_hashes"] = verify_hashes(baseline["protected_sha256"])
             report["elapsed_seconds"] = time.monotonic() - start
             atomic_json(logs / "final.json", report)
     assert not report["changed_hashes"]

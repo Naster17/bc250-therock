@@ -10,6 +10,7 @@ export TMPDIR=/workspace/task/tmp CCACHE_MAXSIZE=2G
 mkdir -p "$TMPDIR"
 eval "$(python3 /workspace/source/build_tools/setup_ccache.py --dir /workspace/task/cache-config-python --local-path /workspace/task/parser-cache-data --no-reset-stats)"
 ccache --show-stats > /workspace/logs/ccache-before.txt
+cmake -S /workspace/task -B /workspace/task/build-r1 > /workspace/logs/configure.log 2>&1
 cmake --build /workspace/task/build-r1 --target migraphx_c driver migraphx_py migraphx-hiprtc-driver --parallel 4 > /workspace/logs/build.log 2>&1
 cmake --install /workspace/task/build-r1 --prefix "/workspace/task/sdk-$attempt" > /workspace/logs/install.log 2>&1
 ccache --show-stats > /workspace/logs/ccache-after.txt
