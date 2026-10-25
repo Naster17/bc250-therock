@@ -150,6 +150,22 @@ def main():
             [2, 3, 3, 3],
             convolution,
         )
+        weight = ((np.arange(85).reshape(17, 5) % 17) - 8).astype(np.float32) / 16
+        bias = np.arange(5, dtype=np.float32) / 16 - 0.125
+        save_case(
+            "constant",
+            [
+                h.make_node("MatMul", ["x", "w"], ["m"]),
+                h.make_node("Add", ["m", "b"], ["s"]),
+                h.make_node("Relu", ["s"], ["y"]),
+            ],
+            dict(x=[3, 17]),
+            [3, 5],
+            lambda d: np.maximum(
+                d["x"] @ weight.astype(np.float64) + bias.astype(np.float64), 0
+            ),
+            [nh.from_array(weight, name="w"), nh.from_array(bias, name="b")],
+        )
         unknown = h.make_model(
             h.make_graph(
                 [h.make_node("BC250Unknown", ["x"], ["y"])],

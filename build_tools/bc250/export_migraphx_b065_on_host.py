@@ -20,7 +20,7 @@ def main():
     )
     assert (
         qualified["status"] == "passed"
-        and sum(g["checks"] for g in qualified["gates"]) == 65
+        and sum(g["checks"] for g in qualified["gates"]) == 68
     )
     assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
     for name, digest in qualified["protected_sha256"].items():
@@ -65,7 +65,7 @@ def main():
 
     report = dict(
         status="qualified-isolated-onnx-fp32-parser",
-        checks=65,
+        checks=68,
         gates=6,
         acknowledged_guards=6,
         source_revision="622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83",
@@ -107,10 +107,10 @@ def main():
             "protobuf.tar.gz",
             "probe_migraphx_b064.cpp",
             "probe_migraphx_b065.cpp",
-            "models-generation.json",
+            "models-generation-r2.json",
         ):
             tar.add(STORAGE / name, arcname="inputs/" + name)
-        tar.add(STORAGE / "models", arcname="models")
+        tar.add(STORAGE / "models-r2", arcname="models")
         tar.add(STORAGE / "build-r1", arcname="parser-build")
         for name in ("build-abseil", "build-protobuf"):
             for filename in ("CMakeCache.txt", "build.ninja", ".ninja_log"):

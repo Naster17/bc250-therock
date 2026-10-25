@@ -19,11 +19,11 @@ def main():
     build = storage / "build-r1"
     scratch = storage / ("runtime-r1-" + args.group)
     assert scratch.is_dir() and os.access(scratch, os.W_OK)
-    generation = json.loads((storage / "models-generation.json").read_text())
-    assert generation["status"] == "passed" and len(generation["checks"]) == 10
+    generation = json.loads((storage / "models-generation-r2.json").read_text())
+    assert generation["status"] == "passed" and len(generation["checks"]) == 12
     for name, digest in generation["sha256"].items():
         assert (
-            hashlib.sha256((storage / "models" / name).read_bytes()).hexdigest()
+            hashlib.sha256((storage / "models-r2" / name).read_bytes()).hexdigest()
             == digest
         ), name
     env = dict(
@@ -60,7 +60,7 @@ def main():
         if args.group == "onnx":
             assert "libmigraphx_onnx.so" in loader.stdout
         command = [str(executable)] + (
-            [str(storage / "models")] if args.group == "onnx" else []
+            [str(storage / "models-r2")] if args.group == "onnx" else []
         )
         result = subprocess.run(
             command, capture_output=True, text=True, timeout=480, env=env
@@ -69,11 +69,18 @@ def main():
         (args.output.parent / "native-stderr.log").write_text(result.stderr)
         assert result.returncode == 0, result.stderr
         data = json.loads(result.stdout.splitlines()[-1])
-        count = 21 if args.group == "onnx" else 22
+        count = 24 if args.group == "onnx" else 22
         assert data["status"] == "passed" and data["checks"] == count
         if args.group == "onnx":
             report["checks"] = ["native-gfx1013-wave32", "rocblas-only-query"]
-            for name in ("pointwise", "reduce", "dense", "transpose", "conv"):
+            for name in (
+                "pointwise",
+                "reduce",
+                "dense",
+                "transpose",
+                "conv",
+                "constant",
+            ):
                 report["checks"] += [
                     name + "-file-buffer-IR",
                     name + "-cpu-double-ort-replay0",

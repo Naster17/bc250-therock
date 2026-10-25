@@ -59,16 +59,13 @@ int main(int argc, char **argv) {
            "Expected rocBLAS-only candidate");
     ++passed;
     for (const std::string name :
-         {"pointwise", "reduce", "dense", "transpose", "conv"}) {
+         {"pointwise", "reduce", "dense", "transpose", "conv", "constant"}) {
       auto folder = root / name;
       auto bytes = read(folder / "model.onnx");
       auto p = mx::parse_onnx((folder / "model.onnx").string());
       const std::map<std::string, std::vector<std::size_t>> expected_lens = {
-          {"pointwise", {3, 17}},
-          {"reduce", {3, 1}},
-          {"dense", {3, 5}},
-          {"transpose", {3, 5}},
-          {"conv", {2, 3, 3, 3}}};
+          {"pointwise", {3, 17}}, {"reduce", {3, 1}},   {"dense", {3, 5}},
+          {"transpose", {3, 5}},  {"constant", {3, 5}}, {"conv", {2, 3, 3, 3}}};
       auto output_shapes = p.get_output_shapes();
       expect(output_shapes.size() == 1 and
                  output_shapes.front().type() == mx::shape::float_type and
@@ -90,10 +87,11 @@ int main(int argc, char **argv) {
       for (const auto &op : operations)
         std::cerr << op.first << ':' << op.second << ' ';
       std::cerr << '\n';
-      const std::string required = name == "conv" ? "gpu::convolution"
-                                   : (name == "dense" or name == "transpose")
-                                       ? "gpu::gemm"
-                                       : "gpu::code_object";
+      const std::string required =
+          name == "conv" ? "gpu::convolution"
+          : (name == "dense" or name == "transpose" or name == "constant")
+              ? "gpu::gemm"
+              : "gpu::code_object";
       expect(operations.count(required) != 0,
              name + " expected GPU lowering missing");
       for (int replay : {0, 1}) {

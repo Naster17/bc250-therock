@@ -39,13 +39,13 @@ def main():
         STORAGE / "build-r1/migraphx/bin/migraphx-hiprtc-driver",
     ):
         protected[str(path)] = sha(path)
-    generation = json.loads((STORAGE / "models-generation.json").read_text())
-    assert generation["status"] == "passed" and len(generation["checks"]) == 10
+    generation = json.loads((STORAGE / "models-generation-r2.json").read_text())
+    assert generation["status"] == "passed" and len(generation["checks"]) == 12
     for name in generation["sha256"]:
-        path = STORAGE / "models" / name
+        path = STORAGE / "models-r2" / name
         protected[str(path)] = sha(path)
     for name in (
-        "models-generation.json",
+        "models-generation-r2.json",
         "abseil-source.json",
         "protobuf-source.json",
     ):
@@ -76,7 +76,7 @@ def main():
                     "bc250-torch",
                     "validate_migraphx_b065.py",
                     ["--group", "onnx"],
-                    21,
+                    24,
                 ),
                 (
                     "retained",
@@ -142,7 +142,7 @@ def main():
             report["status"] = "failed"
         atomic_json(logs / "final.json", report)
     assert (
-        report["status"] == "passed" and sum(g["checks"] for g in report["gates"]) == 65
+        report["status"] == "passed" and sum(g["checks"] for g in report["gates"]) == 68
     )
 
 
