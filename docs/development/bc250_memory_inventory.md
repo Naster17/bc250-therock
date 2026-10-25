@@ -915,8 +915,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
-| MIGraphX | B06.5 unchanged622ea3f2a; private Abseil20250512/Protobuf30 native C++ parser + GPU backend. Six FP32 IR10/opset18 models/file-buffer IR/serialized weights/four refusals,68 checks/six gates including retained references | Isolated candidate only; no daily SDK/Python bindings/ORT GPU EP. BF16 heuristic unqualified; FP8/MX/Lt/CK/MLIR off, MIOpen fusion whitelist excludesgfx1013. Broader IR/opset/dtypes/model speed unqualified; build storage remains external. [Results](bc250_migraphx_b065_results/README.md). |
-| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.5 isolated native C++ ONNX→gfx1013 FP32 graphs qualified; Python bindings remain B06.6 and no ORT GPU EP is installed. [Use/results](bc250_onnx_b061_results/README.md). |
+| MIGraphX | B06.6 unchanged622ea3f2a; isolated Python3.12/native C++ parser + GPU backend, private pinned pybind11/Abseil/Protobuf. Six FP32 IR10/opset18 models, serialization/HIP copies in three import orders;169 checks/seven gates | Isolated candidate only; no daily SDK/ORT GPU EP. CPython3.12/glibc only; no graph autograd, broader dtype/IR/opset/model speed or portable cross-version MXR claim. External build storage; active runtimes/.105 unchanged. [Results](bc250_migraphx_b066_results/README.md). |
+| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.5 isolated native C++ ONNX→gfx1013 FP32 graphs qualified; B06.6 isolated Python bindings/serialization/import-order gates pass; no SDK or ORT GPU EP is installed. [Use/results](bc250_onnx_b061_results/README.md). |
 | Weight-only quantization | B05.6 public opt-in `bc250_quant 0.1.0` installed on .104 daily/RCCL imagee2821cf8:817 candidate+817 installed checks, CPU-reference first gradients/state/AdamW resume and actual B05.5 checkpoint compatibility | Explicit frozen W8 only; native layouts fixed in both a524 cohorts, module first input/bias gradients via unchanged helper. TorchAO/bitsandbytes/NF4/packed INT4/full QLoRA remain absent/unqualified; native direct backward refuses. No model-quality/speed/peak-memory claim. [Use/recovery](bc250_quant_b056_results/README.md). |
 | RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
@@ -945,6 +945,44 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B06.6 Python MIGraphX bindings completed 2026-10-25:** source remains
+  622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83; pinned private pybind11 2.12.0
+  3e9dfa2866941655c56877882565e7577de6fc7b. Python 3.12.3 extension/support
+  libraries build; no MIGraphX source repair or installed package replacement.
+  Tools checkpoint 8692aa5fe, accepted fixture/retries 0bfe2858c. Three fresh
+  import orders each pass 49 composites: six FP32 IR10/opset18 models, file/buffer
+  parsing/execution, uncompiled JSON/msgpack/buffer IR equality, GPU lowering,
+  changed-input CPU-double/CPU ORT references, compiled file/buffer reload,
+  explicit HIP copies, four refusals, CPU ORT inference/Torch HIP backward after.
+  90 GPU graph evaluations; retained core7/ONNX4/daily5/RCCL6 bring 169/seven gates.
+  665 protected hashes/four AOT DBs/links match; seven accepted guards ACK and
+  kernel logs unchanged through export/unmount on r2 boot e955931f-5edb-42e5-8f14-eafc2fbaf361.
+  4,782 MIGraphX/262 pybind source files verified; complete pybind bundle fresh
+  clone/fsck passes. First build refused stale unused protobuf source mount before
+  compilation; r2 corrected. First GPU fixture omitted compiler-exposed output
+  allocation (main:#output_0); corrected per upstream API, same math/references/
+  tolerances. Failed guard ACK/no kernel drift; all attempts preserved.
+  New external durable/b066 under existing B06.4 temporary storage; native read-only
+  pybind input WS/tmp/migraphx-b066/pybind11. Build~463MiB/private headers908KiB/
+  cache51MiB; old builds/caches retained via reflinks. FourCPU/jobs4/link1/RAM10GiB/
+  mem+swap12GiB/no build GPU/network/read-only root/private2GiB cache/no reset;
+  external16GiB admission/14GiB growth/root768MiB floor/two-hour bound unchanged.
+  Export root ordinary866,148,352B; external114,335,145,984B. 29 local tests,
+  Black/pycompile/shell syntax pass; Ruff absent/full upstream CI not run.
+  Local kernel/artifacts/migraphx-b066 archive21,375,875B SHA
+  79738ca55dec9686b95d9303a01a4de084ac6398be6e34edeaf64dd430129c41;
+  239 extracted raw files9,029,640B, separate failed guard and complete source bundle.
+  No owned jobs/containers/armed guards/mount/relay; backing files remain.
+  Active ROCm/Torch/images/defaults/boot/fallback/BIOS/user apps unchanged; .105
+  untouched/not contacted. Candidate CPython3.12/glibc FP32 inference only; no
+  active SDK/ORT GPU EP/MIGraphX autograd/all-model/IR/opset/dtype/performance claim.
+  Historical Python CPU fault remains unresolved/distinct from fixed VM-heap damage.
+  [Scope/replay/evidence](bc250_migraphx_b066_results/README.md).
+  **Next B06.7:** versioned relocatable opt-in SDK archive with source/license/
+  loader metadata; qualify relocation against existing runtime image before
+  considering installation. Respect ordinary root headroom and preserve .105;
+  ORT GPU provider and broader dtype/model/fusion/performance are separate.
 
 **B06.5 native ONNX parser completed2026-10-25:** MIGraphX622ea3f2a unchanged;
   tools checkpointb6a629170/final4711e9892. Pinned full clean sources Abseil

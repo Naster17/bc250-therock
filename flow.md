@@ -9,6 +9,44 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.6 Python MIGraphX bindings completed 2026-10-25:** source remains
+  622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83; pinned private pybind11 2.12.0
+  3e9dfa2866941655c56877882565e7577de6fc7b. Python 3.12.3 extension/support
+  libraries build; no MIGraphX source repair or installed package replacement.
+  Tools checkpoint 8692aa5fe, accepted fixture/retries 0bfe2858c. Three fresh
+  import orders each pass 49 composites: six FP32 IR10/opset18 models, file/buffer
+  parsing/execution, uncompiled JSON/msgpack/buffer IR equality, GPU lowering,
+  changed-input CPU-double/CPU ORT references, compiled file/buffer reload,
+  explicit HIP copies, four refusals, CPU ORT inference/Torch HIP backward after.
+  90 GPU graph evaluations; retained core7/ONNX4/daily5/RCCL6 bring 169/seven gates.
+  665 protected hashes/four AOT DBs/links match; seven accepted guards ACK and
+  kernel logs unchanged through export/unmount on r2 boot e955931f-5edb-42e5-8f14-eafc2fbaf361.
+  4,782 MIGraphX/262 pybind source files verified; complete pybind bundle fresh
+  clone/fsck passes. First build refused stale unused protobuf source mount before
+  compilation; r2 corrected. First GPU fixture omitted compiler-exposed output
+  allocation (main:#output_0); corrected per upstream API, same math/references/
+  tolerances. Failed guard ACK/no kernel drift; all attempts preserved.
+  New external durable/b066 under existing B06.4 temporary storage; native read-only
+  pybind input WS/tmp/migraphx-b066/pybind11. Build~463MiB/private headers908KiB/
+  cache51MiB; old builds/caches retained via reflinks. FourCPU/jobs4/link1/RAM10GiB/
+  mem+swap12GiB/no build GPU/network/read-only root/private2GiB cache/no reset;
+  external16GiB admission/14GiB growth/root768MiB floor/two-hour bound unchanged.
+  Export root ordinary866,148,352B; external114,335,145,984B. 29 local tests,
+  Black/pycompile/shell syntax pass; Ruff absent/full upstream CI not run.
+  Local kernel/artifacts/migraphx-b066 archive21,375,875B SHA
+  79738ca55dec9686b95d9303a01a4de084ac6398be6e34edeaf64dd430129c41;
+  239 extracted raw files9,029,640B, separate failed guard and complete source bundle.
+  No owned jobs/containers/armed guards/mount/relay; backing files remain.
+  Active ROCm/Torch/images/defaults/boot/fallback/BIOS/user apps unchanged; .105
+  untouched/not contacted. Candidate CPython3.12/glibc FP32 inference only; no
+  active SDK/ORT GPU EP/MIGraphX autograd/all-model/IR/opset/dtype/performance claim.
+  Historical Python CPU fault remains unresolved/distinct from fixed VM-heap damage.
+  [Scope/replay/evidence](docs/development/bc250_migraphx_b066_results/README.md).
+  **Next B06.7:** versioned relocatable opt-in SDK archive with source/license/
+  loader metadata; qualify relocation against existing runtime image before
+  considering installation. Respect ordinary root headroom and preserve .105;
+  ORT GPU provider and broader dtype/model/fusion/performance are separate.
+
 - **B06.5 native ONNX parser completed2026-10-25:** MIGraphX622ea3f2a unchanged;
   tools checkpointb6a629170/final4711e9892. Pinned full clean sources Abseil
  20250512.0 bc257a88f7c1939f24e0379f14a3589e926c950c and Protobufv30.0
@@ -3250,7 +3288,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.3 | Strict C++17 DPP declaration guard repair; actual HIPRTC old-failure reproduction/patched module execution, default subwave and block references;93 checks twice. Feature predicates exercised, explicit full-build budget refuses current space; no backend/provider install. |
 | [x]   | B06.4 | Durable external build storage; full minimal FP32 GPU backend built, Lt-disabled default-query compile defect repaired.22 native graph/reference cases plus22 retained checks pass twice; no runtime/provider install. |
 | [x]   | B06.5 | Private pinned Abseil/Protobuf and native C++ ONNX parser built; six FP32 IR10/opset18 model routes/initializers/refusals and retained regressions pass68/six gates. No active SDK/provider install. |
-| [ ]   | **B06.6 — next** | Isolated pinned Python bindings; Python ONNX inference/serialization/import-order gates before SDK packaging. Preserve runtime/.105/reserves; no unqualified ORT GPU EP or other dtype admission. |
+| [x]   | B06.6 | Isolated pinned Python3.12 bindings; six FP32 ONNX models/serialization/explicit HIP copies in three fresh import orders plus retained regressions pass169/seven gates. No active SDK/ORT GPU EP install. |
+| [ ]   | **B06.7 — next** | Versioned relocatable opt-in SDK archive/source/licenses/loader metadata and isolated relocation gates before installation. Respect ordinary space budget; preserve runtime/.105; broader dtypes/ORT GPU EP separate. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

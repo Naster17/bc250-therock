@@ -123,7 +123,7 @@ def main():
     atomic_json(
         dest / "archive.json", dict(sha256=sha(archive), bytes=archive.stat().st_size)
     )
-    print("MIGRAPHX_B065_EXPORT_PASS", flush=True)
+    print("MIGRAPHX_B066_EXPORT_PASS", flush=True)
 
 
 if __name__ == "__main__":
