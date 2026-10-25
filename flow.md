@@ -9,46 +9,53 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **B06.7 in progress (2026-10-25):** SDK source/install work completed; relocation
-  GPU gates NOT RUN. MIGraphX now4797a61125bbec318005969f8497dbd50849cd6e over622ea3f2a:
-  generated config advertised nonexistent migraphx::migraphx_c while exporting
-  migraphx::c. External consumer-r1 reproduces CMake failure; one-line source fix
-  selects existing exported target; consumer-r2 config/compile/link passes against
-  normal private sdk-r5. No backend math/ABI/whitelist change. Source4782 files
-  archiveSHA4b8c3929a711396e06251e97fa18d0474e3dbd26cf8c38d89b6a38b298dc1187;
-  native WS/tmp/migraphx-b067/source-r5 all hashes verified. r5 SDK build669 steps/
-  install exits0 and protected665 hashes match. Accepted local tools checkpoint
-  4d55cd1ac plus pending license/launcher/evidence updates. 29 local tests and
-  Black/pycompile/C++ format/shell checks pass; no GPU result yet.
-  External STORAGE=WS/tmp/migraphx-b064/20261025-storage/mount/b067; durable local
-  tmp/migraphx-b064/20261025-storage/durable/b067. Native input/read-only deps,
-  fourCPU/jobs4/link1/RAM10GiB/mem+swap12GiB/private2GiB ccache/no reset/no build
-  GPU/network; external16GiB admission/14GiB growth/root768MiB/two-hour bounds kept.
-  Interrupted r1 transport/pre-build hash failed. Empty interrupted wrapper made
-  r2/r3 refuse unknown target; restored checked wrapper/explicit configure led to
-  r4 successful old-source SDK. Alias-aware scans verify every expected digest
-  while caching unchanged resolved files; alias-conflict/retarget/drift checks pass.
-  Packaging-r1 refused wrapper-derived broken share/doc/migraphx/LICENSE link;
-  r2 materialized that verified license but SSHFS refused parent-traversing bin
-  directory readlink (EPERM). r3 uses a verified sibling helper copy at
-  lib/migraphx/lib/migraphx-hiprtc-driver, avoiding that transport limitation.
-  **Running:** package controllerPID22687, command python3 WS/helpers/
-  package_migraphx_b067_on_host.py --install STORAGE/sdk-r5 --attempt r3;
-  WS/tmp/migraphx-b063/memory-transfer/package-b067-r3.log and STORAGE/package-r3.
-  No build/consumer/GPU container running. Root SSH session19259; SSHFS PID13907;
-  local bridge15912/SSH15946/SFTP15947, tool session83750. Preserve mount until done.
-  Root free observed~772MiB then~55GiB during r5; no cleanup/reserve-policy change
-  by these tools. New transfer source archive bytes verified on durable storage;
-  its original incoming filename is now an alias, native source view remains.
-  **Next:** await package-r3 final; verify two extracts (one path with spaces),
-  then run qualify_migraphx_b067_on_host.py --attempt r1 --package STORAGE/package-r3
-  --consumer STORAGE/consumer-r2/build/consumer. Prepared134 checks/eight guarded
-  gates: two private minimal-mount SDK Python50/CAPI+CLI6 pairs, retained core7/
-  ONNX4/daily5/RCCL6. Require original builds absent, actual HIPRTC child from SDK
-  (verified sibling helper copy), selected native SQLite and
-  unchanged protected files/links/kernel logs. Export helper accepts matching
-  --attempt; archive/sdk evidence still pending. No active runtime/default/boot/
-  user-app/.105 changes. Historical Python CPU fault remains separate/unresolved.
+- **B06.7 relocatable SDK completed 2026-10-25:** MIGraphX source
+  4797a61125bbec318005969f8497dbd50849cd6e over622ea3f2a fixes generated CMake
+  variables advertising nonexistent migraphx::migraphx_c instead of exported
+  migraphx::c. External consumer reproduces old failure; fixed config/build/link
+  and GPU C API/C++ wrapper pass. No backend math/ABI/whitelist change. Tools
+  389966df4824b6e07e3accb67a679c5b2f2a5e7c. Source4782 files verified; full
+  bundle-chain reconstruction/fsck reaches4797. Private SDK adds C API/CLI to
+  existing Python3.12/GPU/parser; dependencies/policies remain B06.6.
+  Archive kernel/artifacts/migraphx-b067/bc250-migraphx-2.18.0.dev-gfx1013-cp312-b067.tar.gz
+  is41,753,676B SHA11f7f7ab1923132131dc0118af62fbd425e55cfd802d86fdcb57e4952583c8ba;
+  565 files/12 contained links, headers/CMake/source/license/fetch pins/owned fixtures.
+  Verified sibling HIPRTC helper copy handles installed deep-library layout;
+  wrapper-derived license link materialized from source. No active SDK install.
+  Two native extracts (one path with spaces) pass Python50+CAPI/CLI6 each, original
+  build trees absent, actual SDK HIPRTC children and native renamed SQLite loaded.
+  Core7/ONNX4/daily5/RCCL6 bring134/eight accepted guards,68 GPU graph evaluations.
+  All1675 native hashes+136 preserved workstation-backing hashes match (1811
+  combined; all original665 preserved);29 links/four AOT DBs unchanged. Kernel
+  logs match through export/cleanup on r2 boot e955931f-5edb-42e5-8f14-eafc2fbaf361.
+  All11 guards ACK (eight accepted/three failed fixtures). No arithmetic failure
+  reproduced/tolerance relaxation. Earlier attempts retain transport/empty-wrapper/
+  license-link/SSHFS-readlink failures and stale ORT-path/native-scratch-ownership/
+  SQLite-SONAME test corrections. No GPU/VM-heap defect inferred from those.
+  Builds remain external durable/b067 (r5 SDK, consumer-r2); fourCPU/jobs4/link1/
+  RAM10GiB/mem+swap12GiB/private2GiB ccache/no reset/no build GPU/network, prior
+  external16GiB/14GiB/root768MiB/two-hour bounds. Bridge interruptions stopped
+  pre-scans; with root free externally observed~55GiB, immutable native stage at
+  WS/tmp/migraphx-b067-native uses4GiB extraction admission/2GiB growth/floor.
+  Qualification-r5/export-r5 use detached jobs and need no bridge/build mount.
+  Native stage before58,866,450,432B/after58,476,675,072B; export58,079,264,768B.
+  Free-space increase origin not established; no reserve-policy/retained-artifact
+  cleanup by these tools. Native extracts/backing/sources/builds/caches retained;
+  new source-transfer original name aliases its verified native SDK source copy.
+  Evidence1,324,388B SHA27edca3ad576cb11241a27a357cd1ec56c802cd58c79799b1e80b6f57ef884ed,
+  253 rawfiles5,574,136B; separate build archive232,761B/42files1,168,331B; SDK/source
+  bundles/verification/cleanup in kernel/artifacts/migraphx-b067. 29 local tests,
+  Black/pycompile/shell/C++ formatting pass; Ruff absent/full upstream CI not run.
+  No owned jobs/containers/armed guards/mount/relay. Active ROCm/Torch/images/
+  defaults/boot/fallbacks/user apps unchanged; .105 not contacted. CPython3.12/
+  glibc FP32 static graph scope only; no ORT GPU EP/MIGraphX autograd/all-model/
+  dtype/opset/performance or universal MXR portability claim. Historical Python
+  CPU fault remains unresolved/distinct from fixed VM-heap corruption.
+  [SDK/use/evidence](docs/development/bc250_migraphx_b067_results/README.md).
+  **Next B06.8 (planned):** versioned .104 opt-in SDK registration/identity/rollback,
+  then ordinary launcher activation/retained daily+RCCL qualification. Check fresh
+  space; preserve current defaults/fallbacks/.105. Broader models/dtypes/ORT GPU
+  provider/performance remain separate admissions.
 
 - **B06.6 Python MIGraphX bindings completed 2026-10-25:** source remains
   622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83; pinned private pybind11 2.12.0
@@ -3330,7 +3337,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.4 | Durable external build storage; full minimal FP32 GPU backend built, Lt-disabled default-query compile defect repaired.22 native graph/reference cases plus22 retained checks pass twice; no runtime/provider install. |
 | [x]   | B06.5 | Private pinned Abseil/Protobuf and native C++ ONNX parser built; six FP32 IR10/opset18 model routes/initializers/refusals and retained regressions pass68/six gates. No active SDK/provider install. |
 | [x]   | B06.6 | Isolated pinned Python3.12 bindings; six FP32 ONNX models/serialization/explicit HIP copies in three fresh import orders plus retained regressions pass169/seven gates. No active SDK/ORT GPU EP install. |
-| [ ]   | **B06.7 — next** | Versioned relocatable opt-in SDK archive/source/licenses/loader metadata and isolated relocation gates before installation. Respect ordinary space budget; preserve runtime/.105; broader dtypes/ORT GPU EP separate. |
+| [x]   | B06.7 | Relocatable CPython3.12/public C API/CLI SDK archive; generated CMake target repaired, two extracted prefixes (spaces included) pass134/eight guards and68 GPU graph evaluations. No active SDK install. |
+| [ ]   | **B06.8 — next** | Versioned .104 opt-in SDK registration, identity/rollback and ordinary launcher activation gates against daily/RCCL; preserve defaults/fallbacks/.105. ORT GPU EP and broader model/dtype/performance separate. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

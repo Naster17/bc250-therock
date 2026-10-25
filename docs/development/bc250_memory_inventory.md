@@ -915,8 +915,8 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
-| MIGraphX | B06.6 unchanged622ea3f2a; isolated Python3.12/native C++ parser + GPU backend, private pinned pybind11/Abseil/Protobuf. Six FP32 IR10/opset18 models, serialization/HIP copies in three import orders;169 checks/seven gates | Isolated candidate only; no daily SDK/ORT GPU EP. CPython3.12/glibc only; no graph autograd, broader dtype/IR/opset/model speed or portable cross-version MXR claim. External build storage; active runtimes/.105 unchanged. [Results](bc250_migraphx_b066_results/README.md). |
-| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.5 isolated native C++ ONNX→gfx1013 FP32 graphs qualified; B06.6 isolated Python bindings/serialization/import-order gates pass; no SDK or ORT GPU EP is installed. [Use/results](bc250_onnx_b061_results/README.md). |
+| MIGraphX | B06.7 source4797a6112 fixes generated CMake C API target. Versioned relocatable CPython3.12/public C API/CLI SDK archive; two extracted prefixes/134 checks/eight guards/68 GPU graph evaluations; full source/licenses/provenance | Opt-in archive, no active SDK registry/image/default/ORT GPU EP installation. CPython3.12/glibc/static FP32 tested scope; no graph autograd, all-model/dtype/IR/opset, portable cross-version MXR or speed claim. Native qualification no longer needs build-storage bridge. [Use/results](bc250_migraphx_b067_results/README.md). |
+| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.5 isolated native C++ ONNX→gfx1013 FP32 graphs qualified; B06.6 Python bindings and B06.7 relocatable SDK archive qualified in recorded static FP32 scope; no active SDK/ORT GPU EP installation. [Use/results](bc250_onnx_b061_results/README.md). |
 | Weight-only quantization | B05.6 public opt-in `bc250_quant 0.1.0` installed on .104 daily/RCCL imagee2821cf8:817 candidate+817 installed checks, CPU-reference first gradients/state/AdamW resume and actual B05.5 checkpoint compatibility | Explicit frozen W8 only; native layouts fixed in both a524 cohorts, module first input/bias gradients via unchanged helper. TorchAO/bitsandbytes/NF4/packed INT4/full QLoRA remain absent/unqualified; native direct backward refuses. No model-quality/speed/peak-memory claim. [Use/recovery](bc250_quant_b056_results/README.md). |
 | RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
@@ -945,6 +945,54 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B06.7 relocatable SDK completed 2026-10-25:** MIGraphX source
+  4797a61125bbec318005969f8497dbd50849cd6e over622ea3f2a fixes generated CMake
+  variables advertising nonexistent migraphx::migraphx_c instead of exported
+  migraphx::c. External consumer reproduces old failure; fixed config/build/link
+  and GPU C API/C++ wrapper pass. No backend math/ABI/whitelist change. Tools
+  389966df4824b6e07e3accb67a679c5b2f2a5e7c. Source4782 files verified; full
+  bundle-chain reconstruction/fsck reaches4797. Private SDK adds C API/CLI to
+  existing Python3.12/GPU/parser; dependencies/policies remain B06.6.
+  Archive kernel/artifacts/migraphx-b067/bc250-migraphx-2.18.0.dev-gfx1013-cp312-b067.tar.gz
+  is41,753,676B SHA11f7f7ab1923132131dc0118af62fbd425e55cfd802d86fdcb57e4952583c8ba;
+  565 files/12 contained links, headers/CMake/source/license/fetch pins/owned fixtures.
+  Verified sibling HIPRTC helper copy handles installed deep-library layout;
+  wrapper-derived license link materialized from source. No active SDK install.
+  Two native extracts (one path with spaces) pass Python50+CAPI/CLI6 each, original
+  build trees absent, actual SDK HIPRTC children and native renamed SQLite loaded.
+  Core7/ONNX4/daily5/RCCL6 bring134/eight accepted guards,68 GPU graph evaluations.
+  All1675 native hashes+136 preserved workstation-backing hashes match (1811
+  combined; all original665 preserved);29 links/four AOT DBs unchanged. Kernel
+  logs match through export/cleanup on r2 boot e955931f-5edb-42e5-8f14-eafc2fbaf361.
+  All11 guards ACK (eight accepted/three failed fixtures). No arithmetic failure
+  reproduced/tolerance relaxation. Earlier attempts retain transport/empty-wrapper/
+  license-link/SSHFS-readlink failures and stale ORT-path/native-scratch-ownership/
+  SQLite-SONAME test corrections. No GPU/VM-heap defect inferred from those.
+  Builds remain external durable/b067 (r5 SDK, consumer-r2); fourCPU/jobs4/link1/
+  RAM10GiB/mem+swap12GiB/private2GiB ccache/no reset/no build GPU/network, prior
+  external16GiB/14GiB/root768MiB/two-hour bounds. Bridge interruptions stopped
+  pre-scans; with root free externally observed~55GiB, immutable native stage at
+  WS/tmp/migraphx-b067-native uses4GiB extraction admission/2GiB growth/floor.
+  Qualification-r5/export-r5 use detached jobs and need no bridge/build mount.
+  Native stage before58,866,450,432B/after58,476,675,072B; export58,079,264,768B.
+  Free-space increase origin not established; no reserve-policy/retained-artifact
+  cleanup by these tools. Native extracts/backing/sources/builds/caches retained;
+  new source-transfer original name aliases its verified native SDK source copy.
+  Evidence1,324,388B SHA27edca3ad576cb11241a27a357cd1ec56c802cd58c79799b1e80b6f57ef884ed,
+  253 rawfiles5,574,136B; separate build archive232,761B/42files1,168,331B; SDK/source
+  bundles/verification/cleanup in kernel/artifacts/migraphx-b067. 29 local tests,
+  Black/pycompile/shell/C++ formatting pass; Ruff absent/full upstream CI not run.
+  No owned jobs/containers/armed guards/mount/relay. Active ROCm/Torch/images/
+  defaults/boot/fallbacks/user apps unchanged; .105 not contacted. CPython3.12/
+  glibc FP32 static graph scope only; no ORT GPU EP/MIGraphX autograd/all-model/
+  dtype/opset/performance or universal MXR portability claim. Historical Python
+  CPU fault remains unresolved/distinct from fixed VM-heap corruption.
+  [SDK/use/evidence](bc250_migraphx_b067_results/README.md).
+  **Next B06.8 (planned):** versioned .104 opt-in SDK registration/identity/rollback,
+  then ordinary launcher activation/retained daily+RCCL qualification. Check fresh
+  space; preserve current defaults/fallbacks/.105. Broader models/dtypes/ORT GPU
+  provider/performance remain separate admissions.
 
 **B06.6 Python MIGraphX bindings completed 2026-10-25:** source remains
   622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83; pinned private pybind11 2.12.0
