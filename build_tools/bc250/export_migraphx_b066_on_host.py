@@ -16,7 +16,7 @@ from qualify_training_n33_on_host import WS
 def main():
     logs = WS / "logs"
     qualified = json.loads(
-        (logs / "migraphx-b066-qualification-r1/final.json").read_text()
+        (logs / "migraphx-b066-qualification-r2/final.json").read_text()
     )
     assert (
         qualified["status"] == "passed"
@@ -27,7 +27,7 @@ def main():
         assert sha(Path(name)) == digest, name
     assert (
         subprocess.check_output(["dmesg"])
-        == (logs / "migraphx-b066-qualification-r1/kernel-before.log").read_bytes()
+        == (logs / "migraphx-b066-qualification-r2/kernel-before.log").read_bytes()
     )
     for gate in qualified["gates"]:
         state = json.loads((Path("/run") / gate["label"] / "state.json").read_text())

@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 """Qualify pinned header admission and preservation; no runtime deployment."""
 
+import argparse
 import json
 import os
 from pathlib import Path
@@ -15,13 +16,16 @@ from qualify_training_n39_on_host import preflight
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--attempt", choices=("r1", "r2", "r3"), default="r1")
+    attempt = parser.parse_args().attempt
     preflight("migraphx-b066-qualification")
     from build_migraphx_b066_on_host import STORAGE
 
     built = json.loads((STORAGE / "logs-python-r2/final.json").read_text())
     assert built["status"] == "built-isolated-not-qualified"
     for group in ("migraphx", "ort", "torch"):
-        (STORAGE / ("runtime-r1-" + group)).mkdir()
+        (STORAGE / ("runtime-" + attempt + "-" + group)).mkdir()
     baseline = json.loads(
         (WS / "logs/migraphx-b065-qualification-r1/final.json").read_text()
     )
@@ -39,7 +43,7 @@ def main():
         STORAGE / "build-r1/migraphx/bin/migraphx-hiprtc-driver",
     ):
         protected[str(path)] = sha(path)
-    logs = WS / "logs/migraphx-b066-qualification-r1"
+    logs = WS / ("logs/migraphx-b066-qualification-" + attempt)
     logs.mkdir()
     before = subprocess.check_output(["dmesg"])
     (logs / "kernel-before.log").write_bytes(before)
@@ -65,7 +69,7 @@ def main():
                         order,
                         "bc250-torch",
                         "validate_migraphx_b066.py",
-                        ["--order", order],
+                        ["--order", order, "--attempt", attempt],
                         49,
                     )
                     for order in ("migraphx", "ort", "torch")
@@ -91,7 +95,7 @@ def main():
                 if name == "rccl":
                     command += ["--runtime-profile", "rccl-single"]
                 if name in ("migraphx", "ort", "torch"):
-                    scratch = STORAGE / ("runtime-r1-" + name)
+                    scratch = STORAGE / ("runtime-" + attempt + "-" + name)
                     command += [
                         "--mount-ro",
                         str(STORAGE.parent),
@@ -100,7 +104,12 @@ def main():
                     ]
                 command += [str(WS / "helpers" / script), *args]
                 report["gates"].append(
-                    gate("migraphx-b066-r1-" + name, command, count, manifest)
+                    gate(
+                        "migraphx-b066-" + attempt + "-" + name,
+                        command,
+                        count,
+                        manifest,
+                    )
                 )
                 atomic_json(logs / "progress.json", report)
                 print("PASS", name, count, flush=True)

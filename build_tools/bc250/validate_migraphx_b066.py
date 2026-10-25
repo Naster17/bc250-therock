@@ -43,6 +43,12 @@ def worker(args, storage, baseline):
             if explicit
             else inputs
         )
+        if explicit:
+            for name, output_shape in program.get_parameter_shapes().items():
+                if name not in params:
+                    assert name.startswith("main:#output_"), name
+                    params[name] = mx.allocate_gpu(output_shape)
+            assert set(params) == set(program.get_parameter_shapes())
         outputs = program.run(params)
         assert len(outputs) == 1
         result = mx.from_gpu(outputs[0]) if explicit else outputs[0]
@@ -219,6 +225,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--order", choices=ORDERS, required=True)
     parser.add_argument("--worker", action="store_true")
+    parser.add_argument("--attempt", choices=("r1", "r2", "r3"), default="r1")
     args = parser.parse_args()
     ws = Path(__file__).resolve().parent.parent
     storage = ws / "tmp/migraphx-b064/20261025-storage/mount/b066"
@@ -235,7 +242,7 @@ def main():
         )
     if args.worker:
         return worker(args, storage, baseline)
-    scratch = storage / ("runtime-r1-" + args.order)
+    scratch = storage / ("runtime-" + args.attempt + "-" + args.order)
     env = dict(
         os.environ,
         TMPDIR=str(scratch),
@@ -257,6 +264,8 @@ def main():
             sys.executable,
             str(Path(__file__).resolve()),
             "--worker",
+            "--attempt",
+            args.attempt,
             "--order",
             args.order,
             "--output",
