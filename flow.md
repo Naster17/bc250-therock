@@ -9,37 +9,54 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **B06.5 IN PROGRESS2026-10-25 (08:25 UTC checkpoint):** native parser work,
-  not yet GPU-qualified. MIGraphX622ea3f2a unchanged; separate full clean sources
-  Abseil20250512.0 bc257a88f7c1939f24e0379f14a3589e926c950c and Protobufv30.0
-  d295af5c3002c08e1bfd9d7f9e175d0a4d015f1e (annotated tag2c82161c) cloned under
-  therock/sources/bc250-migraphx-{abseil,protobuf}. Existing profiler Abseil202601
-  and Torch protobuf preserved. Abseil private build/install passes; Protobuf
-  currently~287/505, no compiler error. Five owned IR10/opset18 FP32 models and
-  two inputs each pass CPU-double vs explicit CPU ORT references (10 checks).
-  New .104 r2 boot e955931f-5edb-42e5-8f14-eafc2fbaf361, watchdog active, resource
-  preflight passed. No agent reboot/.105 contact/prefix/image/user-app changes.
-  Reconnected B06.4 SSHFS backing; new data under local
-  tmp/migraphx-b064/20261025-storage/durable/b065, remote STORAGE=
-  WS/tmp/migraphx-b064/20261025-storage/mount/b065. Source inputs read-only on
-  WS/tmp/migraphx-b065/{abseil,protobuf}; root~839MiB ordinary, floor768MiB;
-  external16GiB admission/14GiB growth bound, fourCPU/jobs4/link1/RAM10GiB/
-  mem+swap12GiB/read-only build root/networkoff/noGPU/private2GiB ccache/no reset.
-  **Running:** .104 controllerPID6918 executes python3 WS/helpers/
-  build_migraphx_b065_on_host.py --phase protobuf; container
-  a460b490551b (bc250-migraphx-b065-protobuf-r1), Podman child7073.
-  Controller WS/logs/migraphx-b065-protobuf-controller-r1.log; build/configure/
-  progress/final at STORAGE/logs-protobuf-r1/. SSHFS rootPID4238; local relay
-  python3 therock/build_tools/bc250/bridge_migraphx_b064.py --log-directory
-  tmp/migraphx-b065/20261025 (SSH311219/SFTP311220), bridge.log there.
-  Preserve running build/mount and all artifacts. No GPU guard armed yet.
-  Initial protobuf staging raced archive creation (EOF before build); completed
-  archive SHA verified, re-extraction succeeded. CPU model launcher TTY stop was
-  resumed cleanly; models-generation.json passed. No numerical relaxation.
-  **Resume:** inspect Proto final/exit and CPU model report; once built run
-  build_migraphx_b065_on_host.py --phase parser (helpers/fixtures prepared), then
-  qualify_migraphx_b065_on_host.py (planned65/six guarded gates) and export helper.
-  Do not mark native parser, bindings or GPU ORT provider qualified prematurely.
+- **B06.5 native ONNX parser completed2026-10-25:** MIGraphX622ea3f2a unchanged;
+  tools checkpointb6a629170/final4711e9892. Pinned full clean sources Abseil
+ 20250512.0 bc257a88f7c1939f24e0379f14a3589e926c950c and Protobufv30.0
+  d295af5c3002c08e1bfd9d7f9e175d0a4d015f1e (tag2c82161c); private C++17/PIC/O2
+  static builds/install and libprotoc30.0 pass. Existing profiler Abseil202601/
+  Torch protobuf/Python protobuf preserved. Full Git bundles fresh-clone/fsck pass.
+  Native ONNX24: six IR10/opset18 FP32 models (broadcast/ReLU, reduce, dense/ReLU,
+  transpose/MatMul, conv/bias/ReLU, serialized weight/bias initializers), file/
+  buffer IR equality, twelve GPU evaluations vs independent CPU-double and CPU
+  ORT references/shape/type/host guards; four unknown/malformed file/buffer refusals.
+  Actual GPU code_object/gemm/convolution/literal ops/HIP copies, fast_math false/
+  tune off; no tolerance relaxation. CPU oracle generation12 passes separately.
+  Retained candidate hand-built22/core7/ONNXaudit4/daily5/RCCL6 bring68/six gates.
+ 629 protected hashes/four AOT DBs/links and per-gate/export/unmount kernel logs
+  match; six guards ACK. New pre-task r2boot e955931f-5edb-42e5-8f14-eafc2fbaf361,
+  no agent reboot/cross-boot log identity claim.4,782 MIGraphX/1,532 Abseil/3,052
+  Protobuf sourcefiles verified. MIOpen fusion whitelist still excludesgfx1013;
+  ordinary conv/separate pointwise qualified, no architecture/dtype admission change.
+  Reused B06.4 temporary SSHFS backing; new data local tmp/migraphx-b064/
+ 20261025-storage/durable/b065 (remote STORAGE=WS/tmp/migraphx-b064/
+ 20261025-storage/mount/b065). Native source snapshots WS/tmp/migraphx-b065/
+  {abseil,protobuf}; parser uses old readonly622 input. FourCPU/jobs4/link1/
+  RAM10GiB/mem+swap12GiB/read-only build root/noGPU/network; private2GiB caches/
+  no reset/old shared cache untouched. Parser~451MiB/private deps49MiB/dependency
+  builds6.6/69MiB/caches19/50MiB. External16GiB admission/14GiB growth/root768MiB
+  floor/two-hour phase bound. Export root ordinary877,867,008B/external114,507,022,336B.
+  Initial source staging EOF before build corrected with completed-archive SHA
+  check/re-extraction. Live-script edit truncated final protoc version command
+  after successful compile/install; accepted incremental retry snapshots immutable
+  phase script, no rebuild/source change. TTY CPU-generator stop resumed cleanly;
+  null stdin thereafter. Original attempts retained, no GPU numerical failure.
+ 29 local tests/Black/pycompile/shell/C++ format+syntax pass; Ruff absent/full
+  upstream CI not run. Disabled-MLIR/unused rocm-path host warnings remain.
+  No active ROCm/Torch/image/default/boot/fallback/BIOS/user-app/.105 change/contact;
+  no artifact deletion/reserve policy change. Parser C++ isolated only, no Python
+  bindings/ORT GPU EP/autograd/model speed/all-IR/opset/dtype claim. Unknown Python
+  CPU fault remains distinct/unresolved from already-fixed VM-heap corruption.
+  Raw accepted STORAGE/logs-{abseil-r1,protobuf-r2,parser-r1}; WS/logs/
+  migraphx-b065-qualification-r1. Local kernel/artifacts/migraphx-b065 archive
+ 67,909,794B SHAa44098301bfa85484798d9695a6656b360161389ce157c72f8b2260ac10ce6c8,
+ 118 rawfiles2,346,845B plus models/source bundles/verification/cleanup. No owned
+  jobs/containers/armed guards; temporary mount/relay closed, backing data retained.
+  [Scope/replay/results](docs/development/bc250_migraphx_b065_results/README.md).
+  **Next B06.6:** reconnect durable storage; audit/build pinned Python bindings in
+  isolated candidate, then Python ONNX inference/serialized-program roundtrips/
+  Torch+CPU ORT import-order gates before considering installed SDK packaging.
+  Preserve active runtime/.105; root headroom remains low. ORT GPU EP, broader
+  dtype/IR/opsets/fusion/model performance remain separate admissions.
 
 - **B06.4 isolated MIGraphX FP32 graphs completed2026-10-25:** source
  622ea3f2ad8f1baa8a44edb4f1e07cbe6e532c83 over35b40656d; toolsf8635babe.
@@ -3232,7 +3249,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.2 | Pinned MIGraphX audit:30 native header CPU-reference checks,52 total/five gates; minimal GPU configure passes with isolated pinned CMake. Strict DPP0 JIT issue/feature risks and disk/reserve budget remain; no full backend/provider installed. |
 | [x]   | B06.3 | Strict C++17 DPP declaration guard repair; actual HIPRTC old-failure reproduction/patched module execution, default subwave and block references;93 checks twice. Feature predicates exercised, explicit full-build budget refuses current space; no backend/provider install. |
 | [x]   | B06.4 | Durable external build storage; full minimal FP32 GPU backend built, Lt-disabled default-query compile defect repaired.22 native graph/reference cases plus22 retained checks pass twice; no runtime/provider install. |
-| [ ]   | **B06.5 — next** | Reconnect durable storage; audit/build pinned native ONNX parser prerequisites, then ONNX→gfx1013 FP32 graph/CPU references. Preserve CPU ORT/Torch defaults; no unqualified bindings/ORT GPU EP/low-precision admission. |
+| [x]   | B06.5 | Private pinned Abseil/Protobuf and native C++ ONNX parser built; six FP32 IR10/opset18 model routes/initializers/refusals and retained regressions pass68/six gates. No active SDK/provider install. |
+| [ ]   | **B06.6 — next** | Isolated pinned Python bindings; Python ONNX inference/serialization/import-order gates before SDK packaging. Preserve runtime/.105/reserves; no unqualified ORT GPU EP or other dtype admission. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
