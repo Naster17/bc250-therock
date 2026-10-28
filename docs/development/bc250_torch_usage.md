@@ -195,9 +195,24 @@ ONNX training/autograd, GPU execution providers and quantized W8 export remain
 unqualified. Existing Torch GPU math/backward and optional W8/FFT/sparse helpers
 are preserved. [Pinned packages, reference tests, applicability and recovery](bc250_onnx_b061_results/README.md).
 
-B06.2 independently qualifies native MIGraphX pointwise/reduction header probes and
-minimal GPU configure. It installs no graph backend/provider; the CPU behavior
-above is unchanged. [Feasibility, limits and pending strict-JIT issue](bc250_migraphx_b062_results/README.md).
+## Explicit MIGraphX GPU inference (B06.8, .104)
+
+A versioned FP32 inference SDK is installed separately from the daily runtime:
+
+```bash
+bc250-migraphx --sdk-info
+bc250-migraphx /path/to/owned-inference.py
+bc250-migraphx --runtime-profile rccl-single /path/to/owned-inference.py
+```
+
+Use `import migraphx` inside that script and explicitly compile supported ONNX
+programs for `migraphx.get_target("gpu")`. The launcher verifies the registered
+SDK and selected runtime identities, mounts SDK read-only and uses the existing
+CPython 3.12 image. It accepts ordinary launcher mounts/environment/Python options,
+including external script paths containing spaces. Plain Torch launchers keep
+their defaults; ONNX Runtime remains CPU-only. Static FP32 IR10/opset18 fixture
+coverage does not establish every model/operator/dtype, graph autograd or speed.
+[Usage, exact scope, identities and unregister/re-register recovery](bc250_migraphx_b068_results/README.md).
 
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 

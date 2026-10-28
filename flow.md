@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-25 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-28 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,43 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B06.8 installed opt-in SDK completed 2026-10-28:** source remains4797a61125bbec318005969f8497dbd50849cd6e;
+  implementation de93d4fe992383ef4787d494706b52d5c7f707b6, export5f5a73b7a.
+  Qualified B06.7 archive installed root-owned at /opt/bc250-stack/sdks/
+  bc250-migraphx-2.18.0.dev-gfx1013-cp312-b067; registration sdks/migraphx.json,
+  retained version record and tools/migraphx-b068. New /usr/local/bin/bc250-migraphx
+  verifies pinned SDK index/manifest/all bytes/exact file set/contained links and
+  selected runtime manifest/image under shared daily lock, then delegates to
+  ordinary bc250-torch with read-only SDK. Install/unregister/register use exclusive
+  lock; live unregister/refusal/re-register exercised, payloads retained. Scratch
+  runtime/SDK drift refusals, lock exclusion, default SDK absence and actual UID1000
+  doas activation pass. Ordinary daily+RCCL activation8/Python50/CAPI+CLI6 each,
+  retained core7/ONNX4/daily5/RCCL6=150 guarded; host14+user1=165 checks,
+  ten ACK guards/68 GPU graph evaluations. Same FP32 IR10/opset18 six fixtures,
+  CPU-double/CPU ORT references/tolerances, actual sibling HIPRTC helper observed;
+  external script/sidecar/spaces/read-only mount and Torch HIP backward pass.
+  All1681 native protected hashes/29 links/four AOT DBs match;136 preserved backing
+  hashes verified locally before/after, full installed SDK separately checked.
+  New pre-task r2boot83f6cb1b-4540-4149-839e-a6cf7cb80b63; batch kernel logs match,
+  no agent reboot/cross-boot continuity claim. No native rebuild/cache reset needed.
+  Active ROCm/Torch/image/defaults/fallbacks/user apps unchanged; .105 not contacted.
+  Final ordinary free41,137,750,016B. No owned jobs/containers/armed guards/transport.
+  Controller PID8265 and export PID10260 exited0; WS/logs/migraphx-b068-qualification-r1/
+  final.json; controller log WS/logs/migraphx-b068-qualification-r1-controller.log;
+  export WS/tmp/migraphx-b068/export-r1. Local kernel/artifacts/migraphx-b068:
+  evidence623,640B SHAc0e0ce195e4507d57694422dcc0ffd878eaeb686f6aa5627e45cd683cf991396,
+  188 rawfiles2,698,354B plus verification/registration/preservation receipts.
+  29 local tests/Black/pycompile/diff checks pass; Ruff absent/full upstream CI not run.
+  No arithmetic failure/tolerance relaxation. Explicit inference only: ordinary Torch
+  launchers do not load SDK; no ORT GPU EP, graph autograd/all-model/dtype/performance
+  or universal MXR claim. Historical Python CPU fault remains unresolved/distinct
+  from fixed VM-heap corruption. [Use/recovery/evidence](docs/development/bc250_migraphx_b068_results/README.md).
+  **Next B06.9 (planned):** pinned ONNX Runtime MIGraphX EP/API/dependency/storage
+  admission audit; establish feasible isolated candidate before build/provider
+  qualification. Preserve installed CPU ORT/SDK/daily+RCCL/defaults/.105. Broader
+  model/dtype/performance admissions remain separate; continue one bounded batch
+  at a time in order, resolving necessary discovered prerequisites autonomously.
 
 - **B06.7 relocatable SDK completed 2026-10-25:** MIGraphX source
   4797a61125bbec318005969f8497dbd50849cd6e over622ea3f2a fixes generated CMake
@@ -3338,7 +3375,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.5 | Private pinned Abseil/Protobuf and native C++ ONNX parser built; six FP32 IR10/opset18 model routes/initializers/refusals and retained regressions pass68/six gates. No active SDK/provider install. |
 | [x]   | B06.6 | Isolated pinned Python3.12 bindings; six FP32 ONNX models/serialization/explicit HIP copies in three fresh import orders plus retained regressions pass169/seven gates. No active SDK/ORT GPU EP install. |
 | [x]   | B06.7 | Relocatable CPython3.12/public C API/CLI SDK archive; generated CMake target repaired, two extracted prefixes (spaces included) pass134/eight guards and68 GPU graph evaluations. No active SDK install. |
-| [ ]   | **B06.8 — next** | Versioned .104 opt-in SDK registration, identity/rollback and ordinary launcher activation gates against daily/RCCL; preserve defaults/fallbacks/.105. ORT GPU EP and broader model/dtype/performance separate. |
+| [x]   | B06.8 | Versioned .104 SDK installed/registered with explicit bc250-migraphx launcher, identity refusals/live unregister-register recovery and ordinary daily/RCCL activation;165 checks/ten guards/68 GPU evaluations. Defaults/.105 preserved. |
+| [ ]   | **B06.9 — next** | Pinned ONNX Runtime MIGraphX EP/API/dependency/storage admission audit before isolated candidate build; preserve installed CPU ORT/SDK/defaults/.105. Broader model/dtype/performance remain separate. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
