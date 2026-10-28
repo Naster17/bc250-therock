@@ -112,8 +112,8 @@
     {
       "id": "B06",
       "feature": "ONNX export/CPU runtime and opt-in MIGraphX GPU inference; ORT GPU EP remains separate",
-      "evidence": "B06.1 installs pinned ONNX/CPU ORT; B06.2\u2013B06.7 repair/qualify native static FP32 MIGraphX and relocatable SDK. B06.8 installs registered opt-in SDK on .104:165 checks/ten guards/68 GPU evaluations across daily and RCCL. No automatic Torch routing, ORT GPU provider or graph autograd.",
-      "next": "B06.9 pinned ORT MIGraphX EP/API/dependency and storage admission audit before isolated candidate build; preserve CPU ORT/defaults/.105.",
+      "evidence": "B06.1 installs pinned ONNX/CPU ORT; B06.2\u2013B06.7 repair/qualify native static FP32 MIGraphX and relocatable SDK. B06.8 installs registered opt-in SDK on .104:165 checks/ten guards/68 GPU evaluations across daily and RCCL. No automatic Torch routing, ORT GPU provider or graph autograd. B06.9 audits pinned ORT1.31, repairs source C++20 wrapper parsing in private overlay, links168 ABI symbols and passes38 guarded SDK-boundary checks; ORT EP itself unbuilt.",
+      "next": "B06.10 hash/fetch offline dependencies and configure/build isolated matching ORT core/Python/MIGraphX provider with repaired private header; preserve installed CPU ORT/SDK/defaults/.105.",
       "status": "partially_completed_bounded"
     },
     {

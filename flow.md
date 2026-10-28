@@ -9,6 +9,59 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.9 ORT/MIGraphX admission completed 2026-10-28:** pinned unmodified ORT1.31.0
+  402979ac1bef89dcd55add41eaa7277c407599eb at sources/bc250-onnxruntime. Shallow
+  checkout/fsck and exact snapshot11,379 files verified locally and on .104;
+  three gitlinks recorded/uninitialized, no signed-tag/full-history claim.
+  Source279,492,314B SHAe4243f26f7b6fd6be09fabd08a77161da719cdded1cbbc696458e3e2aeb3e51b.
+  Twelve static assertions establish CMake3.28/C++20/shared migraphx::c+hip::host,
+  parser/native stream/output-copy/FP32-default/fallback/visibility controls.
+  Real Clang C++20 blocker reproduced in installed SDK: handwritten C++ wrapper's
+  two leading unqualified module return types misparse as module directives.
+  Source144f6db5c qualifies both as migraphx::module; final134ee25f67007523bd03374c4b723fe075a3b77f
+  also gates new regression on compiler C++20 support. ABI/math unchanged;
+  registered SDK remains4797a6112 bytewise, candidate uses private header overlay.
+  C++17+20 CPU header regressions pass;168 discovered C API declarations link.
+  Eight guarded ORT-style device-pointer run_async cases each daily/RCCL: two
+  models/two changed inputs/default+private streams, explicit output allocation/
+  D2D copy, CPU-double/CPU ORT/host+device guards. Retained core7/ONNX4/daily5/RCCL6
+  bring38/six accepted guards/16 GPU graph evaluations. Earlier fixture passes
+  same16 plus core/ONNX, then log-label collision before remaining gates;
+  four failed-fixture guards ACK. No math/tolerance change. Builds r1/r2 retain
+  missing clang-scan-deps/sibling ccache helper/read-only default-cache failures;
+  r3 actual header failure, r4 succeeds. Disable module scan/use complete setup
+  helper mount/fail on setup errors. FourCPU/jobs4/RAM10GiB/mem+swap12GiB/private
+  2GiB ccache/no reset/read-only build root/no GPU/network. Tools c86648601,
+  source-stage/export167e467e5. ORT protobuf33.6/Abseil20250814 differ from SDK30/
+  20250512; ONNX namespace isolated,195 protobuf/absl exports inventoried, provider
+  version script hides except GetProvider. No collision reproduced/ABI-wide proof;
+  actual candidate ELF/import-order tests required. Candidate13 dependencies pinned
+  URLs/upstream SHA1, bytes not fetched/configure not run. Provisional24GiB ordinary
+  admission/20GiB growth/4GiB floor,link1/two-hour phase bound, not measured footprint;
+  source stage admits40,796,561,408B. Full ORT core/binding/provider not built/loaded/
+  installed. Active CPU ORT/SDK/Torch/ROCm/image/defaults/fallback/user apps unchanged;
+  .105 not contacted.1695 native hashes/29 links/four AOT DBs match,136 preserved
+  backing paths match; full installed SDK checked separately. Kernel logs match
+  through cleanup on r2boot83f6cb1b-4540-4149-839e-a6cf7cb80b63. No owned jobs/
+  containers/armed guards. Build PID10099, qualification11488, source-stage12693,
+  export13014 exited0; WS/tmp/onnxruntime-b069/{probe-r4,inputs,export-r1};
+  WS/logs/onnxruntime-b069-qualification-r2/final.json and matching -controller.log.
+  Local kernel/artifacts/onnxruntime-b069 evidence1,440,485B
+  SHAeb10bae63e6ab08dd09c54a0866ae74fe362bc72ea93076d72b942572f30a4d9;
+  196 rawfiles5,500,940B plus source/dependency/plan/ELF/repair/reconstruction receipts.
+  Earlier scratch reconstruction fails pack/index/reflog/tree checks (cause unknown);
+  retained. Independent complete bundle-chain clone with auto maintenance disabled
+  passes full fsck at134ee25.29 local tests/Black/pycompile/C++format/diff pass;
+  Ruff absent/full upstream CI not run. No provider execution/partition/allocator/
+  dynamic-shape/concurrency/dtype/model/autograd/performance claim. Historical
+  Python CPU fault stays unresolved/distinct from fixed VM-heap corruption.
+  [Evidence/plan](docs/development/bc250_onnxruntime_b069_results/README.md).
+  **Next B06.10 (planned):** fetch/hash selected dependency bytes with SHA256,
+  create offline mirror, recheck space/bounds; configure/build matching isolated
+  ORT core/Python/MIGraphX provider using repaired private header. Preserve installed
+  CPU ORT/SDK/daily+RCCL/defaults/.105. Actual provider assignment/no-silent-CPU-
+  fallback and independent references must pass before installation/activation.
+
 - **B06.8 installed opt-in SDK completed 2026-10-28:** source remains4797a61125bbec318005969f8497dbd50849cd6e;
   implementation de93d4fe992383ef4787d494706b52d5c7f707b6, export5f5a73b7a.
   Qualified B06.7 archive installed root-owned at /opt/bc250-stack/sdks/
@@ -3376,7 +3429,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.6 | Isolated pinned Python3.12 bindings; six FP32 ONNX models/serialization/explicit HIP copies in three fresh import orders plus retained regressions pass169/seven gates. No active SDK/ORT GPU EP install. |
 | [x]   | B06.7 | Relocatable CPython3.12/public C API/CLI SDK archive; generated CMake target repaired, two extracted prefixes (spaces included) pass134/eight guards and68 GPU graph evaluations. No active SDK install. |
 | [x]   | B06.8 | Versioned .104 SDK installed/registered with explicit bc250-migraphx launcher, identity refusals/live unregister-register recovery and ordinary daily/RCCL activation;165 checks/ten guards/68 GPU evaluations. Defaults/.105 preserved. |
-| [ ]   | **B06.9 — next** | Pinned ONNX Runtime MIGraphX EP/API/dependency/storage admission audit before isolated candidate build; preserve installed CPU ORT/SDK/defaults/.105. Broader model/dtype/performance remain separate. |
+| [x]   | B06.9 | Pinned ORT1.31 source/dependency/budget audit; real C++20 public wrapper repair in source/private overlay,168 C ABI symbols link, two CPU header regressions and38 guarded checks/six guards/16 GPU async graph evaluations. ORT provider itself unbuilt. |
+| [ ]   | **B06.10 — next** | Fetch/hash offline dependencies, then bounded isolated matching ORT core/Python/MIGraphX provider configure/build with private repaired header; provider assignment/no silent fallback/reference gates before installation. Preserve CPU ORT/SDK/defaults/.105. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
