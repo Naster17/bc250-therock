@@ -214,6 +214,10 @@ their defaults; ONNX Runtime remains CPU-only. Static FP32 IR10/opset18 fixture
 coverage does not establish every model/operator/dtype, graph autograd or speed.
 [Usage, exact scope, identities and unregister/re-register recovery](bc250_migraphx_b068_results/README.md).
 
+B06.10 separately qualifies a matching ONNX Runtime/MIGraphX GPU candidate in its
+build directory. It is not installed into ordinary launchers; packaging and
+explicit activation remain the next step. [Tested scope and packaging status](bc250_onnxruntime_b0610_results/README.md).
+
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
 The current mutable development prefix automatically supplies one qualified
