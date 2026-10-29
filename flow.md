@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-29 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-10-30 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,46 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
+  tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16
+  bound: H9/W11/C4/K8/g1/f3/index1 actual0.8427734375 vs0.8424274250864983;
+  error0.0003460124>bound0.000306262. Source intentionally retains legacy half
+  accumulator. Scope is precision, not memory corruption/all old training invalid.
+  Native gfx1013 forward now retains float_types FP32 accumulation; other devices/
+  backward unchanged. Isolated native-fix-r2 executes exact existing generator/
+  one-resource-object/link recipes on fresh original-build copy; no interposition.
+  Full patched source byte-identical in embedded library; mapped path/hash proved.
+  Public137 vs repaired218, six NCHW shapes/two opposite orders/daily+RCCL:
+  tuned CK wins g3f1/C=K16/H32W34 by1.1706–1.1782x; g1f3 moderate parity;
+  four others favor repaired direct. No global/model/legacy-vs-repaired speed claim.
+  Native Search5iterations/1000ms yields12PerfDb+12FindDb records; exact-ID fresh
+  replay/no mutation, invalid-ID copy fallback.444CPU checkpoints/9516explicit
+  calls (search internal excluded), maxerror0.00195155665 under fixed B07.9 bound.
+  80top-levelchecks/10final ACKguards +24nested mapped-rebuilt-MIOpen checks;
+  original/new MIOpen candidate refs724half+580float each, installed586float,
+  24Torch output/all-first-gradient fixtures; plugin still forward-only.
+  29localtests/lint/syntax pass. Buildr1memoryrefusal; qualr1/r2 original218
+  precision fail/repro; native-fix-r1 stopped after hidden396-edge timestamp
+  rebuild, retained. Native-fix-r2 resource-only relink passes; qualr3 missing
+  sysdeps loader directory refuses before GPU, r4 supplies existing SDK path/pass.
+  FourCPU/OMP4/job1/RAM10GiB/mem+swap12GiB/ccache20GiB no reset/ro SDK+source/
+  no build GPU/network/600s; SH lock.3864hashes/36links/fourAOTDBs/136backing files
+  unchanged. Same e327c5de boot/r2kernel/logs clean/no KFD recurrence; historical
+  Python CPU fault/KFD uncertainty distinct from fixed VM heap, no root-cause claim.
+  Installed native8389197/Torcha524980/FP32 bc250-ck/defaults/images/.105/user apps
+  unchanged; precision repair is NOT active for ordinary launches. No reboot/delete.
+  BuildPIDs23839exit1/24088+25122exit0; native26573stopped/29211exit0;
+  qual24520+25960+29708exit1/30214exit0/export846exit0; no jobs/containers/armed guards.
+  13totalACK; WS/tmp/ck-plugin-b0711/{inputs-r1..r3,build-r2,r3,native-fix-r1,r2,
+  export-r4}; WS/logs/ck-plugin-b0711-qualification-r4/final.json/r4-controller.log.
+  Evidence66256969B SHA0ce6d10f1c369e3ed68389b48562c76f79b633b4dc6474ec025d31102c7ed8d2.
+  Free20,477,861,888→12,493,869,056B; copied builds retained.
+  [Method/evidence](docs/development/bc250_ck_plugin_b0711_results/README.md).
+  **Next B07.12 (planned):** isolated versioned FP32/FP16 CK+matching repaired
+  MIOpen artifact, exact identity/licenses/example DB and two build-free relocated
+  extracts/daily+RCCL before installation. Preserve installed FP32/defaults/.105;
+  ordinary native precision-repair rollout remains separate compatibility work.
 
 - **B07.10 isolated FP16 MIOpen facade completed2026-10-29:** toolsaf4704f69;
   libraries source742ee1e2c0e, installed native8389197/Torcha524980 unchanged.

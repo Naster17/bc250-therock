@@ -491,3 +491,11 @@ contracts, mixed-dtype cached invokers and retained backward;66 checks/eight
 guards. Installed FP32 option and defaults unchanged; no performance claim.
 [Scope/evidence](bc250_ck_plugin_b0710_results/README.md). Next B07.11: paired
 FP16 timing/native tuning replay before versioned packaging.
+
+B07.11: six public FP16 fixtures/native tuning/replay qualified against an isolated
+HIP-direct precision repair (gfx1013 forward FP32 accumulation). The original218
+legacy half accumulator fails the strict bound; normal installed code unchanged.
+CK gains1.1706–1.1782× on one fixture, one ties, four lose.444 CPU checkpoints/
+80 top-level checks plus24 rebuilt-native nested checks; no global speed claim.
+[Method/evidence](bc250_ck_plugin_b0711_results/README.md). Next B07.12: coherent
+identity-pinned optional CK+repaired-MIOpen artifact and relocation qualification.
