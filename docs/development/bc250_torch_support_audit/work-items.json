@@ -112,8 +112,8 @@
     {
       "id": "B06",
       "feature": "ONNX export/CPU runtime and opt-in MIGraphX GPU inference; ORT GPU EP remains separate",
-      "evidence": "B06.1 installs pinned ONNX/CPU ORT; B06.2\u2013B06.7 repair/qualify native static FP32 MIGraphX and relocatable SDK. B06.8 installs registered opt-in SDK on .104:165 checks/ten guards/68 GPU evaluations across daily and RCCL. No automatic Torch routing, ORT GPU provider or graph autograd. B06.9 audits pinned ORT1.31, repairs source C++20 wrapper parsing in private overlay, links168 ABI symbols and passes38 guarded SDK-boundary checks; ORT EP itself unbuilt. B06.10 builds matching isolated ORT1.31/MIGraphX provider at b81a786;118 checks/36 GPU evals/18 actual GPU profiles pass, installed defaults unchanged.",
-      "next": "B06.11 relocatable matching package/metadata/extraction and explicit versioned activation/rollback, preserving installed CPU ORT/SDK/defaults/.105.",
+      "evidence": "B06.1 installs pinned ONNX/CPU ORT; B06.2\u2013B06.7 repair/qualify native static FP32 MIGraphX and relocatable SDK. B06.8 installs registered opt-in SDK on .104:165 checks/ten guards/68 GPU evaluations across daily and RCCL. No automatic Torch routing, ORT GPU provider or graph autograd. B06.9 audits pinned ORT1.31, repairs source C++20 wrapper parsing in private overlay, links168 ABI symbols and passes38 guarded SDK-boundary checks; ORT EP itself unbuilt. B06.10 builds matching isolated ORT1.31/MIGraphX provider at b81a786;118 checks/36 GPU evals/18 actual GPU profiles pass, installed defaults unchanged. B06.11 installs relocatable versioned package with explicit bc250-ort;174 checks/48 GPU evals, recovery and repaired caller environment pass; ordinary defaults preserved.",
+      "next": "B06.12 bounded modern Torch export to public ORT GPU integration with CPU/eager references, then practical B06 gap review; preserve defaults/.105.",
       "status": "partially_completed_bounded"
     },
     {

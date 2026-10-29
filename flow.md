@@ -9,6 +9,52 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.11 installed explicit ORT package completed 2026-10-29:** source remains
+  ORTb81a7866e5a6eff964b9e411535b4c9198651a9f, registered SDK4797 unchanged. Tools
+  packagebc0f0b0b9/context7870a6ee8/exportfddb14f61. Versioned archive
+  bc250-ort-migraphx-1.31.0-gfx1013-cp312-b0611 at /opt/bc250-stack/sdks/;
+  registration ort-migraphx.json plus retained version record; /usr/local/bin/
+  bc250-ort delegates through existing SDK/Torch launchers with full shared-lock
+  identity checking/read-only package. Install/register/unregister/context tool
+  update use EX lock. New Python/distribution identity1.31.0+gfx1013.b0611 fixes
+  missing build_and_package_info warning without suppressing it. Five copied ELF
+  RUNPATHs normalized to $ORIGIN; DT_NEEDED and .text bytes match originals.
+ 504 files/two contained links include core/Python/providers/headers/licenses,
+  original source+repair/hash pins/13 dependency archives/build settings. External
+  qualified glibc/ROCm image/registered SDK required; not standalone/cross-device.
+  Two private extracts (spaces included), original build and /sdk absent, each34
+  pass. Installed daily/RCCL each34 plus core7/CPU ONNX4/daily5/RCCL6 bring158
+  guarded/eight accepted guards, host14/user2=174 checks/48 GPU evaluations/24
+  accepted actual model profiles. Earlier ordinary acceptance90/24 evals retained;
+  all14 guard records ACK. Same FP32 six IR10/opset18 fixtures/CPU-double+CPU ORT
+  references/tolerances/no CPU node fallback, wrong-input refusals, native gfx1013,
+  exact Torch HIP backward/loaded origins/package identity/ro mount. Actual normal
+  UID1000 exposed bare --env loss after elevation; fixed by caller-side options+
+  existing private-context validation. Before/after proof covers bare env and
+  inherited HF_*; old wrapper/records at WS/recovery/ort-b0611-before-context.
+  Final acceptance-r2 passes; archive/numerical code unchanged by wrapper fix.
+  Live unregister/refusal/re-register, identity drift, lock exclusion and plain
+  daily/RCCL/SDK CPU ORT preservation pass.3553 native hashes/35 links/four AOT DBs/
+  136 retained backing paths match, full package+SDK checked separately. Same
+  r2boot83f6cb1b-4540-4149-839e-a6cf7cb80b63; kernel logs unchanged through cleanup.
+  No owned jobs/containers/armed guards; no compilation/cache reset/source/build/
+  artifact deletion. Initial ordinary30.1GiB; cleanup30,217,469,952B. Active core
+  image/ROCm/Torch/SDK/defaults/boot/fallback/user apps unchanged; .105 not contacted.
+  Package PID14494/relocation15155/install16120/final acceptance19704/export21375
+  exited0. WS/tmp/onnxruntime-b0611/{package-r1,export-r1}; WS/logs/onnxruntime-b0611-
+  acceptance-r2/final.json and matching -controller.log. Local kernel/artifacts/
+  onnxruntime-b0611 package350,607,989B SHAcdac3eab84dd0803ae85eac9e46d657ea67bd267db0bbbaf2ac53c2ec21feae3;
+  evidence1,872,893B SHA8bffd0ce5f114ff5e08ee51c32f8a3b9bd5919f59644b5448045b4b65fa22269,
+  256 rawfiles8,720,980B plus package/ELF/verification/preservation/cleanup.29 local
+  tests/selected critical Ruff/Black/pycompile/diff pass, full upstream CI not run.
+  Explicit ONNX inference/provider choice only; no automatic Torch routing,
+  graph autograd, arbitrary export/model/dtype/concurrency or performance claim.
+  Historical Python CPU fault stays unresolved/distinct from fixed VM-heap damage.
+  [Use/session/recovery](docs/development/bc250_onnxruntime_b0611_results/README.md).
+  **Next B06.12 (planned):** bounded modern Torch exporter→public bc250-ort GPU
+  integration with independent CPU/eager-GPU references, then practical B06 gap
+  review before further expansion. Preserve installed defaults and .105.
+
 - **B06.10 isolated ORT/MIGraphX candidate completed 2026-10-29:** matching ORT1.31.0
   core/Python3.12/provider built and actually executed on .104. Sourceb81a7866e5a6eff964b9e411535b4c9198651a9f
   over402979ac: explicit existing uint32 cache conversion, explicit this capture,
@@ -3477,7 +3523,8 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.8 | Versioned .104 SDK installed/registered with explicit bc250-migraphx launcher, identity refusals/live unregister-register recovery and ordinary daily/RCCL activation;165 checks/ten guards/68 GPU evaluations. Defaults/.105 preserved. |
 | [x]   | B06.9 | Pinned ORT1.31 source/dependency/budget audit; real C++20 public wrapper repair in source/private overlay,168 C ABI symbols link, two CPU header regressions and38 guarded checks/six guards/16 GPU async graph evaluations. ORT provider itself unbuilt. |
 | [x]   | B06.10 | Matching isolated ORT1.31 core/Python/MIGraphX provider built with narrow strict-compiler repairs;118 checks/seven guards/36 GPU evaluations and18 actual GPU profiles pass. Installed defaults unchanged; package identity/relocation remain next. |
-| [ ]   | **B06.11 — next** | Relocatable matching candidate/source/license/loader package, package metadata identity and extraction/explicit versioned activation/rollback qualification; preserve CPU ORT/SDK/defaults/.105. |
+| [x]   | B06.11 | Relocatable ORT package installed via explicit bc250-ort; package identity/RUNPATH normalization, two build-free extracts, live recovery/identity and repaired caller context;174 checks/48 GPU evaluations. Defaults/.105 preserved. |
+| [ ]   | **B06.12 — next** | Bounded modern Torch exporter→public ORT GPU integration with independent CPU/eager-GPU references, then practical B06 gap review. Preserve defaults/.105; no universal model/dtype/graph-autograd or speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
 | [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |

@@ -214,9 +214,25 @@ their defaults; ONNX Runtime remains CPU-only. Static FP32 IR10/opset18 fixture
 coverage does not establish every model/operator/dtype, graph autograd or speed.
 [Usage, exact scope, identities and unregister/re-register recovery](bc250_migraphx_b068_results/README.md).
 
-B06.10 separately qualifies a matching ONNX Runtime/MIGraphX GPU candidate in its
-build directory. It is not installed into ordinary launchers; packaging and
-explicit activation remain the next step. [Tested scope and packaging status](bc250_onnxruntime_b0610_results/README.md).
+## Explicit ONNX Runtime GPU inference (B06.11, .104)
+
+The versioned `onnxruntime-migraphx 1.31.0+gfx1013.b0611` archive is installed for
+explicit use:
+
+```bash
+bc250-ort --ort-info
+bc250-ort /path/to/owned-inference.py
+bc250-ort --runtime-profile rccl-single /path/to/owned-inference.py
+```
+
+Inside the script, select `MIGraphXExecutionProvider` explicitly. Set
+`session.disable_cpu_ep_fallback=1` in session options and call
+`session.disable_fallback()` when GPU execution is required. The launcher checks
+package/SDK/runtime identities and mounts the package read-only. It supports
+ordinary caller environments/mounts and runs in the qualified CPython3.12 image.
+Plain Torch/SDK launchers retain CPU ORT. No automatic Torch routing, ONNX graph
+autograd or training speedup is implied; static FP32 fixture coverage is bounded.
+[Session example, exact scope and unregister/register recovery](bc250_onnxruntime_b0611_results/README.md).
 
 ## Exact-layout BF16 GEMM tuning (N3.2, 2026-10-19)
 
