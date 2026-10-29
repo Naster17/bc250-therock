@@ -899,7 +899,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL | CPU-checked FP32/FP16/signedINT8 GEMM examples; N2.18 FP32 grouped forward128 CPU-reference cases +8 refusals, plain/Add+ReLU, valid strided layouts/guards/private streams | Direct header consumer only; backward, low-precision convolution, other layouts/configurations/performance and automatic Torch/MIOpen routing unqualified. XDL/WMMA/modern CK plugin off. |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private; B07.6 genuine native Search/PerfDb and fresh public replay1.085–1.135x on two fixtures qualified; optional artifact next |
+| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private; B07.6 genuine native Search/PerfDb and fresh public replay1.085–1.135x on two fixtures qualified; B07.7 identity-pinned relocatable artifact qualified/not installed; explicit install next |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
@@ -955,6 +955,35 @@ checks/16 example syntax checks+links pass; no native/GPU qualification change.
 Use bc250-train for frozen consumers, bc250-torch for custom environments; preserve
 native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/developer-guide.
 
+
+**B07.7 opt-in relocatable artifact completed2026-10-29:** toolsfd8c3fe8c;
+  accepted package-r2/qualification-r3, no install/native rebuild.23 files6568985B
+  include unchanged plugin/probes, eight mapped ABI-library pins/API5/66 symbols,
+  focused source/config/license snapshot and genuine two-key examples/profile.
+  Explicit check/seed-db/run; no merge into existing DBs. Two extracts (spaces
+  included) x daily/RCCL with original candidate/source/build paths absent pass
+  50 checks/eight guards;1168 convolution references,488API/984runtime per-ID
+  refusals/608 retained/128 absent/20 entry+seed checks. Unchanged tolerance,
+  max abs2.35537e-6/256-byte guards;29 local tests/lint/pycompile/diff pass.
+  First package's numerics pass but kernel gate rejects Failed to resume KFD.
+  Entry exec-after-HIP replaced by same-process runpy; final r3 logs unchanged.
+  Underlying mm/queue return untraced: no kernel-root-cause fix claim; preserve
+  this N6 input, distinct from historical Python CPU fault/fixed VM heap.
+  Qualr2 profile-context setup refusal before RCCL launch corrected inr3;
+  initial CPU identity TTY attach error retained, noninteractive capture passes.
+  No failed numerical test/relaxed gate/reboot/log clearing.3772 hashes/35 links/
+  four AOT DBs/136 backing files unchanged. Same e327c5de boot/r2kernel; no jobs/
+  containers/armed guards;10 total ACK. Shared lock/no compilation/ccache reset.
+  Package1PID1940/package2PID3233 exit0; qual1PID2297/qual2PID3406 exit1;
+  qual3PID3971/exportPID6306 exit0. WS/tmp/ck-plugin-b077/package-r2 and export-r3;
+  WS/logs/ck-plugin-b077-qualification-r3/final.json and r3-controller.log.
+  Accepted archive5031322B SHA90f0d323d0bb4ffd3a8ae04f1acd4e17805a10d7dcb62d577840cf2120e06984;
+  local evidence6819295B SHAeebcf955438a9a5655bc69ca84334d14da83b61c54b629a5a0a55f7576fd73b4.
+  Source3616b2f/installed8389197/Torcha524980/defaults/prefix/.105/user apps unchanged;
+  ordinary free12,888,330,240→12,653,342,720B, nothing deleted. [Use/evidence](bc250_ck_plugin_b077_results/README.md).
+  **Next B07.8:** versioned explicit .104 install/identity/registration/refusal/
+  rollback and ordinary daily/RCCL activation under exclusive update lock.
+  Preserve native payloads/default whitelist/routing/fallbacks/.105; update usage.
 
 **B07.6 native Search/PerfDb public replay completed2026-10-29:** tools1eac70aa1;
   private libraries3616b2f/installed8389197/Torcha524980 unchanged. Existing native

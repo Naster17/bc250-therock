@@ -464,3 +464,9 @@ qualified in private databases; two fixtures1.085–1.135× versus public HIP-di
 Invalid-ID copies fall back correctly;36 checks pass. No default/source change.
 [Method/evidence](bc250_ck_plugin_b076_results/README.md). Next B07.7 is an isolated
 identity-pinned relocatable opt-in artifact, qualified before installation.
+
+B07.7: exact-ABI opt-in artifact r2 is relocatable in the qualified runtime,
+two extracts/daily+RCCL pass50 checks/1168 convolution references. Initial
+exec-after-HIP warning preserved; same-process runner final gates clean. Not
+a kernel root-cause fix or installed default. [Use/evidence](bc250_ck_plugin_b077_results/README.md).
+Next B07.8 is versioned explicit installation and ordinary activation/rollback.

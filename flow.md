@@ -9,6 +9,35 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.7 opt-in relocatable artifact completed2026-10-29:** toolsfd8c3fe8c;
+  accepted package-r2/qualification-r3, no install/native rebuild.23 files6568985B
+  include unchanged plugin/probes, eight mapped ABI-library pins/API5/66 symbols,
+  focused source/config/license snapshot and genuine two-key examples/profile.
+  Explicit check/seed-db/run; no merge into existing DBs. Two extracts (spaces
+  included) x daily/RCCL with original candidate/source/build paths absent pass
+  50 checks/eight guards;1168 convolution references,488API/984runtime per-ID
+  refusals/608 retained/128 absent/20 entry+seed checks. Unchanged tolerance,
+  max abs2.35537e-6/256-byte guards;29 local tests/lint/pycompile/diff pass.
+  First package's numerics pass but kernel gate rejects Failed to resume KFD.
+  Entry exec-after-HIP replaced by same-process runpy; final r3 logs unchanged.
+  Underlying mm/queue return untraced: no kernel-root-cause fix claim; preserve
+  this N6 input, distinct from historical Python CPU fault/fixed VM heap.
+  Qualr2 profile-context setup refusal before RCCL launch corrected inr3;
+  initial CPU identity TTY attach error retained, noninteractive capture passes.
+  No failed numerical test/relaxed gate/reboot/log clearing.3772 hashes/35 links/
+  four AOT DBs/136 backing files unchanged. Same e327c5de boot/r2kernel; no jobs/
+  containers/armed guards;10 total ACK. Shared lock/no compilation/ccache reset.
+  Package1PID1940/package2PID3233 exit0; qual1PID2297/qual2PID3406 exit1;
+  qual3PID3971/exportPID6306 exit0. WS/tmp/ck-plugin-b077/package-r2 and export-r3;
+  WS/logs/ck-plugin-b077-qualification-r3/final.json and r3-controller.log.
+  Accepted archive5031322B SHA90f0d323d0bb4ffd3a8ae04f1acd4e17805a10d7dcb62d577840cf2120e06984;
+  local evidence6819295B SHAeebcf955438a9a5655bc69ca84334d14da83b61c54b629a5a0a55f7576fd73b4.
+  Source3616b2f/installed8389197/Torcha524980/defaults/prefix/.105/user apps unchanged;
+  ordinary free12,888,330,240→12,653,342,720B, nothing deleted. [Use/evidence](docs/development/bc250_ck_plugin_b077_results/README.md).
+  **Next B07.8:** versioned explicit .104 install/identity/registration/refusal/
+  rollback and ordinary daily/RCCL activation under exclusive update lock.
+  Preserve native payloads/default whitelist/routing/fallbacks/.105; update usage.
+
 - **B07.6 native Search/PerfDb public replay completed2026-10-29:** tools1eac70aa1;
   private libraries3616b2f/installed8389197/Torcha524980 unchanged. Existing native
   Search/GenericSearch and kernel-ID serialization/load validation work; no source
