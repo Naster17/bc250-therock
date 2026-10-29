@@ -9,6 +9,37 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.4 paired public DL/HIP-direct timing completed 2026-10-29:** tools
+  e11969041; candidate libraries3616b2f/installed8389197/Torcha524980 unchanged.
+  Forced public Immediate137 vs218, six NCHW FP32 shapes/batch2/groups1+3/
+  filters1+3/small+moderate inputs. Two fresh opposite-order processes/profile,
+  daily+RCCL;32-call windows/three ABBA or BAAB cycles, separate first-use/query/
+  prepare/wall intervals. Additional verbose runs prove Default block8 DL plus
+  transposes vs MIOpenConvUni; diagnostic timing excluded. HIP-direct wins all24
+  timed comparisons,1.13–2.57x; stream intervals include layout/launch/idle costs,
+  not pure kernel time. No general speed or whole-model claim; cold-user caches
+  are not machine-cold.576 CPU-double correctness checkpoints incl diagnostic
+  passes;14,184 calls, only window-final outputs copied. Unchanged N2.18 tolerance,
+  max abs2.35537e-6; immutable inputs/256-byte guards pass. Private4+4/core7/CPU
+  ONNX4/daily5/RCCL6=30 checks/six ACK600s guards;29 local tests/lints/syntax pass.
+  Probe-only isolated build uses fourCPU/OMP4/jobs1/RAM10GiB/mem+swap12GiB/
+  ccache20GiB no reset/ro sources+prefix/no GPU/network/600s; existing plugin reused.
+  3684 protected hashes/35 links/four AOT DBs/136 backing files unchanged. Same
+  e327c5de boot/r2kernel; kernel logs unchanged; no owned jobs/containers/guards.
+  Initial staging permission failure corrected on new owned directory before
+  build; no failed GPU test/tolerance relaxation. BuildPID25065/qualPID25392/
+  exportPID26699 exit0. WS/tmp/ck-plugin-b074/{inputs-r1,build-r1,export-r1};
+  WS/logs/ck-plugin-b074-qualification-r1/final.json and matching
+  WS/logs/ck-plugin-b074-r1-controller.log. No install/default/prefix/profile/
+  .105/user-app changes or cleanup. Ordinary free12,926,078,976→12,914,167,808B.
+  Local kernel/artifacts/ck-plugin-b074 evidence1,432,289B,
+  SHA630a0525288253423c46e976bc3fe9c2b6009ccead3bb103be1d155c39ebd32b.
+  Historical Python CPU fault stays unresolved/distinct from fixed VM heap.
+  [Method/results](docs/development/bc250_ck_plugin_b074_results/README.md).
+  **Next B07.5 (planned):** compare all six private per-ID variants on retained
+  fixtures; separate invoker-only/full-layout costs and see whether a qualified
+  config beats HIP-direct before packaging. Keep candidate private/defaults/.105.
+
 - **B07.3 private DL scalar/argument/per-kernel contracts completed 2026-10-29:**
   source libraries3616b2f9f09 over2976e7d; tools7519e73b8. Private facade now
   refuses non-default exact double alpha/beta (including near1/NaN/Inf), bias,

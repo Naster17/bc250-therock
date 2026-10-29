@@ -447,3 +447,8 @@ returned invokers check runtime descriptors/pointers/scratch before dispatch.
 All six IDs pass512 CPU-reference GPU calls;244 API/492 runtime refusals preserve
 buffers. Retained public64 and Torch gradients pass;40 final checks. No default
 change or performance claim. [Scope and next paired timing](bc250_ck_plugin_b073_results/README.md).
+
+B07.4: private public-Immediate DL default loses to HIP-direct on six bounded NCHW
+FP32 fixtures (1.13–2.57× slower across both profiles/orders);30 checks pass.
+No production admission. [Method/evidence](bc250_ck_plugin_b074_results/README.md).
+Next B07.5 compares private per-ID configurations before packaging.
