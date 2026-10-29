@@ -424,3 +424,11 @@ GPU-only model profiles with four reference routes. No backend/default change.
 [Scope and optional gaps](bc250_onnxruntime_b0612_results/README.md).
 Next B07.1 audits CK grouped-convolution plugin admission before choosing a port;
 existing HIP-direct/N2.18 scalar coverage is retained.
+
+## B07.1 CK plugin admission (2026-10-29)
+
+Existing native scalar DL FP32 factory matches the MIOpen forward interface:
+nine installed archive instances,192 CPU-reference GPU executions across two
+profiles and24 total checks. API5 requires66 entry points/internal C++ ABI.
+Plugin remains absent; no routing/default change. [Audit and B07.2 private
+prototype plan](bc250_ck_plugin_b071_results/README.md).

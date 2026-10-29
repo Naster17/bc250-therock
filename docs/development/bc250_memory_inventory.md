@@ -899,7 +899,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL | CPU-checked FP32/FP16/signedINT8 GEMM examples; N2.18 FP32 grouped forward128 CPU-reference cases +8 refusals, plain/Add+ReLU, valid strided layouts/guards/private streams | Direct header consumer only; backward, low-precision convolution, other layouts/configurations/performance and automatic Torch/MIOpen routing unqualified. XDL/WMMA/modern CK plugin off. |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent |
+| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent; B07.1 existing FP32 DL factory admission qualified, private plugin next |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
@@ -945,6 +945,43 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B07.1 CK grouped-convolution plugin admission completed 2026-10-29:** tools
+  a4bf75b8033b484b364be84a6233efe681203875. Nine local/staged source files match;
+  API5 loader requires66 entry points across12 solver groups, using internal C++
+  types despite extern-C entry names. gfx1013 excluded by plugin CMake/default
+  loader whitelist; explicit MIOPEN_CK_LIB_PATH bypass remains. Existing scalar DL
+  FP32/FP16 2D NHWGC/GKYXC/NHWGK factory matches plugin forward interface. Factory
+  uses DL_KERNELS, distinct from configured CK_ENABLE_DL_KERNELS; MIOpen compile
+  helper does not explicitly propagate the former. Actual plugin flags still
+  require checking. Native no-DL probe enumerates0; -DDL_KERNELS probe links
+  installed archive and enumerates9 FP32 instances.16 new interleaved grouped
+  fixtures/profile,1x1/3x3/groups1+3/default+private streams/dyadic+non-dyadic,
+  execute96 admitted instances each daily/RCCL=192 CPU-double comparisons.
+  Dyadic exact; unchanged N2.18 tolerance otherwise, max abs6.07623e-7;256-byte
+  guards/immutable inputs and native Torch HIP backward pass. Factory gates3+3,
+  retained core7/daily5/RCCL6=24 checks/five accepted guards; earlier r1 parser
+  rejects diagnostic-prefixed JSON after native exit0, preserved; six total ACK.
+  Test parser now retains stdout and parses final JSON, no numerical relaxation.
+  Two isolated native link builds, ccache20GiB/no reset/OMP4/fourCPU/RAM10GiB/
+  mem+swap12GiB/read-only sources+prefix/no GPU/network/build timeout600s. No
+  plugin/library/Torch build, install, admission/default/prefix change.3649
+  protected hashes/35 links/four AOT DBs unchanged;136 backing paths verified.
+  Same r2boot83f6cb1b-4540-4149-839e-a6cf7cb80b63/kernel logs unchanged; .105/user
+  apps untouched. Qualification r1PID10147 exits1(parser), r2PID10922 exits0;
+  evidence export exits0. WS/logs/ck-plugin-b071-qualification-r2/final.json,
+  WS/logs/ck-plugin-b071-r2-controller.log; WS/tmp/ck-plugin-b071/build-r{1,2},
+  export-r1. Local kernel/artifacts/ck-plugin-b071 evidence1560256B
+  SHAbdd63ea9687bfe26f96ea253845fabfe9f906c91da2be4427ed360e7653c3319;
+  109 rawfiles7008402B.29 local tests/critical Ruff/Black/clang-format/pycompile/
+  shell/diff pass; upstream full CI not run. Free30,202,425,344B; no owned jobs/
+  containers/armed guards. No MIOpen routing/backward-plugin/type/performance
+  qualification; historical Python CPU fault remains distinct from fixed VM heap.
+  [Audit/decision/evidence](docs/development/bc250_ck_plugin_b071_results/README.md).
+  **Next B07.2 (planned):** isolated matching-MIOpen forward-only FP32 DL plugin,
+  explicit DL macro, all66 required exports with unsupported operations refusing;
+  private-path discovery and forced real solver CPU-reference/guard checks before
+  any production admission. Keep installed defaults/.105/user apps untouched.
 
 **B06.12 modern Torch export→public ORT GPU completed 2026-10-29:** tools
   75da6725bd2566828ace1074c5d24c7e0e6347ad, evidence e9e6c29a8. Fresh owned

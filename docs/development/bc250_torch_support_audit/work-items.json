@@ -119,9 +119,9 @@
     {
       "id": "B07",
       "feature": "MIOpen CK grouped-convolution plugin",
-      "evidence": "libMIOpenCKGroupedConv_gfx1013.so still absent; A03 skips default loader probe when build/solver capability excludes it, retaining explicit-path diagnostics. HIP-direct and legacy CK reduction routes are separate.",
-      "next": "B07.1: audit the existing MIOpen CK grouped-convolution plugin ABI, instance factories and native gfx1013 scalar/DL alternatives; compare with retained N2.18/HIP-direct routes before selecting a bounded port. Preserve defaults, .105 and user applications.",
-      "status": "queued"
+      "evidence": "libMIOpenCKGroupedConv_gfx1013.so still absent; A03 skips default loader probe when build/solver capability excludes it, retaining explicit-path diagnostics. HIP-direct and legacy CK reduction routes are separate. B07.1 audits API5/66 required exports/12 groups and matching scalar DL forward factory. Isolated installed-archive probe enumerates9 FP32 instances and passes192 CPU-double GPU comparisons across daily/RCCL, plus native Torch backward/retained gates:24 checks. No plugin built or installed.",
+      "next": "B07.2: build an isolated matching-MIOpen forward-only FP32 DL plugin using existing instances; check actual DL macro/ABI, export all66 required entry points with explicit unsupported refusals, and qualify private-path forced solver references before any installed admission. Preserve defaults/.105/user applications.",
+      "status": "admission-audited-bounded-factory-qualified"
     },
     {
       "id": "N2.7",
@@ -131,7 +131,7 @@
       "status": "queued"
     }
   ],
-  "next": "B07.1: audit the existing MIOpen CK grouped-convolution plugin ABI, instance factories and native gfx1013 scalar/DL alternatives; compare with retained N2.18/HIP-direct routes before selecting a bounded port. Preserve defaults, .105 and user applications.",
+  "next": "B07.2: build an isolated matching-MIOpen forward-only FP32 DL plugin using existing instances; check actual DL macro/ABI, export all66 required entry points with explicit unsupported refusals, and qualify private-path forced solver references before any installed admission. Preserve defaults/.105/user applications.",
   "N2.7": "next, selected A01-A09 bounded scopes completed",
   "completed_primary_items": [
     "A01",
@@ -144,7 +144,7 @@
     "A08",
     "A09"
   ],
-  "next_primary_item": "B07.1",
+  "next_primary_item": "B07.2",
   "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08",
   "current_n2_workstream": {
     "completed": "N2.18 and practical gap review; broader optional scientific coverage remains open",
