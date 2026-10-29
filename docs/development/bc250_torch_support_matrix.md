@@ -432,3 +432,10 @@ nine installed archive instances,192 CPU-reference GPU executions across two
 profiles and24 total checks. API5 requires66 entry points/internal C++ ABI.
 Plugin remains absent; no routing/default change. [Audit and B07.2 private
 prototype plan](bc250_ck_plugin_b071_results/README.md).
+
+## B07.2 private forward plugin (2026-10-29)
+
+Isolated FP32 DL plugin passes64 forced MIOpen solver137 GPU calls,64 absence
+refusals,304 direct contracts/eight Torch output-first-gradient fixtures;38 checks.
+All66 ABI exports, six privately filtered unique IDs. Installed defaults unchanged.
+[Scope, failures, private candidate and B07.3](bc250_ck_plugin_b072_results/README.md).

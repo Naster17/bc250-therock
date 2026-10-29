@@ -9,6 +9,52 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.2 isolated MIOpen FP32 DL forward plugin completed 2026-10-29:** source
+  libraries2976e7d30bfdccb2fb79809b8c58a6b5722a0822 over installed8389197;
+  tools528088c26/controller608ac7b86. Private API5 facade exports all66 required
+  symbols; unsupported11 groups return false/empty lists and explicit workspace/
+  solution INVALID_VALUE, nulls BAD_PARAM. Packed2D FP32 forward only, casts/TF32/
+  mixed types/determinism refused. Existing upstream forward/invoker math reused.
+  Copied config enables CK templates only in candidate; explicit DL macro/C++20/
+  beta API/existing includes/archive. Host-hidden GetCastType gets its exact
+  matching one-line definition hidden locally, verified not exported. Nine raw
+  factory instances have duplicate IDs (transfer parameters omitted from names);
+  private-only guarded filter retains first per ID, exposes six unambiguous IDs.
+  No production factory/admission/default changes. Forced public Immediate solver
+  137 (historical Xdlops name, actual DL kernels), packed NCHW+NHWC/groups1+3/
+  filters1+3/batch2/5x7/C=K=4 per group/default+private streams/two input patterns:
+  32 GPU calls each daily/RCCL=64; CPU double, dyadic exact/unchanged N2.18 tolerance,
+  max abs6.07623e-7,256-byte input/output/workspace guards/immutable inputs pass.
+  Fresh no-private-path subprocess32 refusals/profile=64;304 recorded contract
+  checks include all unsupported groups/cast/FP16/TF32/nulls. Eight Torch conv
+  output/all-first-gradient fixtures plus native arithmetic backward pass; ordinary
+  Torch may choose retained solvers, not proof of automatic private dispatch.
+  Private8+8/core7/CPU ONNX4/daily5/RCCL6=38 checks/six accepted600s guards;12 total
+  ACK including earlier failures. Buildr1 C++17/includes, r2 beta/sqlite, r3+r4
+  hidden accessor (r4 unchanged retry), r5+r6 built; r7 adds private ID filtering,
+  r8 probe workspace-guard correction. Qualr1 duplicate IDs, r2+r3 test wrongly
+  checked mutable workspace scratch (r3 retains native logs), r4 private gates
+  pass then wrong launcher lacks transformers; r5 full pass after bc250-train fix.
+  No numerical tolerance/reference relaxation. FourCPU/OMP4/jobs1/RAM10GiB/
+  mem+swap12GiB/ccache20GiB no reset/read-only source+prefix/no GPU/network build,
+  timeout600s.3663 protected hashes/35 links/four AOT DBs unchanged;136 retained
+  backing paths match. Same r2boot83f6cb1b-4540-4149-839e-a6cf7cb80b63/kernel logs
+  unchanged. No install/prefix update/default admission change/.105/user app access.
+  Buildr8PID29981/qualr5PID31501/export exit0; no owned jobs/containers/armed guards.
+  WS/tmp/ck-plugin-b072/build-r8; WS/logs/ck-plugin-b072-qualification-r5/final.json
+  and WS/logs/ck-plugin-b072-r5-controller.log; export-r1. Local kernel/artifacts/
+  ck-plugin-b072 evidence7298658B SHA9e2aaabae96bd8386cfb2ba65e3de62408a1bd7fd5cd121461baf64627e91ecc,
+  283 rawfiles34976217B, matching source/binary/export checks and private helper
+  visibility proof.29 local tests/critical Ruff/Black/new-source clang-format/
+  pycompile/shell/diff pass; no full upstream CI. Free30,153,154,560B. Default
+  Immediate alpha1/beta0 only qualified; non-default scalars/per-kernel selection/
+  stride+dilation+tails/performance/other types/plugin backward remain open.
+  Historical Python CPU fault remains unresolved/distinct from fixed VM heap.
+  [Use/scope/evidence](docs/development/bc250_ck_plugin_b072_results/README.md).
+  **Next B07.3 (planned):** private forward scalar/argument admission and per-kernel
+  stride/dilation/tail qualification; resolve non-default alpha/beta before broader
+  use, then select paired HIP-direct timing/opt-in packaging. Keep defaults/.105.
+
 - **B07.1 CK grouped-convolution plugin admission completed 2026-10-29:** tools
   a4bf75b8033b484b364be84a6233efe681203875. Nine local/staged source files match;
   API5 loader requires66 entry points across12 solver groups, using internal C++
