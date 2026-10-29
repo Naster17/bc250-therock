@@ -44,7 +44,10 @@ def main():
         registration, sdk = registered(LaunchOptions())
         available = os.statvfs(BASE).f_bavail * os.statvfs(BASE).f_frsize
         assert available > (24 if args.phase == "configure" else 4) * 1024**3
-        source = BASE / "source-r1"
+        source = BASE / "source-r2"
+        repair = json.loads(
+            (WS / "helpers/onnxruntime_b0610_source_repair.json").read_text()
+        )
         if not source.exists():
             archive = WS / "tmp/onnxruntime-b069/inputs/onnxruntime-source.tar.gz"
             audit = json.loads(
@@ -56,6 +59,21 @@ def main():
                 t.extractall(source, filter="data")
             assert not verify_hashes(
                 {str(source / n): d for n, d in audit["source_files_sha256"].items()}
+            )
+        expected = dict(
+            json.loads(
+                (WS / "tmp/onnxruntime-b069/inputs/source-audit.json").read_text()
+            )["source_files_sha256"]
+        )
+        repair_archive = inputs / "source-repair.tar.gz"
+        assert sha(repair_archive) == repair["archive_sha256"]
+        if not (BASE / "source-r2.json").exists():
+            with tarfile.open(repair_archive) as tar:
+                tar.extractall(source, filter="data")
+            expected.update(repair["files_sha256"])
+            assert not verify_hashes({str(source / n): d for n, d in expected.items()})
+            atomic_json(
+                BASE / "source-r2.json", dict(repair=repair, files_sha256=expected)
             )
         mirror = BASE / "mirror"
         if not mirror.exists():
@@ -134,7 +152,7 @@ def main():
             protected_sha256=baseline["protected_sha256"],
             links=baseline["links"],
             installed_registration=registration,
-            ort_source="402979ac1bef89dcd55add41eaa7277c407599eb",
+            ort_source=repair["revision"],
             installed_runtime_changed=False,
             host105_contacted=False,
         )

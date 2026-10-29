@@ -1,0 +1,10 @@
+{
+  "base": "402979ac1bef89dcd55add41eaa7277c407599eb",
+  "revision": "b81a7866e5a6eff964b9e411535b4c9198651a9f",
+  "files_sha256": {
+    "onnxruntime/core/providers/migraphx/migraphx_execution_provider.cc": "209bb60d5c2e1b6577244d8d466afa175d9b9de82d02bae3fd6e0833cfddef9a",
+    "onnxruntime/core/providers/migraphx/migraphx_execution_provider_utils.h": "51e8ac8c9a580f7060cb69200b6c06c61ed3f8f8d5686815d72014c13cc765c3",
+    "onnxruntime/core/providers/migraphx/migraphx_provider_factory.cc": "e5504955a7f10da428a686687b9337cac96ea87f96926f39c5e2e7ee1ec29f77"
+  },
+  "archive_sha256": "9c52f8b7354a411f105c79d42a7e309b718d8b727cbd3f528f4e39e7792c2624"
+}

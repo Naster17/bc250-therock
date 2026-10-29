@@ -65,13 +65,13 @@ def main():
     }
     provider_options.update(device_id="0", migraphx_mem_limit=str(512 * 1024**2))
 
-    def options(profile=False):
+    def options(profile=False, label="session"):
         so = ort.SessionOptions()
         so.intra_op_num_threads = so.inter_op_num_threads = 1
         so.graph_optimization_level = ort.GraphOptimizationLevel.ORT_DISABLE_ALL
         so.add_session_config_entry("session.disable_cpu_ep_fallback", "1")
         so.enable_profiling = profile
-        so.profile_file_prefix = str(args.output.parent / "profile")
+        so.profile_file_prefix = str(args.output.parent / ("profile-" + label))
         return so
 
     first_model = None
@@ -79,7 +79,7 @@ def main():
         folder = fixtures / name
         session = ort.InferenceSession(
             str(folder / "model.onnx"),
-            sess_options=options(True),
+            sess_options=options(True, name),
             providers=[("MIGraphXExecutionProvider", provider_options)],
         )
         session.disable_fallback()
@@ -197,9 +197,10 @@ def main():
         assert any(
             library in line and str(args.candidate) in line for line in report["maps"]
         ), library
-    assert any(
-        "libmigraphx_onnx.so" in line and str(sdk) in line for line in report["maps"]
-    )
+    for library in ("libmigraphx.so", "libmigraphx_onnx.so", "libmigraphx_gpu.so"):
+        assert any(
+            library in line and str(sdk) in line for line in report["maps"]
+        ), library
     passed("actual-matching-candidate-and-sdk-library-origins")
     assert len(report["checks"]) == 32, len(report["checks"])
     report["status"] = "passed"

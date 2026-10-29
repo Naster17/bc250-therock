@@ -35,14 +35,9 @@ def main():
             == (logs / "kernel-before.log").read_bytes()
         )
         assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
-        source = json.loads(
-            (WS / "tmp/onnxruntime-b069/inputs/source-audit.json").read_text()
-        )
+        source = json.loads((base / "source-r2.json").read_text())
         assert not verify_hashes(
-            {
-                str(base / "source-r1" / n): d
-                for n, d in source["source_files_sha256"].items()
-            }
+            {str(base / "source-r2" / n): d for n, d in source["files_sha256"].items()}
         )
         candidate = Path(q["ort_candidate"])
         identity = {
@@ -66,8 +61,8 @@ def main():
             all_acknowledged_guards=len(guards),
             candidate=str(candidate),
             candidate_identity_sha256=identity,
-            source_revision=source["revision"],
-            source_files_verified=len(source["source_files_sha256"]),
+            source_revision=source["repair"]["revision"],
+            source_files_verified=len(source["files_sha256"]),
             protected_paths=len(q["protected_sha256"]),
             links=len(q["links"]),
             aot_caches=q["aot_caches"],
@@ -87,7 +82,7 @@ def main():
         with tarfile.open(dest / "evidence.tar.gz", "w:gz") as tar:
             for path in sorted((WS / "logs").glob("*onnxruntime-b0610*")):
                 tar.add(path, arcname="host-logs/" + path.name)
-            for pattern in ("configure-*", "build-*"):
+            for pattern in ("configure-*", "build-*", "smoke-*"):
                 for folder in sorted(base.glob(pattern)):
                     for path in sorted(folder.iterdir()):
                         if path.is_file():
@@ -100,6 +95,7 @@ def main():
                 if path.is_file():
                     tar.add(path, arcname="helpers/" + path.name)
             tar.add(base / "mirror/manifest.json", arcname="dependencies.json")
+            tar.add(base / "source-r2.json", arcname="source-patched.json")
             for name in ("CMakeCache.txt", "build.ninja"):
                 tar.add(candidate / name, arcname="candidate/" + name)
         atomic_json(

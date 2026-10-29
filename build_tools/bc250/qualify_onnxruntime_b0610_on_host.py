@@ -20,7 +20,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--attempt", required=True)
     parser.add_argument(
-        "--build-attempt", default="r3", choices=("r2", "r3", "r4", "r5")
+        "--build-attempt", default="r5", choices=("r2", "r3", "r4", "r5")
     )
     args = parser.parse_args()
     assert args.attempt in ("r1", "r2", "r3", "r4")
