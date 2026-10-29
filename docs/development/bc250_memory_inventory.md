@@ -899,7 +899,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL | CPU-checked FP32/FP16/signedINT8 GEMM examples; N2.18 FP32 grouped forward128 CPU-reference cases +8 refusals, plain/Add+ReLU, valid strided layouts/guards/private streams | Direct header consumer only; backward, low-precision convolution, other layouts/configurations/performance and automatic Torch/MIOpen routing unqualified. XDL/WMMA/modern CK plugin off. |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private, public Search/PerfDb replay next |
+| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private; B07.6 genuine native Search/PerfDb and fresh public replay1.085–1.135x on two fixtures qualified; optional artifact next |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
@@ -955,6 +955,33 @@ checks/16 example syntax checks+links pass; no native/GPU qualification change.
 Use bc250-train for frozen consumers, bc250-torch for custom environments; preserve
 native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/developer-guide.
 
+
+**B07.6 native Search/PerfDb public replay completed2026-10-29:** tools1eac70aa1;
+  private libraries3616b2f/installed8389197/Torcha524980 unchanged. Existing native
+  Search/GenericSearch and kernel-ID serialization/load validation work; no source
+  repair/override. Public Find only137 genuinely generates two PerfDb+two FindDb
+  records/profile for batch2/32x34/C=K16/g1f3+g3f1. Native5iterations/1000ms bound,
+  private DB/cache. Both select block256 Default3x3; daily1x1Stride1Pad0 vs RCCL
+  1x1Pad0. Four fresh opposite-order public137-vs218 processes retain1.085–1.092x
+  and1.119–1.135x advantages; no whole-model/general/default claim. Untimed verbose
+  replay proves exact-ID DB load/no search; DB hashes unchanged. Invalid-ID copies
+  fall back to block8 Default with CPU references, original records preserved.
+  148 CPU checkpoints/max abs2.35537e-6/unchanged N2.18 tolerance/256-byte guards;
+  3172 explicit Immediate calls excludes internal search evaluations. Private7+7/
+  core7/CPU ONNX4/daily5/RCCL6=36 checks/six ACK guards;29 local tests/lint/syntax
+  pass. Probe-only fourCPU/OMP4/jobs1/RAM10GiB/mem+swap12GiB/ccache20GiB no reset/
+  ro sources+prefix/no build GPU/network/600s.3701 hashes/35 links/four AOT DBs/
+  136 backing files unchanged. Same e327c5de boot/r2kernel/logs; no jobs/containers/
+  guards. BuildPID30906/qualPID31175/exportPID32467 exit0. WS/tmp/ck-plugin-b076/
+  {inputs-r1,build-r1,export-r1}; WS/logs/ck-plugin-b076-qualification-r1/final.json
+  and WS/logs/ck-plugin-b076-r1-controller.log. Evidence1143590B,
+  SHA13d5aabfaf5dcf053af67f8d3f7c62514a09b90104798e8c4d9cf4c6dffaa2e6.
+  No failed GPU batch/install/default/prefix/.105/user-app changes/deletion;
+  ordinary free12,898,476,032→12,890,648,576B. Historical Python CPU fault stays
+  distinct from fixed VM heap. [Method/results](bc250_ck_plugin_b076_results/README.md).
+  **Next B07.7:** isolated relocatable opt-in artifact with exact native MIOpen/
+  ABI/source/license identity and genuine example records; identity refusals/two
+  build-free extracts (spaces included) before installation. Preserve defaults/.105.
 
 **B07.5 six private DL configurations completed2026-10-29:** tools45bac0baa,
   private libraries3616b2f/installed8389197/Torcha524980 unchanged. Probe-only build;

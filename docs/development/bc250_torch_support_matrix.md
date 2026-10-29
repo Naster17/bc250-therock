@@ -458,3 +458,9 @@ block256 configurations beat cached HIP-direct1.09–1.14× on two moderate fixt
 four other fixtures still lose.30 checks pass; no default change.
 [Method/evidence](bc250_ck_plugin_b075_results/README.md). Next B07.6 qualifies
 existing Search/PerfDb and fresh-process public route replay in isolated DBs.
+
+B07.6: genuine native Search/PerfDb selection and fresh-process public137 replay
+qualified in private databases; two fixtures1.085–1.135× versus public HIP-direct.
+Invalid-ID copies fall back correctly;36 checks pass. No default/source change.
+[Method/evidence](bc250_ck_plugin_b076_results/README.md). Next B07.7 is an isolated
+identity-pinned relocatable opt-in artifact, qualified before installation.

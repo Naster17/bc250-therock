@@ -9,6 +9,33 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.6 native Search/PerfDb public replay completed2026-10-29:** tools1eac70aa1;
+  private libraries3616b2f/installed8389197/Torcha524980 unchanged. Existing native
+  Search/GenericSearch and kernel-ID serialization/load validation work; no source
+  repair/override. Public Find only137 genuinely generates two PerfDb+two FindDb
+  records/profile for batch2/32x34/C=K16/g1f3+g3f1. Native5iterations/1000ms bound,
+  private DB/cache. Both select block256 Default3x3; daily1x1Stride1Pad0 vs RCCL
+  1x1Pad0. Four fresh opposite-order public137-vs218 processes retain1.085–1.092x
+  and1.119–1.135x advantages; no whole-model/general/default claim. Untimed verbose
+  replay proves exact-ID DB load/no search; DB hashes unchanged. Invalid-ID copies
+  fall back to block8 Default with CPU references, original records preserved.
+  148 CPU checkpoints/max abs2.35537e-6/unchanged N2.18 tolerance/256-byte guards;
+  3172 explicit Immediate calls excludes internal search evaluations. Private7+7/
+  core7/CPU ONNX4/daily5/RCCL6=36 checks/six ACK guards;29 local tests/lint/syntax
+  pass. Probe-only fourCPU/OMP4/jobs1/RAM10GiB/mem+swap12GiB/ccache20GiB no reset/
+  ro sources+prefix/no build GPU/network/600s.3701 hashes/35 links/four AOT DBs/
+  136 backing files unchanged. Same e327c5de boot/r2kernel/logs; no jobs/containers/
+  guards. BuildPID30906/qualPID31175/exportPID32467 exit0. WS/tmp/ck-plugin-b076/
+  {inputs-r1,build-r1,export-r1}; WS/logs/ck-plugin-b076-qualification-r1/final.json
+  and WS/logs/ck-plugin-b076-r1-controller.log. Evidence1143590B,
+  SHA13d5aabfaf5dcf053af67f8d3f7c62514a09b90104798e8c4d9cf4c6dffaa2e6.
+  No failed GPU batch/install/default/prefix/.105/user-app changes/deletion;
+  ordinary free12,898,476,032→12,890,648,576B. Historical Python CPU fault stays
+  distinct from fixed VM heap. [Method/results](docs/development/bc250_ck_plugin_b076_results/README.md).
+  **Next B07.7:** isolated relocatable opt-in artifact with exact native MIOpen/
+  ABI/source/license identity and genuine example records; identity refusals/two
+  build-free extracts (spaces included) before installation. Preserve defaults/.105.
+
 - **B07.5 six private DL configurations completed2026-10-29:** tools45bac0baa,
   private libraries3616b2f/installed8389197/Torcha524980 unchanged. Probe-only build;
   six retained shapes/two layouts, matched cached218 vs explicit API5 per-ID
