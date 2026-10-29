@@ -15,6 +15,9 @@ if [[ ! -e /task/venv/bin/python ]]; then
   python -m venv --system-site-packages /task/venv
 fi
 source /task/venv/bin/activate
+# A nested venv does not inherit the outer runtime venv site-packages.
+export PYTHONPATH=/opt/torch-venv/lib/python3.12/site-packages
+python -c 'import sys,numpy; print(sys.executable,numpy.__version__,numpy.get_include())' > /logs/python-build-environment.txt
 if [[ "$phase" == configure ]]; then
   cmake -S /source/cmake -B /task/build -GNinja \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER="$prefix/lib/llvm/bin/clang++" \
