@@ -9,6 +9,26 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Developer architecture/environment guide completed 2026-10-29:** workspace
+  root BC250_DEVELOPER_GUIDE.md, linked from README and existing usage document.
+  Explains layers/mounts/commands/profiles, frozen consumers, persistent overlays,
+  independent venv+runner, model/dependency upgrades, native updates/locks/recovery.
+  Actual installed launchers inspected; CPU-only .104 experiments prove naive
+  nested --system-site-packages cannot find Torch, while explicit trusted runtime
+  site .pth bridge retains patched Torch origin and isolates application packages.
+  Offline owned wheel installs in overlay/venv; two fresh-container persistence
+  checks, exact documented bootstrap/runner and ordinary UID1000/doas handoff pass:
+  11 environment checks,16 shell/Python blocks syntax checked, links/anchors pass.
+  Initial missing staging-directory attempt exits2 before fixture execution;
+  retained, corrected own directory permissions only. No GPU kernels, native/image/
+  prefix/profile changes, new public package downloads, user-app or .105 access.
+  Native runtime metadata SHAa9a5afe3 unchanged; no owned jobs. Fixtures at
+  WS/tmp/developer-guide-20261029-r1; WS/logs/developer-guide-*.log. Local evidence
+  kernel/artifacts/developer-guide/evidence.tar.gz4097B,
+  SHAff2287ce357607fb246f2acf090a40aeea320b61aa184a7a977adc8caa560729; guide SHA3b207139894287b13cf862993be42857d99f288ce055c67188c9da3d7838cfd9.
+  No native code revision changes/new GPU qualification. **Next B07.3 unchanged:**
+  private plugin scalar/argument admission and per-kernel stride/dilation/tails.
+
 - **B07.2 isolated MIOpen FP32 DL forward plugin completed 2026-10-29:** source
   libraries2976e7d30bfdccb2fb79809b8c58a6b5722a0822 over installed8389197;
   tools528088c26/controller608ac7b86. Private API5 facade exports all66 required

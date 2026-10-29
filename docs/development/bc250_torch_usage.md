@@ -1,5 +1,8 @@
 # Using bc250-torch for training and persistent files
 
+For the current architecture, independent application environments and project
+venv recipes, see the workspace [developer guide](../../../BC250_DEVELOPER_GUIDE.md).
+
 > **Historical snapshot notice:** this file preserves a previous milestone.
 > Read [flow.md](../../flow.md) and the
 > [current memory inventory](bc250_memory_inventory.md) before acting on its

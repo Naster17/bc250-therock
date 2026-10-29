@@ -946,6 +946,16 @@ backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware f
 
 ## Torch, training, files and resource utilization
 
+Current application architecture/environment workflow:
+[workspace developer guide](../../../BC250_DEVELOPER_GUIDE.md), reviewed2026-10-29.
+CPU-only .104 tests verify explicit runtime-site venv bridging (a naive nested
+system-site-packages venv cannot find Torch), offline package installation,
+overlay/venv persistence and ordinary UID1000 runner execution.11 environment
+checks/16 example syntax checks+links pass; no native/GPU qualification change.
+Use bc250-train for frozen consumers, bc250-torch for custom environments; preserve
+native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/developer-guide.
+
+
 **B07.2 isolated MIOpen FP32 DL forward plugin completed 2026-10-29:** source
   libraries2976e7d30bfdccb2fb79809b8c58a6b5722a0822 over installed8389197;
   tools528088c26/controller608ac7b86. Private API5 facade exports all66 required
