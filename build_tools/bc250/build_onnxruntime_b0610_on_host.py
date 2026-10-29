@@ -23,11 +23,14 @@ BASE = WS / "tmp/onnxruntime-b0610"
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--attempt", required=True)
+    p.add_argument("--task", help="reuse an existing task for an incremental retry")
     p.add_argument("--phase", choices=("configure", "build"), required=True)
     args = p.parse_args()
     assert args.attempt in ("r1", "r2", "r3", "r4", "r5")
     preflight("onnxruntime-b0610-" + args.phase + "-" + args.attempt)
-    task = BASE / ("task-" + args.attempt)
+    task_name = args.task or args.attempt
+    assert task_name in ("r1", "r2", "r3", "r4", "r5")
+    task = BASE / ("task-" + task_name)
     manifest = json.loads(Path("/opt/bc250-stack/current/runtime.json").read_text())
     baseline = json.loads(
         (WS / "logs/onnxruntime-b069-qualification-r2/final.json").read_text()
@@ -74,7 +77,10 @@ def main():
             )
             shutil.copyfile(header, private / "include/migraphx/migraphx.hpp")
         if args.phase == "configure":
-            task.mkdir()
+            if args.task:
+                assert task.exists()
+            else:
+                task.mkdir()
         else:
             assert task.exists()
         logs = BASE / (args.phase + "-" + args.attempt)

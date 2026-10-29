@@ -19,11 +19,16 @@ from qualify_training_n39_on_host import preflight
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--attempt", required=True)
+    parser.add_argument(
+        "--build-attempt", default="r3", choices=("r2", "r3", "r4", "r5")
+    )
     args = parser.parse_args()
     assert args.attempt in ("r1", "r2", "r3", "r4")
     preflight("onnxruntime-b0610-qualification-" + args.attempt)
     base = WS / "tmp/onnxruntime-b0610"
-    build = json.loads((base / "build-r2/final.json").read_text())
+    build = json.loads(
+        (base / ("build-" + args.build_attempt) / "final.json").read_text()
+    )
     assert build["status"] == "passed"
     candidate = base / "task-r2/build"
     assert (candidate / "onnxruntime/__init__.py").exists()

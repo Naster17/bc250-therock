@@ -27,7 +27,7 @@ if [[ "$phase" == configure ]]; then
     -DCMAKE_PREFIX_PATH="/sdk;$prefix" -DAMD_MIGRAPHX_HOME=/sdk \
     -Donnxruntime_CMAKE_DEPS_MIRROR_DIR=/mirror -DFETCHCONTENT_FULLY_DISCONNECTED=OFF -DFETCHCONTENT_TRY_FIND_PACKAGE_MODE=NEVER \
     -Donnxruntime_USE_MIGRAPHX=ON -Donnxruntime_ENABLE_PYTHON=ON -Donnxruntime_BUILD_SHARED_LIB=ON \
-    -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_BUILD_BENCHMARKS=OFF \
+    -DABSL_USE_SYSTEM_INCLUDES=ON -Donnxruntime_BUILD_UNIT_TESTS=OFF -Donnxruntime_BUILD_BENCHMARKS=OFF \
     -Donnxruntime_ENABLE_TRAINING=OFF -Donnxruntime_ENABLE_TRAINING_OPS=OFF \
     -Donnxruntime_USE_CUDA=OFF -Donnxruntime_USE_TENSORRT=OFF -Donnxruntime_USE_DNNL=OFF \
     -Donnxruntime_USE_XNNPACK=OFF -Donnxruntime_USE_MIMALLOC=OFF -Donnxruntime_USE_VCPKG=OFF \
