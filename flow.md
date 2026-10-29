@@ -9,6 +9,34 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.5 six private DL configurations completed2026-10-29:** tools45bac0baa,
+  private libraries3616b2f/installed8389197/Torcha524980 unchanged. Probe-only build;
+  six retained shapes/two layouts, matched cached218 vs explicit API5 per-ID
+  invokers. Four opposite-order daily/RCCL timed processes; all six IDs observed.
+  Full NCHW includes transforms; prepacked NHWC excludes per-call transforms,
+  not pure kernel or an end-to-end packing gain. Fixed first-pass-selected
+  block256 Default wins32x34/g1/3x3 by1.091–1.097x; block256 Filter1x1Pad0 wins
+  32x34/g3/1x1 by1.138–1.144x. Other four shapes still favor HIP-direct. No public
+  default/performance heuristic/install change; unpaired public anchor outlier
+  retained, public paired replay remains next. Two diagnostic runs prove native
+  IDs/MIOpenConvUni.2184 CPU-double checkpoints/52008 convolution calls,
+  max abs2.35537e-6/unchanged tolerance/256-byte guards/immutable inputs pass.
+  Private4+4/core7/CPU ONNX4/daily5/RCCL6=30 checks/six ACK guards;29 local tests/
+  lint/syntax pass. FourCPU/OMP4/jobs1/RAM10GiB/mem+swap12GiB/ccache20GiB no reset/
+  ro source+prefix/no build GPU/network/600s; accepted B07.3 plugin reused.
+  3692 hashes/35 links/four AOT DBs/136 backing files unchanged. Same e327c5de
+  boot/r2kernel/logs unchanged; no jobs/containers/armed guards. BuildPID27923/
+  qualPID28197/exportPID29498 exit0. WS/logs/ck-plugin-b075-qualification-r1/
+  final.json and WS/logs/ck-plugin-b075-r1-controller.log; WS/tmp/ck-plugin-b075/
+  {inputs-r1,build-r1,export-r1}. Local evidence1497520B,
+  SHA4e2d4d39fd075519ff852c2a740caf6a80bbbf69f5e164b374a99777f6c0e703.
+  No install/default/prefix/.105/user-app changes/deletion; ordinary free
+  12,911,759,360→12,901,400,576B. Historical Python CPU fault remains distinct
+  from fixed VM heap. [Method/results](docs/development/bc250_ck_plugin_b075_results/README.md).
+  **Next B07.6:** audit/use existing solver137 Search/PerfDb in isolated DBs,
+  fresh-process public-Immediate selected-config replay with paired HIP-direct
+  references/timings. Keep candidate private and defaults/.105/user apps unchanged.
+
 - **B07.4 paired public DL/HIP-direct timing completed 2026-10-29:** tools
   e11969041; candidate libraries3616b2f/installed8389197/Torcha524980 unchanged.
   Forced public Immediate137 vs218, six NCHW FP32 shapes/batch2/groups1+3/

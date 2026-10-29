@@ -452,3 +452,9 @@ B07.4: private public-Immediate DL default loses to HIP-direct on six bounded NC
 FP32 fixtures (1.13–2.57× slower across both profiles/orders);30 checks pass.
 No production admission. [Method/evidence](bc250_ck_plugin_b074_results/README.md).
 Next B07.5 compares private per-ID configurations before packaging.
+
+B07.5: all six private DL IDs CPU-reference checked in NCHW/NHWC. Selected
+block256 configurations beat cached HIP-direct1.09–1.14× on two moderate fixtures;
+four other fixtures still lose.30 checks pass; no default change.
+[Method/evidence](bc250_ck_plugin_b075_results/README.md). Next B07.6 qualifies
+existing Search/PerfDb and fresh-process public route replay in isolated DBs.
