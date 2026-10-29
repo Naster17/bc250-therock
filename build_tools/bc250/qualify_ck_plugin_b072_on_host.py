@@ -70,7 +70,12 @@ def main():
                 scratch = WS / "tmp/ck-plugin-b072" / label
                 scratch.mkdir()
                 os.chown(scratch, runtime["uid"], runtime["gid"])
-                cmd = ["/usr/local/bin/bc250-torch", "--runtime-profile", profile]
+                launcher = (
+                    "bc250-train"
+                    if name in ("core", "daily-consumers", "rccl-consumers")
+                    else "bc250-torch"
+                )
+                cmd = ["/usr/local/bin/" + launcher, "--runtime-profile", profile]
                 env = dict(
                     TMPDIR=str(scratch),
                     TMP=str(scratch),

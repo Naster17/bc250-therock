@@ -13,7 +13,7 @@ from qualify_training_n33_on_host import WS
 
 
 def main():
-    logs = WS / "logs/ck-plugin-b072-qualification-r4"
+    logs = WS / "logs/ck-plugin-b072-qualification-r5"
     a = json.loads((logs / "final.json").read_text())
     assert a["status"] == "passed" and sum(g["checks"] for g in a["gates"]) == 38
     dest = WS / "tmp/ck-plugin-b072/export-r1"
@@ -31,10 +31,10 @@ def main():
             s = json.loads(p.read_text())
             assert s["status"] == "acknowledged" and s["boot_id"] == a["boot_id"]
             guards.append(p.parent)
-        assert len(guards) == 9
+        assert len(guards) == 12
         cohorts = {}
         for profile in ("daily", "rccl"):
-            p = WS / f"logs/ck-plugin-b072-r4-private-{profile}"
+            p = WS / f"logs/ck-plugin-b072-r5-private-{profile}"
             r = json.loads((p / "result.json").read_text())
             assert r["status"] == "passed" and len(r["checks"]) == 8
             text = (p / "private-stderr.log").read_text()
