@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import tempfile
 
 from bc250_migraphx import registered as sdk_registered, sha, trusted
 from bc250_torch import (
@@ -13,6 +14,7 @@ from bc250_torch import (
     prepare_python_arguments,
     run_process,
     runtime_lock,
+    read_context,
 )
 
 BASE = Path("/opt/bc250-stack/sdks")
@@ -88,11 +90,34 @@ def main():
     if os.geteuid() != 0:
         if os.geteuid() != runtime["uid"]:
             raise ValueError("This runtime belongs to another host user")
-        raise SystemExit(
-            exit_status(run_process(["doas", str(Path(__file__).resolve()), *args]))
-        )
-    info_only = args == ["--ort-info"]
-    options = parse_launcher_arguments([] if info_only else args, dict(os.environ))
+        if args == ["--ort-info"]:
+            raise SystemExit(
+                exit_status(run_process(["doas", str(Path(__file__).resolve()), *args]))
+            )
+        options = parse_launcher_arguments(args, dict(os.environ))
+        if options.shell or not options.arguments:
+            raise ValueError("Supply Python arguments; --shell is not supported")
+        with tempfile.TemporaryDirectory(prefix="bc250-ort-context-") as directory:
+            path = Path(directory) / "context.json"
+            path.touch(mode=0o600)
+            path.write_text(
+                json.dumps(
+                    {"options": vars(options), "workspace": str(Path.cwd().resolve())}
+                )
+            )
+            status = run_process(
+                ["doas", str(Path(__file__).resolve()), "--_context", str(path)]
+            )
+        raise SystemExit(exit_status(status))
+    if args[:1] == ["--_context"]:
+        if len(args) != 2:
+            raise ValueError("Invalid private launcher context")
+        options, workspace = read_context(Path(args[1]), runtime["uid"])
+        info_only = False
+    else:
+        info_only = args == ["--ort-info"]
+        options = parse_launcher_arguments([] if info_only else args, dict(os.environ))
+        workspace = Path.cwd().resolve()
     if options.shell or (not info_only and not options.arguments):
         raise ValueError("Supply Python arguments; --shell is not supported")
     with runtime_lock(daily / ".runtime.lock"):
@@ -100,7 +125,7 @@ def main():
         if info_only:
             print(json.dumps(record, indent=2))
             return
-        python_args, mounts = prepare_python_arguments(options.arguments, Path.cwd())
+        python_args, mounts = prepare_python_arguments(options.arguments, workspace)
         command = [
             "/usr/local/bin/bc250-migraphx",
             "--runtime-profile",
