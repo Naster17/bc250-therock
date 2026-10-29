@@ -470,3 +470,10 @@ two extracts/daily+RCCL pass50 checks/1168 convolution references. Initial
 exec-after-HIP warning preserved; same-process runner final gates clean. Not
 a kernel root-cause fix or installed default. [Use/evidence](bc250_ck_plugin_b077_results/README.md).
 Next B07.8 is versioned explicit installation and ordinary activation/rollback.
+
+B07.8: explicit `bc250-ck` installed on .104 with ABI/runtime identity, non-merging
+example seeding and tested unregister/register recovery.75 checks/10 guards;586
+native convolution references plus16 ordinary Torch output/all-first-gradient
+fixtures pass across installed/plain profiles. Native defaults unchanged.
+[Use/recovery](bc250_ck_plugin_b078_usage.md), [evidence](bc250_ck_plugin_b078_results/README.md).
+Next B07.9 audits existing scalar FP16 factory/accumulation before isolated proof.

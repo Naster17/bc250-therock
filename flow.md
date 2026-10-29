@@ -9,6 +9,35 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.8 explicit bc250-ck installed2026-10-29:** tools36da14fb2; accepted B07.7r2
+  at /opt/bc250-stack/sdks/bc250-miopen-dl-gfx1013-b077, miopen-dl.json plus retained
+  version record; tools/ck-b078 and /usr/local/bin/bc250-ck. Install/register/
+  unregister use EX lock, launch holds SH; archive/manifest/payload/runtime hashes
+  and image pinned, artifact verifies eight mapped ABI libraries/API5/66 exports.
+  Existing caller-context handoff retained; check/info/seed-db/Python scripts,
+  mounts/env/envfile supported; no solver forcing or default/native whitelist change.
+  Live unregister/refusal/re-register, identity/byte/extra-file/CLI/lock tests pass.
+  Main60+ordinary UID1000 env/argv/importdir/backward2+host13=75 checks/10 ACK guards.
+  Two same-process public137 CPU-double calls plus accepted probes=586 native
+  conv references;244API/492runtime per-ID refusals/304 retained contracts.16 normal
+  Torch output/all-first-gradient fixtures across installed/plain daily/RCCL pass;
+  backward uses retained solvers. Unchanged tolerance/guards;29 local tests/lint/
+  pycompile/diff pass. Plain launches have no plugin env; core/CPU ONNX/consumer
+  gates pass.3804 hashes/36 links/four AOT DBs/136 backing paths preserved. Same
+  e327c5de boot/r2kernel/logs unchanged; no KFD warning recurrence or root-cause
+  fix claim. Historical Python CPU fault stays distinct from fixed VM heap.
+  No build/cache reset/deletion/reboot/.105/user-app access. InstallPID7929/
+  qualPID8319/exportPID10985 exit0; no jobs/containers/armed guards. WS/logs/
+  ck-plugin-b078-qualification-r1/final.json and matching r1-controller.log;
+  user-r1/install-r1, WS/tmp/ck-plugin-b078/export-r1. Local evidence979892B
+  SHA22e958b6f3ed827fd1500ded77288cfc71d983b365466808b2a924997bca7bfb.
+  Native libraries8389197/source3616b2f/Torcha524980/images/defaults unchanged;
+  ordinary free12,650,000,384→12,628,176,896B. [Use/recovery](docs/development/bc250_ck_plugin_b078_usage.md),
+  [scope/evidence](docs/development/bc250_ck_plugin_b078_results/README.md).
+  **Next B07.9 (planned):** inspect existing scalar FP16 DL factory/accumulator/
+  type admission and N2.18/B07 evidence, then bounded isolated CPU-reference
+  factory proof if feasible. Preserve installed FP32 option/defaults/.105.
+
 - **B07.7 opt-in relocatable artifact completed2026-10-29:** toolsfd8c3fe8c;
   accepted package-r2/qualification-r3, no install/native rebuild.23 files6568985B
   include unchanged plugin/probes, eight mapped ABI-library pins/API5/66 symbols,
