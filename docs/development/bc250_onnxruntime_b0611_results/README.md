@@ -43,6 +43,10 @@ package first on Python's path and forces the admitted low-precision-conversion/
 exhaustive-tuning flags off. CPython3.12 runs in the qualified glibc image, not
 native musl Python. The GPU provider still requires explicit session selection.
 
+Fresh modern CPU/GPU-origin Torch exports through this public route are also
+bounded-qualified by [B06.12](../bc250_onnxruntime_b0612_results/README.md): six
+static FP32 graphs, independent references and actual GPU-only node profiles.
+
 ## Package and activation
 
 - Version: `onnxruntime-migraphx 1.31.0+gfx1013.b0611` (archive, not a pip wheel).

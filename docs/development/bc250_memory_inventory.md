@@ -916,7 +916,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
 | Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. |
 | MIGraphX | B06.9 source134ee25f6 repairs handwritten wrapper C++20 parsing; private overlay C++17/20 and native async boundary qualified. Installed B06.8 opt-in SDK remains4797a6112; explicit bc250-migraphx launcher verifies identities/read-only mount and both runtime cohorts.165 checks/ten guards/68 GPU graph evaluations; live unregister/register recovery | CPython3.12/glibc/static FP32 fixture scope. Ordinary Torch defaults unchanged; no automatic routing, ORT GPU EP, graph autograd, all-model/dtype/opset/MXR portability or performance claim. [Use/results/recovery](bc250_migraphx_b068_results/README.md). |
-| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.5 isolated native C++ ONNX→gfx1013 FP32 graphs qualified; B06.6 Python bindings/B06.7 relocatable SDK and B06.8 registered opt-in SDK installed in recorded static FP32 scope; B06.11 versioned ORT1.31+gfx1013 package installed via explicit bc250-ort; relocation/metadata/identity/recovery/caller-context174 checks/48 GPU evals pass. Ordinary CPU package/defaults preserved. Arbitrary modern exports/model/dtype/graph-autograd/performance remain unqualified. [Use/recovery](bc250_onnxruntime_b0611_results/README.md). |
+| ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.5 isolated native C++ ONNX→gfx1013 FP32 graphs qualified; B06.6 Python bindings/B06.7 relocatable SDK and B06.8 registered opt-in SDK installed in recorded static FP32 scope; B06.11 versioned ORT1.31+gfx1013 package installed via explicit bc250-ort; relocation/metadata/identity/recovery/caller-context174 checks/48 GPU evals pass. Ordinary CPU package/defaults preserved. B06.12 fresh modern static CPU/GPU-origin exports pass112 checks/24 public GPU evaluations in daily/RCCL with four reference routes and12 GPU-only node profiles. Broader models/dtypes/dynamic shapes/graph-autograd/performance remain unqualified. [Use/recovery](bc250_onnxruntime_b0611_results/README.md). |
 | Weight-only quantization | B05.6 public opt-in `bc250_quant 0.1.0` installed on .104 daily/RCCL imagee2821cf8:817 candidate+817 installed checks, CPU-reference first gradients/state/AdamW resume and actual B05.5 checkpoint compatibility | Explicit frozen W8 only; native layouts fixed in both a524 cohorts, module first input/bias gradients via unchanged helper. TorchAO/bitsandbytes/NF4/packed INT4/full QLoRA remain absent/unqualified; native direct backward refuses. No model-quality/speed/peak-memory claim. [Use/recovery](bc250_quant_b056_results/README.md). |
 | RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
 | rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
@@ -945,6 +945,37 @@ Low-precision Lt inputs may likewise use f32 outputs; sparse Lt uses its documen
 backend-specific FP32 1:2 / FP16-BF16 2:4 compression, not a portable hardware format.
 
 ## Torch, training, files and resource utilization
+
+**B06.12 modern Torch export→public ORT GPU completed 2026-10-29:** tools
+  75da6725bd2566828ace1074c5d24c7e0e6347ad, evidence e9e6c29a8. Fresh owned
+  dense/CNN/gated-LayerNorm models, CPU+GPU export origins, static batch3,
+  dynamo=True/opset18; all six exporter-produced graphs are IR10/opset18 without
+  IR rewriting. Two changed inputs each match Torch CPU FP64, eager HIP FP32,
+  retained CPU ORT1.31 and ONNX NumPy references at unchanged rtol3e-4/atol2e-5.
+  Public bc250-ort daily/RCCL each30, generation30 and retained core7/CPU ONNX4/
+  daily5/RCCL6=112 checks; seven ACK600s guards.24 consumer GPU graph evaluations,
+  12 actual profiles assign every recorded node to MIGraphX with CPU fallback
+  disabled;12 generation eager GPU forwards. Invalid inputs, native gfx1013,
+  package/library origins, explicit CPU after GPU and exact Torch HIP backward
+  pass.3642 protected hashes/35 links/four AOT DBs unchanged;136 retained workstation
+  backing paths verified. No numerical/library/default/prefix changes, native
+  rebuild or cache reset. Same r2boot83f6cb1b-4540-4149-839e-a6cf7cb80b63; kernel
+  logs unchanged. Qualification PID5491 exited0, export exited0; no owned jobs/
+  containers/armed guards. WS/logs/onnxruntime-b0612-qualification-r1/final.json,
+  matching -controller.log; fixtures WS/tmp/onnxruntime-b0612/generation-r1/models;
+  export WS/tmp/onnxruntime-b0612/export-r1. Local kernel/artifacts/onnxruntime-b0612:
+  evidence813709B SHAf5a882a28504f7e0058fd9ae4982f7bf13ad307a58da5ad7e36d92b208f967b1,
+  179 rawfiles3670773B.29 local tests/critical Ruff/Black/pycompile/diff pass;
+  full upstream CI not run. Free30,209,069,056B. .105 not contacted; user apps
+  untouched. Inference-only bounded coverage; dynamic shapes/types/operators/
+  concurrency/graph-autograd/performance remain unqualified. Historical Python
+  CPU fault remains unresolved and distinct from fixed VM-heap corruption.
+  Practical B06 review finds no mandatory defect in this tested path; park optional
+  expansion until a concrete supported-model requirement. [Results/gap review](docs/development/bc250_onnxruntime_b0612_results/README.md).
+  **Next B07.1 (planned):** audit MIOpen CK grouped-conv plugin ABI/instance factories
+  and native scalar/DL applicability versus retained N2.18/HIP-direct alternatives;
+  choose a bounded useful implementation before building or changing admission.
+  Preserve safe defaults, installed packages, .105 and user applications.
 
 **B06.11 installed explicit ORT package completed 2026-10-29:** source remains
   ORTb81a7866e5a6eff964b9e411535b4c9198651a9f, registered SDK4797 unchanged. Tools

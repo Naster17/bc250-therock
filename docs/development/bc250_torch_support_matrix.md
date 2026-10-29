@@ -415,3 +415,12 @@ unavailable. This distinction follows AMD's [FindDb documentation](https://rocm.
 [performance database](https://rocm.docs.amd.com/projects/MIOpen/en/docs-6.4.1/conceptual/perfdb.html)
 and [kernel cache documentation](https://rocm.docs.amd.com/projects/MIOpen/en/docs-7.1.0/conceptual/cache.html).
 The local pinned source and installed audit remain authoritative for gfx1013.
+
+## B06.12 practical closure (2026-10-29)
+
+Fresh modern static FP32 CPU/GPU-origin Torch exports pass through public
+`bc250-ort` in daily and RCCL profiles:112 checks/24 GPU evaluations/12 actual
+GPU-only model profiles with four reference routes. No backend/default change.
+[Scope and optional gaps](bc250_onnxruntime_b0612_results/README.md).
+Next B07.1 audits CK grouped-convolution plugin admission before choosing a port;
+existing HIP-direct/N2.18 scalar coverage is retained.

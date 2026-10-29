@@ -111,16 +111,16 @@
     },
     {
       "id": "B06",
-      "feature": "ONNX export/CPU runtime and opt-in MIGraphX GPU inference; ORT GPU EP remains separate",
-      "evidence": "B06.1 installs pinned ONNX/CPU ORT; B06.2\u2013B06.7 repair/qualify native static FP32 MIGraphX and relocatable SDK. B06.8 installs registered opt-in SDK on .104:165 checks/ten guards/68 GPU evaluations across daily and RCCL. No automatic Torch routing, ORT GPU provider or graph autograd. B06.9 audits pinned ORT1.31, repairs source C++20 wrapper parsing in private overlay, links168 ABI symbols and passes38 guarded SDK-boundary checks; ORT EP itself unbuilt. B06.10 builds matching isolated ORT1.31/MIGraphX provider at b81a786;118 checks/36 GPU evals/18 actual GPU profiles pass, installed defaults unchanged. B06.11 installs relocatable versioned package with explicit bc250-ort;174 checks/48 GPU evals, recovery and repaired caller environment pass; ordinary defaults preserved.",
-      "next": "B06.12 bounded modern Torch export to public ORT GPU integration with CPU/eager references, then practical B06 gap review; preserve defaults/.105.",
+      "feature": "ONNX export/CPU runtime plus explicit registered MIGraphX SDK and ORT GPU inference",
+      "evidence": "B06.1 installs pinned ONNX/CPU ORT; B06.2\u2013B06.7 repair/qualify native static FP32 MIGraphX and relocatable SDK. B06.8 installs registered opt-in SDK on .104:165 checks/ten guards/68 GPU evaluations across daily and RCCL. No automatic Torch routing, ORT GPU provider or graph autograd. B06.9 audits pinned ORT1.31, repairs source C++20 wrapper parsing in private overlay, links168 ABI symbols and passes38 guarded SDK-boundary checks; ORT EP itself unbuilt. B06.10 builds matching isolated ORT1.31/MIGraphX provider at b81a786;118 checks/36 GPU evals/18 actual GPU profiles pass, installed defaults unchanged. B06.11 installs relocatable versioned package with explicit bc250-ort;174 checks/48 GPU evals, recovery and repaired caller environment pass; ordinary defaults preserved. B06.12 qualifies six fresh modern static FP32 Torch exports from CPU/GPU sources through public bc250-ort daily/RCCL:112 checks,24 GPU graph evaluations,12 all-GPU profiles and independent CPU-double/eager-HIP/CPU-ORT/NumPy references. No backend/default change.",
+      "next": "Optional dynamic shapes, other data types/operators, concurrency and graph autograd need separately selected work; no mandatory defect found in bounded B06 practical review. Continue B07.1.",
       "status": "partially_completed_bounded"
     },
     {
       "id": "B07",
       "feature": "MIOpen CK grouped-convolution plugin",
       "evidence": "libMIOpenCKGroupedConv_gfx1013.so still absent; A03 skips default loader probe when build/solver capability excludes it, retaining explicit-path diagnostics. HIP-direct and legacy CK reduction routes are separate.",
-      "next": "Optional substantial scalar/generic plugin port or retain working HIP-direct alternatives. Merely enabling CK flag cannot supply kernels; lower priority than A01/A02.",
+      "next": "B07.1: audit the existing MIOpen CK grouped-convolution plugin ABI, instance factories and native gfx1013 scalar/DL alternatives; compare with retained N2.18/HIP-direct routes before selecting a bounded port. Preserve defaults, .105 and user applications.",
       "status": "queued"
     },
     {
@@ -131,7 +131,7 @@
       "status": "queued"
     }
   ],
-  "next": "B03.1: inspect the qualified Torch distributed build configuration and pinned Gloo/RCCL paths; select bounded local CPU process-group readiness first, preserving native gfx1013 and .105. Multi-board/P2P/XGMI coverage requires separate work and authorization.",
+  "next": "B07.1: audit the existing MIOpen CK grouped-convolution plugin ABI, instance factories and native gfx1013 scalar/DL alternatives; compare with retained N2.18/HIP-direct routes before selecting a bounded port. Preserve defaults, .105 and user applications.",
   "N2.7": "next, selected A01-A09 bounded scopes completed",
   "completed_primary_items": [
     "A01",
@@ -144,7 +144,7 @@
     "A08",
     "A09"
   ],
-  "next_primary_item": "B03.1",
+  "next_primary_item": "B07.1",
   "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08",
   "current_n2_workstream": {
     "completed": "N2.18 and practical gap review; broader optional scientific coverage remains open",
@@ -159,5 +159,17 @@
       "next": "N2.14 FFT plans/layouts and odd-length real transforms",
       "evidence": "../bc250_sparse_n213_results/README.md"
     }
+  },
+  "b06_practical_review": {
+    "status": "completed-bounded",
+    "result": "No additional mandatory implementation found in qualified static FP32 inference route",
+    "evidence": "bc250_onnxruntime_b0612_results/README.md",
+    "optional": [
+      "dynamic shapes",
+      "other dtypes/operators",
+      "concurrency",
+      "graph autograd",
+      "performance"
+    ]
   }
 }

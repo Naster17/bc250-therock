@@ -9,6 +9,37 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B06.12 modern Torch export→public ORT GPU completed 2026-10-29:** tools
+  75da6725bd2566828ace1074c5d24c7e0e6347ad, evidence e9e6c29a8. Fresh owned
+  dense/CNN/gated-LayerNorm models, CPU+GPU export origins, static batch3,
+  dynamo=True/opset18; all six exporter-produced graphs are IR10/opset18 without
+  IR rewriting. Two changed inputs each match Torch CPU FP64, eager HIP FP32,
+  retained CPU ORT1.31 and ONNX NumPy references at unchanged rtol3e-4/atol2e-5.
+  Public bc250-ort daily/RCCL each30, generation30 and retained core7/CPU ONNX4/
+  daily5/RCCL6=112 checks; seven ACK600s guards.24 consumer GPU graph evaluations,
+  12 actual profiles assign every recorded node to MIGraphX with CPU fallback
+  disabled;12 generation eager GPU forwards. Invalid inputs, native gfx1013,
+  package/library origins, explicit CPU after GPU and exact Torch HIP backward
+  pass.3642 protected hashes/35 links/four AOT DBs unchanged;136 retained workstation
+  backing paths verified. No numerical/library/default/prefix changes, native
+  rebuild or cache reset. Same r2boot83f6cb1b-4540-4149-839e-a6cf7cb80b63; kernel
+  logs unchanged. Qualification PID5491 exited0, export exited0; no owned jobs/
+  containers/armed guards. WS/logs/onnxruntime-b0612-qualification-r1/final.json,
+  matching -controller.log; fixtures WS/tmp/onnxruntime-b0612/generation-r1/models;
+  export WS/tmp/onnxruntime-b0612/export-r1. Local kernel/artifacts/onnxruntime-b0612:
+  evidence813709B SHAf5a882a28504f7e0058fd9ae4982f7bf13ad307a58da5ad7e36d92b208f967b1,
+  179 rawfiles3670773B.29 local tests/critical Ruff/Black/pycompile/diff pass;
+  full upstream CI not run. Free30,209,069,056B. .105 not contacted; user apps
+  untouched. Inference-only bounded coverage; dynamic shapes/types/operators/
+  concurrency/graph-autograd/performance remain unqualified. Historical Python
+  CPU fault remains unresolved and distinct from fixed VM-heap corruption.
+  Practical B06 review finds no mandatory defect in this tested path; park optional
+  expansion until a concrete supported-model requirement. [Results/gap review](docs/development/bc250_onnxruntime_b0612_results/README.md).
+  **Next B07.1 (planned):** audit MIOpen CK grouped-conv plugin ABI/instance factories
+  and native scalar/DL applicability versus retained N2.18/HIP-direct alternatives;
+  choose a bounded useful implementation before building or changing admission.
+  Preserve safe defaults, installed packages, .105 and user applications.
+
 - **B06.11 installed explicit ORT package completed 2026-10-29:** source remains
   ORTb81a7866e5a6eff964b9e411535b4c9198651a9f, registered SDK4797 unchanged. Tools
   packagebc0f0b0b9/context7870a6ee8/exportfddb14f61. Versioned archive
