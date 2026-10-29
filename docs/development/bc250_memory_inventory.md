@@ -899,7 +899,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL | CPU-checked FP32/FP16/signedINT8 GEMM examples; N2.18 FP32 grouped forward128 CPU-reference cases +8 refusals, plain/Add+ReLU, valid strided layouts/guards/private streams | Direct header consumer only; backward, low-precision convolution, other layouts/configurations/performance and automatic Torch/MIOpen routing unqualified. XDL/WMMA/modern CK plugin off. |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent; B07.2 private FP32 forward plugin qualified for recorded Immediate scope; not installed/default admitted |
+| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; modern CK plugin B07 absent; B07.3 private scalar/argument checks and all six IDs qualified in recorded scope; not installed/default admitted |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
@@ -955,6 +955,49 @@ checks/16 example syntax checks+links pass; no native/GPU qualification change.
 Use bc250-train for frozen consumers, bc250-torch for custom environments; preserve
 native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/developer-guide.
 
+
+**B07.3 private DL scalar/argument/per-kernel contracts completed 2026-10-29:**
+  source libraries3616b2f9f09 over2976e7d; tools7519e73b8. Private facade now
+  refuses non-default exact double alpha/beta (including near1/NaN/Inf), bias,
+  transpose mode, invalid grouped geometry/output extent and int32-overflow spans.
+  get_solution checks the requested ID before allocating an owning solution.
+  Captured invoker validates runtime scalars/descriptors/casts/pointers/alignment,
+  output/input overlap and required scratch size/alignment/overlap before upstream
+  dispatch. Existing upstream math and production admission/factory unchanged.
+  Per-ID API solutions release temporary problem/solution before invocation;
+  all six IDs run in packed NCHW/NHWC, groups1/3, five1x1/3x3 geometries incl
+  stride2/dilation2/C3/K5/K132 tails, default/private streams/two value patterns.
+  80 fixtures/profile,256 direct GPU calls each daily/RCCL=512 CPU-double checks;
+  dyadic exact, unchanged N2.18 tolerance otherwise, max abs1.07042e-6.244 metadata/
+  scalar/transpose/extent/unknown-ID refusals +492 runtime refusals verify output/
+  scratch unchanged and inputs/256-byte guards intact. Six IDs each observed;
+  shapes are bounded, not general lifetime/concurrency/scalar support proof.
+  Retained public solver13764 GPU calls/64 absence refusals/304 prior contracts,
+  eight Torch conv output/all-first-gradient fixtures plus native backward pass.
+  Private9+9/core7/CPU ONNX4/daily5/RCCL6=40 checks/six final600s guards; initial
+  r1 also40 passes, then transpose admission hardened;12 total ACK. No failed GPU
+  batch or tolerance relaxation. Source inputs-r1/r2 and r1 validator saved;
+  old B07.2 helpers/binaries/inputs unchanged. Two isolated builds use fourCPU/
+  OMP4/jobs1/RAM10GiB/mem+swap12GiB/ccache20GiB no reset/read-only source+prefix/
+  no GPU/network/600s bound.3676 protected hashes/35 links/four AOT DBs unchanged;
+  136 backing paths match. Entry new boot e327c5de-46b8-4e05-94ad-d999a12a06e7,
+  kernel still7.1.5-bc250rocm-r2; no agent reboot/cross-boot continuity claim.
+  Accepted kernel logs unchanged through cleanup; no owned jobs/containers/guards.
+  No install/prefix/profile/default change/.105 or user-app access. Entry ordinary
+  free13,329,420,288B; cleanup12,928,606,208B; nothing removed. Buildr1PID11617/
+  qualr1PID12209/buildr2PID13602/qualr2PID14039/export exit0. WS/tmp/ck-plugin-b073/
+  build-r2; WS/logs/ck-plugin-b073-qualification-r2/final.json and matching
+  WS/logs/ck-plugin-b073-r2-controller.log; export-r1. Local kernel/artifacts/
+  ck-plugin-b073 evidence3284485B SHAe0038bf797e4846a91baa4efb81fc8b9c912badb2ba0152151bedc4565725b2b,
+  211 rawfiles16842346B; matching sources/binaries/66 exports/hidden-helper proof.
+  29 local tests/critical Ruff/Black/new-source clang-format/pycompile/shell/diff
+  pass; full upstream CI not run. No broader shape/type/performance/scaling or
+  non-default scalar arithmetic support claim. Historical Python CPU fault stays
+  unresolved/distinct from fixed VM heap. [Results/contracts](docs/development/bc250_ck_plugin_b073_results/README.md).
+  **Next B07.4 (planned):** bounded paired private DL vs existing MIOpen HIP-direct
+  timing with retained CPU references, explicit solver attribution and warm/cold
+  separation; classify wins/losses before deciding opt-in packaging/admission.
+  Preserve installed defaults, private candidate, .105 and user applications.
 
 **B07.2 isolated MIOpen FP32 DL forward plugin completed 2026-10-29:** source
   libraries2976e7d30bfdccb2fb79809b8c58a6b5722a0822 over installed8389197;

@@ -439,3 +439,11 @@ Isolated FP32 DL plugin passes64 forced MIOpen solver137 GPU calls,64 absence
 refusals,304 direct contracts/eight Torch output-first-gradient fixtures;38 checks.
 All66 ABI exports, six privately filtered unique IDs. Installed defaults unchanged.
 [Scope, failures, private candidate and B07.3](bc250_ck_plugin_b072_results/README.md).
+
+## B07.3 private forward contracts (2026-10-29)
+
+Private DL admission now refuses unsupported scalars/transpose/invalid geometry;
+returned invokers check runtime descriptors/pointers/scratch before dispatch.
+All six IDs pass512 CPU-reference GPU calls;244 API/492 runtime refusals preserve
+buffers. Retained public64 and Torch gradients pass;40 final checks. No default
+change or performance claim. [Scope and next paired timing](bc250_ck_plugin_b073_results/README.md).

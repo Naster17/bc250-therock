@@ -9,6 +9,49 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.3 private DL scalar/argument/per-kernel contracts completed 2026-10-29:**
+  source libraries3616b2f9f09 over2976e7d; tools7519e73b8. Private facade now
+  refuses non-default exact double alpha/beta (including near1/NaN/Inf), bias,
+  transpose mode, invalid grouped geometry/output extent and int32-overflow spans.
+  get_solution checks the requested ID before allocating an owning solution.
+  Captured invoker validates runtime scalars/descriptors/casts/pointers/alignment,
+  output/input overlap and required scratch size/alignment/overlap before upstream
+  dispatch. Existing upstream math and production admission/factory unchanged.
+  Per-ID API solutions release temporary problem/solution before invocation;
+  all six IDs run in packed NCHW/NHWC, groups1/3, five1x1/3x3 geometries incl
+  stride2/dilation2/C3/K5/K132 tails, default/private streams/two value patterns.
+  80 fixtures/profile,256 direct GPU calls each daily/RCCL=512 CPU-double checks;
+  dyadic exact, unchanged N2.18 tolerance otherwise, max abs1.07042e-6.244 metadata/
+  scalar/transpose/extent/unknown-ID refusals +492 runtime refusals verify output/
+  scratch unchanged and inputs/256-byte guards intact. Six IDs each observed;
+  shapes are bounded, not general lifetime/concurrency/scalar support proof.
+  Retained public solver13764 GPU calls/64 absence refusals/304 prior contracts,
+  eight Torch conv output/all-first-gradient fixtures plus native backward pass.
+  Private9+9/core7/CPU ONNX4/daily5/RCCL6=40 checks/six final600s guards; initial
+  r1 also40 passes, then transpose admission hardened;12 total ACK. No failed GPU
+  batch or tolerance relaxation. Source inputs-r1/r2 and r1 validator saved;
+  old B07.2 helpers/binaries/inputs unchanged. Two isolated builds use fourCPU/
+  OMP4/jobs1/RAM10GiB/mem+swap12GiB/ccache20GiB no reset/read-only source+prefix/
+  no GPU/network/600s bound.3676 protected hashes/35 links/four AOT DBs unchanged;
+  136 backing paths match. Entry new boot e327c5de-46b8-4e05-94ad-d999a12a06e7,
+  kernel still7.1.5-bc250rocm-r2; no agent reboot/cross-boot continuity claim.
+  Accepted kernel logs unchanged through cleanup; no owned jobs/containers/guards.
+  No install/prefix/profile/default change/.105 or user-app access. Entry ordinary
+  free13,329,420,288B; cleanup12,928,606,208B; nothing removed. Buildr1PID11617/
+  qualr1PID12209/buildr2PID13602/qualr2PID14039/export exit0. WS/tmp/ck-plugin-b073/
+  build-r2; WS/logs/ck-plugin-b073-qualification-r2/final.json and matching
+  WS/logs/ck-plugin-b073-r2-controller.log; export-r1. Local kernel/artifacts/
+  ck-plugin-b073 evidence3284485B SHAe0038bf797e4846a91baa4efb81fc8b9c912badb2ba0152151bedc4565725b2b,
+  211 rawfiles16842346B; matching sources/binaries/66 exports/hidden-helper proof.
+  29 local tests/critical Ruff/Black/new-source clang-format/pycompile/shell/diff
+  pass; full upstream CI not run. No broader shape/type/performance/scaling or
+  non-default scalar arithmetic support claim. Historical Python CPU fault stays
+  unresolved/distinct from fixed VM heap. [Results/contracts](docs/development/bc250_ck_plugin_b073_results/README.md).
+  **Next B07.4 (planned):** bounded paired private DL vs existing MIOpen HIP-direct
+  timing with retained CPU references, explicit solver attribution and warm/cold
+  separation; classify wins/losses before deciding opt-in packaging/admission.
+  Preserve installed defaults, private candidate, .105 and user applications.
+
 - **Developer architecture/environment guide completed 2026-10-29:** workspace
   root BC250_DEVELOPER_GUIDE.md, linked from README and existing usage document.
   Explains layers/mounts/commands/profiles, frozen consumers, persistent overlays,

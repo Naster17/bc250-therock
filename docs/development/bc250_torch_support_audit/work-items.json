@@ -119,9 +119,9 @@
     {
       "id": "B07",
       "feature": "MIOpen CK grouped-convolution plugin",
-      "evidence": "libMIOpenCKGroupedConv_gfx1013.so still absent; A03 skips default loader probe when build/solver capability excludes it, retaining explicit-path diagnostics. HIP-direct and legacy CK reduction routes are separate. B07.1 audits API5/66 required exports/12 groups and matching scalar DL forward factory. Isolated installed-archive probe enumerates9 FP32 instances and passes192 CPU-double GPU comparisons across daily/RCCL, plus native Torch backward/retained gates:24 checks. No plugin built or installed. B07.2 private API5 FP32 forward facade built at2976e7d; all66 exports, hidden accessor shim, six unique DL IDs after private filtering. Forced MIOpen solver137 passes64 CPU-reference GPU calls in daily/RCCL;64 no-private-path refusals/304 contract checks/eight Torch conv output-first-gradient fixtures;38 full checks. Not installed/default admitted; non-default scalars and broader kernel selection remain open.",
-      "next": "B07.3: harden private forward scalar/argument admission and qualify per-kernel selection with stride/dilation/tail geometries. Explicitly resolve non-default alpha/beta contracts before broader use, then select bounded HIP-direct paired timing and opt-in packaging. Preserve installed defaults/.105/user applications.",
-      "status": "private-forward-plugin-qualified-bounded"
+      "evidence": "libMIOpenCKGroupedConv_gfx1013.so still absent; A03 skips default loader probe when build/solver capability excludes it, retaining explicit-path diagnostics. HIP-direct and legacy CK reduction routes are separate. B07.1 audits API5/66 required exports/12 groups and matching scalar DL forward factory. Isolated installed-archive probe enumerates9 FP32 instances and passes192 CPU-double GPU comparisons across daily/RCCL, plus native Torch backward/retained gates:24 checks. No plugin built or installed. B07.2 private API5 FP32 forward facade built at2976e7d; all66 exports, hidden accessor shim, six unique DL IDs after private filtering. Forced MIOpen solver137 passes64 CPU-reference GPU calls in daily/RCCL;64 no-private-path refusals/304 contract checks/eight Torch conv output-first-gradient fixtures;38 full checks. Not installed/default admitted; non-default scalars and broader kernel selection remain open. B07.3 at3616b2f hardens exact scalar/geometry/int32-span/transpose admission and pre-dispatch runtime descriptors/pointers/workspace checks. Six explicit IDs:512 CPU-double GPU calls,244 API/492 runtime refusals; retained public64 and Torch gradients;40 final checks. No installation/performance claim.",
+      "next": "B07.4: compare private DL with existing MIOpen HIP-direct through bounded paired timings, retained CPU references and actual solver attribution; separate warm/cold costs and classify wins/losses before choosing opt-in packaging. Preserve defaults/.105/user applications.",
+      "status": "private-forward-plugin-contracts-qualified-bounded"
     },
     {
       "id": "N2.7",
@@ -131,7 +131,7 @@
       "status": "queued"
     }
   ],
-  "next": "B07.3: harden private forward scalar/argument admission and qualify per-kernel selection with stride/dilation/tail geometries. Explicitly resolve non-default alpha/beta contracts before broader use, then select bounded HIP-direct paired timing and opt-in packaging. Preserve installed defaults/.105/user applications.",
+  "next": "B07.4: compare private DL with existing MIOpen HIP-direct through bounded paired timings, retained CPU references and actual solver attribution; separate warm/cold costs and classify wins/losses before choosing opt-in packaging. Preserve defaults/.105/user applications.",
   "N2.7": "next, selected A01-A09 bounded scopes completed",
   "completed_primary_items": [
     "A01",
@@ -144,7 +144,7 @@
     "A08",
     "A09"
   ],
-  "next_primary_item": "B07.3",
+  "next_primary_item": "B07.4",
   "user_priority_override": "2026-10-18: user selected A09 ahead of unfinished A08",
   "current_n2_workstream": {
     "completed": "N2.18 and practical gap review; broader optional scientific coverage remains open",
