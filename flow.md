@@ -9,6 +9,36 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **B07.9 isolated FP16 DL factory proof completed2026-10-29:** tools0e8a28146;
+  existing source has half inputs/output with float accumulator. Native shader
+  dot2=0/mac_f32=1/wave32, no XDL; nine distinct IDs/layout. Installed archive has
+  interleaved FP16 but lacks group-major definition: actual link+symbol audit prove
+  gap. R4 compiles only unchanged upstream group-major source into isolated object,
+  links unchanged archive. No installed/native admission or arithmetic change.
+  Two layouts/streams/groups1+3, five geometries/two patterns plus C512 accumulation
+  case:88fixtures/profile,328 GPUcalls+464 refusals each daily/RCCL=656/928.
+  144 accumulation calls subset return256.25 vs sequential-half256. Dyadic final
+  half-round exact; non-dyadic half-quantization+fixed N2.18 residual bound, max
+  abs0.0018510521/max rounded error0.0009765625; immutable inputs/256-byte guards.
+  Eight existing Torch FP16 output/all-first-gradient fixtures; installed FP32
+  references586+eight gradient fixtures retained. Factory14+installed20+core7+
+  CPU ONNX4/daily5/RCCL6=56 checks/eight ACK guards;29 local tests/lint/syntax pass.
+  R1 probe name/include, R2 include order, R3 missing symbol fail before GPU;
+  all inputs/logs retained, R4/first GPU batch pass. FourCPU/OMP4/jobs1/RAM10GiB/
+  mem+swap12GiB/ccache20GiB no reset/ro source+SDK/no build GPU/network/600s.
+  3832 hashes/36 links/four AOT DBs/136 backing files unchanged. Same e327c5de boot/
+  r2kernel/logs clean; no KFD recurrence/root-cause fix claim, no owned jobs/guards.
+  BuildPID13558/14091/14381 exit1; r4PID15015/qualPID15696/exportPID17462 exit0.
+  WS/tmp/ck-plugin-b079/build-r4 and export-r1; source/archive audit JSONs;
+  WS/logs/ck-plugin-b079-qualification-r1/final.json and r1-controller.log.
+  Local evidence3683360B SHA8bfc6d1a4ce85413684170bf7c0c39ddd13982379901f6619f5cdc5531809351.
+  Source3616b2f/installed8389197/Torcha524980/bc250-ck FP32/defaults/.105/user apps
+  unchanged; ordinary free12,625,784,832→12,595,290,112B, nothing deleted. Historical
+  Python CPU fault/KFD uncertainty remain distinct from fixed VM heap. [Scope/evidence](docs/development/bc250_ck_plugin_b079_results/README.md).
+  **Next B07.10 (planned):** isolated matching-MIOpen FP16 forward facade using
+  qualified NHWGC factory, dtype-aware scalar/descriptor/alignment/overlap/scratch
+  contracts and explicit public solver references. Preserve installed FP32 option.
+
 - **B07.8 explicit bc250-ck installed2026-10-29:** tools36da14fb2; accepted B07.7r2
   at /opt/bc250-stack/sdks/bc250-miopen-dl-gfx1013-b077, miopen-dl.json plus retained
   version record; tools/ck-b078 and /usr/local/bin/bc250-ck. Install/register/

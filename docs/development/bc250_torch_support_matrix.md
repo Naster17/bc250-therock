@@ -477,3 +477,10 @@ native convolution references plus16 ordinary Torch output/all-first-gradient
 fixtures pass across installed/plain profiles. Native defaults unchanged.
 [Use/recovery](bc250_ck_plugin_b078_usage.md), [evidence](bc250_ck_plugin_b078_results/README.md).
 Next B07.9 audits existing scalar FP16 factory/accumulation before isolated proof.
+
+B07.9: isolated native FP16 DL factories in two group layouts pass656 GPU CPU
+references/928 admission refusals, float accumulator source and144 discriminator
+calls (subset). Missing installed group-major factory supplied by private upstream
+object; archive unchanged.56 checks pass. `bc250-ck` remains FP32-only.
+[Scope/evidence](bc250_ck_plugin_b079_results/README.md). Next B07.10: private
+FP16 MIOpen facade and dtype-aware invocation contracts before public admission.
