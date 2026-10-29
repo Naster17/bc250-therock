@@ -899,7 +899,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL | CPU-checked FP32/FP16/signedINT8 GEMM examples; N2.18 FP32 grouped forward128 CPU-reference cases +8 refusals, plain/Add+ReLU, valid strided layouts/guards/private streams | Direct header consumer only; backward, low-precision convolution, other layouts/configurations/performance and automatic Torch/MIOpen routing unqualified. XDL/WMMA/modern CK plugin off. |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; native-default CK plugin absent; explicit bc250-ck installed B07.8; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private; B07.6 genuine native Search/PerfDb and fresh public replay1.085–1.135x on two fixtures qualified; B07.8 explicit bc250-ck installed/rollback and daily+RCCL/plain consumers qualified; B07.9 isolated FP16/FP32-accum factories pass656 references; group-major missing installed symbol supplemented privately, FP16 facade next |
+| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; native-default CK plugin absent; explicit bc250-ck installed B07.8; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private; B07.6 genuine native Search/PerfDb and fresh public replay1.085–1.135x on two fixtures qualified; B07.8 explicit bc250-ck installed/rollback and daily+RCCL/plain consumers qualified; B07.9 isolated FP16/FP32-accum factories pass656 references; group-major missing installed symbol supplemented privately, B07.10 isolated FP16 facade passes724 half references/typed contracts and retained gradients,66 checks; installed option stays FP32-only; timing/tuning next |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
@@ -955,6 +955,38 @@ checks/16 example syntax checks+links pass; no native/GPU qualification change.
 Use bc250-train for frozen consumers, bc250-torch for custom environments; preserve
 native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/developer-guide.
 
+
+**B07.10 isolated FP16 MIOpen facade completed2026-10-29:** toolsaf4704f69;
+  libraries source742ee1e2c0e, installed native8389197/Torcha524980 unchanged.
+  Explicit private compile flag reuses matching upstream half dispatcher/FP32
+  accumulator and unchanged installed NHWGC archive. No extra factory object.
+  Typed exact scalar/descriptors/packed2D geometry/int32-span contracts, half16B
+  alignment, pointer overflow/output/scratch overlap and workspace checks; BF16/
+  mixed/casts/TF32/determinism/bias/transpose refused. Global9/per-type6float+9half
+  IDs;66 required exports plus forward-list API, helpers/GetCastType hidden.
+  Daily/RCCL724half refs (656per-ID/64public/four mixed-handle),580candidatefloat;
+  368halfAPI/954runtime/64absent-path refusals. Max half error0.00186229 under fixed
+  B07.9 quantization+N2.18 residual bound; dyadic final-half exact, guards/inputs pass.
+  Installed FP32 adds586native refs; eight half/eight installedfloat Torch output/
+  all-first-gradient fixtures pass; plugin still forward-only, native backward.
+  Private24+installed20+core7+CPU ONNX4+daily5+RCCL6=66checks/eight ACK guards;
+  29localtests/lint/syntax pass. R1 test-only deterministic-wrapper assignment
+  compile failure fixed with public setter; R2 build/first GPU qualification pass.
+  Local audit initially assumed66 total instead of66required+forward-list export;
+  exact set verified, no source/test-contract relaxation. Failed artifacts retained.
+  FourCPU/OMP4/jobs1/RAM10GiB/mem+swap12GiB/ccache20GiB no reset/ro inputs+SDK/
+  no build GPU/network/600s.3849hashes/36links/fourAOTDBs/136backing files unchanged.
+  Same e327c5de boot/r2kernel/log unchanged; no KFD recurrence/root-cause fix claim.
+  Historical Python CPU fault/KFD uncertainty remain distinct from fixed VM heap.
+  Installed bc250-ck FP32/defaults/images/.105/user apps unchanged; no reboot/delete.
+  Build1PID19855exit1/build2PID20834/qualPID21771/exportPID23540exit0; no jobs/
+  containers/armed guards. WS/tmp/ck-plugin-b0710/{inputs-r1,r2;build-r1,r2;export-r1};
+  WS/logs/ck-plugin-b0710-qualification-r1/final.json, r1-controller.log.
+  Evidence2837154B SHAf54cb396f04ead909da37448521017d77186e90058b3c39c6cf3a925ba5a741a.
+  Ordinary free12,592,922,624→12,572,831,744B. [Scope/evidence](bc250_ck_plugin_b0710_results/README.md).
+  **Next B07.11 (planned):** bounded paired FP16 public137/HIP-direct timing and
+  native Search/PerfDb replay on owned fixtures before versioned opt-in packaging;
+  preserve installed FP32 artifact/defaults/.105/user apps. No performance claim yet.
 
 **B07.9 isolated FP16 DL factory proof completed2026-10-29:** tools0e8a28146;
   existing source has half inputs/output with float accumulator. Native shader

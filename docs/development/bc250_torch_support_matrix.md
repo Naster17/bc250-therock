@@ -484,3 +484,10 @@ calls (subset). Missing installed group-major factory supplied by private upstre
 object; archive unchanged.56 checks pass. `bc250-ck` remains FP32-only.
 [Scope/evidence](bc250_ck_plugin_b079_results/README.md). Next B07.10: private
 FP16 MIOpen facade and dtype-aware invocation contracts before public admission.
+
+B07.10: isolated matching-MIOpen FP16 forward facade at libraries742ee1e2c0e
+passes724 half/580 retained float references, typed pointer/descriptor/workspace
+contracts, mixed-dtype cached invokers and retained backward;66 checks/eight
+guards. Installed FP32 option and defaults unchanged; no performance claim.
+[Scope/evidence](bc250_ck_plugin_b0710_results/README.md). Next B07.11: paired
+FP16 timing/native tuning replay before versioned packaging.
