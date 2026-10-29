@@ -23,7 +23,7 @@ if [[ "$phase" == configure ]]; then
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER="$prefix/lib/llvm/bin/clang++" \
     -DCMAKE_C_COMPILER="$prefix/lib/llvm/bin/clang" \
     -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
-    -DCMAKE_CXX_SCAN_FOR_MODULES=OFF -DCMAKE_JOB_POOLS=link_pool=1 -DCMAKE_JOB_POOL_LINK=link_pool \
+    -DCMAKE_PROJECT_INCLUDE=/logs/compiler.cmake -DCMAKE_CXX_SCAN_FOR_MODULES=OFF -DCMAKE_JOB_POOLS=link_pool=1 -DCMAKE_JOB_POOL_LINK=link_pool \
     -DCMAKE_PREFIX_PATH="/sdk;$prefix" -DAMD_MIGRAPHX_HOME=/sdk \
     -Donnxruntime_CMAKE_DEPS_MIRROR_DIR=/mirror -DFETCHCONTENT_FULLY_DISCONNECTED=OFF -DFETCHCONTENT_TRY_FIND_PACKAGE_MODE=NEVER \
     -Donnxruntime_USE_MIGRAPHX=ON -Donnxruntime_ENABLE_PYTHON=ON -Donnxruntime_BUILD_SHARED_LIB=ON \
@@ -33,6 +33,8 @@ if [[ "$phase" == configure ]]; then
     -Donnxruntime_USE_XNNPACK=OFF -Donnxruntime_USE_MIMALLOC=OFF -Donnxruntime_USE_VCPKG=OFF \
     -Donnxruntime_USE_1DS_TELEMETRY=OFF -Donnxruntime_USE_OPENMP=OFF -Donnxruntime_ENABLE_DLPACK=OFF \
     -DPython_EXECUTABLE=/task/venv/bin/python > /logs/configure.log 2>&1
+elif [[ "$phase" == smoke ]]; then
+  cmake --build /task/build --target onnxruntime_lora --parallel 4 > /logs/build.log 2>&1
 else
   cmake --build /task/build --target onnxruntime onnxruntime_pybind11_state onnxruntime_providers_migraphx --parallel 4 > /logs/build.log 2>&1
 fi

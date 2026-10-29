@@ -24,7 +24,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--attempt", required=True)
     p.add_argument("--task", help="reuse an existing task for an incremental retry")
-    p.add_argument("--phase", choices=("configure", "build"), required=True)
+    p.add_argument("--phase", choices=("configure", "build", "smoke"), required=True)
     args = p.parse_args()
     assert args.attempt in ("r1", "r2", "r3", "r4", "r5")
     preflight("onnxruntime-b0610-" + args.phase + "-" + args.attempt)
@@ -88,6 +88,9 @@ def main():
         shutil.copyfile(Path(__file__), logs / "controller-source.py")
         script = WS / "helpers/build_onnxruntime_b0610.sh"
         shutil.copyfile(script, logs / "phase-script.sh")
+        shutil.copyfile(
+            WS / "helpers/onnxruntime_b0610_compiler.cmake", logs / "compiler.cmake"
+        )
         command = [
             "podman",
             "run",
