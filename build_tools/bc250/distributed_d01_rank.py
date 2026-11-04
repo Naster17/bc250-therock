@@ -31,7 +31,11 @@ def main():
         assert torch.cuda.get_device_properties(0).gcnArchName == "gfx1013:xnack-"
         dist.init_process_group(
             a.backend,
-            init_method=f"tcp://192.168.1.104:{a.port}",
+            init_method=(
+                "env://"
+                if "TORCHELASTIC_RUN_ID" in os.environ
+                else f"tcp://192.168.1.104:{a.port}"
+            ),
             rank=a.rank,
             world_size=2,
             timeout=timedelta(seconds=90),
