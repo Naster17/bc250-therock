@@ -9,6 +9,38 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Workspace cleanup/documentation completed2026-11-04:** user authorizes both
+  hosts' stack-owned temporary-file cleanup and source preservation for publication.
+  Tool milestone4eafbcdf0 plus final docs-link repair. Inspected `.104`162.3GiB
+  bc250work (150GiB WS) and `.105`2.9GiB; preserve builds/caches/checkpoints,
+  installed releases/images/SDKs/native controls/boot recovery/user applications.
+  Copied94 historical transfer archives +two loose patches from .104 to local
+  kernel/artifacts/workspace-cleanup-20261104/104-transfers; preserve ignored,
+  not publication-approved. Whole literal deletion allowlist hash+size verified
+  against workstation copies before first unlink; EX common host locks/no containers.
+  `.104`96 files/7,017,699,431B retired (historical transfer archives plus duplicated
+  D01 userspace/image exports); `.105`one1,490,746,029B import copy retired.
+  Old source exports remain; source labels0115c01f/torch4ee65717 stale versus
+  installed a524980: byte-level export/overlay audit is required before release,
+  do not reset/reapply old patches. No source-tree/reusable-build/cache deletion.
+  Grouped20(.104)+32(.105) distributed helpers/evidence under bc250work/tools/
+  distributed-d01 and evidence/distributed-d01; every original path retained as
+  relative compatibility symlink. Selected runtimes/distributed registry/old .105
+  base manifest SHA unchanged; CPU-only CLI and all compatibility/deletion checks
+  pass. No native change/GPU test/reboot; no performance/correctness expansion.
+  Space observed11.6→18.1GiB(.104),43.6→45.0GiB(.105). Root docs entry BOTH:
+  /home/nik/bc250work/docs/README.md with versioned current snapshot, guides,
+  canonical flow/inventory and implementation references. Workstation docs/README.md
+  and docs/WORKSPACE_LAYOUT.md explain layout and publication audit prerequisites;
+  this is NOT an independently reconstructed public release yet.
+  Cleanup PIDs21502(.104)/27600(.105) exit0; per-host bc250work/
+  cleanup-20261104-{controller.log,result.json}; exact plan, journals, raw copies,
+  patch hashes and post-check logs local kernel/artifacts/workspace-cleanup-20261104.
+  No cleanup/build/test jobs/armed guards/containers running. Black/critical Ruff/
+  syntax/diff checks pass; no broad image/container prune or user-app access.
+  **Next remains D05** representative distributed timing/memory/checkpoint work;
+  publication clean reconstruction/license/privacy audit is a separate release gate.
+
 - **D01–D04 two-host rollout completed2026-11-04, bounded scope:** user now
   authorizes `.105` updates/distributed experiments; B07.13 deferred, not done.
   Initial/export tools1f533d8f1, final launcher/qualification/recovery5f45c242a;

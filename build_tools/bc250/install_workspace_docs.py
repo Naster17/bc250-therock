@@ -21,6 +21,9 @@ def main():
     with tarfile.open(a.archive) as t:
         t.extractall(dest, filter="data")
     (dest / "flow.md").symlink_to("therock/flow.md")
+    (dest / "docs/development").symlink_to(
+        "../therock/docs/development", target_is_directory=True
+    )
     readme = dest / "README.md"
     readme.write_text(
         readme.read_text()

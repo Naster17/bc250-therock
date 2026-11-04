@@ -413,6 +413,19 @@ prepare separately versioned candidate with one-shot boot/SSH fallback preserved
 | Recovery link          | `/opt/bc250-stack/before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542` release                                                                   |
 | Software fallback      | `previous` and `before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542`; initial20261012 payload retired20261016                                       |
 
+Storage organization20261104: .10496 exact workstation-backed transfer copies
+(7,017,699,431B) and .105one duplicate import (1,490,746,029B) retired under host
+EX locks after full hash/size preflight. 94 old .104 archives/two patches retained
+locally in kernel/artifacts/workspace-cleanup-20261104, with literal deletion plans
+and host journals; these ignored historical archives are not publication-approved.
+No build/source/cache/checkpoint/image/release/native/boot/user-app retirement.
+Distributed20/32 helper/evidence entries grouped on104/105 with all old paths
+preserved as relative links. Runtime/registry/base hashes unchanged; CPU CLI/path
+checks pass, no native changes or GPU requalification needed. Available space
+observed18.1/45.0GiB. Both boards now expose bc250work/docs/README.md/versioned
+snapshots; [workspace/publication map](../../../docs/WORKSPACE_LAYOUT.md).
+Stale source export revision labels remain an explicit release-audit concern.
+
 Storage refresh20261018 (code780e67ceb) recovered11.96GiB: free1.08->13.04GiB.
 Explicit user cleanup authority supersedes retention only for inspected obsolete
 compiled outputs:8,801 .o/.a/.so files in three inactive Torch build trees,
