@@ -9,6 +9,31 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **.104 remaining-folder review completed2026-11-04:** explicit user asks to
+  inspect/remove obsolete top-level folders. Toold16294297; common EX runtime lock,
+  no containers; system/service/tool/current-runtime reference and process/FD audit
+  finds no candidate dependencies. Removed ONLY bc250-gfx1013-fix (clean5bb0dac,
+  same as workstation repo), migration-105-20261023 (.104 leftover transfer staging,
+  NOT .105 operational helpers), rocm-performance-20261013 (old benchmark fixture).
+  104 inventory entries/113,943,255 file bytes; full archive95,923,498B retained
+  locally kernel/artifacts/workspace-cleanup-20261104/folders-104/obsolete-folders.tar.gz,
+  SHAc50a20b1ff95a8528cab4d1b39d243eed2b30545b6ed857ab76a8a6c7e3833aa.
+  Whole archive and every member/type/link verified; restored Git fsck passes and
+  HEAD5bb0dac matches. Originals and redundant host archive removed only afterward.
+  Plan/result/dependency findings and local verification retained beside archive;
+  host evidence/folder-cleanup-20261104/{plan,result}.json/controller log adjacent.
+  Inventory PID28557 exit0; apply command complete; no running jobs/guards/containers.
+  Retain seven real dirs: active ROCm/Torch workspace, kernel-r3 source/build/
+  helpers/recovery, r2 bc250-rocm-lab fallback, private RADV bc250-vulkan-v33,
+  docs/tools/evidence; plus D04 registry-required alias = eight total root entries.
+  RADV wrapper's absolute private-driver path establishes retention purpose; no
+  current Vulkan workload/performance qualification inferred. Boot/fallback assets
+  and actual source/build/cache/checkpoint trees unchanged. Current/runtime registry/
+  GRUB config+environment hashes unchanged; ordinary --info passes, r2 boot retained,
+  ~20.8GiB available. No GPU/native/boot changes or GPU requalification. .105 UNTOUCHED.
+  [Retention map](../docs/WORKSPACE_LAYOUT.md); docs/memory mirrored to .104.
+  **Next D05 unchanged:** representative distributed timing/memory/checkpoint work.
+
 - **Top-level cleanup follow-up completed2026-11-04:** user explicitly asks to
   remove old agent helpers/files and unused aliases, rather than preserve clutter.
   Source toolbb7fc0c0e plus final consolidation/backup-retirement checks; both host

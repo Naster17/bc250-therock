@@ -413,6 +413,17 @@ prepare separately versioned candidate with one-shot boot/SSH fallback preserved
 | Recovery link          | `/opt/bc250-stack/before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542` release                                                                   |
 | Software fallback      | `previous` and `before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542`; initial20261012 payload retired20261016                                       |
 
+Remaining-folder review20261104 (.104 only, toold16294297): three obsolete
+folders retired after full local archive/member/type verification and Git fsck:
+bc250-gfx1013-fix clean5bb0dac duplicate, old .104 migration transfer staging,
+and rocm-performance-20261013 old benchmark fixture. 113,943,255 logical bytes,
+95,923,498B local archive SHA c50a20b1ff95a8528cab4d1b39d243eed2b30545b6ed857ab76a8a6c7e3833aa.
+System/runtime/process dependencies absent; EX lock, native/GRUB hashes unchanged,
+CPU launcher check passes. Seven actual folders plus required D04 alias retained;
+private RADV has an absolute driver dependency, kernel/r2 folders serve development/
+recovery, and active workspace/docs/tools/evidence remain. .105 not contacted.
+Full retention map: [WORKSPACE_LAYOUT.md](../../../docs/WORKSPACE_LAYOUT.md).
+
 Top-level follow-up20261104 supersedes the earlier keep-every-alias policy:
 user explicitly authorized obsolete agent-file retirement. .104118/.105154 loose
 entries retired (225 regular files,47 unused aliases),2,837,354,361 logical bytes.
