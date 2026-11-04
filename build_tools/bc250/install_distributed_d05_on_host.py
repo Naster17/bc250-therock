@@ -17,11 +17,12 @@ def sha(p):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--activate", action="store_true")
+    parser.add_argument("--payload-root", type=Path)
     args = parser.parse_args()
     assert os.geteuid() == 0 and os.uname().nodename in ["bc250", "bc500"]
     registry = Path("/opt/bc250-stack/distributed/d01.json")
     data = json.loads(registry.read_text())
-    source = Path("/tmp/bc250-d05-install-r1")
+    source = args.payload_root or Path(__file__).resolve().parent / "install-payload"
     pins = json.loads((source / "payload-hashes.json").read_text())
     assert all(sha(source / name) == value for name, value in pins.items())
     fix = json.loads((source / "torchrun-fix.json").read_text())
@@ -33,6 +34,10 @@ def main():
     )
     with Path(data["lock"]).open("r") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        assert (
+            json.loads(registry.read_text()) == data
+        ), "Registry changed before lock acquisition"
+        assert sha(base / "runtime.json") == data["runtime_sha256"]
         folder = Path("/opt/bc250-stack/tools/distributed-d05")
         record = Path("/home/nik/bc250work/evidence/distributed-d05-tool-install-r1")
         command = Path("/usr/local/bin/bc250-distributed")

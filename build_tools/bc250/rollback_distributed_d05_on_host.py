@@ -17,6 +17,9 @@ def main():
     command = Path("/usr/local/bin/bc250-distributed")
     with Path(current["lock"]).open("r") as fd:
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        assert (
+            json.loads(registry.read_text()) == current
+        ), "Registry changed before lock acquisition"
         assert os.readlink(command) == activation["new_command"]
         before = json.loads((record / "registry-before.json").read_text())
         runtime = Path(before["release"]) / "runtime.json"

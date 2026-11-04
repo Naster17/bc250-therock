@@ -9,6 +9,60 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D05 completed 2026-11-04, bounded two-host training + exit repair:** training
+  tools9ab6aec7f; bridge41bafbdd0 plus final durable-payload/recovery maintenance;
+  Torch source exit fix8d8b18df558cb478727ba2179f2e01dfce20ea40. Installed native
+  daily/RCCL cohorts remain a524980; no native build, kernel, image or daily/default
+  profile change. BOTH explicit bc250-distributed commands now select versioned
+  tools/distributed-d05, registry retains native runtime pins and records exit fix.
+  Four-block width512/heads8/seq64/global batch8 FP32 causal transformer12,609,536
+  params, AdamW; one host batch8 versus two hosts4/rank. Both run orders: single
+  23.55–27.22ms(.104)/23.75–25.83ms(.105), DDP438.25–438.41ms, FSDP651.55–651.70ms.
+  Thus this fixture is slower distributed; no speedup/general scaling claim.
+  1/8/32MiB AllReduce medians~9.2/71.9/286.4ms match communication-bound diagnosis.
+  FSDP stores6,304,768 params/rank and matching exp_avg versus12,609,536 in DDP;
+  peak live GPU allocator~212MiB vs299MiB DDP, but reserved360/386MiB vs308MiB.
+  No physical whole-board/large-model capacity/pooled-VRAM claim. CPU oracle/RSS
+  separate from allocator stats. Two warm/five timed steps, max distributed rank,
+  CPU reference/checkpoint/rendezvous/exit excluded; opposite-order repeats.
+  140 worker check groups/108 preload checkpoint refusals/18 GPU guards ACK;
+  all first gradients/two AdamW updates compare CPU double, same-rank/world
+  checkpoint next loss/parameters/AdamW exact. Atomic local parts + complete
+  collective hash manifest; fixed fixture index/data, no elastic/scheduler/RNG/
+  peer-crash/general checkpoint API qualification. Owned .pt files stay on hosts.
+  Original DDP-a .105 agent logs TCPStore EOF after numerically successful work;
+  old guard returns0, recorded separately as lifecycle defect. Symmetric exit
+  barrier could close rank0 store before peer final wait. Source fix reuses
+  synchronize/get_all rank-aware completion. CPU real-store old race reproduced,
+  candidate2 repetitions +2 flag/timeout units pass; r1 ownership harness error
+  before test retained, corrected r2 passes. Source-derived bridge checks original
+  API SHA625fa4cc and patched source hash; applies only exit method, no log masking.
+  Frozen Torch API unchanged; direct torchrun outside bc250-distributed retains old
+  API until separately qualified Torch update. Candidate DDP/FSDP strict clean-agent
+  gates pass before activation, then public DDP strict gate passes. Live EX-locked
+  rollback/reactivation and durable install-payload replay pass on BOTH; old D01
+  tool/registry retained. CPU UID1000/doas/cwd/spaced-argv/Gloo sum tests pass on
+  both with Torch CUDA initialization flag false. 29 local tests/Black/critical
+  Ruff/syntax/diff pass; no full upstream CI. SH tests,4 CPUs/cpuset0-3,10GiB RAM/
+  12GiB memory+swap,600s GPU guards. Kernels/boots d10514df/r2 and92b47338/r3 same;
+  no app access/cache reset/reboot. Historical Python CPU segfault/KFD uncertainty
+  remains separate from fixed VM heap and this agent-exit repair.
+  All controllers exit0 except initial CPU harness4494exit1; corrected4819exit0.
+  Last installed GPU7354(.104)/13266(.105)exit0; no jobs/containers/armed guards.
+  Both /home/nik/bc250work/evidence/distributed-d05-r1/<phase> plus controller logs;
+  tools/distributed-d05 holds installer/rollback/durable payload, install records
+  evidence/distributed-d05-tool-install-r1. CPU r2 on104 and user-cpu onboth retained.
+  Local kernel/artifacts/distributed-d05/*-evidence-r2.tar.gz:104660837B
+  SHA8a546b712339bffc724370eb64c1348f4eea57329824f092250f9fad958ebcdf;
+  105495817B SHA62c1e81c258700b6651791b38c4b1d0d5248a344e38ac39ff95c3549fe4b854b.
+  [Method/limits/recovery](docs/development/bc250_distributed_d05_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md). Host docs/memory updated; old snapshots kept.
+  **Next D06:** matched-global-batch DDP gradient accumulation/no_sync, CPU-double
+  gradient/AdamW/checkpoint references, synchronization counts and one-vs-two-host
+  timing. Amortize measured traffic without changing optimizer semantics. FSDP
+  capacity/reservation and broad model/dtype/transport work remain separate;
+  B07.13 still deferred, not silently installed. No completion percentage.
+
 - **.104 remaining-folder review completed2026-11-04:** explicit user asks to
   inspect/remove obsolete top-level folders. Toold16294297; common EX runtime lock,
   no containers; system/service/tool/current-runtime reference and process/FD audit

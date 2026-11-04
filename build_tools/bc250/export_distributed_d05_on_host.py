@@ -66,7 +66,7 @@ def main():
         containers=[],
     )
     (root / "handoff.json").write_text(json.dumps(summary, indent=2) + "\n")
-    archive = work / "evidence/distributed-d05-evidence-r1.tar.gz"
+    archive = work / "evidence/distributed-d05-evidence-r2.tar.gz"
     assert not archive.exists()
     paths = [
         root,
