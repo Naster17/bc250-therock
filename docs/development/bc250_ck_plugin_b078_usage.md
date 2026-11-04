@@ -103,3 +103,8 @@ from the historical Python CPU fault and the already fixed VM-heap corruption.
 [Installed qualification](bc250_ck_plugin_b078_results/README.md),
 [artifact scope and failures](bc250_ck_plugin_b077_results/README.md),
 [developer architecture/environment guide](../../../BC250_DEVELOPER_GUIDE.md).
+
+The B07.12 FP32/FP16 archive now includes a matching private repaired MIOpen and
+has qualified relocation/identity/reference/gradient tests. It is not yet selected
+by the installed command described here. See [candidate artifact/use](bc250_ck_plugin_b0712_results/README.md);
+B07.13 owns the explicit versioned upgrade and rollback qualification.

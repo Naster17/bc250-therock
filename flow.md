@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-10-30 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-04 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,43 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **B07.12 coherent FP32/FP16 artifact completed2026-11-04:** toolsc64debffb;
+  source96e5a7df/Torcha524980/installed native8389197 unchanged. Packages B07.10
+  plugin+B07.11 repaired MIOpen, no rebuild/install/register/default change.
+  Private runtime/ vs plugin lib/ separates loader search; fresh worker validates
+  payload+27 actual native library pins/gfx1013/API5 before same-process runpy;
+  parent kept alive/no exec-after-HIP. Eight copied ELFs normalized to relative
+  RUNPATH, DT_NEEDED unchanged; source/config/license/resource recipes included.
+  Two build-free extracts (spaces) x daily/RCCL, original sources/builds/candidates
+  absent:78topchecks/48nested/10finalACK;1496half+1176float refs plus586installedfloat,
+  24Torch output/all-first-gradient fixtures.24identity/four seed refusals;
+  128half+128float absent-path,736halfAPI/1908runtime,488floatAPI/984runtime pass.
+  Genuine mixed dtype DB8keys/profile; FindDb source had extra post-gradient
+  entries, select six authoritative half shape keys and copy existing lines,
+  preserving originals. Dedicated reference DB keeps seeded replay immutable.
+  R1 packaging DB count/R2 metadata lookup failures before GPU; R3 accepted.
+  Qualr1 identity passes then cross-bind hardlink fixture fails; host-created
+  immutable payload fixtures+independent manifests fix harness, same package r3
+  passes qualr2.29localtests/lint/syntax/independent archive+ELF inspection pass.
+  CPU2/2GiB packaging/no build GPU/network/cache reset; SH runtime lock/600sgates.
+  3965hashes/36links/fourAOTDBs/136backing files unchanged. New pre-existing
+  d10514df boot/r2kernel throughout, logs unchanged/no KFD recurrence. Historical
+  Python CPU fault/KFD uncertainty distinct from fixed VM heap; no root-cause claim.
+  User authorizes stopping lucid_wiles/6fcfde0398e9; stopped/preserved/not removed.
+  No .105/user-app access/deletion/reboot; no jobs/containers/armed guards;11totalACK.
+  PackagePIDs8781+9525exit1/10202exit0; qual12590exit1/13470+export17389exit0.
+  WS/tmp/ck-plugin-b0712/package-r3 and export-r2; WS/logs/
+  ck-plugin-b0712-qualification-r2/final.json and ck-plugin-b0712-r2-controller.log.
+  Release66651729B SHAa0d47ed4ba4df354cc7ea898a285eefa051f49693667386567ea392f66ddd91e;
+  evidence7079195B SHAadb8ec1f0f84ec3bddc122c25ccae89969b982a6c6c5123b794b1c765c13a650;39payloadfiles/505424918B.
+  Local kernel/artifacts/ck-plugin-b0712; free12,879,323,136→10,253,754,368B.
+  Installed bc250-ck still FP32; ordinary native precision rollout pending.
+  [Artifact/use/evidence](docs/development/bc250_ck_plugin_b0712_results/README.md).
+  **Next B07.13:** versioned explicit .104 install/registration and updated
+  bc250-ck format2 worker activation, exact identity/refusal/live rollback and
+  ordinary daily/RCCL caller-context gates under EX update lock. Retain old FP32
+  artifact/tool/version records, ordinary native defaults/.105/user apps.
 
 - **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

@@ -499,3 +499,10 @@ CK gains1.1706–1.1782× on one fixture, one ties, four lose.444 CPU checkpoint
 80 top-level checks plus24 rebuilt-native nested checks; no global speed claim.
 [Method/evidence](bc250_ck_plugin_b0711_results/README.md). Next B07.12: coherent
 identity-pinned optional CK+repaired-MIOpen artifact and relocation qualification.
+
+B07.12: coherent FP32/FP16 CK+repaired-MIOpen archive qualified in two build-free
+extracts (spaces)/daily+RCCL:78 top checks/48 nested,1496 half+1176 float native
+references plus586 installed float,24 Torch output/all-first-gradient fixtures.
+27 actual runtime pins/eight relative ELF RUNPATHs; original candidates absent.
+Installed FP32/defaults unchanged. [Artifact/use/evidence](bc250_ck_plugin_b0712_results/README.md).
+Next B07.13: versioned explicit install/activation/identity/rollback under EX lock.

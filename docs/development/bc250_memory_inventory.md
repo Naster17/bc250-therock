@@ -899,7 +899,7 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipSPARSELt | f32/f16/bf16 retained; N1.7 INT8→INT8/COMPUTE_32I:134 numerical +16 API;234 scalar/609 broadcast/567 bias/438 alpha-vector regressions. Sparse A/B, layouts/transposes/broadcasts, strip/TILE/partial tiles, FP32 bias/alpha vector and plan/alias/guard checks | INT8 K multiple4 <=262140, FP32 alpha/beta/bias, nearest-even saturation. INT8 sigmoid/tanh enable and widened outputs unsupported. Matching logical batch counts; beta vector/split-K/multi-stream unimplemented. Borrowed vectors/bias live until completion; separate sparse pack, no hardware sparse speedup claim. |
 | CK scalar DL | CPU-checked FP32/FP16/signedINT8 GEMM examples; N2.18 FP32 grouped forward128 CPU-reference cases +8 refusals, plain/Add+ReLU, valid strided layouts/guards/private streams | Direct header consumer only; backward, low-precision convolution, other layouts/configurations/performance and automatic Torch/MIOpen routing unqualified. XDL/WMMA/modern CK plugin off. |
 | CK Tile                                     | Prior19 generic runs; P1 numerical247: top-k60, LayerNorm18, scalarGEMM160, Pool3D9;400 argument rejections; installed public ScalarGemmKernel                                                               | Explicit generic API, not automatic matrix-kernel replacement; more ops/types/layouts remain                                                                |
-| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; native-default CK plugin absent; explicit bc250-ck installed B07.8; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private; B07.6 genuine native Search/PerfDb and fresh public replay1.085–1.135x on two fixtures qualified; B07.8 explicit bc250-ck installed/rollback and daily+RCCL/plain consumers qualified; B07.9 isolated FP16/FP32-accum factories pass656 references; group-major missing installed symbol supplemented privately, B07.10 isolated FP16 facade passes724 half references/typed contracts and retained gradients,66 checks; installed option stays FP32-only; B07.11 public FP16 tuning/replay qualified, one of six shapes1.17x; original HIP-direct legacy half accumulation misses strict bound, source fixed privately/ordinary rollout pending; matching opt-in artifact next |
+| MIOpen | CPU-reference convolutions, A02 native legacy reductions/recurrent gradients; A03 genuine seed FindDb16 keys/58 checked solutions, PerfDb1/KDB41 and normal replay/fallback | Small recorded scope; wider tuning/types/layouts/NaN/index/recurrent contracts unqualified; native-default CK plugin absent; explicit bc250-ck installed B07.8; B07.3 private contracts qualified; B07.4 default DL slower; B07.5 per-ID block256 wins two of six NCHW fixtures1.09–1.14x; candidate private; B07.6 genuine native Search/PerfDb and fresh public replay1.085–1.135x on two fixtures qualified; B07.8 explicit bc250-ck installed/rollback and daily+RCCL/plain consumers qualified; B07.9 isolated FP16/FP32-accum factories pass656 references; group-major missing installed symbol supplemented privately, B07.10 isolated FP16 facade passes724 half references/typed contracts and retained gradients,66 checks; installed option stays FP32-only; B07.11 public FP16 tuning/replay qualified, one of six shapes1.17x; original HIP-direct legacy half accumulation misses strict bound, source fixed privately/ordinary rollout pending; B07.12 coherent FP16/FP32 plugin+private repaired MIOpen archive qualified in two build-free extracts/daily+RCCL;78 top checks/48 nested, explicit installation next; ordinary native precision rollout pending |
 | hipDNN providers                            | Historical pass-by-value5 +HIP9 +MIOpen9, scalar-expansion14; P1 Lt48 +HIP18 +3D18 +fusion16; six host parameter tests                                                                                       | Normalization/training/backward/provider/fusion subsets only. Mixed FP32 virtual/low-precision output rejected; no automatic Torch provider routing claim   |
 | RPP/FFTS                                    | Native image layouts16 plus audio26; decibel zero/reference/reduction fixes, spectrogram row-stride and FFTS build/link fixes                                                                                | Broader image/audio/volume operations, types and layouts remain                                                                                             |
 | rocPRIM/hipCUB/rocThrust                    | P2 INT32 42/48/48; N2.16 reductions/scans576/480/480; N2.17 FP32/64 stable sorting/selection656/656/648 with exact bits/indices/counts, explicit special-value policies, guards/streams; Torch62 output/backward consumers | No production defect found; wider types/operators/iterators/determinism/graphs/concurrency/tuning remain. hipCCL is header packaging, not RCCL. |
@@ -955,6 +955,43 @@ checks/16 example syntax checks+links pass; no native/GPU qualification change.
 Use bc250-train for frozen consumers, bc250-torch for custom environments; preserve
 native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/developer-guide.
 
+
+**B07.12 coherent FP32/FP16 artifact completed2026-11-04:** toolsc64debffb;
+  source96e5a7df/Torcha524980/installed native8389197 unchanged. Packages B07.10
+  plugin+B07.11 repaired MIOpen, no rebuild/install/register/default change.
+  Private runtime/ vs plugin lib/ separates loader search; fresh worker validates
+  payload+27 actual native library pins/gfx1013/API5 before same-process runpy;
+  parent kept alive/no exec-after-HIP. Eight copied ELFs normalized to relative
+  RUNPATH, DT_NEEDED unchanged; source/config/license/resource recipes included.
+  Two build-free extracts (spaces) x daily/RCCL, original sources/builds/candidates
+  absent:78topchecks/48nested/10finalACK;1496half+1176float refs plus586installedfloat,
+  24Torch output/all-first-gradient fixtures.24identity/four seed refusals;
+  128half+128float absent-path,736halfAPI/1908runtime,488floatAPI/984runtime pass.
+  Genuine mixed dtype DB8keys/profile; FindDb source had extra post-gradient
+  entries, select six authoritative half shape keys and copy existing lines,
+  preserving originals. Dedicated reference DB keeps seeded replay immutable.
+  R1 packaging DB count/R2 metadata lookup failures before GPU; R3 accepted.
+  Qualr1 identity passes then cross-bind hardlink fixture fails; host-created
+  immutable payload fixtures+independent manifests fix harness, same package r3
+  passes qualr2.29localtests/lint/syntax/independent archive+ELF inspection pass.
+  CPU2/2GiB packaging/no build GPU/network/cache reset; SH runtime lock/600sgates.
+  3965hashes/36links/fourAOTDBs/136backing files unchanged. New pre-existing
+  d10514df boot/r2kernel throughout, logs unchanged/no KFD recurrence. Historical
+  Python CPU fault/KFD uncertainty distinct from fixed VM heap; no root-cause claim.
+  User authorizes stopping lucid_wiles/6fcfde0398e9; stopped/preserved/not removed.
+  No .105/user-app access/deletion/reboot; no jobs/containers/armed guards;11totalACK.
+  PackagePIDs8781+9525exit1/10202exit0; qual12590exit1/13470+export17389exit0.
+  WS/tmp/ck-plugin-b0712/package-r3 and export-r2; WS/logs/
+  ck-plugin-b0712-qualification-r2/final.json and ck-plugin-b0712-r2-controller.log.
+  Release66651729B SHAa0d47ed4ba4df354cc7ea898a285eefa051f49693667386567ea392f66ddd91e;
+  evidence7079195B SHAadb8ec1f0f84ec3bddc122c25ccae89969b982a6c6c5123b794b1c765c13a650;39payloadfiles/505424918B.
+  Local kernel/artifacts/ck-plugin-b0712; free12,879,323,136→10,253,754,368B.
+  Installed bc250-ck still FP32; ordinary native precision rollout pending.
+  [Artifact/use/evidence](bc250_ck_plugin_b0712_results/README.md).
+  **Next B07.13:** versioned explicit .104 install/registration and updated
+  bc250-ck format2 worker activation, exact identity/refusal/live rollback and
+  ordinary daily/RCCL caller-context gates under EX update lock. Retain old FP32
+  artifact/tool/version records, ordinary native defaults/.105/user apps.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16
