@@ -9,6 +9,36 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D01 distributed workstream IN PROGRESS2026-11-04 (user priority override):**
+  User now authorizes .105 updates and two-board training development; supersedes
+  prior .105-untouched scope. B07.13 deferred, not completed. Preserve .105 M105.1
+  release/image/boot health, r3 and r2 fallback, controls and user apps; no finetune
+  inspection. Goal: qualified socket RCCL/DDP, then sharded model/optimizer states,
+  checkpoint/resume and measured scaling. DDP replicates model; no pooled VRAM claim.
+  Both physical eth0 links1000Mb/s. Initial owned Gloo GPU sum FP32/64/16/BF16,
+  small/1MiB checks and three global-batch CPU-double gradient+SGD DDP steps pass
+  on both hosts (8checks/rank=16). Guards ACK, kernel logs unchanged. Different
+  existing Torch native revisions; no RCCL transport/production/speed/sharding claim.
+  .104 bootd10514df/r2; .105 boot92b47338/r3. Inventories24664ROCm entries EXACTLY
+  MATCH, zero delta; retain same core/kernel. .105 missing current Torch/RCCL/image.
+  Source profile .104 rccl-single-b053, image1bb4ac0e, old .105 image506f3b26.
+  Read HOST105_UPDATE.md before deployment: .105 control EX lock for writes,
+  new versioned release, old health package untouched, target gates before activation.
+  Source exporter running .104 PID22485: python3 /home/nik/bc250work/
+  export_distributed_d01_on_host.py; log distributed-d01-export-controller.log;
+  outputs distributed-d01-export/{userspace.tar.gz,image.tar,manifest.json}.
+  Exports daily/RCCL Torch+RCCL+consumers under existing SH lock, no core duplicate.
+  Inventory PIDs21792(.104)/9287(.105)exit0; guarded ranks21432/9019exit0.
+  Both hosts /home/nik/bc250work/distributed-d01-20261104/{final.json,rank.json,
+  gpu.log,kernel-before.log,kernel-after.log,guard/}; controller distributed-d01-controller.log.
+  Local scripts build_tools/bc250/*distributed_d01*.py; inventories/delta under
+  tmp/distributed-d01. No active prefixes/launchers/kernel changed yet.
+  **Exact next:** finish frozen export, transfer verified artifacts; stage matched
+  .105 daily/RCCL candidate sharing immutable identical M105.1 ROCm, retaining base
+  dependency; load matching image without pruning. Target-qualify and run guarded
+  two-host Ring/Simple Ethernet RCCL with P2P/IB/SDMA/symmetric off, then promote
+  only after references/rollback. Ordinary native precision update remains separate.
+
 - **B07.12 coherent FP32/FP16 artifact completed2026-11-04:** toolsc64debffb;
   source96e5a7df/Torcha524980/installed native8389197 unchanged. Packages B07.10
   plugin+B07.11 repaired MIOpen, no rebuild/install/register/default change.
