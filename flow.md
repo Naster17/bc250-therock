@@ -9,35 +9,54 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **D01 distributed workstream IN PROGRESS2026-11-04 (user priority override):**
-  User now authorizes .105 updates and two-board training development; supersedes
-  prior .105-untouched scope. B07.13 deferred, not completed. Preserve .105 M105.1
-  release/image/boot health, r3 and r2 fallback, controls and user apps; no finetune
-  inspection. Goal: qualified socket RCCL/DDP, then sharded model/optimizer states,
-  checkpoint/resume and measured scaling. DDP replicates model; no pooled VRAM claim.
-  Both physical eth0 links1000Mb/s. Initial owned Gloo GPU sum FP32/64/16/BF16,
-  small/1MiB checks and three global-batch CPU-double gradient+SGD DDP steps pass
-  on both hosts (8checks/rank=16). Guards ACK, kernel logs unchanged. Different
-  existing Torch native revisions; no RCCL transport/production/speed/sharding claim.
-  .104 bootd10514df/r2; .105 boot92b47338/r3. Inventories24664ROCm entries EXACTLY
-  MATCH, zero delta; retain same core/kernel. .105 missing current Torch/RCCL/image.
-  Source profile .104 rccl-single-b053, image1bb4ac0e, old .105 image506f3b26.
-  Read HOST105_UPDATE.md before deployment: .105 control EX lock for writes,
-  new versioned release, old health package untouched, target gates before activation.
-  Source exporter running .104 PID22485: python3 /home/nik/bc250work/
-  export_distributed_d01_on_host.py; log distributed-d01-export-controller.log;
-  outputs distributed-d01-export/{userspace.tar.gz,image.tar,manifest.json}.
-  Exports daily/RCCL Torch+RCCL+consumers under existing SH lock, no core duplicate.
-  Inventory PIDs21792(.104)/9287(.105)exit0; guarded ranks21432/9019exit0.
-  Both hosts /home/nik/bc250work/distributed-d01-20261104/{final.json,rank.json,
-  gpu.log,kernel-before.log,kernel-after.log,guard/}; controller distributed-d01-controller.log.
-  Local scripts build_tools/bc250/*distributed_d01*.py; inventories/delta under
-  tmp/distributed-d01. No active prefixes/launchers/kernel changed yet.
-  **Exact next:** finish frozen export, transfer verified artifacts; stage matched
-  .105 daily/RCCL candidate sharing immutable identical M105.1 ROCm, retaining base
-  dependency; load matching image without pruning. Target-qualify and run guarded
-  two-host Ring/Simple Ethernet RCCL with P2P/IB/SDMA/symmetric off, then promote
-  only after references/rollback. Ordinary native precision update remains separate.
+- **D01–D04 two-host rollout completed2026-11-04, bounded scope:** user now
+  authorizes `.105` updates/distributed experiments; B07.13 deferred, not done.
+  Initial/export tools1f533d8f1, final launcher/qualification/recovery5f45c242a;
+  Torch sourcea524980/daily and RCCL native payloads matched, no native rebuild.
+  All24664 ROCm inventory entries exactly match; retain shared immutable M105.1
+  core. `.105 current` NOW `/opt/bc250-stack/releases/10.2-gfx1013-20261104-d01`
+  after656 target checks/nine guards and9 ordinary bc250-torch/train forward/
+  backward+consumer checks. Image1bb4ac0e exact match; old506f image/base manifest/
+  five boot-health tools verified unchanged. New release and health depend on old
+  M105.1 base: NEVER remove it. Old caches/releases/images/fallbacks/user apps kept.
+  `.104` daily priority1 and existing rccl-single registration/defaults unchanged.
+  `bc250-distributed` installed BOTH, versioned tools/distributed-d01 + root registry
+  distributed/d01.json pins provider manifest, SH runtime lock; EX install/promotion.
+  Two-terminal --node-rank0/1, master104/eth0, Ring/Simple Socket only; P2P/IB/SDMA/
+  symmetric off. Ordinary daily NCCL-off remains. No generic env/venv CLI yet.
+  D01 Gloo16checks, D02 actual two-host RCCL16, D03 installed torchrun16: four
+  float dtype sums/small+1MiB refs/three CPU-double global-batch DDP gradient+SGD
+  steps. D04 classic nested FSDP/use_orig_params+AdamW14checks:1608 total params,
+  804/rank, exp_avg804/rank; CPU-double gradients/three parameter updates including
+  same-world/rank checkpoint resume. Small functional proof; no measured training
+  speedup, large-model peak capacity, production convergence or elastic claim.
+  Both eth0 links1000Mb/s. D03r1 harness extra TCPStore timed out; r2 refused still-
+  exiting owned workers before GPU; r3 env:// passes. Ordinaryr1 GPU math passed
+  then wrong plain-Torch Transformers expectation failed; consumers only in train,
+  correctedr2 passes9. Failed evidence preserved; no backend arithmetic defect.
+  All21 created guards ACK (104:5/105:16); logs unchanged in accepted GPU gates.
+  No running owned jobs/containers/armed guards.29 local tests/Black/critical Ruff/
+  syntax pass. No user-app access/delete/reboot/kernel/default-native-precision
+  change. .104 bootd10514df/r2, .105 boot92b47338/r3; r2 fallback/SSH preserved.
+  Historical Python CPU fault/KFD uncertainty distinct from fixed VM heap.
+  Source exportPID22485/stage22363 exit0; D01ranks21432/9019, D02:894/23562,
+  D03r3:5499/29248, D04:6820/30882, .105 target323 all exit0. No jobs pending.
+  Both /home/nik/bc250work/distributed-d0*/{final.json,rank.json,gpu.log,guard/};
+  matching controller logs. .105 target/ordinary-r2/recovery dirs retained;
+  activation.json plus reviewed promote_distributed_d01_host105.py --rollback
+  under control EX lock restores ordinary old selection; live D01 rollback not
+  exercised. Optional distributed registry independent of daily rollback.
+  Frozen1.49GB userspace/1.21GB image exports retained .104/workstation. Only redundant
+  new .105 image transfer removed after import verification, no other cleanup.
+  Final local kernel/artifacts/distributed-d01/*-final-evidence-r2.tar.gz:
+  104352782B SHAb68218d22d139822a32f872d75440d0e7dd1c35c185a894147718e0fb807dc26;
+  105790849B SHA2b856fdf4ae2d1c2a0acefb070eb11b6155b56bf5ea0785ed6fb47f16b650c67.
+  [Evidence/revisions/limits](docs/development/bc250_distributed_d01_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md), [deployment](../HOST105_UPDATE.md).
+  **Next D05:** owned representative DDP/FSDP training: matched global batch one-
+  versus-two-node communication/step timing and peak-memory measurement; checkpoint
+  robustness/model-block wrapping before larger-model promises. FSDP2/ZeRO/HF
+  integration remains separate. Keep app exclusion and both-host recovery rules.
 
 - **B07.12 coherent FP32/FP16 artifact completed2026-11-04:** toolsc64debffb;
   source96e5a7df/Torcha524980/installed native8389197 unchanged. Packages B07.10
@@ -4017,7 +4036,7 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [ ]   | **B06.12 — next** | Bounded modern Torch exporter→public ORT GPU integration with independent CPU/eager-GPU references, then practical B06 gap review. Preserve defaults/.105; no universal model/dtype/graph-autograd or speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
-| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` migration completed in M105.1; cross-board distributed execution/scaling remains separately unqualified.                                                                                                  |
+| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update and bounded D02–D04 cross-board RCCL/DDP/FSDP now pass; representative scaling, capacity, elastic recovery and other transports remain unqualified.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
 | [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |

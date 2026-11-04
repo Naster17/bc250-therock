@@ -84,19 +84,20 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 
 ## Kernel, unlock, cooling and recovery
 
-Current host105 deployment (M105.1,2026-10-23): explicit user authorization ended
-its old-reference role. `.105` runs the independent `.104` daily snapshot
-(Torch2b449c4/image506f/HIP1f9609), signed r3 image84995f1/module0957f1, with
-`bc250-host105-r3-release` default and retained r2.656 target checks/nine gates,
-three promoted normal boots,15s idle deadline→r2/SSH/GPU smoke, and final
-post-retirement boot pass.69,229 file/link entries match before/after cleanup;
-36 legacy directories/five containers/eight images retired after verified local
-source/Git archives, plus old public download cache. Free root space~101GiB.
-Future update/rollback procedure: [HOST105_UPDATE.md](../../../HOST105_UPDATE.md);
-it distinguishes the administrative lock from draining production workloads.
-Operational healthchecks live in the root-owned versioned release; state is
-`/var/lib/bc250-stack/host105`. Cgroups/watchdog persist. `.104` remains r2 boot
-2db1c7c2/runtime32fd4559, unchanged. [Deployment, exact scope and recovery](bc250_host105_migration_results/README.md).
+Current host105 userspace (D01–D04,2026-11-04): after 656 target checks/nine
+guards and nine ordinary launcher checks, `.105` selects
+`/opt/bc250-stack/releases/10.2-gfx1013-20261104-d01`, daily/RCCL Torch source
+`a524980` and image1bb4ac0e matched to `.104`. All24,664 ROCm inventory entries
+already matched; the new release explicitly shares retained immutable M105.1
+ROCm. Do not retire that base, its old image506f or operational health tools/data.
+No kernel/reboot/boot-policy change: `.105` signed r3/module0957f1, retained r2;
+`.104` remains r2. Original M105.1 migration/boot recovery evidence remains in the
+[migration report](bc250_host105_migration_results/README.md). Current update,
+reviewed daily rollback and dependency rules: [HOST105_UPDATE.md](../../../HOST105_UPDATE.md).
+Actual two-host RCCL/DDP and bounded FSDP state/checkpoint references are now
+qualified below; performance/large-model capacity/elastic recovery remain open.
+[Rollout evidence](bc250_distributed_d01_results/README.md),
+[developer usage](../../../BC250_DISTRIBUTED_GUIDE.md).
 
 
 Historical observation2026-10-19 (N2.18): .104 already running fallback
@@ -914,12 +915,12 @@ counts remain historical; exact next A05. Selected Torch/library queue precedes 
 | hipFile                                     | Five synchronous/asynchronous compatibility I/O roundtrips                                                                                                                                                   | Not a direct-storage/DMA fast-path claim; registration/concurrency/ordering remain                                                                          |
 | rocprofiler/ROCTX                           | Native marker/API/kernel/copy tracing with 3628 APIs,263 dispatches,814 copies, CPU workload correlations                                                                                                    | Counter mapping/advanced profiling/debug consumers separate                                                                                                 |
 | AMD SMI / RDC                               | AMD SMI built without EPYC ESMI; disposable generated-header source copy                                                                                                                                     | Read-only telemetry remains incomplete/untrusted; RDC not built/qualified                                                                                   |
-| Torch distributed / Gloo | B03.1 CPU31 and B03.2 GPU41 local two-rank collectives/first gradients/DDP references; B03.2 total108 retained gates pass | GPU collectives host-staged; one physical GPU. GPU send-recv/RPC/non-loopback/checkpoint/multi-device/scaling unqualified. B03.7 guards/profile76/1441 checks complete; B03.8 ordinary opt-in profile1461/26+context5 passed; daily unchanged, .105 untouched. D01 initial two-physical-host Gloo GPU sums/four dtypes and three CPU-reference global-batch DDP/SGD steps pass16 checks; guarded logs unchanged. Matched userspace export in progress; socket RCCL/FSDP/scaling remain unqualified. |
+| Torch distributed / Gloo | B03.1 CPU31/B03.2 GPU41 local baseline retained. D01 two-physical-host Gloo four-dtype GPU sums and three CPU-reference global-batch DDP/SGD steps:16 checks. D02/D03 same16 each through matched RCCL/installed torchrun command. | Gloo is host-staged. D04 classic FSDP/use_orig_params+AdamW shards804/1608 parameters per rank and same-world/rank checkpoint resume:14 checks. Explicit bc250-distributed on both hosts; no large-model capacity/scaling/elastic/FSDP2/HF Trainer proof. [Usage/evidence](bc250_distributed_d01_results/README.md). |
 | MIGraphX | B06.9 source134ee25f6 repairs handwritten wrapper C++20 parsing; private overlay C++17/20 and native async boundary qualified. Installed B06.8 opt-in SDK remains4797a6112; explicit bc250-migraphx launcher verifies identities/read-only mount and both runtime cohorts.165 checks/ten guards/68 GPU graph evaluations; live unregister/register recovery | CPython3.12/glibc/static FP32 fixture scope. Ordinary Torch defaults unchanged; no automatic routing, ORT GPU EP, graph autograd, all-model/dtype/opset/MXR portability or performance claim. [Use/results/recovery](bc250_migraphx_b068_results/README.md). |
 | ONNX export/runtime | B06.1 pinned ONNX/Script/IR/ORT CPU installed on .104;181 candidate+181 installed checks plus early33: modern CPU/GPU-origin FP32 graphs, CPU-double/NumPy references, explicit host transfer and downstream HIP gradients | CPUExecutionProvider only qualified; Azure advertised/unqualified, no AMD GPU EP/ONNX autograd/training/W8 export claim. ROCm EP removed upstream1.23; B06.5 isolated native C++ ONNX→gfx1013 FP32 graphs qualified; B06.6 Python bindings/B06.7 relocatable SDK and B06.8 registered opt-in SDK installed in recorded static FP32 scope; B06.11 versioned ORT1.31+gfx1013 package installed via explicit bc250-ort; relocation/metadata/identity/recovery/caller-context174 checks/48 GPU evals pass. Ordinary CPU package/defaults preserved. B06.12 fresh modern static CPU/GPU-origin exports pass112 checks/24 public GPU evaluations in daily/RCCL with four reference routes and12 GPU-only node profiles. Broader models/dtypes/dynamic shapes/graph-autograd/performance remain unqualified. [Use/recovery](bc250_onnxruntime_b0611_results/README.md). |
 | Weight-only quantization | B05.6 public opt-in `bc250_quant 0.1.0` installed on .104 daily/RCCL imagee2821cf8:817 candidate+817 installed checks, CPU-reference first gradients/state/AdamW resume and actual B05.5 checkpoint compatibility | Explicit frozen W8 only; native layouts fixed in both a524 cohorts, module first input/bias gradients via unchanged helper. TorchAO/bitsandbytes/NF4/packed INT4/full QLoRA remain absent/unqualified; native direct backward refuses. No model-quality/speed/peak-memory claim. [Use/recovery](bc250_quant_b056_results/README.md). |
-| RCCL | B03.7 isolated Torch14cf FP8 guards and32 bit-copy refs, generic registration/state-only offload readiness;76 new/1441 total pass | Daily NCCL off; B05.3 matched a524 rccl-single selected after1732+371 checks; no numeric FP8/multi-device/symmetric device/offload-payload/scaling/speed proof. |
-| rocSHMEM/MPI | Not built in current profile | Local software-transport/readiness applicability remains; .105/multi-board work deferred. |
+| RCCL | B03.7/B05.3 native a524 rccl-single retained. D02/D03 real two-host eth0 Socket Ring/Simple four-dtype GPU sums, CPU-reference DDP/SGD, and D04 FSDP/AdamW state sharding/checkpoint pass. Matched .105 release installed; explicit bc250-distributed registered on both. | Ordinary daily NCCL remains off; old rccl-single loopback profile unchanged. P2P/IB/SDMA/symmetric off; no numeric FP8, other protocol/transport, offload payload, large-model/scaling/speed proof. |
+| rocSHMEM/MPI | Not built in current profile | Independent software-transport applicability remains; two-host RCCL works without MPI and is not rocSHMEM/MPI qualification. |
 | rocDecode/rocJPEG                           | Current driver does not expose media rings                                                                                                                                                                   | Qualify feasible host decoding/HIP interoperability separately; do not invent an upstream JPEG software fallback                                            |
 | rocWMMA / matrix-only engines               | Not applicable as native MFMA/WMMA execution                                                                                                                                                                 | Distinct scalar emulation/math paths could be work; never enable them by architecture spoofing                                                              |
 | rocRoller/emulation/other optional projects | No blanket qualification                                                                                                                                                                                     | Audit pinned API/instruction applicability before enablement; CPU fallback must be identified                                                               |
