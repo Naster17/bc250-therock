@@ -6,7 +6,13 @@ from pathlib import Path
 import sys
 
 assert os.geteuid() == 0
-sys.path.insert(0, "/opt/bc250-stack/tools/distributed-d01")
+sys.path.insert(
+    0,
+    os.environ.get(
+        "BC250_D05_CANDIDATE_TOOL",
+        str(Path("/usr/local/bin/bc250-distributed").resolve().parent),
+    ),
+)
 import bc250_distributed as launcher
 
 run = launcher.run_process

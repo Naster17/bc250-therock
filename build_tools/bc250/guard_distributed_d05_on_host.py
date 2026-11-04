@@ -49,6 +49,8 @@ def main():
     p.add_argument("--mode", choices=["single", "ddp", "fsdp"], required=True)
     p.add_argument("--label", required=True)
     p.add_argument("--port", type=int, required=True)
+    p.add_argument("--strict-agent", action="store_true")
+    p.add_argument("--candidate", action="store_true")
     a = p.parse_args()
     assert os.geteuid() == 0 and os.uname().nodename in ["bc250", "bc500"]
     assert a.label.replace("-", "").isalnum()
@@ -113,8 +115,14 @@ def main():
             assert state["status"] == "armed"
             result["boot_id"] = state["boot_id"]
             with (root / "gpu.log").open("w") as log:
+                child_env = dict(os.environ)
+                if a.candidate:
+                    child_env["BC250_D05_CANDIDATE_TOOL"] = (
+                        "/opt/bc250-stack/tools/distributed-d05"
+                    )
                 child = subprocess.Popen(
                     command,
+                    env=child_env,
                     stdin=subprocess.DEVNULL,
                     stdout=log,
                     stderr=subprocess.STDOUT,
@@ -130,6 +138,12 @@ def main():
             r = json.loads((root / "rank.json").read_text())
             assert r["status"] == "passed"
             result.update(status="passed", worker=r)
+            text = (root / "gpu.log").read_text()
+            result["agent_shutdown_clean"] = not any(
+                x in text for x in ["DistNetworkError", "Error waiting on exit barrier"]
+            )
+            if a.strict_agent:
+                assert result["agent_shutdown_clean"], "Agent shutdown failed"
         except BaseException as e:
             result.update(status="failed", error=repr(e))
             raise

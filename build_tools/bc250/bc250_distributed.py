@@ -61,8 +61,7 @@ def main():
         env.update(GLOO_SOCKET_IFNAME="eth0")
         options = LaunchOptions(
             arguments=[
-                "-m",
-                "torch.distributed.run",
+                str(Path(__file__).resolve().with_name("bc250_torchrun.py")),
                 "--nnodes=2",
                 "--nproc-per-node=1",
                 "--node-rank=" + str(a.node_rank),
@@ -71,7 +70,10 @@ def main():
                 str(script),
                 *a.arguments,
             ],
-            mounts=[(str(script.parent), "rw")],
+            mounts=[
+                (str(script.parent), "rw"),
+                (str(Path(__file__).resolve().parent), "ro"),
+            ],
             environment=env,
             runtime_profile="rccl-single",
         )
