@@ -8,8 +8,8 @@ daily/RCCL native payloads were copied without rebuilding. ROCm library source
 B07.12 private precision/plugin artifact was not silently installed. B07.13 is
 still deferred by the user's distributed-training priority.
 
-Usage: [BC250_DISTRIBUTED_GUIDE.md](../../../BC250_DISTRIBUTED_GUIDE.md).
-Deployment/recovery: [HOST105_UPDATE.md](../../../HOST105_UPDATE.md).
+Usage: [BC250_DISTRIBUTED_GUIDE.md](../../../../BC250_DISTRIBUTED_GUIDE.md).
+Deployment/recovery: [HOST105_UPDATE.md](../../../../HOST105_UPDATE.md).
 
 ## Executed results
 
