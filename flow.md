@@ -9,6 +9,36 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Top-level cleanup follow-up completed2026-11-04:** user explicitly asks to
+  remove old agent helpers/files and unused aliases, rather than preserve clutter.
+  Source toolbb7fc0c0e plus final consolidation/backup-retirement checks; both host
+  EX locks/no containers. .104118 entries (99 regular/19 links),2,823,477,728B;
+  .105154 (126 regular/28 links),13,876,633B retired. All225 regular loose files
+  including obsolete synthetic fixture checkpoints archived locally; both archive
+  SHAs and EVERY member SHA verified before deletion. No user training checkpoint
+  or application access. Backups790MB/10.5MB remain ONLY on workstation after
+  verified host-copy retirement. Local kernel/artifacts/workspace-cleanup-20261104/
+  top-level/{104,105}-loose-files.tar.gz, plans and verification journals.
+  SHA104a5f31bd0d1f14fd25eb1cf2bc2580ac215b50a062bc9dddcc36d0b2a82b64b64;
+  SHA105fa1298786e61db5eb4a0a276a1c2d65a01623393586b71c47ab0aed411ac9d28.
+  System service/tool/registry absolute references inspected. Retain ONLY root
+  aliases needed by installed report metadata and rollback (D04 both, plus .105
+  target-qualification/recovery/promoter). Other historical replay commands may
+  need grouped paths/fresh output labels; do not recreate obsolete root aliases.
+  Inactive distributed installer-inputs and import/export manifests consolidated
+  under tools/distributed-d01 and evidence/distributed-d01 without root aliases.
+  Root has12entries(.104)/17(.105), ZERO regular files; preserved source/build/
+  cache/recovery/board-support/application directories. .104~20.7GiB free/.105~45GiB.
+  Selected runtime/registry/old .105 base manifest hashes match prior baseline;
+  remaining paths and ordinary --info checks pass, kernels/bootIDs unchanged.
+  No native/GPU/boot changes or new GPU qualification. docs/README.md on both
+  stays the entry point; final documentation/memory snapshot includes this cursor.
+  Inventory/archive PIDs23440/30584 exit0; all retirement/consolidation commands
+  complete, no jobs/containers/guards. Critical Ruff/Black/syntax/diff pass.
+  **Next D05 unchanged:** representative owned distributed timing/memory/checkpoint
+  qualification. Public release still requires source-delta/reconstruction/license
+  and privacy audits; these private recovery archives are not public packages.
+
 - **Workspace cleanup/documentation completed2026-11-04:** user authorizes both
   hosts' stack-owned temporary-file cleanup and source preservation for publication.
   Tool milestone4eafbcdf0 plus final docs-link repair. Inspected `.104`162.3GiB

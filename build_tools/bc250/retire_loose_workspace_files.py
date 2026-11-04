@@ -59,9 +59,11 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--apply", action="store_true")
     p.add_argument("--consolidate-staging", action="store_true")
+    p.add_argument("--discard-host-backup", action="store_true")
     p.add_argument("--verified-archive-sha256")
     a = p.parse_args()
     assert os.geteuid() == 0
+    assert os.uname().nodename in ("bc250", "bc500")
     host = "104" if os.uname().nodename == "bc250" else "105"
     base = WORK / "evidence" / "top-level-cleanup-20261104"
     base.mkdir(parents=True, exist_ok=True)
@@ -75,6 +77,20 @@ def main():
     with lock.open("r") as fd:
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
         assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
+        if a.discard_host_backup:
+            result_path = base / "result.json"
+            result = json.loads(result_path.read_text())
+            plan = json.loads(planfile.read_text())
+            assert result["status"] == "passed"
+            assert (
+                a.verified_archive_sha256 == plan["archive_sha256"] == digest(archive)
+            )
+            archive.unlink()
+            result["backup_location"] = (
+                "verified workstation archive; host transfer retired"
+            )
+            result_path.write_text(json.dumps(result, indent=2) + "\n")
+            return
         if a.consolidate_staging:
             result_path = base / "result.json"
             result = json.loads(result_path.read_text())

@@ -413,6 +413,18 @@ prepare separately versioned candidate with one-shot boot/SSH fallback preserved
 | Recovery link          | `/opt/bc250-stack/before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542` release                                                                   |
 | Software fallback      | `previous` and `before-dev-current` → retained `10.2-gfx1013-20261013-4b000d542`; initial20261012 payload retired20261016                                       |
 
+Top-level follow-up20261104 supersedes the earlier keep-every-alias policy:
+user explicitly authorized obsolete agent-file retirement. .104118/.105154 loose
+entries retired (225 regular files,47 unused aliases),2,837,354,361 logical bytes.
+Workstation archives verified both whole-file and every member SHA before deletion;
+redundant host backup copies also retired. Unused installer/import/export staging
+folders consolidated under tools/evidence. Top levels now12/17 entries, no regular
+files. Keep D04 report alias on both and .105 qualification/recovery/promoter paths;
+system service/tool/registry references protected. Native manifests/bootIDs unchanged,
+CPU launcher/path checks pass; no GPU change or qualification. Logs/plans/recovery
+archives: kernel/artifacts/workspace-cleanup-20261104/top-level. docs/README.md
+remains the host entry; obsolete historical commands need grouped paths/new labels.
+
 Storage organization20261104: .10496 exact workstation-backed transfer copies
 (7,017,699,431B) and .105one duplicate import (1,490,746,029B) retired under host
 EX locks after full hash/size preflight. 94 old .104 archives/two patches retained
