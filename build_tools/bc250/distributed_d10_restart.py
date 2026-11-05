@@ -578,7 +578,37 @@ def main() -> None:
                 else:
                     raise AssertionError("Invalid checkpoint admitted")
             path = checked_part(commit, checkpoint, "real-generation")
-            payload = torch.load(path, map_location="cpu", weights_only=True)
+
+            def restricted_load(part, label):
+                error = None
+                value = None
+                try:
+                    value = torch.load(part, map_location="cpu", weights_only=True)
+                except Exception as exc:
+                    error = repr(exc)
+                agree(error, label)
+                return value
+
+            # Matching valid-digest metadata can still contain invalid serialization on one rank.
+            trial = copy.deepcopy(commit)
+            invalid = b"owned invalid checkpoint bytes"
+            folder = checkpoint
+            trial["parts"][1]["bytes"] = len(invalid)
+            trial["parts"][1]["sha256"] = hashlib.sha256(invalid).hexdigest()
+            if rank == 1:
+                folder = a.output.parent / "invalid-serialization-copy"
+                folder.mkdir()
+                (folder / "rank-1.pt").write_bytes(invalid)
+            invalid_path = checked_part(
+                trial, folder, "valid-digest-invalid-serialization"
+            )
+            try:
+                restricted_load(invalid_path, "restricted-load-refusal")
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Invalid serialization admitted")
+            payload = restricted_load(path, "restricted-real-payload")
             for name in ["loaded-rank", "loaded-cursor"]:
                 bad = copy.deepcopy(payload)
                 if rank == 1:
@@ -623,7 +653,7 @@ def main() -> None:
             agree(error, "uninterrupted-reference-files")
             assert (
                 birth["uuid"] != payload["birth"]["uuid"]
-                and birth["pid_namespace"] != payload["birth"]["pid_namespace"]
+                and birth["start_ticks"] != payload["birth"]["start_ticks"]
             )
             result["source_birth"] = payload["birth"]
             s = payload["state"]
@@ -644,6 +674,7 @@ def main() -> None:
             result["checks"].extend(
                 [
                     "eight-collective-preload-refusals-no-state-mutation",
+                    "one-collective-restricted-load-refusal",
                     "two-collective-loaded-metadata-refusals",
                     "fresh-process-full-initial-state-restored",
                 ]
@@ -667,7 +698,7 @@ def main() -> None:
                 result["checks"].append(
                     f"exact-uninterrupted-loss-gradients-params-optimizer-scaler-scheduler-RNG-cursor-{attempt}"
                 )
-            result["checkpoint_refusals"] = 10
+            result["checkpoint_refusals"] = 11
         assert cursor.epoch == 1 and cursor.offset == 16 and updates[0] == 5
         result["checks"].append("final-epoch-one-offset16-five-actual-updates")
         result["final_state_digest"] = fingerprint(state())
@@ -680,6 +711,8 @@ def main() -> None:
         result.update(status="failed", error=repr(error))
         raise
     finally:
+        if dist.is_initialized():
+            dist.destroy_process_group()
         atomic_json(a.output, result)
 
 
