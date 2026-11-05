@@ -4,13 +4,12 @@
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
 import torch
-import accelerate
-import transformers
 from bc250_trainer import BC250Trainer, masked_token_loss
 
 
@@ -21,15 +20,17 @@ def main():
     assert not torch.cuda.is_initialized()
     checks = []
     before = torch.get_rng_state().clone()
-    for module in [transformers, accelerate]:
-        with patch.object(module, "__version__", "unqualified"):
+    for name in ["transformers", "accelerate"]:
+        with patch.dict(
+            sys.modules, {name: SimpleNamespace(__version__="unqualified")}
+        ):
             try:
                 BC250Trainer.create_accelerator_and_postprocess(object())
             except RuntimeError as e:
                 assert "requalification" in str(e)
             else:
                 raise AssertionError("Future package accepted")
-        checks.append("version-refusal-" + module.__name__)
+        checks.append("version-refusal-" + name)
     read = Path.read_bytes
     for name in ["trainer.py", "accelerator.py"]:
 
