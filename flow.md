@@ -9,6 +9,70 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D14 completed2026-11-05, native Trainer AMP clipping +rank-local FP16 policy:**
+  implementation625b840d7/exportsb3e3d8a30. New opt-in tools/distributed-d14/
+  bc250_trainer_clipping.py BC250ClippedTrainer staged BOTH. D12 normalization/
+  D13 finite callback unchanged. Native daily/RCCL Torch a524980/ROCm/D09 launcher/
+  registry/images/profiles/kernels/consumers unchanged. No native build/install/
+  prefix mutation/reboot/app access. Decorates ONLY own Accelerator PUBLIC
+  clip_grad_norm_ method; native unscale/L2 clip/scaler/Trainer loop retained.
+  Two-host dense FP32-master DDP, one optimizer, positive finite max_grad_norm.
+  Full public scaler-state agreement +all-reduced badflag BEFORE unscale; rank1
+  AFTER-DDP Inf marks a gradient Inf on BOTH so native scalers cache overflow
+  coherently. Native clipping then skip AdamW/StepLR/backoff BOTH, no private
+  scaler flags. BF16 pre-clip invalid stops BOTH. Final public pre-optimizer gate
+  appended after existing caller callbacks stops BOTH on NEW post-clip invalid
+  gradients; do not dynamically reorder/add callbacks or mutate after gate.
+  Matching caller collective order required; finite asymmetric edits unguarded.
+  Public scaler mismatch stops BOTH before unscale. Refusals require checkpoint
+  reload, no same-iterator/scaler continuation; transient state not rolled back.
+  Same owned D07 MLP1051648/variable-mask MSE/global active-window count,
+  actual Trainer5.2/Accelerate1.12 BF16/FP16,28sequential/workers0 records/global8
+  first3attempts/finalglobal4 singlemicro,dropout0,RNG probes,strict determinism.
+  max_grad_norm.002 ACTIVE every finite tested window: pre-norm.0186445–.0547800,
+  coefficients.0365090–.107265. Independent D07 pregrad CPU rounding/FP64-matmul
+  loss/ALL-grad limits retained (BF16 maxrelativeL2.00276769444<=.02, FP16
+  .000372783621<=.004). CPU-FP64 ALL-grad L2 norm/coefficient predicts EVERY clipped
+  gradient (atol1e-8/rtol5e-5); native norm atol1e-7/rtol1e-5. CPU-double AdamW
+  uses expected clipped grads, ALL params/moments pass fixed D07 limits. No
+  tolerance changes. BF16 updates4/LR.00064; FP16 attempts4/actualupdates3/LR.0008,
+  native defaults65536/growth_interval2000→32768/tracker0 thirdskip→finite tracker1.
+  Native per-host save_on_each_node checkpoint2/scaler/four RNG, new CID/UUID/
+  startticks/different constructor seeds, exact initial native restore; attempts3/4
+  ALL local losses/grads/params/optimizer/scheduler/scaler/RNG/probe draws/rows/
+  finiteflag exact+digests:8resumed rank-windows. Native Inf clipping NaNs stored
+  as exact NaN/+Inf/-Inf masks +exact finite values/nonfinite slots0; classifications
+  retained, no NaN-payload-bit equality claim. No generic data/checkpoint proof.
+  Three separate rank1-only expected refusals after checkpoint2: BF16 pre-clip
+  Inf; FP16 post-clip Inf in caller callback (native unscale alreadycachedfinite);
+  FP16 public scaler.update(scale/2) disagreement.6rank refusal observations,
+  complete params/AdamW/StepLR/checkpoint2/globalstep+Adamsteps2 unchanged.
+  RNG/gradient/scaler transient state advances/perturbed; reload required.
+  118groups/14ACK guards/42local regressions, first revision all pass. Black/
+  critical Ruff+unused-import/syntax/diff pass; no full upstream CI. SH locks/
+  4CPUs/10GiB+12GiB/512PIDs/256MiBshm/600s guards/460s children. Clean agents/
+  phase kernel logs/registry. Sequence10343/10259 exit0, exact commands/PIDs/
+  exits sequence.json. No foreign process touched; no jobs/containers/armed
+  guards. Bootsdc9e9293(.104r2)/133b8dc2(.105r3) unchanged. Nativewarnings/D12
+  aggregate resume train_loss caveat remain. Historical Python CPU fault/KFD/
+  invalidvisibility distinct from fixed VMheap/D05 agent exit; no new native fault.
+  Both tools/distributed-d14 +evidence/distributed-d14-r1/{bf16,fp16}-{seed,resume},
+  {bf16-reject,fp16-late,fp16-scale}-seed. Normal seedpayload156059932B/host retained
+  plus refusal/resume outputs. Local kernel/artifacts/distributed-d14 metadata
+  archives omit.pt/.pth/.bin/.pkl/.safetensors:104382577B SHA
+  90780de8dff826d6149016bf2db78c58c89d2eb0d7f20c66aa6f6e92ae14ab23;
+  105343823B SHAbc3b71333f1506f6a87b8ae2375c4cf2cb408cd58146f1fb957c1db3c3bb3667.
+  Source/guard/scaler/refusal/config/fresh proof verified; docs/memory BOTH synced.
+  [D14 report](docs/development/bc250_distributed_d14_results/README.md),
+  [clipped Trainer usage](../BC250_DISTRIBUTED_GUIDE.md#coordinated-trainer-amp-clipping-d14).
+  No arbitrary-model/loss/AMPBert/FP32/sparse/multioptimizer/FSDP/DeepSpeed/dynamic
+  callback/convergence/capacity/speed/elastic/general-resume claim. Extreme finite
+  norm overflow refusal guard exists but has no separate GPU injection proof.
+  **Next D15 (new planned):** actual owned offline Transformer BF16/FP16 Trainer
+  token-normalized CE +clipping/CPU references/native restart; retain native/
+  default/recovery settings. Invalid-visibility frontend/B07.13/larger capacity/
+  release reconstruction remain separate follow-ups.
+
 - **D13 completed2026-11-05, actual Trainer BF16/FP16 + finite refusal:**
   fixture/callback70bd075e7, exports62b35356c. Existing D12 BC250Trainer/source
   pins unchanged, staged BOTH tools/distributed-d13 with new optional public

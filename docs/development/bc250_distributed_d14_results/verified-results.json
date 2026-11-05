@@ -1,0 +1,177 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 118,
+  "accepted_GPU_guards": 14,
+  "coherent_rank_refusals": 6,
+  "exact_resumed_rank_windows": 8,
+  "local_unit_tests": 42,
+  "qualification_boot_ids": [
+    [
+      "dc9e9293-451c-4cd0-8839-7c902c8509ad"
+    ],
+    [
+      "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+    ]
+  ],
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "dc9e9293-451c-4cd0-8839-7c902c8509ad",
+    "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+  ],
+  "valid_payload_bytes_per_host": [
+    156059932,
+    156059932
+  ],
+  "cases": {
+    "bf16": {
+      "clipping_metrics": [
+        {
+          "step": 0,
+          "norm": 0.01864447444231971,
+          "coefficient": 0.10726463443915332
+        },
+        {
+          "step": 1,
+          "norm": 0.021222150613523515,
+          "coefficient": 0.09423671519937235
+        },
+        {
+          "step": 2,
+          "norm": 0.038733343042298155,
+          "coefficient": 0.05163376587582722
+        },
+        {
+          "step": 3,
+          "norm": 0.05364451861571031,
+          "coefficient": 0.03728177211459172
+        }
+      ],
+      "gradient_errors": [
+        {
+          "step": 0,
+          "maximum_relative_L2": 0.0027676944413767366
+        },
+        {
+          "step": 1,
+          "maximum_relative_L2": 0.0015043365526538337
+        },
+        {
+          "step": 2,
+          "maximum_relative_L2": 0.0015797312905110516
+        },
+        {
+          "step": 3,
+          "maximum_relative_L2": 0.0017056711613954137
+        }
+      ],
+      "final_scaler": {},
+      "worker_births": [
+        [
+          {
+            "uuid": "4d3c7b6cab004987afcc0fbf5ec00404",
+            "pid": 20,
+            "start_ticks": "174553"
+          },
+          {
+            "uuid": "11519f00e9f4481e8c93f5fbb9fea0fe",
+            "pid": 20,
+            "start_ticks": "176388"
+          }
+        ],
+        [
+          {
+            "uuid": "42e5ace626c3403495c41c526c62c198",
+            "pid": 19,
+            "start_ticks": "174800"
+          },
+          {
+            "uuid": "0c35dc7c032c44e58b9d8814fc1f9b3f",
+            "pid": 19,
+            "start_ticks": "176636"
+          }
+        ]
+      ]
+    },
+    "fp16": {
+      "clipping_metrics": [
+        {
+          "step": 0,
+          "norm": 0.018645865224974852,
+          "coefficient": 0.10725663407065769
+        },
+        {
+          "step": 1,
+          "norm": 0.02122199167865108,
+          "coefficient": 0.09423742091987282
+        },
+        {
+          "step": 3,
+          "norm": 0.05477999632521376,
+          "coefficient": 0.03650901104694714
+        }
+      ],
+      "gradient_errors": [
+        {
+          "step": 0,
+          "maximum_relative_L2": 0.0003727836212481683
+        },
+        {
+          "step": 1,
+          "maximum_relative_L2": 0.000190467436465859
+        },
+        {
+          "step": 3,
+          "maximum_relative_L2": 0.0002031803985559185
+        }
+      ],
+      "final_scaler": {
+        "scale": 32768.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 1
+      },
+      "worker_births": [
+        [
+          {
+            "uuid": "5a7d8e2aa9894158b97fa7fc9b6b7fbe",
+            "pid": 20,
+            "start_ticks": "178042"
+          },
+          {
+            "uuid": "35ff5c50e0c74647aec62105fe45a7ac",
+            "pid": 20,
+            "start_ticks": "179784"
+          }
+        ],
+        [
+          {
+            "uuid": "6cf4676353764e7186c4713351babcd4",
+            "pid": 19,
+            "start_ticks": "178289"
+          },
+          {
+            "uuid": "93bb3a9c630e41a9acafd1f08c3b4a6a",
+            "pid": 19,
+            "start_ticks": "180031"
+          }
+        ]
+      ]
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 382577,
+      "sha256": "90780de8dff826d6149016bf2db78c58c89d2eb0d7f20c66aa6f6e92ae14ab23"
+    },
+    {
+      "host": 105,
+      "bytes": 343823,
+      "sha256": "bc3b71333f1506f6a87b8ae2375c4cf2cb408cd58146f1fb957c1db3c3bb3667"
+    }
+  ]
+}
