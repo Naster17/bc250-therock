@@ -102,7 +102,7 @@ def main():
 
     command = [
         "python3",
-        "/home/nik/bc250work/tools/distributed-d19-r2/distributed_d19_bounded_launch.py",
+        "/home/nik/bc250work/tools/distributed-d19-r3/distributed_d19_bounded_launch.py",
         "--node-rank",
         str(rank),
         "--master-port",
@@ -115,7 +115,7 @@ def main():
         "HF_HUB_OFFLINE=1",
         "--shm-size",
         "256m",
-        "/home/nik/bc250work/tools/distributed-d19-r2/distributed_d19_evaluate.py",
+        "/home/nik/bc250work/tools/distributed-d19-r3/distributed_d19_evaluate.py",
         "--case",
         a.case,
         "--action",
@@ -158,7 +158,7 @@ def main():
                 child_env["BC250_D05_CANDIDATE_TOOL"] = str(tools)
                 child = subprocess.Popen(
                     command,
-                    cwd=Path("/home/nik/bc250work/tools/distributed-d19-r2"),
+                    cwd=Path("/home/nik/bc250work/tools/distributed-d19-r3"),
                     env=child_env,
                     stdin=subprocess.DEVNULL,
                     stdout=log,

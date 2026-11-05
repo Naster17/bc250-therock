@@ -281,7 +281,7 @@ def main():
             }
         assert (
             profiles["compact"]["aten::_local_scalar_dense"] == 1
-            and profiles["compact"]["aten::nonzero"] == 0
+            and profiles["compact"]["aten::nonzero"] == 3
         )
         assert (
             profiles["d18"]["aten::_local_scalar_dense"] > 1

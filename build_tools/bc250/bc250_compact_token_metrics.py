@@ -53,29 +53,21 @@ class CompactTokenMetrics:
         active = targets.ne(-100)
         bad = (active & ((targets < 0) | (targets >= logits.shape[-1]))).any()
         stats[:, 1] = active.sum(-1)
-        # Rectangular chunks batch rows without flattening/copying ALL causal logits.
-        # At most chunk_tokens positions per temporary, including ignored positions.
-        rows_per_chunk = min(max(1, labels.shape[0]), self.chunk_tokens)
-        sequence_per_chunk = max(1, self.chunk_tokens // rows_per_chunk)
-        for row in range(0, labels.shape[0], rows_per_chunk):
-            rows = slice(row, row + rows_per_chunk)
-            for start in range(0, targets.shape[1], sequence_per_chunk):
-                columns = slice(start, start + sequence_per_chunk)
-                mask = active[rows, columns]
-                y = targets[rows, columns]
-                # Mask ignored NaN/Inf before CE. Invalid ACTIVE values still flag bad.
-                z = values[rows, columns].masked_fill(~mask.unsqueeze(-1), 0).double()
+        # Keep active-token selection: dense padding work regressed wide-vocab tests.
+        # nonzero() still synchronizes its dynamic shape; validation scalar reads
+        # are combined once below, without per-chunk label min/max host transfers.
+        for row in range(labels.shape[0]):
+            indices = active[row].nonzero().flatten()
+            for start in range(0, indices.numel(), self.chunk_tokens):
+                selected = indices[start : start + self.chunk_tokens]
+                z = values[row, selected].double()
+                y = targets[row, selected]
                 bad = bad | ~torch.isfinite(z).all()
-                # Clamp before device indexing so invalid labels cannot fault the GPU.
-                # The accumulated flag refuses them before returning any statistics.
                 loss = torch.nn.functional.cross_entropy(
-                    z.reshape(-1, z.shape[-1]),
-                    y.clamp(0, z.shape[-1] - 1).reshape(-1),
-                    reduction="none",
-                ).reshape(y.shape)
-                stats[rows, 0] += torch.where(mask, loss, 0).sum(-1)
-                stats[rows, 2] += (z.argmax(-1).eq(y) & mask).sum(-1)
-        # Exactly one explicit device-to-host validation read; no nonzero() sync.
+                    z, y.clamp(0, z.shape[-1] - 1), reduction="sum"
+                )
+                stats[row, 0] += loss
+                stats[row, 2] += z.argmax(-1).eq(y).sum()
         if bad.item():
             raise ValueError("Nonfinite active logits or out-of-vocabulary labels")
         return stats
