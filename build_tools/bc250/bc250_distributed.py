@@ -15,11 +15,144 @@ from bc250_torch import (
     run_process,
     runtime_lock,
     read_context,
-    INHERITED_NAMES,
-    INHERITED_PREFIXES,
+    parse_launcher_arguments,
+    validate_options,
+    check_mount,
 )
 
 REGISTRY = Path("/opt/bc250-stack/distributed/d01.json")
+
+
+DISTRIBUTED_ENVIRONMENT = {"GLOO_SOCKET_IFNAME": "eth0"}
+RENDEZVOUS_NAMES = {
+    "MASTER_ADDR",
+    "MASTER_PORT",
+    "RANK",
+    "WORLD_SIZE",
+    "LOCAL_RANK",
+    "LOCAL_WORLD_SIZE",
+    "GROUP_RANK",
+    "GROUP_WORLD_SIZE",
+    "ROLE_RANK",
+    "ROLE_WORLD_SIZE",
+    "PYTHON_EXEC",
+    "LD_PRELOAD",
+    "LD_AUDIT",
+    "HSA_OVERRIDE_GFX_VERSION",
+    "HSA_XNACK",
+}
+
+
+class ForwardOption(argparse.Action):
+    """Keep shared launcher option order, including interleaved env files/overrides."""
+
+    def __call__(self, parser, namespace, values, option_string=None) -> None:
+        ordered = list(getattr(namespace, "shared_options", None) or [])
+        ordered.extend([option_string, values])
+        namespace.shared_options = ordered
+
+
+def validate_distributed_options(options: LaunchOptions, tool: Path) -> None:
+    """Revalidate the two-host contract after private context handoff as well."""
+    validate_options(options)
+    if options.shell or options.runtime_profile != "rccl-single":
+        raise ValueError(
+            "Distributed launch requires Python and the pinned RCCL profile"
+        )
+    for name, value in options.environment.items():
+        if name in RENDEZVOUS_NAMES or name.startswith(
+            ("NCCL_", "TORCH_NCCL_", "TORCHELASTIC_")
+        ):
+            raise ValueError(f"The distributed runtime controls {name}")
+        if name in DISTRIBUTED_ENVIRONMENT and value != DISTRIBUTED_ENVIRONMENT[name]:
+            raise ValueError(f"The distributed runtime controls {name}")
+    args = options.arguments
+    fixed = [str(tool / "bc250_torchrun.py"), "--nnodes=2", "--nproc-per-node=1"]
+    if (
+        len(args) < 8
+        or args[:3] != fixed
+        or args[3] not in ["--node-rank=0", "--node-rank=1"]
+    ):
+        raise ValueError("Invalid distributed worker topology")
+    if args[4] != "--master-addr=192.168.1.104" or not args[5].startswith(
+        "--master-port="
+    ):
+        raise ValueError("Invalid distributed rendezvous")
+    port = int(args[5].partition("=")[2])
+    if not 1024 <= port <= 65535 or args[6] != str(
+        tool / "bc250_distributed_worker.py"
+    ):
+        raise ValueError("Invalid distributed worker bootstrap")
+    script = Path(args[7])
+    if not script.is_absolute() or not script.is_file():
+        raise ValueError("Distributed script must be an existing absolute file")
+    # Do not let a hand-authored private context omit mandatory tool/script mounts.
+    modes = dict(options.mounts)
+    if modes.get(str(tool)) != "ro" or str(script.parent) not in modes:
+        raise ValueError("Missing validated tool/script mounts")
+    for source, mode in options.mounts:
+        path = Path(source)
+        if path != tool and (tool.is_relative_to(path) or path.is_relative_to(tool)):
+            raise ValueError("Mount overlaps the distributed launcher tools")
+        if path == tool and mode != "ro":
+            raise ValueError("Distributed launcher tools must be read-only")
+
+
+def parse_distributed_arguments(
+    arguments: list[str], environment: dict[str, str], tool: Path
+):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--node-rank", type=int, choices=(0, 1))
+    parser.add_argument("--master-port", type=int, default=29861)
+    parser.add_argument("--info", action="store_true")
+    for option in ["--mount", "--mount-ro", "--env", "--env-file", "--shm-size"]:
+        parser.add_argument(option, action=ForwardOption, metavar="VALUE")
+    parser.add_argument("script", nargs="?", type=Path)
+    parser.add_argument("arguments", nargs=argparse.REMAINDER)
+    args = parser.parse_args(arguments)
+    if args.info:
+        return None
+    if args.node_rank is None or args.script is None:
+        parser.error("--node-rank and script are required")
+    script = args.script.expanduser().resolve(strict=True)
+    check_mount(script.parent)
+    options = parse_launcher_arguments(
+        list(getattr(args, "shared_options", None) or [])
+        + ["--runtime-profile", "rccl-single", "--", str(script), *args.arguments],
+        environment,
+    )
+    for source, _ in options.mounts:
+        path = Path(source)
+        if path == tool or tool.is_relative_to(path) or path.is_relative_to(tool):
+            raise ValueError("Mount overlaps the distributed launcher tools")
+    options.arguments = [
+        str(tool / "bc250_torchrun.py"),
+        "--nnodes=2",
+        "--nproc-per-node=1",
+        f"--node-rank={args.node_rank}",
+        "--master-addr=192.168.1.104",
+        f"--master-port={args.master_port}",
+        str(tool / "bc250_distributed_worker.py"),
+        str(script),
+        *args.arguments,
+    ]
+    # A caller's explicit read-only script parent takes precedence over the automatic rw mount.
+    if str(script.parent) not in dict(options.mounts):
+        ancestors = [
+            (Path(source), mode)
+            for source, mode in options.mounts
+            if script.parent.is_relative_to(Path(source))
+        ]
+        mode = (
+            max(ancestors, key=lambda item: len(item[0].parts))[1]
+            if ancestors
+            else "rw"
+        )
+        options.mounts.append((str(script.parent), mode))
+    options.mounts.append((str(tool), "ro"))
+    options.environment = {**DISTRIBUTED_ENVIRONMENT, **options.environment}
+    validate_distributed_options(options, tool)
+    return options
 
 
 def main():
@@ -38,45 +171,14 @@ def main():
         assert os.geteuid() == 0
         options, cwd = read_context(Path(sys.argv[2]), manifest["uid"])
     else:
-        p = argparse.ArgumentParser(description=__doc__)
-        p.add_argument("--node-rank", type=int, choices=(0, 1))
-        p.add_argument("--master-port", type=int, default=29861)
-        p.add_argument("--info", action="store_true")
-        p.add_argument("script", nargs="?", type=Path)
-        p.add_argument("arguments", nargs=argparse.REMAINDER)
-        a = p.parse_args()
-        if a.info:
+        options = parse_distributed_arguments(
+            sys.argv[1:], dict(os.environ), Path(__file__).resolve().parent
+        )
+        if options is None:
             print(json.dumps(record, indent=2))
             return
-        if a.node_rank is None or a.script is None:
-            p.error("--node-rank and script are required")
-        assert 1024 <= a.master_port <= 65535
-        script = a.script.resolve(strict=True)
         cwd = Path.cwd().resolve()
-        env = {
-            k: v
-            for k, v in os.environ.items()
-            if k in INHERITED_NAMES or k.startswith(INHERITED_PREFIXES)
-        }
-        env.update(GLOO_SOCKET_IFNAME="eth0")
-        options = LaunchOptions(
-            arguments=[
-                str(Path(__file__).resolve().with_name("bc250_torchrun.py")),
-                "--nnodes=2",
-                "--nproc-per-node=1",
-                "--node-rank=" + str(a.node_rank),
-                "--master-addr=192.168.1.104",
-                "--master-port=" + str(a.master_port),
-                str(script),
-                *a.arguments,
-            ],
-            mounts=[
-                (str(script.parent), "rw"),
-                (str(Path(__file__).resolve().parent), "ro"),
-            ],
-            environment=env,
-            runtime_profile="rccl-single",
-        )
+    validate_distributed_options(options, Path(__file__).resolve().parent)
     if os.geteuid() != 0:
         assert os.geteuid() == manifest["uid"]
         with tempfile.TemporaryDirectory(prefix="bc250-distributed-") as folder:

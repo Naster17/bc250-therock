@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 import runpy
 
+from bc250_distributed_identity import check_runtime
+
 import torch.distributed.elastic.agent.server.api as agent_api
 
 
@@ -48,5 +50,6 @@ def install_exit_fix():
 
 
 if __name__ == "__main__":
+    check_runtime()
     install_exit_fix()
     runpy.run_module("torch.distributed.run", run_name="__main__")
