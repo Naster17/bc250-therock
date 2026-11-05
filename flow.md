@@ -9,6 +9,66 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D10 completed2026-11-05, fresh-process fixed-world checkpoint/restart:**
+  initial553eebce1, accepted proof/restricted-load correction0c0efa810, exports97641e4b6.
+  Installed D09 tools/native daily+RCCL Torch a524980/ROCm/images/registry/profiles/
+  kernels unchanged, Torch source8d8b18d. No build/install/reboot/app access.
+  Owned D09 Bert22,561 FP32 DDP with dropout.1 and D08 MLP1,051,648 FP16 classic
+  FSDP with output dropout.125, same mixed policy/FP32 master+reduce. Global8,
+  accumulation2/DDP or4/FSDP per rank, strict deterministic algorithms in fixture.
+  AdamW +StepLR(step2,gamma.8), five RNG streams Python/NumPy/TorchCPU/TorchCUDA/
+  explicit cursor generator, per-rank random augmentation/native GPU dropout.
+  Shuffled32-record global cursor,4/rank per window. Three successful windows save
+  local optimizer-boundary checkpoint at next_attempt3/epoch0/offset24, then seed
+  workers continue three uninterrupted reference windows. Attempt4 injects Inf
+  before final DDP reduction or rank1-local FSDP shard after reduction; both skip
+  optimizer/scheduler while data/RNG advance. End five updates/six attempts,
+  epoch1/offset16. Hook update counts/independent LR formula checked.
+  Entirely new containers/workers initialize from different seeds, then restore
+  params/buffers/AdamW/scaler/StepLR/update count/cursor+order+generator and RNG
+  LAST. Initial state exact; three resumed local losses/indices/augmentation/all
+  local gradients/params/optimizer/scaler/scheduler/RNG/cursor EXACT vs uninterrupted,
+  zero tolerances AND matching digests.12 resumed rank-windows. FSDP crosses
+  scaler32→64 then skipped64→32 then finite32/tracker1. No new CPU mathematical
+  kernel proof beyond D08/D09; state continuity is the current qualification.
+  Local CPU-serialized fsync/atomic parts +complete collective rank/hash manifest,
+  no shared FS. Schema/world/rank/config/layout/package-version/selected source+
+  Torch/worker/agent cohort binding, weights_only=True. Both live ranks coordinate
+  admission. Eleven one-rank failures each refuse both before applying state:
+  8header/file cases,1valid-digest invalid serialization,2loaded rank/cursor cases;
+  negative checks leave model/optimizer/scheduler/scaler/RNG/cursor unchanged.
+  References independently hash-checked. No partial-window/DataLoader-worker-RNG/
+  elastic/repartition/peer-death/crash-during-save/arbitrary checkpoint/migration
+  qualification. Owned fixed attempt3 format, not an installed generic API.
+  r1 DDP seed passes; resume fails PRE-restore because harness wrongly required
+  distinct PID-namespace inodes, observed equal across new containers. Actual CID,
+  UUID/start ticks differ. r2 uses those birth proofs, no numerical tolerance
+  relaxation. r1 source/logs/checkpoints kept; normal assertion exit1, not native
+  arithmetic/heap/Python segfault. Corrected failure cleanup destroys process group.
+  48accepted groups/44collective refusal observations/42localtests/8accepted ACKs,
+  plus4historical r1 ACKs. All r2 agents/kernel logs/registries clean/unchanged.
+  SH locks,4CPUs/cpuset0-3/10GiB RAM/12GiB memory+swap/512PIDs/256MiB shm,
+  600s guards/460s child deadlines; owned container labels never stop unrelated
+  containers. Black/critical Ruff+unused-import/syntax/diff pass, no full upstream CI.
+  .104 r2/.105 r3, boots7344171f/e1cbfa23 same. Historical Python CPU fault/KFD
+  uncertainty distinct from fixed VM heap/D05 exit repair. No speed/capacity claim.
+  r2 coordinators21599/1347 exit0; sequence.json exact per-phase PIDs/commands/exits.
+  r1 seed20342/31546 exit0, resume20874/32385 exit1. No jobs/containers/armed guards.
+  Both tools/distributed-d10 and evidence/distributed-d10-r2/{ddp,fsdp}-{seed,resume};
+  r1 diagnostics separate. Valid .pt payloads33,335,526B104/33,368,766B105 plus
+  malformed/historical owned copies retained, exports omit.pt. Local
+  kernel/artifacts/distributed-d10/{verified-results.json,source-r1,raw archives}:
+  104334281B SHA46e57cbb9b3358d3eb1af197b8dea6c9d58795b88be2950d1eff59fe2876beec;
+  105300886B SHA2271b7732b3e36ac6763311fa9eb12f4f7a262c933eb45c3d28682c3af3de5c7.
+  Source/worker/kernel/guard/reference-digest/cohort/birth checks pass; docs/memory
+  synchronized BOTH. [D10 report](docs/development/bc250_distributed_d10_results/README.md),
+  [checkpoint usage](../BC250_DISTRIBUTED_GUIDE.md).
+  **Next D11 (new planned):** actual Accelerate two-host DDP accumulation/AMP
+  through public bc250-distributed, owned small-model references/state handling.
+  D09 imported Accelerate, did not qualify orchestration. Keep native/default/
+  recovery settings; larger capacity/other transports/elastic recovery/release
+  reconstruction remain open. B07.13 deferred; no completion percentage.
+
 - **D09 completed/installed 2026-11-05, distributed consumer env/mounts:**
   launcher/fixtures e1bbb8ec7, installer/CLI refusals37067fdde, exportsbb4d672ea.
   Both public commands NOW /opt/bc250-stack/tools/distributed-d09; registry d01.json
