@@ -9,6 +9,60 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D19 completed 2026-11-05, compact validation +larger-vocabulary crossover:**
+  final active-token helper/fixtures `1a39b5254`, exports/verifier `c99e46fe4`;
+  dense prototype a7c1104d0/strict-wide-FP32 fixture4deb6a00a retained, rejected.
+  Opt-in BOTH `tools/distributed-d19-r3/bc250_compact_token_metrics.py`.
+  Retains per-row active selection/FP64 CE/causal shift; device validation flag
+  once at end, invalid active labels clamped internally then REFUSED, ignored
+  nonfinite positions omitted. CPU dispatch GPU probe: scalar reads12→1, dynamic
+  nonzero3 unchanged; NOT elimination of all sync. No native/ROCm/daily+RCCL a524/
+  D09/consumer/image/registry/kernel/default changes, build/install/prefix update/
+  reboot/app access/download/foreign-workload stop. Old D18 tools retained.
+  Final r3 actual Trainer eval/predict: six small Bert/GPT2 FP32/BF16/FP16 +two
+  vocab32768/maxlen64 FP32 cases,19 dynamic right-padded records/unequal masks/
+  ignored first2rows/tail dedup, eager/dropout0/cacheFalse/world2/RCCL. All modes
+  warm before full/D18/D19/D19/D18/full timing. Exact19 labels/order, counts small
+  126/120/wide838/832; full+D18+D19+manual NumPy64 metrics parity1e-11; ALL real-
+  position logits vsCPUFP64 at ORIGINAL D17 bounds. Native eval_loss EXACTLY
+  unchanged, rankmetrics agree, label-free opt-out exact full logits. Params
+  unchanged/gradsNone/no optimizer; forward/eval only, not new backward.
+  Final176groups/16ACKguards +5CPU patterns*16workers=80obs/2GPU patterns*16=32obs;
+  42localtests/Black/criticalRuff+F401/syntax/diff pass. Both finalcontrollers
+  8981/8659 exit0, exact phasecommands/PIDs/exits in sequence.json. SH locks,
+  4CPUs/10GiB+12GiB/512PIDs/256MiBshm/600s guards/460s children unchanged.
+  Final tiny paired D18/D19 ratios1.014–1.034, wideflat. Compact wide57.7–61.3ms
+  vs full1.12–1.15s =18.6–19.6x IN THESE TWO FP32 fixtures; benefit already D18,
+  now measured at this size, NOT wholeTorch/LoRA/newscalarfix speedup. Two samples
+  each; not statistical, small full-mode outliers retained. Wide predictions
+  159383552B(152MiB)→456B; gather prediction inputs79167488→240B/rank/fivecalls;
+  labels9728B/local logits/native padding remain. Tensorbytes NOT NIC/totalcomms.
+  Wide allocator peak~136.5MB→60.9–61.2MB; final within1024–1536B ofD18. No total
+  GPU/hostRSS/largerfit claim; CPU full references/listfingerprint untimed remain.
+  Rejected dense prototype: nonzero0 but wide78ms vsD18~59–61ms/extra~40MB; all
+  source/evidence retained under r1/r2. Initial wide Bert BF16 metric parity
+  PASSED but CPUFP64 full-logit gate FAILED2/30408704 values,maxabs.003654425659;
+  atol/rtol.003/.003 UNCHANGED. Both failedguards ACK/kernel+registry unchanged;
+  GPT2wideBF16 notrun. WiderBF16 remains UNQUALIFIED undergate, not provennative
+  defect. SmallBF16 passes; wideFP32 does NOT fix BF16. Earlier16successful
+  prototype+2failed guards separate from final16. Native warnings remain;
+  historical PythonCPU/KFD/visibility separate from fixedVMheap/D05 exit.
+  No jobs/containers/armedguards; bootsd83af4e1(.104r2)/bad537ed(.105r3) unchanged.
+  Both `evidence/distributed-d19-r3/{bert,gpt2}-{fp32,bf16,fp16}-eval` plus
+  `{bertwide,gpt2wide}-fp32-eval`; local kernel/artifacts/distributed-d19:
+  final1041013179B SHAbbce25bca5ccba8c8474f0e6e0ee183480da2f463c619c10a92b5c50415b1d39;
+  105914431B SHAe565fcbb83b7a58b1ff4c26033ae6f6129481bac737f7b4251e58fb2607fc8ea.
+  Archives retain r1/r2/r3, all failures; sources/native/config/guards/crossrank
+  digests/CPU reports verified, no saved prediction/checkpoint tensor payload.
+  Docs/memory BOTH synced. [D19 report](docs/development/bc250_distributed_d19_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md#compact-metric-validation-and-larger-vocabulary-d19).
+  **Next D20 (new planned):** diagnose wider Bert BF16 outliers with matched CPU
+  autocast +FP64 references, keep original gates; classify arithmetic vs actual
+  port defect before fix/qualification. First replace owned fixture list-based
+  prediction fingerprint with byte hashing to bound untimed CPU work. Other
+  distributed capacity/streaming/elastic/invalidvisibility/B07.13/release gaps
+  remain separate; no infinite evaluation matrix or universal correctness claim.
+
 - **D18 completed 2026-11-05, compact token statistics before gathering:**
   helper/contracts/fixtures `9a31ac663`, exports/verifier `6bc35b079`.
   New opt-in `tools/distributed-d18/bc250_compact_token_metrics.py` on BOTH hosts:
