@@ -86,7 +86,7 @@ def main():
     p.add_argument(
         "--case",
         choices=[f"{m}-{d}" for m in ["bert", "gpt2"] for d in ["fp32", "bf16", "fp16"]]
-        + ["bertwide-bf16", "gpt2wide-bf16"],
+        + ["bertwide-fp32", "gpt2wide-fp32"],
         required=True,
     )
     p.add_argument("--action", choices=["eval"], required=True)

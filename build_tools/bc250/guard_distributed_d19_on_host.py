@@ -49,7 +49,7 @@ def main():
     p.add_argument(
         "--case",
         choices=[f"{m}-{d}" for m in ["bert", "gpt2"] for d in ["fp32", "bf16", "fp16"]]
-        + ["bertwide-bf16", "gpt2wide-bf16"],
+        + ["bertwide-fp32", "gpt2wide-fp32"],
         required=True,
     )
     p.add_argument("--action", choices=["eval"], required=True)
@@ -102,7 +102,7 @@ def main():
 
     command = [
         "python3",
-        "/home/nik/bc250work/tools/distributed-d19/distributed_d19_bounded_launch.py",
+        "/home/nik/bc250work/tools/distributed-d19-r2/distributed_d19_bounded_launch.py",
         "--node-rank",
         str(rank),
         "--master-port",
@@ -115,7 +115,7 @@ def main():
         "HF_HUB_OFFLINE=1",
         "--shm-size",
         "256m",
-        "/home/nik/bc250work/tools/distributed-d19/distributed_d19_evaluate.py",
+        "/home/nik/bc250work/tools/distributed-d19-r2/distributed_d19_evaluate.py",
         "--case",
         a.case,
         "--action",
@@ -158,7 +158,7 @@ def main():
                 child_env["BC250_D05_CANDIDATE_TOOL"] = str(tools)
                 child = subprocess.Popen(
                     command,
-                    cwd=Path("/home/nik/bc250work/tools/distributed-d19"),
+                    cwd=Path("/home/nik/bc250work/tools/distributed-d19-r2"),
                     env=child_env,
                     stdin=subprocess.DEVNULL,
                     stdout=log,

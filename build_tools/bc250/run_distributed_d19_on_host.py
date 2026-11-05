@@ -10,23 +10,18 @@ import subprocess
 def main() -> None:
     assert os.geteuid() == 0
     work = Path("/home/nik/bc250work")
-    root = work / "evidence/distributed-d19-r1"
+    root = work / "evidence/distributed-d19-r2"
     root.mkdir()
     journal = []
     for index, (case, action) in enumerate(
-        [
-            (f"{model}-{precision}", "eval")
-            for model in ["bert", "gpt2"]
-            for precision in ["fp32", "bf16", "fp16"]
-        ]
-        + [("bertwide-bf16", "eval"), ("gpt2wide-bf16", "eval")]
+        [("bertwide-fp32", "eval"), ("gpt2wide-fp32", "eval")]
     ):
         label = case + "-" + action
         command = [
             "python3",
             str(Path(__file__).with_name("guard_distributed_d19_on_host.py")),
             "--series",
-            "r1",
+            "r2",
             "--case",
             case,
             "--action",
@@ -34,9 +29,9 @@ def main() -> None:
             "--label",
             label,
             "--port",
-            str(30021 + index),
+            str(30041 + index),
         ]
-        log = work / "evidence" / ("distributed-d19-r1-" + label + "-controller.log")
+        log = work / "evidence" / ("distributed-d19-r2-" + label + "-controller.log")
         with log.open("x") as output:
             process = subprocess.Popen(
                 command,
