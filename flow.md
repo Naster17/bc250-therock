@@ -9,6 +9,61 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D23 completed 2026-11-05, actual TrainerFSDP BF16 compute/FP32-shard policy:**
+  helper/factory/fixturesc49d99b84, export/verifier0ecfd6258. New explicit
+  fsdp_bf16_compute_policy() +BF16 admission in BC250FSDPTrainer, BOTHtools/
+  distributed-d23. Native GPU BF16 autocast, but FSDP forward params/reductions/
+  buffers/master+gradient shards ALLFP32, no inputcasts/lowprecision keptgrads,
+  noscaler. Requires bf16True+EXPLICITpolicy beforeTrainer creation; default/
+  lowparam/lowreduce/casting policies refused before+afterAccelerator setup.
+  Incoming alltrainable masterFP32; D21/22 FP32 path+oldstagedhelpers retained.
+  ActualGPU Linearoutputs BF16,forwardweights F32, preparedlogits/loss F32,
+  gradients F32, publicreduce_scatter_single input/output F32;3calls finalmicro,
+  0nonfinal;361024B/12calls for4seedupdates,180512/6replay. Onlygradient-reduction
+  inputbytes, NOTparamallgathers/totalNIC/physicalcounters. NO reducedparamcomm/
+  lowprecisionparameterstorage/speed/peakRAM/largerfit claim, no newmatrixHW.
+  Same D21/22 ownedBertMLM22561/eager/dropout0/world2/RCCL/root+2BertLayers/
+  originalparams/28records/unequalMLMmask/rightpad5–12/micro2/accum2/workers0/
+  sequential/global8/8/8/final4. CPU matched BF16 BOTH-rank microbatches/manualCE
+  +CPUFP64 globalmodel at actualGPUweights; sameHFgraph/differentCPUarithmetic,
+  not independentTransformer. D15 BF16 loss.003/.003; wholegradrelative<=.02AMP/
+  .03FP64; EVERYparam error<=limit*refnorm+3e-6sqrt(elements), no relaxations.
+  Maxobserved CPUAMP.0006256018/FP64.0048790555. D22 nativeglobalnorm/ALLclipped
+  grad bounds+CPUdouble ALLAdamW params/moments/counters retained frompredicted
+  clippedGPUgrads. Cap.05 allactive,norms1.469634–2.265972/coefs.03402205–.02206558.
+  BF16cap100coef1, strictFP32 one-step compatibility (D21 bounds), one-rankNaN
+  flags[False,True] BOTH refuse beforeclip/AdamW withzero updates/unchangedparams/
+  optimizer/scheduler pass. No grad/RNG rollback or latecallback/elastic promise.
+  D21 fixed optimizer-aware nativecheckpoint2 reader+same offlinepayloadunion6/
+  864357B; originalhashes/localTrainer/scheduler/RNG unchanged. NewCIDs/UUIDs/
+  startticks/seed1773: initialALLshards/AdamW/scheduler/4RNG EXACT; resumedwindows
+  3/4 ALLlosses/grads/norm/coefs/params/moments/scheduler/RNG/probes/rows/digests
+  EXACT. No stochastic/shuffle/multiworker/partial/peerloss/generalresume proof.
+  Accepted64GPUgroups/10ACKguards;4CPUclip+policypatterns/40observations;42localtests/
+  Black/criticalRuff+F401/syntax/diff pass, no GPUfailedphase/fullupstreamCI.
+  Nativewarnings/D12 aggregate train_loss caveat remain. Historical PythonCPU/KFD/
+  visibility separate fromfixedVMheap/D05exit/D21optimizerload. NoFP16/scaler/
+  BF16forwardparameter/FSDP2/offload/compile/frozen/generalarchitecture proof.
+  NativeTorch daily/RCCL a524/ROCm/D09/consumers/images/registries/kernels/defaults
+  unchanged, no build/install/prefix mutation/reboot/download/apps/foreignstop.
+  SHlocks/4CPUs/10GiB+12GiB/512PIDs/256MiBshm/600s guards/460s child unchanged;
+  bootsc1199fca(.104r2)/bad537ed(.105r3) retained. Nojobs/containers/armedguards.
+  Seed16859/9394,controls17410/9898,resume18750/11130 exit0; exactphasecommands/
+  PIDs/CIDs/exits controls-sequence.json +both evidence/distributed-d23-r1/
+  {bf16-seed,bf16-resume,inactive-seed,fp32-control-seed,nan-refusal} preserved.
+  Local kernel/artifacts/distributed-d23 archives104368005B SHA
+  92e247e52028f1002480c27e9d67cc0fc77357a095b19945d6ee547df40c638e;
+  105322913B SHAf1839d770ecfd1232d123020f6c9262c49b4625aa81bd6f31b2457c6c2fef51d.
+  Metadataarchives omit.pt/.pth/.bin/.distcp; checkpoint2/4/reference/payloadexports
+  kept onhosts, exports+union also local, inventories/hashes verified. Both docs/
+  memory synced. [D23 report](docs/development/bc250_distributed_d23_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md#trainer-fsdp-bf16-compute-policy-d23).
+  **Next D24(new planned):** audit/prototype BF16 FSDP forward/backward parameters
+  andall-gather buffers withFP32 mastershards/reductions; round-aware CPU references,
+  globalclip/AdamW/exactrestart. Keep D23compute-only policy untilproof. FP16scaler/
+  actuallarge-modelcapacity/otherarchitectures/elastic/release reconstruction
+  remain separate broader priorities.
+
 - **D22 completed 2026-11-05, native FSDP FP32 global clipping +finite refusal:**
   helper/fixture/controls2a11969bc, export/verifier790357231. Extended opt-in
   BC250FSDPTrainer BOTHtools/distributed-d22-r2; old D21 stagedpath retained.
