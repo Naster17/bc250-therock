@@ -9,6 +9,20 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D20 resumed handoff 2026-11-05 17:20 UTC:** work and six guarded GPU
+  qualifications completed before the interruption; source/docs commits1116695f8,
+  workspacefb819b9 retained. .104 now returns SSH "No route to host"; no new GPU
+  test/reboot/prefix action attempted. .105 reachable, bootbad537ed unchanged;
+  D20 helper/fixture and ALLfour prior memory files verified byte-for-byte against
+  local1116695f8/fb819b9 state. Both host snapshots installed earlier remain
+  `distributed-d20-20261105`/agent-memory1116695f8-distributed-d20; this access
+  annotation is local-only until next sync. Final .104 repeat copy verification
+  unavailable; do NOT reinterpret completed numerical qualification as failed.
+  No stack tests/builds/armed guards were running at interruption. **Next:**
+  restore/recheck .104 SSH, inspect boot/runtime/foreign workload status, refresh
+  its handoff memory, then D21 TrainerFSDP readiness/audit. Preserve .105 and all
+  user workloads; no power-state assumption or remote recovery command issued.
+
 - **D20 completed 2026-11-05, BF16 diagnosis +explicit FP32 evaluation head:**
   helpers/bytehash/contracts1a61687a7, export997b38bb7, final scope/export570e60428.
   D19 wide Bert BF16 outliers reproduced EXACTLY by matched CPU BF16 atsame
