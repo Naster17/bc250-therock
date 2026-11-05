@@ -9,6 +9,67 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D09 completed/installed 2026-11-05, distributed consumer env/mounts:**
+  launcher/fixtures e1bbb8ec7, installer/CLI refusals37067fdde, exportsbb4d672ea.
+  Both public commands NOW /opt/bc250-stack/tools/distributed-d09; registry d01.json
+  gains consumer/tool identity/recovery metadata. Native daily/RCCL Torch a524980/
+  ROCm/images/profiles/daily selections/kernels unchanged, Torch source8d8b18d;
+  D05 agent repair source/API hashes and old recovery metadata unchanged. No native
+  build/package install/reboot/app access. Old D05/D01 assets/boot fallback kept.
+  New ordered --env/--env-file/--mount/--mount-ro/--shm-size before script reuse
+  ordinary parser; later files/flags override earlier, script args/spaces preserved,
+  explicit read-only parents honored. Root revalidates private0600 context, fixed
+  topology/rendezvous/bootstrap/tool mounts; protected native/transport settings
+  refuse. Pinned CPython3.12 retained, consumer site-packages via PYTHONPATH/mounts.
+  Agent and fresh worker check Torch package/_C paths, version, __init__/_C/
+  libtorch_python/libtorch_hip SHA before user script; existing RCCL profile checks
+  stay. Worker runpy preserves argv/cwd/script import path. No automatic dependency
+  compatibility or step-speed claim; added launch hashing is startup work.
+  Actual frozen consumers Transformers5.2.0/peft.18.1/accelerate1.12 imported;
+  offline owned random BertForMaskedLM22,561 params, vocab97/width32/2layers/4heads/
+  intermediate64/seq12/dropout0/requested eager, FP32, global8/2micros per rank.
+  Candidate and installed two successive CPU-double global losses/all-param grads/
+  AdamW parameter updates pass at D06 bounds. Retained D08 FP16/no_sync FSDP
+  reference/moment/shard-nonfinite/scaler/exact checkpoint also passes candidate
+  bootstrap. No HF Trainer/Accelerate orchestration/arbitrary model/mixed Bert/
+  capacity/convergence/performance claim.
+  External owned /var/tmp/bc250-d09-fixtures/{read only data,writable data,cwd with spaces},
+  EROFS proves readonly bind despite UID1000 host-owner writable folder; rw marker,
+  literal argv/caller env/override order/cwd/UID verified. Actual Nik SSH→doas→
+  public command CPU Gloo sum3 passes BOTH, Torch cuda-initialized flag false
+  (not whole-driver memory claim). Three CPU identity refusals/rank restore test
+  metadata; no runtime files altered.37localtests (29retained+8new),24actualCLI
+  refusals before containers,46GPU worker groups/6ordinaryCPU groups/6CPUidentity
+  refusals/6ACK guards; retained FSDP includes12checkpoint/4scaler refusals within
+  these counts. Black/critical Ruff+unused-import/syntax/diff pass; no full CI.
+  EX stage candidate → consumer+FSDP qualify → activate → live D05 rollback →
+  reactivate → public consumer pass, BOTH hosts. All9installed/payload files SHA
+  match across hosts. Durable installer exact filename allowlist/pins; EX helpers
+  self-lock, never nest another writer. Native runtime SHA/release/agent fix same.
+  Both tools/distributed-d09/{install_distributed_d09_on_host.py --activate,
+  rollback_distributed_d09_on_host.py,install-payload}; recovery/evidence under
+  evidence/distributed-d09-tool-install-r1. Old D05 fallback keeps agent exit fix.
+  GPU phases SH locks/4CPUs/cpuset0-3/10GiB RAM/12GiB memory+swap/512PIDs,
+  consumer256MiB shm/600s guards/460s deadlines; ordinaryCPU public defaults with
+  fixture4Torchthreads. .104 r2/.105 r3, boots7344171f/e1cbfa23 same; no reboot.
+  Historical Python CPU fault/KFD uncertainty separate from fixed VM heap/D05 exit.
+  AllGPU controllers exit0: candidate15499/19447, retained15907/20252,
+  installed16774/21763; actual ordinaryCPU SSH exit0 both. No jobs/containers/
+  armed guards. Both evidence/distributed-d09-r1/{consumer-candidate,retained-candidate,
+  consumer-installed}, CLI-refusals.json; evidence/distributed-d09-user-cpu/rank.json.
+  Retained owned FSDP .pt stays on boards, excluded from exports. Local
+  kernel/artifacts/distributed-d09/{install-payload,verified-results.json,raw archives}:
+  104259027B SHA69b3293ef4cfa6c1c3d5466cd4923780e39af2ce8879231476e2d3be6c4c39ee;
+  105242047B SHA394d5eaf2923c77def6882f6219d79602b846af59ec1e59e4e64e9f197a58cc5.
+  Source/installed/payload/worker/kernel/guard/caller/recovery hashes verified;
+  host docs/memory synchronized. [D09 report](docs/development/bc250_distributed_d09_results/README.md),
+  [consumer options/recovery](../BC250_DISTRIBUTED_GUIDE.md).
+  **Next D10 (new planned batch):** bounded fresh-process two-host checkpoint/
+  restart, model/optimizer/scaler plus scheduler/RNG/data-cursor references and
+  strict config/world/payload refusals, owned fixtures/public command. Preserve
+  optimizer-boundary/fixed-world scope; elastic/peer-crash/arbitrary checkpoints,
+  larger-model capacity/other transports/release audit remain open. B07.13 deferred.
+
 - **D08 completed 2026-11-05, classic FSDP AMP/shard-aware skipping:** numerical
   tools0815ac97b, export/verifier97e75946a. Reuse D07 MLP/CPU oracle, D05 checkpoint
   primitives/installed bounded launcher/agent repair. Native daily/RCCL Torch
@@ -4354,7 +4415,7 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [ ]   | **B06.12 — next** | Bounded modern Torch exporter→public ORT GPU integration with independent CPU/eager-GPU references, then practical B06 gap review. Preserve defaults/.105; no universal model/dtype/graph-autograd or speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
-| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update, D02–D05 cross-board RCCL/DDP/FSDP, D06 matched-batch DDP accumulation, D07 DDP AMP and D08 FSDP AMP/scaler/shards pass within bounds; these fixtures remain slower than one host. Larger-model capacity, arbitrary mixed-precision/FSDP/model combinations, elastic recovery and other transports remain unqualified.                                                                                                  |
+| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update, D02–D05 cross-board RCCL/DDP/FSDP, D06 matched-batch DDP accumulation, D07 DDP AMP/D08 FSDP AMP/scaler/shards and D09 public consumer environments/tiny Transformers DDP pass within bounds; these fixtures remain slower than one host. Larger-model capacity, arbitrary mixed-precision/FSDP/model combinations, elastic recovery and other transports remain unqualified.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
 | [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |
