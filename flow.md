@@ -9,6 +9,60 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D22 completed 2026-11-05, native FSDP FP32 global clipping +finite refusal:**
+  helper/fixture/controls2a11969bc, export/verifier790357231. Extended opt-in
+  BC250FSDPTrainer BOTHtools/distributed-d22-r2; old D21 stagedpath retained.
+  Finite nonnegative max_grad_norm admitted; zero keeps D21 noclip. Positive
+  complete-root L2 calls delegate unchanged Accelerator→FSDP.clip_grad_norm_.
+  Per-instance public method wrapper collectively checks present/dense/F32/same-
+  device/finite owned gradients beforeclip, thenfinite returnednorm beforeAdamW.
+  One-rank Inf/NaN flags[False,True] stop BOTH beforeclip/AdamW; finite1e30 flags
+  [False,False] native normoverflow stops BOTH afterclip/beforeAdamW. All three
+  zero actualoptimizersteps/unchangedparams+optimizer+scheduler; transientgrads/
+  RNG/iterator NOT rolled back, discard/reloadcheckpoint, no silent skip. Caller
+  late gradient/limit mutation or reordered collectives unqualified; no universal
+  nonfinite/faultrecovery claim. Native clipping math/globalnorm not reimplemented.
+  Same owned D21 actual Trainer BertMLM22561/eager/dropout0/FP32/classicFULL_SHARD/
+  originalparams/root+2BertLayers/world2/RCCL/28records/unequal masks/rightpad5–12/
+  workers0/sequential/micro2/accum2/global8/8/8/final4. AllGPUforward/backward raw
+  gradients+loss vsCPUFP64 unchanged D21 bounds. CPUFP64 actual-pregrad globalnorm
+  predicts native at1e-7/1e-5, coefficient min(1,limit/(norm+1e-6)), EVERYclipped
+  gradient at1e-8/5e-5. CPUdoubleAdamW frompredictedclippedgrads: ALLparameters/
+  moments/counters atD21/D07 bounds; no tolerance relaxation. Cap.05 ACTIVE all4
+  norms1.46937144–2.26791596/coefs.03402813–.02204666; cap100controlcoefEXACT1.
+  Counted1native rootclipcall/window, no partial/localshardnorm substitute.
+  New CID/UUID/startticks/seed1773, D21fixed shardedAdamWloader/nativecheckpoint2
+  +same offline payloadunion6files864357B: initialstate ALLparams/AdamW/scheduler/
+  fourRNG EXACT; resumedwindows3/4 ALLnorms/coefs/grads/losses/params/moments/
+  scheduler/RNG/probes/rows/finaldigests EXACT. Originalcheckpointhashes/local
+  Trainer/RNG/scheduler untouched. No general/elastic/partial/stochastic restart.
+  Accepted68GPUgroups/12ACKguards,2CPUlimitpatterns/24acceptedworkerobs/42localtests.
+  Retained2failedsetup guards separate: firstInf harness couldn't create seedfolder
+  underroot-ownedparent; guardpreparation fixed, newlabel retestpassed. No numerical
+  failure hidden. Black/criticalRuff+F401/syntax/diff pass, no fullupstreamCI.
+  Native D09/Torch daily+RCCL a524/ROCm/consumer packages/images/registries/kernels/
+  defaults/DDPhelpers unchanged, no native build/install/prefix mutation/reboot/
+  download/app access/foreignstop. Sharedlocks/4CPUs/10GiB+12GiB/512PIDs/256MiBshm/
+  600s guards/460schildren. Boots c1199fca(.104r2)/bad537ed(.105r3) unchanged. Native
+  warnings/aggregate train_loss resume caveat retained; historical PythonCPU/KFD/
+  visibility separate fromfixedVMheap/D05exit/D21optimizerload. No speed/RAM/
+  capacity or AMP/scaler/FSDP2/generalmodel claims; no jobs/containers/armedguards.
+  Seed11245/4083 exit0; controls-r111723/4519 exit1setup; correctedcontrols12595/5309
+  andresume13834/6428 exit0. Both evidence/distributed-d22-r1/{fp32-seed,fp32-resume,
+  inactive-seed,inf-refusal,inf-refusal-r2,nan-refusal,overflow-refusal}; exactcommands/
+  PIDs/CIDs/exits controllers+controls-r2-sequence.json/ACK/kernel/sources preserved.
+  Local kernel/artifacts/distributed-d22 archives104526568B SHA
+  e2863fb13dd4ee32f51a1616cc6de577c6c571ef58109f9fd24893ad3caa36aa;
+  105472600B SHAf99bbe5573367cb21b4d7c5662f7ba9fb51770ed4bfc8efa6389281f6d14e60b.
+  Metadata excludes.pt/.pth/.bin/.distcp; checkpoint2/4+referencepayloads retained
+  onhosts, sourcepayloadexports+union also local, inventories/hashes verified.
+  Bothdocs/memory synced. [D22 report](docs/development/bc250_distributed_d22_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md#trainer-fsdp-fp32-gradient-clipping-d22).
+  **Next D23(new planned):** actual Trainer classicFSDP BF16 readiness with explicit
+  parameter/reduction/autocast policy, CPU gradients/globalclip/AdamW +exactfresh
+  restart. Lift current AMP refusal ONLY afterproof; FP16scaler/largecapacity/
+  generalarchitectures/elastic/release reconstruction remain separate priorities.
+
 - **D21 completed 2026-11-05, actual Trainer classic FSDP FP32 +restart repair:**
   helper/fixture/checkpoint utility5189348ba, export/verifier39918b800. New opt-in
   BOTH tools/distributed-d21-r3/bc250_trainer_fsdp.py BC250FSDPTrainer. Existing

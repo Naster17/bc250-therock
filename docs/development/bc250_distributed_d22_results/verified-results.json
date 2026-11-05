@@ -1,0 +1,2994 @@
+{
+  "status": "passed",
+  "accepted_GPU_groups": 68,
+  "accepted_GPU_guards": 12,
+  "retained_failed_guards": 2,
+  "CPU_clip_contract_patterns": 2,
+  "CPU_clip_contract_observations": 24,
+  "local_unit_tests": 42,
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "c1199fca-eb06-413f-8d28-34417297ba67",
+    "bad537ed-ea08-49e6-ad44-40a9bc1d6914"
+  ],
+  "shard_parameter_elements": [
+    11282,
+    11279
+  ],
+  "source_pins": {
+    "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+    "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+    "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+    "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+    "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+  },
+  "records": {
+    "104": {
+      "fp32-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "fp32",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 11245,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30121",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_trainer.py",
+            "--case",
+            "fp32",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-seed/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67",
+          "container_id": "835b5032117d",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+              "native-root-global-norm-and-ALL-clipped-gradients-1",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-1",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+              "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-2",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-3",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "101f7dc9e5407f5b27796a6c20a18dce8af04b9b4374ce728a3ca47e1e91ca17",
+                "rows": [
+                  0,
+                  1,
+                  4,
+                  5
+                ]
+              },
+              {
+                "step": 2,
+                "digest": "970e6b3f7e763fe40e8d69b71206fec3bc0432beb5b3f7375fd98f335e266e6c",
+                "rows": [
+                  8,
+                  9,
+                  12,
+                  13
+                ]
+              },
+              {
+                "step": 3,
+                "digest": "e857b65492adc2785df84a9eaf2d4c42ac3fa14b3a7dce6e4dda43ff33768111",
+                "rows": [
+                  16,
+                  17,
+                  20,
+                  21
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "044c452426725316ade8e8b53bd10691c33f6c7a59148ebbd5a3b840b01793c8",
+                "rows": [
+                  24,
+                  25
+                ]
+              }
+            ],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "af79b366e5bd4d45a28142da7ab4aeaf",
+              "pid": 20,
+              "start_ticks": "224944"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "fp32",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4693714380264282,
+                "CPU_norm": 1.4693713507772312,
+                "coefficient": 0.03402813451168608
+              },
+              {
+                "step": 1,
+                "norm": 1.4967209100723267,
+                "CPU_norm": 1.4967210436539398,
+                "coefficient": 0.033406336341472775
+              },
+              {
+                "step": 2,
+                "norm": 1.6263184547424316,
+                "CPU_norm": 1.6263183922538007,
+                "coefficient": 0.030744268461749418
+              },
+              {
+                "step": 3,
+                "norm": 2.267915964126587,
+                "CPU_norm": 2.267916032733807,
+                "coefficient": 0.022046661883273873
+              }
+            ],
+            "optimizer_shard_elements": 11282,
+            "checkpoint_files": [
+              {
+                "name": "optimizer_0/.metadata",
+                "bytes": 67829,
+                "sha256": "2a538352e59add6b12115491c4d165fcf175c1da233e607dae176b2a5c585c26"
+              },
+              {
+                "name": "optimizer_0/__0_0.distcp",
+                "bytes": 224413,
+                "sha256": "ec62d90824807d4358dda1796f9616c85ed46eaa2f0e74f3fd52574c84a1a22f"
+              },
+              {
+                "name": "pytorch_model_fsdp_0/.metadata",
+                "bytes": 24557,
+                "sha256": "cc4ceda79dc474f048b4eef733666f694f83f1a014d97b2ef6f31025873636e3"
+              },
+              {
+                "name": "pytorch_model_fsdp_0/__0_0.distcp",
+                "bytes": 121036,
+                "sha256": "be0e6d2ffba79ce10dd48b0a92e0949cbe1bbd5e82ffde38cc8c360bbc026f62"
+              },
+              {
+                "name": "rng_state_0.pth",
+                "bytes": 14661,
+                "sha256": "72d17e43797fa4628787a39bdbd0223302a639eb46513fb88a147447400a1a35"
+              },
+              {
+                "name": "scheduler.pt",
+                "bytes": 1401,
+                "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+              },
+              {
+                "name": "trainer_state.json",
+                "bytes": 770,
+                "sha256": "56cefeb378c00a9d745c89d180d6c14763fae1d72ff0cc95caeb1a103aa690ea"
+              }
+            ],
+            "final_state_digest": "df9d895a16abd697138a8a36d9af948d020c550460f963d3a51058aa9731c688"
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+            "native-root-global-norm-and-ALL-clipped-gradients-1",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-1",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+            "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-2",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-3",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "101f7dc9e5407f5b27796a6c20a18dce8af04b9b4374ce728a3ca47e1e91ca17",
+              "rows": [
+                0,
+                1,
+                4,
+                5
+              ]
+            },
+            {
+              "step": 2,
+              "digest": "970e6b3f7e763fe40e8d69b71206fec3bc0432beb5b3f7375fd98f335e266e6c",
+              "rows": [
+                8,
+                9,
+                12,
+                13
+              ]
+            },
+            {
+              "step": 3,
+              "digest": "e857b65492adc2785df84a9eaf2d4c42ac3fa14b3a7dce6e4dda43ff33768111",
+              "rows": [
+                16,
+                17,
+                20,
+                21
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "044c452426725316ade8e8b53bd10691c33f6c7a59148ebbd5a3b840b01793c8",
+              "rows": [
+                24,
+                25
+              ]
+            }
+          ],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "af79b366e5bd4d45a28142da7ab4aeaf",
+            "pid": 20,
+            "start_ticks": "224944"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "fp32",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4693714380264282,
+              "CPU_norm": 1.4693713507772312,
+              "coefficient": 0.03402813451168608
+            },
+            {
+              "step": 1,
+              "norm": 1.4967209100723267,
+              "CPU_norm": 1.4967210436539398,
+              "coefficient": 0.033406336341472775
+            },
+            {
+              "step": 2,
+              "norm": 1.6263184547424316,
+              "CPU_norm": 1.6263183922538007,
+              "coefficient": 0.030744268461749418
+            },
+            {
+              "step": 3,
+              "norm": 2.267915964126587,
+              "CPU_norm": 2.267916032733807,
+              "coefficient": 0.022046661883273873
+            }
+          ],
+          "optimizer_shard_elements": 11282,
+          "checkpoint_files": [
+            {
+              "name": "optimizer_0/.metadata",
+              "bytes": 67829,
+              "sha256": "2a538352e59add6b12115491c4d165fcf175c1da233e607dae176b2a5c585c26"
+            },
+            {
+              "name": "optimizer_0/__0_0.distcp",
+              "bytes": 224413,
+              "sha256": "ec62d90824807d4358dda1796f9616c85ed46eaa2f0e74f3fd52574c84a1a22f"
+            },
+            {
+              "name": "pytorch_model_fsdp_0/.metadata",
+              "bytes": 24557,
+              "sha256": "cc4ceda79dc474f048b4eef733666f694f83f1a014d97b2ef6f31025873636e3"
+            },
+            {
+              "name": "pytorch_model_fsdp_0/__0_0.distcp",
+              "bytes": 121036,
+              "sha256": "be0e6d2ffba79ce10dd48b0a92e0949cbe1bbd5e82ffde38cc8c360bbc026f62"
+            },
+            {
+              "name": "rng_state_0.pth",
+              "bytes": 14661,
+              "sha256": "72d17e43797fa4628787a39bdbd0223302a639eb46513fb88a147447400a1a35"
+            },
+            {
+              "name": "scheduler.pt",
+              "bytes": 1401,
+              "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+            },
+            {
+              "name": "trainer_state.json",
+              "bytes": 770,
+              "sha256": "56cefeb378c00a9d745c89d180d6c14763fae1d72ff0cc95caeb1a103aa690ea"
+            }
+          ],
+          "final_state_digest": "df9d895a16abd697138a8a36d9af948d020c550460f963d3a51058aa9731c688"
+        }
+      },
+      "inactive-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "inactive",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 11724,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30123",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_trainer.py",
+            "--case",
+            "inactive",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inactive-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inactive-seed/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67",
+          "container_id": "ecb3e193044a",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "6314a364d1dbe7a3679f1d798aea1d9ef1608d54c6e45e9e3973e0f983b37f84",
+                "rows": [
+                  0,
+                  1,
+                  4,
+                  5
+                ]
+              }
+            ],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "290384cdbdaf48f5a25f4669fdda810f",
+              "pid": 20,
+              "start_ticks": "230988"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 100.0,
+              "case": "inactive",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4693714380264282,
+                "CPU_norm": 1.4693713507772312,
+                "coefficient": 1.0
+              }
+            ],
+            "optimizer_shard_elements": 11282,
+            "final_state_digest": "044224090760079ed447f4d13fa835f81c19588040b67a38ba01734fc9b69ab4"
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "6314a364d1dbe7a3679f1d798aea1d9ef1608d54c6e45e9e3973e0f983b37f84",
+              "rows": [
+                0,
+                1,
+                4,
+                5
+              ]
+            }
+          ],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "290384cdbdaf48f5a25f4669fdda810f",
+            "pid": 20,
+            "start_ticks": "230988"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 100.0,
+            "case": "inactive",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4693714380264282,
+              "CPU_norm": 1.4693713507772312,
+              "coefficient": 1.0
+            }
+          ],
+          "optimizer_shard_elements": 11282,
+          "final_state_digest": "044224090760079ed447f4d13fa835f81c19588040b67a38ba01734fc9b69ab4"
+        }
+      },
+      "inf-refusal": {
+        "final": {
+          "status": "failed",
+          "rank": 0,
+          "case": "inf",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 12066,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30124",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_trainer.py",
+            "--case",
+            "inf",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-refusal/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67",
+          "container_id": "ddf269e4cacf",
+          "error": "AssertionError(1)",
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "failed",
+          "checks": [],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "error": "PermissionError(13, 'Permission denied')"
+        }
+      },
+      "inf-refusal-r2": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "inf",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 12596,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30127",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "inf",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-refusal-r2/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67",
+          "container_id": "5cc8a8deb789",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "966b4c6ffa4a4c97bc5bcb5f64f60cfc",
+              "pid": 20,
+              "start_ticks": "240692"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "inf",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              true
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "966b4c6ffa4a4c97bc5bcb5f64f60cfc",
+            "pid": 20,
+            "start_ticks": "240692"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "inf",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            true
+          ],
+          "raw_updates": 0
+        }
+      },
+      "nan-refusal": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "nan",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 12929,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30128",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "nan",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/nan-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/nan-refusal/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67",
+          "container_id": "67c9087e0121",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "b6e9b1131e8c429b94ebe4d6bd17d80b",
+              "pid": 20,
+              "start_ticks": "242235"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "nan",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              true
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "b6e9b1131e8c429b94ebe4d6bd17d80b",
+            "pid": 20,
+            "start_ticks": "242235"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "nan",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            true
+          ],
+          "raw_updates": 0
+        }
+      },
+      "overflow-refusal": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "overflow",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 13262,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30129",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "overflow",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/overflow-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/overflow-refusal/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67",
+          "container_id": "89376db17fb5",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "90d70fc1ce45466c8167e2a4145bf73c",
+              "pid": 20,
+              "start_ticks": "243776"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "overflow",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              false
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "90d70fc1ce45466c8167e2a4145bf73c",
+            "pid": 20,
+            "start_ticks": "243776"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "overflow",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            false
+          ],
+          "raw_updates": 0
+        }
+      },
+      "fp32-resume": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "fp32",
+          "action": "resume",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 13834,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30122",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "fp32",
+            "--action",
+            "resume",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-resume/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67",
+          "container_id": "de02bd9367e9",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "fresh-FSDP-replay-exact-all-state-window-3",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "fresh-FSDP-replay-exact-all-state-window-4",
+              "fresh-process-different-birth-and-exact-resumed-transcript"
+            ],
+            "transcript": [
+              {
+                "step": 3,
+                "digest": "e857b65492adc2785df84a9eaf2d4c42ac3fa14b3a7dce6e4dda43ff33768111",
+                "rows": [
+                  16,
+                  17,
+                  20,
+                  21
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "044c452426725316ade8e8b53bd10691c33f6c7a59148ebbd5a3b840b01793c8",
+                "rows": [
+                  24,
+                  25
+                ]
+              }
+            ],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "06c6ee4f1ea74d309a70d9962f0a56ed",
+              "pid": 20,
+              "start_ticks": "252964"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "fp32",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "restore_optimizer_actual_keys": [
+              0,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30
+            ],
+            "restore_optimizer_expected_keys": [
+              0,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30
+            ],
+            "restore_parameter_numels": [
+              2738,
+              0,
+              0,
+              0,
+              0,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              32,
+              16,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              32,
+              16,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 2,
+                "norm": 1.6263184547424316,
+                "CPU_norm": 1.6263183922538007,
+                "coefficient": 0.030744268461749418
+              },
+              {
+                "step": 3,
+                "norm": 2.267915964126587,
+                "CPU_norm": 2.267916032733807,
+                "coefficient": 0.022046661883273873
+              }
+            ],
+            "optimizer_shard_elements": 11282,
+            "final_state_digest": "df9d895a16abd697138a8a36d9af948d020c550460f963d3a51058aa9731c688"
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "fresh-FSDP-replay-exact-all-state-window-3",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "fresh-FSDP-replay-exact-all-state-window-4",
+            "fresh-process-different-birth-and-exact-resumed-transcript"
+          ],
+          "transcript": [
+            {
+              "step": 3,
+              "digest": "e857b65492adc2785df84a9eaf2d4c42ac3fa14b3a7dce6e4dda43ff33768111",
+              "rows": [
+                16,
+                17,
+                20,
+                21
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "044c452426725316ade8e8b53bd10691c33f6c7a59148ebbd5a3b840b01793c8",
+              "rows": [
+                24,
+                25
+              ]
+            }
+          ],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "06c6ee4f1ea74d309a70d9962f0a56ed",
+            "pid": 20,
+            "start_ticks": "252964"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "fp32",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "restore_optimizer_actual_keys": [
+            0,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "restore_optimizer_expected_keys": [
+            0,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "restore_parameter_numels": [
+            2738,
+            0,
+            0,
+            0,
+            0,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            32,
+            16,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            32,
+            16,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 2,
+              "norm": 1.6263184547424316,
+              "CPU_norm": 1.6263183922538007,
+              "coefficient": 0.030744268461749418
+            },
+            {
+              "step": 3,
+              "norm": 2.267915964126587,
+              "CPU_norm": 2.267916032733807,
+              "coefficient": 0.022046661883273873
+            }
+          ],
+          "optimizer_shard_elements": 11282,
+          "final_state_digest": "df9d895a16abd697138a8a36d9af948d020c550460f963d3a51058aa9731c688"
+        }
+      }
+    },
+    "105": {
+      "fp32-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "fp32",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 4083,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30121",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_trainer.py",
+            "--case",
+            "fp32",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-seed/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914",
+          "container_id": "d1de9249e616",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+              "native-root-global-norm-and-ALL-clipped-gradients-1",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-1",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+              "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-2",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-3",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "958a3fa5748ba96786b804da4a4cdabe7d0f7c3a7dd1df281e2afff996d0bffc",
+                "rows": [
+                  2,
+                  3,
+                  6,
+                  7
+                ]
+              },
+              {
+                "step": 2,
+                "digest": "96b07aa78d09354ad23f0072f0446d3dc10552b0f262f44759c0059376091a96",
+                "rows": [
+                  10,
+                  11,
+                  14,
+                  15
+                ]
+              },
+              {
+                "step": 3,
+                "digest": "46738af2e83282cdeb9894602a24ddd993f132c4215333b59e6023b84c44ad0d",
+                "rows": [
+                  18,
+                  19,
+                  22,
+                  23
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "06f47be56e98248e04ca6d3b83432bf1ca140332262c397c7c936e2f6cdfd609",
+                "rows": [
+                  26,
+                  27
+                ]
+              }
+            ],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "89186dca668846a49d6f7b2d22623381",
+              "pid": 19,
+              "start_ticks": "2214365"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "fp32",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4693714380264282,
+                "CPU_norm": 1.4693713507772312,
+                "coefficient": 0.03402813451168608
+              },
+              {
+                "step": 1,
+                "norm": 1.4967209100723267,
+                "CPU_norm": 1.4967210436539398,
+                "coefficient": 0.033406336341472775
+              },
+              {
+                "step": 2,
+                "norm": 1.6263184547424316,
+                "CPU_norm": 1.6263183922538007,
+                "coefficient": 0.030744268461749418
+              },
+              {
+                "step": 3,
+                "norm": 2.267915964126587,
+                "CPU_norm": 2.267916032733807,
+                "coefficient": 0.022046661883273873
+              }
+            ],
+            "optimizer_shard_elements": 11279,
+            "checkpoint_files": [
+              {
+                "name": "optimizer_0/__1_0.distcp",
+                "bytes": 305742,
+                "sha256": "7d4d65a31c34d04c7517c78a363934447f08a723586f559d2ee8ddce334d243c"
+              },
+              {
+                "name": "pytorch_model_fsdp_0/__1_0.distcp",
+                "bytes": 120780,
+                "sha256": "99afcf98115c97f814758191cdbda68ac0315a791eaacbb3d7aa7d3876217e29"
+              },
+              {
+                "name": "rng_state_1.pth",
+                "bytes": 14661,
+                "sha256": "391d0c89e8ff0ca695b62efcb87b86d5984e187fa266e7d11f4fadc87610db65"
+              },
+              {
+                "name": "scheduler.pt",
+                "bytes": 1401,
+                "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+              },
+              {
+                "name": "trainer_state.json",
+                "bytes": 771,
+                "sha256": "dc6a5beba0886864f5238666f3d9c400db1611e9f6a149d58b88a9448d88809c"
+              }
+            ],
+            "final_state_digest": "eee13c541ed5c8d03f123d92e12265455c8e1d07ae5216ecabd547e746afe5fa"
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+            "native-root-global-norm-and-ALL-clipped-gradients-1",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-1",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+            "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-2",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-3",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "958a3fa5748ba96786b804da4a4cdabe7d0f7c3a7dd1df281e2afff996d0bffc",
+              "rows": [
+                2,
+                3,
+                6,
+                7
+              ]
+            },
+            {
+              "step": 2,
+              "digest": "96b07aa78d09354ad23f0072f0446d3dc10552b0f262f44759c0059376091a96",
+              "rows": [
+                10,
+                11,
+                14,
+                15
+              ]
+            },
+            {
+              "step": 3,
+              "digest": "46738af2e83282cdeb9894602a24ddd993f132c4215333b59e6023b84c44ad0d",
+              "rows": [
+                18,
+                19,
+                22,
+                23
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "06f47be56e98248e04ca6d3b83432bf1ca140332262c397c7c936e2f6cdfd609",
+              "rows": [
+                26,
+                27
+              ]
+            }
+          ],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "89186dca668846a49d6f7b2d22623381",
+            "pid": 19,
+            "start_ticks": "2214365"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "fp32",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4693714380264282,
+              "CPU_norm": 1.4693713507772312,
+              "coefficient": 0.03402813451168608
+            },
+            {
+              "step": 1,
+              "norm": 1.4967209100723267,
+              "CPU_norm": 1.4967210436539398,
+              "coefficient": 0.033406336341472775
+            },
+            {
+              "step": 2,
+              "norm": 1.6263184547424316,
+              "CPU_norm": 1.6263183922538007,
+              "coefficient": 0.030744268461749418
+            },
+            {
+              "step": 3,
+              "norm": 2.267915964126587,
+              "CPU_norm": 2.267916032733807,
+              "coefficient": 0.022046661883273873
+            }
+          ],
+          "optimizer_shard_elements": 11279,
+          "checkpoint_files": [
+            {
+              "name": "optimizer_0/__1_0.distcp",
+              "bytes": 305742,
+              "sha256": "7d4d65a31c34d04c7517c78a363934447f08a723586f559d2ee8ddce334d243c"
+            },
+            {
+              "name": "pytorch_model_fsdp_0/__1_0.distcp",
+              "bytes": 120780,
+              "sha256": "99afcf98115c97f814758191cdbda68ac0315a791eaacbb3d7aa7d3876217e29"
+            },
+            {
+              "name": "rng_state_1.pth",
+              "bytes": 14661,
+              "sha256": "391d0c89e8ff0ca695b62efcb87b86d5984e187fa266e7d11f4fadc87610db65"
+            },
+            {
+              "name": "scheduler.pt",
+              "bytes": 1401,
+              "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+            },
+            {
+              "name": "trainer_state.json",
+              "bytes": 771,
+              "sha256": "dc6a5beba0886864f5238666f3d9c400db1611e9f6a149d58b88a9448d88809c"
+            }
+          ],
+          "final_state_digest": "eee13c541ed5c8d03f123d92e12265455c8e1d07ae5216ecabd547e746afe5fa"
+        }
+      },
+      "inactive-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "inactive",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 4520,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30123",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_trainer.py",
+            "--case",
+            "inactive",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inactive-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inactive-seed/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914",
+          "container_id": "ed9014484734",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "f47af0703d6d116068589b9dbe0f6cc94bf54eb5ade10dc6d26ea5b4f86d9741",
+                "rows": [
+                  2,
+                  3,
+                  6,
+                  7
+                ]
+              }
+            ],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "b79f513bc7314f08bff9e5b5e63e6d4c",
+              "pid": 19,
+              "start_ticks": "2220409"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 100.0,
+              "case": "inactive",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4693714380264282,
+                "CPU_norm": 1.4693713507772312,
+                "coefficient": 1.0
+              }
+            ],
+            "optimizer_shard_elements": 11279,
+            "final_state_digest": "eba2af89488b2264d3b75828750dc8712f8e7299211427ab106fbab9c0009266"
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-FP64-global-token-loss-and-ALL-full-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "f47af0703d6d116068589b9dbe0f6cc94bf54eb5ade10dc6d26ea5b4f86d9741",
+              "rows": [
+                2,
+                3,
+                6,
+                7
+              ]
+            }
+          ],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "b79f513bc7314f08bff9e5b5e63e6d4c",
+            "pid": 19,
+            "start_ticks": "2220409"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 100.0,
+            "case": "inactive",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4693714380264282,
+              "CPU_norm": 1.4693713507772312,
+              "coefficient": 1.0
+            }
+          ],
+          "optimizer_shard_elements": 11279,
+          "final_state_digest": "eba2af89488b2264d3b75828750dc8712f8e7299211427ab106fbab9c0009266"
+        }
+      },
+      "inf-refusal": {
+        "final": {
+          "status": "failed",
+          "rank": 1,
+          "case": "inf",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 4814,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30124",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22/distributed_d22_trainer.py",
+            "--case",
+            "inf",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-refusal/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914",
+          "container_id": "2abc0f071279",
+          "error": "AssertionError(1)",
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "failed",
+          "checks": [],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "error": "PermissionError(13, 'Permission denied')"
+        }
+      },
+      "inf-refusal-r2": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "inf",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 5310,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30127",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "inf",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/inf-refusal-r2/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914",
+          "container_id": "9f803f90da17",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "41c636e941514f738f327c622710ad31",
+              "pid": 19,
+              "start_ticks": "2230113"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "inf",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              true
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "41c636e941514f738f327c622710ad31",
+            "pid": 19,
+            "start_ticks": "2230113"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "inf",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            true
+          ],
+          "raw_updates": 0
+        }
+      },
+      "nan-refusal": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "nan",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 5603,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30128",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "nan",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/nan-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/nan-refusal/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914",
+          "container_id": "88029d38385d",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "ea3192dea46640e1a31824f1910b30e1",
+              "pid": 19,
+              "start_ticks": "2231655"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "nan",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              true
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "ea3192dea46640e1a31824f1910b30e1",
+            "pid": 19,
+            "start_ticks": "2231655"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "nan",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            true
+          ],
+          "raw_updates": 0
+        }
+      },
+      "overflow-refusal": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "overflow",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 5896,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30129",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "overflow",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/overflow-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/overflow-refusal/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914",
+          "container_id": "f194a3962d75",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "b0560698bc484658b488ef8f613442ed",
+              "pid": 19,
+              "start_ticks": "2233197"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "overflow",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              false
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "b0560698bc484658b488ef8f613442ed",
+            "pid": 19,
+            "start_ticks": "2233197"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "overflow",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            false
+          ],
+          "raw_updates": 0
+        }
+      },
+      "fp32-resume": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "fp32",
+          "action": "resume",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 6428,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30122",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d22-r2/distributed_d22_trainer.py",
+            "--case",
+            "fp32",
+            "--action",
+            "resume",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d22-r1/fp32-resume/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914",
+          "container_id": "ab04724f6865",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "fresh-FSDP-replay-exact-all-state-window-3",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "fresh-FSDP-replay-exact-all-state-window-4",
+              "fresh-process-different-birth-and-exact-resumed-transcript"
+            ],
+            "transcript": [
+              {
+                "step": 3,
+                "digest": "46738af2e83282cdeb9894602a24ddd993f132c4215333b59e6023b84c44ad0d",
+                "rows": [
+                  18,
+                  19,
+                  22,
+                  23
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "06f47be56e98248e04ca6d3b83432bf1ca140332262c397c7c936e2f6cdfd609",
+                "rows": [
+                  26,
+                  27
+                ]
+              }
+            ],
+            "CPU_clip_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "da1936cd40e24cd3b41fc3be3f669fa9",
+              "pid": 19,
+              "start_ticks": "2242385"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32",
+              "clip_limit": 0.05,
+              "case": "fp32",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+            },
+            "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+            "restore_optimizer_actual_keys": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41
+            ],
+            "restore_optimizer_expected_keys": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41
+            ],
+            "restore_parameter_numels": [
+              366,
+              1024,
+              64,
+              32,
+              32,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              16,
+              2048,
+              64,
+              2048,
+              32,
+              32,
+              32,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              16,
+              2048,
+              64,
+              2048,
+              32,
+              32,
+              32,
+              97,
+              1024,
+              32,
+              32,
+              32
+            ],
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 2,
+                "norm": 1.6263184547424316,
+                "CPU_norm": 1.6263183922538007,
+                "coefficient": 0.030744268461749418
+              },
+              {
+                "step": 3,
+                "norm": 2.267915964126587,
+                "CPU_norm": 2.267916032733807,
+                "coefficient": 0.022046661883273873
+              }
+            ],
+            "optimizer_shard_elements": 11279,
+            "final_state_digest": "eee13c541ed5c8d03f123d92e12265455c8e1d07ae5216ecabd547e746afe5fa"
+          },
+          "agent_shutdown_clean": true,
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "fresh-FSDP-replay-exact-all-state-window-3",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "fresh-FSDP-replay-exact-all-state-window-4",
+            "fresh-process-different-birth-and-exact-resumed-transcript"
+          ],
+          "transcript": [
+            {
+              "step": 3,
+              "digest": "46738af2e83282cdeb9894602a24ddd993f132c4215333b59e6023b84c44ad0d",
+              "rows": [
+                18,
+                19,
+                22,
+                23
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "06f47be56e98248e04ca6d3b83432bf1ca140332262c397c7c936e2f6cdfd609",
+              "rows": [
+                26,
+                27
+              ]
+            }
+          ],
+          "CPU_clip_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "da1936cd40e24cd3b41fc3be3f669fa9",
+            "pid": 19,
+            "start_ticks": "2242385"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32",
+            "clip_limit": 0.05,
+            "case": "fp32",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "ee6595c80362277cff04f80ff08cd2f724b0a5b45f689af1912c41618da574b5"
+          },
+          "source_sha256": "9e819d66f8b10a33df0723799beace9879d3075ebbbcf10b705c77beef7b2ba9",
+          "restore_optimizer_actual_keys": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "restore_optimizer_expected_keys": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "restore_parameter_numels": [
+            366,
+            1024,
+            64,
+            32,
+            32,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            16,
+            2048,
+            64,
+            2048,
+            32,
+            32,
+            32,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            16,
+            2048,
+            64,
+            2048,
+            32,
+            32,
+            32,
+            97,
+            1024,
+            32,
+            32,
+            32
+          ],
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 2,
+              "norm": 1.6263184547424316,
+              "CPU_norm": 1.6263183922538007,
+              "coefficient": 0.030744268461749418
+            },
+            {
+              "step": 3,
+              "norm": 2.267915964126587,
+              "CPU_norm": 2.267916032733807,
+              "coefficient": 0.022046661883273873
+            }
+          ],
+          "optimizer_shard_elements": 11279,
+          "final_state_digest": "eee13c541ed5c8d03f123d92e12265455c8e1d07ae5216ecabd547e746afe5fa"
+        }
+      }
+    }
+  },
+  "payload_files": {
+    "optimizer_0/__1_0.distcp": {
+      "bytes": 305742,
+      "sha256": "7d4d65a31c34d04c7517c78a363934447f08a723586f559d2ee8ddce334d243c"
+    },
+    "optimizer_0/.metadata": {
+      "bytes": 67829,
+      "sha256": "2a538352e59add6b12115491c4d165fcf175c1da233e607dae176b2a5c585c26"
+    },
+    "optimizer_0/__0_0.distcp": {
+      "bytes": 224413,
+      "sha256": "ec62d90824807d4358dda1796f9616c85ed46eaa2f0e74f3fd52574c84a1a22f"
+    },
+    "pytorch_model_fsdp_0/__1_0.distcp": {
+      "bytes": 120780,
+      "sha256": "99afcf98115c97f814758191cdbda68ac0315a791eaacbb3d7aa7d3876217e29"
+    },
+    "pytorch_model_fsdp_0/.metadata": {
+      "bytes": 24557,
+      "sha256": "cc4ceda79dc474f048b4eef733666f694f83f1a014d97b2ef6f31025873636e3"
+    },
+    "pytorch_model_fsdp_0/__0_0.distcp": {
+      "bytes": 121036,
+      "sha256": "be0e6d2ffba79ce10dd48b0a92e0949cbe1bbd5e82ffde38cc8c360bbc026f62"
+    }
+  },
+  "payload_inventories": {
+    "104": [
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "f818dfce910b1f6d243bae4639d7c94ab669a3449ac268d5a4eb9ba09945d9f3"
+      },
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "81576ff754f97dd1b5f887ebddce5f303065973d0010de7ef4f583322f947a76"
+      },
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/rng_state_0.pth",
+        "bytes": 14661,
+        "sha256": "08d91b3247a66656f6c003930378073995ed50643908c8f9a17fcc1d253976ef"
+      },
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      },
+      {
+        "name": "fp32-seed/checkpoint-state.pt",
+        "bytes": 179490,
+        "sha256": "d8661c62ac3815db653d8d950851126c1b4d3485900a63c05eb11b5ba3665385"
+      },
+      {
+        "name": "fp32-seed/reference-3.pt",
+        "bytes": 232279,
+        "sha256": "404525e04ec149106373293273bafd311587f8d312594e172ec86634cc456899"
+      },
+      {
+        "name": "fp32-seed/reference-4.pt",
+        "bytes": 232215,
+        "sha256": "371fec9ae8112ab963e7400ab1cc346cdd16fa47c2fb0b7f80194147c3fac987"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "ec62d90824807d4358dda1796f9616c85ed46eaa2f0e74f3fd52574c84a1a22f"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "7d4d65a31c34d04c7517c78a363934447f08a723586f559d2ee8ddce334d243c"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "be0e6d2ffba79ce10dd48b0a92e0949cbe1bbd5e82ffde38cc8c360bbc026f62"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "99afcf98115c97f814758191cdbda68ac0315a791eaacbb3d7aa7d3876217e29"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/rng_state_0.pth",
+        "bytes": 14661,
+        "sha256": "72d17e43797fa4628787a39bdbd0223302a639eb46513fb88a147447400a1a35"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "f818dfce910b1f6d243bae4639d7c94ab669a3449ac268d5a4eb9ba09945d9f3"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "81576ff754f97dd1b5f887ebddce5f303065973d0010de7ef4f583322f947a76"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/rng_state_0.pth",
+        "bytes": 14661,
+        "sha256": "08d91b3247a66656f6c003930378073995ed50643908c8f9a17fcc1d253976ef"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      }
+    ],
+    "105": [
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "5ab100d9dd87a8b5c5b5e84781eb636e7875d6fd15e0e1daf2d025f138d3d919"
+      },
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "73fef35016a0035f882f10d2767905d3c10c08d6d432153081856137c7d7e5cb"
+      },
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/rng_state_1.pth",
+        "bytes": 14661,
+        "sha256": "3aa09a5d8d232ddf70dba8bc582bf0b098ba257ce2818fc7c13600ec9616d13c"
+      },
+      {
+        "name": "fp32-resume/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      },
+      {
+        "name": "fp32-seed/checkpoint-state.pt",
+        "bytes": 182177,
+        "sha256": "07f468384d69c22d75ba520bba73c25d8b8f92e4d5450a56110ffbf05bb47fd0"
+      },
+      {
+        "name": "fp32-seed/reference-3.pt",
+        "bytes": 235439,
+        "sha256": "bd47f5ce8f1533fc1208c536d57f0ba691d7e35756ca8a63cae4e16ee9db8736"
+      },
+      {
+        "name": "fp32-seed/reference-4.pt",
+        "bytes": 235375,
+        "sha256": "5ea24c5863d09a1cfb3c325b0ccb200d39f9f5a5a9d58989810883d68ea7bcc1"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "ec62d90824807d4358dda1796f9616c85ed46eaa2f0e74f3fd52574c84a1a22f"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "7d4d65a31c34d04c7517c78a363934447f08a723586f559d2ee8ddce334d243c"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "be0e6d2ffba79ce10dd48b0a92e0949cbe1bbd5e82ffde38cc8c360bbc026f62"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "99afcf98115c97f814758191cdbda68ac0315a791eaacbb3d7aa7d3876217e29"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/rng_state_1.pth",
+        "bytes": 14661,
+        "sha256": "391d0c89e8ff0ca695b62efcb87b86d5984e187fa266e7d11f4fadc87610db65"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-2/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "5ab100d9dd87a8b5c5b5e84781eb636e7875d6fd15e0e1daf2d025f138d3d919"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "73fef35016a0035f882f10d2767905d3c10c08d6d432153081856137c7d7e5cb"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/rng_state_1.pth",
+        "bytes": 14661,
+        "sha256": "3aa09a5d8d232ddf70dba8bc582bf0b098ba257ce2818fc7c13600ec9616d13c"
+      },
+      {
+        "name": "fp32-seed/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      }
+    ]
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 526568,
+      "sha256": "e2863fb13dd4ee32f51a1616cc6de577c6c571ef58109f9fd24893ad3caa36aa"
+    },
+    {
+      "host": 105,
+      "bytes": 472600,
+      "sha256": "f99bbe5573367cb21b4d7c5662f7ba9fb51770ed4bfc8efa6389281f6d14e60b"
+    }
+  ]
+}
