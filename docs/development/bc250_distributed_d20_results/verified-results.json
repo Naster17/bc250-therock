@@ -1,0 +1,322 @@
+{
+  "status": "passed",
+  "GPU_check_groups": 36,
+  "GPU_guards": 6,
+  "CPU_digest_patterns": 3,
+  "CPU_digest_observations": 12,
+  "CPU_head_patterns": 4,
+  "CPU_head_observations": 8,
+  "local_unit_tests": 42,
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "d83af4e1-e3ef-4cc8-ade9-371328a22f4b",
+    "bad537ed-ea08-49e6-ad44-40a9bc1d6914"
+  ],
+  "cases": {
+    "r1": {
+      "status": "passed",
+      "checks": [
+        "native-BF16-full-predict-19row-order-tail-and-GPU-placement",
+        "original-two-outliers-reproduced-at-unchanged-003-003-gate",
+        "matched-CPU-autocast-and-layer-tap-diagnostics-recorded",
+        "compact-full-token-metric-parity-and-native-loss-unchanged",
+        "no-model-state-gradient-or-optimizer-mutation",
+        "both-ranks-identical-byte-prediction-digest"
+      ],
+      "digest_contracts": [
+        "whole-byte-oracle-strided-and-chunk-order-parity",
+        "dtype-shape-and-signed-zero-sensitive",
+        "object-and-structured-refusals"
+      ],
+      "rank": 0,
+      "source_sha256": "e6d782963aa83a3f9da779492ba25810ff5b76e1c2686e1a3765b2474f90d460",
+      "helpers": {
+        "bc250_array_digest.py": "62d839b98a1efefc675c52f716974a2bf9df584fbad2c4cea6468f8ee294b6c8",
+        "check_array_digest_d20.py": "c0d3afc5c7f9c80dc9c30d9a40cd9445bbde76ef58d9359fb3a8aab0ef7b7203",
+        "bc250_compact_token_metrics.py": "4bd87f88f4465ca95b23ca05e60f4ce28b5a3e3abf4c1f6582e151f85aa1d6bf",
+        "distributed_d19_evaluate.py": "396e47bd82fffe43b0d17ba6d8ad3a0ebee30389395be03bf8943f80d5389e65"
+      },
+      "prediction_digest": "ccb82765e351cf46887bd9713be848465245d3088a2120b88c19e509242158e4",
+      "GPU_BF16_vs_CPU_FP64": {
+        "compared_values": 30408704,
+        "violations": 2,
+        "max_absolute_error": 0.003654425659018067,
+        "relative_L2": 0.004237156271034316,
+        "atol": 0.003,
+        "rtol": 0.003,
+        "outliers": [
+          {
+            "row": 13,
+            "position": 42,
+            "vocab": 16960,
+            "actual": 0.007293701171875,
+            "reference": 0.010948126830893067,
+            "absolute_error": 0.003654425659018067
+          },
+          {
+            "row": 9,
+            "position": 38,
+            "vocab": 30852,
+            "actual": 0.140625,
+            "reference": 0.14417412714823571,
+            "absolute_error": 0.0035491271482357145
+          }
+        ]
+      },
+      "GPU_BF16_vs_matched_CPU_BF16": {
+        "compared_values": 30408704,
+        "violations": 0,
+        "max_absolute_error": 0.001953125,
+        "relative_L2": 2.43521749509087e-05,
+        "atol": 0.003,
+        "rtol": 0.003,
+        "outliers": []
+      },
+      "CPU_BF16_vs_CPU_FP64": {
+        "compared_values": 30408704,
+        "violations": 2,
+        "max_absolute_error": 0.003654425659018067,
+        "relative_L2": 0.004237140778073454,
+        "atol": 0.003,
+        "rtol": 0.003,
+        "outliers": [
+          {
+            "row": 13,
+            "position": 42,
+            "vocab": 16960,
+            "actual": 0.007293701171875,
+            "reference": 0.010948126830893067,
+            "absolute_error": 0.003654425659018067
+          },
+          {
+            "row": 9,
+            "position": 38,
+            "vocab": 30852,
+            "actual": 0.140625,
+            "reference": 0.14417412714823571,
+            "absolute_error": 0.0035491271482357145
+          }
+        ]
+      },
+      "CPU_BF16_at_GPU_outliers": [
+        {
+          "row": 13,
+          "position": 42,
+          "vocab": 16960,
+          "actual": 0.007293701171875,
+          "reference": 0.010948126830893067,
+          "absolute_error": 0.003654425659018067,
+          "CPU_BF16": 0.007293701171875
+        },
+        {
+          "row": 9,
+          "position": 38,
+          "vocab": 30852,
+          "actual": 0.140625,
+          "reference": 0.14417412714823571,
+          "absolute_error": 0.0035491271482357145,
+          "CPU_BF16": 0.140625
+        }
+      ],
+      "matched_taps": {
+        "bert": {
+          "shape": [
+            32
+          ],
+          "max_abs_GPU_CPU_BF16": 2.384185791015625e-07,
+          "exact": false
+        },
+        "cls.predictions.transform.dense": {
+          "shape": [
+            32
+          ],
+          "max_abs_GPU_CPU_BF16": 0.0,
+          "exact": true
+        },
+        "cls.predictions.transform.transform_act_fn": {
+          "shape": [
+            32
+          ],
+          "max_abs_GPU_CPU_BF16": 0.0,
+          "exact": true
+        },
+        "cls.predictions.transform.LayerNorm": {
+          "shape": [
+            32
+          ],
+          "max_abs_GPU_CPU_BF16": 0.005288600921630859,
+          "exact": false
+        },
+        "cls.predictions.decoder": {
+          "shape": [
+            32768
+          ],
+          "max_abs_GPU_CPU_BF16": 0.00048828125,
+          "exact": false
+        }
+      },
+      "token_metrics": {
+        "token_nll": 10.432745588959701,
+        "token_perplexity": 33953.44460501349,
+        "token_accuracy": 0.0,
+        "active_tokens": 838,
+        "evaluated_examples": 19
+      },
+      "native_loss": 10.561141967773438
+    },
+    "r2": {
+      "status": "passed",
+      "checks": [
+        "native-BF16-full-predict-19row-order-tail-and-GPU-placement",
+        "explicit-FP32-head-passes-original-all-logit-CPU-FP64-gate",
+        "matched-CPU-autocast-and-layer-tap-diagnostics-recorded",
+        "compact-full-token-metric-parity-and-native-loss-unchanged",
+        "no-model-state-gradient-or-optimizer-mutation",
+        "GPU-FP32-head-dtype-and-exact-native-BF16-scope-restoration",
+        "both-ranks-identical-byte-prediction-digest"
+      ],
+      "digest_contracts": [
+        "whole-byte-oracle-strided-and-chunk-order-parity",
+        "dtype-shape-and-signed-zero-sensitive",
+        "object-and-structured-refusals"
+      ],
+      "head_contracts": [
+        "FP32-scope-and-native-AMP-restoration",
+        "parameter-values-identities-and-state-keys-unchanged",
+        "exception-and-custom-forward-restoration",
+        "nested-training-weights-grad-input-refusals"
+      ],
+      "policy": "fp32-head",
+      "rank": 0,
+      "source_sha256": "08b9561d6c8fe16c852d85a98f2dc81a3803daf804e71e83a0ad0a19d61b45dc",
+      "helpers": {
+        "bc250_array_digest.py": "62d839b98a1efefc675c52f716974a2bf9df584fbad2c4cea6468f8ee294b6c8",
+        "check_array_digest_d20.py": "c0d3afc5c7f9c80dc9c30d9a40cd9445bbde76ef58d9359fb3a8aab0ef7b7203",
+        "bc250_compact_token_metrics.py": "4bd87f88f4465ca95b23ca05e60f4ce28b5a3e3abf4c1f6582e151f85aa1d6bf",
+        "distributed_d19_evaluate.py": "396e47bd82fffe43b0d17ba6d8ad3a0ebee30389395be03bf8943f80d5389e65",
+        "bc250_eval_precision.py": "90a6d6ab8525c7ecb3f58626faf35701d39dab377452d7cbed83025658d67aee",
+        "check_eval_precision_d20.py": "a2ac6446986da1e0271a35ca55356d7685480a3ac177722d30a0178e356e7dc8"
+      },
+      "prediction_digest": "90242fe2d21c8d092a2033915d5a4112dbea65f22957d302ff286c63cda09449",
+      "GPU_BF16_vs_CPU_FP64": {
+        "compared_values": 30408704,
+        "violations": 0,
+        "max_absolute_error": 5.873836473679894e-05,
+        "relative_L2": 6.318260507230478e-05,
+        "atol": 0.003,
+        "rtol": 0.003,
+        "outliers": []
+      },
+      "GPU_BF16_vs_matched_CPU_BF16": {
+        "compared_values": 30408704,
+        "violations": 0,
+        "max_absolute_error": 4.708766937255859e-06,
+        "relative_L2": 5.656457316262216e-07,
+        "atol": 0.003,
+        "rtol": 0.003,
+        "outliers": []
+      },
+      "CPU_BF16_vs_CPU_FP64": {
+        "compared_values": 30408704,
+        "violations": 0,
+        "max_absolute_error": 5.870856241441125e-05,
+        "relative_L2": 6.318384772632747e-05,
+        "atol": 0.003,
+        "rtol": 0.003,
+        "outliers": []
+      },
+      "CPU_BF16_at_GPU_outliers": [],
+      "matched_taps": {
+        "bert": {
+          "shape": [
+            32
+          ],
+          "GPU_dtype": "torch.float32",
+          "CPU_dtype": "torch.float32",
+          "max_abs_GPU_CPU_BF16": 2.384185791015625e-07,
+          "exact": false
+        },
+        "cls.predictions.transform.dense": {
+          "shape": [
+            32
+          ],
+          "GPU_dtype": "torch.float32",
+          "CPU_dtype": "torch.float32",
+          "max_abs_GPU_CPU_BF16": 4.470348358154297e-08,
+          "exact": false
+        },
+        "cls.predictions.transform.transform_act_fn": {
+          "shape": [
+            32
+          ],
+          "GPU_dtype": "torch.float32",
+          "CPU_dtype": "torch.float32",
+          "max_abs_GPU_CPU_BF16": 2.2351741790771484e-08,
+          "exact": false
+        },
+        "cls.predictions.transform.LayerNorm": {
+          "shape": [
+            32
+          ],
+          "GPU_dtype": "torch.float32",
+          "CPU_dtype": "torch.float32",
+          "max_abs_GPU_CPU_BF16": 3.5762786865234375e-07,
+          "exact": false
+        },
+        "cls.predictions.decoder": {
+          "shape": [
+            32768
+          ],
+          "GPU_dtype": "torch.float32",
+          "CPU_dtype": "torch.float32",
+          "max_abs_GPU_CPU_BF16": 1.1175870895385742e-07,
+          "exact": false
+        }
+      },
+      "token_metrics": {
+        "token_nll": 10.43274511247336,
+        "token_perplexity": 33953.42842666472,
+        "token_accuracy": 0.0,
+        "active_tokens": 838,
+        "evaluated_examples": 19
+      },
+      "native_loss": 10.56113338470459
+    },
+    "r3": {
+      "status": "passed",
+      "checks": [
+        "native-Trainer-evaluate-matches-frozen-D20-predict-metrics",
+        "actual-Trainer-evaluate-FP32-head-metrics-and-observed-BF16-encoder",
+        "GPU-exception-restores-original-head-and-exact-native-evaluation-metrics",
+        "model-state-keys-parameter-identities-tied-weights-and-gradients-preserved",
+        "both-ranks-identical-scope-evaluation-metrics"
+      ],
+      "rank": 0,
+      "source_sha256": "2dbb3a4dfdddc5cf93e13d1bec80020a0efab681a7693cffbc1bfe60b40906ce",
+      "helpers": {
+        "bc250_eval_precision.py": "90a6d6ab8525c7ecb3f58626faf35701d39dab377452d7cbed83025658d67aee",
+        "bc250_compact_token_metrics.py": "4bd87f88f4465ca95b23ca05e60f4ce28b5a3e3abf4c1f6582e151f85aa1d6bf",
+        "distributed_d19_evaluate.py": "396e47bd82fffe43b0d17ba6d8ad3a0ebee30389395be03bf8943f80d5389e65"
+      },
+      "metrics": {
+        "native_token_nll": 10.432745588959694,
+        "head_token_nll": 10.43274511247336
+      }
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 298287,
+      "sha256": "65824728c50f4e2080207a456996ada8ba286741c0ff28356a600284e261c495"
+    },
+    {
+      "host": 105,
+      "bytes": 280711,
+      "sha256": "54fc6c50af6974c4bc090838aee98d22f7b7479685afc9969c12d9e47e3fc0f9"
+    }
+  ]
+}

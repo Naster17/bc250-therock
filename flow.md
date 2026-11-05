@@ -9,6 +9,57 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D20 completed 2026-11-05, BF16 diagnosis +explicit FP32 evaluation head:**
+  helpers/bytehash/contracts1a61687a7, export997b38bb7, final scope/export570e60428.
+  D19 wide Bert BF16 outliers reproduced EXACTLY by matched CPU BF16 atsame
+  coordinates/values:2/30408704 versus FP64,maxabs.003654425659; GPU vsCPU-BF16
+  zero violations,maxabs.001953125. ORIGINAL atol/rtol.003/.003 retained. Evidence
+  supports BF16 rounding inthisfixture, no native ROCm/Torch defect demonstrated;
+  nativeBF16 still fails strictFP64 gate, no universal correctness inference.
+  Added opt-in BOTH tools/distributed-d20-r3/bc250_eval_precision.py fp32_eval_head:
+  existing single-positional-hidden-input FP32-master eval head only, disables
+  autocast inside head/inputFP32, weights/buffers/keys/ties unchanged. Requires
+  eval+no_grad/inference_mode, one tensor output; nested/training/lowprecision
+  weights/invalid input refused. Restores per-instance forward onexception/exit;
+  no class/global/app patches. Actual Bert model.cls with BF16 encoder AMP now
+  ORIGINAL CPUFP64 gate ZERO violations,maxabs.00005873836474,relativeL2.00006318.
+  GPU vsmatched CPU policy maxabs.000004708767; scope intentionally changes head
+  math/loss, no exact BF16 continuation, training/backward/speedup claim.
+  Three phases/node: r1native diagnose/r2full-reference FP32head/r3actual
+  Trainer.evaluate/scope restoration. Encoderquery BF16/head FP32 observed; native
+  metrics EXACT afternormal+GPUexception exit, parameter IDs/keys/ties preserved.
+  Owned Bert vocab32768/hidden32/2layers/seq64/eager/dropout0/cacheFalse,19records/
+  rightpadding33–64/unequalmasks/838targets/world2/RCCL. Full/compact metrics
+  parity1e-11, native loss unchanged WITHINpolicy; crossrank digests/metrics agree.
+  36groups/6ACKguards;3CPUdigest patterns*4workers=12obs/4CPUhead patterns*2=8obs;
+  42localtests/Black/criticalRuff+F401/syntax/diff pass. CPU graph same HFimplementation,
+  not independent Transformer. No larger/general model, streaming/elastic/capacity
+  or FP16/newbackward qualification. Historical PythonCPU/KFD/visibility separate
+  from fixedVMheap/D05 agent exit; native warnings retained.
+  New bc250_array_digest versioned named/dtype/shape/C-order byte SHA, bounded
+  noncontig iteration; owned D19 fixture no longer .tolist/giantJSONfingerprints.
+  CPU whole-byte oracle/chunk1/3/65536/order/strides/zero/dtype/shape/refusals pass.
+  Newformat NOT comparable tolegacy JSON digests; full reference arrays remain,
+  no hostRSS/performance claim. Native a524/daily+RCCL/ROCm/D09/consumers/images/
+  registries/kernels/defaults unchanged; no build/install/prefix mutation/reboot/
+  downloads/app access/foreignstop. Sharedlocks/4CPUs/10GiB+12GiB/512PIDs/256MiBshm/
+  600s watchdog/460s children. Guards14025/13356,15056/14338,16906/16124 all exit0,
+  exactcommands/container IDs/kernel/ACK records preserved under evidence/
+  distributed-d20-{r1,r2,r3}/bertwide-bf16-{diagnose,fp32-head,scope}.
+  No jobs/containers/armedguards; bootsd83af4e1(.104r2)/bad537ed(.105r3) unchanged.
+  Local kernel/artifacts/distributed-d20 finalarchives104298287B SHA
+  65824728c50f4e2080207a456996ada8ba286741c0ff28356a600284e261c495;
+  105280711B SHA54fc6c50af6974c4bc090838aee98d22f7b7479685afc9969c12d9e47e3fc0f9.
+  Initial archives retained; source/config/nativeidentity/consumer manifests/guards/
+  rawCPUreports/crossrankdigests verified. No persistent prediction/checkpoint
+  tensors. Both docs/memory synced. [D20 report](docs/development/bc250_distributed_d20_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md#explicit-fp32-evaluation-head-d20).
+  **Next D21(new planned):** practical distributed gap review +pinned actual
+  Trainer FSDP FP32 readiness audit; prioritize bounded real-training integration
+  with CPU ALL-gradient/optimizer and fixed-world restart if API admits it. D08
+  customFSDP/D12–16 actualTrainerDDP already pass; do not repeat full matrices or
+  infer larger-model capacity/scaling. Broad unresolved work remains inroadmap.
+
 - **D19 completed 2026-11-05, compact validation +larger-vocabulary crossover:**
   final active-token helper/fixtures `1a39b5254`, exports/verifier `c99e46fe4`;
   dense prototype a7c1104d0/strict-wide-FP32 fixture4deb6a00a retained, rejected.
