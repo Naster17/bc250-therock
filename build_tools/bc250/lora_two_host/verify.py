@@ -64,6 +64,7 @@ def verify(directory):
                 assert not record["foreign_containers"]
                 prefix = name.removesuffix("final.json")
                 state = json.loads(files[prefix + "guard/state.json"])
+                assert state["status"] == "acknowledged" and not state["dry_run"]
                 ack = json.loads(files[prefix + "guard/ack.json"])
                 assert all(state[k] == ack[k] for k in ["nonce", "boot_id", "phase"])
                 assert record["boot_id"] == state["boot_id"]
@@ -100,6 +101,15 @@ def verify(directory):
             == pair[1]["initial_adapter_sha256"]
         )
         assert pair[0]["final_adapter_sha256"] == pair[1]["final_adapter_sha256"]
+        if series == "correctness-r1":
+            # A clipped direction alone cannot detect a common loss-scaling
+            # error. Also compare the native PRE-clip norm and initial loss.
+            reference = single["rows"][0]["metrics"]
+            candidate = pair[0]["rows"][0]["metrics"]
+            assert abs(candidate["grad_norm"] / reference["grad_norm"] - 1) <= 0.03
+            assert abs(candidate["loss"] - reference["loss"]) <= 0.003 + 0.003 * abs(
+                reference["loss"]
+            )
         count = 4 if series == "correctness-r1" else 6
         assert all(len(r["rows"]) == count for r in [single, *pair])
         for a, b, c in zip(single["rows"], pair[0]["rows"], pair[1]["rows"]):

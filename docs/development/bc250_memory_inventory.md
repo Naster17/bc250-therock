@@ -82,6 +82,31 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 | Profiling                           | API/kernel/copy tracing works. Hardware counter tables, PC sampling, ATT and SPM are unqualified.                                                                                |
 | Debugger                            | Native architecture/ELF registration patched; consumers and attach/step/wave suites not qualified                                                                                |
 
+## L01 authorized two-host LoRA application update (2026-11-05)
+
+[Report](bc250_lora_two_host_results/README.md),
+[usage](../../../BC250_LORA_TWO_HOST.md). User explicitly authorized
+`bc250-projects/lora-smoke`, separate from excluded `finetune-n7`. Additive DDP
+entry point on both boards, newer app-only Transformers5.22.1/TRL1.17.1/
+PEFT0.21.2/Accelerate1.15/datasets5.1, native providers unchanged. Qwen3.5-2B,
+rank128/alpha256/all-linear, 134553600 FP32 LoRA elements, FP16 base/AMP/native
+scale128, global16 preserved through accumulation8 single/4 per rank. Fixed
+rank-0-only final evaluation and explicit process-group shutdown. First-update
+POST-CLIP full-gradient one-GPU comparison relative L2 .0034373344 <=.03 and all
+parameter bounds pass; first loss/native PRE-CLIP norm also match. No independent
+CPU Qwen proof. DDP final replicas identical; no skipped updates. Dropout.05 R2
+matches all96 input+label hashes: warm five updates122.892s single/99.861s DDP,
+1.231x throughput; whole short train_runtime239.404/248.044s, startup makes DDP
+slower overall. No full-run speed/capacity/convergence claim. Production smoke
+one update +two-rank eval8, ALL372 saved tensors exactly match live PEFT export.
+Eight acknowledged guards, kernel/registry/boots unchanged, no native install or
+prefix mutation. Recovered allocation retries and reference conv/delta paths
+remain; no general8192-length fit/fast-package proof. Complete metadata exports
+verify; initial non-root exports rejected for missing root-only guard directories,
+retained separately. Originals/checkpoints untouched. Next application L02 is
+full same-world checkpoint distribution/fresh-process optimizer/scaler/RNG/cursor
+replay; old one-host continuation unqualified. Stack D24 remains separate.
+
 ## D23 actual Trainer FSDP BF16 computation update (2026-11-05)
 
 [Report](bc250_distributed_d23_results/README.md),

@@ -9,6 +9,59 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **L01 completed 2026-11-05: authorized real LoRA application on two boards.**
+  User redirected this batch from D24 to `/home/nik/bc250-projects/lora-smoke`
+  (plural directory). Integration `ee1cc87a4`, export/initial verifier `8bacdd1d2`;
+  final verifier adds initial loss/pre-clip-norm and acknowledged-guard checks.
+  [Commands](../BC250_LORA_TWO_HOST.md),
+  [report](docs/development/bc250_lora_two_host_results/README.md).
+  Staged its own Transformers5.22.1/TRL1.17.1/PEFT0.21.2/Accelerate1.15/datasets5.1
+  environment, Qwen3.5-2B and private datasets to .105; model SHA matched.
+  Added `train_two_host.py`, support module, `run-distributed`, matching
+  `two_host_training.json` on BOTH hosts; original entry points, completed
+  adapters/checkpoints retained. No finetune-n7 inspection/change.
+  Native DDP/RCCL, rank128/alpha256/all-linear, FP16 base/autocast/scaler,
+  134553600 trainable FP32 elements/372 tensors; micro2, accumulation8 single /
+  4 per rank gives global16. Native newer Trainer already has accumulation fix;
+  old version-pinned BC250Trainer/FSDP helper NOT applied. Explicit global causal
+  target normalization checked at runtime. Fixed rank-0-only final evaluation;
+  both ranks now enter it; explicit process-group cleanup removes pilot warning.
+  Native initial FP16 scale128 in the opt-in entry point, native growth/skip kept.
+  R1 dropout0: all first-update POST-CLIP LoRA gradients vs equal-batch one GPU,
+  CPU-FP64 comparison relative L2 .0034373344 <=.03, every parameter bound passes;
+  initial loss and PRE-CLIP norm also agree, so clipping cannot hide loss scaling.
+  Not an independent CPU Qwen reference. Four updates; final DDP replica hashes
+  identical. R2 dropout.05: six updates/layout, all96 input+label hashes match
+  global windows; no skipped/nonfinite updates in any phase. Warm five updates:
+  single122.892s vs max-rank DDP99.861s =>1.231x throughput /18.7% less update time.
+  Whole short train_runtime239.404s vs248.044s including startup: DDP slower here;
+  no full-run speed/convergence claim. Gradient vector538214400B, not wire counter.
+  Separate production smoke: one update/16 records +final eval8 on BOTH ranks;
+  all372 saved adapter tensors/134553600 elements EXACT vs live export.
+  Eight GPU guards ACK/exit0, no failed GPU phase/kernel-log/registry change.
+  Recoverable allocation retries in DDP R1 and both R2 layouts retained; 8192
+  setting remains memory-sensitive, not all full-length samples tested. Reference
+  conv/gated-delta paths still used by this newer app; fast-package/hooks not ported.
+  Black/critical Ruff+F401/syntax/shell +3 generator preservation checks pass.
+  First non-root metadata exports omitted 0700 guard dirs and verifier rejected;
+  fixed root-only exporter, complete exports verify; incomplete archives retained.
+  Local `kernel/artifacts/lora-two-host/{104,105}-evidence.tar.gz`:405179/282309B,
+  SHA58557236d72cb6aa6a3781a2c351cb367d9222a40ddd0543b61d27edf43d247d /
+  2bbafbb7c270c053480c17eb3618eb14910afb00b9e3508b2611ef2707456902.
+  Raw gradients/adapter retained on hosts; no private dataset/weights in exports.
+  Guards104:27384/28490/30214/30886/32056;105:20500/22096/23684; exact commands,
+  PIDs/configs/logs in both `bc250work/evidence/lora-two-host/*/{running,final}.json`.
+  No jobs/containers/armed guards; boots c1199fca(.104r2)/bad537ed(.105r3) unchanged.
+  Shared locks/resource envelope retained. No native build/install/prefix mutation/
+  reboot/download; Torch daily/RCCL a524/D09/ROCm/kernels/defaults unchanged.
+  Native historical CPU Python/KFD faults remain separate from fixed VM heap,
+  D05 agent exit and D21 optimizer load. No larger-model-capacity/general-model proof.
+  **Next application L02:** same-world real-application checkpoint payload
+  distribution +fresh-process optimizer/scaler/scheduler/RNG/cursor replay before
+  relying on long-job recovery. Old one-host checkpoints are NOT qualified exact
+  two-host continuation. **Stack cursor remains D24** below; L01 does not widen
+  D23's frozen-parameter/version guards. Both host docs/memory synchronized.
+
 - **D23 completed 2026-11-05, actual TrainerFSDP BF16 compute/FP32-shard policy:**
   helper/factory/fixturesc49d99b84, export/verifier0ecfd6258. New explicit
   fsdp_bf16_compute_policy() +BF16 admission in BC250FSDPTrainer, BOTHtools/

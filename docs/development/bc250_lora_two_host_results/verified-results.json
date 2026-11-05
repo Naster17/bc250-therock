@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "guards": [
+    {
+      "host": 104,
+      "phase": "ddp-correctness-r1",
+      "guardian_pid": 28490,
+      "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67"
+    },
+    {
+      "host": 104,
+      "phase": "ddp-production-r2",
+      "guardian_pid": 30214,
+      "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67"
+    },
+    {
+      "host": 104,
+      "phase": "ddp-timing-r2",
+      "guardian_pid": 32056,
+      "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67"
+    },
+    {
+      "host": 104,
+      "phase": "single-correctness-r1",
+      "guardian_pid": 27384,
+      "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67"
+    },
+    {
+      "host": 104,
+      "phase": "single-timing-r2",
+      "guardian_pid": 30886,
+      "boot_id": "c1199fca-eb06-413f-8d28-34417297ba67"
+    },
+    {
+      "host": 105,
+      "phase": "ddp-correctness-r1",
+      "guardian_pid": 20500,
+      "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914"
+    },
+    {
+      "host": 105,
+      "phase": "ddp-production-r2",
+      "guardian_pid": 22096,
+      "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914"
+    },
+    {
+      "host": 105,
+      "phase": "ddp-timing-r2",
+      "guardian_pid": 23684,
+      "boot_id": "bad537ed-ea08-49e6-ad44-40a9bc1d6914"
+    }
+  ],
+  "gradient_comparison": {
+    "status": "passed",
+    "present_parameter_tensors": 372,
+    "elements": 134553600,
+    "relative_l2": 0.003437334358804414,
+    "maximum_per_parameter_bound_fraction": 0.11397200527077515,
+    "reference_sha256": "a52e14dea2a9fc84b39c9e9f8d9b6a65307a196f2041d4ebd6804045135bc5b3",
+    "candidate_sha256": "ba2d036fdf173e97a5d2c036ddb4325e368c8ce4a22c03a8125dde350ca5bc6f"
+  },
+  "saved_adapter": {
+    "status": "passed",
+    "parameter_tensors": 372,
+    "elements": 134553600,
+    "all_saved_adapter_weights_equal_live_weights": true
+  },
+  "timings": {
+    "correctness-r1": {
+      "measured_updates": 3,
+      "single_seconds": 80.45122456700028,
+      "two_host_seconds": 67.96736731900182,
+      "throughput_ratio": 1.1836742798850224,
+      "single_examples_per_second": 0.5966347965284892,
+      "two_host_examples_per_second": 0.7062212631352062,
+      "single_peak_allocated_bytes": 9790509568,
+      "two_host_peak_allocated_bytes": [
+        10324945408,
+        7906830848
+      ],
+      "per_update_seconds": {
+        "single": [
+          113.3058536769995,
+          18.502290856999934,
+          42.94782003599994,
+          19.001113674000408
+        ],
+        "two_host_maximum": [
+          109.11259972100015,
+          17.5715024430001,
+          36.74811638100073,
+          13.647748495000997
+        ]
+      }
+    },
+    "timing-r2": {
+      "measured_updates": 5,
+      "single_seconds": 122.89226522300032,
+      "two_host_seconds": 99.86094028699881,
+      "throughput_ratio": 1.2306339682944085,
+      "single_examples_per_second": 0.650976689662543,
+      "two_host_examples_per_second": 0.801114026866573,
+      "single_peak_allocated_bytes": 9842607616,
+      "two_host_peak_allocated_bytes": [
+        10378108416,
+        8045485568
+      ],
+      "per_update_seconds": {
+        "single": [
+          115.37799546199949,
+          18.46102590099963,
+          42.75111912800003,
+          18.945603997000035,
+          17.66522465700018,
+          25.06929154000045
+        ],
+        "two_host_maximum": [
+          110.92787973000031,
+          17.63906014099848,
+          36.434033435001766,
+          13.39266971500183,
+          13.876191504998133,
+          18.518985490998602
+        ]
+      }
+    }
+  },
+  "input_hash_matches": 96,
+  "limits": [
+    "Subset, not whole-job speed or convergence proof",
+    "One-GPU same-graph gradient reference, not independent CPU model",
+    "Separate-disk full application checkpoint restart unqualified",
+    "FP32 DDP gradient payload 538214400 bytes/update; not measured wire bytes",
+    "Native reference conv/delta paths and recovered allocation retries retained"
+  ]
+}
