@@ -32,7 +32,8 @@ from bc250_compact_token_metrics import CompactTokenMetrics
 from d18_compact_reference import CompactTokenMetrics as D18Compact
 from distributed_d05_train import atomic_json
 from distributed_d10_checkpoint import digest
-from distributed_d10_restart import cpu_tree, exact, fingerprint
+from distributed_d10_restart import cpu_tree, exact
+from bc250_array_digest import array_digest
 
 
 class OwnedData(torch.utils.data.Dataset):
@@ -465,10 +466,10 @@ def main():
             CPU_FP64_token_nll=high_precision["token_nll"],
             native_eval_loss=evaluated["eval_loss"],
             native_loss_token_NLL_gap=difference,
-            prediction_digest=fingerprint(
+            prediction_digest=array_digest(
                 dict(
-                    predictions=full_logits.tolist(),
-                    labels=full_labels.tolist(),
+                    predictions=full_logits,
+                    labels=full_labels,
                 )
             ),
             evaluated_metric_keys=sorted(evaluated),
