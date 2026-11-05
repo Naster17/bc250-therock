@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 78,
+  "accepted_GPU_guards": 10,
+  "historical_r1_guards": 4,
+  "exact_resumed_rank_windows": 8,
+  "local_unit_tests": 42,
+  "actual_pinned_CPU_checks": 18,
+  "qualification_boot_ids": [
+    [
+      "7344171f-9dc7-4f00-8eb0-8ea1f08cfd7c"
+    ],
+    [
+      "e1cbfa23-fb2d-4eda-aa10-77a302716a15"
+    ]
+  ],
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "dc9e9293-451c-4cd0-8839-7c902c8509ad",
+    "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+  ],
+  "valid_payload_bytes_per_host": [
+    3720842,
+    3720842
+  ],
+  "cases": {
+    "mean": {
+      "worker_births": [
+        [
+          {
+            "uuid": "9eebd1baa4224370bcec35e68f888a0b",
+            "pid": 20,
+            "start_ticks": "824489"
+          },
+          {
+            "uuid": "9256c40eec824e21956495aa70a20608",
+            "pid": 20,
+            "start_ticks": "826087"
+          }
+        ],
+        [
+          {
+            "uuid": "27dbbffe91e740c8913705016c87d8df",
+            "pid": 19,
+            "start_ticks": "833687"
+          },
+          {
+            "uuid": "782bd537ee044b65a4b1d414d9873dc6",
+            "pid": 19,
+            "start_ticks": "835284"
+          }
+        ]
+      ]
+    },
+    "tokens": {
+      "worker_births": [
+        [
+          {
+            "uuid": "662a3cfa53ad4b0e8600813f6c2665ed",
+            "pid": 20,
+            "start_ticks": "827623"
+          },
+          {
+            "uuid": "a00fa7a0e82e493ea5d6374063026f9a",
+            "pid": 20,
+            "start_ticks": "829165"
+          }
+        ],
+        [
+          {
+            "uuid": "cdecd0ceb2c3495c93b1f5eeb45ab966",
+            "pid": 19,
+            "start_ticks": "836821"
+          },
+          {
+            "uuid": "e985a4968ade4e0c8ed15ef7b863d219",
+            "pid": 19,
+            "start_ticks": "838363"
+          }
+        ]
+      ]
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 406142,
+      "sha256": "7ce23877c053426ecd690a764ff1377ae0b839eaec659e3a43580d41db8ccf0d"
+    },
+    {
+      "host": 105,
+      "bytes": 365873,
+      "sha256": "ed7af2bc9f1bf60381749a175456d628b5208f5a801dad77c1c2007ad671497c"
+    }
+  ]
+}

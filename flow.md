@@ -9,6 +9,67 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D12 completed2026-11-05, actual Trainer DDP + accumulation repair:**
+  initial514ed8be2, acceptedf5edcaac1, exports3f2d1e391/CPUtestcc47efc09.
+  Native daily+RCCL Torch a524980/ROCm/D09 launcher/images/registries/profiles/
+  kernels/frozen consumers unchanged. No native build/install/prefix update/
+  development reboot/user-app access. Actual Transformers5.2.0 +Accelerate1.12.0
+  Trainer both divide accumulation loss: stock two-micro ALL gradients equal
+  0.5x CPU-double, reproduced on both. Accepted stock checks prove DEFECT, not
+  correctness. Opt-in tools/distributed-d12/bc250_trainer.py BC250Trainer delegates
+  native loop; Accelerator accumulation1 while Trainer arguments2, one division.
+  Version AND Trainer/Accelerator source SHA guards; no global monkeypatch or
+  user-script autoactivation. Independent native Accelerator callers unchanged.
+  BertMLM **kwargs ignores num_items: explicit accepts_loss_kwargsFalse for equal
+  active-count native mean; explicit masked_token_loss hook for variable masks,
+  sum CE/global active-window count +Trainer DDP compensation. Unshifted MLM only.
+  Owned offline Bert22561 FP32/eager/dropout0,28records/sequential/workers0,
+  per-device micro2/accum2: global8 first3updates, final global4/ONE micro.
+  Each4seed windows/case/rank: CPU-double global loss/ALL grads/AdamW ALL params/
+  moments pass fixed D09/D07 bounds, no numerical relaxation.90,244 gradient bytes
+  only final micro. Native Trainer scheduler+post-step hook/LR check:4updates,
+  StepLR.001→.00064. Actual save_on_each_node native checkpoint2 per independent
+  filesystem, then fresh native Trainer train(resume_from_checkpoint) restores
+  initial model/optimizer/StepLR/globalstep/four RNG exact; skip data and following
+  steps3/4 losses/grads/params/optimizer/scheduler/RNG/probe draws/rows EXACT and
+  digests.8resumed rank-windows, CID/UUID/starttick birth proofs. No stochastic
+  graph (RNG probes only), general shuffled/multiworker/elastic resume claim.
+  78groups(6stock diagnosis+72corrected),10GPUguards(2stock+8corrected),18actual
+  pinned CPU checks(versions/source refusals+analytic CE derivatives/counts),
+  42local regressions; Black/critical Ruff/syntax/diff pass, no full upstreamCI.
+  All agents/phase kernel logs/registry clean; SH locks,4CPUs/10GiB+12GiB/512PIDs/
+  256MiBshm/600s guards/460s deadlines. r2 sequence29765/16203 exit0, per-phase
+  PIDs/commands/exits sequence.json. r1 stock28871/15080 exit0, mean29292/15570
+  exit1 after4 CPU references: LR iterative vs power rounding strict equality.
+  Only LR check now abs1e-15; model/loss/grad limits unchanged. r1source/logs/
+  checkpoints retained,4historical ACKs. CPU initial HIP_VISIBLE_DEVICES=-1 aborts
+  ROCr import (139), unsupported value, logs cpu-invalid-visibility; corrected
+  command omits flags, Torch CUDA stays uninitialized. CPU stale lazy-module
+  mock fixed with sys.modules admission stub; original log/source retained.
+  Corrected CPU controllers4100/4259 exit0. Invalid negative visibility parser
+  behavior remains; not historical Python fault/KFD uncertainty or fixed VM heap.
+  GPU boots7344171f/e1cbfa23; BOTH rebooted BETWEEN completed GPU work and CPU/
+  export (guards already ACK). No development reboot issued. Current .104r2
+  bootdc9e9293-451c-4cd0-8839-7c902c8509ad/.105r3 boot133b8dc2-62a1-417b-8acb-fc44aeda6eec.
+  No jobs/containers/armed guards. Native tied decoder missing-key notices pass
+  complete exact restore; all_gather deprecation/barrier warnings retained.
+  Aggregate resume train_loss is remaining loss/totalglobalstep, not equal-interval
+  comparable; per-window exact losses qualified. No eval-metric semantics repair.
+  Both tools/distributed-d12 +evidence/distributed-d12-r2/{stock-seed,mean-seed,
+  mean-resume,tokens-seed,tokens-resume,cpu}; r1/failedCPU/source preserved.
+  Valid seed/native/reference3720842B/host retained plus resumed/historicaloutputs.
+  Local kernel/artifacts/distributed-d12 archives omit.pt/.pth/.bin/.pkl/.safetensors:
+  104406142B SHA7ce23877c053426ecd690a764ff1377ae0b839eaec659e3a43580d41db8ccf0d;
+  105365873B SHAed7af2bc9f1bf60381749a175456d628b5208f5a801dad77c1c2007ad671497c.
+  Both docs/memory synchronized. [D12 report](docs/development/bc250_distributed_d12_results/README.md),
+  [explicit usage](../BC250_DISTRIBUTED_GUIDE.md#transformers-trainer-on-two-hosts-d12).
+  No generic task/model/loss/AMP/FSDP/DeepSpeed/clipping/evaluation/convergence/
+  capacity/speedup claim; historical Python fault distinct from fixed VMheap/D05.
+  **Next D13 (new planned):** actual Trainer BF16/FP16 with bounded mathematical/
+  nonfinite-update/state references, owned fixtures +explicit adapter; preserve
+  native/default/recovery settings. Runtime invalid-visibility refusal is a
+  separate follow-up; B07.13/larger capacity/elastic/release reconstruction open.
+
 - **D11 completed2026-11-05, actual Accelerate two-host DDP integration:**
   fixture21766d81d, exports/verifierf5329413b. Existing frozen Accelerate1.12.0/
   NumPy2.5.1; D09 public command/native daily+RCCL Torch a524980/ROCm/images/
