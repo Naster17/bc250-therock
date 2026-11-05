@@ -9,6 +9,55 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D11 completed2026-11-05, actual Accelerate two-host DDP integration:**
+  fixture21766d81d, exports/verifierf5329413b. Existing frozen Accelerate1.12.0/
+  NumPy2.5.1; D09 public command/native daily+RCCL Torch a524980/ROCm/images/
+  registry/profiles/kernels unchanged. No native build/install/reboot/app access.
+  Owned1,051,648-param residual MLP, FP32/BF16/FP16 actual Accelerator.prepare/
+  accumulate/backward/prepared optimizer/scheduler/DataLoader, MULTI_GPU/world2/
+  NCCL(native RCCL). Sequential32 records, split global micro2,4micros/global8.
+  First3 micros no gradient reduction; final4,206,592 FP32 bytes. Independent
+  CPU-double FP32 and D07 explicit low-rounding loss/all-gradient references,
+  CPU-double AdamW parameter/moment checks,2windows/precision/rank. BF16 max
+  gradient relativeL2.00225232<=.02, FP16.000435060<=.004, fixed D07 limits.
+  Accelerator divides loss; no double division. split_batchesTrue +plugin
+  adjust_schedulerFalse, post-step hook/independent LR verify update-only StepLR.
+  Rank1 Inf before third-window reduction reaches both; native FP16 scaler skips,
+  FP32/BF16 explicit collective finite guard skips optimizer AND scheduler.
+  Accelerator itself supplies no automatic FP32/BF16 nonfinite guard. Fourth
+  window recovers; final3updates/16micros/LR.0008, FP16scale16/tracker1.
+  Native save_state on BOTH independent filesystems with save_on_each_nodeTrue,
+  registered Progress cursor, checkpoint after8micros/2updates. New containers/
+  UUID/startticks/different constructors; actual native load_state restores
+  initial model/optimizer/scaler/scheduler/four RNG streams/custom cursor exactly.
+  Materialize/prefetch skipped workers0 sequential loader BEFORE load_state so
+  iterator CPU RNG draws precede restoration; native RNG loader may suppress
+  errors, explicitly checked. Following2windows incl skip/recovery exact losses/
+  grads/params/optimizer/scaler/scheduler/RNG/augmentation/indices/cursor and
+  digests:12 resumed rank-windows.4 rank1 bad config/cursor/file-size/hash metadata
+  cases refuse BOTH live ranks before mutation,24refusal observations. Owned
+  admission wrapper, trusted native files; not an installed generic checkpoint API.
+  78accepted groups/42localtests/12ACK guards; clean agents/kernel logs/registries,
+  SH locks/4CPUs/10GiB+12GiB/512PIDs/256MiBshm,600s guards/460s deadlines.
+  Black/critical Ruff+unused imports/syntax/diff pass; no full upstream CI.
+  Sequence26401/11021 exit0; FP32 seed25559/10127,resume25995/10583 exit0.
+  Both tools/distributed-d11 +evidence/distributed-d11-r1/{no,bf16,fp16}-{seed,resume};
+  per-phase PID/commands/exits sequence.json. Native/reference payloads177094758B104/
+  177094566B105 retained; archives omit.pt/.bin/.pkl/.safetensors. Local
+  kernel/artifacts/distributed-d11 verified results +archives104326808B SHA
+  b44001c1a03faa538a284d747de05780372f1a466c2a00e874317887f4c8a2c8;
+  105292811B SHAa62d43b21ec83c94d174f015467f5f57038e99ee302b4c4dab63fec66c607db8.
+  .104r2/.105r3 boots7344171f/e1cbfa23 same. No jobs/containers/armed guards.
+  No arbitrary model/AcceleratorFSDP/Trainer/multiworker/shuffle/partial-window/
+  elastic/peer-loss/capacity/speedup claim. Historical Python CPU fault/KFD
+  uncertainty distinct from fixed VM heap/D05 agent exit; no new native fault.
+  Both host docs/memory synchronized. [D11 report](docs/development/bc250_distributed_d11_results/README.md),
+  [Accelerate recipe](../BC250_DISTRIBUTED_GUIDE.md#accelerate-on-two-hosts-d11).
+  **Next D12 (new planned):** actual Transformers Trainer two-host integration,
+  owned offline fixture, bounded accumulation/state references through public
+  command; retain native/default/recovery settings. B07.13 deferred; other
+  transports/larger capacity/elastic/release reconstruction remain open.
+
 - **D10 completed2026-11-05, fresh-process fixed-world checkpoint/restart:**
   initial553eebce1, accepted proof/restricted-load correction0c0efa810, exports97641e4b6.
   Installed D09 tools/native daily+RCCL Torch a524980/ROCm/images/registry/profiles/

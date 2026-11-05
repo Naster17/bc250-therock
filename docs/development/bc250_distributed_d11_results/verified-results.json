@@ -1,0 +1,127 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 78,
+  "accepted_GPU_guards": 12,
+  "collective_checkpoint_refusals": 24,
+  "exact_resumed_rank_windows": 12,
+  "local_unit_tests": 42,
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "7344171f-9dc7-4f00-8eb0-8ea1f08cfd7c",
+    "e1cbfa23-fb2d-4eda-aa10-77a302716a15"
+  ],
+  "valid_payload_bytes_per_host": [
+    177094758,
+    177094566
+  ],
+  "cases": {
+    "no": {
+      "final_scaler": {},
+      "worker_births": [
+        [
+          {
+            "uuid": "8a1240275af344eebfbee74ff297c388",
+            "pid": 20,
+            "start_ticks": "757718"
+          },
+          {
+            "uuid": "ed0b9ac5411f475c89573e6c942a8cb0",
+            "pid": 20,
+            "start_ticks": "760961"
+          }
+        ],
+        [
+          {
+            "uuid": "03cc16345c7a4564a1a5433785d26154",
+            "pid": 19,
+            "start_ticks": "766915"
+          },
+          {
+            "uuid": "4c5c6a75748549728a46d5e3ff3ed859",
+            "pid": 19,
+            "start_ticks": "770158"
+          }
+        ]
+      ]
+    },
+    "bf16": {
+      "final_scaler": {},
+      "worker_births": [
+        [
+          {
+            "uuid": "f00d7698d11a4c929aa345dfb5f3a61b",
+            "pid": 20,
+            "start_ticks": "763942"
+          },
+          {
+            "uuid": "61527dee25384b1c8d310ce2308bdbd1",
+            "pid": 20,
+            "start_ticks": "765649"
+          }
+        ],
+        [
+          {
+            "uuid": "c2f9ac15c40340b7927c2b5fbefb5d97",
+            "pid": 19,
+            "start_ticks": "773140"
+          },
+          {
+            "uuid": "bc038aaaa0204f4a9fe3b9ac2d987047",
+            "pid": 19,
+            "start_ticks": "774846"
+          }
+        ]
+      ]
+    },
+    "fp16": {
+      "final_scaler": {
+        "scale": 16.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2,
+        "_growth_tracker": 1
+      },
+      "worker_births": [
+        [
+          {
+            "uuid": "4b5400299dcf4ded91e931258ecba596",
+            "pid": 20,
+            "start_ticks": "767041"
+          },
+          {
+            "uuid": "52fb937f9ec94fdbb7a6cb9648cbd3a7",
+            "pid": 20,
+            "start_ticks": "768651"
+          }
+        ],
+        [
+          {
+            "uuid": "d725ef1de9a84a15ad50f1ce88545767",
+            "pid": 19,
+            "start_ticks": "776239"
+          },
+          {
+            "uuid": "7f61432d91a34dd1a18bc98ed1a0bc3b",
+            "pid": 19,
+            "start_ticks": "777849"
+          }
+        ]
+      ]
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 326808,
+      "sha256": "b44001c1a03faa538a284d747de05780372f1a466c2a00e874317887f4c8a2c8"
+    },
+    {
+      "host": 105,
+      "bytes": 292811,
+      "sha256": "a62d43b21ec83c94d174f015467f5f57038e99ee302b4c4dab63fec66c607db8"
+    }
+  ]
+}
