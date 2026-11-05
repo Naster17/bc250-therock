@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 """Opt-in source-pinned classic FSDP FP32 Trainer integration for two BC-250 hosts."""
 import hashlib
+import math
 from pathlib import Path
 
 import torch
@@ -16,12 +17,23 @@ PINS = {
 }
 
 
+def _clip_limit(value):
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(value)
+        or value < 0
+    ):
+        raise ValueError("max_grad_norm must be a finite nonnegative number")
+    return float(value)
+
+
 class BC250FSDPTrainer(Trainer):
     """Separate FP32 classic FULL_SHARD/use_orig_params path; DDP helper unchanged.
 
     Native Trainer loop, FSDP wrapping/backward/optimizer/checkpoints retained.
     Explicit SHARDED_STATE_DICT; independent-host checkpoint payloads must be
-    consolidated before restart. No FSDP2, AMP/scaler/clipping/offload/compile,
+    consolidated before restart. No FSDP2, AMP/scaler/offload/compile,
     PEFT/frozen parameters or activation checkpointing qualification.
     """
 
@@ -43,16 +55,16 @@ class BC250FSDPTrainer(Trainer):
                     "BC250FSDPTrainer source identity requires requalification: " + name
                 )
         args = self.args
+        limit = _clip_limit(args.max_grad_norm)
         if (
             args.bf16
             or args.fp16
-            or args.max_grad_norm != 0
             or args.gradient_checkpointing
             or args.torch_compile
             or args.deepspeed
         ):
             raise ValueError(
-                "BC250FSDPTrainer requires FP32/no clipping/checkpointing/compile/DeepSpeed"
+                "BC250FSDPTrainer requires FP32/no activation-checkpointing/compile/DeepSpeed"
             )
         if args.fsdp_plugin_args is None:
             raise ValueError("Explicit classic FSDP configuration is required")
@@ -84,6 +96,53 @@ class BC250FSDPTrainer(Trainer):
             )
         # Trainer already owns the full/short-window denominator and sync schedule.
         acc.gradient_accumulation_steps = 1
+        if limit > 0:
+            original_clip = acc.clip_grad_norm_
+
+            def checked_clip(parameters, max_norm, norm_type=2):
+                parameters = list(parameters)
+                expected = list(self.model.parameters())
+                if (
+                    _clip_limit(max_norm) != limit
+                    or norm_type != 2
+                    or len(parameters) != len(expected)
+                    or any(p is not q for p, q in zip(parameters, expected))
+                ):
+                    raise ValueError(
+                        "Only the complete FSDP root L2 clipping call is qualified"
+                    )
+                bad = torch.zeros((), device=acc.device, dtype=torch.int32)
+                for p in parameters:
+                    if p.numel() == 0:
+                        continue
+                    g = p.grad
+                    if (
+                        g is None
+                        or g.layout != torch.strided
+                        or g.dtype != torch.float32
+                        or g.device != acc.device
+                    ):
+                        bad.fill_(1)
+                    else:
+                        bad = torch.maximum(
+                            bad, (~torch.isfinite(g)).any().to(torch.int32)
+                        )
+                torch.distributed.all_reduce(bad, op=torch.distributed.ReduceOp.MAX)
+                if bad.item():
+                    raise FloatingPointError(
+                        "FSDP gradient refusal on a live rank; reload checkpoint"
+                    )
+                norm = original_clip(parameters, max_norm, norm_type=norm_type)
+                bad = (~torch.isfinite(norm)).to(torch.int32)
+                torch.distributed.all_reduce(bad, op=torch.distributed.ReduceOp.MAX)
+                if bad.item():
+                    raise FloatingPointError(
+                        "FSDP norm refusal on a live rank; reload checkpoint"
+                    )
+                return norm
+
+            # Per-instance public Accelerator method; no package/Trainer-loop fork.
+            acc.clip_grad_norm_ = checked_clip
 
     def _load_optimizer_and_scheduler(self, checkpoint):
         if checkpoint is None:
