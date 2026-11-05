@@ -51,7 +51,9 @@ def main():
         choices=["bertwide-bf16"],
         required=True,
     )
-    p.add_argument("--action", choices=["diagnose", "fp32-head"], required=True)
+    p.add_argument(
+        "--action", choices=["diagnose", "fp32-head", "scope"], required=True
+    )
     p.add_argument("--series", default="r1")
     p.add_argument("--label", required=True)
     p.add_argument("--port", type=int, required=True)
@@ -101,7 +103,7 @@ def main():
 
     command = [
         "python3",
-        "/home/nik/bc250work/tools/distributed-d20-r2/distributed_d20_bounded_launch.py",
+        "/home/nik/bc250work/tools/distributed-d20-r3/distributed_d20_bounded_launch.py",
         "--node-rank",
         str(rank),
         "--master-port",
@@ -114,7 +116,13 @@ def main():
         "HF_HUB_OFFLINE=1",
         "--shm-size",
         "256m",
-        "/home/nik/bc250work/tools/distributed-d20-r2/distributed_d20_precision.py",
+        str(
+            Path(__file__).with_name(
+                "distributed_d20_scope.py"
+                if a.action == "scope"
+                else "distributed_d20_precision.py"
+            )
+        ),
         "--case",
         a.case,
         "--action",
@@ -157,7 +165,7 @@ def main():
                 child_env["BC250_D05_CANDIDATE_TOOL"] = str(tools)
                 child = subprocess.Popen(
                     command,
-                    cwd=Path("/home/nik/bc250work/tools/distributed-d20-r2"),
+                    cwd=Path("/home/nik/bc250work/tools/distributed-d20-r3"),
                     env=child_env,
                     stdin=subprocess.DEVNULL,
                     stdout=log,

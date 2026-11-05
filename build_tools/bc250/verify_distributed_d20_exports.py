@@ -12,9 +12,9 @@ from export_distributed_d20_on_host import PHASES
 def read(path):
     with tarfile.open(path) as t:
         h = json.load(
-            t.extractfile("home/nik/bc250work/evidence/distributed-d20-handoff.json")
+            t.extractfile("home/nik/bc250work/evidence/distributed-d20-handoff-r3.json")
         )
-        assert h["status"] == "passed" and set(h["records"]) == {"r1", "r2"}
+        assert h["status"] == "passed" and set(h["records"]) == {"r1", "r2", "r3"}
         for series, label, tools, groups in PHASES:
             root = f"home/nik/bc250work/evidence/distributed-d20-{series}/{label}/"
             final = json.load(t.extractfile(root + "final.json"))
@@ -44,7 +44,14 @@ def read(path):
             source = f"home/nik/bc250work/tools/{tools}/"
             assert (
                 hashlib.sha256(
-                    t.extractfile(source + "distributed_d20_precision.py").read()
+                    t.extractfile(
+                        source
+                        + (
+                            "distributed_d20_scope.py"
+                            if series == "r3"
+                            else "distributed_d20_precision.py"
+                        )
+                    ).read()
                 ).hexdigest()
                 == w["source_sha256"]
             )
@@ -53,6 +60,12 @@ def read(path):
                     hashlib.sha256(t.extractfile(source + name).read()).hexdigest()
                     == sha
                 )
+            if series == "r3":
+                assert (
+                    abs(w["metrics"]["native_token_nll"] - 10.432745588959701) < 1e-11
+                )
+                assert abs(w["metrics"]["head_token_nll"] - 10.43274511247336) < 1e-11
+                continue
             assert (
                 len(w["digest_contracts"]) == 3
                 and len(w["prediction_digest"]) == 64
@@ -99,10 +112,17 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--directory", type=Path, required=True)
     a = p.parse_args()
-    nodes = [read(a.directory / f"{host}-evidence-r1.tar.gz") for host in [104, 105]]
-    for series in ["r1", "r2"]:
+    nodes = [read(a.directory / f"{host}-evidence-r3.tar.gz") for host in [104, 105]]
+    for series in ["r1", "r2", "r3"]:
         left, right = [n["records"][series]["worker"] for n in nodes]
         assert [left["rank"], right["rank"]] == [0, 1]
+        if series == "r3":
+            assert (
+                left["metrics"] == right["metrics"]
+                and left["source_sha256"] == right["source_sha256"]
+                and left["helpers"] == right["helpers"]
+            )
+            continue
         for k in [
             "source_sha256",
             "helpers",
@@ -115,8 +135,8 @@ def main():
             assert left[k] == right[k], (series, k)
     result = dict(
         status="passed",
-        GPU_check_groups=26,
-        GPU_guards=4,
+        GPU_check_groups=36,
+        GPU_guards=6,
         CPU_digest_patterns=3,
         CPU_digest_observations=12,
         CPU_head_patterns=4,
@@ -124,13 +144,13 @@ def main():
         local_unit_tests=42,
         kernels=[n["kernel"] for n in nodes],
         boot_ids=[n["boot_id"] for n in nodes],
-        cases={s: nodes[0]["records"][s]["worker"] for s in ["r1", "r2"]},
+        cases={s: nodes[0]["records"][s]["worker"] for s in ["r1", "r2", "r3"]},
         archives=[
             dict(
                 host=h,
-                bytes=(a.directory / f"{h}-evidence-r1.tar.gz").stat().st_size,
+                bytes=(a.directory / f"{h}-evidence-r3.tar.gz").stat().st_size,
                 sha256=hashlib.sha256(
-                    (a.directory / f"{h}-evidence-r1.tar.gz").read_bytes()
+                    (a.directory / f"{h}-evidence-r3.tar.gz").read_bytes()
                 ).hexdigest(),
             )
             for h in [104, 105]

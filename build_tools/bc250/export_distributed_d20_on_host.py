@@ -11,6 +11,7 @@ import tarfile
 PHASES = [
     ("r1", "bertwide-bf16-diagnose", "distributed-d20", 6),
     ("r2", "bertwide-bf16-fp32-head", "distributed-d20-r2", 7),
+    ("r3", "bertwide-bf16-scope", "distributed-d20-r3", 5),
 ]
 
 
@@ -30,7 +31,9 @@ def main():
             and final["worker"] == worker
             and worker["status"] == "passed"
         )
-        assert len(worker["checks"]) == groups and len(worker["digest_contracts"]) == 3
+        assert len(worker["checks"]) == groups
+        if series != "r3":
+            assert len(worker["digest_contracts"]) == 3
         if series == "r2":
             assert len(worker["head_contracts"]) == 4
         assert all(
@@ -56,10 +59,10 @@ def main():
         registry_sha256=hashlib.sha256(registry.read_bytes()).hexdigest(),
         running_containers=[],
     )
-    output = work / "evidence/distributed-d20-handoff.json"
+    output = work / "evidence/distributed-d20-handoff-r3.json"
     assert not output.exists()
     output.write_text(json.dumps(handoff, indent=2) + "\n")
-    archive = work / "evidence/distributed-d20-evidence-r1.tar.gz"
+    archive = work / "evidence/distributed-d20-evidence-r3.tar.gz"
     assert not archive.exists()
     paths = [
         output,
