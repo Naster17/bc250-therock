@@ -9,6 +9,67 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D15 completed2026-11-05, actual offline Transformer AMP Trainer:**
+  fixturesdeed14f14/exports84039269e. D12/D13/D14 production helpers UNCHANGED,
+  copied BOTH tools/distributed-d15 with owned fixtures. Native daily/RCCL Torch
+  a524980/ROCm/D09 launcher/registry/images/profiles/kernels/consumers unchanged.
+  No native build/install/prefix mutation/reboot/app access/model download.
+  Actual BertForMaskedLM22561/vocab97/hidden32/2layers/4heads/intermediate64/
+  maxpositions32/length12, eager bidirectional attention/dropout0. Not MLP proxy:
+  embeddings/tied MLM decoder/masked attention matmuls+softmax/LayerNorm/GELU/
+  residuals/CE forward/backward, ALL parameter gradients checked. One gfx1013GPU/
+  node/world2/RCCL, BF16/FP16 Linear outputs +FP32 prepared logits/master/reduction.
+  Unequal padding5–12/active MLM counts,attention_mask,padID0/targets-100;
+  explicit accepts_loss_kwargsFalse +UNCHANGED masked_token_loss UNshifted CE/
+  global active-window count/Trainer DDP compensation/D12 single normalization.
+  28sequential workers0 records/per-device micro2/accum2: global8 first3attempts,
+  finalglobal4 singlemicro; all rows checked,0 nonfinal/90244B final reductions.
+  Two CPU references at current GPU weights: native CPU-autocast actual micro/
+  rank/scale with MANUAL logsumexp CE, plus CPU-FP64 full-global Bert/manual CE.
+  Same pinned HF graph, distinct CPU kernels; not independently implemented Bert.
+  Whole-grad relativeL2 limits AMP BF16.02/FP16.004, FP64.03/.006; EVERYparam
+  norm budget adds floor3e-6/3e-7*sqrt(elements) for nearzero key-bias cancellation.
+  Loss atol+rtol.003(BF16)/.001(FP16), declared before tests, no bounds relaxed.
+  MaxgradientrelativeL2 vsCPUAMP BF16.0000582494/FP16.0000732985; vsFP64
+  BF16.00487906/FP16.000594423. CPU-FP64 global norm/ALL clipped-grad/CPU-double
+  AdamW ALL params+moments checks retain D14/D07 bounds. Clip.05 ACTIVE norms
+  1.46933–2.27917/coeff.0219378–.0340292. Not a speed/convergence measurement.
+  Fixture-only GradScalerKwargs(init_scale128,growth_interval2) via source-pinned
+  Trainer _build_accelerator_args; no native default change/65536-Bert proof.
+  FP16 first2 finite updates scale128→256 at checkpoint2, rank1 AFTER-DDP Inf
+  attempt3 agreed before native unscale, BOTH skip AdamW/StepLR unchanged weights/
+  moments/scheduler, backoff128 then finalshort finite recovery128/tracker1.
+  BF16 4actualupdates/LR.00064, FP16 4Trainerattempts/3actualupdates/LR.0008.
+  Native save_on_each_node complete checkpoint2/scaler/rank RNG each host, new
+  CID/UUID/startticks/different constructors, exact initial native restore and
+  attempts3/4 ALL local losses/grads/params/optimizer/scheduler/scaler/four RNG/
+  probe draws/rows/finiteflag EXACT+digests:8resumed rank-windows. Nonfinite masks+
+  finite gradient components exact perD14, no NaN-payload-bit equality claim.
+  70groups/8ACKguards/42localregressions, first revision all pass. Black/critical
+  Ruff+unusedimports/syntax/diff pass, no full upstreamCI. SH locks/4CPUs/10GiB+
+  12GiB/512PIDs/256MiBshm/600s guards/460s children; clean agents/phase kernellogs/
+  registry. Sequence15951/15570 exit0; exact commands/PIDs/exits sequence.json.
+  No jobs/containers/armed guards/foreign processes touched; bootsdc9e9293(.104r2)/
+  133b8dc2(.105r3) unchanged. Native tied decoder missing-key notices pass exact
+  complete restore; all_gather/barrier warnings +D12 aggregate train_loss caveat
+  remain. Historical Python CPU fault/KFD/invalidvisibility distinct from fixed
+  VMheap/D05 agent exit; no new native defect/capacity/performance claim.
+  Both tools/distributed-d15 +evidence/distributed-d15-r1/{bf16,fp16}-{seed,resume}.
+  Normal seedpayload4126664B/host retained plus resumed outputs; local
+  kernel/artifacts/distributed-d15 verified results +archives omit.pt/.pth/.bin/
+  .pkl/.safetensors.104239556B SHA0a07815d632fcc7f636235191d868affec2bba17dd88b400e25ab2eee14e952b;
+  105217535B SHA6a05eb85c2ae290ecfc9cb68b92d7eea7f46256e701a2774ddfbde1db21479ba.
+  Source/config/guard/kernel/fresh proofs verified; docs/memory BOTH synchronized.
+  [D15 report](docs/development/bc250_distributed_d15_results/README.md),
+  [Bert AMP recipe](../BC250_DISTRIBUTED_GUIDE.md#offline-transformer-amp-training-d15).
+  Scope small eager bidirectional BertMLM/dropout0/fixed world/sequential workers0,
+  not causalLM/RoPE/GQA/cache/SDPA/Flash/FSDP/DeepSpeed/checkpointed gradients/
+  stochastic graph/arbitrary architecture/loss/scale/capacity/convergence/speed/
+  multiworker/elastic/general resume. **Next D16 (new planned):** owned offline
+  causal Transformer AMP Trainer with SHIFTED CE/global valid-target accounting,
+  clipping/CPU references/native restart. Evaluation metrics/invalid-visibility
+  frontend/B07.13/larger capacity/release reconstruction remain separate.
+
 - **D14 completed2026-11-05, native Trainer AMP clipping +rank-local FP16 policy:**
   implementation625b840d7/exportsb3e3d8a30. New opt-in tools/distributed-d14/
   bc250_trainer_clipping.py BC250ClippedTrainer staged BOTH. D12 normalization/

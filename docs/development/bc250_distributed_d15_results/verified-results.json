@@ -1,0 +1,183 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 70,
+  "accepted_GPU_guards": 8,
+  "exact_resumed_rank_windows": 8,
+  "local_unit_tests": 42,
+  "qualification_boot_ids": [
+    [
+      "dc9e9293-451c-4cd0-8839-7c902c8509ad"
+    ],
+    [
+      "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+    ]
+  ],
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "dc9e9293-451c-4cd0-8839-7c902c8509ad",
+    "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+  ],
+  "valid_payload_bytes_per_host": [
+    4126664,
+    4126664
+  ],
+  "cases": {
+    "bf16": {
+      "clipping_metrics": [
+        {
+          "step": 0,
+          "norm": 1.4696340963926844,
+          "coefficient": 0.03402205086332538
+        },
+        {
+          "step": 1,
+          "norm": 1.4969564559186257,
+          "coefficient": 0.033401082844613586
+        },
+        {
+          "step": 2,
+          "norm": 1.6271428425130652,
+          "coefficient": 0.030728690785429766
+        },
+        {
+          "step": 3,
+          "norm": 2.2734770441813734,
+          "coefficient": 0.02199273493226271
+        }
+      ],
+      "gradient_errors": [
+        {
+          "step": 0,
+          "global_AMP_relativeL2": 5.82494421398614e-05,
+          "global_FP64_relativeL2": 0.004561734502807934
+        },
+        {
+          "step": 1,
+          "global_AMP_relativeL2": 4.200710182862281e-05,
+          "global_FP64_relativeL2": 0.004879055546995712
+        },
+        {
+          "step": 2,
+          "global_AMP_relativeL2": 4.4743818612818674e-05,
+          "global_FP64_relativeL2": 0.004375692755574749
+        },
+        {
+          "step": 3,
+          "global_AMP_relativeL2": 5.604253560723194e-05,
+          "global_FP64_relativeL2": 0.004396328079220785
+        }
+      ],
+      "final_scaler": {},
+      "worker_births": [
+        [
+          {
+            "uuid": "3c38ca8759a549ea8b2fc57a7c121fa7",
+            "pid": 20,
+            "start_ticks": "291363"
+          },
+          {
+            "uuid": "fd2325a50b414b51a3f425db1a8c7f25",
+            "pid": 20,
+            "start_ticks": "293012"
+          }
+        ],
+        [
+          {
+            "uuid": "5c387cff9ad34922aca8d5772be2de5b",
+            "pid": 19,
+            "start_ticks": "291609"
+          },
+          {
+            "uuid": "bdec0ec246104ce2bc71497efdc677d4",
+            "pid": 19,
+            "start_ticks": "293258"
+          }
+        ]
+      ]
+    },
+    "fp16": {
+      "clipping_metrics": [
+        {
+          "step": 0,
+          "norm": 1.4693264999891482,
+          "coefficient": 0.03402917321044443
+        },
+        {
+          "step": 1,
+          "norm": 1.4967268445057937,
+          "coefficient": 0.033406206868897774
+        },
+        {
+          "step": 3,
+          "norm": 2.279173311881573,
+          "coefficient": 0.021937769190949894
+        }
+      ],
+      "gradient_errors": [
+        {
+          "step": 0,
+          "global_AMP_relativeL2": 4.00438915528896e-05,
+          "global_FP64_relativeL2": 0.0005944232720300317
+        },
+        {
+          "step": 1,
+          "global_AMP_relativeL2": 7.329847464508248e-05,
+          "global_FP64_relativeL2": 0.0005658943450744522
+        },
+        {
+          "step": 3,
+          "global_AMP_relativeL2": 5.363619573762581e-05,
+          "global_FP64_relativeL2": 0.000544785169022676
+        }
+      ],
+      "final_scaler": {
+        "scale": 128.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2,
+        "_growth_tracker": 1
+      },
+      "worker_births": [
+        [
+          {
+            "uuid": "93536ac0c93d4951b214b24c31c49c51",
+            "pid": 20,
+            "start_ticks": "294630"
+          },
+          {
+            "uuid": "91c67cc09a1b4dc385b5010ab0a43c55",
+            "pid": 20,
+            "start_ticks": "296300"
+          }
+        ],
+        [
+          {
+            "uuid": "3b391896d27e4a108b02ffce7b3d4a58",
+            "pid": 19,
+            "start_ticks": "294876"
+          },
+          {
+            "uuid": "6c9640bd9bf44921baf7f32ed334b940",
+            "pid": 19,
+            "start_ticks": "296546"
+          }
+        ]
+      ]
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 239556,
+      "sha256": "0a07815d632fcc7f636235191d868affec2bba17dd88b400e25ab2eee14e952b"
+    },
+    {
+      "host": 105,
+      "bytes": 217535,
+      "sha256": "6a05eb85c2ae290ecfc9cb68b92d7eea7f46256e701a2774ddfbde1db21479ba"
+    }
+  ]
+}
