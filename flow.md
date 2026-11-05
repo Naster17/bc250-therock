@@ -9,6 +9,72 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D16 completed2026-11-05, causal Transformer AMP +shifted target contract:**
+  helper/contracts/fixturesce09f6c24/exportsad6454602. New opt-in BOTH tools/
+  distributed-d16/bc250_trainer_causal.py CausalLabelCollator+causal_token_loss;
+  D12/D13/D14 helpers unchanged. Native daily/RCCL Torch a524980/ROCm/D09 launcher/
+  registry/images/profiles/kernels/consumers unchanged. No native build/install/
+  prefix mutation/reboot/model download/app access. Pinned Trainer counts ALL
+  nonignored labels; causal CE shifts logits[:,:-1]/labels[:,1:]. Collator clones
+  existing int64 labels, masks position0+attention padding BEFORE native counting,
+  preserves prompt ignore masks/caller data. Right-padding binary masks,>=2real
+  tokens; left-pad refused; no packing/position/labelsynthesis inference. Loss
+  FP32 summed SHIFTED CE/positive GLOBAL window count, Trainer DDP compensation/
+  D12 single normalization. Explicit accepts_loss_kwargsFalse; not ordinary
+  Trainer/GPT2 auto-fix. Local allignored micro with positiveglobal count zero+
+  differentiable; missing/emptyglobal/unmaskedfirst labels refused.
+  Actual GPT2LMHeadModel21280/vocab97/positions32/emb32/2layers/4heads/inner64/
+  sequence12/eagerCAUSAL/dropout0/cacheFalse, Conv1D/Linear AMP observed, tied
+  embeddings/head, FP32 logits/master/reduction; one gfx1013GPU/node/world2/RCCL.
+  28records/rightpadding5–12/promptlabels/two allignored examples rank0 firstmicro,
+  sequential workers0/perdevicemicro2/accum2/global8 first3attempts/finalglobal4.
+  All rows/native counts checked:SHIFTED49/57/57/21 vsraw51/60/59/23; rank0 local
+  [0,16]/[8,17]/[8,16]/[9]. GPU zero-local loss finite0; reductions0 nonfinal/
+  85120B final. CPUautocast micro/rank/scale +CPU-FP64 global GPT2, manualSHIFTED
+  logsumexp CE. Same HF graph/different CPU arithmetic, not independent GPT2 code.
+  D15 bounds unchanged: globalgradrelative AMP.02/.004, FP64.03/.006 BF16/FP16,
+  EVERYparam norm budgets+floors3e-6/3e-7*sqrt(elements), lossatol+rtol.003/.001.
+  Maxgradrelative vsCPUAMP BF16.00399075/FP16.000498595; vsFP64 .00495313/.000661749.
+  CPUFP64 ALLnorm/ALLclippedgrad/CPU-double AdamW ALLparams+moments pass D14/D07
+  bounds. Clip.05 ACTIVE norms1.15832–2.31724/coeff.0215774–.0431659. No relaxation.
+  FixtureFP16init128/growth2 via pinnedTrainerextension, no default65536 proof/
+  native default change. Scale128→256 checkpoint2, rank1 AFTER-DDP Inf attempt3
+  coordinated before nativeunscale, BOTH skip AdamW/StepLR unchangedweights/
+  moments/scheduler, backoff128/tracker0 then finalfinite128/tracker1. BF164actual
+  updates/LR.00064; FP164Trainerattempts/3actualupdates/LR.0008.
+  Native perhost save_on_each_node checkpoint2/scaler/rankRNG, fresh CID/UUID/
+  startticks/different constructors, exactinitial restore +attempts3/4 ALLlosses/
+  grads/params/optimizer/scheduler/scaler/four RNG/probe draws/rows/finiteflag AND
+  global/local targetcounts EXACT+digests:8resumed rank-windows. D14nonfinite masks/
+  finite components retained, no NaN-payload-bit claim. Dropout0+RNG probes only.
+  96groups/8ACKguards/42localregressions;7CPUcontractpatterns*8workers=56observations
+  separately(ownership/count/leftpad/analyticderivatives/localzero/globalcount/
+  firstlabelrefusals). Firstrevision allpasses; Black/critical Ruff+unusedimports/
+  syntax/diff pass, no fullupstreamCI. SH locks/4CPUs/10GiB+12GiB/512PIDs/256MiBshm/
+  600s guards/460s children. Clean agents/phasekernellogs/registries. Sequence
+  19820/19250 exit0; exactcommands/PIDs/exits sequence.json. No jobs/containers/
+  armedguards, foreignworkloads untouched; bootsdc9e9293(.104r2)/133b8dc2(.105r3)
+  unchanged. Native tiedlm_head missing-key notices pass exactrestore. Native
+  warnings/D12 aggregate train_loss caveat remain; owned zero-loss assertion
+  scalarconversion warning only(actual lossTensor still backward, not helper).
+  Historical PythonCPU fault/KFD/invalidvisibility separate from fixedVMheap/D05;
+  no newnative defect/capacity/performance/convergence claim.
+  Both tools/distributed-d16 +evidence/distributed-d16-r1/{bf16,fp16}-{seed,resume}.
+  Normalseedpayload3731560B/host retained +resumedoutputs. Local kernel/artifacts/
+  distributed-d16 verifiedsummary+metadataarchives omit.pt/.pth/.bin/.pkl/.safetensors:
+  104248327B SHA691a0246b4a54b796eb3b5c1b33722d82082b092ba3182d5809d4e0c82a2cd88;
+  105225607B SHAf0e326c5089071e1d9063df01e2b931361170a39c5e04a1edb7829c000a6bbb6.
+  Sources/config/count/guard/kernel/freshproofs verified; docs/memoryBOTH synced.
+  [D16 report](docs/development/bc250_distributed_d16_results/README.md),
+  [causal usage](../BC250_DISTRIBUTED_GUIDE.md#causal-transformer-training-and-target-counts-d16).
+  Scope small eager GPT2/dropout0/cacheFalse/rightpaddedunpacked/explicitlabels/
+  fixedworld/sequentialworkers0; no leftpad/packing/RoPE/GQA/SDPA/Flash/cache/
+  generation/FSDP/DeepSpeed/checkpointedgrads/arbitraryarch/scale/eval/largerfit/
+  speedup/stochastic/multiworker/elastic/generalresume proof. **Next D17(new
+  planned):** actual two-host Trainer evaluation/prediction +explicit token-weighted
+  metrics, unequal finalbatches/CPUreferences. Invalidvisibility frontend/B07.13/
+  larger capacity/release reconstruction remain separate follow-ups.
+
 - **D15 completed2026-11-05, actual offline Transformer AMP Trainer:**
   fixturesdeed14f14/exports84039269e. D12/D13/D14 production helpers UNCHANGED,
   copied BOTH tools/distributed-d15 with owned fixtures. Native daily/RCCL Torch

@@ -1,0 +1,265 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 96,
+  "accepted_GPU_guards": 8,
+  "exact_resumed_rank_windows": 8,
+  "local_unit_tests": 42,
+  "CPU_contract_patterns": 7,
+  "CPU_contract_observations": 56,
+  "shifted_target_counts": [
+    49,
+    57,
+    57,
+    21
+  ],
+  "qualification_boot_ids": [
+    [
+      "dc9e9293-451c-4cd0-8839-7c902c8509ad"
+    ],
+    [
+      "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+    ]
+  ],
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "dc9e9293-451c-4cd0-8839-7c902c8509ad",
+    "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+  ],
+  "valid_payload_bytes_per_host": [
+    3731560,
+    3731560
+  ],
+  "cases": {
+    "bf16": {
+      "target_counts": [
+        {
+          "step": 0,
+          "shifted": 49,
+          "raw_unshifted": 51,
+          "local_active": [
+            0,
+            16
+          ]
+        },
+        {
+          "step": 1,
+          "shifted": 57,
+          "raw_unshifted": 60,
+          "local_active": [
+            8,
+            17
+          ]
+        },
+        {
+          "step": 2,
+          "shifted": 57,
+          "raw_unshifted": 59,
+          "local_active": [
+            8,
+            16
+          ]
+        },
+        {
+          "step": 3,
+          "shifted": 21,
+          "raw_unshifted": 23,
+          "local_active": [
+            9
+          ]
+        }
+      ],
+      "clipping_metrics": [
+        {
+          "step": 0,
+          "norm": 1.4140751226321413,
+          "coefficient": 0.03535877538680924
+        },
+        {
+          "step": 1,
+          "norm": 1.2201292632603764,
+          "coefficient": 0.04097923107520691
+        },
+        {
+          "step": 2,
+          "norm": 1.158320941659029,
+          "coefficient": 0.04316589214254764
+        },
+        {
+          "step": 3,
+          "norm": 2.2121130987122037,
+          "coefficient": 0.022602812408775756
+        }
+      ],
+      "gradient_errors": [
+        {
+          "step": 0,
+          "global_AMP_relativeL2": 0.0039336897068349835,
+          "global_FP64_relativeL2": 0.004853023735231638
+        },
+        {
+          "step": 1,
+          "global_AMP_relativeL2": 0.00395290286064887,
+          "global_FP64_relativeL2": 0.004926763205560279
+        },
+        {
+          "step": 2,
+          "global_AMP_relativeL2": 0.003990749308195623,
+          "global_FP64_relativeL2": 0.004953129283717249
+        },
+        {
+          "step": 3,
+          "global_AMP_relativeL2": 0.00374034943354074,
+          "global_FP64_relativeL2": 0.004415419439463954
+        }
+      ],
+      "final_scaler": {},
+      "worker_births": [
+        [
+          {
+            "uuid": "f29742c0cb2f4fc3ba002cada7bfabe8",
+            "pid": 20,
+            "start_ticks": "378247"
+          },
+          {
+            "uuid": "a378acb516084a3d8f1f3cdc7e38ef90",
+            "pid": 20,
+            "start_ticks": "379909"
+          }
+        ],
+        [
+          {
+            "uuid": "d746adf89f2e4a22a717ac1d89710e9a",
+            "pid": 19,
+            "start_ticks": "378479"
+          },
+          {
+            "uuid": "6e7d9e69a55c439abc1a530f2871d3e2",
+            "pid": 19,
+            "start_ticks": "380140"
+          }
+        ]
+      ]
+    },
+    "fp16": {
+      "target_counts": [
+        {
+          "step": 0,
+          "shifted": 49,
+          "raw_unshifted": 51,
+          "local_active": [
+            0,
+            16
+          ]
+        },
+        {
+          "step": 1,
+          "shifted": 57,
+          "raw_unshifted": 60,
+          "local_active": [
+            8,
+            17
+          ]
+        },
+        {
+          "step": 2,
+          "shifted": 57,
+          "raw_unshifted": 59,
+          "local_active": [
+            8,
+            16
+          ]
+        },
+        {
+          "step": 3,
+          "shifted": 21,
+          "raw_unshifted": 23,
+          "local_active": [
+            9
+          ]
+        }
+      ],
+      "clipping_metrics": [
+        {
+          "step": 0,
+          "norm": 1.4138461034079204,
+          "coefficient": 0.03536450290804472
+        },
+        {
+          "step": 1,
+          "norm": 1.2214370845131572,
+          "coefficient": 0.040935353690014574
+        },
+        {
+          "step": 3,
+          "norm": 2.317238959233102,
+          "coefficient": 0.021577394175675987
+        }
+      ],
+      "gradient_errors": [
+        {
+          "step": 0,
+          "global_AMP_relativeL2": 0.00046361155411684074,
+          "global_FP64_relativeL2": 0.0005897169659657925
+        },
+        {
+          "step": 1,
+          "global_AMP_relativeL2": 0.0004985948143094123,
+          "global_FP64_relativeL2": 0.0006617491750606007
+        },
+        {
+          "step": 3,
+          "global_AMP_relativeL2": 0.00044378940056418793,
+          "global_FP64_relativeL2": 0.0005287754888136545
+        }
+      ],
+      "final_scaler": {
+        "scale": 128.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2,
+        "_growth_tracker": 1
+      },
+      "worker_births": [
+        [
+          {
+            "uuid": "9b704e93c0bf45e1a566951f48e9a5a4",
+            "pid": 20,
+            "start_ticks": "381492"
+          },
+          {
+            "uuid": "df4f3703876244cf82e8991d2be1c124",
+            "pid": 20,
+            "start_ticks": "383075"
+          }
+        ],
+        [
+          {
+            "uuid": "9aed990d74af448692b695ccbb661da6",
+            "pid": 19,
+            "start_ticks": "381723"
+          },
+          {
+            "uuid": "638aef74fe9342d0b472f744d296926e",
+            "pid": 19,
+            "start_ticks": "383305"
+          }
+        ]
+      ]
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 248327,
+      "sha256": "691a0246b4a54b796eb3b5c1b33722d82082b092ba3182d5809d4e0c82a2cd88"
+    },
+    {
+      "host": 105,
+      "bytes": 225607,
+      "sha256": "f0e326c5089071e1d9063df01e2b931361170a39c5e04a1edb7829c000a6bbb6"
+    }
+  ]
+}
