@@ -9,6 +9,71 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D08 completed 2026-11-05, classic FSDP AMP/shard-aware skipping:** numerical
+  tools0815ac97b, export/verifier97e75946a. Reuse D07 MLP/CPU oracle, D05 checkpoint
+  primitives/installed bounded launcher/agent repair. Native daily/RCCL Torch
+  a524980/ROCm/images/registries/profiles/kernels unchanged; no backend defect,
+  build/install/reboot/app access. Width256/hidden512/4blocks/tokens16/1,051,648
+  params/global8/micro1/accum4/rank. Eight separately wrapped Linear modules,
+  classic FULL_SHARD/use_orig_params; actual BF16/FP16 forward params/intermediates,
+  FP32 masters/final grads/reduction/loss/residuals. Root/nested input casts off,
+  outer autocast. Each rank525,824 master and AdamW exp_avg elements; exact original
+  param coverage/owned optimizer slices, empty local views correctly have no state.
+  CPU FP64/explicit-low-rounding oracle at matching weights checks two losses/all
+  param+input gradients. no_sync CPU oracle additionally rounds each rank's full
+  accumulated grad to low dtype, matching pinned FSDP. Fixed relative-L2 limits
+  BF16.02/FP16.004, no relaxation. Max param errors BF16.31388% no_sync/.22560%sync,
+  FP16.05349%/.04558%; input<=.02914%/.00862%. Separate CPU-double AdamW fed ACTUAL
+  admitted AMP gradients compares all updated params and local moments/counters
+  at D07 bounds; no whole unrounded-FP64 trajectory/convergence/arbitrary model
+  or attention/compiler proof.
+  Inf then NaN injected ONLY into rank1 local grad AFTER reduce-scatter: local
+  flags[True,False]. Native FP16 ShardedGradScaler synchronizes found_inf, both
+  actually skip (post-step hooks); local params/AdamW EXACT unchanged. BF16 disabled
+  scaler uses explicit collective all-finite guard. Finite recovery passes; FP16
+  16→16→32→32→16→8→8→16, growth tracker/backoff checked. Full param hashes and
+  complete scaler state agree; one-rank scale/tracker mismatch both refused before
+  backward. Local optimizer shards are distinct, not duplicate replicas.
+  Atomic local optimizer/scaler/config/next-index parts +complete collective
+  hash manifest; six preload refusals/rank. Same-worker model/optimizer/scaler
+  reconstruction next loss/all LOCAL params/AdamW/scaler EXACT, crossing8→16 growth.
+  No fresh-process/partial-window/RNG/sampler/scheduler/elastic/peer-crash/general
+  distributed-checkpoint qualification.
+  Every complete backward8RS calls/4,206,592 FP32 input B/rank; no_sync one pass
+  vs sync4passes/32calls/16,826,368B. Instrumented public RS delegates unchanged;
+  excludes parameter all-gathers/control/scaler/checkpoint, not wire/total traffic.
+  Eight windows/worker assert counts; no speed/timing claim. no_sync first3 micros
+  retain1,051,648 low grad elements then525,824 FP32 shards; sync525,824 FP32
+  throughout. Both gradient views2,103,296B at2ranks, not a general memory ratio.
+  Isolated third training window (finite/scaler/control included, CPU oracle/full-
+  state-validation/checkpoint excluded): live peak BF16 no_sync75.04102 vs73.60693MiB,
+  FP16 75.04248 vs73.60840, both ranks; +1.43408MiB. Reserved84/84 vs84/82(BF16),
+  86/84 vs82/80(FP16) for104/105. Baseline/per-micro snapshots retained; no physical
+  RAM pooling/larger-model fit/general capacity or different-policy cost claim.
+  100groups/48checkpoint+8scaler-mismatch refusals/8ACKed guards; agents/kernel
+  logs/registries clean/unchanged. SH locks,4CPUs/cpuset0-3,10GiB/12GiB memory+swap,
+  600s guards/460s child deadlines; Black/critical Ruff+unused-import/syntax/diff pass,
+  no full upstream CI. .104 r2/.105 r3, boots7344171f/e1cbfa23 same. Historical
+  Python CPU fault/KFD uncertainty distinct from fixed VM heap/D05 exit repair.
+  All controllers exit0: bf16-no-sync11869/10611, fp16-no-sync12241/11288,
+  bf16-sync12561/11813, fp16-sync12919/12459. No jobs/containers/armed guards.
+  Both tools/distributed-d08, evidence/distributed-d08-r1/{bf16,fp16}-{no-sync,sync}-r1
+  plus controller logs. Four .pt/host25,285,292B104/25,311,948B105 retained, omitted
+  from exports. Local kernel/artifacts/distributed-d08/verified-results.json and
+  raw archives104252227B SHA209e51c2b6186f5a7b6cf4be92b9e079850c664a9c4cfaa2f0525057d5875df6;
+  105230690B SHAc45da6b438bab63adf706b527cebdc734a1cb6ed509e9fcba941b2b3dfe79426.
+  Source/archive/worker/kernel/guard/rank/window/scaler/memory checks verified;
+  both host docs/memory synchronized, existing apps unchanged, opt-in recipe.
+  [D08 report](docs/development/bc250_distributed_d08_results/README.md),
+  [FSDP AMP usage](../BC250_DISTRIBUTED_GUIDE.md).
+  **Next D09 (new planned batch):** close recorded distributed consumer-env gap:
+  explicit validated env-file/env/mount support reusing ordinary Torch launcher,
+  owned tiny Transformers training consumer, private caller/identity/refusal and
+  live rollback gates on both hosts. Preserve native pins/D05 exit repair/Ethernet
+  restrictions/defaults; no user apps/model downloads. Fresh-process recovery,
+  larger-model capacity/other transports/release audit remain separate. B07.13
+  still deferred; no completion percentage.
+
 - **D07 completed 2026-11-05, two-host AMP/scaler:** numerical tools/guardian
   ae52b7306, export/verifier615caa65e. Existing native daily/RCCL Torch a524980/
   ROCm/images/profiles/registries/kernels and active D05 source-derived agent exit
@@ -4289,7 +4354,7 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [ ]   | **B06.12 — next** | Bounded modern Torch exporter→public ORT GPU integration with independent CPU/eager-GPU references, then practical B06 gap review. Preserve defaults/.105; no universal model/dtype/graph-autograd or speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
-| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update, D02–D05 cross-board RCCL/DDP/FSDP, D06 matched-batch DDP accumulation and D07 bounded BF16/FP16 MLP/scaler pass; these fixtures remain slower than one host. Larger-model capacity, arbitrary mixed-precision/FSDP training, elastic recovery and other transports remain unqualified.                                                                                                  |
+| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update, D02–D05 cross-board RCCL/DDP/FSDP, D06 matched-batch DDP accumulation, D07 DDP AMP and D08 FSDP AMP/scaler/shards pass within bounds; these fixtures remain slower than one host. Larger-model capacity, arbitrary mixed-precision/FSDP/model combinations, elastic recovery and other transports remain unqualified.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
 | [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |
