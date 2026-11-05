@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Opt-in source-pinned classic FSDP FP32 Trainer integration for two BC-250 hosts."""
+"""Opt-in source-pinned classic FSDP Trainer integration for two BC-250 hosts."""
 import hashlib
 import math
 from pathlib import Path
@@ -28,12 +28,45 @@ def _clip_limit(value):
     return float(value)
 
 
+def fsdp_bf16_compute_policy():
+    """Explicit BF16 autocast compute with FP32 parameters, reductions and buffers.
+
+    This does NOT enable BF16 parameter all-gathers or a low-precision storage
+    policy. Pass in args.fsdp_plugin_args['mixed_precision_policy'] explicitly.
+    """
+    from torch.distributed.fsdp import MixedPrecision
+
+    return MixedPrecision(
+        param_dtype=torch.float32,
+        reduce_dtype=torch.float32,
+        buffer_dtype=torch.float32,
+        keep_low_precision_grads=False,
+        cast_forward_inputs=False,
+        cast_root_forward_inputs=False,
+    )
+
+
+def _bf16_compute_policy_matches(policy):
+    from torch.distributed.fsdp import MixedPrecision
+
+    return (
+        isinstance(policy, MixedPrecision)
+        and policy.param_dtype
+        == policy.reduce_dtype
+        == policy.buffer_dtype
+        == torch.float32
+        and not policy.keep_low_precision_grads
+        and not policy.cast_forward_inputs
+        and not policy.cast_root_forward_inputs
+    )
+
+
 class BC250FSDPTrainer(Trainer):
-    """Separate FP32 classic FULL_SHARD/use_orig_params path; DDP helper unchanged.
+    """Separate classic FULL_SHARD/use_orig_params FP32 or explicit BF16-compute path; DDP helper unchanged.
 
     Native Trainer loop, FSDP wrapping/backward/optimizer/checkpoints retained.
     Explicit SHARDED_STATE_DICT; independent-host checkpoint payloads must be
-    consolidated before restart. No FSDP2, AMP/scaler/offload/compile,
+    consolidated before restart. No FSDP2, FP16/scaler/low-precision parameter sharding/offload/compile,
     PEFT/frozen parameters or activation checkpointing qualification.
     """
 
@@ -57,17 +90,22 @@ class BC250FSDPTrainer(Trainer):
         args = self.args
         limit = _clip_limit(args.max_grad_norm)
         if (
-            args.bf16
-            or args.fp16
+            args.fp16
             or args.gradient_checkpointing
             or args.torch_compile
             or args.deepspeed
         ):
             raise ValueError(
-                "BC250FSDPTrainer requires FP32/no activation-checkpointing/compile/DeepSpeed"
+                "BC250FSDPTrainer requires FP32 or explicit BF16 compute; no FP16/checkpointing/compile/DeepSpeed"
             )
         if args.fsdp_plugin_args is None:
             raise ValueError("Explicit classic FSDP configuration is required")
+        if args.bf16 and not _bf16_compute_policy_matches(
+            args.fsdp_plugin_args.get("mixed_precision_policy")
+        ):
+            raise ValueError(
+                "BF16 requires explicit fsdp_bf16_compute_policy; default low-precision FSDP params are unqualified"
+            )
         if any(
             not p.requires_grad or p.dtype != torch.float32
             for p in self.model.parameters()
@@ -86,7 +124,11 @@ class BC250FSDPTrainer(Trainer):
             or not plugin.use_orig_params
             or plugin.sharding_strategy != ShardingStrategy.FULL_SHARD
             or plugin.cpu_offload.offload_params
-            or plugin.mixed_precision_policy is not None
+            or (not args.bf16 and plugin.mixed_precision_policy is not None)
+            or (
+                args.bf16
+                and not _bf16_compute_policy_matches(plugin.mixed_precision_policy)
+            )
             or plugin.activation_checkpointing
             or not plugin.sync_module_states
             or plugin.state_dict_type != StateDictType.SHARDED_STATE_DICT
@@ -94,6 +136,12 @@ class BC250FSDPTrainer(Trainer):
             raise ValueError(
                 "Requires two-rank classic FULL_SHARD/original FP32 params/no offload/SHARDED_STATE_DICT"
             )
+        if args.bf16 and (
+            not acc.native_amp
+            or acc.mixed_precision != "bf16"
+            or acc.scaler is not None
+        ):
+            raise ValueError("BF16 compute requires native autocast without a scaler")
         # Trainer already owns the full/short-window denominator and sync schedule.
         acc.gradient_accumulation_steps = 1
         if limit > 0:
