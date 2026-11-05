@@ -1,0 +1,6642 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 108,
+  "accepted_GPU_guards": 12,
+  "CPU_contract_patterns": 4,
+  "CPU_contract_observations": 48,
+  "local_unit_tests": 42,
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "dc9e9293-451c-4cd0-8839-7c902c8509ad",
+    "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+  ],
+  "cases": {
+    "bert-fp32-eval": {
+      "token_metrics": {
+        "token_nll": 4.5686087234665544,
+        "token_perplexity": 96.40988361297974,
+        "token_accuracy": 0.031746031746031744,
+        "active_tokens": 126,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.568608724315808,
+      "observations": {
+        "104": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.040529013000195846,
+            "peak_allocated_bytes": 305152,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.23103249899941147,
+            "peak_allocated_bytes": 264704,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.045106634000148915,
+            "peak_allocated_bytes": 264704,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.03898478199971578,
+            "peak_allocated_bytes": 305152,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          }
+        ],
+        "105": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.040404647999821464,
+            "peak_allocated_bytes": 304640,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.22989522799980477,
+            "peak_allocated_bytes": 268288,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.045151801999963936,
+            "peak_allocated_bytes": 268288,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.03890705999947386,
+            "peak_allocated_bytes": 304640,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5686087234665544,
+              "token_perplexity": 96.40988361297974,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595089912414551
+          }
+        ]
+      },
+      "native_eval_loss": 4.595089912414551,
+      "native_loss_token_NLL_gap": 0.026481188947996337
+    },
+    "bert-bf16-eval": {
+      "token_metrics": {
+        "token_nll": 4.568724065899436,
+        "token_perplexity": 96.42100440484673,
+        "token_accuracy": 0.031746031746031744,
+        "active_tokens": 126,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.568608724315808,
+      "observations": {
+        "104": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.04454507499940519,
+            "peak_allocated_bytes": 310272,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899436,
+              "token_perplexity": 96.42100440484673,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.2144159760000548,
+            "peak_allocated_bytes": 297984,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899435,
+              "token_perplexity": 96.42100440484664,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.04876427799990779,
+            "peak_allocated_bytes": 297984,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899435,
+              "token_perplexity": 96.42100440484664,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.04293776499980595,
+            "peak_allocated_bytes": 310272,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899436,
+              "token_perplexity": 96.42100440484673,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          }
+        ],
+        "105": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.04454145899944706,
+            "peak_allocated_bytes": 314880,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899436,
+              "token_perplexity": 96.42100440484673,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.21441711999977997,
+            "peak_allocated_bytes": 302592,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899435,
+              "token_perplexity": 96.42100440484664,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.04865212999993673,
+            "peak_allocated_bytes": 302592,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899435,
+              "token_perplexity": 96.42100440484664,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.04291845399984595,
+            "peak_allocated_bytes": 314880,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568724065899436,
+              "token_perplexity": 96.42100440484673,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.595186710357666
+          }
+        ]
+      },
+      "native_eval_loss": 4.595186710357666,
+      "native_loss_token_NLL_gap": 0.026462644458230322
+    },
+    "bert-fp16-eval": {
+      "token_metrics": {
+        "token_nll": 4.568599817959727,
+        "token_perplexity": 96.40902503792606,
+        "token_accuracy": 0.031746031746031744,
+        "active_tokens": 126,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.568608724315808,
+      "observations": {
+        "104": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.04392616699988139,
+            "peak_allocated_bytes": 310272,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.2225792890003504,
+            "peak_allocated_bytes": 297984,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.04926366199924814,
+            "peak_allocated_bytes": 297984,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.09052996299942606,
+            "peak_allocated_bytes": 310272,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          }
+        ],
+        "105": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.044044834000487754,
+            "peak_allocated_bytes": 314880,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.22258968200003437,
+            "peak_allocated_bytes": 302592,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.0492592529999456,
+            "peak_allocated_bytes": 302592,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.04380538900022657,
+            "peak_allocated_bytes": 314880,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.568599817959727,
+              "token_perplexity": 96.40902503792606,
+              "token_accuracy": 0.031746031746031744,
+              "active_tokens": 126,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.5950798988342285
+          }
+        ]
+      },
+      "native_eval_loss": 4.5950798988342285,
+      "native_loss_token_NLL_gap": 0.026480080874501155
+    },
+    "gpt2-fp32-eval": {
+      "token_metrics": {
+        "token_nll": 4.5860881379021725,
+        "token_perplexity": 98.10988616566955,
+        "token_accuracy": 0.0,
+        "active_tokens": 120,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.586088139465457,
+      "observations": {
+        "104": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.04018415200062009,
+            "peak_allocated_bytes": 295424,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.2109581069998967,
+            "peak_allocated_bytes": 266240,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.043639147999783745,
+            "peak_allocated_bytes": 266240,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.03820077599993965,
+            "peak_allocated_bytes": 295424,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          }
+        ],
+        "105": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.040163859999665874,
+            "peak_allocated_bytes": 294912,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.21088232100009918,
+            "peak_allocated_bytes": 274432,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.04352344600010838,
+            "peak_allocated_bytes": 274432,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.0382116999999198,
+            "peak_allocated_bytes": 294912,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.5860881379021725,
+              "token_perplexity": 98.10988616566955,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643459320068
+          }
+        ]
+      },
+      "native_eval_loss": 4.609643459320068,
+      "native_loss_token_NLL_gap": 0.023555321417895847
+    },
+    "gpt2-bf16-eval": {
+      "token_metrics": {
+        "token_nll": 4.586088897766168,
+        "token_perplexity": 98.109960715868,
+        "token_accuracy": 0.0,
+        "active_tokens": 120,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.586088139465457,
+      "observations": {
+        "104": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.04257128700010071,
+            "peak_allocated_bytes": 303104,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766168,
+              "token_perplexity": 98.109960715868,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.2154771730001812,
+            "peak_allocated_bytes": 290816,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766169,
+              "token_perplexity": 98.10996071586808,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.04785070500020083,
+            "peak_allocated_bytes": 290816,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766169,
+              "token_perplexity": 98.10996071586808,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.041898004000358924,
+            "peak_allocated_bytes": 303104,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766168,
+              "token_perplexity": 98.109960715868,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          }
+        ],
+        "105": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.042492460000175925,
+            "peak_allocated_bytes": 309248,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766168,
+              "token_perplexity": 98.109960715868,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.21439954200013744,
+            "peak_allocated_bytes": 296960,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766169,
+              "token_perplexity": 98.10996071586808,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.04780383600063942,
+            "peak_allocated_bytes": 296960,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766169,
+              "token_perplexity": 98.10996071586808,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.041838160999759566,
+            "peak_allocated_bytes": 309248,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586088897766168,
+              "token_perplexity": 98.109960715868,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609602451324463
+          }
+        ]
+      },
+      "native_eval_loss": 4.609602451324463,
+      "native_loss_token_NLL_gap": 0.023513553558294653
+    },
+    "gpt2-fp16-eval": {
+      "token_metrics": {
+        "token_nll": 4.586089732183077,
+        "token_perplexity": 98.11004258051231,
+        "token_accuracy": 0.0,
+        "active_tokens": 120,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.586088139465457,
+      "observations": {
+        "104": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.04356621500028268,
+            "peak_allocated_bytes": 303104,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183075,
+              "token_perplexity": 98.11004258051213,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.21198277300027257,
+            "peak_allocated_bytes": 290816,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183077,
+              "token_perplexity": 98.11004258051231,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.047199552999700245,
+            "peak_allocated_bytes": 290816,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183077,
+              "token_perplexity": 98.11004258051231,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.04144771400024183,
+            "peak_allocated_bytes": 303104,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183075,
+              "token_perplexity": 98.11004258051213,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          }
+        ],
+        "105": [
+          {
+            "mode": "full",
+            "elapsed_s": 0.04353866499968717,
+            "peak_allocated_bytes": 309248,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183075,
+              "token_perplexity": 98.11004258051213,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.21197176599980594,
+            "peak_allocated_bytes": 296960,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183077,
+              "token_perplexity": 98.11004258051231,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          },
+          {
+            "mode": "compact",
+            "elapsed_s": 0.04712387699964893,
+            "peak_allocated_bytes": 296960,
+            "prediction_array_bytes": 456,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 240,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  3
+                ],
+                "dtype": "torch.float64",
+                "bytes": 48
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183077,
+              "token_perplexity": 98.11004258051231,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          },
+          {
+            "mode": "full",
+            "elapsed_s": 0.04140472299968678,
+            "peak_allocated_bytes": 309248,
+            "prediction_array_bytes": 88464,
+            "label_array_bytes": 1824,
+            "prediction_gather_input_bytes": 36472,
+            "gather_inputs": [
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  8,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 6208
+              },
+              {
+                "shape": [
+                  2,
+                  8
+                ],
+                "dtype": "torch.int64",
+                "bytes": 128
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  12,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 9312
+              },
+              {
+                "shape": [
+                  2,
+                  12
+                ],
+                "dtype": "torch.int64",
+                "bytes": 192
+              },
+              {
+                "shape": [
+                  2
+                ],
+                "dtype": "torch.float32",
+                "bytes": 8
+              },
+              {
+                "shape": [
+                  2,
+                  7,
+                  97
+                ],
+                "dtype": "torch.float32",
+                "bytes": 5432
+              },
+              {
+                "shape": [
+                  2,
+                  7
+                ],
+                "dtype": "torch.int64",
+                "bytes": 112
+              }
+            ],
+            "metrics": {
+              "token_nll": 4.586089732183075,
+              "token_perplexity": 98.11004258051213,
+              "token_accuracy": 0.0,
+              "active_tokens": 120,
+              "evaluated_examples": 19
+            },
+            "native_loss": 4.609643936157227
+          }
+        ]
+      },
+      "native_eval_loss": 4.609643936157227,
+      "native_loss_token_NLL_gap": 0.023554203974149424
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 344806,
+      "sha256": "76691515b8b76a925ac7009466d3443b25640a9ecbd5d79b80f5c778d48a03bf"
+    },
+    {
+      "host": 105,
+      "bytes": 311154,
+      "sha256": "307692ad8da565a706edc16c09800bc5307b6b8a17d87b42f400d38771dcba2b"
+    }
+  ]
+}

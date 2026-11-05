@@ -9,6 +9,53 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D18 completed 2026-11-05, compact token statistics before gathering:**
+  helper/contracts/fixtures `9a31ac663`, exports/verifier `6bc35b079`.
+  New opt-in `tools/distributed-d18/bc250_compact_token_metrics.py` on BOTH hosts:
+  CompactTokenMetrics.preprocess +compute_metrics; per-example FP64 GPU summed
+  NLL/count/correct, causal shift or masked aligned, chunked before native gather.
+  Native tail de-dup precedes final token division; zero-target rows allowed,
+  globally empty targets refused. D12–D17 helpers/native daily+RCCL a524980/ROCm/
+  D09 launcher/registries/consumers/images/kernels/defaults unchanged. No native
+  build/install/prefix mutation/model download/app access/development reboot.
+  Actual two-host BertMLM/GPT2 eager/no-dropout/no-cache FP32/BF16/FP16,19records/
+  dynamic lengths5–12/rightpadding/prompt masks/unequal tail: ABBA full/compact/
+  compact/full predict, compact evaluate, full-logit label-free opt-out pass.
+  Exact19 labels/order;126masked/120causal targets; metrics vs full+manual NumPy64
+  within1e-11, ALL real-position full logits vs CPUFP64 at D17 bounds. Native loss
+  EXACTLY unchanged across modes; both ranks agree; params unchanged/gradsNone,
+  no optimizer. 108groups/12ACKguards +4CPU patterns*12workers=48observations,
+  42localtests/Black/criticalRuff+F401/syntax/diff pass. GPU chunk7; CPU1/3/4096.
+  Prediction array88464→456B (194x smaller); per-rank five-batch prediction gather
+  inputs36472→240B (~152x), ALL loss/label/prediction gather inputs37264→1032B
+  (~36.1x). Tensor bytes only, NOT wire traffic/totalcollectives. Live allocator
+  peaks lower12288–40448B in tiny fixtures; NOT hostRSS/totalGPU/largerfit proof.
+  Full warmed before ABBA, compact first211–231ms vs repeat43.5–49.3ms; full
+  mostly38.2–44.6ms, one90.5ms outlier. NO latency win; conservative per-row FP64/
+  scalar-sync overhead remains. No statistical/defaultchunk4096GPU-speed claim.
+  Full local model logits/native cross-rank padding/dataset labels remain;
+  not streaming/generation/arbitrarymodels/outputtuples/general recovery proof.
+  Disable BOTH callbacks for full-logit/label-free predict; explicit usage guide.
+  Both `evidence/distributed-d18-r1/{bert,gpt2}-{fp32,bf16,fp16}-eval`, exact
+  commands/PIDs/exits in sequence.json; controllers30382/29377 exit0. SH locks,
+  4CPUs/10GiB+12GiB/512PIDs/256MiBshm/600s guard/460s child; clean agent exits,
+  unchanged phase kernel logs+registries. No jobs/containers/armedguards remain.
+  Tested bootsdc9e9293(.104r2)/133b8dc2(.105r3), then boot IDs changed during chat
+  interruption; current doc-sync bootsd83af4e1(.104)/bad537ed(.105), same kernels.
+  No GPU requalification claimed on new boots. Native warnings remain; historical
+  PythonCPU/KFD/invalidvisibility separate from fixedVMheap/D05 exit.
+  Local `kernel/artifacts/distributed-d18`:104344806B SHA256
+  76691515b8b76a925ac7009466d3443b25640a9ecbd5d79b80f5c778d48a03bf;
+  105311154B SHA256307692ad8da565a706edc16c09800bc5307b6b8a17d87b42f400d38771dcba2b.
+  Sources/config/nativeidentity/guards/rawreports/crossrankdigests verified;
+  no persistent prediction/checkpoint tensors created. Docs/memory BOTH synced.
+  [D18 report](docs/development/bc250_distributed_d18_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md#compact-distributed-evaluation-statistics-d18).
+  **Next D19 (new planned):** reduce compact metric launches/scalar synchronization,
+  preserve count/tail/CPU contracts; bounded larger-vocabulary payload/memory/
+  latency crossover. Preserve opt-in/native defaults. Invalidvisibility/B07.13/
+  largerfit/release reconstruction remain separate follow-ups.
+
 - **D17 completed2026-11-05, actual distributed Trainer evaluate/predict:**
   metric/contracts/fixturesf8f0a475a/exportscf7eb27c2. New opt-in BOTH tools/
   distributed-d17/bc250_token_metrics.py TokenWeightedMetrics; D12–D16 helpers
