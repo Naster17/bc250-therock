@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-04 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-05 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,60 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **D06 completed 2026-11-05, counted DDP accumulation:** numerical tools
+  bd3726047; sequencing/export/verifier539951ced. Reuse D05 owned transformer and
+  checkpoint primitives, installed bounded launcher and active D05 agent exit fix.
+  Native daily/RCCL Torch a524980/ROCm/images/registry/daily profiles unchanged;
+  no native build/install/reboot/app access. Generic FP32 width512/heads8/4 blocks/
+  seq64/12,609,536 params, AdamW; distinct FP32-rounded per-example inputs.
+  Global8/micro1: accumulation8 single or4/rank; global32/micro2:16 single or8/rank.
+  Equal global objective, one zero_grad/optimizer update; no_sync encloses BOTH
+  forward/backward of all non-final micros, each mean loss/local accumulation.
+  DDP averaging supplies rank normalization. CPU-double oracle chunk4 compares two
+  global losses/all gradients/parameters/both AdamW moments/step counters; fixed
+  tolerances, no relaxation. Atomic rank checkpoint complete collective manifest;
+  six preload refusals each, reconstructed next local loss/all params/AdamW exact.
+  Optimizer-boundary/fixed-world/rank/data recipe only; partial accum/RNG/scheduler/
+  elastic/peer-crash/masked-token/uneven-batch behavior remains unqualified.
+  Torch averaging hook counted per micro; complete50,438,144 gradient input B/rank
+  per sync. Steady small12calls/201,752,576B→3/50,438,144; larger24/403,505,152→3/
+  50,438,144. Counters exclude control/init/checkpoint collectives, are bucket input
+  not NIC/wire byte measurements. All11 updates/worker enforce byte/call contracts.
+  Two warm/five measured, max rank, opposite orders, CPU oracle/checkpoint/control/
+  launch/exit excluded. Global8: sync1738.02–1738.56ms→no_sync462.00–462.36ms
+  (3.760–3.762x), single62.67–64.86ms. Global32:3474.24–3476.18→496.08–497.33ms
+  (6.986–7.007x), single123.35–128.16ms. These gains are versus every-micro sync;
+  two hosts remain slower than one for these fixtures. Different data/micro layout
+  from D05, not a D05 regression comparison or application/universal speed claim.
+  Peak live allocator no_sync321.53/333.53MiB vs sync270.43/282.43MiB: +51.10MiB;
+  reserved342/350 vs306/314MiB. No memory/capacity/physical RAM pooling claim.
+  12 phases/host,24workers,192check groups/144preload refusals/24ACKed GPU guards;
+  agent exits clean, kernel logs and registry unchanged throughout. Black/critical
+  Ruff/syntax/diff pass; no full upstream CI. Broadcast_buffers deprecation and
+  current-context barrier warnings visible, not hidden/backend errors. SH locks,
+  4 CPUs/cpuset0-3,10GiB/12GiB memory+swap,600s guards/460s child deadlines.
+  .104 r2/.105 r3; current observed boots7344171f/e1cbfa23 newer than D05 but
+  present at first D06 phase; no reboot here. Historical Python CPU fault/KFD
+  uncertainty distinct from fixed VM heap and D05 exit repair, no new fix claim.
+  Coordinators4856(.104)/3882(.105)exit0; all per-phase guards passed. No jobs/
+  containers/armed guards. Both tools/distributed-d06 and evidence/distributed-d06-r1/
+  <case>-<mode>-<a|b>; per-phase logs and sequence commands/PID/exit journal.
+  Each host retains12 owned .pt checkpoints/1,816,412,148B, omitted from exports.
+  Local kernel/artifacts/distributed-d06/verified-results.json + raw archives:
+  104647863B SHAe68c3c32a77a14dbc9e77fa68ada38f3a3897026699c36d300ee61a013bb3d64;
+  105578803B SHA08fda612dd67472bd22fa4ab8c03854548331e4d742c4f540130ac9024b76448.
+  Independent archive/source/worker/kernel/guard/rank/config/timing checks pass.
+  [D06 report](docs/development/bc250_distributed_d06_results/README.md),
+  [explicit usage](../BC250_DISTRIBUTED_GUIDE.md). Existing app loops unchanged;
+  no_sync already exists in installed Torch, no automatic launcher optimization.
+  Both host docs/memory synchronized; old snapshots preserved.
+  **Next D07 (new planned batch):** bounded DDP mixed-precision accumulation:
+  BF16 autocast and FP16+GradScaler, independent dtype-appropriate gradient/update
+  references, synchronized finite/nonfinite decisions and same-world optimizer/
+  scaler checkpoint replay. Preserve FP32 defaults; no AMP qualification yet.
+  FSDP capacity/reservation, other transports and release reconstruction stay open;
+  B07.13 still deferred. Do not infer completion percentage.
 
 - **D05 completed 2026-11-04, bounded two-host training + exit repair:** training
   tools9ab6aec7f; bridge41bafbdd0 plus final durable-payload/recovery maintenance;
@@ -4177,7 +4231,7 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [ ]   | **B06.12 — next** | Bounded modern Torch exporter→public ORT GPU integration with independent CPU/eager-GPU references, then practical B06 gap review. Preserve defaults/.105; no universal model/dtype/graph-autograd or speed claim. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
-| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update and bounded D02–D04 cross-board RCCL/DDP/FSDP now pass; representative scaling, capacity, elastic recovery and other transports remain unqualified.                                                                                                  |
+| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update, D02–D05 cross-board RCCL/DDP/FSDP and D06 matched-batch DDP accumulation/no_sync pass within recorded bounds; these fixtures remain slower than one host. Larger-model capacity, mixed-precision training, elastic recovery and other transports remain unqualified.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
 | [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |
