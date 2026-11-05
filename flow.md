@@ -9,6 +9,63 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D17 completed2026-11-05, actual distributed Trainer evaluate/predict:**
+  metric/contracts/fixturesf8f0a475a/exportscf7eb27c2. New opt-in BOTH tools/
+  distributed-d17/bc250_token_metrics.py TokenWeightedMetrics; D12–D16 helpers
+  unchanged. Native daily/RCCL Torch a524980/ROCm/D09 launcher/registry/images/
+  profiles/kernels/consumers unchanged. No native build/install/prefix mutation/
+  reboot/model download/app access. Actual native Trainer.evaluate +labeled+
+  label-free predict, BertMLM22561/GPT2causal21280, eager/dropout0/cacheFalse,
+  FP32/BF16/FP16 (6cases/world2/one gfx1013GPU per node/RCCL). GPUparam placement/
+  Linear+Conv1D dtype checked, logitsF32. Forward/eval proof, not new backward.
+  Stateless full-gathered-logit callback sums CPU-FP64 CE/correctargmax over ALL
+  active targets, divides ONCE bydataset count; masked aligned or causalSHIFTED.
+  Returns token_nll/exp(nll)perplexity/token_accuracy/active_tokens/examples.
+  Native eval_loss RETAINED: average gathered batch losses, different weighting.
+  BertF32 eval_loss4.595089912 vs token_nll4.568608723; GPT2F32 4.609643459 vs
+  4.586088138, not GPUarithmeticfault. Otherprecisions agreeCPUrefs withinbounds.
+  Use metric_for_best_model='token_nll',greater_is_betterFalse explicitly.
+  19owned records notdivisibleworld2*batch2, dynamicactual length5–12/rightpadding/
+  promptlabels/twoignoredfirstexamples; nativepad_across_processes+gather tail
+  dedup returns EXACT[19,12,97]logits/[19,12]expectedlabels inroworder, not20.
+  Token counts126masked/120causal verified. Sequentialworkers0/evalbatch2/
+  eval_accumulation_steps2/batch_eval_metricsFalse/concatTrue/globalcountTrue.
+  ALLrealposition full-vocab GPUlogits vsCPU-FP64 forward: atol3e-6/rtol5e-5F32,
+  .003/.003BF16,.001/.001FP16. Same HFgraph/different CPUarithmetic, not independent
+  graph. Explicitmetrics vsmanual NumPy64 logsumexp/count/accuracy1e-11; tokenNLL
+  vsCPU-FP64 model withinprecisionbounds. Accuracy checkedactual gathered logits,
+  not FP64argmax near-tie equality. evaluate/labeledpredict/rankmetrics agree.
+  Label-free predict bypassesrequired-label trainingcollator, returns SAME exact
+  logits/no label/loss/tokenmetrics. ALLmodelstate-dict values unchanged/allgrads
+  None, no optimizercreated/updated; evalmode changes intentionally, not RNGrollback.
+  96groups/12ACKguards/42localregressions +5CPUcontractpatterns*12workers=60obs
+  (masked/causalmanual/chunking/stateless/empty+argmaxrefusals grouped). Firstrevision
+  allpasses; Black/criticalRuff+unusedimports/syntax/diff pass, no fullupstreamCI.
+  SHlocks/4CPUs/10GiB+12GiB/512PIDs/256MiBshm/600s guards/460s children. Clean
+  agents/phasekernellogs/registries. Sequence25857/25113 exit0, exactcommands/
+  PIDs/exits sequence.json. No jobs/containers/armedguards/foreignworkload changes.
+  Bootsdc9e9293(.104r2)/133b8dc2(.105r3) unchanged; SSH/bootfallback retained.
+  Native all_gather/barrier warnings stay; historical PythonCPU fault/KFD/invalid
+  visibility separate from fixedVMheap/D05 exit. No newnativefault/speed/memory
+  measurement/largerfit claim. No persistent prediction/checkpointpayloadcreated;
+  source/digests/rawreports/CPUcomparisons preserved, verifierdoesnotrerunGPU.
+  Both tools/distributed-d17 +evidence/distributed-d17-r1/
+  {bert,gpt2}-{fp32,bf16,fp16}-eval. Local kernel/artifacts/distributed-d17
+  verifiedsummary+archives104327082B SHA2a49a451cc2816746e3e11d2c402ee51804bcc25216483eee4bd6f306b025636;
+  105293063B SHA9485e90a5f46d15e5311baf40266044912770389ef85a2ea72e4225484813f02.
+  Helpers/fixture/selectedTrainer/nativeidentity/config/guard/kernel/crossrank
+  metrics+predictiondigests verified. Docs/memory BOTH synced.
+  [D17 report](docs/development/bc250_distributed_d17_results/README.md),
+  [tokenmetric usage](../BC250_DISTRIBUTED_GUIDE.md#distributed-evaluation-and-token-metrics-d17).
+  Full logits still gathered/stored; chunking bounds temporaryFP64 only, not
+  datasetfullarrays/othercopies. NOT largevocab/longdataset/memoryefficient eval
+  proof. No streaming/batchmetrics/generationquality/IterableDataset/shuffle/
+  multiworker/arbitrarymodel/preprocessing/eval+trainresume/elastic/peerloss claim.
+  **Next D18(new planned):** compact per-example token statistics BEFORE crosshost
+  gather, CPUreference parity, bounded payload/memory/timing comparison. Retain
+  native/default/recovery settings; invalidvisibility/B07.13/largerfit/release
+  reconstruction remain separate follow-ups.
+
 - **D16 completed2026-11-05, causal Transformer AMP +shifted target contract:**
   helper/contracts/fixturesce09f6c24/exportsad6454602. New opt-in BOTH tools/
   distributed-d16/bc250_trainer_causal.py CausalLabelCollator+causal_token_loss;

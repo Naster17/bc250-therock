@@ -1,0 +1,102 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 96,
+  "accepted_GPU_guards": 12,
+  "CPU_contract_patterns": 5,
+  "CPU_contract_observations": 60,
+  "local_unit_tests": 42,
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "dc9e9293-451c-4cd0-8839-7c902c8509ad",
+    "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+  ],
+  "cases": {
+    "bert-fp32-eval": {
+      "token_metrics": {
+        "token_nll": 4.5686087234665544,
+        "token_perplexity": 96.40988361297974,
+        "token_accuracy": 0.031746031746031744,
+        "active_tokens": 126,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.568608724315808,
+      "native_eval_loss": 4.595089912414551,
+      "native_loss_token_NLL_gap": 0.026481188947996337
+    },
+    "bert-bf16-eval": {
+      "token_metrics": {
+        "token_nll": 4.568724065899436,
+        "token_perplexity": 96.42100440484673,
+        "token_accuracy": 0.031746031746031744,
+        "active_tokens": 126,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.568608724315808,
+      "native_eval_loss": 4.595186710357666,
+      "native_loss_token_NLL_gap": 0.026462644458230322
+    },
+    "bert-fp16-eval": {
+      "token_metrics": {
+        "token_nll": 4.568599817959727,
+        "token_perplexity": 96.40902503792606,
+        "token_accuracy": 0.031746031746031744,
+        "active_tokens": 126,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.568608724315808,
+      "native_eval_loss": 4.5950798988342285,
+      "native_loss_token_NLL_gap": 0.026480080874501155
+    },
+    "gpt2-fp32-eval": {
+      "token_metrics": {
+        "token_nll": 4.5860881379021725,
+        "token_perplexity": 98.10988616566955,
+        "token_accuracy": 0.0,
+        "active_tokens": 120,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.586088139465457,
+      "native_eval_loss": 4.609643459320068,
+      "native_loss_token_NLL_gap": 0.023555321417895847
+    },
+    "gpt2-bf16-eval": {
+      "token_metrics": {
+        "token_nll": 4.586088897766168,
+        "token_perplexity": 98.109960715868,
+        "token_accuracy": 0.0,
+        "active_tokens": 120,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.586088139465457,
+      "native_eval_loss": 4.609602451324463,
+      "native_loss_token_NLL_gap": 0.023513553558294653
+    },
+    "gpt2-fp16-eval": {
+      "token_metrics": {
+        "token_nll": 4.586089732183077,
+        "token_perplexity": 98.11004258051231,
+        "token_accuracy": 0.0,
+        "active_tokens": 120,
+        "evaluated_examples": 19
+      },
+      "CPU_FP64_token_nll": 4.586088139465457,
+      "native_eval_loss": 4.609643936157227,
+      "native_loss_token_NLL_gap": 0.023554203974149424
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 327082,
+      "sha256": "2a49a451cc2816746e3e11d2c402ee51804bcc25216483eee4bd6f306b025636"
+    },
+    {
+      "host": 105,
+      "bytes": 293063,
+      "sha256": "9485e90a5f46d15e5311baf40266044912770389ef85a2ea72e4225484813f02"
+    }
+  ]
+}
