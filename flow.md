@@ -9,6 +9,62 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D21 completed 2026-11-05, actual Trainer classic FSDP FP32 +restart repair:**
+  helper/fixture/checkpoint utility5189348ba, export/verifier39918b800. New opt-in
+  BOTH tools/distributed-d21-r3/bc250_trainer_fsdp.py BC250FSDPTrainer. Existing
+  D12/DDP helper+FSDP refusal unchanged. Five HF/Accelerate files exact-pinned;
+  classicFULL_SHARD/use_orig_params/FP32/trainable/noAMP/noClip/noOffload/noCompile/
+  no activation-checkpointing; SHARDED_STATE_DICT. Native Trainer loop/wrapping/
+  modelcheckpoint/scheduler retained; Accelerator accumulation1 (D12 denominator
+  correction). No native Torch/ROCm/kernel/image/registry/D09/consumer/default
+  changes, builds/install/prefix mutation/reboot/download/app access/foreignstop.
+  .104 returned with bootc1199fca (r2); preflight idle/runtime verified, handoff
+  refreshed atentry. .105 bad537ed(r3) unchanged. Both SSH and fallbacks retained.
+  Actual BertMLM22561/vocab97/hidden32/2layers/4heads/inner64/positions32/eager/
+  dropout0/cacheFalse, three FSDPunits(root+2BertLayers). Owned28/rightpadding5–12/
+  unequalMLMmask/sequentialworkers0/perdevicemicro2/accum2 =>global8/8/8/final4.
+  EVERY globaltokenloss/allfullparametergradient vs CPUFP64 actualHFgraph/manual
+  CE: loss3e-6/5e-5, grads3e-6/5e-4. CPUdouble AdamW consumes admitted GPUgrads;
+  ALL params4e-6/5e-5,moments3e-7/5e-4 and3e-9/1e-3,counters exact for4updates.
+  Public FSDP fullgrad/optimizerstate APIs, no private shards. Parameter+exp_avg
+  elements11282(.104)/11279(.105),total22561. Sharding proof only, NOT peak RAM/
+  pooled32GB/largerfit/scaling/speedup. No new causalLM/AMP/FSDP2/clipping policy.
+  Demonstrated pinned Accelerate optimizer-load defect: generic DCP fresh empty
+  template left ALL AdamW moment entries absent. Two failed initial-restore gates/
+  host, no subsequent optimizer step; diagnosticsactualkeys[] vs21/22required.
+  Fixed ONLY subclass loadhook via public load_sharded_optimizer_state_dict +
+  FSDP.optim_state_dict_to_load +optimizer/scheduler load_state_dict. No dummy
+  steps, tolerance relaxation, zero-initialized moments or global package patch.
+  Native model+optimizer DCP checkpoint2 spread across separatehostfilesystems.
+  New bc250_fsdp_checkpoint.py offline export/merge/install includes six DCP
+  payloadfiles864357B; hash/conflict/owner checks, missing-file-only install,
+  EVERY originalcheckpointfile hash unchanged, localTrainer/scheduler/rankRNG
+  untouched. Bounded256MiB/trusted SAMEcheckpoint/world/rank utility, NOT automatic
+  sharedstorage/run-lineage validation/elastic/streaming/crash-atomic protocol.
+  Fresh CID/UUID/startticks/seed1773: initial params/ALLlocalAdamW/scheduler/four
+  RNG EXACT; windows3/4 ALLlosses/grads/params/moments/scheduler/RNG/probes/rows/
+  finaldigests EXACT seed replay onBOTH. Fixedworld/sequential/no dropout only;
+  nativeaggregate train_loss caveatD12 remains, no general restart claim.
+  Accepted30GPUgroups/4ACKguards, retained4FAILED-ACKguards separately;4localCPU
+  payloadcontractpatterns/42localtests, Black/criticalRuff+F401/syntax/diff pass.
+  No full upstreamCI. Native deprecationwarnings stay; historical PythonCPU/KFD/
+  visibility separate fromfixedVMheap/D05 exit/thisoptimizer-load integrationbug.
+  Seed4449/29954 andcorrectedresume6613/31909 exit0; failed5328/30719,6003/31345
+  exit1beforeupdates. Both evidence/distributed-d21-r1/{fp32-seed,fp32-resume,
+  fp32-resume-r2,fp32-resume-r3}; all commands/CIDs/PIDs/ACK/kernel/sourcehashes
+  preserved. SHlocks/4CPUs/10GiB+12GiB/512PIDs/256MiBshm/600s guards/460schildren.
+  No jobs/containers/armedguards. BOTHdocs/memory synced. Checkpoints2/4+reference
+  tensors kept onhosts; local kernel/artifacts/distributed-d21 metadataarchives
+  omit.pt/.pth/.bin/.distcp, inventories+hashes retained, CPU payloadexports+union
+  also kept locally. 104439245B SHA8b38c968be3530469965f72f95f882b1fed82a1ffa58c6ad0e05bee0500092a2;
+  105399839B SHAf12bde68b9cfa7505882826624e0d4f83ccf63309029bcabfddbe89774701ade.
+  [D21 report](docs/development/bc250_distributed_d21_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md#trainer-classic-fsdp-fp32-d21).
+  **Next D22(new planned):** actual TrainerFSDP FP32 native global gradient-norm
+  clipping with CPU ALLgrad/norm/clippedgrad/AdamW andexactfixedworldrestart.
+  Extend max_grad_norm=0 guard ONLY afterproof. AMP/FSDP2/generalmodels/largefit/
+  elastic/release reconstruction remain separate broadpriorities.
+
 - **D20 resumed handoff 2026-11-05 17:20 UTC:** work and six guarded GPU
   qualifications completed before the interruption; source/docs commits1116695f8,
   workspacefb819b9 retained. .104 now returns SSH "No route to host"; no new GPU

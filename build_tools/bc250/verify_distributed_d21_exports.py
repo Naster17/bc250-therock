@@ -67,6 +67,10 @@ def read(path):
             == resume["restore_optimizer_expected_keys"]
         )
         assert (
+            h["records"]["fp32-seed"]["final"]["container_id"]
+            != h["records"]["fp32-resume-r3"]["final"]["container_id"]
+        )
+        assert (
             seed["birth"]["uuid"] != resume["birth"]["uuid"]
             and seed["birth"]["start_ticks"] != resume["birth"]["start_ticks"]
         )
