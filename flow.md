@@ -9,6 +9,64 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D13 completed2026-11-05, actual Trainer BF16/FP16 + finite refusal:**
+  fixture/callback70bd075e7, exports62b35356c. Existing D12 BC250Trainer/source
+  pins unchanged, staged BOTH tools/distributed-d13 with new optional public
+  FiniteGradientCheck. Native daily/RCCL Torch a524980/ROCm/D09 launcher/registry/
+  images/profiles/kernels/frozen consumers unchanged. No native build/install/
+  active-prefix update/reboot/user-app access. Actual Trainer5.2/Accelerate1.12
+  MULTI_GPU/world2/RCCL, owned D07 residual MLP1051648 params/4x256/512/16tokens,
+  BF16/FP16 observed Linear activations, FP32 master/reduction. Not AMP Bert.
+  Explicit masked MSE/global active-window count, variable masks;28sequential
+  records/workers0/per-device micro2/accum2: global8 first3attempts, global4 final
+  single micro. All rows checked; reduction0 nonfinal/4206592B final. Clip0,
+  no dropout; strict deterministic algorithms fixture-only. D07 CPU oracle uses
+  explicit operand/output/backward rounding+FP64 matmuls, actual native loss scale
+  and micro/rank accumulation. ALL finite losses/grads within retained limits:
+  BF16 maxrelativeL2.00276769444<=.02; FP16.000372783622<=.004. CPU-double AdamW
+  fed admitted GPU grads independently checks ALL params/moments, fixedD07 bounds.
+  BF16 four successful updates/LR.00064; FP16 four Trainer attempts/three AdamW+
+  StepLR updates/LR.0008. Rank1 Inf BEFORE third final DDP reduction reachesBOTH:
+  native defaultGradScaler65536/growth_interval2000 skips AdamW AND scheduler,
+  checks params/moments/scheduler unchanged, backs off32768/tracker0, final short
+  window recovers32768/tracker1. No private scaler/Trainer-overflow mutation.
+  Native save_on_each_node checkpoint2 BOTH independent filesystems including
+  FP16scaler.pt; new CID/UUID/startticks/different constructor seeds restore
+  complete params/AdamW/scheduler/scaler/global_step/four RNG EXACT. Native skipped
+  loader then attempts3/4 losses/ALL grads/params/optimizer/scheduler/scaler/RNG/
+  probe draws/rows/finiteflag EXACT and digests:8resumed rank-windows, incl FP16
+  native skip/recovery. RNG probes only, no stochastic-model/general-data claim.
+  BF16 FiniteGradientCheck PUBLIC on_pre_optimizer_step all-reduces invalidflag,
+  raises NonFiniteGradientError on BOTH live ranks BEFORE update. Deliberate
+  STOP/reload complete checkpoint, not automatic skip. Separate rank1 AFTER-
+  reduction Inf leaves rank0 localgrads finite; both refuse, full params/AdamW/
+  scheduler equal checkpoint2/globalstep+Adamsteps2. RNG/data/grad buffers advance.
+  Callback refuses FP16; sparse/peer-loss not qualified, FP32 code acceptance not
+  separate GPU proof. FP16 rank-local errors AFTER reduction/clipping still open.
+  68groups/10ACK guards/42local regressions; first revision all pass, Black/critical
+  Ruff+unused-import/syntax/diff pass; no full upstream CI. SH locks/4CPUs/10GiB+
+  12GiB/512PIDs/256MiBshm/600s guards/460s children. Clean agents/phase kernellogs/
+  registries; no foreign workload touched. Sequence6626/6771 exit0, commands/
+  per-phase PID/exits sequence.json; separate BF16reject8067/8033 exit0 (expected
+  exception caught). No jobs/containers/armed guards. Boots dc9e9293(.104r2)/
+  133b8dc2(.105r3) unchanged. Warnings +D12 aggregate resume train_loss caveat stay;
+  historical Python CPU fault/KFD and invalid HIP visibility remain distinct from
+  fixed VMheap/D05 exit. No native fault or performance/capacity claim added.
+  Both tools/distributed-d13 +evidence/distributed-d13-r1/{bf16,fp16}-{seed,resume},
+  bf16-reject-seed. Normal seed payload143385444B/host retained plus reject/resume
+  native outputs; archives omit.pt/.pth/.bin/.pkl/.safetensors. Local
+  kernel/artifacts/distributed-d13 verified summary+archives104279479B SHA
+  f7cc87c152d92c700f605ff0d0d35190933d773c513308d1913fd65f5f1dd6b5;
+  105252034B SHA2d3cf3ca63a0a8eae14bfef5d1b61b5abc90293e47ec5b28d688d72755ff5f2a.
+  Docs/agent memory synchronized BOTH. [D13 report](docs/development/bc250_distributed_d13_results/README.md),
+  [AMP recipe](../BC250_DISTRIBUTED_GUIDE.md#trainer-bf16fp16-and-finite-gradient-checks-d13).
+  No arbitrary model/loss/TrainerAMPBert/FSDP/DeepSpeed/clipping/eval/convergence/
+  larger-capacity/speedup/elastic/peer-loss/multiworker claim. **Next D14 (new
+  planned):** actual Trainer AMP gradient clipping +coherent rank-local FP16
+  nonfinite policy, owned bounded references; retain active native/default/
+  recovery settings. Invalid-visibility refusal/B07.13/larger capacity/elastic/
+  release reconstruction remain separate follow-ups.
+
 - **D12 completed2026-11-05, actual Trainer DDP + accumulation repair:**
   initial514ed8be2, acceptedf5edcaac1, exports3f2d1e391/CPUtestcc47efc09.
   Native daily+RCCL Torch a524980/ROCm/D09 launcher/images/registries/profiles/

@@ -1,0 +1,105 @@
+{
+  "status": "passed",
+  "accepted_GPU_check_groups": 68,
+  "accepted_GPU_guards": 10,
+  "exact_resumed_rank_windows": 8,
+  "local_unit_tests": 42,
+  "qualification_boot_ids": [
+    [
+      "dc9e9293-451c-4cd0-8839-7c902c8509ad"
+    ],
+    [
+      "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+    ]
+  ],
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "dc9e9293-451c-4cd0-8839-7c902c8509ad",
+    "133b8dc2-62a1-417b-8acb-fc44aeda6eec"
+  ],
+  "valid_payload_bytes_per_host": [
+    143385444,
+    143385444
+  ],
+  "cases": {
+    "bf16": {
+      "final_scaler": {},
+      "worker_births": [
+        [
+          {
+            "uuid": "5818ac7da0f349b3be82922923d678ba",
+            "pid": 20,
+            "start_ticks": "103456"
+          },
+          {
+            "uuid": "1a697b26cb2049dab0462d428952ff2e",
+            "pid": 20,
+            "start_ticks": "105214"
+          }
+        ],
+        [
+          {
+            "uuid": "42596279f3594523961b12cad4549cb6",
+            "pid": 19,
+            "start_ticks": "103701"
+          },
+          {
+            "uuid": "d5479f15bcaf4988a6d70f51ea433877",
+            "pid": 19,
+            "start_ticks": "105459"
+          }
+        ]
+      ]
+    },
+    "fp16": {
+      "final_scaler": {
+        "scale": 32768.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 1
+      },
+      "worker_births": [
+        [
+          {
+            "uuid": "3fcad6138dfc428aa3eb0dac6166cf03",
+            "pid": 20,
+            "start_ticks": "106786"
+          },
+          {
+            "uuid": "947487e6f3334f52b837bd7b9b8f0fd2",
+            "pid": 20,
+            "start_ticks": "108559"
+          }
+        ],
+        [
+          {
+            "uuid": "cb2f60a636da4d93811a6ff97a41f125",
+            "pid": 19,
+            "start_ticks": "107031"
+          },
+          {
+            "uuid": "70d3391f00ed452b902e859b7ca1a6bd",
+            "pid": 19,
+            "start_ticks": "108804"
+          }
+        ]
+      ]
+    }
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 279479,
+      "sha256": "f7cc87c152d92c700f605ff0d0d35190933d773c513308d1913fd65f5f1dd6b5"
+    },
+    {
+      "host": 105,
+      "bytes": 252034,
+      "sha256": "2d3cf3ca63a0a8eae14bfef5d1b61b5abc90293e47ec5b28d688d72755ff5f2a"
+    }
+  ]
+}
