@@ -48,28 +48,36 @@ class CompactTokenMetrics:
         stats = torch.zeros(
             (labels.shape[0], 3), device=logits.device, dtype=torch.float64
         )
-        # Row-wise slicing avoids flattening/copying the whole causal [N,L-1,V] view.
-        for row in range(labels.shape[0]):
-            z = logits[row, :-1] if self.causal else logits[row]
-            y = labels[row, 1:] if self.causal else labels[row]
-            indices = y.ne(-100).nonzero().flatten()
-            stats[row, 1] = indices.numel()
-            for start in range(0, indices.numel(), self.chunk_tokens):
-                selected = indices[start : start + self.chunk_tokens]
-                values = z[selected].double()
-                targets = y[selected]
-                if (
-                    not torch.isfinite(values).all().item()
-                    or targets.min().item() < 0
-                    or targets.max().item() >= values.shape[-1]
-                ):
-                    raise ValueError(
-                        "Nonfinite active logits or out-of-vocabulary labels"
-                    )
-                stats[row, 0] += torch.nn.functional.cross_entropy(
-                    values, targets, reduction="sum"
-                )
-                stats[row, 2] += values.argmax(-1).eq(targets).sum()
+        targets = labels[:, 1:] if self.causal else labels
+        values = logits[:, :-1] if self.causal else logits
+        active = targets.ne(-100)
+        bad = (active & ((targets < 0) | (targets >= logits.shape[-1]))).any()
+        stats[:, 1] = active.sum(-1)
+        # Rectangular chunks batch rows without flattening/copying ALL causal logits.
+        # At most chunk_tokens positions per temporary, including ignored positions.
+        rows_per_chunk = min(max(1, labels.shape[0]), self.chunk_tokens)
+        sequence_per_chunk = max(1, self.chunk_tokens // rows_per_chunk)
+        for row in range(0, labels.shape[0], rows_per_chunk):
+            rows = slice(row, row + rows_per_chunk)
+            for start in range(0, targets.shape[1], sequence_per_chunk):
+                columns = slice(start, start + sequence_per_chunk)
+                mask = active[rows, columns]
+                y = targets[rows, columns]
+                # Mask ignored NaN/Inf before CE. Invalid ACTIVE values still flag bad.
+                z = values[rows, columns].masked_fill(~mask.unsqueeze(-1), 0).double()
+                bad = bad | ~torch.isfinite(z).all()
+                # Clamp before device indexing so invalid labels cannot fault the GPU.
+                # The accumulated flag refuses them before returning any statistics.
+                loss = torch.nn.functional.cross_entropy(
+                    z.reshape(-1, z.shape[-1]),
+                    y.clamp(0, z.shape[-1] - 1).reshape(-1),
+                    reduction="none",
+                ).reshape(y.shape)
+                stats[rows, 0] += torch.where(mask, loss, 0).sum(-1)
+                stats[rows, 2] += (z.argmax(-1).eq(y) & mask).sum(-1)
+        # Exactly one explicit device-to-host validation read; no nonzero() sync.
+        if bad.item():
+            raise ValueError("Nonfinite active logits or out-of-vocabulary labels")
         return stats
 
     def __call__(self, prediction):
