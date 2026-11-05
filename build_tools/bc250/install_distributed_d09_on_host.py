@@ -24,6 +24,18 @@ def main():
     data = json.loads(registry.read_text())
     source = args.payload_root or Path(__file__).resolve().parent / "install-payload"
     pins = json.loads((source / "payload-hashes.json").read_text())
+    expected = {
+        "bc250_distributed.py",
+        "bc250_torch.py",
+        "bc250_torchrun.py",
+        "bc250_distributed_identity.py",
+        "bc250_distributed_worker.py",
+        "torch-identity.json",
+        "agent-api-source.py",
+        "torchrun-fix.json",
+        "pytorch-LICENSE",
+    }
+    assert set(pins) == expected, "Unexpected installer payload names"
     assert all(sha(source / name) == value for name, value in pins.items())
     fix = json.loads((source / "torchrun-fix.json").read_text())
     base = Path(data["release"])
