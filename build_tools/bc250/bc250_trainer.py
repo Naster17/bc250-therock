@@ -6,6 +6,9 @@ Trainer owns accumulation loss normalization and sync boundaries. Its Accelerato
 must not divide the already-normalized loss again. This opt-in subclass keeps the
 native Trainer loop, checkpoint handling and optimizer orchestration.
 """
+import hashlib
+from pathlib import Path
+
 import torch
 from transformers import Trainer
 
@@ -44,6 +47,22 @@ class BC250Trainer(Trainer):
             raise RuntimeError(
                 "BC250Trainer requires requalification for this package pair"
             )
+        # Refuse a same-version source replacement as well as future versions:
+        # upstream may repair this integration without changing our fixture API.
+        for path, expected in [
+            (
+                Path(transformers.__file__).parent / "trainer.py",
+                "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+            ),
+            (
+                Path(accelerate.__file__).parent / "accelerator.py",
+                "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+            ),
+        ]:
+            if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+                raise RuntimeError(
+                    "BC250Trainer source identity requires requalification"
+                )
         super().create_accelerator_and_postprocess()
         if self.is_deepspeed_enabled or self.is_fsdp_enabled:
             raise ValueError("BC250Trainer currently qualifies plain/DDP only")

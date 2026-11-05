@@ -4,6 +4,7 @@
 import argparse
 import copy
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -332,8 +333,11 @@ def main():
 
             def on_step_end(self, args, ts, control, **kwargs):
                 assert trainer.lr_scheduler.state_dict()["last_epoch"] == ts.global_step
-                assert trainer.optimizer.param_groups[0]["lr"] == 0.001 * 0.8 ** (
-                    ts.global_step // 2
+                assert math.isclose(
+                    trainer.optimizer.param_groups[0]["lr"],
+                    0.001 * 0.8 ** (ts.global_step // 2),
+                    rel_tol=0,
+                    abs_tol=1e-15,
                 )
                 if not stock:
                     value = dict(
