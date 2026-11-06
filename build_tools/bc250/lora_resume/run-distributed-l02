@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Run the matching command on both boards, with node rank 0 on .104 and 1 on .105.
+set -euo pipefail
+PROJECT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+APP_ENV="${APP_ENV:-$PROJECT_DIR/../env}"
+if [[ $# -lt 2 || ( "$1" != 0 && "$1" != 1 ) ]]; then
+    echo "usage: run-distributed-l02 NODE_RANK TRAIN_OPTIONS..." >&2
+    exit 2
+fi
+NODE_RANK="$1"
+shift
+exec /usr/local/bin/bc250-distributed \
+    --node-rank "$NODE_RANK" \
+    --master-port "${BC250_MASTER_PORT:-30141}" \
+    --env "PYTHONPATH=$APP_ENV/lib/python3.12/site-packages" \
+    --env "HF_HUB_OFFLINE=1" \
+    --env "TOKENIZERS_PARALLELISM=false" \
+    --env "OMP_NUM_THREADS=4" \
+    --env "BC250_LORA_INITIAL_SCALE=${BC250_LORA_INITIAL_SCALE:-128}" \
+    --shm-size 256m \
+    "$PROJECT_DIR/train_two_host_l02.py" "$@"
