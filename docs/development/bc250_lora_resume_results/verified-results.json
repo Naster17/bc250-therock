@@ -1,0 +1,110 @@
+{
+  "status": "passed",
+  "accepted_guards": [
+    {
+      "host": 104,
+      "phase": "l02-r2-resume",
+      "pid": 15398,
+      "boot_id": "95c5d5e2-972a-472a-901f-046408fb11d4",
+      "kernel_log_unchanged": true
+    },
+    {
+      "host": 104,
+      "phase": "l02-r2-seed",
+      "pid": 13638,
+      "boot_id": "95c5d5e2-972a-472a-901f-046408fb11d4",
+      "kernel_log_unchanged": true
+    },
+    {
+      "host": 104,
+      "phase": "l02-r3-resume",
+      "pid": 3944,
+      "boot_id": "7b7d244f-d349-420b-a2f5-ff7a68b5c7bb",
+      "kernel_log_unchanged": true
+    },
+    {
+      "host": 105,
+      "phase": "l02-r2-seed",
+      "pid": 12975,
+      "boot_id": "e49272d5-cb2c-4b2d-8244-cdd73ca7f2c9",
+      "kernel_log_unchanged": true
+    },
+    {
+      "host": 105,
+      "phase": "l02-r3-resume",
+      "pid": 7663,
+      "boot_id": "153daab4-ba4d-4141-8bae-48be45a8b2af",
+      "kernel_log_unchanged": true
+    }
+  ],
+  "retained_failed_guards": [
+    {
+      "host": 104,
+      "phase": "l02-r1-seed",
+      "pid": 12101,
+      "boot_id": "95c5d5e2-972a-472a-901f-046408fb11d4",
+      "kernel_log_unchanged": true
+    },
+    {
+      "host": 105,
+      "phase": "l02-r1-seed",
+      "pid": 9035,
+      "boot_id": "e49272d5-cb2c-4b2d-8244-cdd73ca7f2c9",
+      "kernel_log_unchanged": true
+    },
+    {
+      "host": 105,
+      "phase": "l02-r2-resume",
+      "pid": 17836,
+      "boot_id": "e49272d5-cb2c-4b2d-8244-cdd73ca7f2c9",
+      "kernel_log_unchanged": false
+    }
+  ],
+  "fresh_process_replays": [
+    {
+      "host": 104,
+      "seed_pid": 20,
+      "resume_pid": 20,
+      "hostname": "bc250",
+      "seed_process_start_ticks": "331860",
+      "resume_process_start_ticks": "28770",
+      "replayed_steps": [
+        3,
+        4
+      ],
+      "all_successful_gradients_and_full_state_exact": true,
+      "native_overflow_skip_replayed_exactly": true,
+      "restored_token_counter": 10648
+    },
+    {
+      "host": 105,
+      "seed_pid": 19,
+      "resume_pid": 19,
+      "hostname": "bc500",
+      "seed_process_start_ticks": "108260",
+      "resume_process_start_ticks": "2983817",
+      "replayed_steps": [
+        3,
+        4
+      ],
+      "all_successful_gradients_and_full_state_exact": true,
+      "native_overflow_skip_replayed_exactly": true,
+      "restored_token_counter": 10648
+    }
+  ],
+  "checkpoint_id": "be695e35-1872-4a62-a61e-3dc40f981303-2",
+  "common_payload_files": 11,
+  "common_payload_bytes": 1635023695,
+  "local_unit_tests": 54,
+  "actual_checkpoint_negative_controls": {
+    "incomplete_peer_payload_refused": true,
+    "wrong_generation_refused": true,
+    "original_rng_unchanged_and_no_failed_destination": true
+  },
+  "limits": [
+    "Same two ranks, pinned framework/provider, same settings/data/model",
+    "Middle-epoch complete optimizer boundary; workers0/unpacked/native AdamW",
+    "No elastic or one-host conversion, partial-window or crash-durability proof",
+    "No throughput or full-epoch convergence claim; native aggregate train_loss caveat retained"
+  ]
+}

@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-05 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-07 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,61 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **L02 completed 2026-11-07: real two-host LoRA checkpoint replay.**
+  Implementation `284d3315b`, Docker-aware guardian/verifier `4d5f60e43`.
+  [Commands](../BC250_LORA_TWO_HOST.md#restore-a-sealed-l02-checkpoint),
+  [report](docs/development/bc250_lora_resume_results/README.md).
+  Additive `train_two_host_l02.py`, `run-distributed-l02`, `checkpoint_files.py`,
+  support module and `two_host_training_l02.json` installed on BOTH hosts under
+  the authorized lora-smoke project. L01 entry points, completed outputs and all
+  native checkpoints retained; finetune-n7 uninspected/unmodified.
+  Native HF/PEFT restore model/AdamW/scheduler/scaler/RNG; added sealed checkpoint
+  IDs, common file hashes, rank-specific RNG validation, model/data/settings
+  fingerprints and restoration of TRL's otherwise-reset cumulative token counter.
+  Offline common-payload exchange prepares a fresh validated peer directory and
+  atomically renames it; no source checkpoint/RNG overwrites or payload unpickling.
+  Two ranks, pinned newer framework sources, FP16/native AdamW/workers0/unpacked;
+  old unsealed/one-host, elastic, partial-window and shared-FS recovery unqualified.
+  Real Qwen3.5-2B/rank128/all-linear/134553600 FP32 trainable elements, global16,
+  dropout.05/cosine/one warmup window: R2 checkpoint2 then uninterrupted windows3/4;
+  final R3 fresh-process replay after external/user board reboots is EXACT on BOTH
+  ranks for data, all gradients, parameters, AdamW/moments/counters, scheduler,
+  scaler, four RNG hashes and per-step metrics. Initial test scale8 restores512;
+  poisoned RNG1773 is restored natively; token counter10648 resumes15745/19377.
+  Test-only growth interval1 causes natural overflow at window4: exact native skip,
+  scale1024→512, unchanged parameters/optimizer/scheduler; data/RNG consumed normally.
+  Production growth interval unchanged. First warmup optimizer call has LR0.
+  Eight guards retained: five accepted/three rejected, all recovery guards ACK.
+  Two R1 failures were overstrict probe refusal of legitimate AMP skip. R2 resume
+  math passed both, but .105 guard failed on unrelated Docker veth/journald startup;
+  failure retained. Added default-local-Docker pre/post checks and repeated clean
+  R3 pair, both kernel logs/registries unchanged and Docker/Podman idle. User
+  authorized stopping steam-headless/brave_engelbart; already stopped when resumed,
+  no unrelated container stopped by agent. Older guardians need this check too.
+  54 local tests (42 existing+8 transport+4 Docker), three actual checkpoint refusal/
+  preservation checks, Black/critical Ruff+F401/syntax/shell/diff pass. No full CI,
+  throughput/capacity/full-epoch/convergence or independent CPU Qwen claim. Native
+  aggregate train_loss current-process caveat and reference conv/delta paths remain.
+  Common payload11 files/1635023695B; original .104 CP2 and .105 local RNG/ready
+  full copy retained. Redundant new .104 transfer tar removed only after SHA
+  verification of retained .105 copy; no checkpoint/cache/image/release cleanup.
+  Local `kernel/artifacts/lora-resume/{104,105}-evidence.tar.gz`:220526/195665B,
+  SHA c4e6bbe17a4c2edf975493f512a4fc5197a26deaa32911a50f78f87859eca890 /
+  a334532aa2787ed9b3050c287be09f4c961131ba855bd6d1d7a5ef6f6c063e72.
+  Metadata excludes data/tensor/RNG binaries; full local+host transcripts/configs,
+  markers/kernel logs/guard ACKs and historical failed probes preserved.
+  Exact commands in `bc250work/evidence/lora-resume/*/{running,final}.json`;
+  guardians .10412101/13638/15398/3944, .1059035/12975/17836/7663, all finished.
+  No jobs/containers/armed guards. Final boots7b7d244f(.104r2)/153daab4(.105r3);
+  reboots between attempts were external/user, none initiated here. Shared locks/
+  resource envelope retained; no native build/install/prefix mutation/download.
+  Torch daily/RCCL a524/D09/ROCm/kernels/fallbacks unchanged. Historical CPU Python/
+  KFD issues remain distinct from fixed VM heap, D05 exit and D21 optimizer load.
+  Both host docs/memory synced. **Next D24:** first carry Docker-aware preflight
+  into its owning guardian; then audit/prototype BF16 FSDP working parameters and
+  all-gather buffers with FP32 master shards/reductions and numerical/replay checks.
+  D23 frozen-parameter/package-version guards remain unchanged.
 
 - **L01 completed 2026-11-05: authorized real LoRA application on two boards.**
   User redirected this batch from D24 to `/home/nik/bc250-projects/lora-smoke`

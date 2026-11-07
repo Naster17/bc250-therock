@@ -82,6 +82,31 @@ Hardware-relevant sources include `compiler/amd-llvm/llvm/lib/Target/AMDGPU/GCNP
 | Profiling                           | API/kernel/copy tracing works. Hardware counter tables, PC sampling, ATT and SPM are unqualified.                                                                                |
 | Debugger                            | Native architecture/ELF registration patched; consumers and attach/step/wave suites not qualified                                                                                |
 
+## L02 real LoRA checkpoint replay update (2026-11-07)
+
+[Report](bc250_lora_resume_results/README.md),
+[commands](../../../BC250_LORA_TWO_HOST.md#restore-a-sealed-l02-checkpoint).
+Implementation284d3315b/guard-verifier4d5f60e43; additive L02 runner/profile on both
+hosts, original L01/outputs/checkpoints retained. Native loaders plus sealed
+common/rank-RNG file inventories and model/data/settings fingerprints; custom
+restoration of TRL's otherwise-reset token counter. Offline peer preparation
+preserves local RNG, validates before atomic rename, never unpickles payloads.
+Actual Qwen3.5-2B/rank128/134553600 FP32 elements, native FP16 AdamW/global16/
+dropout.05: checkpoint2→fresh windows3/4 after reboots matches ALL parameter/
+gradient/AdamW/scheduler/scaler/RNG/data/per-step hashes exactly. Scale8→loaded512,
+poisoned RNG restored, token10648→15745/19377. Test-only accelerated growth produces
+native overflow skip4, exact preservation/backoff1024→512; production growth kept.
+Five accepted/three retained rejected guards: two overstrict skip-probe failures,
+one .105 R2 system rejection for Docker startup despite exact math. New Docker
+pre/post check; final R3 pair clean kernel/registry/Docker/Podman. 54 local tests
+and3 actual refusal/preservation controls pass. Payload11/1635023695B; all native
+checkpoints preserved, retained .105 transport tar; only redundant new .104 tar
+removed. No native install/prefix changes or agent reboot. Same two ranks/pinned
+sources/FP16/AdamW/workers0/unpacked optimizer boundaries; no one-host conversion,
+elastic/shared-FS/partial-window/crash-durability/full-epoch/performance proof.
+Native aggregate train_loss caveat retained. Next D24 with Docker-aware guardian
+before BF16 FSDP working-parameter/all-gather qualification; D23 guards unchanged.
+
 ## L01 authorized two-host LoRA application update (2026-11-05)
 
 [Report](bc250_lora_two_host_results/README.md),
