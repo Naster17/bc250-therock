@@ -5,11 +5,17 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 MODULE = Path(__file__).resolve().parents[1] / "bc250/lora_resume/checkpoint_files.py"
 spec = importlib.util.spec_from_file_location("lora_checkpoint_files", MODULE)
 files = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(files)
+guard_spec = importlib.util.spec_from_file_location(
+    "lora_guard", MODULE.with_name("guard.py")
+)
+guard = importlib.util.module_from_spec(guard_spec)
+guard_spec.loader.exec_module(guard)
 
 
 class CheckpointTransport(unittest.TestCase):
@@ -98,6 +104,52 @@ class CheckpointTransport(unittest.TestCase):
         (self.peer / files.MANIFEST).write_text(json.dumps(changed))
         with self.assertRaises(AssertionError):
             files.prepare(self.archive, self.peer, self.root / "ready", 1)
+
+
+class DockerPreflight(unittest.TestCase):
+    def test_absent_socket_does_not_query_remote_daemon(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(
+            guard.subprocess, "run"
+        ) as run:
+            self.assertEqual(guard.docker_containers(Path(temp) / "absent"), [])
+            run.assert_not_called()
+
+    def test_local_containers_enumerated(self):
+        with tempfile.TemporaryDirectory() as temp:
+            socket = Path(temp) / "docker.sock"
+            socket.touch()
+            result = guard.subprocess.CompletedProcess(
+                [], 0, stdout="b\na\n", stderr=""
+            )
+            with mock.patch.object(
+                guard.shutil, "which", return_value="/usr/bin/docker"
+            ), mock.patch.object(guard.subprocess, "run", return_value=result) as run:
+                self.assertEqual(guard.docker_containers(socket), ["a", "b"])
+                self.assertEqual(
+                    run.call_args.args[0],
+                    ["docker", "--host", "unix://" + str(socket), "ps", "-q"],
+                )
+
+    def test_unavailable_daemon_state_refused(self):
+        with tempfile.TemporaryDirectory() as temp:
+            socket = Path(temp) / "docker.sock"
+            socket.touch()
+            result = guard.subprocess.CompletedProcess(
+                [], 1, stdout="", stderr="unavailable"
+            )
+            with mock.patch.object(
+                guard.shutil, "which", return_value="/usr/bin/docker"
+            ), mock.patch.object(guard.subprocess, "run", return_value=result):
+                with self.assertRaises(AssertionError):
+                    guard.docker_containers(socket)
+
+    def test_missing_cli_with_present_socket_refused(self):
+        with tempfile.TemporaryDirectory() as temp:
+            socket = Path(temp) / "docker.sock"
+            socket.touch()
+            with mock.patch.object(guard.shutil, "which", return_value=None):
+                with self.assertRaises(AssertionError):
+                    guard.docker_containers(socket)
 
 
 if __name__ == "__main__":

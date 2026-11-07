@@ -94,11 +94,25 @@ def verify(directory):
         for name, data in files.items():
             if name.startswith("evidence/") and name.endswith("/final.json"):
                 r = json.loads(data)
-                assert (
-                    r["kernel_log_unchanged"]
-                    and r["registry_unchanged"]
-                    and not r["foreign_containers"]
-                )
+                assert r["registry_unchanged"] and not r["foreign_containers"]
+                if not r["kernel_log_unchanged"]:
+                    assert host == 105 and r["config"]["label"] == "l02-r2-resume"
+                    assert r["status"] == "failed" and r["exit_code"] == 0
+                    before = files[
+                        name.removesuffix("final.json") + "kernel-before.log"
+                    ]
+                    after = files[name.removesuffix("final.json") + "kernel-after.log"]
+                    assert after.startswith(before)
+                    messages = [
+                        x.split("] ", 1)[1]
+                        for x in after[len(before) :].decode().splitlines()
+                    ]
+                    assert messages and all(
+                        x.startswith(
+                            ("eth0: renamed", "veth", "docker0:", "systemd-journald[")
+                        )
+                        for x in messages
+                    )
                 prefix = name.removesuffix("final.json")
                 state = json.loads(files[prefix + "guard/state.json"])
                 ack = json.loads(files[prefix + "guard/ack.json"])
@@ -109,12 +123,16 @@ def verify(directory):
                     "phase": r["config"]["label"],
                     "pid": r["guardian_pid"],
                     "boot_id": r["boot_id"],
+                    "kernel_log_unchanged": r["kernel_log_unchanged"],
                 }
+                if r["config"]["label"] == "l02-r3-resume":
+                    assert r["status"] == "passed" and r["kernel_log_unchanged"]
+                    assert r["docker_containers"] == {"before": [], "after": []}
                 (accepted if r["status"] == "passed" else failed).append(item)
         rank = host - 104
         root = "application/outputs/two-host-tests/l02-r2/"
         seed = json.loads(files[root + f"seed/replay-rank{rank}.json"])
-        resumed = json.loads(files[root + f"resume/replay-rank{rank}.json"])
+        resumed = json.loads(files[root + f"resume-r3/replay-rank{rank}.json"])
         manifest = json.loads(files[root + "seed/checkpoint-2/bc250-l02.json"])
         assert seed["status"] == resumed["status"] == "passed"
         assert len(seed["steps"]) == 4 and len(resumed["steps"]) == 2
@@ -168,7 +186,7 @@ def verify(directory):
         )
         manifests.append(manifest)
     assert manifests[0] == manifests[1]
-    assert len(accepted) == 4 and len(failed) == 2
+    assert len(accepted) == 5 and len(failed) == 3
     negative = json.loads(nodes[105]["evidence/actual-negative-controls.json"])
     assert len(negative) == 3 and all(negative.values())
     return {
@@ -181,7 +199,7 @@ def verify(directory):
         "common_payload_bytes": sum(
             v["bytes"] for v in manifests[0]["payload"].values()
         ),
-        "local_unit_tests": 50,
+        "local_unit_tests": 54,
         "actual_checkpoint_negative_controls": negative,
         "limits": [
             "Same two ranks, pinned framework/provider, same settings/data/model",
