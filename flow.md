@@ -9,6 +9,34 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-02 in progress, candidate batch 2026-11-08:** implementation19de82f88.
+  [Report](docs/development/bc250_plan02_results/README.md). Installed .104 MIOpen
+  SHA3a751adc1497 remains selected; retained repair797335e2b713 tested privately.
+  Exact old FP16 solver218 mismatch reproduced in daily AND RCCL, original bound
+  unchanged. Repaired candidate passes12 direct cases/profile (24 total), plus
+  12 ordinary Torch output/dx/dw/db configurations/profile (24 total), covering
+  FP32/FP16/BF16/groups1/3/dilation1/2 with declared CPU FP64 bounds. No native
+  rebuild/prefix update or .105 access; no ordinary-default fix installed yet.
+  Six accepted guards including two old negative controls, two setup failures
+  retained: protected LD_LIBRARY_PATH refused, then missing private-child zstd
+  dependency. Correct fresh child+sysdeps path passes; all8 ACK, dmesg unchanged,
+  no containers/jobs/armed guards.62 local tests/Black/critical Ruff+F401/syntax pass.
+  Controllers20838/21414 exit1,21705/22359 exit0. Exact commands/results/logs
+  WS/logs/plan02-*; evidence /home/nik/bc250work/evidence/plan02. Local archive
+  kernel/artifacts/plan02/evidence-r3.tar.gz354657B SHA
+  fe5f48b34620cb42fb47c10deb24601686ff9b300ba4bed5b7e6c41ca2de09c2.
+  Resources4CPU/10GiB+12GiB/512PIDs/256MiBshm/600s guard/540s child, PLAN-01
+  reservation+SH lock retained. Entry .104 bootafcc7be4/r2 unchanged. No app access,
+  foreign stop/reboot/download. Historical Python CPU fault remains distinct from
+  fixed VM heap/D05 exit/D21 optimizer loading. Host docs still PLAN-01; updated
+  candidate report/cursor local; evidence/tools retained on .104.
+  **NEXT remains PLAN-02:** new installed-layout candidate/RUNPATH normalization
+  and ABI/NEEDED checks; coherent identity qualification before EX-lock rollout.
+  Installed bc250-ck pins old MIOpen; SDK hashes runtime descriptors and ORT embeds
+  SDK registration in both registry and immutable manifest. Preserve consumers;
+  do not relax pins or swap the DSO alone. Then ordinary .104 activation/rollback
+  and matched .105 qualification. PLAN-02 unchecked; do not advance to D26 yet.
+
 - **PLAN-01 completed 2026-11-08:** implementation `2e24474d6`, selected upcoming
   B07.11/B07.12 modules use new stack-only board_preflight and shared GPU gate
   cooperative EX board reservation + SH runtime lock. Default-local Docker,

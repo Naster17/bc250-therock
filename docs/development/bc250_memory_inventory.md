@@ -5,6 +5,18 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## PLAN-02 candidate update (2026-11-08)
+
+[Evidence and remaining rollout](bc250_plan02_results/README.md), implementation
+19de82f88. Original strict FP16 direct218 failure reproduced on .104 daily/RCCL.
+Retained isolated repair passes24 direct CPU-reference cases plus24 Torch forward/
+ALL-first-gradient configurations acrossFP32/FP16/BF16/groups/dilation. Six accepted
+guards/two retained setup failures/all8ACK/62 local tests. No native runtime
+change, .105 access, reboot or new universal proof. PLAN-02 remains OPEN: candidate
+RUNPATH is build-tree-specific; installed CK pins old MIOpen, SDK/ORT identities
+require coherent cohort qualification and live rollback before ordinary rollout.
+Historical fault distinctions preserved. No jobs/containers/armed guards.
+
 ## PLAN-01 reservation update (2026-11-08)
 
 Selected upcoming MIOpen/CK modules migrated to stack-only board_preflight and

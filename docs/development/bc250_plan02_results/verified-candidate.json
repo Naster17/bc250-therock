@@ -1,0 +1,844 @@
+{
+  "status": "candidate-qualified-not-installed",
+  "records": {
+    "plan02-old-daily-r1": {
+      "exit": {
+        "returncode": 0,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-old-daily-r1",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "4bfa75362c58ca9bf19aa7afd6b8be63",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4349.673168257,
+        "dry_run": false
+      },
+      "result": {
+        "status": "passed",
+        "checks": [
+          "old-precision-failure-reproduced"
+        ],
+        "library": "/workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+        "library_sha256": "3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce",
+        "rows": [
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 1068,
+            "first_actual": 0.8427734375,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.002330489456653595,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 1609,
+            "first_actual": -0.0247802734375,
+            "first_reference": -0.024767160415649414,
+            "first_bound": 2.8867752552032473e-05,
+            "max_abs_error": 0.0006713718175888062,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 3250,
+            "first_actual": 0.8427734375,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.0023772865533828735,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 24988,
+            "first_actual": 2.39453125,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.00999562069773674,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 53250,
+            "first_actual": -1.8173828125,
+            "first_reference": -1.8176991045475006,
+            "first_bound": 0.0005991662052273751,
+            "max_abs_error": 0.0046027787029743195,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 74828,
+            "first_actual": 2.39453125,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.00999562069773674,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -0.024793386459350586,
+            "first_reference": -0.02479338177964685,
+            "first_bound": 2.1239669088982344e-05,
+            "max_abs_error": 8.029386044938747e-08,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -1.8181818723678589,
+            "first_reference": -1.818181896751578,
+            "first_bound": 0.0001109090948375789,
+            "max_abs_error": 3.03934426959529e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          }
+        ]
+      }
+    },
+    "plan02-old-rccl-single-r1": {
+      "exit": {
+        "returncode": 0,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-old-rccl-single-r1",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "4ec3cddfd1843df1135865d2ba398832",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4364.273800667001,
+        "dry_run": false
+      },
+      "result": {
+        "status": "passed",
+        "checks": [
+          "old-precision-failure-reproduced"
+        ],
+        "library": "/workspace/build/dist/rocm/lib/libMIOpen.so.1.0",
+        "library_sha256": "3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce",
+        "rows": [
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 1068,
+            "first_actual": 0.8427734375,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.002330489456653595,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 1609,
+            "first_actual": -0.0247802734375,
+            "first_reference": -0.024767160415649414,
+            "first_bound": 2.8867752552032473e-05,
+            "max_abs_error": 0.0006713718175888062,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 3250,
+            "first_actual": 0.8427734375,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.0023772865533828735,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 24988,
+            "first_actual": 2.39453125,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.00999562069773674,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 53250,
+            "first_actual": -1.8173828125,
+            "first_reference": -1.8176991045475006,
+            "first_bound": 0.0005991662052273751,
+            "max_abs_error": 0.0046027787029743195,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 74828,
+            "first_actual": 2.39453125,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.00999562069773674,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -0.024793386459350586,
+            "first_reference": -0.02479338177964685,
+            "first_bound": 2.1239669088982344e-05,
+            "max_abs_error": 8.029386044938747e-08,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -1.8181818723678589,
+            "first_reference": -1.818181896751578,
+            "first_bound": 0.0001109090948375789,
+            "max_abs_error": 3.03934426959529e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          }
+        ]
+      }
+    },
+    "plan02-new-daily-r1": {
+      "exit": {
+        "returncode": 1,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-new-daily-r1",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "abfe9f9eefac2afa4115fe6b3c1c1e97",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4370.256088331,
+        "dry_run": false
+      },
+      "result": null
+    },
+    "plan02-new-daily-r2": {
+      "exit": {
+        "returncode": 1,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-new-daily-r2",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "14b108fee397f84ad47dcc35bd4115a2",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4402.609628722999,
+        "dry_run": false
+      },
+      "result": null
+    },
+    "plan02-new-daily-r3": {
+      "exit": {
+        "returncode": 0,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-new-daily-r3",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "e0847a1e315501c41854c1582e45d167",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4446.579793339,
+        "dry_run": false
+      },
+      "result": {
+        "status": "passed",
+        "checks": [
+          "12-direct218-CPU-reference-guard-input-preservation-fixtures"
+        ],
+        "library": "/home/nik/bc250work/rocm-10.2-gfx1013/tmp/ck-plugin-b0711/native-fix-r2/miopen-build/lib/libMIOpen.so.1.0",
+        "library_sha256": "797335e2b71368205095d53afb3e1f83e0fd67f76f9f257e00a3f2ef4ac6ba9e",
+        "rows": [
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.84228515625,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.0009240880608558655,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -0.0247650146484375,
+            "first_reference": -0.024767160415649414,
+            "first_bound": 2.8867752552032473e-05,
+            "max_abs_error": 0.00023505091667175293,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.84228515625,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.0009240880608558655,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.396484375,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.0019515566527843475,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -1.8173828125,
+            "first_reference": -1.8176991045475006,
+            "first_bound": 0.0005991662052273751,
+            "max_abs_error": 0.0009317360818386078,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.396484375,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.0019515566527843475,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -0.024793386459350586,
+            "first_reference": -0.02479338177964685,
+            "first_bound": 2.1239669088982344e-05,
+            "max_abs_error": 8.029386044938747e-08,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -1.8181818723678589,
+            "first_reference": -1.818181896751578,
+            "first_bound": 0.0001109090948375789,
+            "max_abs_error": 3.03934426959529e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          }
+        ]
+      }
+    },
+    "plan02-new-rccl-single-r3": {
+      "exit": {
+        "returncode": 0,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-new-rccl-single-r3",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "d3b9f902812430bb8e246db162e7f648",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4460.376965775,
+        "dry_run": false
+      },
+      "result": {
+        "status": "passed",
+        "checks": [
+          "12-direct218-CPU-reference-guard-input-preservation-fixtures"
+        ],
+        "library": "/home/nik/bc250work/rocm-10.2-gfx1013/tmp/ck-plugin-b0711/native-fix-r2/miopen-build/lib/libMIOpen.so.1.0",
+        "library_sha256": "797335e2b71368205095d53afb3e1f83e0fd67f76f9f257e00a3f2ef4ac6ba9e",
+        "rows": [
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.84228515625,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.0009240880608558655,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -0.0247650146484375,
+            "first_reference": -0.024767160415649414,
+            "first_bound": 2.8867752552032473e-05,
+            "max_abs_error": 0.00023505091667175293,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.84228515625,
+            "first_reference": 0.8424274250864983,
+            "first_bound": 0.0003062619962543249,
+            "max_abs_error": 0.0009240880608558655,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.396484375,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.0019515566527843475,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -1.8173828125,
+            "first_reference": -1.8176991045475006,
+            "first_bound": 0.0005991662052273751,
+            "max_abs_error": 0.0009317360818386078,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float16",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.396484375,
+            "first_reference": 2.396013855934143,
+            "first_bound": 0.0011163631927967072,
+            "max_abs_error": 0.0019515566527843475,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -0.024793386459350586,
+            "first_reference": -0.02479338177964685,
+            "first_bound": 2.1239669088982344e-05,
+            "max_abs_error": 8.029386044938747e-08,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 9,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 0.8429751992225647,
+            "first_reference": 0.8429752270544846,
+            "first_bound": 6.214876135272424e-05,
+            "max_abs_error": 4.164936138195685e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 1,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 1,
+            "violations": 0,
+            "first_actual": -1.8181818723678589,
+            "first_reference": -1.818181896751578,
+            "first_bound": 0.0001109090948375789,
+            "max_abs_error": 3.03934426959529e-07,
+            "workspace": 0
+          },
+          {
+            "dtype": "torch.float32",
+            "h": 32,
+            "groups": 3,
+            "filter": 3,
+            "violations": 0,
+            "first_actual": 2.3966939449310303,
+            "first_reference": 2.396694254776663,
+            "first_bound": 0.00013983471273883315,
+            "max_abs_error": 1.237412130983273e-06,
+            "workspace": 0
+          }
+        ]
+      }
+    },
+    "plan02-backward-daily-r1": {
+      "exit": {
+        "returncode": 0,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-backward-daily-r1",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "7efe398f41b45cc56de42a3c5730689c",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4550.840326436,
+        "dry_run": false
+      },
+      "result": {
+        "status": "passed",
+        "checks": [
+          "torch.float32-g1-dilation1-output-dx-dw-db",
+          "torch.float32-g1-dilation2-output-dx-dw-db",
+          "torch.float32-g3-dilation1-output-dx-dw-db",
+          "torch.float32-g3-dilation2-output-dx-dw-db",
+          "torch.float16-g1-dilation1-output-dx-dw-db",
+          "torch.float16-g1-dilation2-output-dx-dw-db",
+          "torch.float16-g3-dilation1-output-dx-dw-db",
+          "torch.float16-g3-dilation2-output-dx-dw-db",
+          "torch.bfloat16-g1-dilation1-output-dx-dw-db",
+          "torch.bfloat16-g1-dilation2-output-dx-dw-db",
+          "torch.bfloat16-g3-dilation1-output-dx-dw-db",
+          "torch.bfloat16-g3-dilation2-output-dx-dw-db"
+        ],
+        "library_sha256": "797335e2b71368205095d53afb3e1f83e0fd67f76f9f257e00a3f2ef4ac6ba9e"
+      }
+    },
+    "plan02-backward-rccl-single-r1": {
+      "exit": {
+        "returncode": 0,
+        "kernel_log_unchanged": true,
+        "running_containers": [],
+        "docker_containers": [],
+        "docker_error": null
+      },
+      "guard": {
+        "release": "7.1.5-bc250rocm-r2",
+        "phase": "plan02-backward-rccl-single-r1",
+        "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+        "nonce": "95a124bb182638c487b1c870c95c275f",
+        "timeout_seconds": 600,
+        "status": "acknowledged",
+        "deadline_monotonic": 4562.640717654,
+        "dry_run": false
+      },
+      "result": {
+        "status": "passed",
+        "checks": [
+          "torch.float32-g1-dilation1-output-dx-dw-db",
+          "torch.float32-g1-dilation2-output-dx-dw-db",
+          "torch.float32-g3-dilation1-output-dx-dw-db",
+          "torch.float32-g3-dilation2-output-dx-dw-db",
+          "torch.float16-g1-dilation1-output-dx-dw-db",
+          "torch.float16-g1-dilation2-output-dx-dw-db",
+          "torch.float16-g3-dilation1-output-dx-dw-db",
+          "torch.float16-g3-dilation2-output-dx-dw-db",
+          "torch.bfloat16-g1-dilation1-output-dx-dw-db",
+          "torch.bfloat16-g1-dilation2-output-dx-dw-db",
+          "torch.bfloat16-g3-dilation1-output-dx-dw-db",
+          "torch.bfloat16-g3-dilation2-output-dx-dw-db"
+        ],
+        "library_sha256": "797335e2b71368205095d53afb3e1f83e0fd67f76f9f257e00a3f2ef4ac6ba9e"
+      }
+    }
+  },
+  "identities": {
+    "/opt/bc250-stack/current/runtime.json": {
+      "sha256": "a9a5afe3a808bd3ea348663746665fc6e792d1005c68f4e7b6df89bbe7c1b465",
+      "bytes": 62262
+    },
+    "/opt/bc250-stack/dev/rccl-single-b053/runtime.json": {
+      "sha256": "db556925af537b2f8e4d9e9cbfd475750a06c6f9e71b0226c7280dbae6c19005",
+      "bytes": 63333
+    },
+    "/opt/bc250-stack/current/rocm/lib/libMIOpen.so.1.0": {
+      "sha256": "3a751adc149778f061198014d6f086a75c33e7640b9473dd75bf14464652afce",
+      "bytes": 498397568
+    },
+    "/opt/bc250-stack/distributed/d01.json": {
+      "sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+      "bytes": 1585
+    },
+    "/opt/bc250-stack/sdks/miopen-dl.json": {
+      "sha256": "f4f6faa55dc96d587e15404069ad2345abb1e17dd56dd3e2a2610f2a4dcad982",
+      "bytes": 1171
+    },
+    "/opt/bc250-stack/sdks/migraphx.json": {
+      "sha256": "20c7145693f325d6fc75a1e7b75e5e42919cb80f043fee87359477355c153aa8",
+      "bytes": 914
+    },
+    "/opt/bc250-stack/sdks/ort-migraphx.json": {
+      "sha256": "c30fed096c78f93b51f906f26edb228a185378a4bece4918ad08429dc0874e69",
+      "bytes": 1798
+    }
+  },
+  "remaining": "Normalize installed-layout RUNPATH in a separate candidate; qualify coherent CK/SDK/ORT and daily/RCCL metadata/pins with live rollback under exclusive update lock before native install; .105 untouched",
+  "kernel_release": "7.1.5-bc250rocm-r2",
+  "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21"
+}
