@@ -1,4 +1,127 @@
-# PLAN-02: precision repair candidate qualification
+# PLAN-02: native MIOpen FP16 repair deployed
+
+Completed 2026-11-08, within the bounds below. Implementation `72c4276ad`,
+MIOpen source `e1d8d1ff920` on the retained B07.11 accumulation repair `96e5a7dfc43`.
+[Verified rollout metadata](verified-rollout.json). The initial candidate evidence
+below remains historical; its “not deployed” statements no longer describe the
+selected profiles.
+
+Both `.104` and `.105` select
+`/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/daily`; explicit RCCL/D01
+selects its `profiles/rccl-single`. Installed MIOpen SHA256:
+`381eac05240e33acced9472fb7c3071afe8bc4f434407e67a29ce64423b935ac`.
+Torch native a524, RCCL, runtime image and kernel/boot policy remain the recorded
+payloads. The runtime descriptor keeps the base native revision and adds the
+specific `miopen_precision_repair` source/hash/cache version; this is not a full
+ROCm rebuild from e1d8d1ff920.
+
+## What changed and why retained-cache tests matter
+
+The gfx1013 HIP-direct FP16 forward kernel accumulates in FP32 before rounding
+its result. The original half accumulator misses the existing reference bound;
+this does not establish memory corruption or invalidate every historical run.
+A fresh-cache installed-layout repair initially passed all consumers, but a copy
+of the old user KDB still loaded the old arithmetic while the repaired DSO was
+mapped. Cohort r2 was therefore rolled back and must remain inactive.
+
+MIOpen keys binaries by filename and compile options, not embedded source bytes.
+The solver now adds `-DBC250_DIRECT_FWD_FP32_ACCUM_CACHE=1` for gfx1013 FP16
+forward only. It separates the repaired user/system-cache key without deleting
+old entries. FP32/BF16/backward/other-device compile options retain their original
+behavior. The isolated build reuses ccache and rebuilds one solver object plus
+the DSO link in a preserved copy; the original build and DSO remain intact.
+
+On each host, daily and RCCL tests independently clone the owned old cache,
+retain all 12 old logical records, add six versioned FP16 entries and pass cold
+and fresh-process warm precision checks. Warm runs log 12 binary hits, six with
+the new marker, no binary saves and unchanged logical records. Original control
+cache hashes remain unchanged. `.105` uses transferred owned `.104` controls,
+not user application caches. SQLite can change physical bytes during bookkeeping;
+logical record equality and no saves establish warm reuse, not byte-identical
+SQLite storage. Failed probe r1 used raw-byte equality; r2 omitted quotes in the
+log matcher. Both retained GPU phases passed math; the final r3 checks pass.
+
+The original decisive result is 0.8427734375 versus CPU FP64 0.8424274250864983
+(bound 0.0003062619962543249). Repaired warm-cache result is 0.84228515625,
+inside that unchanged bound. No tolerance was relaxed.
+
+## Qualification and reversible deployment
+
+| Host / phase | Guarded runs | Scope |
+| --- | ---: | --- |
+| .104 retained-cache migration | 4 | 12 direct CPU-reference cases/run, cold/warm daily and RCCL |
+| .104 inactive then public cohort | 10 + 10 | Each matrix has 98 top-level groups: direct FP16/FP32, Torch FP32/FP16/BF16 outputs and ALL first gradients, CK FP32, MIGraphX and retained ORT GPU graphs |
+| .104 live rollback / final reactivation | 2 + 4 | Original pointers/D01 bytes/library and known old mismatch; repaired public direct/backward on both profiles |
+| .105 retained-cache migration | 4 | Same copied-old-cache reference and fresh-process reuse checks |
+| .105 inactive / public / final reactivation | 4 + 4 + 4 | Each matrix has 26 groups: direct references and ordinary Torch output/ALL-first-gradient configurations on daily/RCCL |
+| .105 live rollback | 1 | Original pointers/D01 bytes/library and old daily mismatch restored |
+| Both hosts public distributed regression | 1 per host | Eight groups/rank: four-dtype GPU sums, small/1MiB sums, three DDP/SGD steps against global CPU FP64 gradients/parameters |
+
+All **49 final r4 guards** acknowledged; kernel logs unchanged. Eight actual
+registration/identity refusal groups and two actual activation refusals pass on
+.104; cache-unsafe cohort and failed migration evidence refuse before pointer
+publication. 62 local tests, Black, critical Ruff+F401 and diff checks pass.
+No full upstream CI, training-convergence, broad performance, higher-order
+gradient or arbitrary-geometry/special-value claim. Historical CPU Python faults
+remain distinct from fixed VM-heap corruption and D05/D21 issues.
+
+Staging verifies SONAME/NEEDED/public C/C++ exports and normalized installed
+RUNPATH. Recompiling changes one compiler-generated `__hip_cuid_<hex>` name;
+only that anchored content-ID pattern is excluded from the export comparison,
+with raw exports retained. Unchanged ROCm files use host-local hardlinks; the
+changed MIOpen inode is detached before replacement. **Never modify shared
+inodes in place** in a later update: detach every changed file or stage independent
+copies. Old prefixes and fallbacks depend on their preserved contents.
+
+.104 CK/SDK/ORT registrations and immutable package metadata are rebased as a
+coherent versioned cohort; no identity check is weakened. Public optional
+launchers select the cohort's private registries. Old SDK registrations remain
+historical and preserved. CK stays explicit and FP32; B07.13 FP16 installation
+is separate. `.105` has no optional SDK installation; this batch adds none.
+Its old ordinary daily launcher remains, and public RCCL qualification uses the
+existing D09 core with the new alias. New target descriptors enable cooperative
+locking through hardlinks to its recorded migration-control lock. The frozen
+underlying target payloads remain preserved.
+
+Every activation/rollback holds EX reservation and stable runtime/D01 locks;
+GPU tests hold SH locks and release them before transactions. Transaction journals
+are `COHORT/transactions/{cache-safe-initial,cache-safe-rollback,cache-safe-final}`
+on .104 and `{target-initial,target-rollback,target-final}` on .105. To return to
+the pre-PLAN-02 stack on an idle board, use this helper with a **new unique label**:
+
+```sh
+doas python3 /home/nik/bc250work/tools/plan02/activate_miopen_plan02_cohort_on_host.py \
+  --root /opt/bc250-stack/candidates/miopen-plan02-r4 --action rollback \
+  --label operator-rollback-r1 \
+  --from-transaction /opt/bc250-stack/candidates/miopen-plan02-r4/transactions/cache-safe-initial/before.json
+```
+
+Use a new unique lowercase label for each transaction. On .105, use
+`transactions/target-initial/before.json`. This is a userspace selection rollback,
+not a kernel rollback. Run corresponding reference checks afterward. Kernel r2
+fallbacks, native controls, healthcheck package/data, old paths, user applications,
+images, builds and caches were preserved. No user app inspection, foreign stop,
+cleanup, reboot or download in this rollout.
+
+GPU resources: four CPUs/cpuset0–3,10GiB RAM/12GiB RAM+swap,512PIDs,256MiB shm,
+600s recovery/540s child/15s termination. Resource injection is test-only; ordinary
+consumer defaults are preserved. .104 boot afcc7be4/r2 and .105 boot8c396bd1/r3
+remain unchanged. Exact commands/PIDs/ACKs and retained failures are in the
+metadata archives listed in verified-rollout.json; no tensor/checkpoint binaries
+or private application data are exported. Final boards idle, no owned jobs,
+containers or armed guards.
+
+## Next action
+
+PLAN-02 is complete for this scope. Proceed to **PLAN-03 / D26**: actual Trainer
+classic FSDP eager GPT2 causal LM, tied parameters, shifted global token loss,
+CPU ALL gradients/clipping/AdamW and exact restart under explicit FP32/BF16/FP16
+policies. Checkpoint bitwise continuation across changed MIOpen arithmetic is
+not promised; preserved old cohorts remain available for exact old environments.
+
+---
+
+# Initial candidate qualification (historical)
 
 2026-11-08 batch, implementation19de82f88. **PLAN-02 remains in progress; no
 ordinary native deployment or .105 change.** [Recorded results](verified-candidate.json).

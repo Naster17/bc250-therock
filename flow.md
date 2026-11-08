@@ -9,7 +9,63 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **PLAN-02 in progress, candidate batch 2026-11-08:** implementation19de82f88.
+- **PLAN-02 completed 2026-11-08 — ordinary MIOpen repair active on BOTH hosts.**
+  Implementation `72c4276ad`; solver/cache source `e1d8d1ff920` on B07.11 repair
+  `96e5a7dfc43`. [Report](docs/development/bc250_plan02_results/README.md),
+  [verified rollout](docs/development/bc250_plan02_results/verified-rollout.json).
+  Current .104 AND .105: `/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/daily`;
+  RCCL alias/D01 select its `profiles/rccl-single`. Installed MIOpen SHA
+  381eac05240e33acced9472fb7c3071afe8bc4f434407e67a29ce64423b935ac.
+  Base native revisions remain in descriptors; specific miopen_precision_repair
+  records source/hash/cache version. Torch a524/RCCL/image/kernels unchanged.
+  All old prefixes, SDKs, paths/caches/builds/checkpoints/images retained. .104
+  optional CK/MIGraphX/ORT use coherent new versioned registries/packages; no pin
+  weakened. .105 has no optional SDKs; old daily CLI preserved, D09 core handles
+  explicit RCCL. New target descriptors enable the SAME migration-control lock
+  inode; frozen payload remains preserved. Shared unchanged ROCm hardlinks are
+  dependencies: detach every changed inode on future updates, never write through
+  them in place. .105 production healthcheck/native controls/fallback untouched.
+  Additional retained-cache control exposed unsafe r2: new DSO0612f031 still
+  executes old half-accumulation binaries. r2 EX rolled back, NEVER reactivate it.
+  Version1 adds gfx1013 FP16 forward-only compile option to separate old cache
+  keys. Isolated ccache build5690 passes (one object+link, old build preserved),
+  source DSO0e256648; normalized381eac05. r3 stage failed only generated HIP CUID
+  export difference; r4 excludes anchored compiler content IDs only, raw ABI/deps
+  retained. Cache probe r1 raw-SQLite-byte check and r2 quoted-log matcher failed
+  outside numerical gates; GPU math passed. Corrected r3 checks pass both hosts:
+  each profile retains12 old rows/adds6 new; fresh warm process12 hits/6versioned,
+  no saves/unchanged logical records, original control cache hashes preserved.
+  Target controls copied from owned .104 fixture; user caches/apps not inspected.
+  .104 r4 inactive+public matrices10 guards/98 groups EACH pass, eight actual
+  identity/refusal groups and two actual cache-activation refusals pass. Live EX
+  rollback restores pointers/D01/native bytes and reproduces old strict mismatch
+  in two guards; final reactivation direct/backward4 guards/26groups pass.
+  .105 matched cache4, inactive/public/final4 each (26groups each), rollback1 pass.
+  Public two-host RCCL four-dtype sums +three CPU-reference DDP/SGD steps8groups/
+  rank pass (one guard/host). Final r4 totals49 acknowledged guards,62 localtests,
+  Black/criticalRuff+F401/diff pass. No universal precision/speed/convergence or
+  cross-native-version bitwise checkpoint claim. Historical Python CPU faults
+  distinct from fixed VM heap/D05 exit/D21 loading. No app access/foreignstop/
+  cleanup/reboot/download; bootafcc7be4(.104r2)/8c396bd1(.105r3) unchanged.
+  Target setup failures retained: missing legacy import dependency, then absent
+  log parent, both before GPU/guard arm. Reusable gate imports now lazy; existing
+  PLAN-01 reservation/SHlock/4CPU/10GiB+12GiB/512PIDs/256MiBshm/600s/540s retained.
+  Exact transactions ROOT/transactions/cache-safe-{initial,rollback,final}(.104)
+  and target-{initial,rollback,final}(.105); rollback uses initial/before.json.
+  Commands/controller/worker/CID/log/ACK details in WS/logs/plan02-* and
+  evidence/plan02-*. Final controllers10416479/25967/30456/30907/32203 and
+  10523409/24749/26282/27443/28040/29337 exit0; exports32592/30144 exit0.
+  Local kernel/artifacts/plan02/plan02-rollout-bc250-r4.tar.gz3348200B SHA
+  833dc281beae95d18cf6b8971d1d9e1e2a289888980feafa054de044175fee7c;
+  bc500 archive781459B SHAbaba98b6560df77fa566806d036ca6a0c27b1796305621dbbec8bb19acf21482.
+  Final idle preflight passes, no owned GPU/build jobs/containers/armed guards.
+  Final PLAN-02 docs/memory snapshots synchronized to BOTH host docs entry points.
+  **NEXT PLAN-03 / D26:** inspect recorded GPT2/D16/D23–D25 evidence, then actual
+  Trainer classic FSDP eager GPT2 tied-parameter/shifted-token-loss CPU ALL
+  gradients/clipping/AdamW and exact restart for explicit FP32/BF16/FP16 policies.
+  Keep frozen/PEFT/checkpointing/capacity separate; do not repeat completed D25.
+
+- **Historical PLAN-02 candidate batch 2026-11-08 (superseded above):** implementation19de82f88.
   [Report](docs/development/bc250_plan02_results/README.md). Installed .104 MIOpen
   SHA3a751adc1497 remains selected; retained repair797335e2b713 tested privately.
   Exact old FP16 solver218 mismatch reproduced in daily AND RCCL, original bound
