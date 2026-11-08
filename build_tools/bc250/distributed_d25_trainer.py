@@ -25,7 +25,7 @@ from distributed_d10_checkpoint import digest
 from distributed_d10_restart import cpu_tree, exact, fingerprint, rng_state
 
 
-def main():
+def main(fixture=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
         "--case",
@@ -37,7 +37,8 @@ def main():
             "scale",
             "fp32-control",
             "bf16-control",
-        ],
+        ]
+        + (["fp32", "bf16"] if fixture is not None else []),
         required=True,
     )
     p.add_argument("--action", choices=["seed", "resume"], required=True)
@@ -50,10 +51,10 @@ def main():
         torch.set_num_interop_threads(1)
         torch.use_deterministic_algorithms(True)
         r["CPU_policy_contracts"] = contracts()
-        half = a.case not in ["fp32-control", "bf16-control"]
-        amp = a.case != "fp32-control"
+        half = a.case not in ["fp32-control", "bf16-control", "fp32", "bf16"]
+        amp = a.case not in ["fp32-control", "fp32"]
         dtype = torch.float16 if half else torch.bfloat16
-        bf16 = a.case == "bf16-control"
+        bf16 = a.case in ["bf16-control", "bf16"]
         one_step = a.case in [
             "inactive",
             "fp32-control",
@@ -62,20 +63,24 @@ def main():
             "scale",
         ]
         torch.manual_seed(773 if a.action == "seed" else 1773)
-        cfg = BertConfig(
-            vocab_size=97,
-            hidden_size=32,
-            num_hidden_layers=2,
-            num_attention_heads=4,
-            intermediate_size=64,
-            max_position_embeddings=32,
-            hidden_dropout_prob=0.0,
-            attention_probs_dropout_prob=0.0,
-            pad_token_id=0,
-            use_cache=False,
-            attn_implementation="eager",
-        )
-        base = BertForMaskedLM(cfg)
+        if fixture is None:
+            cfg = BertConfig(
+                vocab_size=97,
+                hidden_size=32,
+                num_hidden_layers=2,
+                num_attention_heads=4,
+                intermediate_size=64,
+                max_position_embeddings=32,
+                hidden_dropout_prob=0.0,
+                attention_probs_dropout_prob=0.0,
+                pad_token_id=0,
+                use_cache=False,
+                attn_implementation="eager",
+            )
+            base = BertForMaskedLM(cfg)
+        else:
+            base = fixture.model()
+            fixture.check(base)
         base.accepts_loss_kwargs = False
         names = list(dict(base.named_parameters()))
         oracle = copy.deepcopy(base).double()
@@ -83,8 +88,15 @@ def main():
         refopt = torch.optim.AdamW(
             oracle.parameters(), lr=0.001, eps=1e-5, weight_decay=0.01, foreach=False
         )
-        data = OwnedData()
+        data = OwnedData() if fixture is None else fixture.dataset()
+        targets = data.labels if fixture is None else data.targets
+        token_ce = cpu_token_ce if fixture is None else fixture.cpu_loss
+        layer = "BertLayer" if fixture is None else fixture.layer
+        if fixture is not None:
+            r["CPU_causal_contracts"] = fixture.contracts()
         nparams = sum(p.numel() for p in base.parameters())
+        if fixture is not None:
+            r["fixture_source_sha256"] = digest(Path(fixture.__file__))
         args = TrainingArguments(
             output_dir=str(a.output.parent / "trainer-output"),
             per_device_train_batch_size=2,
@@ -114,7 +126,7 @@ def main():
             fsdp="full_shard auto_wrap",
             fsdp_config=dict(
                 version=1,
-                transformer_layer_cls_to_wrap=["BertLayer"],
+                transformer_layer_cls_to_wrap=[layer],
                 use_orig_params=True,
                 sync_module_states=True,
                 cpu_ram_efficient_loading=False,
@@ -134,6 +146,7 @@ def main():
             )
         a.seed_directory.mkdir(parents=True, exist_ok=True)
         local = dict(rows=[], losses=[], draws=[], windows=0, registered=False)
+        local["counts"], local["local_active"] = [], []
         local["linear_types"] = set()
         local["weight_types"] = set()
 
@@ -142,7 +155,10 @@ def main():
             local["weight_types"].add(str(module.weight.dtype))
 
         for module in base.modules():
-            if isinstance(module, torch.nn.Linear):
+            if isinstance(
+                module,
+                (torch.nn.Linear,) if fixture is None else fixture.observed_modules,
+            ):
                 module.register_forward_hook(observe_linear)
         birth = dict(
             uuid=uuid.uuid4().hex,
@@ -223,6 +239,8 @@ def main():
                     with FSDP.summon_full_params(
                         self.model, writeback=False, with_grads=True
                     ):
+                        if fixture is not None:
+                            fixture.check(self.model)
                         local["preclip"] = {
                             n: cpu_tree(p.grad).double() / scale
                             for n, p in named(self.model).items()
@@ -290,13 +308,18 @@ def main():
                 assert isinstance(model, FSDP)
                 if not local["registered"]:
                     assert sum(isinstance(m, FSDP) for m in model.modules()) == 3
+                    if fixture is not None:
+                        fixture.check(model)
                     counts = [None] * 2
                     dist.all_gather_object(
                         counts, sum(p.numel() for p in model.parameters())
                     )
+                    assert sum(counts) == nparams
                     r["local_shard_parameter_elements"] = counts
                     r["checks"].append(
-                        "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards"
+                        "actual-classic-FSDP-root-and-two-"
+                        + layer
+                        + "-wraps-original-FP32-shards"
                     )
                     local["registered"] = True
                     root_clip = model.clip_grad_norm_
@@ -361,6 +384,8 @@ def main():
                         p.numel() for p in self.model.parameters()
                     ]
                     exact(actual_state, wanted_state)
+                    if fixture is not None:
+                        fixture.check(self.model)
                     r["checks"].append(
                         "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact"
                     )
@@ -390,13 +415,29 @@ def main():
 
         def observed_loss(outputs, labels, num_items_in_batch=None):
             assert outputs.logits.dtype == torch.float32
-            return masked_token_loss(outputs, labels, num_items_in_batch)
+            if fixture is None:
+                return masked_token_loss(outputs, labels, num_items_in_batch)
+            local["counts"].append(int(num_items_in_batch))
+            active = int(labels[:, 1:].ne(-100).sum())
+            local["local_active"].append(active)
+            value = fixture.loss(outputs, labels, num_items_in_batch)
+            if active == 0:
+                assert (
+                    value.requires_grad
+                    and torch.isfinite(value).item()
+                    and value.item() == 0
+                )
+                r["checks"].append(
+                    "GPU-local-zero-target-micro-positive-global-zero-loss"
+                )
+            return value
 
         trainer = Observed(
             model=base,
             args=args,
             train_dataset=data,
             compute_loss_func=observed_loss,
+            **({} if fixture is None else {"data_collator": fixture.collator()}),
         )
         acc = trainer.accelerator
         assert acc.native_amp == amp and (acc.scaler is not None) == half
@@ -452,11 +493,12 @@ def main():
                 precision=(
                     "FP16 working params+allgather/FP32 masters+reduce/native ShardedGradScaler"
                     if half
-                    else "BF16 control" if amp else "FP32 control"
+                    else "BF16 working params" if amp else "FP32"
                 ),
                 clip_limit=args.max_grad_norm,
                 case=a.case,
                 source_pins=PINS,
+                fixture="Bert MLM" if fixture is None else fixture.name,
                 helper_sha256=digest(Path(__file__).with_name("bc250_trainer_fsdp.py")),
             ),
             source_sha256=digest(Path(__file__)),
@@ -483,6 +525,21 @@ def main():
                 local["grads"] = cpu_tree(
                     {n: p.grad for n, p in named(trainer.model).items()}
                 )
+                if fixture is not None:
+                    count = int(targets[rows, 1:].ne(-100).sum())
+                    assert local["counts"] and set(local["counts"]) == {count}
+                    assert count == [49, 57, 57, 21][ts.global_step]
+                    r.setdefault("target_counts", []).append(
+                        dict(
+                            step=ts.global_step,
+                            shifted=count,
+                            raw_unshifted=int(data.labels[rows].ne(-100).sum()),
+                            local_active=list(local["local_active"]),
+                        )
+                    )
+                    r["checks"].append(
+                        "native-global-shifted-target-count-" + str(ts.global_step)
+                    )
                 if local["skip"]:
                     r["checks"].append(
                         "native-overflow-window-recorded-for-exact-replay"
@@ -493,6 +550,8 @@ def main():
                 ):
                     actual = named(trainer.model)
                     assert set(actual) == set(names)
+                    if fixture is not None:
+                        fixture.check(trainer.model)
                     if a.action == "seed":
                         with torch.no_grad():
                             for name, p in oracle.named_parameters():
@@ -502,8 +561,8 @@ def main():
                                     else actual[name].cpu()
                                 )
                         refopt.zero_grad(set_to_none=True)
-                        target = data.labels[rows]
-                        wanted = cpu_token_ce(
+                        target = targets[rows]
+                        wanted = token_ce(
                             oracle(
                                 input_ids=data.ids[rows], attention_mask=data.mask[rows]
                             ).logits,
@@ -540,9 +599,9 @@ def main():
                                             input_ids=data.ids[indices],
                                             attention_mask=data.mask[indices],
                                         ).logits
-                                    part = cpu_token_ce(
+                                    part = token_ce(
                                         logits.float(),
-                                        data.labels[indices],
+                                        targets[indices],
                                         denominator,
                                     )
                                     (part * 2 * local["scale_before"]).backward()
@@ -635,6 +694,8 @@ def main():
                     )
                     with FSDP.summon_full_params(trainer.model, writeback=False):
                         actual = named(trainer.model)
+                        if fixture is not None:
+                            fixture.check(trainer.model)
                         for name, p in oracle.named_parameters():
                             torch.testing.assert_close(
                                 actual[name].cpu().double(),
@@ -698,6 +759,12 @@ def main():
                     draws=local["draws"],
                     clip=local["clip"],
                 )
+                if fixture is not None:
+                    fixture.check(trainer.model)
+                    value.update(
+                        target_counts=list(local["counts"]),
+                        local_active=list(local["local_active"]),
+                    )
                 if ts.global_step > 2:
                     f = a.seed_directory / f"reference-{ts.global_step}.pt"
                     if a.action == "seed":
@@ -717,6 +784,7 @@ def main():
                         rows=list(local["rows"]),
                     )
                 )
+                local["counts"], local["local_active"] = [], []
                 local["rows"] = []
                 local["losses"] = []
                 local["draws"] = []
@@ -762,6 +830,8 @@ def main():
             "inactive",
             "fp32-control",
             "bf16-control",
+            "fp32",
+            "bf16",
         ]
         assert trainer.state.global_step == (1 if one_step else 4) and local[
             "windows"
@@ -790,6 +860,8 @@ def main():
             final_scaler={} if acc.scaler is None else acc.scaler.state_dict(),
         )
         r.update(status="passed", final_state_digest=fingerprint(state()))
+        if fixture is not None:
+            r["tied_parameter_checks"] = fixture.check_calls
         dist.barrier()
     except BaseException as e:
         r.update(status="failed", error=repr(e))
