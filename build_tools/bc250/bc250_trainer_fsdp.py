@@ -121,6 +121,30 @@ class BC250FSDPTrainer(Trainer):
     PEFT/frozen parameters or activation checkpointing qualification.
     """
 
+    def _validate_master_parameters(self):
+        if any(
+            not p.requires_grad or p.dtype != torch.float32
+            for p in self.model.parameters()
+        ):
+            raise ValueError("Only trainable FP32 master parameters are qualified")
+
+    def _gradient_problem(self, parameters, device):
+        bad = torch.zeros((), device=device, dtype=torch.int32)
+        for p in parameters:
+            if p.numel() == 0:
+                continue
+            g = p.grad
+            if (
+                g is None
+                or g.layout != torch.strided
+                or g.dtype != torch.float32
+                or g.device != device
+            ):
+                bad.fill_(1)
+            else:
+                bad = torch.maximum(bad, (~torch.isfinite(g)).any().to(torch.int32))
+        return bad
+
     def create_accelerator_and_postprocess(self):
         import accelerate
         import transformers
@@ -176,11 +200,7 @@ class BC250FSDPTrainer(Trainer):
             raise ValueError(
                 "BF16 requires an explicit qualified compute or parameter policy"
             )
-        if any(
-            not p.requires_grad or p.dtype != torch.float32
-            for p in self.model.parameters()
-        ):
-            raise ValueError("Only trainable FP32 master parameters are qualified")
+        self._validate_master_parameters()
         super().create_accelerator_and_postprocess()
         acc = self.accelerator
         plugin = getattr(acc.state, "fsdp_plugin", None)
@@ -251,22 +271,7 @@ class BC250FSDPTrainer(Trainer):
                     from bc250_fsdp_fp16 import clip
 
                     return clip(self, parameters, max_norm, norm_type)
-                bad = torch.zeros((), device=acc.device, dtype=torch.int32)
-                for p in parameters:
-                    if p.numel() == 0:
-                        continue
-                    g = p.grad
-                    if (
-                        g is None
-                        or g.layout != torch.strided
-                        or g.dtype != torch.float32
-                        or g.device != acc.device
-                    ):
-                        bad.fill_(1)
-                    else:
-                        bad = torch.maximum(
-                            bad, (~torch.isfinite(g)).any().to(torch.int32)
-                        )
+                bad = self._gradient_problem(parameters, acc.device)
                 torch.distributed.all_reduce(bad, op=torch.distributed.ReduceOp.MAX)
                 if bad.item():
                     raise FloatingPointError(

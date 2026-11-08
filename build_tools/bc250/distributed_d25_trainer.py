@@ -38,30 +38,53 @@ def main(fixture=None):
             "fp32-control",
             "bf16-control",
         ]
-        + (["fp32", "bf16"] if fixture is not None else []),
+        + (
+            [
+                "fp32",
+                "bf16",
+                "frozen",
+                "frozen-missing",
+                "frozen-grad",
+                "frozen-late",
+                "frozen-policy",
+            ]
+            if fixture is not None
+            else []
+        ),
         required=True,
     )
     p.add_argument("--action", choices=["seed", "resume"], required=True)
     p.add_argument("--seed-directory", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     a = p.parse_args()
+    frozen = bool(getattr(fixture, "frozen", False))
+    refusals = {"frozen-missing", "frozen-grad", "frozen-late"}
     r = dict(status="running", checks=[], transcript=[])
     try:
         torch.set_num_threads(4)
         torch.set_num_interop_threads(1)
         torch.use_deterministic_algorithms(True)
         r["CPU_policy_contracts"] = contracts()
-        half = a.case not in ["fp32-control", "bf16-control", "fp32", "bf16"]
-        amp = a.case not in ["fp32-control", "fp32"]
-        dtype = torch.float16 if half else torch.bfloat16
-        bf16 = a.case in ["bf16-control", "bf16"]
-        one_step = a.case in [
-            "inactive",
+        half = not frozen and a.case not in [
             "fp32-control",
             "bf16-control",
-            "late",
-            "scale",
+            "fp32",
+            "bf16",
         ]
+        amp = not frozen and a.case not in ["fp32-control", "fp32"]
+        dtype = torch.float16 if half else torch.bfloat16
+        bf16 = a.case in ["bf16-control", "bf16"]
+        one_step = (
+            a.case
+            in [
+                "inactive",
+                "fp32-control",
+                "bf16-control",
+                "late",
+                "scale",
+            ]
+            or a.case in refusals
+        )
         torch.manual_seed(773 if a.action == "seed" else 1773)
         if fixture is None:
             cfg = BertConfig(
@@ -86,7 +109,11 @@ def main(fixture=None):
         oracle = copy.deepcopy(base).double()
         oracle_amp = copy.deepcopy(base).float()
         refopt = torch.optim.AdamW(
-            oracle.parameters(), lr=0.001, eps=1e-5, weight_decay=0.01, foreach=False
+            (p for p in oracle.parameters() if p.requires_grad),
+            lr=0.001,
+            eps=1e-5,
+            weight_decay=0.01,
+            foreach=False,
         )
         data = OwnedData() if fixture is None else fixture.dataset()
         targets = data.labels if fixture is None else data.targets
@@ -95,6 +122,7 @@ def main(fixture=None):
         if fixture is not None:
             r["CPU_causal_contracts"] = fixture.contracts()
         nparams = sum(p.numel() for p in base.parameters())
+        ntrainable = sum(p.numel() for p in base.parameters() if p.requires_grad)
         if fixture is not None:
             r["fixture_source_sha256"] = digest(Path(fixture.__file__))
         args = TrainingArguments(
@@ -104,7 +132,9 @@ def main(fixture=None):
             max_steps=1 if one_step else 4,
             bf16=bf16,
             fp16=half,
-            max_grad_norm=100.0 if a.case == "inactive" else 0.05,
+            max_grad_norm=(
+                100.0 if a.case == "inactive" else getattr(fixture, "clip_limit", 0.05)
+            ),
             learning_rate=0.001,
             report_to="none",
             save_strategy="no" if one_step else "steps",
@@ -145,6 +175,22 @@ def main(fixture=None):
                 fsdp_fp16_parameter_policy() if half else fsdp_bf16_parameter_policy()
             )
         a.seed_directory.mkdir(parents=True, exist_ok=True)
+        if frozen:
+            f = a.seed_directory / "frozen-initial.pt"
+            if a.action == "seed":
+                assert not f.exists()
+                torch.save(
+                    cpu_tree(
+                        {
+                            n: p
+                            for n, p in base.named_parameters()
+                            if not p.requires_grad
+                        }
+                    ),
+                    f,
+                )
+            frozen_initial = torch.load(f, map_location="cpu", weights_only=True)
+            r["frozen_initial_digest"] = fingerprint(frozen_initial)
         local = dict(rows=[], losses=[], draws=[], windows=0, registered=False)
         local["counts"], local["local_active"] = [], []
         local["linear_types"] = set()
@@ -175,7 +221,12 @@ def main(fixture=None):
                 for name, value in model.named_parameters()
             }
 
-        class Observed(BC250FSDPTrainer):
+        def trainable(model):
+            return {n: p for n, p in named(model).items() if p.requires_grad}
+
+        trainer_base = fixture.trainer_class if frozen else BC250FSDPTrainer
+
+        class Observed(trainer_base):
             def _build_accelerator_args(self, **kwargs):
                 result = super()._build_accelerator_args(**kwargs)
                 if half:
@@ -196,7 +247,11 @@ def main(fixture=None):
                     scale = self.accelerator.scaler.get_scale() if half else 1.0
                     local["scale_before"] = scale
                     local["skip"] = a.case == "overflow" and self.state.global_step == 2
-                    if local["skip"] or a.case in ["late", "scale"]:
+                    if (
+                        local["skip"]
+                        or a.case in ["late", "scale"]
+                        or a.case in refusals
+                    ):
                         local["before_refusal"] = dict(
                             params=cpu_tree(named(self.model)),
                             optimizer=cpu_tree(self.optimizer.state_dict()),
@@ -243,8 +298,12 @@ def main(fixture=None):
                             fixture.check(self.model)
                         local["preclip"] = {
                             n: cpu_tree(p.grad).double() / scale
-                            for n, p in named(self.model).items()
+                            for n, p in trainable(self.model).items()
                         }
+                        if frozen:
+                            fixture.check_frozen(
+                                self.model, frozen_initial, full_gradient_views=True
+                            )
                     wanted = math.sqrt(
                         sum(float(g.square().sum()) for g in local["preclip"].values())
                     )
@@ -255,6 +314,19 @@ def main(fixture=None):
                         else (wanted > max_norm and coefficient < 1)
                     )
                     before = local.get("root_clip_calls", 0)
+                    if (
+                        a.case in ["frozen-missing", "frozen-grad"]
+                        and self.accelerator.process_index == 1
+                    ):
+                        p = next(
+                            p
+                            for p in parameters
+                            if p.numel()
+                            and p.requires_grad == (a.case == "frozen-missing")
+                        )
+                        p.grad = (
+                            None if a.case == "frozen-missing" else torch.zeros_like(p)
+                        )
                     norm = native_clip(parameters, max_norm, norm_type=norm_type)
                     assert local["root_clip_calls"] == before + 1
                     torch.testing.assert_close(
@@ -266,7 +338,7 @@ def main(fixture=None):
                     with FSDP.summon_full_params(
                         self.model, writeback=False, with_grads=True
                     ):
-                        for n, p in named(self.model).items():
+                        for n, p in trainable(self.model).items():
                             torch.testing.assert_close(
                                 p.grad.cpu().double(),
                                 local["preclip"][n] * coefficient,
@@ -290,7 +362,7 @@ def main(fixture=None):
             def create_optimizer(self):
                 if self.optimizer is None:
                     self.optimizer = torch.optim.AdamW(
-                        self.model.parameters(),
+                        (p for p in self.model.parameters() if p.requires_grad),
                         lr=0.001,
                         eps=1e-5,
                         weight_decay=0.01,
@@ -315,6 +387,16 @@ def main(fixture=None):
                         counts, sum(p.numel() for p in model.parameters())
                     )
                     assert sum(counts) == nparams
+                    if frozen:
+                        parts = [None] * 2
+                        dist.all_gather_object(
+                            parts,
+                            sum(
+                                p.numel() for p in model.parameters() if p.requires_grad
+                            ),
+                        )
+                        assert sum(parts) == ntrainable
+                        r["local_trainable_elements"] = parts
                     r["local_shard_parameter_elements"] = counts
                     r["checks"].append(
                         "actual-classic-FSDP-root-and-two-"
@@ -346,7 +428,7 @@ def main(fixture=None):
                 finally:
                     local["in_training"] = False
                 assert len(local["reductions"]) - previous == (
-                    3 if self.accelerator.sync_gradients else 0
+                    (2 if frozen else 3) if self.accelerator.sync_gradients else 0
                 )
                 assert local["linear_types"] == (
                     {str(dtype)} if amp else {"torch.float32"}
@@ -438,6 +520,7 @@ def main(fixture=None):
             train_dataset=data,
             compute_loss_func=observed_loss,
             **({} if fixture is None else {"data_collator": fixture.collator()}),
+            **({} if not frozen else {"frozen_parameter_policy": fixture.policy(base)}),
         )
         acc = trainer.accelerator
         assert acc.native_amp == amp and (acc.scaler is not None) == half
@@ -481,12 +564,18 @@ def main(fixture=None):
             and acc.gradient_accumulation_steps == 1
         )
         assert torch.cuda.get_device_properties(0).gcnArchName == "gfx1013:xnack-"
+        if frozen:
+            r["frozen_helper_sha256"] = digest(
+                Path(__file__).with_name("bc250_fsdp_frozen.py")
+            )
+            r["frozen_policy_sha256"] = trainer.frozen_parameter_policy.sha256
         r.update(
             rank=acc.process_index,
             birth=birth,
             config=dict(
                 world=2,
                 parameters=nparams,
+                trainable_parameters=ntrainable,
                 records=28,
                 accumulation=2,
                 per_device_micro=2,
@@ -552,6 +641,10 @@ def main(fixture=None):
                     assert set(actual) == set(names)
                     if fixture is not None:
                         fixture.check(trainer.model)
+                    if frozen:
+                        fixture.check_frozen(
+                            trainer.model, frozen_initial, full_gradient_views=True
+                        )
                     if a.action == "seed":
                         with torch.no_grad():
                             for name, p in oracle.named_parameters():
@@ -645,7 +738,7 @@ def main(fixture=None):
                                     )
                             r.setdefault("gradient_errors", []).append(errors)
                         else:
-                            for name, p in oracle.named_parameters():
+                            for name, p in trainable(oracle).items():
                                 torch.testing.assert_close(
                                     local["preclip"][name], p.grad, atol=3e-6, rtol=5e-4
                                 )
@@ -654,20 +747,20 @@ def main(fixture=None):
                             + str(ts.global_step)
                         )
                         # Restore exact FP32 masters before CPU AdamW, not rounded working weights.
-                        for name, p in oracle.named_parameters():
+                        for name, p in trainable(oracle).items():
                             with torch.no_grad():
                                 p.copy_(actual[name].cpu())
                             p.grad = (
                                 local["preclip"][name] * local["clip"]["coefficient"]
                             )
-                if a.case == "late" and acc.process_index == 1:
+                if a.case in ["late", "frozen-late"] and acc.process_index == 1:
                     next(
                         p
                         for p in trainer.model.parameters()
                         if p.grad is not None and p.grad.numel()
                     ).grad.view(-1)[0] = float("nan")
                 assert all(
-                    p.numel() == 0 or p.grad is not None
+                    p.numel() == 0 or not p.requires_grad or p.grad is not None
                     for p in trainer.model.parameters()
                 )
 
@@ -696,7 +789,10 @@ def main(fixture=None):
                         actual = named(trainer.model)
                         if fixture is not None:
                             fixture.check(trainer.model)
-                        for name, p in oracle.named_parameters():
+                        if frozen:
+                            fixture.check_frozen(trainer.model, frozen_initial)
+                            assert set(fullopt["state"]) == set(trainable(oracle))
+                        for name, p in trainable(oracle).items():
                             torch.testing.assert_close(
                                 actual[name].cpu().double(),
                                 p.detach(),
@@ -724,11 +820,17 @@ def main(fixture=None):
                 state_elements = sum(
                     v["exp_avg"].numel() for v in trainer.raw_optimizer.state.values()
                 )
-                local_elements = sum(p.numel() for p in trainer.model.parameters())
+                local_elements = sum(
+                    p.numel() for p in trainer.model.parameters() if p.requires_grad
+                )
                 assert state_elements == local_elements
                 r["optimizer_shard_elements"] = state_elements
 
             def on_step_end(self, args, ts, control, **kw):
+                if frozen:
+                    assert trainer._frozen_gate_optimizer is trainer.raw_optimizer
+                    assert trainer._frozen_gate_calls == local["raw_updates"]
+                    r["frozen_gate_calls"] = trainer._frozen_gate_calls
                 if half:
                     assert trainer._fp16_gate_optimizer is trainer.raw_optimizer
                     assert getattr(trainer, "_fp16_gate_calls", 0) == local.get(
@@ -799,8 +901,24 @@ def main(fixture=None):
                     else None
                 )
             )
+        except ValueError as error:
+            if a.case != "frozen-policy" or "Frozen checkpoint policy" not in str(
+                error
+            ):
+                raise
+            assert local.get("raw_updates", 0) == 0 and not trainer.raw_optimizer.state
+            assert trainer.lr_scheduler.state_dict()["last_epoch"] == 0
+            r["checks"].extend(
+                [
+                    "both-live-ranks-refuse-changed-checkpoint-policy",
+                    "zero-AdamW-updates-and-unrestored-optimizer-scheduler",
+                ]
+            )
+            r.update(status="passed", raw_updates=0, refusal=str(error))
+            dist.barrier()
+            return
         except FloatingPointError:
-            if a.case not in ["late", "scale"]:
+            if a.case not in ["late", "scale"] and a.case not in refusals:
                 raise
             exact(
                 dict(
@@ -812,7 +930,8 @@ def main(fixture=None):
             )
             assert (
                 local.get("raw_updates", 0) == 0
-                and local.get("root_clip_calls", 0) == (1 if a.case == "late" else 0)
+                and local.get("root_clip_calls", 0)
+                == (1 if a.case in ["late", "frozen-late"] else 0)
                 and trainer.state.global_step == 0
             )
             r["checks"].extend(
@@ -832,6 +951,7 @@ def main(fixture=None):
             "bf16-control",
             "fp32",
             "bf16",
+            "frozen",
         ]
         assert trainer.state.global_step == (1 if one_step else 4) and local[
             "windows"
