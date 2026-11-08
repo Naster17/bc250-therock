@@ -61,12 +61,45 @@ def _bf16_compute_policy_matches(policy):
     )
 
 
+def fsdp_bf16_parameter_policy():
+    """BF16 working parameters/all-gathers; FP32 master shards and reductions."""
+    from torch.distributed.fsdp import MixedPrecision
+
+    return MixedPrecision(
+        param_dtype=torch.bfloat16,
+        reduce_dtype=torch.float32,
+        buffer_dtype=torch.float32,
+        keep_low_precision_grads=False,
+        cast_forward_inputs=False,
+        cast_root_forward_inputs=False,
+    )
+
+
+def _bf16_parameter_policy_matches(policy):
+    from torch.distributed.fsdp import MixedPrecision
+
+    return (
+        isinstance(policy, MixedPrecision)
+        and policy.param_dtype == torch.bfloat16
+        and policy.reduce_dtype == policy.buffer_dtype == torch.float32
+        and not policy.keep_low_precision_grads
+        and not policy.cast_forward_inputs
+        and not policy.cast_root_forward_inputs
+    )
+
+
+def _qualified_bf16_policy(policy):
+    return _bf16_compute_policy_matches(policy) or _bf16_parameter_policy_matches(
+        policy
+    )
+
+
 class BC250FSDPTrainer(Trainer):
     """Separate classic FULL_SHARD/use_orig_params FP32 or explicit BF16-compute path; DDP helper unchanged.
 
     Native Trainer loop, FSDP wrapping/backward/optimizer/checkpoints retained.
     Explicit SHARDED_STATE_DICT; independent-host checkpoint payloads must be
-    consolidated before restart. No FSDP2, FP16/scaler/low-precision parameter sharding/offload/compile,
+    consolidated before restart. No FSDP2, FP16/scaler/offload/compile,
     PEFT/frozen parameters or activation checkpointing qualification.
     """
 
@@ -100,11 +133,11 @@ class BC250FSDPTrainer(Trainer):
             )
         if args.fsdp_plugin_args is None:
             raise ValueError("Explicit classic FSDP configuration is required")
-        if args.bf16 and not _bf16_compute_policy_matches(
+        if args.bf16 and not _qualified_bf16_policy(
             args.fsdp_plugin_args.get("mixed_precision_policy")
         ):
             raise ValueError(
-                "BF16 requires explicit fsdp_bf16_compute_policy; default low-precision FSDP params are unqualified"
+                "BF16 requires an explicit qualified compute or parameter policy"
             )
         if any(
             not p.requires_grad or p.dtype != torch.float32
@@ -125,10 +158,7 @@ class BC250FSDPTrainer(Trainer):
             or plugin.sharding_strategy != ShardingStrategy.FULL_SHARD
             or plugin.cpu_offload.offload_params
             or (not args.bf16 and plugin.mixed_precision_policy is not None)
-            or (
-                args.bf16
-                and not _bf16_compute_policy_matches(plugin.mixed_precision_policy)
-            )
+            or (args.bf16 and not _qualified_bf16_policy(plugin.mixed_precision_policy))
             or plugin.activation_checkpointing
             or not plugin.sync_module_states
             or plugin.state_dict_type != StateDictType.SHARDED_STATE_DICT
