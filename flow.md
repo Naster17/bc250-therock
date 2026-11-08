@@ -9,6 +9,27 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **Priority review completed 2026-11-08 (documentation only).**
+  Reviewed the complete chronology and reconciled superseded “next” entries with
+  current inventory, manifest and component reports. New prioritized checklist:
+  [BC250_REMAINING_PLAN.md](../BC250_REMAINING_PLAN.md), ten important work packages
+  plus optional B07.13/N4/N2/N6/N7 expansion; these are not ten small patches or a
+  completion percentage. **Next execution: PLAN-01**, Docker-aware preflight and
+  board reservation for selected upcoming guardians; **then PLAN-02**, audit and
+  qualify ordinary-runtime rollout of the isolated B07.11 FP16 accumulation repair.
+  **D26 remains next model capability** within PLAN-03. Follow with frozen/PEFT+
+  activation-checkpointing admission, real capacity/matched performance, bounded
+  crash/stability triage, clean source reconstruction and coherent N8 release,
+  package/model compatibility and profile-driven optimization. Begin CPU-only
+  reconstruction inventory early; newly reproduced corruption outranks features.
+  Corrected stale B06.12 “next” row (already complete), old current-state heading
+  and distributed summary; K6 is complete, not a new kernel rewrite. Historical
+  evidence retained. No host access, GPU tests, native/source-code changes, prefix
+  updates or cleanup. D25 last qualified runtime/evidence unchanged; historical
+  Python CPU fault remains separate from fixed VM heap/D05 exit/D21 loading.
+  Host docs/memory snapshots still D25; synchronize the plan during the next
+  authorized host batch. No running jobs created by this review.
+
 - **D25 completed 2026-11-08: actual Trainer classic FSDP FP16/scaler.**
   Implementation/verifier `36a215d8c`; installed under `tools/distributed-d25`
   on BOTH hosts. [Report](docs/development/bc250_distributed_d25_results/README.md),
@@ -5242,7 +5263,11 @@ matrix backend is not. CPU fallbacks must be labeled.
 - SSH keys work. Doas credentials are transient session information; **never write
   passwords, tokens or raw credential-bearing prompts into memory/source/logs**.
 
-## Current state and paths
+## Historical state/path snapshot (superseded identities)
+
+This section retains older milestone identities. Use the resume cursor and
+workspace-manifest.json for current revisions, boot evidence and providers.
+Do not reinstall these older identities as a resume action.
 
 `WS` = `/home/nik/bc250work/rocm-10.2-gfx1013` on `nik@192.168.1.104`.
 Workspace root `/home/nik/Documents/Vibe/bc250stack`; TheRock root
@@ -5365,6 +5390,8 @@ index, training/model pins and old defects are in the inventory. Counts overlap.
 P0/P1/P2 milestones are completed **within their recorded scopes**. Remaining
 work is below; do not revive their old unchecked checklist lines as new tasks.
 Work through one measurable subtask at a time and keep these IDs stable.
+The current priority order is [the remaining-work checklist](../BC250_REMAINING_PLAN.md);
+this older category table is not the execution cursor.
 
 | State | ID                   | Work and acceptance boundary                                                                                                                                                                                                                                                                                                                                                                        |
 | ----- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -5438,10 +5465,10 @@ Work through one measurable subtask at a time and keep these IDs stable.
 | [x]   | B06.9 | Pinned ORT1.31 source/dependency/budget audit; real C++20 public wrapper repair in source/private overlay,168 C ABI symbols link, two CPU header regressions and38 guarded checks/six guards/16 GPU async graph evaluations. ORT provider itself unbuilt. |
 | [x]   | B06.10 | Matching isolated ORT1.31 core/Python/MIGraphX provider built with narrow strict-compiler repairs;118 checks/seven guards/36 GPU evaluations and18 actual GPU profiles pass. Installed defaults unchanged; package identity/relocation remain next. |
 | [x]   | B06.11 | Relocatable ORT package installed via explicit bc250-ort; package identity/RUNPATH normalization, two build-free extracts, live recovery/identity and repaired caller context;174 checks/48 GPU evaluations. Defaults/.105 preserved. |
-| [ ]   | **B06.12 — next** | Bounded modern Torch exporter→public ORT GPU integration with independent CPU/eager-GPU references, then practical B06 gap review. Preserve defaults/.105; no universal model/dtype/graph-autograd or speed claim. |
+| [x]   | B06.12 | Modern Torch exporter→public ORT GPU integration completed 2026-10-29:112 checks/24 GPU evaluations/12 GPU-only model profiles; practical gap review found no mandatory defect. Optional dynamic-shape/dtype/operator expansion remains separate. |
 | [ ]   | N3                   | Torch functional/performance expansion: larger meaningful training sequences/batches, full-model AMP, compiled/eager gradient equivalence, optimizer/checkpoint resume, quantization/QLoRA applicability, feasible scalar tiled attention and hipDNN mixed/fused graphs. Keep mathematical SDPA working; unsupported matrix backends stay off.                                                      |
 | [ ]   | N4                   | Trusted read-only telemetry, RDC applicability, debugger consumers/suites, additional tracing and physical counter mapping. A09 CPU-first ordering repaired with bounded both-order traces; physical telemetry/clock/counter and advanced profiler work remain. Dangerous debugger tests require recovery first.                                                                                                                                                   |
-| [ ]   | N5                   | Build native RCCL/rocSHMEM/MPI local readiness; feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update, D02–D05 cross-board RCCL/DDP/FSDP, D06 matched-batch DDP accumulation, D07 DDP AMP/D08 FSDP AMP/scaler/shards and D09 public consumer environments/tiny Transformers DDP pass within bounds; these fixtures remain slower than one host. Larger-model capacity, arbitrary mixed-precision/FSDP/model combinations, elastic recovery and other transports remain unqualified.                                                                                                  |
+| [ ]   | N5                   | Extend beyond qualified native RCCL/Gloo/DDP/FSDP; optional rocSHMEM/MPI and feasible generic/software transports with GDA/SDMA/XGMI/P2P claims off until demonstrated. Single-GPU readiness is not full collective coverage. `.105` D01 update, D02–D05 cross-board RCCL/DDP/FSDP, D06 matched-batch DDP accumulation, D07 DDP AMP/D08 FSDP AMP/scaler/shards and D09 public consumer environments/tiny Transformers DDP pass within bounds; D10–D25 add bounded native consumer/Trainer AMP, clipping, finite/overflow policy and exact restart. L01 measured1.231x warm-update throughput in one real DDP LoRA fixture; earlier synthetic fixtures remain slower than one host. Larger-model capacity, arbitrary FSDP/model/frozen combinations, elastic recovery and other transports remain unqualified.                                                                                                  |
 | [ ]   | N6                   | Guarded kernel/runtime investigations: experimental VM-heap repair, SDMA, reset/fault recovery, XNACK/wave64 where supported, advanced profiling. Preserve known boot/stack defaults; isolated opt-in gates and independent recovery required.                                                                                                                                                      |
 | [ ]   | N7                   | Remaining optional feasibility: host media/HIP interoperability, actual media rings, hipThreads/Fortran execution, hipify-clang, hipFile registration/concurrency/direct-storage applicability, rocRoller/emulation and other pinned projects. Explicit unsupported/not-applicable decisions where hardware/API prevents a path.                                                                    |
 | [ ]   | N8                   | Final integration/release: source reconstruction, independent relocatable packaging, licenses/tools/plugins/kernel packs, selected Torch regressions, agreed bounded stability/training/memory gates, kernel-log review, recovery verification and truthful operation matrix. Longer runs only when relevant/user-agreed.                                                                           |

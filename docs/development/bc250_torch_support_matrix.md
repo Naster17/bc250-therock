@@ -1,5 +1,12 @@
 # Torch / ROCm gfx1013 support matrix — 2026-10-21
 
+> **Priority/status notice (2026-11-08):** the tables below retain an older
+> capability baseline and subsequent dated evidence. Use [flow.md](../../flow.md)
+> and [the current prioritized checklist](../../../BC250_REMAINING_PLAN.md) for
+> execution order. B06.12, K6 and D01–D25 are complete within their stated scopes;
+> old “absent/next/.105 unchanged” rows are not current deployment instructions.
+
+
 This is the current capability audit and work queue requested before N2.7. It
 extends the [inventory](bc250_memory_inventory.md); it does not restart completed
 N1/N2 or imply that every Torch operation/shape/type was tested. Runtime evidence,

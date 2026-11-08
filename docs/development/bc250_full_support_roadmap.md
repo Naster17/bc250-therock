@@ -4,7 +4,8 @@
 > Read [flow.md](../../flow.md) and the
 > [current memory inventory](bc250_memory_inventory.md) before acting on its
 > active-release claims or unchecked tasks. Newer qualified scopes supersede
-> older unsupported/pending rows; retain the original evidence.
+> older unsupported/pending rows; retain the original evidence. The current
+> priority checklist is [BC250_REMAINING_PLAN.md](../../../BC250_REMAINING_PLAN.md).
 
 Last reviewed: **2026-10-13**. This is a manual progress snapshot, not a live
 dashboard. Host logs and committed source revisions are the authoritative

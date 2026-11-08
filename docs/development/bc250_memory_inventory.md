@@ -5,6 +5,19 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## Remaining-work priority review (2026-11-08)
+
+[Current prioritized checklist](../../../BC250_REMAINING_PLAN.md) reconciles the
+full flow chronology through D25. Ten important work packages, plus optional
+expansion; not a completion percentage. Next PLAN-01 reserves boards and checks
+selected guardians, then PLAN-02 qualifies ordinary-runtime MIOpen FP16 precision
+repair. D26 remains next model capability. Frozen/PEFT FSDP, activation
+checkpointing, real capacity/performance, bounded crash triage, complete source
+reconstruction and a coherent release remain important. B06.12 and K6 are done;
+B07.13 deployment is still pending. Planning only: no new runtime/hardware proof,
+no host changes, old fault distinctions and safe defaults preserved. Host copies
+remain D25 until the next authorized sync.
+
 ## Evidence, precedence and audit coverage
 
 Current host manifests, exact source snapshots, committed patches and executed
