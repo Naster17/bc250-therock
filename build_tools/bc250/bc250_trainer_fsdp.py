@@ -94,12 +94,30 @@ def _qualified_bf16_policy(policy):
     )
 
 
+def fsdp_fp16_parameter_policy():
+    """FP16 working parameters/all-gathers; FP32 masters/reductions and native scaler."""
+    from dataclasses import replace
+
+    return replace(fsdp_bf16_parameter_policy(), param_dtype=torch.float16)
+
+
+def _fp16_parameter_policy_matches(policy):
+    from dataclasses import replace
+    from torch.distributed.fsdp import MixedPrecision
+
+    return (
+        isinstance(policy, MixedPrecision)
+        and policy.param_dtype == torch.float16
+        and _bf16_parameter_policy_matches(replace(policy, param_dtype=torch.bfloat16))
+    )
+
+
 class BC250FSDPTrainer(Trainer):
-    """Separate classic FULL_SHARD/use_orig_params FP32 or explicit BF16-compute path; DDP helper unchanged.
+    """Source-pinned classic FULL_SHARD/use_orig_params with explicit AMP policy.
 
     Native Trainer loop, FSDP wrapping/backward/optimizer/checkpoints retained.
     Explicit SHARDED_STATE_DICT; independent-host checkpoint payloads must be
-    consolidated before restart. No FSDP2, FP16/scaler/offload/compile,
+    consolidated before restart. Native shard-aware FP16 scaling; no FSDP2/offload/compile,
     PEFT/frozen parameters or activation checkpointing qualification.
     """
 
@@ -122,17 +140,36 @@ class BC250FSDPTrainer(Trainer):
                 )
         args = self.args
         limit = _clip_limit(args.max_grad_norm)
-        if (
-            args.fp16
-            or args.gradient_checkpointing
-            or args.torch_compile
-            or args.deepspeed
-        ):
+        if args.gradient_checkpointing or args.torch_compile or args.deepspeed:
             raise ValueError(
-                "BC250FSDPTrainer requires FP32 or explicit BF16 compute; no FP16/checkpointing/compile/DeepSpeed"
+                "BC250FSDPTrainer requires explicit qualified precision; no checkpointing/compile/DeepSpeed"
             )
         if args.fsdp_plugin_args is None:
             raise ValueError("Explicit classic FSDP configuration is required")
+        if args.fp16:
+            if (
+                args.bf16
+                or limit <= 0
+                or not _fp16_parameter_policy_matches(
+                    args.fsdp_plugin_args.get("mixed_precision_policy")
+                )
+            ):
+                raise ValueError(
+                    "FP16 requires explicit fsdp_fp16_parameter_policy and positive global clipping"
+                )
+            for name, sha in {
+                "optimizer.py": "a79a9f08e322f03023bf1e9e102ca9a387a3de9be643f53f6e09ab10029ce216",
+                "utils/modeling.py": "421a88fba25d6a50791fb54ea52e7eefd3beb678d1a131055176c09a87e820d6",
+            }.items():
+                if (
+                    hashlib.sha256(
+                        (Path(accelerate.__file__).parent / name).read_bytes()
+                    ).hexdigest()
+                    != sha
+                ):
+                    raise RuntimeError(
+                        "FP16 scaler/optimizer source requires requalification: " + name
+                    )
         if args.bf16 and not _qualified_bf16_policy(
             args.fsdp_plugin_args.get("mixed_precision_policy")
         ):
@@ -157,8 +194,16 @@ class BC250FSDPTrainer(Trainer):
             or not plugin.use_orig_params
             or plugin.sharding_strategy != ShardingStrategy.FULL_SHARD
             or plugin.cpu_offload.offload_params
-            or (not args.bf16 and plugin.mixed_precision_policy is not None)
+            or (
+                not args.bf16
+                and not args.fp16
+                and plugin.mixed_precision_policy is not None
+            )
             or (args.bf16 and not _qualified_bf16_policy(plugin.mixed_precision_policy))
+            or (
+                args.fp16
+                and not _fp16_parameter_policy_matches(plugin.mixed_precision_policy)
+            )
             or plugin.activation_checkpointing
             or not plugin.sync_module_states
             or plugin.state_dict_type != StateDictType.SHARDED_STATE_DICT
@@ -172,6 +217,19 @@ class BC250FSDPTrainer(Trainer):
             or acc.scaler is not None
         ):
             raise ValueError("BF16 compute requires native autocast without a scaler")
+        if args.fp16:
+            from torch.distributed.fsdp.sharded_grad_scaler import ShardedGradScaler
+
+            if (
+                not acc.native_amp
+                or acc.mixed_precision != "fp16"
+                or type(acc.scaler) is not ShardedGradScaler
+                or not acc.scaler.is_enabled()
+                or acc.scaler.process_group not in (None, torch.distributed.group.WORLD)
+            ):
+                raise ValueError(
+                    "FP16 requires enabled native world-group ShardedGradScaler"
+                )
         # Trainer already owns the full/short-window denominator and sync schedule.
         acc.gradient_accumulation_steps = 1
         if limit > 0:
@@ -189,6 +247,10 @@ class BC250FSDPTrainer(Trainer):
                     raise ValueError(
                         "Only the complete FSDP root L2 clipping call is qualified"
                     )
+                if args.fp16:
+                    from bc250_fsdp_fp16 import clip
+
+                    return clip(self, parameters, max_norm, norm_type)
                 bad = torch.zeros((), device=acc.device, dtype=torch.int32)
                 for p in parameters:
                     if p.numel() == 0:
@@ -221,6 +283,14 @@ class BC250FSDPTrainer(Trainer):
 
             # Per-instance public Accelerator method; no package/Trainer-loop fork.
             acc.clip_grad_norm_ = checked_clip
+
+    def create_scheduler(self, num_training_steps, optimizer=None):
+        scheduler = super().create_scheduler(num_training_steps, optimizer=optimizer)
+        if self.args.fp16:
+            from bc250_fsdp_fp16 import install_optimizer_gate
+
+            install_optimizer_gate(self)
+        return scheduler
 
     def _load_optimizer_and_scheduler(self, checkpoint):
         if checkpoint is None:
