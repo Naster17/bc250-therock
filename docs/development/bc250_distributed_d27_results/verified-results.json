@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "groups": 97,
+  "final_guards": 14,
+  "retained_failed_probe_guards": 2,
+  "intermediate_passed_guards": 2,
+  "all_guards_acknowledged": 18,
+  "CPU_contract_patterns": 22,
+  "CPU_contract_observations": 294,
+  "parameters": 24352,
+  "frozen_parameters": 21280,
+  "trainable_parameters": 3072,
+  "parameter_shards": [
+    12176,
+    12176
+  ],
+  "trainable_and_AdamW_shards": [
+    1504,
+    1568
+  ],
+  "frozen_parameters_exactly_preserved": true,
+  "fresh_all_state_replay_exact": true,
+  "refusals": [
+    "rank1 missing trainable gradient",
+    "rank1 injected frozen gradient",
+    "rank1 post-clip NaN",
+    "rank1-only private checkpoint-policy corruption"
+  ],
+  "checkpoint_payload_bytes": 469453,
+  "checkpoint_policy_sha256": "8bb58c1bbeaae860b780ce76b5ad67068b2ed8242e46d4ae74583ea4445e46b4",
+  "boot_ids": [
+    "afcc7be4-f746-439d-bc88-3690a87f2d21",
+    "570437ed-991b-416e-add1-66b1b03c16f4"
+  ],
+  "native_runtime_changed": false,
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d27/104-evidence-r3.tar.gz",
+      "bytes": 694604,
+      "sha256": "fec317a80cac76bb74f99b65142e18fa3a605d15825fc15ffac3d631c668527e"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d27/105-evidence-r3.tar.gz",
+      "bytes": 607645,
+      "sha256": "3690917d572464734d73bc2cb57f90358218ebc2039d90d060256c4be1283767"
+    }
+  ],
+  "next": "PLAN-04 / D28 planned: inspect pinned PEFT package and qualify actual PEFT LoRA FP32 FSDP before mixed-precision or activation-checkpointing admission"
+}
