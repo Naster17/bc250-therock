@@ -59,6 +59,7 @@ def main():
     global ROOT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--revision", required=True)
+    parser.add_argument("--source-record", type=Path, required=True)
     args = parser.parse_args()
     assert re.fullmatch(r"r[1-9][0-9]*", args.revision)
     ROOT = BASE / ("candidates/miopen-plan02-" + args.revision)
@@ -68,15 +69,11 @@ def main():
         ROOT.mkdir(parents=True)
         old = BASE / "current/rocm/lib/libMIOpen.so.1.0"
         original_sha = sha(old)
-        source = Path(
-            json.loads(
-                (WS / "tmp/ck-plugin-b0711/native-fix-r2/final.json").read_text()
-            )["library"]
-        )
-        assert (
-            sha(source)
-            == "797335e2b71368205095d53afb3e1f83e0fd67f76f9f257e00a3f2ef4ac6ba9e"
-        )
+        source_record = json.loads(args.source_record.read_text())
+        assert source_record["status"] == "built-isolated-cache-version-not-qualified"
+        assert source_record["cache_key_version"] == 1
+        source = Path(source_record["library"])
+        assert sha(source) == source_record["library_sha256"]
         lib = ROOT / "native/libMIOpen.so.1.0"
         lib.parent.mkdir()
         shutil.copy2(source, lib)
@@ -110,10 +107,14 @@ print(subprocess.check_output(['patchelf','--version'],text=True))
         after = elf(lib)
         original = elf(old)
         assert before == after
-        assert (
-            original["dependencies"] == after["dependencies"]
-            and original["exports"] == after["exports"]
-        )
+        assert original["dependencies"] == after["dependencies"]
+        # Recompiling a HIP-header TU renames its compiler-generated content ID.
+        # No public C/C++ export may disappear or change as a result.
+        public = lambda names: {
+            n for n in names if not re.fullmatch(r"__hip_cuid_[0-9a-f]+", n)
+        }
+        assert public(original["exports"]) == public(after["exports"])
+
         write(
             ROOT / "elf.json",
             dict(
@@ -153,7 +154,8 @@ print(subprocess.check_output(['patchelf','--version'],text=True))
             os.link((BASE / "current/.runtime.lock").resolve(), dest / ".runtime.lock")
             value = json.loads((live / "runtime.json").read_text())
             value["miopen_precision_repair"] = dict(
-                source_revision="96e5a7dfc43356b1c9789a84ae9d79d41bbb0ad7",
+                source_revision=source_record["source_revision"],
+                cache_key_version=source_record["cache_key_version"],
                 library_sha256=sha(lib),
                 scope="gfx1013 HIP-direct forward FP32 accumulation",
                 qualification="PLAN-02",
@@ -276,6 +278,8 @@ print(subprocess.check_output(['patchelf','--version'],text=True))
             dict(
                 status="staged-inactive-not-qualified",
                 library=str(lib),
+                cache_key_version=source_record["cache_key_version"],
+                source_record=source_record,
                 library_sha256=sha(lib),
                 profiles=profiles,
                 registries={str(p): sha(p) for p in registries.iterdir()},

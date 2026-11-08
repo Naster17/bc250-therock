@@ -19,6 +19,7 @@ def main():
     p.add_argument("--attempt", required=True)
     p.add_argument("--cohort-root", type=Path, required=True)
     p.add_argument("--public", action="store_true")
+    p.add_argument("--native-only", action="store_true")
     a = p.parse_args()
     root = a.cohort_root
     os.environ["PATH"] = str(root / "test-tools") + ":" + os.environ["PATH"]
@@ -77,6 +78,8 @@ def main():
                     30,
                 ),
             ]:
+                if a.native_only and route not in {"direct", "backward"}:
+                    continue
                 label = "plan02-cohort-" + a.attempt + "-" + profile + "-" + route
                 scratch = out / (profile + "-" + route)
                 scratch.mkdir()
@@ -92,10 +95,19 @@ def main():
                             "bc250_ort.py": "bc250-ort",
                         }[launcher]
                     )
+                profile_args = ["--runtime-profile", profile]
+                if a.public and os.uname().nodename == "bc500":
+                    assert a.native_only, "Target has no optional SDK installation"
+                    if profile == "daily":
+                        # The preserved deployment launcher predates profile CLI.
+                        profile_args = []
+                    else:
+                        selected = (
+                            "/opt/bc250-stack/tools/distributed-d09/bc250_torch.py"
+                        )
                 cmd = [
                     selected,
-                    "--runtime-profile",
-                    profile,
+                    *profile_args,
                     "--shm-size",
                     "256m",
                     "--env",

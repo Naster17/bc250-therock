@@ -9,10 +9,7 @@ import signal
 import subprocess
 import time
 
-from bc250_torch import runtime_lock
 from deploy_torch_a04_on_host import atomic_json, sha
-from package_rccl_b038_on_host import PROFILE
-from qualify_rccl_b037_on_host import GATES
 from qualify_training_n33_on_host import WS
 from board_preflight import preflight, reserved
 from docker_preflight import docker_containers
@@ -116,6 +113,12 @@ def gate(label, command, count, manifest):
 
 
 def main():
+    # These legacy batch dependencies are not required by the reusable gate.
+    # Deployment hosts intentionally do not contain the historical build helpers.
+    from bc250_torch import runtime_lock
+    from package_rccl_b038_on_host import PROFILE
+    from qualify_rccl_b037_on_host import GATES
+
     preflight("rccl-b038-qualification")
     logs = WS / "logs/rccl-b038-qualification-r1"
     logs.mkdir()

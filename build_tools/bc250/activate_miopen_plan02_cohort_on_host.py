@@ -72,6 +72,7 @@ def main():
     p.add_argument("--action", choices=["activate", "rollback"], required=True)
     p.add_argument("--label", required=True)
     p.add_argument("--qualification", type=Path)
+    p.add_argument("--cache-qualification", type=Path)
     p.add_argument("--from-transaction", type=Path)
     a = p.parse_args()
     assert re.fullmatch(r"[a-z0-9-]+", a.label)
@@ -86,10 +87,23 @@ def main():
         == stage["library_sha256"]
     )
     if a.action == "activate":
+        assert (
+            stage.get("cache_key_version") == 1
+        ), "Cache-unsafe cohorts must not be activated"
         q = json.loads(a.qualification.read_text())
         assert q["status"] == "passed"
         assert len(q["gates"]) >= (10 if os.uname().nodename == "bc250" else 4)
         assert q["stage"]["library_sha256"] == stage["library_sha256"]
+        assert a.cache_qualification, "Retained-cache qualification required"
+        cache = json.loads(a.cache_qualification.read_text())
+        assert cache["status"] == "passed" and cache["cache_key_version"] == 1
+        assert cache["library_sha256"] == stage["library_sha256"]
+        assert len(cache["gates"]) >= 4
+        assert set(cache["profiles"]) == {"daily", "rccl-single"}
+        for result in cache["profiles"].values():
+            assert result["warm_logical_records_unchanged"]
+            assert result["warm_binary_saves"] == 0
+            assert result["versioned_rows"] >= 6
         for group in ["tools", "registries"]:
             for name, digest in stage.get(group, {}).items():
                 assert sha(Path(name)) == digest
@@ -105,7 +119,11 @@ def main():
     )
     record = json.loads(D01.read_text())
     # The old and new current profiles must use the SAME stable lock inode.
-    oldlock = BASE / "current/.runtime.lock"
+    oldlock = (
+        BASE / "current/.runtime.lock"
+        if os.uname().nodename == "bc250"
+        else BASE / "migration-control/.runtime.lock"
+    )
     newlock = root / "profiles/daily/.runtime.lock"
     assert (oldlock.stat().st_dev, oldlock.stat().st_ino) == (
         newlock.stat().st_dev,
