@@ -5,6 +5,17 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## PLAN-01 reservation update (2026-11-08)
+
+Selected upcoming MIOpen/CK modules migrated to stack-only board_preflight and
+cooperative board reservation/shared runtime lock. Default Docker admission and
+post-test state now checked. Implementation2e24474d6; additive tools/plan01 both
+hosts. Four CPU lock/admission controls per host and62local tests pass; no GPU or
+new recovery reboot qualification. [Evidence](bc250_plan01_results/README.md).
+Native providers/boot/registry unchanged. Next PLAN-02 identity/precision repair
+qualification; use new overlay ahead of old helpers. Other old guardians and
+custom daemons are not implicitly migrated.
+
 ## Remaining-work priority review (2026-11-08)
 
 [Current prioritized checklist](../../../BC250_REMAINING_PLAN.md) reconciles the

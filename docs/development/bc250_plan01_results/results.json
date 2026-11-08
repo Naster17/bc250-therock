@@ -1,0 +1,56 @@
+{
+  "104": {
+    "status": "passed",
+    "checks": [
+      "idle Docker/Podman/GPU/memory/watchdog preflight",
+      "second cooperating reservation refused",
+      "prefix writer excluded by shared lock",
+      "exception releases both locks"
+    ],
+    "preflight": {
+      "attempt": "plan01-held",
+      "memory_available_bytes": 15428132864,
+      "gpu_clients": [
+        {
+          "pid": 3085,
+          "uid": 0,
+          "comm": "cyan-skillfish-"
+        }
+      ],
+      "docker_containers": [],
+      "podman_containers": [],
+      "watchdog": "active"
+    },
+    "kernel_log_unchanged": true,
+    "registry_unchanged": true,
+    "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+    "kernel": "7.1.5-bc250rocm-r2"
+  },
+  "105": {
+    "status": "passed",
+    "checks": [
+      "idle Docker/Podman/GPU/memory/watchdog preflight",
+      "second cooperating reservation refused",
+      "prefix writer excluded by shared lock",
+      "exception releases both locks"
+    ],
+    "preflight": {
+      "attempt": "plan01-held",
+      "memory_available_bytes": 14895423488,
+      "gpu_clients": [
+        {
+          "pid": 3276,
+          "uid": 0,
+          "comm": "cyan-skillfish-"
+        }
+      ],
+      "docker_containers": [],
+      "podman_containers": [],
+      "watchdog": "active"
+    },
+    "kernel_log_unchanged": true,
+    "registry_unchanged": true,
+    "boot_id": "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d",
+    "kernel": "7.2.10-bc250rocm-r3"
+  }
+}

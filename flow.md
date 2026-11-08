@@ -9,6 +9,25 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-01 completed 2026-11-08:** implementation `2e24474d6`, selected upcoming
+  B07.11/B07.12 modules use new stack-only board_preflight and shared GPU gate
+  cooperative EX board reservation + SH runtime lock. Default-local Docker,
+  Podman/GPU fds/memory/watchdog checked; post-test Docker unknown/busy fails.
+  Additive `tools/plan01` on BOTH hosts; preserve old helpers. PLAN-02 must put
+  this overlay before legacy helpers in PYTHONPATH. Four real CPU controls/node
+  pass: idle, competing reservation refusal, prefix EX writer exclusion, exception
+  releases locks. 62 local tests pass, Black/critical Ruff+F401/diff pass.
+  [Evidence](docs/development/bc250_plan01_results/README.md). No GPU numerical
+  execution/reboot or new watchdog-reset claim; inherited600s recovery/540s child/
+  15s termination/ACK procedure retained. D25 recovery evidence not rerun.
+  Boot IDs afcc7be4(.104r2)/8c396bd1(.105r3), kernel logs and registries unchanged.
+  No native prefix/install/build/app inspection/foreign stop; boards idle/no jobs
+  or armed guards. Old unused guardians/custom daemons/uncooperating workloads
+  remain outside cooperative reservation guarantees. Plan/docs snapshots synced
+  at batch end. **Next PLAN-02:** inspect current MIOpen identities and retained
+  repaired artifact, reproduce original FP16 precision bound and qualify minimal
+  repair/compatibility/rollback before any ordinary native rollout. D26 follows.
+
 - **Priority review completed 2026-11-08 (documentation only).**
   Reviewed the complete chronology and reconciled superseded “next” entries with
   current inventory, manifest and component reports. New prioritized checklist:
