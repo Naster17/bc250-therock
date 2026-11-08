@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "groups": 232,
+  "guards": 18,
+  "all_guards_acknowledged": true,
+  "CPU_contract_patterns": 15,
+  "CPU_contract_observations": 256,
+  "parameters": 21280,
+  "parameter_and_AdamW_elements_per_rank": 10640,
+  "target_counts": [
+    49,
+    57,
+    57,
+    21
+  ],
+  "gradient_errors": {
+    "bf16": {
+      "CPU_AMP": 0.0065852255390969035,
+      "CPU_FP64": 0.0066042648873130645
+    },
+    "fp16": {
+      "CPU_AMP": 0.0008251510195040309,
+      "CPU_FP64": 0.0009179057182066197
+    },
+    "overflow": {
+      "CPU_AMP": 0.0008251510195040309,
+      "CPU_FP64": 0.0008521218574056901
+    }
+  },
+  "payload_bytes": {
+    "fp32-seed": 653339,
+    "bf16-seed": 653339,
+    "fp16-seed": 653339,
+    "overflow-seed": 653347
+  },
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d26/104-evidence-r2.tar.gz",
+      "sha256": "61aed24e5000b4b5be3d98d69a5ed43369a5f4146e931d96bbdcb8b4c4553037",
+      "bytes": 672202
+    },
+    {
+      "path": "kernel/artifacts/distributed-d26/105-evidence-r2.tar.gz",
+      "sha256": "757620d5fee9ea29a49f97a2ad9f174371e43406b3b351443d918a0ca55845f1",
+      "bytes": 568511
+    }
+  ],
+  "boots": [
+    "afcc7be4-f746-439d-bc88-3690a87f2d21",
+    "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d"
+  ],
+  "native_runtime_changed": false,
+  "precision_policies": [
+    "FP32",
+    "BF16 working parameters",
+    "FP16 working parameters/native ShardedGradScaler"
+  ],
+  "next": "PLAN-04: explicit frozen/PEFT classic FSDP admission, then activation-checkpointing combinations; retain refusal until bounded proof"
+}

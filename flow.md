@@ -9,6 +9,61 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-03 / D26 completed 2026-11-08:** implementation/verifier `8e04668d7`.
+  [Report](docs/development/bc250_distributed_d26_results/README.md),
+  [verified results](docs/development/bc250_distributed_d26_results/verified-results.json).
+  Additive BOTH-host tools/distributed-d26, shared D25 test harness parameterized
+  for owned GPT2; D25 installed tools and BC250FSDPTrainer policy helper preserved.
+  No production native defect reproduced or new kernel/default claimed. Actual
+  eager GPT2/tied wte+lm_head/21280 unique params/root+2GPT2Blocks/world2/RCCL/
+  FULL_SHARD/use_orig_params/alltrainable FP32 masters: FP32, BF16working params
+  and FP16working params/native ShardedGradScaler pass. Each rank owns10640
+  parameters AND AdamW elements, tied aliases SAME Parameter across wrapping,
+  gradients/updates/restart; finite seed18/replay9 checks, overflow15/7.
+  D16 caller-owned CausalLabelCollator+shiftedCE/global denominators49/57/57/21
+  vs raw51/60/59/23; localzero-target actual GPUmicro passes. Owned28records,
+  rightpad/promptmasks/dropout0/eager/cacheFalse/workers0/sequential/micro2/accum2,
+  global8/8/8/final4. CPUFP64 ALLgradient/loss +roundedCPUAMP localaccum refs pass
+  originalD15/D25 bounds; maxrelative BF16.006585226/.006604265, FP16.000825151/
+  .000917906. CPU rootnorm/ALLclippedgrad/ALLAdamWparams+moments+counters pass
+  D21/D22 gates. Conv1D+head/workingparamallgathers and FP32reduce/master/syncedgrad
+  observed. BERTFP32 default harness control passes (new tools only).
+  FP16stress128/growth2 finiteends512; rank1-owned Inf AFTERreducewindow3 gives
+  flags[False,True], BOTHnative AdamW/scheduler skips/EXACT unchangedparams+moments/
+  scale256→128, window4finiteupdate3. Native defaults65536/2000 unchanged.
+  CP2 +offline DCP union6files653339B each finitepolicy/653347Boverflow on BOTH
+  filesystems; original local hashes unchanged. Fresh constructor1773/scaler8/
+  newUUID/startticks/containers restore ALLparams/AdamW/scheduler/scaler256/fourRNG
+  EXACT; windows3/4 ALLloss/grads/clip/update/state/RNG/rows/counts/digests replay
+  EXACT for all three policies AND overflow. Native train_loss remains current-
+  process statistic. No partialwindow/stochastic/elastic/cross-policy proof.
+  232GPUgroups/18ACKguards/15CPUcontractpatterns256observations/62localtests,
+  Black/criticalRuff+F401/diff pass. No failed GPUphase. Initial archive verifier
+  overexpected >=8 alias checks in overflowreplay; exact7 follows skip callbacks.
+  Corrected exact18/15/9/7 bookkeeping; numerical results unchanged/no GPUrerun.
+  Initial verifier/failurelog/sourceentry variants/r1archives preserved; r2metadata
+  exports assert same handoffbytes and include finalverifier. No fullupstreamCI.
+  Exact commands/PIDs/CIDs/ACK/kernel+registry records in
+  evidence/distributed-d26-r1/{fp32,bf16,fp16,overflow}-{seed,resume}, bert-control-seed;
+  seeds-sequence.json/resumes-sequence.json/controllerlogs. Firstseed2733/3761,
+  seeds3398/4659,resumes5066/7063,finalexports7095/10554 exit0. Nativecheckpoint/
+  reference tensors retained onhosts; local kernel/artifacts/distributed-d26 has
+  both raw exports/fourunions/metadata/source overlay and initialverifierfailure.
+  Final .104 r2archive672202B SHA61aed24e5000b4b5be3d98d69a5ed43369a5f4146e931d96bbdcb8b4c4553037;
+  .105568511B SHA757620d5fee9ea29a49f97a2ad9f174371e43406b3b351443d918a0ca55845f1.
+  PLAN-01 reservation+SHlock/4CPU/10GiB+12GiB/512PIDs/256MiBshm/600s/460s retained.
+  No app access/foreignstop/nativebuild/prefixchange/reboot/download, entryboots
+  afcc7be4(.104r2)/8c396bd1(.105r3) unchanged. PLAN-02 MIOpen381eac05/nativea524/
+  D09/RCCL/images/packages/registries/defaults/fallbacks preserved. Kernel logs
+  unchanged; finalidlepreflight/no jobs/containers/armedguards. Docs/memory snapshot
+  synchronized BOTH hosts. Historical PythonCPU fault separatefixedVMheap/D05/D21.
+  No speed/capacity/convergence/universal causal-model claim. SDPA/RoPE/GQA/
+  generation/packing/otherarchitectures/FSDP2/offload/compile remain separate.
+  **NEXT PLAN-04 / D27 (planned):** inspect frozen/missing-gradient/optimizer
+  guards; design an explicit bounded FP32 frozen-base/adapter FSDP policy and
+  owned CPU ALL-trainable-gradients/AdamW/exactrestart fixture. Keep existing
+  frozen-parameter refusal until qualification. Activation checkpointing follows.
+
 - **PLAN-02 completed 2026-11-08 — ordinary MIOpen repair active on BOTH hosts.**
   Implementation `72c4276ad`; solver/cache source `e1d8d1ff920` on B07.11 repair
   `96e5a7dfc43`. [Report](docs/development/bc250_plan02_results/README.md),
