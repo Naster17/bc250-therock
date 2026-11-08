@@ -9,62 +9,69 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **D25 completed 2026-11-08: actual Trainer classic-FSDP FP16/scaler.**
-  Implementation/verifier `36a215d8c`; BOTH `tools/distributed-d25`.
-  [Report](docs/development/bc250_distributed_d25_results/README.md),
+- **D25 completed 2026-11-08: actual Trainer classic FSDP FP16/scaler.**
+  Implementation/verifier `36a215d8c`; installed under `tools/distributed-d25`
+  on BOTH hosts. [Report](docs/development/bc250_distributed_d25_results/README.md),
   [usage](../BC250_DISTRIBUTED_GUIDE.md#trainer-fsdp-fp16-working-parameters-and-scaling-d25).
-  New explicit fsdp_fp16_parameter_policy: FP16 working params/all-gathers,
-  FP32 masters/syncedgrads/reductions/buffers/AdamW; positiveglobalL2clip,
-  enablednativeworldShardedGradScaler. TrainableincomingFP32, oldF32/BF16/staged
-  helpers/frozen/package guards retained. Additional Accelerateoptimizer/modeling
-  source pins. Perinstance public unscale ONCE then rootFSDPclip iffinite; native
-  scaler synchronizesoverflow/skip/backoff, nativeTrainerdoesnotscheduleskips.
-  ActualAdamWprehook rechecksgradient/scaler beforeupdate. No private scalerflag
-  manipulation/globalpackagepatch/Trainerloopfork/nativebuild/prefix mutation.
-  OwnedBertMLM22561/eager/dropout0/root+2BertLayers/world2/RCCL/fullshard/original
-  params/workers0/sequential/micro2/accum2/unequalMLM/rightpad/global8/8/8/4:
-  roundedCPUFP16 scaledlocalaccum+CPUFP64global loss/ALLgrad atD15bounds unchanged,
-  maxrelative .001115321/.000713187. Nativeglobalnorm/ALLclippedgrads/CPUdouble
-  ALLAdamWparams+moments+counters atD21/D22bounds pass. Master/AdamWelems11284/
-  11277. NativeFP16gathers/FP32reductions observed. No speed/peakRAM/largefit proof.
-  Stressinit128/growth2:4finiteupdates endscale512. Rank1Infafterreduction
-  window3 flags[False,True]: BOTHnativeunscale-skipAdamW+scheduler, EXACTunchanged
-  params/moments/optimizer/scheduler,256→128; window4finiteupdate3/scale128.
-  Trainerglobalstep/data/RNGconsume skippedwindow. Productiondefault65536/2000
-  unchanged. BF16/F32/inactiveclip controls pass; postcliprank1NaN andpreunscale
-  rank1scalemismatch BOTHrefuse/zeroAdamW/unchangedparams+optimizer+scheduler.
-  CP2nativeScaler256 +offlineDCPunion6files864357Bfinite/864365Boverflow,
-  original localcheckpoint/Trainer/scheduler/scaler/rankRNGhashes preserved.
-  FreshCIDs/UUID/startticks/seed1773/scaler8: initialALLmastershards/AdamW/
-  scheduler/scaler/4RNG EXACT. Finite ANDoverflowwindows3/4 ALLgrad/loss/clip/
-  params/moments/counters/scheduler/scaler/RNG/data/digests EXACT bothranks.
-  No rollback of transientgrads/RNG, stochastic/multiworker/partial/elastic/
-  arbitrarylatehook/rankloss recovery; abortedjobsdiscard/reload. Nativewarnings/
-  aggregate train_loss caveat retained. No causal/otherarchitecture/frozenproof.
-  Final128GPUgroups/18ACKguards,8CPUcontracts144observations/58localtests/
-  Black/criticalRuff+F401/pycompile/diff pass. Retain4failedguards: R1both wrong
-  probeexpectedscale256 insteadcorrect512; R2both lateNaN exposed initialhook
-  installation in create_optimizer_and_scheduler bypassedbypinnedTrainer.
-  Fixed actual create_scheduler path/unwrappedoptimizer; R3allrerun andassert
-  gateidentity+gatecalls==actualAdamWupdates.10intermediateR2passedguards retained,
-  all32ACK; isolatedR2NaNfixture discarded,no active/userappupdated. No fullCI.
-  Local kernel/artifacts/distributed-d25 metadataarchives1041024387B SHA
+  Explicit `fsdp_fp16_parameter_policy()` admits FP16 working weights/all-gathers,
+  FP32 masters/synchronized gradients/reductions/buffers/AdamW, positive global L2
+  clipping and enabled native world-group ShardedGradScaler. Incoming parameters
+  must be trainable FP32. Old FP32/BF16/staged helpers and frozen/package guards
+  retained. Additional Accelerate optimizer/modeling source pins checked.
+  Public unscale runs ONCE, then root FSDP clipping for finite gradients; native
+  scaler synchronizes overflow/skip/backoff and Trainer suppresses scheduler steps
+  on skips. Actual AdamW pre-hook rejects late invalid gradients/scaler changes.
+  No private scaler flags, global package patch, Trainer loop fork or native build.
+  Owned eager Bert MLM22561, root+two BertLayer FSDP units, world2/RCCL/full sharding,
+  original parameters/dropout0/workers0/sequential/micro2/accum2, unequal MLM masks
+  and right padding: global8/8/8/4. CPU FP16 scaled local accumulation and FP64
+  rounded-weight global loss/ALL gradients pass unchanged D15 bounds; maximum
+  relative errors .001115321/.000713187. Native global norm/ALL clipped gradients/
+  CPU double ALL AdamW parameters, moments and counters pass D21/D22 bounds.
+  Owned parameter/AdamW elements11284/11277. Native FP16 gathers/FP32 reductions
+  observed; no speed, peak-memory, larger-fit or total-network claim.
+  Stress initial128/growth2: four finite updates end at scale512. Rank1 Inf AFTER
+  reduction at window3 gives flags[False,True]: BOTH native scaler skips preserve
+  parameters/optimizer/moments/scheduler EXACTLY, scale256→128; window4 executes
+  successful update3. Trainer global_step/data/RNG still advance on a skip.
+  Native production defaults65536/growth2000 unchanged. FP32/BF16/inactive clipping
+  controls pass. Post-clip rank1 NaN and pre-unscale rank1 scale disagreement both
+  refuse before AdamW, zero updates and unchanged parameters/optimizer/scheduler.
+  Native checkpoint2/scaler256 plus offline DCP union6 files:864357B finite /
+  864365B overflow; all original local hashes retained. Fresh containers/UUIDs/
+  start ticks/constructor seed1773/scaler8 restore ALL master shards/AdamW/scheduler/
+  scaler/four RNG EXACTLY. Finite AND overflow windows3/4 replay ALL gradients,
+  loss, clipping/norms, parameters/moments/counters, scheduler/scaler, RNG/data and
+  transcript/final digests EXACTLY on both ranks. Native train_loss remains a
+  current-process statistic. No transient-gradient/RNG rollback or stochastic,
+  multiworker, partial-window, elastic, arbitrary-callback or rank-loss promise.
+  Final128 GPU groups/18 acknowledged guards,8 CPU patterns/144 observations,
+  58 local tests, Black/critical Ruff+F401/py_compile/diff pass. Four rejected
+  guards retained: R1 both had a probe expecting256 instead of correct512; R2 both
+  exposed initial pre-hook installation in create_optimizer_and_scheduler, which
+  pinned Trainer bypasses. Fixed actual create_scheduler/raw optimizer path;
+  all R3 phases rerun and assert gate identity/calls==actual AdamW updates.
+  Ten intermediate R2 passed guards also retained; all32 guards acknowledged.
+  Isolated R2 NaN fixture discarded; no active/user application updated. No full CI.
+  Local `kernel/artifacts/distributed-d25` archives: .1041024387B SHA
   c2f26b9706b7077c901f2b5a03c29f120be6ebf8b59740456806e1d56b93b0f1;
-  105873798B SHAb1a6466e512b331e7fe4eef7e03d9c1734c637770edddbbcc01d0d6772b4df59.
-  Historicalsources/r1-r3logs/checkpoints/references/payloadexports preserved;
-  metadataexcludes tensor/RNGbinaries/privateapps. Exactcommands/PIDs/CIDs/ACKs
-  evidence/distributed-d25-r3/*/{rank,final}.json +controls-sequence.json.
-  Finalseed13649/18301,controls14118/18778,finite-resume16256/20940,
-  overflow-resume16657/21347 exit0; finalidlepreflight passes,nojobs/containers/
-  armedguards. SHlocks/4CPU/10GiB+12GiB/512PIDs/256MiBshm/600srecovery/460schild
-  retained; entrybootsafcc7be4(.104r2)/8c396bd1(.105r3) unchanged. Noagentreboot/
-  download/appinspection/foreignstop; nativeTorchdaily+RCCLa524/D09/ROCm/images/
-  registries/packages/kernels/fallbacks/defaults unchanged. HistoricalPythonCPU/
-  KFDissues separate fromfixedVMheap/D05exit/D21optimizerload. Finalhostdocs/
-  memorysnapshots synchronized. **Next D26 (planned):** actualTrainerclassicFSDP
-  eagerGPT2causalLM/tiedparams, SHIFTEDglobaltokenloss/CPUALLgrad/clip/AdamW/
-  exactrestart underexplicitF32/BF16/FP16. D16DDP isnotFSDPproof. Frozen/PEFT/
-  FSDP2/offload/compile/activationcheckpointing/elastic/realcapacity separate.
+  .105873798B SHA b1a6466e512b331e7fe4eef7e03d9c1734c637770edddbbcc01d0d6772b4df59.
+  Historical sources/r1–r3 logs/checkpoints/references/payloads preserved; metadata
+  excludes tensor/RNG binaries/private applications. Exact commands/PIDs/CIDs/ACKs:
+  `evidence/distributed-d25-r3/*/{rank,final}.json`, controls-sequence.json and
+  controller logs. Final seed13649/18301, controls14118/18778, finite resume16256/
+  20940, overflow resume16657/21347 exit0. Final idle preflight passes; no jobs,
+  containers or armed guards. SH locks/4CPUs/10GiB RAM+12GiB RAM+swap/512PIDs/
+  256MiB shm/600s recovery/460s child retained. Entry bootsafcc7be4(.104r2)/
+  8c396bd1(.105r3) unchanged. No agent reboot/download/prefix mutation/application
+  inspection/foreign stop. Native Torch daily/RCCL a524, D09, ROCm, images,
+  registries/packages/kernels/fallbacks/defaults unchanged. Historical Python CPU/
+  KFD issues remain separate from fixed VM heap/D05 exit/D21 optimizer loading.
+  Final host docs/memory snapshots synchronized. **Next D26 (planned):** actual
+  Trainer classic FSDP eager GPT2 causal LM/tied parameters, shifted global token
+  loss, CPU ALL gradients/clipping/AdamW and exact restart with explicit FP32/
+  BF16/FP16 policies. D16 DDP is not FSDP proof. Frozen/PEFT, FSDP2, offload,
+  compile, activation checkpointing, elastic and real capacity remain separate.
 
 - **D24 completed 2026-11-08: BF16 FSDP working parameters/all-gathers.**
   Implementation/verifier `dfe347376`; BOTH `tools/distributed-d24`.
