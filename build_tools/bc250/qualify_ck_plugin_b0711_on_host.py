@@ -11,7 +11,7 @@ from build_migraphx_b067_on_host import verify_hashes
 from deploy_torch_a04_on_host import atomic_json, sha
 from qualify_rccl_b038_on_host import gate
 from qualify_training_n33_on_host import WS
-from qualify_training_n39_on_host import preflight
+from board_preflight import preflight
 
 
 def main():

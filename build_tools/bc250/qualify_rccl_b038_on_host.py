@@ -14,9 +14,11 @@ from deploy_torch_a04_on_host import atomic_json, sha
 from package_rccl_b038_on_host import PROFILE
 from qualify_rccl_b037_on_host import GATES
 from qualify_training_n33_on_host import WS
-from qualify_training_n39_on_host import preflight
+from board_preflight import preflight, reserved
+from docker_preflight import docker_containers
 
 
+@reserved
 def gate(label, command, count, manifest):
     preflight(label)
     assert not subprocess.check_output(["podman", "ps", "-q"], text=True).strip()
@@ -74,12 +76,20 @@ def gate(label, command, count, manifest):
         after = subprocess.check_output(["dmesg"])
         (logs / "kernel-after.log").write_bytes(after)
         running = subprocess.check_output(["podman", "ps", "-q"], text=True).split()
+        docker = None
+        docker_error = None
+        try:
+            docker = docker_containers()
+        except Exception as exc:
+            docker_error = repr(exc)
         atomic_json(
             logs / "exit.json",
             dict(
                 returncode=code,
                 kernel_log_unchanged=before == after,
                 running_containers=running,
+                docker_containers=docker,
+                docker_error=docker_error,
             ),
         )
         # ACK only after ordinary launcher exit and no remaining container.
@@ -91,7 +101,13 @@ def gate(label, command, count, manifest):
             )
             guard.wait(timeout=5)
         guard_log.close()
-    assert code == 0 and before == after and not running, label
+    assert (
+        code == 0
+        and before == after
+        and not running
+        and not docker
+        and not docker_error
+    ), label
     result = json.loads((logs / "result.json").read_text())
     assert result["status"] == "passed" and len(result["checks"]) == count, result
     final_guard = json.loads((guard_dir / "state.json").read_text())
