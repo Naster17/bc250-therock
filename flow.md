@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-07 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-08 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,53 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **D24 completed 2026-11-08: BF16 FSDP working parameters/all-gathers.**
+  Implementation/verifier `dfe347376`; BOTH `tools/distributed-d24`.
+  [Report](docs/development/bc250_distributed_d24_results/README.md),
+  [usage](../BC250_DISTRIBUTED_GUIDE.md#trainer-fsdp-bf16-working-parameters-d24).
+  New explicit fsdp_bf16_parameter_policy() +pinned BC250FSDPTrainer admission:
+  BF16 working weights/parameter all-gather input+output, FP32 master shards,
+  synchronized gradients/reductions/buffers/AdamW. No kept lowprecision grads,
+  input casts/scaler; unsynchronized gradients may temporarily be BF16.
+  D23 compute-only factory/old staged helpers and frozen/package guards retained.
+  New guardian checks default-local Docker before/after, unknown state refused;
+  no unrelated workload stopped. Other old guardians still need migration.
+  Owned eager BertMLM22561/root+2BertLayers/world2/RCCL/alltrainable/micro2/accum2/
+  workers0/sequential/rightpadding/unequalMLM/global8/8/8/final4: CPU BF16 rounded
+  params/local accumulation+CPUFP64 rounded-weight global loss/ALLgrads pass D15
+  bounds unchanged. Maxrelative CPUAMP.008212774/FP64.005715182; native globalclip/
+  ALLclipped grads/CPUdouble ALLAdamW params+moments+counters pass D21/22 limits.
+  BF16 padding yields master/AdamW elements11284/11277, sum22561. StrictFP32
+  control11282/11279, inactiveclip coef1, rank1NaN BOTHrefuse beforeclip/AdamW/
+  zeroupdates/unchangedparams+optimizer+scheduler pass. No grad/RNG rollback.
+  Native CP2+offline DCP union6files864357B, original hashes/local state preserved;
+  newCIDs/UUID/startticks/seed1773: initial ALLshards/AdamW/scheduler/4RNG EXACT;
+  windows3/4 ALLloss/grads/clip/params/moments/scheduler/RNG/rows/digests EXACT.
+  BF16 training-only allgather inputs35calls277592B seed/15calls118968B replay;
+  inactive10calls79312B vsFP32control158608B.2Bvs4B elements/padding differ,
+  NOTtotalNIC/peakRAM/speed/largerfit proof. FP32reduce361088B/12calls seed.
+  Accepted64GPUgroups/10ACKguards,6CPUcontracts60observations/58localtests;
+  Black/criticalRuff+F401/syntax/diff pass. No GPUfailedphase/fullupstreamCI.
+  Initial archive verifier full-tail gather overcount corrected35/15; initial
+  archives retained, GPU math unchanged. Native warnings/train_loss caveat remain.
+  Local kernel/artifacts/distributed-d24 metadata archives1041226233B SHA
+  885ebd47cf3622918729a73f29b56fc95f2e281202115161447bc425d6a3c083;
+  1051180601B SHAcfe5d2fb1382df55dbec53cfc604b267ea242b6e0a7a6a5787095131adc57173.
+  Payload exports/union local, native checkpoints2/4/references retained onhosts;
+  metadata excludes tensor/RNG payloads/private applications. Exact commands/
+  CIDs/worker+guard results in evidence/distributed-d24-r1/*/{rank,final}.json,
+  controls-sequence.json/controllerlogs. Seed5142/9798,resume5835/10445,controls
+  6208/10823 exit0. Final idle preflight pass, nojobs/containers/armedguards.
+  Entryboots afcc7be4(.104r2)/8c396bd1(.105r3) retained, no agent reboot/download/
+  native build/prefix mutation/app inspection/foreignstop. SHlocks/4CPU/10GiB+
+  12GiB/512PIDs/256MiBshm/600srecovery/460schild unchanged. Native daily/RCCL Torch
+  a524/D09/ROCm/images/registries/packages/kernels/defaults/fallbacks unchanged.
+  Historical PythonCPU/KFD issues separate from fixed VMheap/D05exit/D21load.
+  Both host docs/memory synchronized. **Next D25 (planned):** actual Trainer
+  classicFSDP FP16 workingparams/nativeShardedGradScaler CPUgrad/globalclip/
+  collective overflow-skip/exactrestart; retain FP16 refusal until proof. Larger
+  capacity/causal+other architectures/frozen parameters/elastic remain separate.
 
 - **L02 completed 2026-11-07: real two-host LoRA checkpoint replay.**
   Implementation `284d3315b`, Docker-aware guardian/verifier `4d5f60e43`.

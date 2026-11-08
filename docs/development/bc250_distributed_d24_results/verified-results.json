@@ -1,0 +1,4542 @@
+{
+  "status": "passed",
+  "accepted_GPU_groups": 64,
+  "accepted_GPU_guards": 10,
+  "retained_failed_guards": 0,
+  "CPU_policy_contract_patterns": 6,
+  "CPU_policy_contract_observations": 60,
+  "local_unit_tests": 58,
+  "kernels": [
+    "7.1.5-bc250rocm-r2",
+    "7.2.10-bc250rocm-r3"
+  ],
+  "boot_ids": [
+    "afcc7be4-f746-439d-bc88-3690a87f2d21",
+    "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d"
+  ],
+  "shard_parameter_elements": [
+    11284,
+    11277
+  ],
+  "source_pins": {
+    "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+    "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+    "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+    "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+    "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+  },
+  "records": {
+    "104": {
+      "bf16-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "bf16",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 5142,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30241",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "bf16",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-seed/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+          "container_id": "db4c0f0b9b51",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-global-loss-and-ALL-raw-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+              "native-root-global-norm-and-ALL-clipped-gradients-1",
+              "CPU-global-loss-and-ALL-raw-gradients-1",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+              "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "CPU-global-loss-and-ALL-raw-gradients-2",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "CPU-global-loss-and-ALL-raw-gradients-3",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "90f9e59904067b19191f05f2770348bebf9572f21bd17dfe7d7ab6b249fed04a",
+                "rows": [
+                  0,
+                  1,
+                  4,
+                  5
+                ]
+              },
+              {
+                "step": 2,
+                "digest": "f85d3bab4e18939922abd4efb512392c88bd02ff5aeb80bbba3cb6763f670eb5",
+                "rows": [
+                  8,
+                  9,
+                  12,
+                  13
+                ]
+              },
+              {
+                "step": 3,
+                "digest": "8bd9c2d4a7ce10849125e1096f5b40cd06f4aa0302f9edc431658e07fe142c4d",
+                "rows": [
+                  16,
+                  17,
+                  20,
+                  21
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "49556b481bc743dc6219740e0491230df6dec8117795d47bd8df8e352eda1e11",
+                "rows": [
+                  24,
+                  25
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "881be6d3ef9b46c6b0c1e5af53970d03",
+              "pid": 20,
+              "start_ticks": "67995"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 0.05,
+              "case": "bf16",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4695591926574707,
+                "CPU_norm": 1.469559190523974,
+                "coefficient": 0.034023785022491954
+              },
+              {
+                "step": 1,
+                "norm": 1.4988558292388916,
+                "CPU_norm": 1.4988557618880318,
+                "coefficient": 0.03335875800234414
+              },
+              {
+                "step": 2,
+                "norm": 1.6281917095184326,
+                "CPU_norm": 1.6281916417517803,
+                "coefficient": 0.030708896919104587
+              },
+              {
+                "step": 3,
+                "norm": 2.265427589416504,
+                "CPU_norm": 2.265427501579057,
+                "coefficient": 0.0220708797320899
+              }
+            ],
+            "gradient_errors": [
+              {
+                "step": 0,
+                "CPU_AMP": 0.008173523490387894,
+                "CPU_FP64": 0.005715181797517745
+              },
+              {
+                "step": 1,
+                "CPU_AMP": 0.008212773645672737,
+                "CPU_FP64": 0.005556979611937282
+              },
+              {
+                "step": 2,
+                "CPU_AMP": 0.007118270252762315,
+                "CPU_FP64": 0.005031926126791069
+              },
+              {
+                "step": 3,
+                "CPU_AMP": 0.007920514022267419,
+                "CPU_FP64": 0.004863608905558259
+              }
+            ],
+            "optimizer_shard_elements": 11284,
+            "checkpoint_files": [
+              {
+                "name": "optimizer_0/.metadata",
+                "bytes": 67829,
+                "sha256": "89178651b45a0e69c298643a5195a4547fa77bd15d7e3e3c211b39df7a6378f2"
+              },
+              {
+                "name": "optimizer_0/__0_0.distcp",
+                "bytes": 224413,
+                "sha256": "525777b047a59f0a394d1cc026c8652d0ca9d782cf7f1aa423e2603eef3e108e"
+              },
+              {
+                "name": "pytorch_model_fsdp_0/.metadata",
+                "bytes": 24557,
+                "sha256": "d5d5d8b492a8c0cbe50161832fe63218ea58b8ca68f0d99fe719e7c2504e68b2"
+              },
+              {
+                "name": "pytorch_model_fsdp_0/__0_0.distcp",
+                "bytes": 121036,
+                "sha256": "1980b3074f00b23047f9b06f3213f3e6ad265f7da90238bcfbdc3eacccfc6102"
+              },
+              {
+                "name": "rng_state_0.pth",
+                "bytes": 14661,
+                "sha256": "72d17e43797fa4628787a39bdbd0223302a639eb46513fb88a147447400a1a35"
+              },
+              {
+                "name": "scheduler.pt",
+                "bytes": 1401,
+                "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+              },
+              {
+                "name": "trainer_state.json",
+                "bytes": 770,
+                "sha256": "56cefeb378c00a9d745c89d180d6c14763fae1d72ff0cc95caeb1a103aa690ea"
+              }
+            ],
+            "parameter_allgathers": [
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.bfloat16"
+              ],
+              "forward_weights": [
+                "torch.bfloat16"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 12,
+              "reduction_input_bytes": 361088,
+              "scaler": null
+            },
+            "final_state_digest": "1d7b57a46853729ae949f88a7bad324c3d6c2f23aaf3000a3ee2741105f592d5"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-global-loss-and-ALL-raw-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+            "native-root-global-norm-and-ALL-clipped-gradients-1",
+            "CPU-global-loss-and-ALL-raw-gradients-1",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+            "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "CPU-global-loss-and-ALL-raw-gradients-2",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "CPU-global-loss-and-ALL-raw-gradients-3",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "90f9e59904067b19191f05f2770348bebf9572f21bd17dfe7d7ab6b249fed04a",
+              "rows": [
+                0,
+                1,
+                4,
+                5
+              ]
+            },
+            {
+              "step": 2,
+              "digest": "f85d3bab4e18939922abd4efb512392c88bd02ff5aeb80bbba3cb6763f670eb5",
+              "rows": [
+                8,
+                9,
+                12,
+                13
+              ]
+            },
+            {
+              "step": 3,
+              "digest": "8bd9c2d4a7ce10849125e1096f5b40cd06f4aa0302f9edc431658e07fe142c4d",
+              "rows": [
+                16,
+                17,
+                20,
+                21
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "49556b481bc743dc6219740e0491230df6dec8117795d47bd8df8e352eda1e11",
+              "rows": [
+                24,
+                25
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "881be6d3ef9b46c6b0c1e5af53970d03",
+            "pid": 20,
+            "start_ticks": "67995"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 0.05,
+            "case": "bf16",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4695591926574707,
+              "CPU_norm": 1.469559190523974,
+              "coefficient": 0.034023785022491954
+            },
+            {
+              "step": 1,
+              "norm": 1.4988558292388916,
+              "CPU_norm": 1.4988557618880318,
+              "coefficient": 0.03335875800234414
+            },
+            {
+              "step": 2,
+              "norm": 1.6281917095184326,
+              "CPU_norm": 1.6281916417517803,
+              "coefficient": 0.030708896919104587
+            },
+            {
+              "step": 3,
+              "norm": 2.265427589416504,
+              "CPU_norm": 2.265427501579057,
+              "coefficient": 0.0220708797320899
+            }
+          ],
+          "gradient_errors": [
+            {
+              "step": 0,
+              "CPU_AMP": 0.008173523490387894,
+              "CPU_FP64": 0.005715181797517745
+            },
+            {
+              "step": 1,
+              "CPU_AMP": 0.008212773645672737,
+              "CPU_FP64": 0.005556979611937282
+            },
+            {
+              "step": 2,
+              "CPU_AMP": 0.007118270252762315,
+              "CPU_FP64": 0.005031926126791069
+            },
+            {
+              "step": 3,
+              "CPU_AMP": 0.007920514022267419,
+              "CPU_FP64": 0.004863608905558259
+            }
+          ],
+          "optimizer_shard_elements": 11284,
+          "checkpoint_files": [
+            {
+              "name": "optimizer_0/.metadata",
+              "bytes": 67829,
+              "sha256": "89178651b45a0e69c298643a5195a4547fa77bd15d7e3e3c211b39df7a6378f2"
+            },
+            {
+              "name": "optimizer_0/__0_0.distcp",
+              "bytes": 224413,
+              "sha256": "525777b047a59f0a394d1cc026c8652d0ca9d782cf7f1aa423e2603eef3e108e"
+            },
+            {
+              "name": "pytorch_model_fsdp_0/.metadata",
+              "bytes": 24557,
+              "sha256": "d5d5d8b492a8c0cbe50161832fe63218ea58b8ca68f0d99fe719e7c2504e68b2"
+            },
+            {
+              "name": "pytorch_model_fsdp_0/__0_0.distcp",
+              "bytes": 121036,
+              "sha256": "1980b3074f00b23047f9b06f3213f3e6ad265f7da90238bcfbdc3eacccfc6102"
+            },
+            {
+              "name": "rng_state_0.pth",
+              "bytes": 14661,
+              "sha256": "72d17e43797fa4628787a39bdbd0223302a639eb46513fb88a147447400a1a35"
+            },
+            {
+              "name": "scheduler.pt",
+              "bytes": 1401,
+              "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+            },
+            {
+              "name": "trainer_state.json",
+              "bytes": 770,
+              "sha256": "56cefeb378c00a9d745c89d180d6c14763fae1d72ff0cc95caeb1a103aa690ea"
+            }
+          ],
+          "parameter_allgathers": [
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.bfloat16"
+            ],
+            "forward_weights": [
+              "torch.bfloat16"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 12,
+            "reduction_input_bytes": 361088,
+            "scaler": null
+          },
+          "final_state_digest": "1d7b57a46853729ae949f88a7bad324c3d6c2f23aaf3000a3ee2741105f592d5"
+        }
+      },
+      "bf16-resume": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "bf16",
+          "action": "resume",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 5835,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30242",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "bf16",
+            "--action",
+            "resume",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-resume/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+          "container_id": "fb6a1e91fd34",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "fresh-FSDP-replay-exact-all-state-window-3",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "fresh-FSDP-replay-exact-all-state-window-4",
+              "fresh-process-different-birth-and-exact-resumed-transcript"
+            ],
+            "transcript": [
+              {
+                "step": 3,
+                "digest": "8bd9c2d4a7ce10849125e1096f5b40cd06f4aa0302f9edc431658e07fe142c4d",
+                "rows": [
+                  16,
+                  17,
+                  20,
+                  21
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "49556b481bc743dc6219740e0491230df6dec8117795d47bd8df8e352eda1e11",
+                "rows": [
+                  24,
+                  25
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "1b7558b8073142d6bf55ac58a5aaaefc",
+              "pid": 20,
+              "start_ticks": "77718"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 0.05,
+              "case": "bf16",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "restore_optimizer_actual_keys": [
+              0,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30
+            ],
+            "restore_optimizer_expected_keys": [
+              0,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30
+            ],
+            "restore_parameter_numels": [
+              2740,
+              0,
+              0,
+              0,
+              0,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              32,
+              16,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              1024,
+              32,
+              32,
+              16,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "clip_records": [
+              {
+                "step": 2,
+                "norm": 1.6281917095184326,
+                "CPU_norm": 1.6281916417517803,
+                "coefficient": 0.030708896919104587
+              },
+              {
+                "step": 3,
+                "norm": 2.265427589416504,
+                "CPU_norm": 2.265427501579057,
+                "coefficient": 0.0220708797320899
+              }
+            ],
+            "optimizer_shard_elements": 11284,
+            "parameter_allgathers": [
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.bfloat16"
+              ],
+              "forward_weights": [
+                "torch.bfloat16"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 6,
+              "reduction_input_bytes": 180544,
+              "scaler": null
+            },
+            "final_state_digest": "1d7b57a46853729ae949f88a7bad324c3d6c2f23aaf3000a3ee2741105f592d5"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "fresh-FSDP-replay-exact-all-state-window-3",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "fresh-FSDP-replay-exact-all-state-window-4",
+            "fresh-process-different-birth-and-exact-resumed-transcript"
+          ],
+          "transcript": [
+            {
+              "step": 3,
+              "digest": "8bd9c2d4a7ce10849125e1096f5b40cd06f4aa0302f9edc431658e07fe142c4d",
+              "rows": [
+                16,
+                17,
+                20,
+                21
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "49556b481bc743dc6219740e0491230df6dec8117795d47bd8df8e352eda1e11",
+              "rows": [
+                24,
+                25
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "1b7558b8073142d6bf55ac58a5aaaefc",
+            "pid": 20,
+            "start_ticks": "77718"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 0.05,
+            "case": "bf16",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "restore_optimizer_actual_keys": [
+            0,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "restore_optimizer_expected_keys": [
+            0,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "restore_parameter_numels": [
+            2740,
+            0,
+            0,
+            0,
+            0,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            32,
+            16,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            1024,
+            32,
+            32,
+            16,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "clip_records": [
+            {
+              "step": 2,
+              "norm": 1.6281917095184326,
+              "CPU_norm": 1.6281916417517803,
+              "coefficient": 0.030708896919104587
+            },
+            {
+              "step": 3,
+              "norm": 2.265427589416504,
+              "CPU_norm": 2.265427501579057,
+              "coefficient": 0.0220708797320899
+            }
+          ],
+          "optimizer_shard_elements": 11284,
+          "parameter_allgathers": [
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.bfloat16"
+            ],
+            "forward_weights": [
+              "torch.bfloat16"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 6,
+            "reduction_input_bytes": 180544,
+            "scaler": null
+          },
+          "final_state_digest": "1d7b57a46853729ae949f88a7bad324c3d6c2f23aaf3000a3ee2741105f592d5"
+        }
+      },
+      "inactive-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "inactive",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 6209,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30133",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "inactive",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/inactive-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/inactive-seed/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+          "container_id": "ad49cd64d427",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-global-loss-and-ALL-raw-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "d4fc70bcfc80f4b5585fd565d262b71dd37c29edf72081c9e4631913204408a7",
+                "rows": [
+                  0,
+                  1,
+                  4,
+                  5
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "528509ed6c9a4953874ab1d9bd07fd65",
+              "pid": 20,
+              "start_ticks": "80369"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 100.0,
+              "case": "inactive",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4695591926574707,
+                "CPU_norm": 1.469559190523974,
+                "coefficient": 1.0
+              }
+            ],
+            "gradient_errors": [
+              {
+                "step": 0,
+                "CPU_AMP": 0.008173523490387894,
+                "CPU_FP64": 0.005715181797517745
+              }
+            ],
+            "optimizer_shard_elements": 11284,
+            "parameter_allgathers": [
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.bfloat16"
+              ],
+              "forward_weights": [
+                "torch.bfloat16"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 3,
+              "reduction_input_bytes": 90272,
+              "scaler": null
+            },
+            "final_state_digest": "1bca8b0cfdde301ce0ffb46841a53e203877591d81f4dc10d006430e4c4ce0e1"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-global-loss-and-ALL-raw-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "d4fc70bcfc80f4b5585fd565d262b71dd37c29edf72081c9e4631913204408a7",
+              "rows": [
+                0,
+                1,
+                4,
+                5
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "528509ed6c9a4953874ab1d9bd07fd65",
+            "pid": 20,
+            "start_ticks": "80369"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 100.0,
+            "case": "inactive",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4695591926574707,
+              "CPU_norm": 1.469559190523974,
+              "coefficient": 1.0
+            }
+          ],
+          "gradient_errors": [
+            {
+              "step": 0,
+              "CPU_AMP": 0.008173523490387894,
+              "CPU_FP64": 0.005715181797517745
+            }
+          ],
+          "optimizer_shard_elements": 11284,
+          "parameter_allgathers": [
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.bfloat16"
+            ],
+            "forward_weights": [
+              "torch.bfloat16"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 3,
+            "reduction_input_bytes": 90272,
+            "scaler": null
+          },
+          "final_state_digest": "1bca8b0cfdde301ce0ffb46841a53e203877591d81f4dc10d006430e4c4ce0e1"
+        }
+      },
+      "fp32-control-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "fp32-control",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 6548,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30134",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "fp32-control",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/fp32-control-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/fp32-control-seed/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+          "container_id": "a76451a43ae2",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-global-loss-and-ALL-raw-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "101f7dc9e5407f5b27796a6c20a18dce8af04b9b4374ce728a3ca47e1e91ca17",
+                "rows": [
+                  0,
+                  1,
+                  4,
+                  5
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "cf31dc609d774f42abb088497890a945",
+              "pid": 20,
+              "start_ticks": "82021"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32 control",
+              "clip_limit": 0.05,
+              "case": "fp32-control",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4693714380264282,
+                "CPU_norm": 1.4693713507772312,
+                "coefficient": 0.03402813451168608
+              }
+            ],
+            "optimizer_shard_elements": 11282,
+            "parameter_allgathers": [
+              {
+                "input_bytes": 10952,
+                "elements": 2738,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 10952,
+                "elements": 2738,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.float32"
+              ],
+              "forward_weights": [
+                "torch.float32"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 3,
+              "reduction_input_bytes": 90256,
+              "scaler": null
+            },
+            "final_state_digest": "089f00fa5e107b7bbb5e982b3248d80e26c74ed112426b770a81b160742e89f0"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-global-loss-and-ALL-raw-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "101f7dc9e5407f5b27796a6c20a18dce8af04b9b4374ce728a3ca47e1e91ca17",
+              "rows": [
+                0,
+                1,
+                4,
+                5
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "cf31dc609d774f42abb088497890a945",
+            "pid": 20,
+            "start_ticks": "82021"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32 control",
+            "clip_limit": 0.05,
+            "case": "fp32-control",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4693714380264282,
+              "CPU_norm": 1.4693713507772312,
+              "coefficient": 0.03402813451168608
+            }
+          ],
+          "optimizer_shard_elements": 11282,
+          "parameter_allgathers": [
+            {
+              "input_bytes": 10952,
+              "elements": 2738,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 10952,
+              "elements": 2738,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.float32"
+            ],
+            "forward_weights": [
+              "torch.float32"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 3,
+            "reduction_input_bytes": 90256,
+            "scaler": null
+          },
+          "final_state_digest": "089f00fa5e107b7bbb5e982b3248d80e26c74ed112426b770a81b160742e89f0"
+        }
+      },
+      "nan-refusal": {
+        "final": {
+          "status": "passed",
+          "rank": 0,
+          "case": "nan",
+          "action": "seed",
+          "kernel": "7.1.5-bc250rocm-r2",
+          "guardian_pid": 6884,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "0",
+            "--master-port",
+            "30135",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "nan",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/nan-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/nan-refusal/rank.json"
+          ],
+          "registry_sha256": "5340d0ecaba6ea781310ac3d159e476e7349e39cd7eaec5ca04d9cfe70776282",
+          "boot_id": "afcc7be4-f746-439d-bc88-3690a87f2d21",
+          "container_id": "d62bd2929953",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 0,
+            "birth": {
+              "uuid": "ccaf49d1ffa7499c884a90de32bdb0a3",
+              "pid": 20,
+              "start_ticks": "83611"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 0.05,
+              "case": "nan",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              true
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 0,
+          "birth": {
+            "uuid": "ccaf49d1ffa7499c884a90de32bdb0a3",
+            "pid": 20,
+            "start_ticks": "83611"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 0.05,
+            "case": "nan",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            true
+          ],
+          "raw_updates": 0
+        }
+      }
+    },
+    "105": {
+      "bf16-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "bf16",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 9798,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30241",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "bf16",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-seed/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d",
+          "container_id": "a2bf665b9e4e",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-global-loss-and-ALL-raw-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+              "native-root-global-norm-and-ALL-clipped-gradients-1",
+              "CPU-global-loss-and-ALL-raw-gradients-1",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+              "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "CPU-global-loss-and-ALL-raw-gradients-2",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "CPU-global-loss-and-ALL-raw-gradients-3",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "f33ad74295bd2f5a60b578397747bbdb5915af533602456ef9679e18abf20124",
+                "rows": [
+                  2,
+                  3,
+                  6,
+                  7
+                ]
+              },
+              {
+                "step": 2,
+                "digest": "e7c5d978ec16e313ecbed70a81b90e13b5c1bf48923773781e0053dd58656015",
+                "rows": [
+                  10,
+                  11,
+                  14,
+                  15
+                ]
+              },
+              {
+                "step": 3,
+                "digest": "53d0a708b75a7e1f3a642499e14e634f2674ed673838bf783ecad21add87723d",
+                "rows": [
+                  18,
+                  19,
+                  22,
+                  23
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "346f2ba93747525f25b9fdee80aa39a99f1049b3acaa91cf0521cb83c7db399f",
+                "rows": [
+                  26,
+                  27
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "ff221c877bae418897b77d6f68fca134",
+              "pid": 19,
+              "start_ticks": "68235"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 0.05,
+              "case": "bf16",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4695591926574707,
+                "CPU_norm": 1.469559190523974,
+                "coefficient": 0.034023785022491954
+              },
+              {
+                "step": 1,
+                "norm": 1.4988558292388916,
+                "CPU_norm": 1.4988557618880318,
+                "coefficient": 0.03335875800234414
+              },
+              {
+                "step": 2,
+                "norm": 1.6281917095184326,
+                "CPU_norm": 1.6281916417517803,
+                "coefficient": 0.030708896919104587
+              },
+              {
+                "step": 3,
+                "norm": 2.265427589416504,
+                "CPU_norm": 2.265427501579057,
+                "coefficient": 0.0220708797320899
+              }
+            ],
+            "gradient_errors": [
+              {
+                "step": 0,
+                "CPU_AMP": 0.008173523490387894,
+                "CPU_FP64": 0.005715181797517745
+              },
+              {
+                "step": 1,
+                "CPU_AMP": 0.008212773645672737,
+                "CPU_FP64": 0.005556979611937282
+              },
+              {
+                "step": 2,
+                "CPU_AMP": 0.007118270252762315,
+                "CPU_FP64": 0.005031926126791069
+              },
+              {
+                "step": 3,
+                "CPU_AMP": 0.007920514022267419,
+                "CPU_FP64": 0.004863608905558259
+              }
+            ],
+            "optimizer_shard_elements": 11277,
+            "checkpoint_files": [
+              {
+                "name": "optimizer_0/__1_0.distcp",
+                "bytes": 305742,
+                "sha256": "75a2a68bd30d2499d88c07bc39852bdefa4b432dc6ce195ea0403cca05b1a722"
+              },
+              {
+                "name": "pytorch_model_fsdp_0/__1_0.distcp",
+                "bytes": 120780,
+                "sha256": "b614ef8d432bed989c9000b53c1835df0119097fcc416aadf4d731f2e63f0a65"
+              },
+              {
+                "name": "rng_state_1.pth",
+                "bytes": 14661,
+                "sha256": "391d0c89e8ff0ca695b62efcb87b86d5984e187fa266e7d11f4fadc87610db65"
+              },
+              {
+                "name": "scheduler.pt",
+                "bytes": 1401,
+                "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+              },
+              {
+                "name": "trainer_state.json",
+                "bytes": 771,
+                "sha256": "dc6a5beba0886864f5238666f3d9c400db1611e9f6a149d58b88a9448d88809c"
+              }
+            ],
+            "parameter_allgathers": [
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.bfloat16"
+              ],
+              "forward_weights": [
+                "torch.bfloat16"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 12,
+              "reduction_input_bytes": 361088,
+              "scaler": null
+            },
+            "final_state_digest": "92f13f6b45eb6bb2fa3599b382aae8e1b7d1bf43862e89a1eeb47bb5cd5e14ca"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-global-loss-and-ALL-raw-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0",
+            "native-root-global-norm-and-ALL-clipped-gradients-1",
+            "CPU-global-loss-and-ALL-raw-gradients-1",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-1",
+            "native-Trainer-sharded-model-optimizer-scheduler-rank-RNG-checkpoint2",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "CPU-global-loss-and-ALL-raw-gradients-2",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-2",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "CPU-global-loss-and-ALL-raw-gradients-3",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-3"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "f33ad74295bd2f5a60b578397747bbdb5915af533602456ef9679e18abf20124",
+              "rows": [
+                2,
+                3,
+                6,
+                7
+              ]
+            },
+            {
+              "step": 2,
+              "digest": "e7c5d978ec16e313ecbed70a81b90e13b5c1bf48923773781e0053dd58656015",
+              "rows": [
+                10,
+                11,
+                14,
+                15
+              ]
+            },
+            {
+              "step": 3,
+              "digest": "53d0a708b75a7e1f3a642499e14e634f2674ed673838bf783ecad21add87723d",
+              "rows": [
+                18,
+                19,
+                22,
+                23
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "346f2ba93747525f25b9fdee80aa39a99f1049b3acaa91cf0521cb83c7db399f",
+              "rows": [
+                26,
+                27
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "ff221c877bae418897b77d6f68fca134",
+            "pid": 19,
+            "start_ticks": "68235"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 0.05,
+            "case": "bf16",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4695591926574707,
+              "CPU_norm": 1.469559190523974,
+              "coefficient": 0.034023785022491954
+            },
+            {
+              "step": 1,
+              "norm": 1.4988558292388916,
+              "CPU_norm": 1.4988557618880318,
+              "coefficient": 0.03335875800234414
+            },
+            {
+              "step": 2,
+              "norm": 1.6281917095184326,
+              "CPU_norm": 1.6281916417517803,
+              "coefficient": 0.030708896919104587
+            },
+            {
+              "step": 3,
+              "norm": 2.265427589416504,
+              "CPU_norm": 2.265427501579057,
+              "coefficient": 0.0220708797320899
+            }
+          ],
+          "gradient_errors": [
+            {
+              "step": 0,
+              "CPU_AMP": 0.008173523490387894,
+              "CPU_FP64": 0.005715181797517745
+            },
+            {
+              "step": 1,
+              "CPU_AMP": 0.008212773645672737,
+              "CPU_FP64": 0.005556979611937282
+            },
+            {
+              "step": 2,
+              "CPU_AMP": 0.007118270252762315,
+              "CPU_FP64": 0.005031926126791069
+            },
+            {
+              "step": 3,
+              "CPU_AMP": 0.007920514022267419,
+              "CPU_FP64": 0.004863608905558259
+            }
+          ],
+          "optimizer_shard_elements": 11277,
+          "checkpoint_files": [
+            {
+              "name": "optimizer_0/__1_0.distcp",
+              "bytes": 305742,
+              "sha256": "75a2a68bd30d2499d88c07bc39852bdefa4b432dc6ce195ea0403cca05b1a722"
+            },
+            {
+              "name": "pytorch_model_fsdp_0/__1_0.distcp",
+              "bytes": 120780,
+              "sha256": "b614ef8d432bed989c9000b53c1835df0119097fcc416aadf4d731f2e63f0a65"
+            },
+            {
+              "name": "rng_state_1.pth",
+              "bytes": 14661,
+              "sha256": "391d0c89e8ff0ca695b62efcb87b86d5984e187fa266e7d11f4fadc87610db65"
+            },
+            {
+              "name": "scheduler.pt",
+              "bytes": 1401,
+              "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+            },
+            {
+              "name": "trainer_state.json",
+              "bytes": 771,
+              "sha256": "dc6a5beba0886864f5238666f3d9c400db1611e9f6a149d58b88a9448d88809c"
+            }
+          ],
+          "parameter_allgathers": [
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.bfloat16"
+            ],
+            "forward_weights": [
+              "torch.bfloat16"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 12,
+            "reduction_input_bytes": 361088,
+            "scaler": null
+          },
+          "final_state_digest": "92f13f6b45eb6bb2fa3599b382aae8e1b7d1bf43862e89a1eeb47bb5cd5e14ca"
+        }
+      },
+      "bf16-resume": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "bf16",
+          "action": "resume",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 10445,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30242",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "bf16",
+            "--action",
+            "resume",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/bf16-resume/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d",
+          "container_id": "69e4bf196f63",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-2",
+              "fresh-FSDP-replay-exact-all-state-window-3",
+              "native-root-global-norm-and-ALL-clipped-gradients-3",
+              "fresh-FSDP-replay-exact-all-state-window-4",
+              "fresh-process-different-birth-and-exact-resumed-transcript"
+            ],
+            "transcript": [
+              {
+                "step": 3,
+                "digest": "53d0a708b75a7e1f3a642499e14e634f2674ed673838bf783ecad21add87723d",
+                "rows": [
+                  18,
+                  19,
+                  22,
+                  23
+                ]
+              },
+              {
+                "step": 4,
+                "digest": "346f2ba93747525f25b9fdee80aa39a99f1049b3acaa91cf0521cb83c7db399f",
+                "rows": [
+                  26,
+                  27
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "98d7ee9ebfe549a48ce91c4ead48d9a0",
+              "pid": 19,
+              "start_ticks": "77958"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 0.05,
+              "case": "bf16",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "restore_optimizer_actual_keys": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41
+            ],
+            "restore_optimizer_expected_keys": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41
+            ],
+            "restore_parameter_numels": [
+              364,
+              1024,
+              64,
+              32,
+              32,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              16,
+              2048,
+              64,
+              2048,
+              32,
+              32,
+              32,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              16,
+              2048,
+              64,
+              2048,
+              32,
+              32,
+              32,
+              97,
+              1024,
+              32,
+              32,
+              32
+            ],
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "clip_records": [
+              {
+                "step": 2,
+                "norm": 1.6281917095184326,
+                "CPU_norm": 1.6281916417517803,
+                "coefficient": 0.030708896919104587
+              },
+              {
+                "step": 3,
+                "norm": 2.265427589416504,
+                "CPU_norm": 2.265427501579057,
+                "coefficient": 0.0220708797320899
+              }
+            ],
+            "optimizer_shard_elements": 11277,
+            "parameter_allgathers": [
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.bfloat16"
+              ],
+              "forward_weights": [
+                "torch.bfloat16"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 6,
+              "reduction_input_bytes": 180544,
+              "scaler": null
+            },
+            "final_state_digest": "92f13f6b45eb6bb2fa3599b382aae8e1b7d1bf43862e89a1eeb47bb5cd5e14ca"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "fresh-native-FSDP-restore-all-shards-optimizer-scheduler-four-RNG-exact",
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-2",
+            "fresh-FSDP-replay-exact-all-state-window-3",
+            "native-root-global-norm-and-ALL-clipped-gradients-3",
+            "fresh-FSDP-replay-exact-all-state-window-4",
+            "fresh-process-different-birth-and-exact-resumed-transcript"
+          ],
+          "transcript": [
+            {
+              "step": 3,
+              "digest": "53d0a708b75a7e1f3a642499e14e634f2674ed673838bf783ecad21add87723d",
+              "rows": [
+                18,
+                19,
+                22,
+                23
+              ]
+            },
+            {
+              "step": 4,
+              "digest": "346f2ba93747525f25b9fdee80aa39a99f1049b3acaa91cf0521cb83c7db399f",
+              "rows": [
+                26,
+                27
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "98d7ee9ebfe549a48ce91c4ead48d9a0",
+            "pid": 19,
+            "start_ticks": "77958"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 0.05,
+            "case": "bf16",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "restore_optimizer_actual_keys": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "restore_optimizer_expected_keys": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          "restore_parameter_numels": [
+            364,
+            1024,
+            64,
+            32,
+            32,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            16,
+            2048,
+            64,
+            2048,
+            32,
+            32,
+            32,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            16,
+            2048,
+            64,
+            2048,
+            32,
+            32,
+            32,
+            97,
+            1024,
+            32,
+            32,
+            32
+          ],
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "clip_records": [
+            {
+              "step": 2,
+              "norm": 1.6281917095184326,
+              "CPU_norm": 1.6281916417517803,
+              "coefficient": 0.030708896919104587
+            },
+            {
+              "step": 3,
+              "norm": 2.265427589416504,
+              "CPU_norm": 2.265427501579057,
+              "coefficient": 0.0220708797320899
+            }
+          ],
+          "optimizer_shard_elements": 11277,
+          "parameter_allgathers": [
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.bfloat16"
+            ],
+            "forward_weights": [
+              "torch.bfloat16"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 6,
+            "reduction_input_bytes": 180544,
+            "scaler": null
+          },
+          "final_state_digest": "92f13f6b45eb6bb2fa3599b382aae8e1b7d1bf43862e89a1eeb47bb5cd5e14ca"
+        }
+      },
+      "inactive-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "inactive",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 10824,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30133",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "inactive",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/inactive-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/inactive-seed/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d",
+          "container_id": "0c053ee78d77",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-global-loss-and-ALL-raw-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "3681317090b1923473f30e2f5f3fbceb97cc836fc486c5edf72eeaf7ec2d726e",
+                "rows": [
+                  2,
+                  3,
+                  6,
+                  7
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "dd9372c0c0484d52869b5fb9d694b648",
+              "pid": 19,
+              "start_ticks": "80610"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 100.0,
+              "case": "inactive",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4695591926574707,
+                "CPU_norm": 1.469559190523974,
+                "coefficient": 1.0
+              }
+            ],
+            "gradient_errors": [
+              {
+                "step": 0,
+                "CPU_AMP": 0.008173523490387894,
+                "CPU_FP64": 0.005715181797517745
+              }
+            ],
+            "optimizer_shard_elements": 11277,
+            "parameter_allgathers": [
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 5480,
+                "elements": 2740,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              },
+              {
+                "input_bytes": 8544,
+                "elements": 4272,
+                "dtype": "torch.bfloat16"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.bfloat16"
+              ],
+              "forward_weights": [
+                "torch.bfloat16"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 3,
+              "reduction_input_bytes": 90272,
+              "scaler": null
+            },
+            "final_state_digest": "9457206d9b70536bedf0bf97c697b72e0b337d23a5dcb247a564a67929a969f9"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-global-loss-and-ALL-raw-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "3681317090b1923473f30e2f5f3fbceb97cc836fc486c5edf72eeaf7ec2d726e",
+              "rows": [
+                2,
+                3,
+                6,
+                7
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "dd9372c0c0484d52869b5fb9d694b648",
+            "pid": 19,
+            "start_ticks": "80610"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 100.0,
+            "case": "inactive",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4695591926574707,
+              "CPU_norm": 1.469559190523974,
+              "coefficient": 1.0
+            }
+          ],
+          "gradient_errors": [
+            {
+              "step": 0,
+              "CPU_AMP": 0.008173523490387894,
+              "CPU_FP64": 0.005715181797517745
+            }
+          ],
+          "optimizer_shard_elements": 11277,
+          "parameter_allgathers": [
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 5480,
+              "elements": 2740,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            },
+            {
+              "input_bytes": 8544,
+              "elements": 4272,
+              "dtype": "torch.bfloat16"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.bfloat16"
+            ],
+            "forward_weights": [
+              "torch.bfloat16"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 3,
+            "reduction_input_bytes": 90272,
+            "scaler": null
+          },
+          "final_state_digest": "9457206d9b70536bedf0bf97c697b72e0b337d23a5dcb247a564a67929a969f9"
+        }
+      },
+      "fp32-control-seed": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "fp32-control",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 11166,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30134",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "fp32-control",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/fp32-control-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/fp32-control-seed/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d",
+          "container_id": "32a0488f1135",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "native-root-global-norm-and-ALL-clipped-gradients-0",
+              "CPU-global-loss-and-ALL-raw-gradients-0",
+              "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+            ],
+            "transcript": [
+              {
+                "step": 1,
+                "digest": "958a3fa5748ba96786b804da4a4cdabe7d0f7c3a7dd1df281e2afff996d0bffc",
+                "rows": [
+                  2,
+                  3,
+                  6,
+                  7
+                ]
+              }
+            ],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "c2d59ca54eec43bbb18492f09c7f8a88",
+              "pid": 19,
+              "start_ticks": "82261"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "FP32 control",
+              "clip_limit": 0.05,
+              "case": "fp32-control",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11282,
+              11279
+            ],
+            "clip_records": [
+              {
+                "step": 0,
+                "norm": 1.4693714380264282,
+                "CPU_norm": 1.4693713507772312,
+                "coefficient": 0.03402813451168608
+              }
+            ],
+            "optimizer_shard_elements": 11279,
+            "parameter_allgathers": [
+              {
+                "input_bytes": 10952,
+                "elements": 2738,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 10952,
+                "elements": 2738,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              },
+              {
+                "input_bytes": 17088,
+                "elements": 4272,
+                "dtype": "torch.float32"
+              }
+            ],
+            "observed_dtypes": {
+              "linear_outputs": [
+                "torch.float32"
+              ],
+              "forward_weights": [
+                "torch.float32"
+              ],
+              "reduction_dtype": "torch.float32",
+              "reduction_calls": 3,
+              "reduction_input_bytes": 90256,
+              "scaler": null
+            },
+            "final_state_digest": "2f0752a0b61798e77934d52f329a1bad3753b5ec22c2f637ebc2bef87719d933"
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "native-root-global-norm-and-ALL-clipped-gradients-0",
+            "CPU-global-loss-and-ALL-raw-gradients-0",
+            "CPU-AdamW-ALL-parameters-full-moments-and-counters-0"
+          ],
+          "transcript": [
+            {
+              "step": 1,
+              "digest": "958a3fa5748ba96786b804da4a4cdabe7d0f7c3a7dd1df281e2afff996d0bffc",
+              "rows": [
+                2,
+                3,
+                6,
+                7
+              ]
+            }
+          ],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "c2d59ca54eec43bbb18492f09c7f8a88",
+            "pid": 19,
+            "start_ticks": "82261"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "FP32 control",
+            "clip_limit": 0.05,
+            "case": "fp32-control",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11282,
+            11279
+          ],
+          "clip_records": [
+            {
+              "step": 0,
+              "norm": 1.4693714380264282,
+              "CPU_norm": 1.4693713507772312,
+              "coefficient": 0.03402813451168608
+            }
+          ],
+          "optimizer_shard_elements": 11279,
+          "parameter_allgathers": [
+            {
+              "input_bytes": 10952,
+              "elements": 2738,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 10952,
+              "elements": 2738,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            },
+            {
+              "input_bytes": 17088,
+              "elements": 4272,
+              "dtype": "torch.float32"
+            }
+          ],
+          "observed_dtypes": {
+            "linear_outputs": [
+              "torch.float32"
+            ],
+            "forward_weights": [
+              "torch.float32"
+            ],
+            "reduction_dtype": "torch.float32",
+            "reduction_calls": 3,
+            "reduction_input_bytes": 90256,
+            "scaler": null
+          },
+          "final_state_digest": "2f0752a0b61798e77934d52f329a1bad3753b5ec22c2f637ebc2bef87719d933"
+        }
+      },
+      "nan-refusal": {
+        "final": {
+          "status": "passed",
+          "rank": 1,
+          "case": "nan",
+          "action": "seed",
+          "kernel": "7.2.10-bc250rocm-r3",
+          "guardian_pid": 11513,
+          "selected_tools": "/opt/bc250-stack/tools/distributed-d09",
+          "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7",
+          "command": [
+            "python3",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_bounded_launch.py",
+            "--node-rank",
+            "1",
+            "--master-port",
+            "30135",
+            "--env-file",
+            "/opt/bc250-stack/current/python-consumers/training.env",
+            "--mount-ro",
+            "/opt/bc250-stack/current/python-consumers",
+            "--env",
+            "HF_HUB_OFFLINE=1",
+            "--shm-size",
+            "256m",
+            "/home/nik/bc250work/tools/distributed-d24/distributed_d24_trainer.py",
+            "--case",
+            "nan",
+            "--action",
+            "seed",
+            "--seed-directory",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/nan-seed",
+            "--output",
+            "/home/nik/bc250work/evidence/distributed-d24-r1/nan-refusal/rank.json"
+          ],
+          "registry_sha256": "c657bc994f5a9b068a04aa3f0c1913cb3c66365e184fb3cb13b4b53ef0d78acd",
+          "boot_id": "8c396bd1-7c03-4ad9-a9d4-2a51300b3b7d",
+          "container_id": "e6c2bb05a172",
+          "worker": {
+            "status": "passed",
+            "checks": [
+              "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+              "both-live-ranks-refuse-before-AdamW",
+              "parameters-optimizer-scheduler-unchanged-after-refusal"
+            ],
+            "transcript": [],
+            "CPU_policy_contracts": [
+              "finite-nonnegative-limits",
+              "negative-nonfinite-null-bool-string-tensor-refusals",
+              "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+              "default-low-param-low-reduce-input-cast-policy-refusals",
+              "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+              "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+            ],
+            "rank": 1,
+            "birth": {
+              "uuid": "13f62668c5f64a7a93a057488dba01f3",
+              "pid": 18,
+              "start_ticks": "83851"
+            },
+            "config": {
+              "world": 2,
+              "parameters": 22561,
+              "records": 28,
+              "accumulation": 2,
+              "per_device_micro": 2,
+              "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+              "clip_limit": 0.05,
+              "case": "nan",
+              "source_pins": {
+                "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+                "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+                "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+                "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+                "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+              },
+              "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+            },
+            "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+            "local_shard_parameter_elements": [
+              11284,
+              11277
+            ],
+            "raw_rank_nonfinite_flags": [
+              false,
+              true
+            ],
+            "raw_updates": 0
+          },
+          "agent_shutdown_clean": true,
+          "docker_containers": {
+            "before": [],
+            "after": []
+          },
+          "kernel_log_unchanged": true,
+          "registry_unchanged": true
+        },
+        "worker": {
+          "status": "passed",
+          "checks": [
+            "actual-classic-FSDP-root-and-two-BertLayer-wraps-original-FP32-shards",
+            "both-live-ranks-refuse-before-AdamW",
+            "parameters-optimizer-scheduler-unchanged-after-refusal"
+          ],
+          "transcript": [],
+          "CPU_policy_contracts": [
+            "finite-nonnegative-limits",
+            "negative-nonfinite-null-bool-string-tensor-refusals",
+            "explicit-FP32-parameter-reduction-buffer-BF16-compute-policy",
+            "default-low-param-low-reduce-input-cast-policy-refusals",
+            "explicit-BF16-working-parameters-FP32-master-reduce-policy",
+            "low-reduce-buffer-kept-grad-inputcast-FP16-refusals"
+          ],
+          "rank": 1,
+          "birth": {
+            "uuid": "13f62668c5f64a7a93a057488dba01f3",
+            "pid": 18,
+            "start_ticks": "83851"
+          },
+          "config": {
+            "world": 2,
+            "parameters": 22561,
+            "records": 28,
+            "accumulation": 2,
+            "per_device_micro": 2,
+            "precision": "BF16 working params+allgather/FP32 masters+reduce+buffers",
+            "clip_limit": 0.05,
+            "case": "nan",
+            "source_pins": {
+              "transformers/trainer.py": "fa7764933aaff94ae272cf3a545ed78e85c54c0b62ab1e309e3af6321095a095",
+              "transformers/training_args.py": "33410b1c77482c37558a8b4fd6bf4ce76208919ecba1fbd8d05741e9dc041da4",
+              "accelerate/accelerator.py": "8acd976354c667b858a61cff08baaaedd88dbef775ef4da3bb88c9327b3ddfd7",
+              "accelerate/utils/fsdp_utils.py": "6b3e87c159515558a15795abbf8803d9dffddbe3be2fbca6444983ee6ba6628d",
+              "accelerate/utils/dataclasses.py": "6f6db1018c1be71436e34baec4b48ef3add91be8056a884cb032576dd867e90d"
+            },
+            "helper_sha256": "d0a0cfc3d43f643ef146b462396e88c75f407e4125e4a9adf36e049013dad32d"
+          },
+          "source_sha256": "7857046efed5c0fb4f49e1fec3e54a86a1f9c7ea96a99762cd8034109adec4d3",
+          "local_shard_parameter_elements": [
+            11284,
+            11277
+          ],
+          "raw_rank_nonfinite_flags": [
+            false,
+            true
+          ],
+          "raw_updates": 0
+        }
+      }
+    }
+  },
+  "payload_files": {
+    "optimizer_0/__1_0.distcp": {
+      "bytes": 305742,
+      "sha256": "75a2a68bd30d2499d88c07bc39852bdefa4b432dc6ce195ea0403cca05b1a722"
+    },
+    "optimizer_0/.metadata": {
+      "bytes": 67829,
+      "sha256": "89178651b45a0e69c298643a5195a4547fa77bd15d7e3e3c211b39df7a6378f2"
+    },
+    "optimizer_0/__0_0.distcp": {
+      "bytes": 224413,
+      "sha256": "525777b047a59f0a394d1cc026c8652d0ca9d782cf7f1aa423e2603eef3e108e"
+    },
+    "pytorch_model_fsdp_0/__1_0.distcp": {
+      "bytes": 120780,
+      "sha256": "b614ef8d432bed989c9000b53c1835df0119097fcc416aadf4d731f2e63f0a65"
+    },
+    "pytorch_model_fsdp_0/.metadata": {
+      "bytes": 24557,
+      "sha256": "d5d5d8b492a8c0cbe50161832fe63218ea58b8ca68f0d99fe719e7c2504e68b2"
+    },
+    "pytorch_model_fsdp_0/__0_0.distcp": {
+      "bytes": 121036,
+      "sha256": "1980b3074f00b23047f9b06f3213f3e6ad265f7da90238bcfbdc3eacccfc6102"
+    }
+  },
+  "payload_inventories": {
+    "104": [
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "a5e0807c27dd09f8687b9f06c039cbb5ea5abdc9b8ef9db342144c58befe9b4b"
+      },
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "c40054392d7176c3bd8ea3ade2d4de7760785970c842ef4d31f49e83ef2b3221"
+      },
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/rng_state_0.pth",
+        "bytes": 14661,
+        "sha256": "08d91b3247a66656f6c003930378073995ed50643908c8f9a17fcc1d253976ef"
+      },
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      },
+      {
+        "name": "bf16-seed/checkpoint-state.pt",
+        "bytes": 179490,
+        "sha256": "18b9ebf6855182d4f51cedc46d65b89fe37d0a90cc976f971b78267fa99521a7"
+      },
+      {
+        "name": "bf16-seed/reference-3.pt",
+        "bytes": 232279,
+        "sha256": "5f3f011113965a42bad24dd18a964cf51be9c60c56d272db5323b270746ff778"
+      },
+      {
+        "name": "bf16-seed/reference-4.pt",
+        "bytes": 232215,
+        "sha256": "ec45612d0687962165482a684bc02d14b5e3ffa2f09b320fc7275cf1a75cd064"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "525777b047a59f0a394d1cc026c8652d0ca9d782cf7f1aa423e2603eef3e108e"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "75a2a68bd30d2499d88c07bc39852bdefa4b432dc6ce195ea0403cca05b1a722"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "1980b3074f00b23047f9b06f3213f3e6ad265f7da90238bcfbdc3eacccfc6102"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "b614ef8d432bed989c9000b53c1835df0119097fcc416aadf4d731f2e63f0a65"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/rng_state_0.pth",
+        "bytes": 14661,
+        "sha256": "72d17e43797fa4628787a39bdbd0223302a639eb46513fb88a147447400a1a35"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "a5e0807c27dd09f8687b9f06c039cbb5ea5abdc9b8ef9db342144c58befe9b4b"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "c40054392d7176c3bd8ea3ade2d4de7760785970c842ef4d31f49e83ef2b3221"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/rng_state_0.pth",
+        "bytes": 14661,
+        "sha256": "08d91b3247a66656f6c003930378073995ed50643908c8f9a17fcc1d253976ef"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      }
+    ],
+    "105": [
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "22443b8cf9fad5eac4f1299febccc57375de6d84deef1225c42db76aba89f42d"
+      },
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "7c4824b185790f24935aac462ec214b6433ea6788102c1de136d10f6038f22ce"
+      },
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/rng_state_1.pth",
+        "bytes": 14661,
+        "sha256": "3aa09a5d8d232ddf70dba8bc582bf0b098ba257ce2818fc7c13600ec9616d13c"
+      },
+      {
+        "name": "bf16-resume/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      },
+      {
+        "name": "bf16-seed/checkpoint-state.pt",
+        "bytes": 181985,
+        "sha256": "cb53fb692bdf7e320824c58db2914bd5e2af3006c5ba9a54938e9afdad6bbc51"
+      },
+      {
+        "name": "bf16-seed/reference-3.pt",
+        "bytes": 235439,
+        "sha256": "9421d37dd1437d6feb682bc25f4c6b9f0be2aa25174cac47b359927bc665bfda"
+      },
+      {
+        "name": "bf16-seed/reference-4.pt",
+        "bytes": 235375,
+        "sha256": "8a19e4cbb20badfd4acd30bb42487b45a64930862b936beaa889c79dd0375d73"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/optimizer_0/__0_0.distcp",
+        "bytes": 224413,
+        "sha256": "525777b047a59f0a394d1cc026c8652d0ca9d782cf7f1aa423e2603eef3e108e"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "75a2a68bd30d2499d88c07bc39852bdefa4b432dc6ce195ea0403cca05b1a722"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__0_0.distcp",
+        "bytes": 121036,
+        "sha256": "1980b3074f00b23047f9b06f3213f3e6ad265f7da90238bcfbdc3eacccfc6102"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "b614ef8d432bed989c9000b53c1835df0119097fcc416aadf4d731f2e63f0a65"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/rng_state_1.pth",
+        "bytes": 14661,
+        "sha256": "391d0c89e8ff0ca695b62efcb87b86d5984e187fa266e7d11f4fadc87610db65"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-2/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "5fabd1cc04c7c1f3be3f3c4c86469777da0e3aac8c48926cb768bb9cf7a810cf"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/optimizer_0/__1_0.distcp",
+        "bytes": 305742,
+        "sha256": "22443b8cf9fad5eac4f1299febccc57375de6d84deef1225c42db76aba89f42d"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/pytorch_model_fsdp_0/__1_0.distcp",
+        "bytes": 120780,
+        "sha256": "7c4824b185790f24935aac462ec214b6433ea6788102c1de136d10f6038f22ce"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/rng_state_1.pth",
+        "bytes": 14661,
+        "sha256": "3aa09a5d8d232ddf70dba8bc582bf0b098ba257ce2818fc7c13600ec9616d13c"
+      },
+      {
+        "name": "bf16-seed/trainer-output/checkpoint-4/scheduler.pt",
+        "bytes": 1401,
+        "sha256": "445881f2f6ccc0c113adb036eaac8addfed11c01d1356f5fa000e489df387a21"
+      }
+    ]
+  },
+  "archives": [
+    {
+      "host": 104,
+      "bytes": 1226233,
+      "sha256": "885ebd47cf3622918729a73f29b56fc95f2e281202115161447bc425d6a3c083"
+    },
+    {
+      "host": 105,
+      "bytes": 1180601,
+      "sha256": "cfe5d2fb1382df55dbec53cfc604b267ea242b6e0a7a6a5787095131adc57173"
+    }
+  ]
+}
