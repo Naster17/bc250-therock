@@ -1,0 +1,156 @@
+{
+  "archive_sha256": "5f3b45e1fc26481c871c68f453e14b530c708ec885e24576753b5de76075224b",
+  "original_container_ids": [
+    "111ea0a0d4a2",
+    "534d89e94ffe",
+    "e649ebc60cfa",
+    "634bd6f560b1",
+    "c7d8f00b94cb",
+    "4ee300f31b6c"
+  ],
+  "physical_rank": 1,
+  "qualification": "D32 CPU FP64 loss/ALL gradients/clip/ALL AdamW",
+  "reference": {
+    "ddp": {
+      "checks": [
+        "CPU-FP64-global-loss-ALL-gradients",
+        "CPU-root-norm-and-ALL-clipped-gradients",
+        "CPU-double-ALL-AdamW-parameters-moments-counters",
+        "five-finite-matched-global-batch-updates",
+        "actual-master-AdamW-shard-ownership",
+        "FP32-training-collective-inputs"
+      ],
+      "config": {
+        "blocks": 6,
+        "global_batch": 8,
+        "heads": 12,
+        "micro": 1,
+        "tokens": 256,
+        "vocab": 4096,
+        "width": 768
+      },
+      "container_id": "534d89e94ffe",
+      "global_losses": [
+        8.318974018096924,
+        8.351043701171875,
+        7.993187665939331,
+        8.049518346786499,
+        7.876844882965088
+      ],
+      "reference": {
+        "ALL_AdamW_parameters_moments_counters": true,
+        "CPU_FP64_loss": 8.477344610596989,
+        "CPU_root_norm": 1.8330619935381125,
+        "clip_coefficient": 0.27276749449560267,
+        "gradient_elements": 45871104,
+        "gradient_parameters": 76,
+        "loss": 8.477344512939453,
+        "root_norm": 1.8330620527267456
+      },
+      "registry_sha256": "d5212c7b7d351577cd029121d6cc0f9ded01d0a7da0e136716c643ddcff54327",
+      "state": {
+        "AdamW_moment_elements_each": 45871104,
+        "AdamW_state_bytes": 366969136,
+        "full_parameter_elements": 45871104,
+        "local_master_elements": 45871104
+      },
+      "torch": "2.13.0a0+gfx1013"
+    },
+    "fsdp": {
+      "checks": [
+        "CPU-FP64-global-loss-ALL-gradients",
+        "CPU-root-norm-and-ALL-clipped-gradients",
+        "CPU-double-ALL-AdamW-parameters-moments-counters",
+        "five-finite-matched-global-batch-updates",
+        "actual-master-AdamW-shard-ownership",
+        "FP32-training-collective-inputs"
+      ],
+      "config": {
+        "blocks": 6,
+        "global_batch": 8,
+        "heads": 12,
+        "micro": 1,
+        "tokens": 256,
+        "vocab": 4096,
+        "width": 768
+      },
+      "container_id": "e649ebc60cfa",
+      "global_losses": [
+        8.31897497177124,
+        8.351043701171875,
+        7.993187665939331,
+        8.049519062042236,
+        7.876844882965088
+      ],
+      "reference": {
+        "ALL_AdamW_parameters_moments_counters": true,
+        "CPU_FP64_loss": 8.477344610596989,
+        "CPU_root_norm": 1.8330619935381125,
+        "clip_coefficient": 0.27276749449560267,
+        "gradient_elements": 45871104,
+        "gradient_parameters": 76,
+        "loss": 8.477344512939453,
+        "root_norm": 1.833061933517456
+      },
+      "registry_sha256": "d5212c7b7d351577cd029121d6cc0f9ded01d0a7da0e136716c643ddcff54327",
+      "state": {
+        "AdamW_moment_elements_each": 22935552,
+        "AdamW_state_bytes": 183484528,
+        "full_parameter_elements": 45871104,
+        "local_master_elements": 22935552
+      },
+      "torch": "2.13.0a0+gfx1013"
+    },
+    "single": {
+      "checks": [
+        "CPU-FP64-global-loss-ALL-gradients",
+        "CPU-root-norm-and-ALL-clipped-gradients",
+        "CPU-double-ALL-AdamW-parameters-moments-counters",
+        "five-finite-matched-global-batch-updates",
+        "actual-master-AdamW-shard-ownership",
+        "FP32-training-collective-inputs"
+      ],
+      "config": {
+        "blocks": 6,
+        "global_batch": 8,
+        "heads": 12,
+        "micro": 1,
+        "tokens": 256,
+        "vocab": 4096,
+        "width": 768
+      },
+      "container_id": "111ea0a0d4a2",
+      "global_losses": [
+        8.318974494934082,
+        8.351043701171875,
+        7.99318790435791,
+        8.049518585205078,
+        7.87684440612793
+      ],
+      "reference": {
+        "ALL_AdamW_parameters_moments_counters": true,
+        "CPU_FP64_loss": 8.477344610596989,
+        "CPU_root_norm": 1.833061993565932,
+        "clip_coefficient": 0.272767494491463,
+        "gradient_elements": 45871104,
+        "gradient_parameters": 76,
+        "loss": 8.477344512939453,
+        "root_norm": 1.8330620527267456
+      },
+      "registry_sha256": "d5212c7b7d351577cd029121d6cc0f9ded01d0a7da0e136716c643ddcff54327",
+      "state": {
+        "AdamW_moment_elements_each": 45871104,
+        "AdamW_state_bytes": 366969136,
+        "full_parameter_elements": 45871104,
+        "local_master_elements": 45871104
+      },
+      "torch": "2.13.0a0+gfx1013"
+    }
+  },
+  "schema": 1,
+  "source_sha256": {
+    "capacity_plan_d32.py": "8c7687e47917d79c6433322f296493a98ea7bcd555333a0a27bdbae4985f4bbc",
+    "distributed_d05_train.py": "a598b26b0c30ddd1a6efe205a4e28bce8a03f1f69467aa0bdf82fbe7c7e750bb",
+    "distributed_d32_capacity.py": "f6e78720483d065c55a55e37df6cc604dd8bfc2df5e4f408ae6144b32af225ab"
+  }
+}
