@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 """Reverify D41 raw references, export metadata only, and preserve original oracles."""
+import fcntl
 import hashlib
 import json
 import os
@@ -10,13 +11,17 @@ from board_preflight import reservation
 from artifact_d35 import load_manifest
 from artifact_d41 import validate
 from capacity_plan_d35 import CONFIG, PARAMETERS
+from finite_reference_d41 import scan
 
 
 def main():
     assert os.geteuid() == 0 and os.uname().nodename == "bc250"
     work = Path("/home/nik/bc250work")
     root = work / "evidence/distributed-d41-r1"
-    with reservation("d41-final-export"):
+    with reservation("d41-final-export"), Path(
+        "/opt/bc250-stack/current/.runtime.lock"
+    ).open("r") as lock:
+        fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
         records = {}
         for label in ["control", "large-oracle"]:
             phase = root / label
@@ -43,6 +48,15 @@ def main():
             manifest_path, records["large-oracle"]["worker"]["manifest_sha256"]
         )
         assert len(large["tensors"]) == 244
+        finite = dict(initial_values=0, gradient_values=0, max_chunk_bytes=1024**2)
+        for entry in large["tensors"]:
+            finite["initial_values"] += scan(manifest_path.parent, entry["initial"], 4)
+            finite["gradient_values"] += scan(
+                manifest_path.parent, entry["gradient"], 8
+            )
+        assert (
+            finite["initial_values"] == finite["gradient_values"] == large["parameters"]
+        )
         old = work / "evidence/distributed-d35-r1/cpu-reference"
         old_worker = json.loads((old / "rank.json").read_text())
         old_path = old / "reference/manifest.json"
@@ -55,6 +69,7 @@ def main():
             (root / name).write_bytes(source.read_bytes())
         result = dict(
             status="passed",
+            finite_blob_scan=finite,
             records=records,
             boot_id=Path("/proc/sys/kernel/random/boot_id").read_text().strip(),
             kernel=os.uname().release,
@@ -67,7 +82,7 @@ def main():
             GPU_admitted=False,
         )
         (root / "handoff.json").write_text(json.dumps(result, indent=2) + "\n")
-        archive = work / "evidence/distributed-d41-evidence-r1.tar.gz"
+        archive = work / "evidence/distributed-d41-evidence-r2.tar.gz"
         assert not archive.exists()
         with tarfile.open(archive, "w:gz", compresslevel=1) as t:
             for path in [

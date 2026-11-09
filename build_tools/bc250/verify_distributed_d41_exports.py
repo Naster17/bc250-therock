@@ -31,7 +31,8 @@ SOURCE_SHA256 = {
 HOST_SHA256 = {
     "guard_distributed_d41_on_host.py": "431b720b4c00166ea6b322596313ecad46d668548c5e4ee8c22c31a08023c260",
     "cpu_d41_bounded_launch.py": "ca316c49a61e0a129221aad728efabf0ef100bb30a7fb2e5a16128e9d88fc4de",
-    "export_distributed_d41_on_host.py": "79c0aab9b699259581039353475f0e2cfc8d59c7cd944106144292ed350ed5ec",
+    "export_distributed_d41_on_host.py": "420221a87211a834346ccb098d750a77aa5098425127049d83feda6c16ad268b",
+    "finite_reference_d41.py": "e04414b84de267c0245289c1d9479a06b53b733f5b350625fa0f716ef95f86a9",
 }
 CHECKPOINT_SHA = "eab49639231cc989d65c04212923eef0ade4aa059b68bcabfe2819007f34e69f"
 
@@ -62,6 +63,11 @@ def read(path, baseline, baseline_path):
         assert (
             h["GPU_admitted"] is False
             and h["large_reference_payload_bytes"] == PARAMETERS * 12
+        )
+        assert h["finite_blob_scan"] == dict(
+            initial_values=PARAMETERS,
+            gradient_values=PARAMETERS,
+            max_chunk_bytes=1024**2,
         )
         assert h["boot_id"] == baseline["boot_id"] and h["kernel"] == baseline["kernel"]
         assert record("CPU-control-manifest.json") == old_manifest
@@ -242,10 +248,7 @@ def read(path, baseline, baseline_path):
                     CPU_FP64_loss=w["CPU_FP64_loss"],
                     whole_cgroup_peak_MiB=max(s["memory.peak"] for s in trace)
                     / 1024**2,
-                    process_peak_RSS_MiB=max(
-                        s["process_RSS_high_water_bytes"] for s in trace
-                    )
-                    / 1024**2,
+                    process_peak_RSS_MiB=max(s["VmHWM"] for s in trace) / 1024**2,
                     host_min_available_GiB=min(s["host_available_bytes"] for s in trace)
                     / 1024**3,
                     final_free_disk_GiB=w["snapshots"][-1]["free_disk_bytes"] / 1024**3,
@@ -276,7 +279,7 @@ def main():
         status="passed",
         groups=16,
         guards=2,
-        local_tests=97,
+        local_tests=100,
         host="104",
         boot_id=h["boot_id"],
         CPU_large_oracle_published=True,
