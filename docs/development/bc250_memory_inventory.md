@@ -28,6 +28,9 @@ mutations ANDpostclipLIVEcheckpointRNGoption drift BOTHrefusebeforeAdamW/zero/
 unchangedstate; private rank1saveduse_reentrant corruption BOTHrefuseoptimizer
 restore/originalbytesintact/discardabortedsession. RetainedD30BF16control passes.
 163groups/18ACKguards/30CPUpatterns536obs/62localtests/lint pass/no failedGPUphase.
+6c4758c18 pinsimmutableD30/D31archivehelperhashes instead ofmutablecurrentbytes;
+botharchivereplays yieldbyteexactoriginalverifiedJSON/finalverifiersinGit+D31
+namespace(aftermetadataexport), noGPU/mathchange/hashweakening.
 Initiallocaltempquota +7devshmmounttesterrors resolvedwithownedworkspaceTMPDIR;
 mountguardsunchanged/no cachesdeleted. PLAN01resources/locks retained,logs+registry
 unchanged/finalidle/nojobs/guards. Entry2d86d523r2/e902e636r3 unchanged;nativeprovider/

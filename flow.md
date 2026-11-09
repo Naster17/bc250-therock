@@ -9,8 +9,8 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **PLAN-04 / D31 completed 2026-11-09; PLAN-04 bounded scope COMPLETE:** code/
-  verifier `725e495c8`. [Report](docs/development/bc250_distributed_d31_results/README.md),
+- **PLAN-04 / D31 completed 2026-11-09; PLAN-04 bounded scope COMPLETE:** code
+  `725e495c8`; final archive-verifier maintenance `6c4758c18`. [Report](docs/development/bc250_distributed_d31_results/README.md),
   [verified results](docs/development/bc250_distributed_d31_results/verified-results.json).
   NEW BC250BF16CheckpointPeftFSDPTrainer in BOTH additive tools/distributed-d31.
   Combines D29 native nonreentrant+preserveRNG enable/functionguards with explicit
@@ -41,6 +41,12 @@ release claims must not override this cursor and current manifests.
   intact; modelmayalreadyload/discardabortedsession. RetainedD30BF16control passes.
   frozen-policy-seed PRIVATECOPY,notrun.163groups/18ACKguards/30CPUpatterns536obs/
   62localtests/Black/criticalRuff+F401/diff pass; no failedGPUphase/fullupstreamCI.
+  Postqualification found D30/D31archiveverifiers compared frozen evidence to
+  mutablecurrenthelperbytes.6c4758c18 pins IMMUTABLEqualifiedsourcehashes; replay
+  BOTHarchives produces BYTEEXACToriginalverifiedJSON,noGPUrerun/mathchange.
+  Finalverifiers installed inD31namespace AFTERmetadataexport; finalsourceinGit,
+  earlierverifiers retainedinarchives/originalnamespaces. D31d30/d31-verifier-replay
+  JSON/log artifacts retainedlocally. No hashcheckweakened.
   Initialzshheredoc tempquota stoppedwritesBEFOREtrackedsourcechange; workspace
   disk26GiBfree. Bash+TMPDIR=/dev/shm fixedheredocs; unittestthere correctlyrefused
   7runtime/devshmmounts. Owned workspaceTMPDIR kernel/artifacts/distributed-d31/

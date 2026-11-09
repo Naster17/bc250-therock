@@ -1,6 +1,6 @@
 # D31: combined BF16 PEFT FSDP and activation checkpointing
 
-Completed 2026-11-09; implementation/verifier `725e495c8`.
+Completed 2026-11-09; implementation `725e495c8`; final verifier maintenance `6c4758c18`.
 **163 groups/18 acknowledged guards**,30 CPU contract patterns/536 observations.
 [Verified results](verified-results.json).
 [Usage](../../../../BC250_DISTRIBUTED_GUIDE.md#combined-bf16-peft-and-activation-checkpointing-d31).
@@ -84,6 +84,11 @@ Metadata excludes tensor/RNG/safetensors payloads; hashes are in verified result
 Guardian/controller PIDs(.104/.105): seed6265/23444, controls6850/24260,
 resumes9014/27004, allocator9961/28238,exports10451/28891, all exit0.
 No failed GPU phase;62 local regressions/Black/critical Ruff+F401/diff pass.
+Final verifier maintenance6c4758c18 replaces current-source comparisons with
+immutable qualified D30/D31 source hashes. Replaying BOTH archived qualifications
+produces byte-identical original verified JSON. No GPU rerun or bound change.
+Final verifiers installed in D31 namespace AFTER metadata export; committed final
+sources are in Git, original verifier variants remain in archives/namespaces.
 Final idle preflight passes/no jobs/containers/armed guards; kernel logs/registries
 unchanged. Docs/flow/manifest snapshots synced to BOTH host docs entry points.
 
