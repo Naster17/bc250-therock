@@ -13,7 +13,8 @@ import artifact_d35 as artifact
 from artifact_d41 import sources as oracle_sources
 import distributed_d35_growth as base
 import distributed_d39_units as previous
-from audit_units_d39 import Auditor
+from audit_chunks_d42 import Auditor
+from cpu_adamw_chunks_d42 import equivalence_check
 from capacity_plan_d42 import descriptor, admit, READINESS_SECONDS
 from capacity_plan_d41 import CONFIG, CONTROL, parameters
 from fixture_d41 import select
@@ -34,6 +35,8 @@ def sources():
                 "distributed_d42_capacity.py",
                 "serve_reference_d42.py",
                 "oracle_descriptor_d42.json",
+                "audit_chunks_d42.py",
+                "cpu_adamw_chunks_d42.py",
             ]
         }
     )
@@ -59,10 +62,15 @@ class StageAuditor(Auditor):
 
     def qualify(self, *args, **kwargs):
         self.cache_events = []
+        self.equivalence = equivalence_check()
         self.trim("after-wrap-before-backward")
         result = super().qualify(*args, **kwargs)
         result["cache_trim_events"] = self.cache_events
+        result["CPU_AdamW_chunk_equivalence"] = self.equivalence
         return result
+
+    def after_updated_audit(self):
+        self.trim("before-local-moments")
 
     def parameters(self, model, entries, stage):
         self.trim(stage)

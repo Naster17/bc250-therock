@@ -75,7 +75,7 @@ def main():
     assert a.label.replace("-", "").isalnum()
     preflight()
     rank = 0 if os.uname().nodename == "bc250" else 1
-    series = Path("/home/nik/bc250work/evidence") / "distributed-d42-r4"
+    series = Path("/home/nik/bc250work/evidence") / "distributed-d42-r5"
     root = series / a.label
     root.mkdir(parents=True)
     os.chown(root, 1000, 1000)
@@ -111,7 +111,7 @@ def main():
         (tools / "bc250_distributed.py").read_bytes()
     ).hexdigest()
     consumers = Path("/opt/bc250-stack/current/python-consumers")
-    label = "d42-r4-" + a.label
+    label = "d42-r5-" + a.label
 
     def owned_containers():
         return subprocess.check_output(

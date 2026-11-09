@@ -17,7 +17,7 @@ LABELS = ["control", "large-audit"]
 
 def main():
     work = Path("/home/nik/bc250work")
-    root = work / "evidence/distributed-d42-r4"
+    root = work / "evidence/distributed-d42-r5"
     rank = 0 if os.uname().nodename == "bc250" else 1
     lock = Path(
         "/opt/bc250-stack/current/.runtime.lock"
@@ -101,7 +101,7 @@ def main():
             selected_daily=str(Path("/opt/bc250-stack/current").resolve()),
         )
         (root / "handoff.json").write_text(json.dumps(h, indent=2) + "\n")
-        archive = work / "evidence/distributed-d42-evidence-r4.tar.gz"
+        archive = work / "evidence/distributed-d42-evidence-r5.tar.gz"
         assert not archive.exists()
         with tarfile.open(archive, "w:gz", compresslevel=1) as t:
             for path in [
@@ -111,6 +111,7 @@ def main():
                 work / "evidence/distributed-d42-r1",
                 work / "evidence/distributed-d42-r2",
                 work / "evidence/distributed-d42-r3",
+                work / "evidence/distributed-d42-r4",
                 work / "tools/distributed-d42-preliminary-r1",
             ]:
                 t.add(

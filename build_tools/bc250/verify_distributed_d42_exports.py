@@ -46,15 +46,17 @@ SOURCE_SHA256 = {
     "cpu_oracle_d41.py": "cd1f9df577dde6ff2c238f665c614c10dad2d4366b591b709849eb9192aa9434",
     "reference_transport_d40.py": "829043e2aab1877f2ac3805c7d4264df7b22db92aa04615ad02556a5207726bf",
     "capacity_plan_d42.py": "fbd64603efefaef31e93d4214e0774e43407a87950d5567218afd3b6d54b9e4b",
-    "distributed_d42_capacity.py": "00788ff64f48eae6af45a35dde25d54dc1c8b21b5830a6051aa1c9d6731d68d4",
+    "distributed_d42_capacity.py": "de185f0a3d5306ce113e02e8d21b2f43df360fb0393bdaaac55b40ae763cb5b7",
     "serve_reference_d42.py": "8300b5e18a69110e7a2378b32cc22962ab81c539f8644444c3124edca634627b",
     "oracle_descriptor_d42.json": "a0af0b1f62295742d23b8e809ac320e3da60d0d8fdc2e4783d9fa6c1e068a867",
+    "audit_chunks_d42.py": "d1a5b2b169b75124d487075689cc07848083ef617505028468f90d8c2429f441",
+    "cpu_adamw_chunks_d42.py": "9e9d7e5ede0facad96a6339530ecb160c33b5800e024b6415f5e542f94a99cd4",
 }
 HOST_SHA256 = {
-    "guard_distributed_d42_on_host.py": "3fa55a74cd7fa373acc122c63e41d28f6f49888fcb39ea0f08ffdb781438c9c1",
+    "guard_distributed_d42_on_host.py": "19149e5121cfa3b634f2db49c9d223f230e76dfa36b23070cc2b2ee2b5bd33f6",
     "distributed_d42_bounded_launch.py": "574372d65a3f7023c70a7fdce208d1ef2d74cfb525545f2c965442695c99b148",
     "deadline_guard_d42.py": "bce97bfb137c77ff28f1ad30ea23f9aada593174c58e91a2e1628a5b8b011d7c",
-    "export_distributed_d42_on_host.py": "3ffc359e424c117c7598f670413b0a6b5d3f38c6aedd0bf51a3d5bd47ca59c07",
+    "export_distributed_d42_on_host.py": "00904838a268802a25d8c7c256469e8b1f7043069c00f7b1e24ae16268f1796c",
 }
 LABELS = ["control", "large-audit"]
 
@@ -95,7 +97,7 @@ def predecessors(workspace):
 
 
 def read(path, rank, old, oracle):
-    prefix = "home/nik/bc250work/evidence/distributed-d42-r4/"
+    prefix = "home/nik/bc250work/evidence/distributed-d42-r5/"
     source = "home/nik/bc250work/tools/distributed-d42/"
     with tarfile.open(path) as archive:
 
@@ -237,8 +239,18 @@ def read(path, rank, old, oracle):
                 and ref["clipping_rtol"] == 5e-5
             )
             assert ref["local_moment_elements_each"] == count // 2
-            assert ref["maximum_CPU_moment_elements"] == 2 * max(
-                math.prod(e["shape"]) for e in entries.values()
+            assert ref["maximum_CPU_moment_elements"] == 2 * 1024**2
+            assert ref["CPU_AdamW_chunk_elements"] == 1024**2
+            assert ref["CPU_AdamW_chunks_checked"] == sum(
+                (math.prod(e["shape"]) + 1024**2 - 1) // 1024**2
+                for e in entries.values()
+            )
+            assert ref["CPU_AdamW_values_checked"] == count
+            assert ref["CPU_AdamW_chunk_equivalence"] == dict(
+                chunk_elements=1024**2,
+                synthetic_elements=2 * 1024**2 + 13,
+                chunks=3,
+                ALL_values_moments_step_exact=True,
             )
             for key in [
                 "actual_raw_spool_sha256",
@@ -250,7 +262,7 @@ def read(path, rank, old, oracle):
                 )
             if shape == "control":
                 for key, value in old[1]["remote-reference"]["reference"].items():
-                    if key != "audit":
+                    if key not in {"audit", "maximum_CPU_moment_elements"}:
                         assert ref[key] == value, (key, "D40")
             cache = ref["cache_trim_events"]
             assert [e["stage"] for e in cache] == [
@@ -258,6 +270,7 @@ def read(path, rank, old, oracle):
                 "raw-gradient",
                 "clipped-gradient",
                 "updated-parameter",
+                "before-local-moments",
             ]
             assert all(
                 e["after"]["reserved_bytes"] <= e["before"]["reserved_bytes"]
