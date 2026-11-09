@@ -117,6 +117,10 @@ def read(path, rank):
                 assert w["median_update_seconds"] == statistics.median(
                     s["seconds_max_rank"] for s in w["samples"]
                 )
+                assert all(
+                    s["traffic_input_bytes"] == w["samples"][0]["traffic_input_bytes"]
+                    for s in w["samples"]
+                )
                 for sample in w["samples"]:
                     assert sample["seconds_max_rank"] >= sample["seconds_local"] > 0
                     assert (
@@ -170,6 +174,17 @@ def read(path, rank):
                     / 1024**2,
                     whole_cgroup_peak_MiB=max(s["memory.peak"] for s in trace)
                     / 1024**2,
+                    measured_host_min_available_GiB=min(
+                        s["host_available_bytes"] for s in samples
+                    )
+                    / GIB,
+                    traffic_input_bytes=(
+                        None
+                        if qualification
+                        else w["samples"][0]["traffic_input_bytes"]
+                    ),
+                    host_swap_max_bytes=max(s["host_swap_used_bytes"] for s in trace),
+                    cgroup_swap_max_bytes=max(s["memory.swap.current"] for s in trace),
                     host_min_available_GiB=min(s["host_available_bytes"] for s in trace)
                     / GIB,
                     local_master_elements=PARAMETERS // world,

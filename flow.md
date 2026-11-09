@@ -9,6 +9,54 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D34 completed 2026-11-09 — bounded159.8M correctness/measurement; PLAN-05 OPEN.**
+  Implementation `58e91cb5d`. [Report](docs/development/bc250_distributed_d34_results/README.md),
+  [verified metadata](docs/development/bc250_distributed_d34_results/verified-results.json).
+  Additive tools/distributed-d34 on BOTH. Fixed eager tied GPT2/159,807,488 FP32
+  trainable params/width1024/12blocks/16heads/vocab8192/positions256/seq128/global2/
+  micro1/dropout0/cacheFalse; native AdamW/rootclip.5/no AMP/PEFT/checkpoint/compile.
+  Separate oneboard+FSDP qualification checks CPU FP64 loss/ALL148 gradients,
+  exact initialized values/tied weights, CPU norm/ALLclip/ALL updated values and
+  ALL local AdamW moments/counters at unchangedD32 bounds. CPU AdamW checks stream
+  one parameter at a time; max moment scratch128MiB, no full CPU optimizer/export.
+  Maxgradienterror1.85513e-7; loss9.1934337616 vsCPU9.1934335610. Each FSDP rank
+  owns79,903,744 master/moment elements vs159,807,488single. One local micro avoids
+  full no_sync gradient. Fresh workers bind successful qualification digest/source/
+  shape/mode/rank/Torch/registry; package modeling pins retained, fullaudits forbidden.
+  Initial update+two warmups+five measured, bothorders; laterglobal losses agree
+  across modes/hosts/orders within1e-5.64groups/12ACKguards/71localtests/3private
+  archive corruptionrefusals/Black/criticalRuff+F401/diff pass, no failedGPUphase.
+  Medianms single150.288–151.092,FSDP8088.982–8103.416 (~54xslower). LiveGPU
+  2737.507 vs1493.502–1495.365MiB (~45.4%lower),reserved2748vs1956–2064MiB.
+  Native collective input/rank/update gather621924352B+reduce639229952B; notwirebytes,
+  eth0 both1000Mb/s. Fresh cgroup maxima1082single/1648FSDP MiB; host available
+  10.107–10.234single/10.093–10.337FSDP GiB. No clear wholehost capacity gain;
+  counters overlap and must not be summed. Both fit; larger-than-single unproven.
+  CPUqualification cgroup peak≤4991.34MiB/hostavailable≥5.811GiB; measuredhost≥10.093.
+  All host/cgroup swap0/OOM0. Admission≥10GiBhost/≥6GiBdevice,10GiB+12GiB cap;
+  4CPUcpuset0–3/512PIDs/256MiBshm/600s recovery/460s child and PLAN01 EXreservation+
+  SHruntimelock retained. Guarded measurement17.5–18.2ssingle/81.6–82.1sFSDP includes
+  imports/coordination, not training-only; qualification37–38s/60–61s separate.
+  Not D33speedup (differentmodel/batch/tokens), nor convergence/restart/longrunproof.
+  Exactcommands/CIDs/UUIDs/logs/ACKs evidence/distributed-d34-r1/{qualify-single,
+  qualify-fsdp,single-a,fsdp-a,fsdp-b,single-b},sequence.json/controllerlogs.
+  Guardians104:27806,28632,29278,29666,30412,31143;105:12390,13628,14498,14981,
+  16058,17125. Sequence28630/13627,exports31744/17992 exit0. Local artifacts
+  kernel/artifacts/distributed-d34;104archive678906B SHA680cca7c072671faadb97d278322f59045672568a6881bbc2137868c0433c234;
+  105643665B SHAd02d50a86aad79ecd60052dd19b207da000ed60863d037b5bfec96fc8ed3053d.
+  Initial nonrootstage permission refusal preserved as prestage log; rootstage
+  succeeds before GPU. Original evidence/checkpoints/builds/caches/apps retained.
+  Final idle/nojobs/containers/armedguards; kernel+registry unchanged. Boots2d86d523
+  (.104r2)/e902e636(.105r3) unchanged; nativePLAN02MIOpen381eac05/Torcha524/RCCL/
+  D09/image/packages/defaults/fallbacks preserved. No nativebuild/reboot/download/
+  prefixmutation/apps/foreignstop. Docs/flow/manifest snapshots synced BOTH.
+  Historical PythonCPUfault distinctfromfixedVMheap/D05exit/D21load.
+  **NEXT PLAN-05 / D35 (planned):** staged source-bound CPUgradient artifacts and
+  storage/memory admission for352,957,440 params, avoiding fullCPUoracle+GPUstate
+  coexistence. Qualify that pipeline before any352.96M GPUadmission, then shape-
+  specific single/FSDP and freshmeasurement. Keep1.024B blocked; no extrapolated
+  physicalfit or deliberateOOM. Six important packages remain.
+
 - **PLAN-05 / D33 completed 2026-11-09 — fresh memory controls; PLAN-05 OPEN.**
   Implementation/verifier `199d3f2ab`. [Report](docs/development/bc250_distributed_d33_results/README.md),
   [verified results](docs/development/bc250_distributed_d33_results/verified-results.json),
