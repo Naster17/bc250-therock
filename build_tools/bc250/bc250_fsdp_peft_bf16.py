@@ -21,18 +21,41 @@ PRECISION = dict(
 )
 
 
-def validate_precision(args):
+def validate_precision(args, *, checkpointing=False):
     if (
         args.bf16 is not True
         or args.fp16
-        or args.gradient_checkpointing
+        or args.gradient_checkpointing is not checkpointing
         or not _bf16_parameter_policy_matches(
             (args.fsdp_plugin_args or {}).get("mixed_precision_policy")
         )
     ):
         raise ValueError(
-            "Explicit BF16 working/FP32 master-reduce policy; checkpointing off required"
+            "Explicit BF16 working/FP32 master-reduce and matching checkpoint policy required"
         )
+
+
+def precision_runtime_matches(owner, *, checkpointing=False):
+    """Shared BF16 runtime checks; checkpoint function admission stays separate."""
+    try:
+        validate_precision(owner.args, checkpointing=checkpointing)
+        if (
+            not checkpointing
+            and unwrap(owner.model).get_base_model().is_gradient_checkpointing
+        ):
+            return False
+        acc = getattr(owner, "accelerator", None)
+        return acc is None or (
+            acc.native_amp
+            and acc.mixed_precision == "bf16"
+            and acc.scaler is None
+            and _bf16_parameter_policy_matches(
+                acc.state.fsdp_plugin.mixed_precision_policy
+            )
+            and not acc.state.fsdp_plugin.activation_checkpointing
+        )
+    except (ValueError, TypeError, AttributeError):
+        return False
 
 
 class BC250BF16PeftFSDPTrainer(BC250PeftFSDPTrainer):
@@ -70,24 +93,7 @@ class BC250BF16PeftFSDPTrainer(BC250PeftFSDPTrainer):
             )
 
     def _partition_matches(self):
-        if not super()._partition_matches():
-            return False
-        try:
-            validate_precision(self.args)
-            if unwrap(self.model).get_base_model().is_gradient_checkpointing:
-                return False
-            acc = getattr(self, "accelerator", None)
-            return acc is None or (
-                acc.native_amp
-                and acc.mixed_precision == "bf16"
-                and acc.scaler is None
-                and _bf16_parameter_policy_matches(
-                    acc.state.fsdp_plugin.mixed_precision_policy
-                )
-                and not acc.state.fsdp_plugin.activation_checkpointing
-            )
-        except (ValueError, TypeError, AttributeError):
-            return False
+        return super()._partition_matches() and precision_runtime_matches(self)
 
     def _checkpoint_policy(self):
         result = super()._checkpoint_policy()
