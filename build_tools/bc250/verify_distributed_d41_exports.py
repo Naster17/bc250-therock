@@ -283,6 +283,7 @@ def main():
         host="104",
         boot_id=h["boot_id"],
         CPU_large_oracle_published=True,
+        finite_blob_scan=h["finite_blob_scan"],
         GPU_admitted=False,
         larger_GPU_fit_qualified=False,
         native_runtime_changed=False,

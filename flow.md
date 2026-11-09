@@ -9,6 +9,53 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D41 completed 2026-11-09 —1.024B CPU oracle published; PLAN-05 OPEN.**
+  Producer `3afa04930`, final finite scanner `f75cb361e`.
+  [Report](docs/development/bc250_distributed_d41_results/README.md),
+  [verified results](docs/development/bc250_distributed_d41_results/verified-results.json).
+  Additive tools/distributed-d41104ONLY. CPU FP64 GPT2:1,024,471,040 params/20blocks/
+  width2048/heads32/vocab8192/positions256/seq128/global2, eager/dropout0/cacheOFF,
+  tied weights; original D35 construction/math with explicit source-bound dimensions.
+  Fresh352.96M control ALLinitial/grad hashes/loss EXACT D35, no fullref duplicate.
+  Native nonreentrant/preserveRNG checkpoint guards21 modules,20→40 block entries
+  (early-stop caveat); ALL244 hooks once/finite grads/rawroundtrips, zero retained,
+  max visible16,777,216 gradient elements/128MiB roundtrip. CPU loss9.416439180620552,
+  FP64 initial preserved afterbackward, dropout0 RNGunchanged. No optimizer/PG/agent/
+  GPUdevices/CUDAinit. Direct D09 ordinary Torch launcher+identity bootstrap, same
+  native cohort; explicit removal of kfd/render mappings. CPU/GPU claims separate.
+  CPU admission beforeallocation:7.633GiB FP64params+1.25runtime+.5engine+3×128MiB
+  scratch=9.758GiB planned;≥12GiB available/planned3GiBhostreserve. Softstop10GiB,
+  hard11GiB/combined12GiB/4CPU0–3/512PID/256MiBshm; extra1GiB vsoldCPU cap explicit.
+  Worker perphase/tensorgates+guardian100ms monitor stops onlyowned container on
+  softRAM/host<3GiB/disk<5GiB, no abort needed. Disk full11.449GiBpayload+5GiBreserve+
+  64MiBmetadata admitted; no deliberateOOM/extrapolatedfit. PLAN01 EXreservation+
+  SHruntime/600s guard/460s child/ACKafterexit retained. No global cacheflush.
+  Large cgroup9268.129MiB=9.051GiB/VmHWM9498.918MiB, hostavailable≥5.365GiB,
+  swap/OOM0. Control3748.035MiB; different shape/direct-noagent, no speedup inference.
+  Workerlarge172.9s/guard181.8s inclI/O/recompute/checks; control62.8/71.7s.
+  Durable104 evidence/distributed-d41-r1/large-oracle/reference has488rawfiles:
+  12,293,652,480B, plusmanifest SHA99b36b92073fddf2e68da39525392b202992ac8263693e8b2247866165077efb.
+  Preserve this and oldD35refs BOTH; no rawcopy to105/workstation. Final disk5.424GiB.
+  R2 export rehashes old/newrefs and independently scans ALL initialFP32+gradientFP64
+  finite values/SHA in1MiBchunks withoutTorch/model; each1,024,471,040 values pass.
+  R1 preliminary pre-finite-scan metadata retained, no model rerun.16CPUgroups/2ACKs/
+  100localtests/3 source-hook-admission archive refusals/Black/criticalRuff+F401/diff
+  pass. No failed model phase/relaxed gate/fullCI/GPUfit claim. .104guardians22608/
+  23355,exports24339(r1)/25094(r2) exit0; exact CID/UUID/commands/ACK/cgroup/logs kept.
+  Local kernel/artifacts/distributed-d41; final metadata archive843352B SHA
+  622ed7be3fdb7abf27e85af247869cd5fa63a628323fe2c0d623924427101cc3.
+  Final idle/no jobs/containers/armed guards; boots2d86d523r2/e902e636r3/defaults/
+  native PLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/fallbacks unchanged. No native
+  build/install/reboot/download/prefixmutation/apps/foreignstop.105docs-only update.
+  Docs/flow/manifest synced BOTH. PythonCPUfault stilldistinct fixedVMheap/D05/D21.
+  **NEXT PLAN-05 / D42 (planned):** source-bound1.024B two-host per-unit FSDP GPU
+  audit with104 D41oracle/105 boundedstream, ALL original mathgates/128MiB reader.
+  Beforelaunch review RAM/device/scratch and startup/readiness/guard budgets: two
+  remote12.294GB verificationpasses take≥197s atideal1Gb/s, exceed old120sPGtimeout.
+  Explicitreadybarrier or reviewedboundedtimeouts, don'treuseD40blindly. No deliberate
+  singlefullFP32AdamWOOM (statefloor>RAM). GPUcapacity remains unqualified; later
+  training-only measurement separate. Six important packages remain.
+
 - **PLAN-05 / D40 completed 2026-11-09 — bounded reference transport; PLAN-05 OPEN.**
   Implementation `470c4046b`. [Report](docs/development/bc250_distributed_d40_results/README.md),
   [verified results](docs/development/bc250_distributed_d40_results/verified-results.json).

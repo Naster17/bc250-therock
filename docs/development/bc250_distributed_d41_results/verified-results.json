@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "groups": 16,
+  "guards": 2,
+  "local_tests": 100,
+  "host": "104",
+  "boot_id": "2d86d523-c909-415b-86fa-a75be9460dde",
+  "CPU_large_oracle_published": true,
+  "finite_blob_scan": {
+    "initial_values": 1024471040,
+    "gradient_values": 1024471040,
+    "max_chunk_bytes": 1048576
+  },
+  "GPU_admitted": false,
+  "larger_GPU_fit_qualified": false,
+  "native_runtime_changed": false,
+  "reference_payload_bytes": 12293652480,
+  "manifest_sha256": "99b36b92073fddf2e68da39525392b202992ac8263693e8b2247866165077efb",
+  "control_matches_D35_exactly": true,
+  "rows": [
+    {
+      "shape": "control",
+      "parameters": 352957440,
+      "CPU_FP64_loss": 9.364227904214559,
+      "whole_cgroup_peak_MiB": 3748.03515625,
+      "process_peak_RSS_MiB": 4046.62109375,
+      "host_min_available_GiB": 10.673847198486328,
+      "final_free_disk_GiB": 16.87484359741211,
+      "retained_gradient_elements": 0,
+      "maximum_roundtrip_bytes": 100663296,
+      "worker_seconds": 62.7658224830011,
+      "guarded_phase_seconds": 71.65730839299795
+    },
+    {
+      "shape": "large",
+      "parameters": 1024471040,
+      "CPU_FP64_loss": 9.416439180620552,
+      "whole_cgroup_peak_MiB": 9268.12890625,
+      "process_peak_RSS_MiB": 9498.91796875,
+      "host_min_available_GiB": 5.365131378173828,
+      "final_free_disk_GiB": 5.424480438232422,
+      "retained_gradient_elements": 0,
+      "maximum_roundtrip_bytes": 134217728,
+      "worker_seconds": 172.89415521599585,
+      "guarded_phase_seconds": 181.7686541850053
+    }
+  ],
+  "baseline_archive": {
+    "path": "kernel/artifacts/distributed-d35/104-evidence-r1.tar.gz",
+    "bytes": 1237695,
+    "sha256": "46fecff3a5da132bd15813b95c341ebfd336da9d15f16ebaf86bb1c3259deee0"
+  },
+  "archive": {
+    "path": "kernel/artifacts/distributed-d41/104-evidence-r2.tar.gz",
+    "bytes": 843352,
+    "sha256": "622ed7be3fdb7abf27e85af247869cd5fa63a628323fe2c0d623924427101cc3"
+  }
+}

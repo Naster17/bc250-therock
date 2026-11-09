@@ -1,0 +1,17 @@
+[
+  {
+    "case": "source-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "hook-count-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "admission-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  }
+]
