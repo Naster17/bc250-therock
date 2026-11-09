@@ -8,6 +8,13 @@ from pathlib import Path
 import tarfile
 from export_distributed_d31_on_host import PHASES
 
+# Freeze tested identities so later source work cannot invalidate old evidence.
+QUALIFIED_SOURCES = {
+    "bc250_fsdp_peft_bf16_checkpoint.py": "bd62c1c5aa0d2d2132738d323d8d88084bb2219ad8c17ee12a577f56a88f2c99",
+    "bc250_fsdp_peft_bf16.py": "b836185fbe3102e2c3b49de76b37de025ea11a89c9d92fd77d5f3c069ff682cc",
+    "bc250_fsdp_activation.py": "9a35b1d45c30c67eb125e73d851f0dcbbfdf45ccc520c0f7f230f996df321b76",
+}
+
 
 def read(path):
     with tarfile.open(path) as archive:
@@ -31,18 +38,15 @@ def read(path):
             cast_root_forward_inputs=False,
             activation_checkpointing=True,
         )
-        helper = "bc250_fsdp_peft_bf16_checkpoint.py"
-        assert (
-            archive.extractfile(source + helper).read()
-            == Path(__file__).with_name(helper).read_bytes()
-        )
         assert handoff["checkpoint_policy"]["activation_checkpointing"] == dict(
             use_reentrant=False, preserve_rng_state=True
         )
-        for dependency in ["bc250_fsdp_peft_bf16.py", "bc250_fsdp_activation.py"]:
+        for filename, wanted in QUALIFIED_SOURCES.items():
             assert (
-                archive.extractfile(source + dependency).read()
-                == Path(__file__).with_name(dependency).read_bytes()
+                hashlib.sha256(
+                    archive.extractfile(source + filename).read()
+                ).hexdigest()
+                == wanted
             )
         groups = observations = 0
         for series, label, accepted in PHASES:
@@ -234,9 +238,7 @@ def main():
                 for v in h["records"]["r1/frozen-seed"]["worker"]["gradient_errors"]
             ),
         ),
-        BF16_helper_sha256=hashlib.sha256(
-            Path(__file__).with_name("bc250_fsdp_peft_bf16_checkpoint.py").read_bytes()
-        ).hexdigest(),
+        BF16_helper_sha256=QUALIFIED_SOURCES["bc250_fsdp_peft_bf16_checkpoint.py"],
         allocator=[
             dict(
                 rank=rank,

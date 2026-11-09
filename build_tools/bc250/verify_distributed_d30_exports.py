@@ -8,6 +8,11 @@ from pathlib import Path
 import tarfile
 from export_distributed_d30_on_host import PHASES
 
+# Immutable D30 qualification identity. Current source may legitimately advance.
+QUALIFIED_HELPER_SHA256 = (
+    "800c041f97b7565a10e29049c88dcb1a43c17cb79337890b79919e593ab92bc3"
+)
+
 
 def read(path):
     with tarfile.open(path) as archive:
@@ -33,8 +38,8 @@ def read(path):
         )
         helper = "bc250_fsdp_peft_bf16.py"
         assert (
-            archive.extractfile(source + helper).read()
-            == Path(__file__).with_name(helper).read_bytes()
+            hashlib.sha256(archive.extractfile(source + helper).read()).hexdigest()
+            == QUALIFIED_HELPER_SHA256
         )
         groups = observations = 0
         for series, label, accepted in PHASES:
@@ -185,9 +190,7 @@ def main():
                 for v in h["records"]["r1/frozen-seed"]["worker"]["gradient_errors"]
             ),
         ),
-        BF16_helper_sha256=hashlib.sha256(
-            Path(__file__).with_name("bc250_fsdp_peft_bf16.py").read_bytes()
-        ).hexdigest(),
+        BF16_helper_sha256=QUALIFIED_HELPER_SHA256,
         payload_bytes=sum(v["bytes"] for v in left["payload_files"].values()),
         boot_ids=[left["boot_id"], right["boot_id"]],
         checkpoint_policy=left["checkpoint_policy"],
