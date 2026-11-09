@@ -1,0 +1,58 @@
+{
+  "status": "plan-only",
+  "baseline_parameters": 45871104,
+  "measured_fresh_host_min_available_GiB": 10.624774932861328,
+  "measured_FSDP_cgroup_max_MiB": 1646.23046875,
+  "candidates": [
+    {
+      "width": 1024,
+      "blocks": 12,
+      "heads": 16,
+      "vocab": 8192,
+      "positions": 256,
+      "parameters": 159807488,
+      "single_FP32_master_gradient_AdamW_floor_GiB": 2.381317138671875,
+      "two_rank_FSDP_sharded_state_floor_GiB_per_rank": 1.1906585693359375,
+      "two_rank_FSDP_unsharded_no_sync_gradient_floor_GiB_per_rank": 1.4883232116699219,
+      "one_block_full_FP32_parameter_MiB": 48.05078125,
+      "GPU_admitted": false,
+      "qualification": "planning only: new shape and initialization/activation/collective envelope unqualified"
+    },
+    {
+      "width": 1536,
+      "blocks": 12,
+      "heads": 24,
+      "vocab": 8192,
+      "positions": 256,
+      "parameters": 352957440,
+      "single_FP32_master_gradient_AdamW_floor_GiB": 5.2594757080078125,
+      "two_rank_FSDP_sharded_state_floor_GiB_per_rank": 2.6297378540039062,
+      "two_rank_FSDP_unsharded_no_sync_gradient_floor_GiB_per_rank": 3.287172317504883,
+      "one_block_full_FP32_parameter_MiB": 108.076171875,
+      "GPU_admitted": false,
+      "qualification": "planning only: new shape and initialization/activation/collective envelope unqualified"
+    },
+    {
+      "width": 2048,
+      "blocks": 20,
+      "heads": 32,
+      "vocab": 8192,
+      "positions": 256,
+      "parameters": 1024471040,
+      "single_FP32_master_gradient_AdamW_floor_GiB": 15.26580810546875,
+      "two_rank_FSDP_sharded_state_floor_GiB_per_rank": 7.632904052734375,
+      "two_rank_FSDP_unsharded_no_sync_gradient_floor_GiB_per_rank": 9.541130065917969,
+      "one_block_full_FP32_parameter_MiB": 192.1015625,
+      "GPU_admitted": false,
+      "qualification": "planning only: new shape and initialization/activation/collective envelope unqualified"
+    }
+  ],
+  "excludes": [
+    "activations",
+    "largest-unit gather overlap",
+    "allocator reservations",
+    "CPU initialization peak",
+    "native runtime and communication allocations"
+  ],
+  "next": "Start with the smallest candidate; qualify a memory-safe initialization/shape-specific correctness path and strict admission before any larger GPU allocation. Prefer a capacity-oriented one-local-micro policy to avoid unsharded no_sync gradients; do not infer linear physical scaling from these floors."
+}

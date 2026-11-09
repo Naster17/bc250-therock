@@ -9,6 +9,68 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D33 completed 2026-11-09 — fresh memory controls; PLAN-05 OPEN.**
+  Implementation/verifier `199d3f2ab`. [Report](docs/development/bc250_distributed_d33_results/README.md),
+  [verified results](docs/development/bc250_distributed_d33_results/verified-results.json),
+  [larger-shape plan](docs/development/bc250_distributed_d33_results/larger-shape-plan.json).
+  New additive tools/distributed-d33 on BOTH hosts. Prepared small immutable proof
+  records from published/hash-verified D32 archives, binding host/mode, CPU loss/
+  ALL gradients/clip/ALL AdamW checks, original sources and runtime registry.
+  Guardian+worker refuse changed proof/source/native identity before model allocation.
+  Fresh workers reuse unchanged D32 build/data/loss/backward/AdamW functions, retain
+  no CPU base duplicate and forbid oracle/full optimizer export/full-param audits.
+  Native Torch version/Transformers5.2/three modeling source pins checked. Original
+  D32 sources/evidence/defaults preserved. Proof files are specific to45.9M;
+  they do not qualify a different shape. New tests exercise proof/source tampering.
+  Same eager tied GPT2/45,871,104 FP32 trainable params/global8/micro1/seq256,
+  no dropout/cache/AMP/PEFT/compile. Initial GPU update+two warmups+five measured,
+  both orders. All initial/five measured global losses match D32 within1e-5;
+  original CPU checks reused, not rerun or counted as fresh. Master/AdamW ownership
+  and native collective inputs match D32. New containers/UUIDs/start ticks prove
+  fresh processes.84 fresh groups/12 ACKed guards/68 local tests/Black/critical
+  Ruff+F401/diff pass; no failed GPU phase or relaxed numerical bounds.
+  Timing ms:single247.897–249.549,DDP1680.839–1681.057,FSDP6879.746–6882.628.
+  Live GPU peak940.725/1114.484/767.607–769.358MiB; clean cgroup maxima1081/1872/
+  1646MiB vs D32's2100–2332/2792–3048/3260–3448. This fixes the measurement baseline,
+  NOT native Torch/application memory use. The removed CPU oracle/audit/base history
+  affected old counters; individual causal shares remain unattributed. GPU updates
+  are not faster. Do not sum GPU/RSS/cgroup/host counters as independent pools.
+  New memory.stat/RSS and GPU snapshots cover before-model/after-wrap/first-update/
+  owned-cache release/warmup/measurement-end. DDP shmem458→514→530→530→530MiB in
+  both orders on both hosts; final three endpoints plateau in this short run,
+  NOT proof of long-run stability/leak/fixed library ownership. FSDP shmem stays
+  near304MiB after first update. Whole-worker cgroup peak≤1874.44MiB, sampled host
+  available≥10.625GiB, host+cgroup swap0/OOM0. Admission≥10GiB host/≥4GiB device
+  unchanged. Complete phases~17–18s single/30–31DDP/70–71FSDP omit CPU audit by
+  design; not a training-speed gain. Single workers still use two-node launcher
+  orchestration but no training process group. No checkpoint/restart/convergence
+  or larger-than-single qualification. PLAN-05 remains open.
+  CPU-only planner records tied-GPT2 candidates159,807,488 /352,957,440 /
+  1,024,471,040 parameters. State floors exclude activations/gather overlap/
+  reservations/init/runtime/communication; ALL candidates GPU_admitted=False.
+  No linear-fit inference or OOM search. Smallest candidate single FP32 state
+  floor2.381GiB/sharded1.191GiB per rank/no_sync-full-grad1.488GiB per rank.
+  Exact commands/PIDs/CIDs/ACK/logs: evidence/distributed-d33-r1/{single,ddp,fsdp}-{a,b},
+  sequence.json/controller logs. Guardians104:11524,12442,12911,13571,14232,14687;
+  105:16770,18210,18815,19775,20733,21332. Sequence12441/18209,exports15427/22461 exit0.
+  Local artifacts kernel/artifacts/distributed-d33:proof inputs/overlays/raw pilot
+  JSON/metadata; original sources/evidence remain hosts.104archive720475B SHA
+  f3559f7bcdfee1dad7ded60d2100c4601cdeec4fb3f933e1f58a5b02bea00ee0;
+  105690668B SHAedc434002dec47f2c7feb05189976695ecee66ee4775f00577b62f533463509e.
+  PLAN-01 EX reservation+SH runtime locks/4CPUcpuset0–3/10GiB+12GiB/512PIDs/
+  256MiBshm/600s recovery/460s child retained. Kernel logs/registry unchanged;
+  final idle/no owned jobs/containers/armed guards. Boots2d86d523(.104r2)/e902e636
+  (.105r3) unchanged; native PLAN-02 MIOpen381eac05/Torch a524/RCCL/D09/image/
+  packages/defaults/fallbacks preserved. No native build/reboot/download/prefix
+  mutation/apps/foreign stop. Docs/flow/manifest snapshots synced BOTH. Historical
+  Python CPU fault remains distinct from fixed VM heap/D05 exit/D21 loading.
+  **NEXT PLAN-05 / D34 (planned):** start with159.8M candidate; qualify memory-bounded
+  initialization and shape-specific CPU/GPU correctness, then fresh one-board/FSDP
+  measurements at global2/micro1/sequence128/positions256. Keep qualification and
+  measurement separate; use bounded CPU optimizer checking rather than co-resident
+  full CPU moments/export if needed. One local micro avoids unsharded no_sync
+  gradients. Keep352.96M/1.024B blocked until their own envelopes are qualified.
+
 - **PLAN-05 / D32 completed 2026-11-09 — representative baseline; PLAN-05 OPEN.**
   Implementation/verifier `6af433cb8`. [Report](docs/development/bc250_distributed_d32_results/README.md),
   [verified results](docs/development/bc250_distributed_d32_results/verified-results.json).
