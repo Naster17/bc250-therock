@@ -9,6 +9,59 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-04 / D29 completed 2026-11-09 (PLAN-04 still OPEN):** implementation/
+  verifier `8e04fa9b4`. [Report](docs/development/bc250_distributed_d29_results/README.md),
+  [verified results](docs/development/bc250_distributed_d29_results/verified-results.json).
+  NEW BC250CheckpointPeftFSDPTrainer in BOTH additive tools/distributed-d29;
+  explicit FP32 PEFT eagerGPT2/native nonreentrant+preserveRNG kwargs. Three new
+  modeling hashes checked; requires cacheFalse/checkpointing initiallyoff. Native
+  Trainer enable beforewrap/frozenembedding output-grad hook/blockcheckpoint calls
+  retained; no loop/package patch. Actual functions/options checked in inherited
+  preupdate guards and bound to fullcheckpoint recipe. D28 fullsave/adapterexport/
+  frozenFP32/rootclip/AdamW contracts retained. Ordinary/D27/D28 helpers still
+  refuse checkpointing; frozenAMP/plugincheckpoint/compile/offload/FSDP2 separate.
+  Same owned24352=21280frozen+3072trainable/19FSDPunits; shards12176each/AdamW1536.
+  D26 data28/rightpad/prompt/cacheFalse/dropout0/workers0/micro2accum2/global8/8/8/4,
+  shifted49/57/57/21/localzero micro. CPUFP64 ALLadaptergrad/loss/rootnorm/ALLclip/
+  CPUdoubleALLAdamW pass unchangedD28bounds; ALLfrozenvalues EXACT. GPUblockhooks
+  14calls/7micros(seed),6/3(replay),offcontrol7/7: realbackwardrecomputation.
+  Offcontrol trainingtranscript/finaldigest EXACTsame. FP32gathers259→357seed,
+  111→153replay;16reductions12288B/window retained, not totalNIC/speed result.
+  PublicPEFT adapterexports CP2/4/replay4 reload ALLparams/logits EXACT/RNGunchanged.
+  FullCP2 union6files480247B onBOTH; originalfiles/hashes preserved. Freshseed1773
+  versus773/newUUID+ticks+containers restoresALLbase+adapter+AdamW/scheduler/fourRNG
+  EXACT; windows3/4 ALLloss/grads/clip/updates/state/RNG/rows/counts/digests EXACT.
+  Fourrank1 missinggrad/frozengrad/lateNaN/lateLoRAscaling mutations BOTH refuse
+  beforeAdamW/zeroupdates/EXACTunchangedparams+optimizer+scheduler; retainedD28
+  control passes. PRIVATE checkpointcopy changes ONLYrank1saveduse_reentrant;
+  BOTH refuse optimizerrestore, originalcheckpoint unchanged. Model may already
+  load on refusal; discard/reload abortedsession. No stochastic/elastic promise.
+  Tinycompletecorrectnessharness peak491008B vs546304B/rank(55296B/10.12%lower)
+  onBOTH, includesaudit/checkpoints; NOT isolatedactivation/wholehost/largefit or
+  speedproof. PLAN05meaningfulcapacity separate.163groups/18ACKguards/28CPUpatterns
+  500obs/62localtests/Black/criticalRuff+F401/diff pass. No failedGPUphase; initial
+  SCPpermission/prematurelaunch setupfailure retained beforeguard/GPU. Allsources/
+  checkpoints/reference tensors stayhost; kernel/artifacts/distributed-d29 retains
+  sourceaudit/overlays/payloadexports/union/metadata excludes tensor/RNG/safetensors.
+  104archive764130B SHAe0f1aa6a1bc129b09d98ad1b99c55f767ded26e13b1cd8a6c78b2e555e137ebe;
+  105674130B SHA92ba18c33be2eee498a8838a775ee03f2255f610483090d459de669ddcd6bdc0.
+  Exactcommands/PIDs/CIDs/ACK/logs evidence/distributed-d29-r1/frozen-{seed,resume},
+  frozen-{missing,grad,late,peft}-seed,retained-control-seed,frozen-policy-resume,
+  allocator-control-seed; controls/resumes-sequence.json/controllerlogs.
+  frozen-policy-seed is PRIVATECOPY, not a run. Seed22304/30336,controls22858/31101,
+  resumes25019/1388,allocator25904/2533,exports26385/3193 finalexit0. Verifier
+  installed AFTERmetadataexport; finalsource committed and installed BOTH.
+  PLAN01reservation+SHlock/4CPUcpuset0–3/10GiB+12GiB/512PIDs/256MiBshm/600s/460s
+  retained. Kernellogs/registries unchanged/finalidle/no jobs/containers/armedguards.
+  Entry2d86d523(.104r2)/e902e636(.105r3) unchanged; no build/reboot/download/prefix
+  mutation/apps/foreignstop. NativePLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/
+  packages/defaults/fallbacks preserved; docs snapshots synced BOTH. Historical
+  PythonCPUfault distinctfixedVMheap/D05exit/D21load. No fullupstreamCI/universal
+  model/speed/capacity claim. **NEXT PLAN-04 / D30 (planned):** inspect/admit explicit
+  BF16 working-parameter PEFT frozen-base FSDP with checkpointing OFF first, CPU
+  ALLadaptergrad/clip/AdamW/frozenpreservation and exactrestart. Keep frozenAMP
+  refusals untilqualification; combinedBF16checkpoint and FP16 remain separate.
+
 - **PLAN-04 / D28 completed 2026-11-09 (PLAN-04 still OPEN):** implementation/
   verifier `e08c98d15`. [Report](docs/development/bc250_distributed_d28_results/README.md),
   [verified results](docs/development/bc250_distributed_d28_results/verified-results.json).
