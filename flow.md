@@ -9,41 +9,51 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **PLAN-05 / D42 IN PROGRESS 2026-11-09 — RAM fix control running, not qualified.**
-  Initial implementation48f58f74c; latest source: see HEAD commit for phase-boundary
-  cuda.synchronize/empty_cache and cache/live/host telemetry. New final series r4.
-  r3 352M GPU control passed/ACKed ALL hashes EXACT D39/D40, then1.024B forward/
-  backward reached raw audit but BOTH parent safety guards stopped owned jobs when
-  hostavailable<3GiB (1043,187,204,096B/1053,145,555,968B), cgroup~1.9GiB. No numerical
-  failure observed before stop, no OOM/kernel change/reboot; BOTH guards ACKed and
-  containers/source exited. This is NOT a passed1.024B GPU audit. r3 failed finals
-  saved locally as104/105-large-audit-r3-stopped.json. Original references preserved.
-  Targeted candidate r4 trims only unused Torch CUDA cache afterwrap/beforebackward
-  and at each three public audit passes; original maths/reserves unchanged. Four
-  before/after live/reserved/host readings captured. No default/native prefix change.
-  **RUNNING:** r4 control on BOTH, guardians104PID841/105PID28926, command python3
-  ~/bc250work/tools/distributed-d42/guard_distributed_d42_on_host.py --shape control
-  --label control --port29743 --ready-port29744 (actual CLI has spaces after options).
-  Logs evidence/distributed-d42-control-controller.log and
-  evidence/distributed-d42-r4/control/{gpu.log,source.json,guard/state.json,rank.json,
-  final.json}. Own label bc250.d42=d42-r4-control. Check live CID/state there, do not
-  launch any competing test. Earlier GPU dirs r2/r3 and logs/source backups retained.
-  r1 failed host-specific registry check105/original600s guard cap104 beforeGPUinit;
-  fixed per-host D40 registry pins and isolated copy of same guard algorithm max1800
-  (original kernel helper unchanged); dry-run max ACK/1s expiry/above-max refuse pass.
-  r2 controlpassed, then client-finished TCPStore shutdown handshake hardened/r3
-  controlpassed. Local108 tests/lint pass. CPU readiness timeout600beforeGPUinit,
-  nativeGPU PG120 unchanged; child1400/guard1800/4CPU0–3/10GiB+12combined/512PID/
-  256MiBshm/EXreservation+SHruntime,100ms safetycgroup<9GiB/host≥3GiB/disk≥5GiB.
-  New larger guard deadline is not arbitrary GPU-hang hardware recovery proof.
-  **NEXT:** if r4 control passes/ACKs, compare ALL reference hashes exact D39/D40,
-  then launch --shape large --label large-audit --port29745 --ready-port29746 BOTH.
-  Use immutable D41 oracle99b36b92 on104 and bounded128MiB remote reader105, no full
-  rawcopy/spool. Do not relax math/reserves. Monitor through final/ACK or diagnose
-  concrete stop. Exporter must be staged from current local file before final export
-  (r4/SH lock/preliminary dirs); verifier current r4 pins. Finish archive verification,
-  negatives, docs/manifest/commits/hostdocs sync only after real final results. Native
-  profiles/defaults/boots/r2fallback/apps unchanged, no builds/deletions/installations.
+- **PLAN-05 / D42 IN PROGRESS 2026-11-09 — r4 large GPU audit ACTIVE, not qualified.**
+  Initial48f58f74c; cache-trim candidate f9f9ab563; source/math/reserves unchanged
+  since final r4 control. New primary series distributed-d42-r4. Control-recheck
+  BOTH passed/ACKed, ALL reference/state hashes EXACT D39/D40 and original gates.
+  r4 synchronizes/empty_cache afterwrap/beforebackward + before each three unit audit
+  passes; records4 cache/live/host samples. Real1.024B beforewrap→backward trim:
+  live2,048,942,080B unchanged; reserved6,360,662,016→2,105,540,608B BOTH, ~4GiB released.
+  Afterbackward raw trim live4,166,033,920B unchanged; reserved6,501,171,200→4,303,355,904B,
+  hostavailable1048,893,988,864B/1058,809,508,864B. Both forward/backward completed,
+  loss gate passed, RAW gradient audit currently running; no final qualification yet.
+  **RUNNING BOTH:** python3 ~/bc250work/tools/distributed-d42/guard_distributed_d42_on_host.py
+  --shape large --label large-audit --port 29745 --ready-port 29746. Guardians1043588/
+  10529643.104 deadline3691/source3693;104CID747efb7179c6 (read live current CID105
+  using label below). Root SSH controllers independent nohup; do not launch a new job.
+  Own label bc250.d42=d42-r4-large-audit. Logs BOTH:
+  ~/bc250work/evidence/distributed-d42-large-audit-controller.log,
+  evidence/distributed-d42-r4/large-audit/{gpu.log,source.log,source.json,guard/state.json,
+  rank.json,final.json} as created. Check current stage/CID/ACK/processes there.
+  Root source HTTP104:29842; D41 oracle99b36b92 stays104/128MiB remote reader105,
+  no full copy/spool. CPU TCPStore readiness600s beforeGPUinit, native PG120s unchanged,
+  explicit client-finished teardown. Child1400s/isolated guard1800s/4CPU0–3/10GiB+
+  12combined/512PID/256MiBshm/EXreservation+SHruntime;100ms own-stop host<3GiB/
+  cgroup≥9GiB/disk<5GiB, no relaxation. Original kernel600s guard untouched; isolated
+  cap1800 same algorithm (AST comparison passes) maxACK/expiry/above-max tests; no
+  new arbitrary GPU-hang hardware-recovery claim. Local108tests/lint pass.
+  Preserved preliminary history: r1 registry105 mismatch/old600s cap104 beforeGPU;
+  r2control passed then TCPStore client-finished hardening/r3control passed. r3large
+  reachedraw then safe hostRAM stop1043,187,204,096B/1053,145,555,968B, cgroup~1.9GiB;
+  BOTH ACKed/noOOM/reboot/kernelchange, no mathfailure observed beforestop. This drove
+  r4 cache fix; sources/logs/overlays r1/r2/r3 and backups retained.
+  r4 firstcontrol GPU/math/exit passed,105strictlogguard refused clocksource warning:
+  '[43484.262225] clocksource: Watchdog remote CPU 3 read timed out'. BothTSCunchanged.
+  Qualified kernel/linux-r3 source0957f1aa4 clocksource.c:590 uses pr_info_once; WD_CPU_TIMEOUT
+  retries nextcycle, not markTSCunstable. Thus subsequent quietlogs DO NOT prove cause
+  fixed/recurrence absent. Warning remains OPEN, separate from GPU math/VMheap/Python
+  fault. Unmodified r4 control-recheck then BOTH strictpass/ACK/no added messages,
+  hashes exact; primary exporter/verifier use control-recheck, not firstcontrol.
+  **NEXT:** monitorlarge BOTH to final/ACK or preserve precisefailure, neverrelaxgates.
+  Ifpasses, stage current local export_distributed_d42_on_host.py beforeexport (latest
+  LABELScontrol-recheck/large-audit, r4/SHlock/preliminary dirs). scp evidence-r4.tar.gz
+  to kernel/artifacts/distributed-d42, run verify_distributed_d42_exports.py --host104
+  ... --host105 ... --output ...; replays D35/D36/D39/D40/D41. Finish negatives/docs/
+  manifest/commits/both-hostdocs. Ifstops diagnose actualcache/CPU memory or numerical
+  evidence first. Nativeprefix/defaults/boots/fallback/apps unchanged, no builds/
+  deletions/installations. Future training-only memory/capacity measurement separate.
 
 - **PLAN-05 / D41 completed 2026-11-09 —1.024B CPU oracle published; PLAN-05 OPEN.**
   Producer `3afa04930`, final finite scanner `f75cb361e`.
