@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "groups": 116,
+  "final_guards": 16,
+  "retained_failed_probe_guards": 2,
+  "intermediate_passed_guards": 2,
+  "all_guards_acknowledged": 20,
+  "CPU_contract_patterns": 26,
+  "CPU_contract_observations": 408,
+  "parameters": 24352,
+  "frozen_parameters": 21280,
+  "trainable_parameters": 3072,
+  "parameter_shards": [
+    12176,
+    12176
+  ],
+  "trainable_and_AdamW_shards": [
+    1536,
+    1536
+  ],
+  "frozen_parameters_exactly_preserved": true,
+  "fresh_all_state_replay_exact": true,
+  "refusals": [
+    "rank1 missing trainable gradient",
+    "rank1 injected frozen gradient",
+    "rank1 post-clip NaN",
+    "rank1-only private checkpoint-recipe corruption",
+    "rank1 post-clip LoRA scaling mutation"
+  ],
+  "checkpoint_payload_bytes": 480247,
+  "checkpoint_policy_sha256": "11ebfb1e59d410689b057ed89ac793b51c6448924a38d6ec0a72f728cdce68f3",
+  "boot_ids": [
+    "2d86d523-c909-415b-86fa-a75be9460dde",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "native_runtime_changed": false,
+  "PEFT_version": "0.18.1",
+  "native_full_model_checkpoint": true,
+  "public_adapter_roundtrip_exact": true,
+  "source_pins": {
+    "peft/mapping_func.py": "714db3bc17ac5d3d72baea44a29f836199da731cecc7e96f9cf367ebcd6089a1",
+    "peft/peft_model.py": "b847795c28bc4b00b3224c0dcea90edbee40ee60384cd104fdafd7056afcb13e",
+    "peft/tuners/lora/config.py": "a33f9f057d7df7e352e796731c59c755197aa267d0d0f2698a516bb97ddc8997",
+    "peft/tuners/lora/layer.py": "e8a47a49cf69f92ded68bf7ab286aeaf068f0ac809ab3465ad16f78a8f9f8b63",
+    "peft/tuners/lora/model.py": "f619f6fccd6f2abc2ad51e4fde3f28a77a6b8104b7a94e1b0c18e341dafb48c7",
+    "peft/tuners/tuners_utils.py": "99410963bc0bb2f194bef1ab01e65f3e24d5b066b90ea3242cd9edb11ead77a7",
+    "peft/utils/other.py": "c5e3db7e853791235b110e5ecbf0a77095179b7ba42491da4bcb8c80a6c0c53d",
+    "peft/utils/save_and_load.py": "499d7bc36929d172da951b97ae81129834a5c69d6d4c434a1ee4359f256149ca",
+    "transformers/integrations/fsdp.py": "c9dd4f201b787782e56a857de895ab60439cd308af7321df163a3351cf90660c"
+  },
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d28/104-evidence-r3.tar.gz",
+      "bytes": 816023,
+      "sha256": "eedfa6b5bf43807495d11bafd9d10591beede394d4b98f949acec2f6ca3e64ac"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d28/105-evidence-r3.tar.gz",
+      "bytes": 713531,
+      "sha256": "1fbd0d22fdbe0b9982499e470477606b35f7ee214262a77167ec45f01b79b4c1"
+    }
+  ],
+  "next": "PLAN-04 / D29 planned: audit and qualify explicit non-reentrant FP32 PEFT activation checkpointing; retain frozen AMP guards and compare live allocator costs within safe headroom"
+}

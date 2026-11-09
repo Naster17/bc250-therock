@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-08 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-09 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -8,6 +8,69 @@ Old milestone documents are evidence snapshots; their unchecked boxes and active
 release claims must not override this cursor and current manifests.
 
 ## Resume cursor
+
+- **PLAN-04 / D28 completed 2026-11-09 (PLAN-04 still OPEN):** implementation/
+  verifier `e08c98d15`. [Report](docs/development/bc250_distributed_d28_results/README.md),
+  [verified results](docs/development/bc250_distributed_d28_results/verified-results.json).
+  NEW BC250PeftFSDPTrainer/peft_fp32_policy in BOTH additive tools/distributed-d28.
+  Actual PEFT0.18.1/Transformers5.2/Accelerate1.12; nine extra source hashes checked.
+  Single default causal LoRA/dropout0/biasnone/unmerged/no DoRA/RSLoRA/savedmodules;
+  named FP32 frozen/trainable policy, base configuration/attention +PEFT/layer
+  rank/alpha/scaling/activation recipe bound to checkpoint. D27 ordinary/default
+  guards and installed helpers preserved. Frozen AMP/checkpointing stay refused.
+  Source audit: native Trainer applies PEFT auto-wrap AND adapter_only=True for
+  checkpoint helpers. Retain native wrapping; explicit subclass saves/loads FULL
+  model with public Accelerate adapter_only=False +native FSDP optimizer/scheduler;
+  Trainer loop/RNG/state/D27policy/D21optimizer-reader retained, no package patch.
+  Each checkpoint also exports ordinary PEFT adapter artifacts with canonical
+  FSDP prefixes removed;14,216B safetensors. R1 export kept wrapper prefixes;
+  public load warned missing LoRA keys and strict ALLparameter comparison failed
+  at CP2 on BOTH, after correct training references. R2 canonical export passes;
+  R3 binds base recipe/adds live scaling refusal and reruns selected final phases.
+  No suppressed warning/tolerance relaxation/old user-training defect claim.
+  Owned eager GPT2/tied frozen head/8actual PEFTConv1D LoRA/r4alpha8/zeroB,
+  24352unique=21280frozen+3072trainable. Native PEFT wrapping root+2GPT2Blocks+
+  16trainable leaves=19FSDPunits; original shards12176each, adapter/AdamW1536each.
+  D26 rightpad/prompt/dropout0/cacheFalse/workers0/sequential/micro2/accum2/data28,
+  global8/8/8/final4, shifted49/57/57/21/localzero micro. CPUFP64 ALLadaptergrad/
+  loss/rootnorm/ALLclip(cap.005)/CPUdoubleALLAdamW at unchangedFP32bounds pass;
+  ALLfrozen VALUES exact. Observed FP32 gathers259seed/111resume and16reductions/
+  window/12288B input; NOT totalNIC/memory/speed comparison. Public PEFT
+  save_pretrained/from_pretrained CP2+4 and replayCP4 ALLparams/logits exact,
+  four RNG states unchanged by CPU audit. Adapter-only artifact needs matchingbase.
+  Rank1 missingadaptergrad /injectedfrozengrad /lateNaN /lateLoRAscaling BOTH
+  refused before AdamW, zeroupdates/unchangedparams+optimizer+scheduler. Retained
+  D27 native-adapter helper control passes. Private rank1 checkpoint changes ONLY
+  saved LoRA scaling (generic frozen hash unchanged): BOTH refuse optimizerrestore,
+  zero updates. Original checkpoint/policy hashes intact. Aborted model may have
+  loaded; discard/reload session. No arbitrary-hook/rankloss/partialwindow promise.
+  Full CP2 DCPunion6files480247B onBOTH independent filesystems; original ranklocal
+  files/hash retained. Fresh constructor1773/newUUID+ticks+containers restores ALL
+  frozen/adapter shards/AdamW/scheduler/fourRNG EXACT; windows3/4 ALLloss/grads/
+  clip/updates/state/RNG/rows/counts/digests replay EXACT. Native train_loss remains
+  current-process statistic. No stochastic/elastic/other-PEFT-recipe guarantee.
+  116finalgroups/16ACKguards/26CPUpatterns408observations/62localtests/Black/critical
+  Ruff+F401/diff pass;2R1failedexports+2R2intermediatepasses retained/all20ACK.
+  Exact commands/PIDs/CIDs/ACK/logs in evidence/distributed-d28-r3/frozen-{seed,resume},
+  frozen-{missing,grad,late,peft}-seed,retained-control-seed,frozen-policy-resume;
+  controls-sequence.json/resumes-sequence.json/controllerlogs. frozen-policy-seed
+  is PRIVATECOPY, not a run. R1 11804/13899exit1; R2 12431/14692exit0; R3seed13445/
+  16280,controls14014/17060,resume16159/19784,exports17340/21442exit0. All sources/
+  payloads/checkpoints/public artifacts retained; local kernel/artifacts/distributed-
+  d28 packageaudit/overlay/exports/completeunion/metadata excludes tensor/RNG/
+  safetensors payloads.104archive816023B SHAeedfa6b5bf43807495d11bafd9d10591beede394d4b98f949acec2f6ca3e64ac;
+  105713531B SHA1fbd0d22fdbe0b9982499e470477606b35f7ee214262a77167ec45f01b79b4c1.
+  PLAN-01 reservation+SHlock/4CPU/10GiB+12GiB/512PIDs/256MiBshm/600s/460s retained.
+  Kernellogs/registries unchanged, finalidle/nojobs/containers/armedguards. Entry
+  2d86d523(.104r2)/e902e636(.105r3), already different from D27 snapshots; no agent
+  reboot/build/prefixmutation/download/appinspection/foreignstop. Native PLAN-02
+  MIOpen381eac05/Torch a524/RCCL/D09/image/packages/defaults/fallbacks preserved.
+  Docs/memory snapshots synced BOTH hosts. Historical PythonCPU fault distinct
+  fixedVMheap/D05exit/D21load; no fullupstreamCI/speed/capacity/universal proof.
+  **NEXT PLAN-04 / D29 (planned):** inspect native HF/PEFT non-reentrant activation
+  checkpointing paths and introduce an explicit FP32 policy, prove CPU ALLgrad/
+  AdamW/frozen-preservation/exactrestart, then bounded allocator comparison with
+  safe headroom. Preserve checkpointing/frozen-AMP refusals until their own proof.
 
 - **PLAN-04 / D27 completed 2026-11-08 (PLAN-04 still OPEN):** implementation/
   verifier `80080e6a0`. [Report](docs/development/bc250_distributed_d27_results/README.md),
