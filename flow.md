@@ -9,6 +9,52 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D38 completed 2026-11-09 — CPU checkpoint+streaming; PLAN-05 OPEN.**
+  Implementation `22d702e47`. [Report](docs/development/bc250_distributed_d38_results/README.md),
+  [verified results](docs/development/bc250_distributed_d38_results/verified-results.json).
+  New additive tools/distributed-d38 BOTH. Same352,957,440-param FP64 CPU GPT2,
+  full global2 backward/seq128/positions256/dropout0/cacheFalse and D35 raw refs.
+  Native gradient_checkpointing_enable with use_reentrant=False/preserve_rng_state
+  True; guards13 live modules/partial native function/exact bool kwargs before/
+  after execution. Wrong options/functions/positional args/integer flags refuse.
+  Control block entries12 once; enabled24 (each block reentered during backward;
+  nonreentrant early-stop may stop recompute before full forward completion).
+  ALL148 gradient hooks once/0 grads retained; direct FP64 initial before/after,
+  loss and ALL gradient bytes/SHA EXACT both modes/hosts/D35/D37. CPU loss remains
+  9.364227904214559. Dropout0 CPU RNG bytes unchanged; no stochastic guarantee.
+  Native checkpoint.py SHA eab49639231cc989d65c04212923eef0ade4aa059b68bcabfe2819007f34e69f
+  matches qualified torch/torch/utils/checkpoint.py; immutable verifier pin. Source
+  tables bind old oracle separately from new checkpoint/streaming code. CUDA never
+  initialized/no GPU tensors/optimizer/PG; native GPU training/defaults untouched.
+  32CPUgroups/4ACKguards/86localtests/3 private source/recompute/recipe corruption
+  refusals/Black/criticalRuff+F401/diff pass; no failed phase/relaxed math/full CI.
+  Cgroup peakMiB5208.641→4179.109104/5196.531→4249.711105 (18.2–19.8%lower vsstream);
+  VmHWM5149.285→4127.707/5139.398→4200.547. Hostavailable min9.237→10.261GiB104/
+  9.132→10.033GiB105. Scratch one96MiB file+5GiBreserve, removed after checks;
+  no fullref/spool/global cache flush. Afterbackward cgroup3615–3697MiB still has
+  full FP64 parameters. Counters overlap/don't sum;200ms+kernel peak/HWM; swap/OOM0.
+  Guarded71s control/80s checkpoint, worker57–58s/58–66s includes I/O/recompute/
+  checks/imports, no training-speed/timing-significance/largefit/longrun claim.
+  PLAN01 EXreservation+SHruntime/4CPUcpuset0–3/10GiB+12GiB/512PID/256MiBshm/600s
+  guard/460s child retained; CPU admission≥12GiBhost. Originalrefs rehashed export,
+  tensor payload omitted metadata; immutable D35+D37 archive provenance replayed.
+  Exact commands/CIDs/UUIDs/ACK/logs evidence/distributed-d38-r1/{stream-control,
+  checkpoint-stream}; guardians1045110/5946,10519068/20336,exports6842/21712 exit0.
+  Local kernel/artifacts/distributed-d38;104archive510548B SHA
+  77c4c82ca65189a0ebd42c261bb2989cc90793dad3b3c464290a7a959acdb9e0;
+  105480889B SHA6f77ae9f9ed8b716d7ff7ace89b26c86a47b66398af303a7aa45135fb3fdb095.
+  Final idle/no owned jobs/containers/armed guards; registry/kernel logs unchanged,
+  boots2d86d523r2/e902e636r3/native PLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/
+  packages/defaults/fallbacks retained; no nativebuild/reboot/download/prefixmutation/
+  apps/foreign stop. Docs/flow/manifest synced BOTH. PythonCPUfault remains distinct
+  fixedVMheap/D05exit/D21load.1.024B CPU/GPU still unqualified, no scaled admission.
+  **NEXT PLAN-05 / D39 (planned):** independent FP64 CPU-reference clipped-gradient
+  audit replacing full actualGPU-gradient spool, original atol1e-8/rtol5e-5 plus
+  ALLraw/norm/AdamW gates, at352.96M per-unit GPU scope. Compare exact native raw/
+  clipped/updated/local-state digests against legacy D36; preserve fallback/refs,
+  don't relax failures.1.024B oldspool3.816GiB+5GiBreserve fails.105; reference/oracle
+  storage and memory admission remain separate/no deliberateOOM. Six packages remain.
+
 - **PLAN-05 / D37 completed 2026-11-09 — CPU gradient streaming; PLAN-05 OPEN.**
   Implementation `2610b2b76`. [Report](docs/development/bc250_distributed_d37_results/README.md),
   [verified results](docs/development/bc250_distributed_d37_results/verified-results.json).

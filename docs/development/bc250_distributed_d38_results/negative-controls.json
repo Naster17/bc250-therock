@@ -1,0 +1,17 @@
+[
+  {
+    "case": "source-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "recompute-count-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "checkpoint-policy-tamper",
+    "status": "refused-as-required",
+    "reason": "Explicit non-reentrant RNG-preserving CPU recipe required"
+  }
+]

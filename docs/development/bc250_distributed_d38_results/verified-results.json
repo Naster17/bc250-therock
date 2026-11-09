@@ -1,0 +1,135 @@
+{
+  "status": "passed",
+  "groups": 32,
+  "guards": 4,
+  "local_tests": 86,
+  "config": {
+    "width": 1536,
+    "heads": 24,
+    "blocks": 12,
+    "tokens": 128,
+    "positions": 256,
+    "vocab": 8192,
+    "global_batch": 2,
+    "micro": 1
+  },
+  "parameters": 352957440,
+  "CPU_only": true,
+  "fresh_CPU_oracle_executed": true,
+  "CPU_reference_reused_from_D35": true,
+  "exact_ALL_gradients_initial_loss": true,
+  "post_accumulate_streaming_qualified": true,
+  "native_nonreentrant_CPU_checkpointing_qualified": true,
+  "actual_block_recomputation_qualified": true,
+  "native_checkpoint_source_sha256": "eab49639231cc989d65c04212923eef0ade4aa059b68bcabfe2819007f34e69f",
+  "stream_baseline_archives": [
+    {
+      "path": "kernel/artifacts/distributed-d37/104-evidence-r2.tar.gz",
+      "bytes": 472440,
+      "sha256": "fedf02daf56a229c388dfdb91c6a29ce875cf24859f4b9cf0e47b8deac7267d1"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d37/105-evidence-r2.tar.gz",
+      "bytes": 445212,
+      "sha256": "870f76e490c0d2aa11495ed536444eb7e94db7216812583d2b73d442dd24519e"
+    }
+  ],
+  "GPU_training_changed": false,
+  "larger_than_single_fit_qualified": false,
+  "larger_CPU_oracle_admitted": false,
+  "PLAN05_complete": false,
+  "rows": [
+    {
+      "host": 0,
+      "label": "stream-control",
+      "whole_cgroup_peak_MiB": 5208.640625,
+      "process_peak_RSS_MiB": 5149.28515625,
+      "sampled_RSS_max_MiB": 5149.28515625,
+      "host_min_available_GiB": 9.23727035522461,
+      "after_backward_cgroup_MiB": 4823.80859375,
+      "after_backward_RSS_MiB": 4837.30078125,
+      "retained_gradient_elements": 0,
+      "maximum_live_scratch_bytes": 100663296,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 57.639075156002946,
+      "guarded_phase_seconds": 71.03226003599775
+    },
+    {
+      "host": 0,
+      "label": "checkpoint-stream",
+      "whole_cgroup_peak_MiB": 4179.109375,
+      "process_peak_RSS_MiB": 4127.70703125,
+      "sampled_RSS_max_MiB": 4127.70703125,
+      "host_min_available_GiB": 10.261051177978516,
+      "after_backward_cgroup_MiB": 3614.56640625,
+      "after_backward_RSS_MiB": 3636.23046875,
+      "retained_gradient_elements": 0,
+      "maximum_live_scratch_bytes": 100663296,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 66.49564596299751,
+      "guarded_phase_seconds": 79.7909345290027
+    },
+    {
+      "host": 1,
+      "label": "stream-control",
+      "whole_cgroup_peak_MiB": 5196.53125,
+      "process_peak_RSS_MiB": 5139.3984375,
+      "sampled_RSS_max_MiB": 5139.3984375,
+      "host_min_available_GiB": 9.13216781616211,
+      "after_backward_cgroup_MiB": 4802.5390625,
+      "after_backward_RSS_MiB": 4816.18359375,
+      "retained_gradient_elements": 0,
+      "maximum_live_scratch_bytes": 100663296,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 56.748334818999865,
+      "guarded_phase_seconds": 71.00904528300089
+    },
+    {
+      "host": 1,
+      "label": "checkpoint-stream",
+      "whole_cgroup_peak_MiB": 4249.7109375,
+      "process_peak_RSS_MiB": 4200.546875,
+      "sampled_RSS_max_MiB": 4200.546875,
+      "host_min_available_GiB": 10.032691955566406,
+      "after_backward_cgroup_MiB": 3697.015625,
+      "after_backward_RSS_MiB": 3720.98828125,
+      "retained_gradient_elements": 0,
+      "maximum_live_scratch_bytes": 100663296,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 57.627091741000186,
+      "guarded_phase_seconds": 79.88469549900037
+    }
+  ],
+  "boot_ids": [
+    "2d86d523-c909-415b-86fa-a75be9460dde",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "baseline_archives": [
+    {
+      "path": "kernel/artifacts/distributed-d35/104-evidence-r1.tar.gz",
+      "bytes": 1237695,
+      "sha256": "46fecff3a5da132bd15813b95c341ebfd336da9d15f16ebaf86bb1c3259deee0"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d35/105-evidence-r1.tar.gz",
+      "bytes": 1183666,
+      "sha256": "5883fb9026210caf75c420e1f889207efbabeb1eee28cdb32ae824a10ceec5a2"
+    }
+  ],
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d38/104-evidence-r1.tar.gz",
+      "bytes": 510548,
+      "sha256": "77c4c82ca65189a0ebd42c261bb2989cc90793dad3b3c464290a7a959acdb9e0"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d38/105-evidence-r1.tar.gz",
+      "bytes": 480889,
+      "sha256": "6f77ae9f9ed8b716d7ff7ace89b26c86a47b66398af303a7aa45135fb3fdb095"
+    }
+  ]
+}
