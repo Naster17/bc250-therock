@@ -9,41 +9,41 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **PLAN-05 / D42 IN PROGRESS 2026-11-09 — larger GPU audit running, not qualified.**
-  Code `48f58f74c`; tools/distributed-d42 BOTH. Final series distributed-d42-r3.
-  Fresh r3 352.96M two-host GPU control passed both/ACKs, ALL native reference/state
-  hashes EXACT D39/D40. Local108 tests/lint pass. New CPU TCPStore readiness before
-  GPUinit (600s), native GPU PG timeout still120s; explicit client-finished store
-  shutdown ACK. Reviewed child1400s/isolated guard1800s; original kernel guard600
-  unchanged. New guard is same recovery algorithm with cap1800, dry-run max ACK/
-  1s expiry/above-max refusal pass, not new arbitrary-hang hardware qualification.
-  Initial r1 had host-registry mismatch on105 and original600s guard refusal on104,
-  BEFORE any GPUinit/container; no live guard armed. r2 control GPU/math/exit passed,
-  then store shutdown handshake hardened and r3 control rerun. r1/r2 sources/logs
-  preserved in evidence/distributed-d42-r1,-r2 and tools/distributed-d42-preliminary-r1,
-  tools/distributed-d42/preliminary-r2; local overlays-r1/r2/r3. Final use r3 only.
-  **RUNNING:** large1,024,471,040-param per-unit FSDP audit BOTH, original ALL loss/
-  raw/norm/clip/AdamW gates, D41 oracle99b36b92 on104,128MiB reader/no rawcopy105.
-  Each root command (104 first): python3 ~/bc250work/tools/distributed-d42/
-  guard_distributed_d42_on_host.py --shape large --label large-audit --port 29745
-  --ready-port 29746. Guardians104PID31021/105PID28478.104 deadlinePID31124/source
-  PID31125; source HTTP104:29842. At checkpoint (~25s elapsed), source original
-  raw verification/startup, no container yet; GPU result UNKNOWN. Logs BOTH:
-  ~/bc250work/evidence/distributed-d42-large-audit-controller.log and
-  evidence/distributed-d42-r3/large-audit/{gpu.log,source.log,source.json,guard/state.json,
-  rank.json,final.json} as created. Own Podman label bc250.d42=d42-r3-large-audit;
-  read PID/CID/progress there, NEVER start another test while active. Parent holds
-  EX board reservation+SH runtime;4CPU0–3/10GiBRAM+12GiBcombined/512PID/256MiBshm.
-  Guardian100ms safety stops only owned job if hostavailable<3GiB/cgroup≥9GiB/disk<5GiB.
-  Native profiles/defaults/boots/r2 fallback unchanged, no source/build/cache/app
-  deletion or installation. User apps untouched. No GPUfit/speed claim yet.
-  **Next:** monitor BOTH until final.json passed/ACK or inspect exact failure;
-  do not relax tolerances. If successful export with export_distributed_d42_on_host.py
-  (already staged BOTH), scp evidence-r3 archives to kernel/artifacts/distributed-d42,
-  run verify_distributed_d42_exports.py --host104 ... --host105 ... --output ... .
-  Verifier replays D35/D36/D39/D40/D41 proofs; finish negative archives/docs/manifest/
-  commits/docs sync. If failed, preserve logs/source/oracles and diagnose before
-  rerun. No return to old tasks. Future training-only capacity measurement separate.
+- **PLAN-05 / D42 IN PROGRESS 2026-11-09 — RAM fix control running, not qualified.**
+  Initial implementation48f58f74c; latest source: see HEAD commit for phase-boundary
+  cuda.synchronize/empty_cache and cache/live/host telemetry. New final series r4.
+  r3 352M GPU control passed/ACKed ALL hashes EXACT D39/D40, then1.024B forward/
+  backward reached raw audit but BOTH parent safety guards stopped owned jobs when
+  hostavailable<3GiB (1043,187,204,096B/1053,145,555,968B), cgroup~1.9GiB. No numerical
+  failure observed before stop, no OOM/kernel change/reboot; BOTH guards ACKed and
+  containers/source exited. This is NOT a passed1.024B GPU audit. r3 failed finals
+  saved locally as104/105-large-audit-r3-stopped.json. Original references preserved.
+  Targeted candidate r4 trims only unused Torch CUDA cache afterwrap/beforebackward
+  and at each three public audit passes; original maths/reserves unchanged. Four
+  before/after live/reserved/host readings captured. No default/native prefix change.
+  **RUNNING:** r4 control on BOTH, guardians104PID841/105PID28926, command python3
+  ~/bc250work/tools/distributed-d42/guard_distributed_d42_on_host.py --shape control
+  --label control --port29743 --ready-port29744 (actual CLI has spaces after options).
+  Logs evidence/distributed-d42-control-controller.log and
+  evidence/distributed-d42-r4/control/{gpu.log,source.json,guard/state.json,rank.json,
+  final.json}. Own label bc250.d42=d42-r4-control. Check live CID/state there, do not
+  launch any competing test. Earlier GPU dirs r2/r3 and logs/source backups retained.
+  r1 failed host-specific registry check105/original600s guard cap104 beforeGPUinit;
+  fixed per-host D40 registry pins and isolated copy of same guard algorithm max1800
+  (original kernel helper unchanged); dry-run max ACK/1s expiry/above-max refuse pass.
+  r2 controlpassed, then client-finished TCPStore shutdown handshake hardened/r3
+  controlpassed. Local108 tests/lint pass. CPU readiness timeout600beforeGPUinit,
+  nativeGPU PG120 unchanged; child1400/guard1800/4CPU0–3/10GiB+12combined/512PID/
+  256MiBshm/EXreservation+SHruntime,100ms safetycgroup<9GiB/host≥3GiB/disk≥5GiB.
+  New larger guard deadline is not arbitrary GPU-hang hardware recovery proof.
+  **NEXT:** if r4 control passes/ACKs, compare ALL reference hashes exact D39/D40,
+  then launch --shape large --label large-audit --port29745 --ready-port29746 BOTH.
+  Use immutable D41 oracle99b36b92 on104 and bounded128MiB remote reader105, no full
+  rawcopy/spool. Do not relax math/reserves. Monitor through final/ACK or diagnose
+  concrete stop. Exporter must be staged from current local file before final export
+  (r4/SH lock/preliminary dirs); verifier current r4 pins. Finish archive verification,
+  negatives, docs/manifest/commits/hostdocs sync only after real final results. Native
+  profiles/defaults/boots/r2fallback/apps unchanged, no builds/deletions/installations.
 
 - **PLAN-05 / D41 completed 2026-11-09 —1.024B CPU oracle published; PLAN-05 OPEN.**
   Producer `3afa04930`, final finite scanner `f75cb361e`.
