@@ -9,6 +9,60 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D35 completed 2026-11-09 — staged CPU references and352.96M; PLAN-05 OPEN.**
+  Implementation `02107159f`. [Report](docs/development/bc250_distributed_d35_results/README.md),
+  [verified results](docs/development/bc250_distributed_d35_results/verified-results.json),
+  [next capacity plan](docs/development/bc250_distributed_d35_results/next-capacity-plan.json).
+  New additive tools/distributed-d35 BOTH. Owned eager tied GPT2/352,957,440 FP32
+  params/width1536/12blocks/24heads/vocab8192/positions256/seq128/global2/micro1/
+  dropout0/cacheFalse; native AdamW/rootclip.5, no AMP/PEFT/checkpoint/compile.
+  CPU-only producer exits before GPU; CUDA never initialized. Raw FP32 initial+
+  FP64 ALL148 gradients roundtrip bit-exact, identical manifests BOTH hosts;
+  source/shape/name/size/hash/full coverage checked before CUDA allocation. Payload
+  4235489280B=3.9446GiB/host retained at evidence/distributed-d35-r1/cpu-reference/
+  reference. No pickle/global cache flush; owned-file fsync/fadvise only. Reserve
+  payload+5GiB disk; GPU actual-gradient spool1411829760B temporary, removed after
+  successful ALLclip checks/digests retained; original references never removed.
+  GPU single/FSDP CPU FP64 loss/ALLgrad/CPU norm/ALLclip/streamed CPU AdamW ALLvalues/
+  local moments/counters pass unchangedD32 gates. Maxgraderror2.19408e-7; loss
+  9.3642272949 vsCPU9.3642279042. Each FSDP rank owns176478720 master/moment elements
+  vs352957440single. CPU moment scratch≤192MiB/parameter, no full CPU optimizer/
+  export/oracle in GPU workers. Source/digest/mode/rank/runtime-bound fresh workers,
+  initial update+two warmups+five timed, both orders. Later losses agree≤1e-5.
+  72groups/14ACKguards/76localtests/3privatearchive corruption refusals/lint pass;
+  no failed GPU phase, full upstream CI or relaxed-bound claim. Medianms single
+  265.535–266.563,FSDP17968.643–17973.422 (~68xslower); liveGPU5863.493vs3183.965–
+  3189.670MiB (~45.6%lower), reserved5912vs4238–4254MiB. Collective input/rank/update
+  gather1385871360B+reduce1411829760B, not wire totals; eth0 both1000Mb/s.
+  Measured cgroup~1083vs1652MiB; hostavailable6.997–7.129single/7.940–8.081FSDP GiB,
+  paired FSDP headroom+0.927–0.956GiB/host. Counters overlap; don't sum. Both modes
+  fit; larger-than-single remains unproven. CPU producer cgrouppeak≤7550MiB;
+  GPU qualification≤2504MiB; hostavailable≥4.932GiB throughout, swap/OOM0.
+  CPU≥12GiB host admission/GPU≥11GiB host+9GiB device; original PLAN01 EXreservation+
+  SH runtime/4CPUcpuset0–3/10GiB+12GiB/512PID/256MiBshm/600s guard/460s child retained.
+  Complete guarded CPU63–65s/GPUqual72single,131–132FSDP/fresh28–30single,170–171FSDP
+  includes I/O/imports/agents, not production training-only. Exact commands/PIDs/
+  CIDs/UUIDs/ACKs/logs: evidence/distributed-d35-r1/{cpu-reference,qualify-single,
+  qualify-fsdp,single-a,fsdp-a,fsdp-b,single-b},sequence.json/controllerlogs.
+  Guardians104:11869,12781,13478,14492,14971,16185,17385;
+  105:8161,9572,10590,12173,12813,14743,16676. Sequence12780/9570,exports18108/17748
+  exit0. Local kernel/artifacts/distributed-d35; metadata1041237695B SHA
+  46fecff3a5da132bd15813b95c341ebfd336da9d15f16ebaf86bb1c3259deee0;
+  1051183666B SHA5883fb9026210caf75c420e1f889207efbabeb1eee28cdb32ae824a10ceec5a2.
+  Raw payload stays hosts/reverified at final export, omitted local metadata. Final
+  idle/no jobs/containers/armed guards; kernel+registry unchanged, boots2d86d523r2/
+  e902e636r3/native PLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/defaults/fallbacks
+  preserved; no build/reboot/download/prefix mutation/apps/foreign stop. Docs/flow/
+  manifest snapshots synced BOTH. Historical PythonCPUfault distinct fixedVMheap/
+  D05exit/D21load. 1.024B remains CPU/GPU BLOCKED: single-state/fullCPUoracle floor
+  15.266GiB exceeds physical RAM; unchanged11.449GiB reference+5GiB disk reserve
+  and3.816GiB spool+reserve fail on.105. Two-rank7.633GiB floor excludes overhead.
+  **NEXT PLAN-05 / D36 (planned):** bounded per-FSDP-unit ALLgradient/AdamW audits
+  against existing352.96M source-bound CPU references, unchanged numerical gates,
+  before replacing whole-model summons. Then resolve streamed CPU oracle/storage
+  before any1.024B allocation. No extrapolated fit/deliberateOOM/reference deletion.
+  Six important packages remain; no convergence/large restart/universal speed claim.
+
 - **PLAN-05 / D34 completed 2026-11-09 — bounded159.8M correctness/measurement; PLAN-05 OPEN.**
   Implementation `58e91cb5d`. [Report](docs/development/bc250_distributed_d34_results/README.md),
   [verified metadata](docs/development/bc250_distributed_d34_results/verified-results.json).

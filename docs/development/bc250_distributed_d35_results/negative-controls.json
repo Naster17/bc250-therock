@@ -1,0 +1,14 @@
+[
+  {
+    "case": "source-tamper",
+    "status": "refused-as-required"
+  },
+  {
+    "case": "proof-tamper",
+    "status": "refused-as-required"
+  },
+  {
+    "case": "measurement-tamper",
+    "status": "refused-as-required"
+  }
+]

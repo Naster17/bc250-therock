@@ -1,0 +1,40 @@
+{
+  "status": "planning-only",
+  "parameters": 1024471040,
+  "blocks": 20,
+  "width": 2048,
+  "heads": 32,
+  "vocabulary": 8192,
+  "positions": 256,
+  "sequence": 128,
+  "global_batch": 2,
+  "micro": 1,
+  "single_FP32_parameter_gradient_AdamW_floor_bytes": 16391536640,
+  "two_rank_FP32_state_floor_bytes_each": 8195768320,
+  "unchanged_CPU_FP64_parameter_gradient_floor_bytes": 16391536640,
+  "unchanged_reference_payload_bytes_each": 12293652480,
+  "unchanged_whole_model_summon_extra_parameter_gradient_bytes_each": 4097884160,
+  "per_unit_summon_largest_block_extra_parameter_gradient_bytes_each": 201433088,
+  "hosts": [
+    {
+      "host": "104",
+      "observed_MemTotal_bytes": 15954210816,
+      "observed_free_disk_bytes": 18484469760,
+      "resident_single_FP32_AdamW_floor_exceeds_RAM": true,
+      "unchanged_reference_storage_plus_5GiB_fits": true,
+      "unchanged_actual_spool_plus_5GiB_fits": true
+    },
+    {
+      "host": "105",
+      "observed_MemTotal_bytes": 15959621632,
+      "observed_free_disk_bytes": 7908020224,
+      "resident_single_FP32_AdamW_floor_exceeds_RAM": true,
+      "unchanged_reference_storage_plus_5GiB_fits": false,
+      "unchanged_actual_spool_plus_5GiB_fits": false
+    }
+  ],
+  "GPU_admitted": false,
+  "CPU_oracle_admitted": false,
+  "excludes": "activations, allocator retention, CPU audit scratch, runtime, communications, gather overlap",
+  "next": "Qualify per-FSDP-unit ALL-gradient/AdamW audit on the existing352.96M references first. Plan streamed CPU gradients and explicit storage before admitting1.024B; do not run the unchanged full CPU oracle or deliberately OOM a single board."
+}
