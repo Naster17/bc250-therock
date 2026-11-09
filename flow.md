@@ -9,6 +9,57 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-04 / D30 completed 2026-11-09 (PLAN-04 still OPEN):** implementation/
+  verifier `e8c6d120c`. [Report](docs/development/bc250_distributed_d30_results/README.md),
+  [verified results](docs/development/bc250_distributed_d30_results/verified-results.json).
+  NEW BC250BF16PeftFSDPTrainer in BOTH additive tools/distributed-d30. Requires
+  pinnedplainPEFT/eagerGPT2/dropout0/cacheFalse/checkpointOFF/FP32originalparams;
+  explicitBF16working+FP32master/reduce/buffer/nativeautocast/noscaler. FrozenAMP
+  refusal factored into method; defaultoldhelpers stillrefuse. D28 namedpartition/
+  PEFTsignature/trainableAdamW/rootclip/fullcheckpoint/publicexport inherited.
+  Actualargs/pluginprecision/modelcheckpoint guards +three modelinghashes;
+  fullcheckpoint binds precisionrecipe/pins. No nativepackagepatch/loopfork.
+  Sharedharness frozenAMP selection +ALLtrainable-only CPUAMPgradient lists;
+  oldalltrainable/FP32math preserved. Sameowned24352=21280frozen+3072trainable,
+  19PEFTFSDPunits/shards12176each/trainableAdamW1536each/tiedfrozenembedding-head.
+  D26data28/rightpad/prompt/dropout0/cacheFalse/workers0/micro2accum2/global8/8/8/4,
+  shifted49/57/57/21/localzeromicro. ActualBF16weights/output/gathers,FP32master/
+  reduce/optimizergrad observed. ALLadaptergrad/loss versus roundedCPU BF16local
+  accumulation+FP64atBF16roundedweights pass ORIGINALD25/D26BF16.02/.03normgates+
+  floor,loss.003/.003. Maxglobalrelative.00760192991/.00783804056. ALLfrozenvalues
+  EXACT; CPUrootnorm/ALLclippedgrads/CPUdoubleALLAdamWvalues+moments+counters pass
+  originalD21/D22bounds.259seedgathers/identicalelementsequence toD28,inputs
+  623168→311584B; replay111gathers;16reductions12288B/window. Not totalNIC/speed/
+  memorycapacityclaim. PublicPEFT CP2/4/replay4 loads ALLparams/logits EXACT/
+  RNGunchanged. FullCP2DCPunion6files480247B onBOTH preservesoriginallocalhashes.
+  Freshseed1773vs773/newUUID+ticks+containers restoresALLbase+adapter/AdamW/
+  scheduler/fourRNG EXACT; windows3/4 ALLloss/grads/clip/updates/state/RNG/rows/
+  counts/digests EXACT. Native train_loss processlocal; no crossprecisionpromise.
+  Rank1missingadaptergrad/injectedfrozengrad/lateNaN/lateLoRAscaling BOTHrefuse
+  beforeAdamW/zeroupdates/EXACTunchangedparams+optimizer+scheduler. RetainedD28
+  FP32PEFTcontrol passes. PRIVATEcheckpointcopy changes ONLYrank1savedreduction
+  precisiontoBF16; BOTHrefuseoptimizerrestore/zeroAdamW/originalbytesunchanged.
+  Model mayalreadyload; discard/reload abortedsession. frozen-policy-seed PRIVATE
+  COPY,notrun.116groups/16ACKguards/28CPUpatterns444obs/62localtests/Black/critical
+  Ruff+F401/diff pass; no failedGPUphase. No fullupstreamCI/universalmodel/
+  stochastic/elastic/largefit/convergence/speedproof. Exactcommands/PIDs/CIDs/ACKs/
+  logs evidence/distributed-d30-r1/frozen-{seed,resume},frozen-{missing,grad,late,
+  peft}-seed,retained-control-seed,frozen-policy-resume; controls/resumes-sequence
+  JSON/controllerlogs. Seed28859/7650,controls29377/8341,resumes31579/11167,exports
+  32560/12492 allfinalexit0. Sources/checkpoints/reference tensors/publicexports
+  remainhost; local kernel/artifacts/distributed-d30 overlay/payloadexports/union/
+  metadata excludes tensor/RNG/safetensors.104archive681233B SHA0044f8e1acb0380ee4fee0e2a1e0ac2640137f6843dc24b63f1113bdb12ea688;
+  105611707B SHAf2e2b1a9abc07a1d11420aa44924c3e8219d4cb6c019983d8ef4a66aa0e28a09.
+  PLAN01reservation+SHlock/4CPUcpuset0–3/10GiB+12GiB/512PIDs/256MiBshm/600s/460s
+  retained; kernellogs/registry unchanged/finalidle/no jobs/containers/armedguards.
+  Entry2d86d523(.104r2)/e902e636(.105r3) unchanged; no build/reboot/download/prefix
+  mutation/apps/foreignstop. NativePLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/
+  packages/defaults/fallbacks preserved/docs syncedBOTH. HistoricalPythonCPUfault
+  distinctfixedVMheap/D05exit/D21load. **NEXT PLAN-04 / D31 (planned):** combine
+  explicitBF16 PEFT frozenbase and native nonreentrant activationcheckpointing,
+  qualify CPUALLadaptergrad/clip/AdamW/frozenpreservation+exactrestart beforelifting
+  combinationrefusal. FP16/otherrecipes/capacity remain separate.
+
 - **PLAN-04 / D29 completed 2026-11-09 (PLAN-04 still OPEN):** implementation/
   verifier `8e04fa9b4`. [Report](docs/development/bc250_distributed_d29_results/README.md),
   [verified results](docs/development/bc250_distributed_d29_results/verified-results.json).
