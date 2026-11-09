@@ -47,6 +47,7 @@ def main(fixture=None):
                 "frozen-grad",
                 "frozen-late",
                 "frozen-policy",
+                "frozen-peft",
             ]
             if fixture is not None
             else []
@@ -58,7 +59,7 @@ def main(fixture=None):
     p.add_argument("--output", type=Path, required=True)
     a = p.parse_args()
     frozen = bool(getattr(fixture, "frozen", False))
-    refusals = {"frozen-missing", "frozen-grad", "frozen-late"}
+    refusals = {"frozen-missing", "frozen-grad", "frozen-late", "frozen-peft"}
     r = dict(status="running", checks=[], transcript=[])
     try:
         torch.set_num_threads(4)
@@ -379,7 +380,9 @@ def main(fixture=None):
             def training_step(self, model, inputs, num_items_in_batch=None):
                 assert isinstance(model, FSDP)
                 if not local["registered"]:
-                    assert sum(isinstance(m, FSDP) for m in model.modules()) == 3
+                    assert sum(isinstance(m, FSDP) for m in model.modules()) == getattr(
+                        fixture, "wrap_units", 3
+                    )
                     if fixture is not None:
                         fixture.check(model)
                     counts = [None] * 2
@@ -428,7 +431,9 @@ def main(fixture=None):
                 finally:
                     local["in_training"] = False
                 assert len(local["reductions"]) - previous == (
-                    (2 if frozen else 3) if self.accelerator.sync_gradients else 0
+                    getattr(fixture, "reduction_units", (2 if frozen else 3))
+                    if self.accelerator.sync_gradients
+                    else 0
                 )
                 assert local["linear_types"] == (
                     {str(dtype)} if amp else {"torch.float32"}
@@ -474,6 +479,22 @@ def main(fixture=None):
 
             def _save_checkpoint(self, model, trial):
                 super()._save_checkpoint(model, trial)
+                if fixture is not None and hasattr(fixture, "export_audit"):
+                    with FSDP.summon_full_params(self.model, writeback=False):
+                        payload = cpu_tree(named(self.model))
+                    folder = (
+                        Path(self.args.output_dir)
+                        / f"checkpoint-{self.state.global_step}"
+                        / "peft-adapter"
+                    )
+                    audit = fixture.export_audit(payload, folder, data)
+                    r.setdefault("adapter_exports", []).append(
+                        dict(step=self.state.global_step, **audit)
+                    )
+                    r["checks"].append(
+                        "public-PEFT-save-and-from-pretrained-ALL-parameters-logits-exact-"
+                        + str(self.state.global_step)
+                    )
                 if self.state.global_step == 2:
                     torch.save(state(), a.seed_directory / "checkpoint-state.pt")
                     ckpt = Path(self.args.output_dir) / "checkpoint-2"
@@ -520,7 +541,15 @@ def main(fixture=None):
             train_dataset=data,
             compute_loss_func=observed_loss,
             **({} if fixture is None else {"data_collator": fixture.collator()}),
-            **({} if not frozen else {"frozen_parameter_policy": fixture.policy(base)}),
+            **(
+                {}
+                if not frozen
+                else {
+                    getattr(
+                        fixture, "policy_keyword", "frozen_parameter_policy"
+                    ): fixture.policy(base)
+                }
+            ),
         )
         acc = trainer.accelerator
         assert acc.native_amp == amp and (acc.scaler is not None) == half
@@ -569,6 +598,10 @@ def main(fixture=None):
                 Path(__file__).with_name("bc250_fsdp_frozen.py")
             )
             r["frozen_policy_sha256"] = trainer.frozen_parameter_policy.sha256
+        if getattr(fixture, "peft", False):
+            r["peft_helper_sha256"] = digest(
+                Path(__file__).with_name("bc250_fsdp_peft.py")
+            )
         r.update(
             rank=acc.process_index,
             birth=birth,
@@ -753,6 +786,8 @@ def main(fixture=None):
                             p.grad = (
                                 local["preclip"][name] * local["clip"]["coefficient"]
                             )
+                if a.case == "frozen-peft" and acc.process_index == 1:
+                    fixture.mutate(trainer.model)
                 if a.case in ["late", "frozen-late"] and acc.process_index == 1:
                     next(
                         p
@@ -931,7 +966,7 @@ def main(fixture=None):
             assert (
                 local.get("raw_updates", 0) == 0
                 and local.get("root_clip_calls", 0)
-                == (1 if a.case in ["late", "frozen-late"] else 0)
+                == (1 if a.case in ["late", "frozen-late", "frozen-peft"] else 0)
                 and trainer.state.global_step == 0
             )
             r["checks"].extend(
