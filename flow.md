@@ -9,6 +9,64 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-04 / D31 completed 2026-11-09; PLAN-04 bounded scope COMPLETE:** code/
+  verifier `725e495c8`. [Report](docs/development/bc250_distributed_d31_results/README.md),
+  [verified results](docs/development/bc250_distributed_d31_results/verified-results.json).
+  NEW BC250BF16CheckpointPeftFSDPTrainer in BOTH additive tools/distributed-d31.
+  Combines D29 native nonreentrant+preserveRNG enable/functionguards with explicit
+  D30BF16working/gather+FP32master/reduce/buffer/AdamW/nativeautocast/noscaler;
+  D28 namedfrozen/PEFT/rootclip/fullcheckpoint/publicexport retained. D30precision/
+  runtimepredicates factored; checkpointOFFdefault/oldinstalledhelpers preserved.
+  PinnedplainLoRA/eagerGPT2/dropout0/cacheFalse/FP32originalparams/modelcheckpoint
+  initiallyOFF. Both recipes/pins boundtosavedmetadata and checkedbeforeupdate.
+  Sameowned24352=21280frozen+3072trainable/19units/shards12176/AdamW1536each;
+  tiedfrozenembedding-head/D26data28/rightpad/prompt/workers0/micro2accum2/global
+  8/8/8/4/shifted49/57/57/21/localzero. ActualBF16weights/output/gathers+FP32master/
+  reduce/optimizergrad; ALLfrozenvalues EXACT. CPUroundedBF16+FP64 ALLadaptergrad/
+  loss/rootnorm/ALLclip/CPUdoubleALLAdamW pass UNCHANGEDD25/D26/D21/D22bounds;
+  maxglobalrelative.00760192991/.00783804056. GPUblocks14calls/7seedmicros,6/3replay,
+  offcontrol7/7: realbackwardrecompute. Inbatchcontrol ANDhashverifiedpublished
+  D30archives have EXACTsame seedtranscript/finaldigest. BF16gathers259→357seed,
+  111→153replay;16reductions12288B/window. Tinycompleteharness peak459264B vs499200B
+  EACHrank(39936B/8%lower),includesaudit/checkpoint; not isolatedactivation/wholehost/
+  largefit/speedproof. Publicadapter CP2/4/replay4 loadsALLparams/logitsEXACT/fourRNG
+  unchanged. FullCP2union6files480247B onBOTH/originalhashespreserved; newseed1773
+  vs773/newUUID+ticks+containers restoresALLmodel/AdamW/scheduler/fourRNG EXACT,
+  windows3/4 ALLloss/grads/clip/updates/state/RNG/rows/counts/digests EXACT. Native
+  train_loss processlocal; no crossprecision/stochastic/elasticpromise. Rank1missing
+  adaptergrad/injectedfrozengrad/lateNaN ANDpostclip LIVEcheckpointpreserveRNGdrift
+  BOTHrefusebeforeAdamW/zeroupdates/EXACTunchangedparams+optimizer+scheduler.
+  frozen-peft case NOWtests checkpointfunctiondrift,notLoRAscaling. PRIVATErank1
+  saveduse_reentrant corruption BOTHrefuseoptimizerrestore/originalcheckpointbytes
+  intact; modelmayalreadyload/discardabortedsession. RetainedD30BF16control passes.
+  frozen-policy-seed PRIVATECOPY,notrun.163groups/18ACKguards/30CPUpatterns536obs/
+  62localtests/Black/criticalRuff+F401/diff pass; no failedGPUphase/fullupstreamCI.
+  Initialzshheredoc tempquota stoppedwritesBEFOREtrackedsourcechange; workspace
+  disk26GiBfree. Bash+TMPDIR=/dev/shm fixedheredocs; unittestthere correctlyrefused
+  7runtime/devshmmounts. Owned workspaceTMPDIR kernel/artifacts/distributed-d31/
+  local-tmp passesall62, mountguardsunchanged/no cachesdeleted. local-validation-
+  environment.txt recordssetup. Tempquota mayrecur; useownedworkspaceTMPDIRfor
+  tests,bash+smallheredoctmpelsewhere; don't deletepreservedbuilds/caches.
+  Exactcommands/PIDs/CIDs/ACK/logs evidence/distributed-d31-r1/frozen-{seed,resume},
+  frozen-{missing,grad,late,peft}-seed,retained-control-seed,frozen-policy-resume,
+  allocator-control-seed; controls/resumes-sequence.json/controllerlogs.
+  Seed6265/23444,controls6850/24260,resumes9014/27004,allocator9961/28238,exports
+  10451/28891 allfinalexit0. Sources/checkpoints/references/publicartifacts remain
+  host; kernel/artifacts/distributed-d31 overlays/payloadexports/union/metadata
+  excludes tensor/RNG/safetensors.104archive779548B SHAee83847c206e86f03657008e6121c0bd883a247f40021dbb4acbbd75063232b2;
+  105689055B SHA2a4190af18c58f9a0a079afc606eaede0a0c6069c45fff97939cdef4a04ed2dd.
+  PLAN01reservation+SHlock/4CPUcpuset0–3/10GiB+12GiB/512PIDs/256MiBshm/600s/460s
+  retained; kernel+registryunchanged/finalidle/nojobs/containers/armedguards.
+  Entry2d86d523(.104r2)/e902e636(.105r3) unchanged/no build/reboot/download/prefix
+  mutation/apps/foreignstop. NativePLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/
+  packages/defaults/fallbacks retained; docssyncedBOTH. HistoricalPythonCPUfault
+  distinctfixedVMheap/D05exit/D21load. No universalmodel/speed/capacityclaim.
+  **NEXT PLAN-05 / D32 (planned):** inspect retainedsizing/timing evidence and
+  implement conservativeownedmodel oneboardvs two-hostDDP/FSDP measurement,
+  matchedglobalbatch/sequence/precision; allocator+hostRAM/swapheadroom/boundedwarm
+  update+wholejobtiming. No intentionalOOM/largefitinferencefromtinyfixtures.
+  Siximportantplanpackages remain; FP16PEFT/otherrecipes separatequalification.
+
 - **PLAN-04 / D30 completed 2026-11-09 (PLAN-04 still OPEN):** implementation/
   verifier `e8c6d120c`. [Report](docs/development/bc250_distributed_d30_results/README.md),
   [verified results](docs/development/bc250_distributed_d30_results/verified-results.json).

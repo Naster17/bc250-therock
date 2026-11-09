@@ -1,0 +1,589 @@
+{
+  "status": "passed",
+  "groups": 163,
+  "guards": 18,
+  "CPU_contract_observations": 536,
+  "parameters": 24352,
+  "frozen": 21280,
+  "trainable": 3072,
+  "full_exact_restart": true,
+  "activation_checkpointing": true,
+  "native_runtime_changed": false,
+  "checkpointing_off_transcript_exact": true,
+  "qualified_D30_baseline_archives": [
+    {
+      "path": "kernel/artifacts/distributed-d30/104-evidence-r1.tar.gz",
+      "sha256": "0044f8e1acb0380ee4fee0e2a1e0ac2640137f6843dc24b63f1113bdb12ea688"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d30/105-evidence-r1.tar.gz",
+      "sha256": "f2e2b1a9abc07a1d11420aa44924c3e8219d4cb6c019983d8ef4a66aa0e28a09"
+    }
+  ],
+  "BF16_gradient_max_relative": {
+    "CPU_AMP": 0.007601929910085879,
+    "CPU_FP64": 0.007838040563884631
+  },
+  "BF16_helper_sha256": "bd62c1c5aa0d2d2132738d323d8d88084bb2219ad8c17ee12a577f56a88f2c99",
+  "allocator": [
+    {
+      "rank": 0,
+      "checkpointed_peak_bytes": 459264,
+      "checkpointing_off_peak_bytes": 499200,
+      "scope": "tiny complete correctness harness; no capacity/speed proof"
+    },
+    {
+      "rank": 1,
+      "checkpointed_peak_bytes": 459264,
+      "checkpointing_off_peak_bytes": 499200,
+      "scope": "tiny complete correctness harness; no capacity/speed proof"
+    }
+  ],
+  "payload_bytes": 480247,
+  "boot_ids": [
+    "2d86d523-c909-415b-86fa-a75be9460dde",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "checkpoint_policy": {
+    "activation_checkpoint_sources": {
+      "modeling_layers.py": "9e4726c07cfc895d95f9a75b0e7d23b8561575080811695e70fa879b0a18dae4",
+      "modeling_utils.py": "2f45c2139ce633e6e3eae9290675dd5815643b37c27f2cc4dd83586fb648f7bb",
+      "models/gpt2/modeling_gpt2.py": "97c3e08dadffb3e54a6c75d935af995b2cc9ba723fc49c16eb21056d49ee4ebd"
+    },
+    "activation_checkpointing": {
+      "preserve_rng_state": true,
+      "use_reentrant": false
+    },
+    "frozen_names": [
+      "base_model.model.transformer.h.0.attn.c_attn.base_layer.bias",
+      "base_model.model.transformer.h.0.attn.c_attn.base_layer.weight",
+      "base_model.model.transformer.h.0.attn.c_proj.base_layer.bias",
+      "base_model.model.transformer.h.0.attn.c_proj.base_layer.weight",
+      "base_model.model.transformer.h.0.ln_1.bias",
+      "base_model.model.transformer.h.0.ln_1.weight",
+      "base_model.model.transformer.h.0.ln_2.bias",
+      "base_model.model.transformer.h.0.ln_2.weight",
+      "base_model.model.transformer.h.0.mlp.c_fc.base_layer.bias",
+      "base_model.model.transformer.h.0.mlp.c_fc.base_layer.weight",
+      "base_model.model.transformer.h.0.mlp.c_proj.base_layer.bias",
+      "base_model.model.transformer.h.0.mlp.c_proj.base_layer.weight",
+      "base_model.model.transformer.h.1.attn.c_attn.base_layer.bias",
+      "base_model.model.transformer.h.1.attn.c_attn.base_layer.weight",
+      "base_model.model.transformer.h.1.attn.c_proj.base_layer.bias",
+      "base_model.model.transformer.h.1.attn.c_proj.base_layer.weight",
+      "base_model.model.transformer.h.1.ln_1.bias",
+      "base_model.model.transformer.h.1.ln_1.weight",
+      "base_model.model.transformer.h.1.ln_2.bias",
+      "base_model.model.transformer.h.1.ln_2.weight",
+      "base_model.model.transformer.h.1.mlp.c_fc.base_layer.bias",
+      "base_model.model.transformer.h.1.mlp.c_fc.base_layer.weight",
+      "base_model.model.transformer.h.1.mlp.c_proj.base_layer.bias",
+      "base_model.model.transformer.h.1.mlp.c_proj.base_layer.weight",
+      "base_model.model.transformer.ln_f.bias",
+      "base_model.model.transformer.ln_f.weight",
+      "base_model.model.transformer.wpe.weight",
+      "base_model.model.transformer.wte.weight"
+    ],
+    "peft_signature": {
+      "attention": "eager",
+      "base_config": {
+        "_name_or_path": "",
+        "activation_function": "gelu_new",
+        "add_cross_attention": false,
+        "architectures": null,
+        "attn_pdrop": 0.0,
+        "bos_token_id": 1,
+        "chunk_size_feed_forward": 0,
+        "dtype": null,
+        "embd_pdrop": 0.0,
+        "eos_token_id": 2,
+        "id2label": {
+          "0": "LABEL_0",
+          "1": "LABEL_1"
+        },
+        "initializer_range": 0.02,
+        "is_encoder_decoder": false,
+        "label2id": {
+          "LABEL_0": 0,
+          "LABEL_1": 1
+        },
+        "layer_norm_epsilon": 1e-05,
+        "model_type": "gpt2",
+        "n_ctx": 32,
+        "n_embd": 32,
+        "n_head": 4,
+        "n_inner": 64,
+        "n_layer": 2,
+        "n_positions": 32,
+        "output_attentions": false,
+        "output_hidden_states": false,
+        "pad_token_id": 0,
+        "problem_type": null,
+        "reorder_and_upcast_attn": false,
+        "resid_pdrop": 0.0,
+        "return_dict": true,
+        "scale_attn_by_inverse_layer_idx": false,
+        "scale_attn_weights": true,
+        "summary_activation": null,
+        "summary_first_dropout": 0.1,
+        "summary_proj_to_labels": true,
+        "summary_type": "cls_index",
+        "summary_use_proj": true,
+        "tie_word_embeddings": true,
+        "transformers_version": "5.2.0",
+        "use_cache": false,
+        "vocab_size": 97
+      },
+      "config": {
+        "alora_invocation_tokens": null,
+        "alpha_pattern": {},
+        "arrow_config": null,
+        "auto_mapping": null,
+        "base_model_name_or_path": "",
+        "bias": "none",
+        "corda_config": null,
+        "ensure_weight_tying": false,
+        "eva_config": null,
+        "exclude_modules": null,
+        "fan_in_fan_out": true,
+        "inference_mode": false,
+        "init_lora_weights": true,
+        "layer_replication": null,
+        "layers_pattern": null,
+        "layers_to_transform": null,
+        "loftq_config": {},
+        "lora_alpha": 8,
+        "lora_bias": false,
+        "lora_dropout": 0.0,
+        "megatron_config": null,
+        "megatron_core": "megatron.core",
+        "modules_to_save": null,
+        "peft_type": "LORA",
+        "peft_version": "0.18.1",
+        "qalora_group_size": 16,
+        "r": 4,
+        "rank_pattern": {},
+        "revision": null,
+        "target_modules": [
+          "c_attn",
+          "c_fc",
+          "c_proj"
+        ],
+        "target_parameters": null,
+        "task_type": "CAUSAL_LM",
+        "trainable_token_indices": null,
+        "use_dora": false,
+        "use_qalora": false,
+        "use_rslora": false
+      },
+      "layers": {
+        "base_model.model.transformer.h.0.attn.c_attn": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        },
+        "base_model.model.transformer.h.0.attn.c_proj": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        },
+        "base_model.model.transformer.h.0.mlp.c_fc": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        },
+        "base_model.model.transformer.h.0.mlp.c_proj": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        },
+        "base_model.model.transformer.h.1.attn.c_attn": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        },
+        "base_model.model.transformer.h.1.attn.c_proj": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        },
+        "base_model.model.transformer.h.1.mlp.c_fc": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        },
+        "base_model.model.transformer.h.1.mlp.c_proj": {
+          "alpha": {
+            "default": 8
+          },
+          "dropout": {
+            "default": {
+              "p": 0.0,
+              "type": "Identity"
+            }
+          },
+          "fan_in_fan_out": true,
+          "lora_bias": {
+            "default": false
+          },
+          "r": {
+            "default": 4
+          },
+          "scaling": {
+            "default": 2.0
+          },
+          "use_dora": {
+            "default": false
+          }
+        }
+      },
+      "version": "0.18.1"
+    },
+    "peft_source_pins": {
+      "peft/mapping_func.py": "714db3bc17ac5d3d72baea44a29f836199da731cecc7e96f9cf367ebcd6089a1",
+      "peft/peft_model.py": "b847795c28bc4b00b3224c0dcea90edbee40ee60384cd104fdafd7056afcb13e",
+      "peft/tuners/lora/config.py": "a33f9f057d7df7e352e796731c59c755197aa267d0d0f2698a516bb97ddc8997",
+      "peft/tuners/lora/layer.py": "e8a47a49cf69f92ded68bf7ab286aeaf068f0ac809ab3465ad16f78a8f9f8b63",
+      "peft/tuners/lora/model.py": "f619f6fccd6f2abc2ad51e4fde3f28a77a6b8104b7a94e1b0c18e341dafb48c7",
+      "peft/tuners/tuners_utils.py": "99410963bc0bb2f194bef1ab01e65f3e24d5b066b90ea3242cd9edb11ead77a7",
+      "peft/utils/other.py": "c5e3db7e853791235b110e5ecbf0a77095179b7ba42491da4bcb8c80a6c0c53d",
+      "peft/utils/save_and_load.py": "499d7bc36929d172da951b97ae81129834a5c69d6d4c434a1ee4359f256149ca",
+      "transformers/integrations/fsdp.py": "c9dd4f201b787782e56a857de895ab60439cd308af7321df163a3351cf90660c"
+    },
+    "policy_sha256": "11ebfb1e59d410689b057ed89ac793b51c6448924a38d6ec0a72f728cdce68f3",
+    "precision": {
+      "activation_checkpointing": true,
+      "buffers": "float32",
+      "cast_forward_inputs": false,
+      "cast_root_forward_inputs": false,
+      "keep_low_precision_grads": false,
+      "master_parameters": "float32",
+      "reductions": "float32",
+      "working_parameters": "bfloat16"
+    },
+    "schema": 1,
+    "shapes": {
+      "base_model.model.transformer.h.0.attn.c_attn.base_layer.bias": [
+        96
+      ],
+      "base_model.model.transformer.h.0.attn.c_attn.base_layer.weight": [
+        32,
+        96
+      ],
+      "base_model.model.transformer.h.0.attn.c_attn.lora_A.default.weight": [
+        4,
+        32
+      ],
+      "base_model.model.transformer.h.0.attn.c_attn.lora_B.default.weight": [
+        96,
+        4
+      ],
+      "base_model.model.transformer.h.0.attn.c_proj.base_layer.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.0.attn.c_proj.base_layer.weight": [
+        32,
+        32
+      ],
+      "base_model.model.transformer.h.0.attn.c_proj.lora_A.default.weight": [
+        4,
+        32
+      ],
+      "base_model.model.transformer.h.0.attn.c_proj.lora_B.default.weight": [
+        32,
+        4
+      ],
+      "base_model.model.transformer.h.0.ln_1.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.0.ln_1.weight": [
+        32
+      ],
+      "base_model.model.transformer.h.0.ln_2.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.0.ln_2.weight": [
+        32
+      ],
+      "base_model.model.transformer.h.0.mlp.c_fc.base_layer.bias": [
+        64
+      ],
+      "base_model.model.transformer.h.0.mlp.c_fc.base_layer.weight": [
+        32,
+        64
+      ],
+      "base_model.model.transformer.h.0.mlp.c_fc.lora_A.default.weight": [
+        4,
+        32
+      ],
+      "base_model.model.transformer.h.0.mlp.c_fc.lora_B.default.weight": [
+        64,
+        4
+      ],
+      "base_model.model.transformer.h.0.mlp.c_proj.base_layer.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.0.mlp.c_proj.base_layer.weight": [
+        64,
+        32
+      ],
+      "base_model.model.transformer.h.0.mlp.c_proj.lora_A.default.weight": [
+        4,
+        64
+      ],
+      "base_model.model.transformer.h.0.mlp.c_proj.lora_B.default.weight": [
+        32,
+        4
+      ],
+      "base_model.model.transformer.h.1.attn.c_attn.base_layer.bias": [
+        96
+      ],
+      "base_model.model.transformer.h.1.attn.c_attn.base_layer.weight": [
+        32,
+        96
+      ],
+      "base_model.model.transformer.h.1.attn.c_attn.lora_A.default.weight": [
+        4,
+        32
+      ],
+      "base_model.model.transformer.h.1.attn.c_attn.lora_B.default.weight": [
+        96,
+        4
+      ],
+      "base_model.model.transformer.h.1.attn.c_proj.base_layer.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.1.attn.c_proj.base_layer.weight": [
+        32,
+        32
+      ],
+      "base_model.model.transformer.h.1.attn.c_proj.lora_A.default.weight": [
+        4,
+        32
+      ],
+      "base_model.model.transformer.h.1.attn.c_proj.lora_B.default.weight": [
+        32,
+        4
+      ],
+      "base_model.model.transformer.h.1.ln_1.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.1.ln_1.weight": [
+        32
+      ],
+      "base_model.model.transformer.h.1.ln_2.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.1.ln_2.weight": [
+        32
+      ],
+      "base_model.model.transformer.h.1.mlp.c_fc.base_layer.bias": [
+        64
+      ],
+      "base_model.model.transformer.h.1.mlp.c_fc.base_layer.weight": [
+        32,
+        64
+      ],
+      "base_model.model.transformer.h.1.mlp.c_fc.lora_A.default.weight": [
+        4,
+        32
+      ],
+      "base_model.model.transformer.h.1.mlp.c_fc.lora_B.default.weight": [
+        64,
+        4
+      ],
+      "base_model.model.transformer.h.1.mlp.c_proj.base_layer.bias": [
+        32
+      ],
+      "base_model.model.transformer.h.1.mlp.c_proj.base_layer.weight": [
+        64,
+        32
+      ],
+      "base_model.model.transformer.h.1.mlp.c_proj.lora_A.default.weight": [
+        4,
+        64
+      ],
+      "base_model.model.transformer.h.1.mlp.c_proj.lora_B.default.weight": [
+        32,
+        4
+      ],
+      "base_model.model.transformer.ln_f.bias": [
+        32
+      ],
+      "base_model.model.transformer.ln_f.weight": [
+        32
+      ],
+      "base_model.model.transformer.wpe.weight": [
+        32,
+        32
+      ],
+      "base_model.model.transformer.wte.weight": [
+        97,
+        32
+      ]
+    },
+    "trainable_names": [
+      "base_model.model.transformer.h.0.attn.c_attn.lora_A.default.weight",
+      "base_model.model.transformer.h.0.attn.c_attn.lora_B.default.weight",
+      "base_model.model.transformer.h.0.attn.c_proj.lora_A.default.weight",
+      "base_model.model.transformer.h.0.attn.c_proj.lora_B.default.weight",
+      "base_model.model.transformer.h.0.mlp.c_fc.lora_A.default.weight",
+      "base_model.model.transformer.h.0.mlp.c_fc.lora_B.default.weight",
+      "base_model.model.transformer.h.0.mlp.c_proj.lora_A.default.weight",
+      "base_model.model.transformer.h.0.mlp.c_proj.lora_B.default.weight",
+      "base_model.model.transformer.h.1.attn.c_attn.lora_A.default.weight",
+      "base_model.model.transformer.h.1.attn.c_attn.lora_B.default.weight",
+      "base_model.model.transformer.h.1.attn.c_proj.lora_A.default.weight",
+      "base_model.model.transformer.h.1.attn.c_proj.lora_B.default.weight",
+      "base_model.model.transformer.h.1.mlp.c_fc.lora_A.default.weight",
+      "base_model.model.transformer.h.1.mlp.c_fc.lora_B.default.weight",
+      "base_model.model.transformer.h.1.mlp.c_proj.lora_A.default.weight",
+      "base_model.model.transformer.h.1.mlp.c_proj.lora_B.default.weight"
+    ]
+  },
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d31/104-evidence-r1.tar.gz",
+      "bytes": 779548,
+      "sha256": "ee83847c206e86f03657008e6121c0bd883a247f40021dbb4acbbd75063232b2"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d31/105-evidence-r1.tar.gz",
+      "bytes": 689055,
+      "sha256": "2a4190af18c58f9a0a079afc606eaede0a0c6069c45fff97939cdef4a04ed2dd"
+    }
+  ]
+}
