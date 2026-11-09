@@ -1,0 +1,120 @@
+{
+  "status": "passed",
+  "groups": 24,
+  "guards": 4,
+  "local_tests": 83,
+  "config": {
+    "width": 1536,
+    "heads": 24,
+    "blocks": 12,
+    "tokens": 128,
+    "positions": 256,
+    "vocab": 8192,
+    "global_batch": 2,
+    "micro": 1
+  },
+  "parameters": 352957440,
+  "CPU_only": true,
+  "fresh_CPU_oracle_executed": true,
+  "CPU_reference_reused_from_D35": true,
+  "exact_ALL_gradients_initial_loss": true,
+  "post_accumulate_streaming_qualified": true,
+  "GPU_training_changed": false,
+  "larger_than_single_fit_qualified": false,
+  "larger_CPU_oracle_admitted": false,
+  "PLAN05_complete": false,
+  "rows": [
+    {
+      "host": 0,
+      "label": "retained-control",
+      "whole_cgroup_peak_MiB": 7556.62109375,
+      "process_peak_RSS_MiB": 7563.83984375,
+      "sampled_RSS_max_MiB": 7372.20703125,
+      "host_min_available_GiB": 7.032905578613281,
+      "after_backward_cgroup_MiB": 7364.359375,
+      "after_backward_RSS_MiB": 7371.97265625,
+      "retained_gradient_elements": 352957440,
+      "maximum_live_scratch_bytes": 0,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 44.01405607799825,
+      "guarded_phase_seconds": 57.07912869900247
+    },
+    {
+      "host": 0,
+      "label": "stream-gradient",
+      "whole_cgroup_peak_MiB": 5218.11328125,
+      "process_peak_RSS_MiB": 5158.75,
+      "sampled_RSS_max_MiB": 5158.75,
+      "host_min_available_GiB": 9.212326049804688,
+      "after_backward_cgroup_MiB": 4833.4609375,
+      "after_backward_RSS_MiB": 4846.76953125,
+      "retained_gradient_elements": 0,
+      "maximum_live_scratch_bytes": 100663296,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 62.90285869099898,
+      "guarded_phase_seconds": 76.0901048759988
+    },
+    {
+      "host": 1,
+      "label": "retained-control",
+      "whole_cgroup_peak_MiB": 7481.609375,
+      "process_peak_RSS_MiB": 7492.65234375,
+      "sampled_RSS_max_MiB": 7301.0,
+      "host_min_available_GiB": 6.983680725097656,
+      "after_backward_cgroup_MiB": 7289.09375,
+      "after_backward_RSS_MiB": 7300.76953125,
+      "retained_gradient_elements": 352957440,
+      "maximum_live_scratch_bytes": 0,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 39.790703079001105,
+      "guarded_phase_seconds": 57.44653485499657
+    },
+    {
+      "host": 1,
+      "label": "stream-gradient",
+      "whole_cgroup_peak_MiB": 5202.4609375,
+      "process_peak_RSS_MiB": 5145.84375,
+      "sampled_RSS_max_MiB": 5145.84375,
+      "host_min_available_GiB": 9.108638763427734,
+      "after_backward_cgroup_MiB": 4817.78125,
+      "after_backward_RSS_MiB": 4833.87109375,
+      "retained_gradient_elements": 0,
+      "maximum_live_scratch_bytes": 100663296,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "worker_seconds": 56.79856136599847,
+      "guarded_phase_seconds": 76.4314068959975
+    }
+  ],
+  "boot_ids": [
+    "2d86d523-c909-415b-86fa-a75be9460dde",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "baseline_archives": [
+    {
+      "path": "kernel/artifacts/distributed-d35/104-evidence-r1.tar.gz",
+      "bytes": 1237695,
+      "sha256": "46fecff3a5da132bd15813b95c341ebfd336da9d15f16ebaf86bb1c3259deee0"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d35/105-evidence-r1.tar.gz",
+      "bytes": 1183666,
+      "sha256": "5883fb9026210caf75c420e1f889207efbabeb1eee28cdb32ae824a10ceec5a2"
+    }
+  ],
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d37/104-evidence-r2.tar.gz",
+      "bytes": 472440,
+      "sha256": "fedf02daf56a229c388dfdb91c6a29ce875cf24859f4b9cf0e47b8deac7267d1"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d37/105-evidence-r2.tar.gz",
+      "bytes": 445212,
+      "sha256": "870f76e490c0d2aa11495ed536444eb7e94db7216812583d2b73d442dd24519e"
+    }
+  ]
+}

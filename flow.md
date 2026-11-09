@@ -9,6 +9,52 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D37 completed 2026-11-09 — CPU gradient streaming; PLAN-05 OPEN.**
+  Implementation `2610b2b76`. [Report](docs/development/bc250_distributed_d37_results/README.md),
+  [verified results](docs/development/bc250_distributed_d37_results/verified-results.json).
+  New additive tools/distributed-d37 BOTH; final evidence series distributed-d37-r2.
+  CPU-only352,957,440-param FP64 GPT2, same D35 math/full global2 backward/seq128/
+  positions256/dropout0/cacheFalse, checkpointOFF; CUDA never initialized/no PG/GPU
+  tensors. Fresh retained-gradient control vs native post-accumulate hooks checking
+  each gradient against original D35 FP64 reference, one raw scratch file roundtrip,
+  then p.grad=None. ALL148 hooks exactly once/tied embedding-head retained; max
+  visible .grad elements at hook12582912, after backward352957440→0. Scratch≤96MiB
+  (100663296B)+5GiB disk reserve, removed on success; no full3.9446GiB ref copy/spool/
+  global cache flush. Initial values checked direct FP64 against promoted FP32 ref
+  before/after; ALL gradient bits/SHA/loss EXACT both modes/hosts/D35. Loss remains
+  9.364227904214559. CPU-only contract, not multi-micro/shared-graph/optimizer recipe.
+  Initial r1 control checked weights after FP32 cast; tightened before streaming,
+  reran BOTH corrected r2 controls/streams. r1 evidence/preliminary source backup
+  tools/distributed-d37-preliminary-r1 preserved, not counted among final24 groups;
+  no demonstrated Torch math bug. Final24 CPUgroups/4ACKguards/83localtests/3private
+  source/hook-count/gradient-hash corruption refusals/Black/criticalRuff+F401/diff
+  pass; no failed final phase or relaxed bounds/full upstream CI claim.
+  Cgroup peakMiB7556.621→5218.113104/7481.609→5202.461105 (~30.5–30.9%lower);
+  VmHWM7563.840→5158.750/7492.652→5145.844MiB. Host available min7.033→9.212GiB104/
+  6.984→9.109GiB105. After-backward stream cgroup4818–4833MiB; full FP64 params
+  still retained. Counters overlap/don't sum;200ms sampling+kernel peak/HWM. Host/
+  cgroup swap0/OOM0. Guarded57s retained/76s stream includes I/O/checks/imports;
+  worker40–44s/57–63s. Memory/I/O tradeoff, not CPU/GPU training-speed proof.
+  Native GPU training untouched; no new GPU qualification or larger-fit inference.
+  CPU host admission≥12GiB; PLAN01 EXreservation+SHruntime/4CPUcpuset0–3/10GiB+12GiB/
+  512PID/256MiBshm/600s guard/460s child retained. Exact commands/CIDs/UUIDs/ACK/logs
+  evidence/distributed-d37-r2/{retained-control,stream-gradient}; guardians10432310/
+  630,10510185/11364,exports1769/13133 exit0. Preliminary r1 guardians31542/9018 exit0.
+  Local kernel/artifacts/distributed-d37: r1/r2 overlays/raw summaries/final metadata;
+  104archive472440B SHA fedf02daf56a229c388dfdb91c6a29ce875cf24859f4b9cf0e47b8deac7267d1;
+  105445212B SHA870f76e490c0d2aa11495ed536444eb7e94db7216812583d2b73d442dd24519e.
+  Original D35 references reverified at export, stay hosts/omitted metadata. Final
+  idle/no jobs/containers/armed guards; registry/kernel unchanged/boots2d86d523r2/
+  e902e636r3/native PLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/defaults/fallbacks
+  preserved. No nativebuild/reboot/download/prefix mutation/apps/foreign stop.
+  Docs/flow/manifest synced BOTH. PythonCPUfault distinct fixedVMheap/D05exit/D21load.
+  **NEXT PLAN-05 / D38 (planned):** native nonreentrant CPU checkpointing with
+  streaming (use_reentrant=False,preserve_rng_state=True) on existing352.96M refs;
+  exact loss/FP64 initial/ALLgrad/hook count/recompute+memory. Keep one-tensor
+  scratch/original refs.1.024B remains CPU/GPU blocked pending its own oracle,
+  storage and clipping-spool admission; no deliberateOOM/extrapolated fit. Six major
+  packages remain.
+
 - **PLAN-05 / D36 completed 2026-11-09 — per-unit FSDP audits; PLAN-05 OPEN.**
   Implementation `22447a4a9`. [Report](docs/development/bc250_distributed_d36_results/README.md),
   [verified results](docs/development/bc250_distributed_d36_results/verified-results.json).
