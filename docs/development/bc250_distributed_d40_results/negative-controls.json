@@ -1,0 +1,17 @@
+[
+  {
+    "case": "source-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "local-fallback-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "retained-buffer-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  }
+]

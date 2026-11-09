@@ -9,6 +9,52 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D40 completed 2026-11-09 — bounded reference transport; PLAN-05 OPEN.**
+  Implementation `470c4046b`. [Report](docs/development/bc250_distributed_d40_results/README.md),
+  [verified results](docs/development/bc250_distributed_d40_results/verified-results.json).
+  Additive tools/distributed-d40 BOTH; same352,957,440-param native FSDP/D35 refs/
+  D39 independent CPU clipped-gradient audit. Fresh both-local control vs .104-local/
+  .105-remote reader. ALL148 raw/clipped/updated hashes and local AdamW moments/
+  counters EXACT control/D39/D36 perrank; loss9.364227294921875, maxcliperr1.30094e-8,
+  original bounds retained. No CPU oracle in GPUworkers,39 unit contexts/max28.33M.
+  .104 guarded temporary UID1000 read-only source rehashes296 blobs; binds104:29840,
+  allows only105, no listings/writes, O_NOFOLLOW/type/size checks,256MiBAS/64FD/
+  singlehandler/1MiBchunks. Plain HTTP privateLAN fixture service, no public auth/
+  encryption claim. Stops beforeACK; parent keeps EXreservation+SHruntime throughout.
+  .105 preflight+worker enforce original manifest SHA/length and perblob status/
+  length/header+computedSHA, no redirect/encoding/unknownitems/roots,20s socket/60s
+  blob deadlines. No silent fallback/disk cache; descriptor only68,123B manifest,
+  max retained blob96MiB/verification1MiB (hard transportcap128MiB). Existing full D35
+  refs BOTH preserved. Source exactly1185 complete requests: each296 rawblob4times,
+  payload16,941,957,120B+manifest68,123B, failed/rejected0. App payload, not wirebytes.
+  24GPUgroups/4ACKguards/93localtests (7new actualsocket refusal/roundtrip methods)/
+  3 private source/fallback/buffer archive refusals/Black/criticalRuff+F401/diff pass;
+  immutable D35+D36+D39 replay. Preliminary localcounter race fixed by draining test
+  server before inspection, then93 pass; no failed GPU phase/relaxed math/full CI.
+  LiveGPU unchanged2980.129/2973.930MiB; reserved3734/4136. Cgroup2504–2515MiB,
+  hostavailable≥7.33GiB/swap+OOM0/logs+registry unchanged. Source outsideGPUcgroup/
+  capped256MiB; counters overlap. New worker207s vslocal121.5 includes network/
+  validation, storage/network tradeoff, no training speed/memory/largefit claim.
+  Guarded104257.3/105220.2s excludes105earlierremote preflight, different brackets.
+  PLAN01 EXreservation+SHruntime/4CPU0–3/10GiB+12GiB/512PID/256MiBshm/600s guard/
+  460s child/5GiBfree reserve retained. Evidence/distributed-d40-r1/{local-control,
+  remote-reference}, ports29741/29742; guardians10416356/17139,10526759/27099,
+  source17198/export18491/27467 exit0. Exact commands/CIDs/UUIDs/ACK/logs retained;
+  local kernel/artifacts/distributed-d40; archives omit raw tensors.
+  104archive960364B SHA15eb9d294a6a6d360142306ef9fa20b4d2690dbe44c3c1854b6fdf5c8089fb49.
+  105archive887542B SHAf1752c722bb4413524eb55070d75ef3fd17c77ce832e7f6e747d1004b75e1fb6.
+  Final idle/no jobs/containers/source/armed guards; boots2d86d523r2/e902e636r3,
+  native PLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/packages/defaults/fallbacks
+  unchanged. No nativebuild/install/reboot/download/prefixmutation/apps/foreignstop.
+  Docs/flow/manifest synced BOTH. PythonCPUfault distinct fixedVMheap/D05exit/D21load.
+  **NEXT PLAN-05 / D41 (planned):** CPU-only FP64 checkpoint+streaming oracle for
+  planned1,024,471,040-param GPT2 on104 after source/config/P/RAM admission and
+  11.449GiB payload+5GiB diskreserve. Conservative headroom/abort-owned policy,
+  ALL initial/loss/gradient finite/coverage/raw roundtrip/hash, recomputation/0retained
+  gradients. Preserve D35refs; no GPU/largerfit claim until oracle/storage and
+  shape-specific GPU/transport admission pass separately.1.024B still unqualified,
+  no deliberateOOM/extrapolated fit. Six important packages remain.
+
 - **PLAN-05 / D39 completed 2026-11-09 — spool-free CPU-reference clipping; PLAN-05 OPEN.**
   Implementation `a82aca0ba`. [Report](docs/development/bc250_distributed_d39_results/README.md),
   [verified results](docs/development/bc250_distributed_d39_results/verified-results.json).

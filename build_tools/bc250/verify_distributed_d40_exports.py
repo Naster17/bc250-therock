@@ -427,6 +427,11 @@ def main():
         target_raw_reference_cache_bytes=0,
         target_max_retained_blob_bytes=100663296,
         source_payload_bytes_transferred=16941957120,
+        source=left["records"]["remote-reference"]["final"]["reference_source"],
+        remote_preflight=right["records"]["remote-reference"]["final"][
+            "remote_preflight"
+        ],
+        remote_worker=rw["remote-reference"]["reference_transport"],
         independent_CPU_reference_clipping_qualified=True,
         temporary_raw_spool_bytes_before=0,
         temporary_raw_spool_bytes_after=0,
