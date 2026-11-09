@@ -46,15 +46,15 @@ SOURCE_SHA256 = {
     "cpu_oracle_d41.py": "cd1f9df577dde6ff2c238f665c614c10dad2d4366b591b709849eb9192aa9434",
     "reference_transport_d40.py": "829043e2aab1877f2ac3805c7d4264df7b22db92aa04615ad02556a5207726bf",
     "capacity_plan_d42.py": "fbd64603efefaef31e93d4214e0774e43407a87950d5567218afd3b6d54b9e4b",
-    "distributed_d42_capacity.py": "f039d63e2596b26411db665cd3d361e5503cb70d593b7ebce29b5c127f6dbb7c",
+    "distributed_d42_capacity.py": "00788ff64f48eae6af45a35dde25d54dc1c8b21b5830a6051aa1c9d6731d68d4",
     "serve_reference_d42.py": "8300b5e18a69110e7a2378b32cc22962ab81c539f8644444c3124edca634627b",
     "oracle_descriptor_d42.json": "a0af0b1f62295742d23b8e809ac320e3da60d0d8fdc2e4783d9fa6c1e068a867",
 }
 HOST_SHA256 = {
-    "guard_distributed_d42_on_host.py": "4498d3f282c327329f27e63c5cfbdf8aed6d1a0e2902d93a32c52e279b1d119a",
+    "guard_distributed_d42_on_host.py": "3fa55a74cd7fa373acc122c63e41d28f6f49888fcb39ea0f08ffdb781438c9c1",
     "distributed_d42_bounded_launch.py": "574372d65a3f7023c70a7fdce208d1ef2d74cfb525545f2c965442695c99b148",
     "deadline_guard_d42.py": "bce97bfb137c77ff28f1ad30ea23f9aada593174c58e91a2e1628a5b8b011d7c",
-    "export_distributed_d42_on_host.py": "5b5787fb68e154ba66fb3c4720e1b2f6b9f7682081bc0b6ac695f8207965b6f9",
+    "export_distributed_d42_on_host.py": "3ffc359e424c117c7598f670413b0a6b5d3f38c6aedd0bf51a3d5bd47ca59c07",
 }
 LABELS = ["control", "large-audit"]
 
@@ -95,7 +95,7 @@ def predecessors(workspace):
 
 
 def read(path, rank, old, oracle):
-    prefix = "home/nik/bc250work/evidence/distributed-d42-r3/"
+    prefix = "home/nik/bc250work/evidence/distributed-d42-r4/"
     source = "home/nik/bc250work/tools/distributed-d42/"
     with tarfile.open(path) as archive:
 
@@ -252,6 +252,17 @@ def read(path, rank, old, oracle):
                 for key, value in old[1]["remote-reference"]["reference"].items():
                     if key != "audit":
                         assert ref[key] == value, (key, "D40")
+            cache = ref["cache_trim_events"]
+            assert [e["stage"] for e in cache] == [
+                "after-wrap-before-backward",
+                "raw-gradient",
+                "clipped-gradient",
+                "updated-parameter",
+            ]
+            assert all(
+                e["after"]["reserved_bytes"] <= e["before"]["reserved_bytes"]
+                for e in cache
+            )
             audit = ref["audit"]
             assert (
                 audit["kind"] == "unit"

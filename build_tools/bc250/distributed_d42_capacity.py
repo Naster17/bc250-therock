@@ -41,7 +41,31 @@ def sources():
 
 
 class StageAuditor(Auditor):
+    def trim(self, stage):
+        base.torch.cuda.synchronize()
+        before = dict(
+            allocated_bytes=base.torch.cuda.memory_allocated(),
+            reserved_bytes=base.torch.cuda.memory_reserved(),
+            host_available_bytes=base.meminfo()["MemAvailable"],
+        )
+        base.torch.cuda.empty_cache()
+        after = dict(
+            allocated_bytes=base.torch.cuda.memory_allocated(),
+            reserved_bytes=base.torch.cuda.memory_reserved(),
+            host_available_bytes=base.meminfo()["MemAvailable"],
+        )
+        self.cache_events.append(dict(stage=stage, before=before, after=after))
+        print("D42 cache trim", stage, json.dumps(self.cache_events[-1]), flush=True)
+
+    def qualify(self, *args, **kwargs):
+        self.cache_events = []
+        self.trim("after-wrap-before-backward")
+        result = super().qualify(*args, **kwargs)
+        result["cache_trim_events"] = self.cache_events
+        return result
+
     def parameters(self, model, entries, stage):
+        self.trim(stage)
         print("D42 GPU audit stage:", stage, flush=True)
         yield from super().parameters(model, entries, stage)
 
