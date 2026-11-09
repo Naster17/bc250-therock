@@ -1,0 +1,128 @@
+{
+  "status": "passed",
+  "groups": 24,
+  "guards": 4,
+  "local_tests": 86,
+  "config": {
+    "width": 1536,
+    "heads": 24,
+    "blocks": 12,
+    "tokens": 128,
+    "positions": 256,
+    "vocab": 8192,
+    "global_batch": 2,
+    "micro": 1
+  },
+  "parameters": 352957440,
+  "CPU_reference_reused_from_D35": true,
+  "fresh_CPU_oracle_executed": false,
+  "ALL_cpu_gates_unchanged": true,
+  "legacy_D36_native_digests_exact": true,
+  "independent_CPU_reference_clipping_qualified": true,
+  "temporary_raw_spool_bytes_before": 1411829760,
+  "temporary_raw_spool_bytes_after": 0,
+  "paired_digests_exact": true,
+  "per_unit_scope_qualified": true,
+  "native_runtime_changed": false,
+  "training_speed_improvement_qualified": false,
+  "larger_than_single_fit_qualified": false,
+  "PLAN05_complete": false,
+  "rows": [
+    {
+      "host": 0,
+      "label": "legacy-control",
+      "peak_live_audit_MiB": 2980.12890625,
+      "peak_reserved_audit_MiB": 3734.0,
+      "max_full_unit_elements": 28331520,
+      "summon_contexts": 39,
+      "whole_cgroup_peak_MiB": 2507.64453125,
+      "host_min_available_GiB": 7.801677703857422,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 132.74723819799692,
+      "worker_seconds": 119.61425416899874
+    },
+    {
+      "host": 0,
+      "label": "reference-clip",
+      "peak_live_audit_MiB": 2980.12890625,
+      "peak_reserved_audit_MiB": 3734.0,
+      "max_full_unit_elements": 28331520,
+      "summon_contexts": 39,
+      "whole_cgroup_peak_MiB": 2502.0859375,
+      "host_min_available_GiB": 7.704631805419922,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 134.5526436680011,
+      "worker_seconds": 121.47627553300117
+    },
+    {
+      "host": 1,
+      "label": "legacy-control",
+      "peak_live_audit_MiB": 2973.9296875,
+      "peak_reserved_audit_MiB": 4136.0,
+      "max_full_unit_elements": 28331520,
+      "summon_contexts": 39,
+      "whole_cgroup_peak_MiB": 2502.29296875,
+      "host_min_available_GiB": 7.289592742919922,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 133.85659169599967,
+      "worker_seconds": 119.49270419999812
+    },
+    {
+      "host": 1,
+      "label": "reference-clip",
+      "peak_live_audit_MiB": 2973.9296875,
+      "peak_reserved_audit_MiB": 4136.0,
+      "max_full_unit_elements": 28331520,
+      "summon_contexts": 39,
+      "whole_cgroup_peak_MiB": 2503.17578125,
+      "host_min_available_GiB": 7.270439147949219,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 135.9200183530047,
+      "worker_seconds": 121.35908814200229
+    }
+  ],
+  "boot_ids": [
+    "2d86d523-c909-415b-86fa-a75be9460dde",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "baseline_archives": [
+    {
+      "path": "kernel/artifacts/distributed-d35/104-evidence-r1.tar.gz",
+      "bytes": 1237695,
+      "sha256": "46fecff3a5da132bd15813b95c341ebfd336da9d15f16ebaf86bb1c3259deee0"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d35/105-evidence-r1.tar.gz",
+      "bytes": 1183666,
+      "sha256": "5883fb9026210caf75c420e1f889207efbabeb1eee28cdb32ae824a10ceec5a2"
+    }
+  ],
+  "legacy_archives": [
+    {
+      "path": "kernel/artifacts/distributed-d36/104-evidence-r1.tar.gz",
+      "bytes": 874908,
+      "sha256": "8b0e3f1ac80d005272736a2f98857c113bfd8d6d150111b64922d62375678472"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d36/105-evidence-r1.tar.gz",
+      "bytes": 808010,
+      "sha256": "db6a82e431ecdccea1dfdeda68f8e34ac4dcd31c9c4c4b841699c8cc01f11831"
+    }
+  ],
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d39/104-evidence-r1.tar.gz",
+      "bytes": 850950,
+      "sha256": "47d632edd02869f8cda2f71b1b3ec2034ed77d10b0cb4adf252e87d46c98b1a1"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d39/105-evidence-r1.tar.gz",
+      "bytes": 795941,
+      "sha256": "13b2d58760799d9f6574a17462b8a2d6838d08877061d39c379ea429d68fed48"
+    }
+  ]
+}

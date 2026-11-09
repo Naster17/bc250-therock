@@ -9,6 +9,45 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D39 completed 2026-11-09 — spool-free CPU-reference clipping; PLAN-05 OPEN.**
+  Implementation `a82aca0ba`. [Report](docs/development/bc250_distributed_d39_results/README.md),
+  [verified results](docs/development/bc250_distributed_d39_results/verified-results.json).
+  Additive tools/distributed-d39 BOTH; same352,957,440-param FP32 GPT2/native FSDP/
+  global2/seq128 and immutable D35 CPU refs. New per-unit clipping audit reads FP64
+  CPU reference gradients instead of full actual-GPU-gradient disk spool. Original
+  atol1e-8/rtol5e-5 pass ALL entries; maxabs1.300937118860028e-8 both hosts (combined
+  absolute/relative gate). Coefficient still from CPU-summed checked actual-gradient
+  norm, not separate CPU-reference-only norm. ALL raw/loss/norm/AdamW gates retained.
+  Raw/clipped/updated tensor hashes and local moments/counters EXACT fresh legacy
+  control/D36 perrank. Original D36 code/control/refs preserved.39 public nonrecursive
+  contexts/maxunit28,331,520 retained, whole summons forbidden. No CPU oracle/global
+  optimizer in GPUworker. Raw hashes computed directly; compatibility spool-removed
+  flag denotes final absence. Raw spool1,411,829,760B=1.315GiB→0 perhost;5GiB disk
+  reserve retained, both guardian+worker admit correctly. No fullref copy/global cache
+  flush. Originalrefs rehashed before allocation/export, tensor payload omitted.
+  24GPUgroups/4ACKguards/86localtests/3 private source/tolerance/hash corruption
+  refusals/Black/criticalRuff+F401/diff pass; immutable D35+D36 replay. No failed GPU
+  phase/relaxed bounds/full upstream CI. LiveGPU unchanged2980.129MiB104/2973.930105;
+  reserved3734/4136. CPU cgroup2502–2508MiB, hostavailable min7.705104/7.270105GiB,
+  swap/OOM0/registry+kernel logs unchanged. Qualification storage improvement, no
+  training speed/memory/largefit/longrun claim. Guarded132.7–135.9s includes I/O/checks.
+  PLAN01 EXreservation+SHruntime/4CPU0–3/10GiB+12GiB/512PID/256MiBshm/600s guard/
+  460s child retained. Evidence/distributed-d39-r1/{legacy-control,reference-clip},
+  ports29739/29740; guardians10410967/11784,10521718/22538; exports12572/23340 exit0.
+  Exact commands/CIDs/UUIDs/ACK/logs retained; local kernel/artifacts/distributed-d39.
+  104archive850950B SHA47d632edd02869f8cda2f71b1b3ec2034ed77d10b0cb4adf252e87d46c98b1a1.
+  105archive795941B SHA13b2d58760799d9f6574a17462b8a2d6838d08877061d39c379ea429d68fed48.
+  Final idle/no jobs/containers/armed guards; boots2d86d523r2/e902e636r3/native
+  PLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/defaults/fallbacks unchanged. No native
+  build/install/reboot/download/prefix mutation/apps/foreign stop. Docs/flow/manifest
+  synced BOTH. PythonCPUfault remains distinct fixedVMheap/D05exit/D21load.
+  **NEXT PLAN-05 / D40 (planned):** bounded read-only per-tensor reference transport
+  .104→.105 on existing352.96M refs, source/manifest/size/SHA checks and bounded
+  buffers/truncation+corruption refusal controls; preserve local fallback/refs, no
+  fullref duplicate.1.024B CPU/GPU remains unqualified:11.449GiB refs+5GiB reserve
+  still fails.105, oracle/RAM/storage/transport admission separately before allocation.
+  No deliberateOOM/inferred fit; six packages remain.
+
 - **PLAN-05 / D38 completed 2026-11-09 — CPU checkpoint+streaming; PLAN-05 OPEN.**
   Implementation `22d702e47`. [Report](docs/development/bc250_distributed_d38_results/README.md),
   [verified results](docs/development/bc250_distributed_d38_results/verified-results.json).

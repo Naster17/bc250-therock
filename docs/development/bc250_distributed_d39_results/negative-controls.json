@@ -1,0 +1,17 @@
+[
+  {
+    "case": "source-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "clipping-tolerance-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "paired-gradient-digest-tamper",
+    "status": "refused-as-required",
+    "reason": "('reference-clip', 'D36', 'clipped_gradient_sha256')"
+  }
+]
