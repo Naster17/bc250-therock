@@ -136,7 +136,18 @@ def read(path, rank, baseline, baseline_path):
             ref = w["reference"]
             original = baseline["records"]["qualify-fsdp"]["worker"]["reference"]
             for key, wanted in original.items():
-                assert ref[key] == wanted, (label, key)
+                # D36 sums checked per-parameter squares in CPU manifest order.
+                # D35's FSDP named-parameter order differs; these two report-only
+                # scalars can differ by a double-precision rounding unit. The
+                # actual GPU/CPU loss, gradient, norm, clipping and AdamW gates
+                # are unchanged in both workers; raw-gradient hashes stay exact.
+                if key == "CPU_root_norm":
+                    assert abs(ref[key] - wanted) <= 1e-13
+                elif key == "clip_coefficient":
+                    assert abs(ref[key] - wanted) <= 1e-15
+                    assert ref[key] == min(1.0, 0.5 / (ref["CPU_root_norm"] + 1e-6))
+                else:
+                    assert ref[key] == wanted, (label, key)
             assert (
                 set(ref["clipped_gradient_sha256"])
                 == set(ref["updated_parameter_sha256"])

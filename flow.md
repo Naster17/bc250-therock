@@ -9,6 +9,54 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D36 completed 2026-11-09 — per-unit FSDP audits; PLAN-05 OPEN.**
+  Implementation `22447a4a9`. [Report](docs/development/bc250_distributed_d36_results/README.md),
+  [verified results](docs/development/bc250_distributed_d36_results/verified-results.json).
+  New additive tools/distributed-d36 BOTH. Reuses immutable D35 352,957,440-param
+  FP32 GPT2/math/native CPU reference (no oracle rerun/full reference copy). Public
+  wrapper-name ownership partitions ALL148 params into root+12 blocks. Per-unit
+  summon uses recurse=False/writeback=False/with_grads=True; process guard refuses
+  whole-model calls, other wrapped matrices must remain1D shards. No private handle
+  API/training-loop fork. Three passes:39 unit contexts vs3 whole-control; every
+  pass covers all names once. Max materialized scope352957440→28331520 elements.
+  Original CPU FP64 loss/ALLgrad/norm/ALLclip/streamed CPU AdamW ALLvalues/local
+  moments/counters pass unchanged. Raw/clipped gradients and updated values EXACT
+  both paths/hosts; local AdamW digests EXACT within each rank. Same176478720
+  local master/moment elements. CPU sum uses manifest order: report-only norm
+  8.457222465649355→8.457222465649352 (3.6e-15), coefficient delta2.08e-17; no GPU/
+  CPU gate loosened, paired D36 scalars exact. Historical verifier explicitly handles
+  those double-rounding report scalars; other D35 common reference fields exact.
+  24 new GPU audit groups/4 ACKed guards/79 local tests/3 private archive corruption
+  refusals/Black/critical Ruff+F401/diff pass; no failed GPU phase/full upstream CI.
+  Peak live AUDIT GPU5456.828→2980.129MiB104/5450.629→2973.930MiB105 (~45.4%lower);
+  reserved6264→3734/6484→4136MiB. Peak reset before first backward excludes earlier
+  model init. Host available min5.260→7.838GiB104/4.920→7.246GiB105. Cgroup peaks
+  ~2501–2506MiB/swap+OOM0/logs unchanged. Counters overlap, don't sum. Qualification
+  memory improvement only; ordinary training/defaults unchanged, no speed/largefit/
+  restart/convergence/longrun claim. Guarded phases144.3–144.6s whole/134.4s unit
+  include I/O/imports/digests, not throughput; one paired order, no timing claim.
+  Source-bound CPU manifest/table checked separately from new audit source table;
+  final export rehashes original raw files, metadata omits tensors. New phase-owned
+  gradient spool removed after checks; original D35 refs/builds/caches/apps retained.
+  PLAN01 EXreservation+SHruntime/4CPUcpuset0–3/10GiB+12GiB/512PID/256MiBshm/600s
+  guard/460s child retained; GPU admission≥11GiBhost/9GiBdevice, spool+5GiBdisk.
+  Exact commands/CIDs/UUIDs/ACKs/logs evidence/distributed-d36-r1/{whole-control,
+  unit-audit}; guardians10420709/21890,10522408/24273,exports23300/26549 exit0.
+  Local kernel/artifacts/distributed-d36;104archive874908B SHA
+  8b0e3f1ac80d005272736a2f98857c113bfd8d6d150111b64922d62375678472;
+  105808010B SHAdb6a82e431ecdccea1dfdeda68f8e34ac4dcd31c9c4c4b841699c8cc01f11831.
+  Final idle/no owned jobs/containers/armed guards; boot2d86d523r2/e902e636r3/native
+  PLAN02MIOpen381eac05/Torcha524/RCCL/D09/image/defaults/fallbacks preserved, no
+  build/reboot/download/prefix mutation/apps/foreign stop. Docs/flow/manifest synced
+  BOTH. PythonCPUfault distinct fixedVMheap/D05exit/D21load.1.024B CPU/GPU still
+  blocked by oracle/storage constraints; D36 audit bounds do not admit it.
+  **NEXT PLAN-05 / D37 (planned):** CPU post-accumulate gradient streaming on existing
+  352.96M fixture, ALL gradient bits/loss/initial values versus D35, hook counts and
+  no retained full gradient set; CPU/RSS/cgroup/host peaks. One parameter of owned
+  scratch only, no3.9446GiB duplicate. CPU checkpointing separately if needed; then
+  resolve1.024B oracle/storage admission. Preserve refs/no deliberateOOM. Six major
+  packages remain.
+
 - **PLAN-05 / D35 completed 2026-11-09 — staged CPU references and352.96M; PLAN-05 OPEN.**
   Implementation `02107159f`. [Report](docs/development/bc250_distributed_d35_results/README.md),
   [verified results](docs/development/bc250_distributed_d35_results/verified-results.json),

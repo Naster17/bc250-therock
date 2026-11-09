@@ -1,0 +1,17 @@
+[
+  {
+    "case": "source-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "scope-coverage-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "paired-gradient-digest-tamper",
+    "status": "refused-as-required",
+    "reason": "clipped_gradient_sha256"
+  }
+]

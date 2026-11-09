@@ -1,0 +1,112 @@
+{
+  "status": "passed",
+  "groups": 24,
+  "guards": 4,
+  "local_tests": 79,
+  "config": {
+    "width": 1536,
+    "heads": 24,
+    "blocks": 12,
+    "tokens": 128,
+    "positions": 256,
+    "vocab": 8192,
+    "global_batch": 2,
+    "micro": 1
+  },
+  "parameters": 352957440,
+  "CPU_reference_reused_from_D35": true,
+  "fresh_CPU_oracle_executed": false,
+  "ALL_cpu_gates_unchanged": true,
+  "paired_digests_exact": true,
+  "per_unit_scope_qualified": true,
+  "native_runtime_changed": false,
+  "training_speed_improvement_qualified": false,
+  "larger_than_single_fit_qualified": false,
+  "PLAN05_complete": false,
+  "rows": [
+    {
+      "host": 0,
+      "label": "whole-control",
+      "peak_live_audit_MiB": 5456.828125,
+      "peak_reserved_audit_MiB": 6264.0,
+      "max_full_unit_elements": 352957440,
+      "summon_contexts": 3,
+      "whole_cgroup_peak_MiB": 2506.16796875,
+      "host_min_available_GiB": 5.259822845458984,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 144.26794334399892,
+      "worker_seconds": 131.00323665500036
+    },
+    {
+      "host": 0,
+      "label": "unit-audit",
+      "peak_live_audit_MiB": 2980.12890625,
+      "peak_reserved_audit_MiB": 3734.0,
+      "max_full_unit_elements": 28331520,
+      "summon_contexts": 39,
+      "whole_cgroup_peak_MiB": 2503.09375,
+      "host_min_available_GiB": 7.838165283203125,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 134.38507355099864,
+      "worker_seconds": 121.03007603199876
+    },
+    {
+      "host": 1,
+      "label": "whole-control",
+      "peak_live_audit_MiB": 5450.62890625,
+      "peak_reserved_audit_MiB": 6484.0,
+      "max_full_unit_elements": 352957440,
+      "summon_contexts": 3,
+      "whole_cgroup_peak_MiB": 2502.60546875,
+      "host_min_available_GiB": 4.919654846191406,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 144.55911847800235,
+      "worker_seconds": 130.8523815389999
+    },
+    {
+      "host": 1,
+      "label": "unit-audit",
+      "peak_live_audit_MiB": 2973.9296875,
+      "peak_reserved_audit_MiB": 4136.0,
+      "max_full_unit_elements": 28331520,
+      "summon_contexts": 39,
+      "whole_cgroup_peak_MiB": 2500.671875,
+      "host_min_available_GiB": 7.245735168457031,
+      "host_swap_max_bytes": 0,
+      "cgroup_swap_max_bytes": 0,
+      "guarded_phase_seconds": 134.42144500300128,
+      "worker_seconds": 120.86175974300204
+    }
+  ],
+  "boot_ids": [
+    "2d86d523-c909-415b-86fa-a75be9460dde",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "baseline_archives": [
+    {
+      "path": "kernel/artifacts/distributed-d35/104-evidence-r1.tar.gz",
+      "bytes": 1237695,
+      "sha256": "46fecff3a5da132bd15813b95c341ebfd336da9d15f16ebaf86bb1c3259deee0"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d35/105-evidence-r1.tar.gz",
+      "bytes": 1183666,
+      "sha256": "5883fb9026210caf75c420e1f889207efbabeb1eee28cdb32ae824a10ceec5a2"
+    }
+  ],
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d36/104-evidence-r1.tar.gz",
+      "bytes": 874908,
+      "sha256": "8b0e3f1ac80d005272736a2f98857c113bfd8d6d150111b64922d62375678472"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d36/105-evidence-r1.tar.gz",
+      "bytes": 808010,
+      "sha256": "db6a82e431ecdccea1dfdeda68f8e34ac4dcd31c9c4c4b841699c8cc01f11831"
+    }
+  ]
+}
