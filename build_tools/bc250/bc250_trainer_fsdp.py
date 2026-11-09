@@ -121,6 +121,12 @@ class BC250FSDPTrainer(Trainer):
     PEFT/frozen parameters or activation checkpointing qualification.
     """
 
+    def _validate_activation_checkpointing(self):
+        if self.args.gradient_checkpointing:
+            raise ValueError(
+                "Activation checkpointing requires separate explicit admission"
+            )
+
     def _validate_master_parameters(self):
         if any(
             not p.requires_grad or p.dtype != torch.float32
@@ -164,7 +170,8 @@ class BC250FSDPTrainer(Trainer):
                 )
         args = self.args
         limit = _clip_limit(args.max_grad_norm)
-        if args.gradient_checkpointing or args.torch_compile or args.deepspeed:
+        self._validate_activation_checkpointing()
+        if args.torch_compile or args.deepspeed:
             raise ValueError(
                 "BC250FSDPTrainer requires explicit qualified precision; no checkpointing/compile/DeepSpeed"
             )

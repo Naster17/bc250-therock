@@ -168,6 +168,8 @@ def main(fixture=None):
                 "gradient_accumulation_kwargs": {"adjust_scheduler": False}
             },
         )
+        if fixture is not None and hasattr(fixture, "configure_args"):
+            fixture.configure_args(args)
         args.fsdp_plugin_args["state_dict_type"] = "SHARDED_STATE_DICT"
         if amp:
             from bc250_trainer_fsdp import fsdp_bf16_parameter_policy
@@ -551,6 +553,8 @@ def main(fixture=None):
                 }
             ),
         )
+        if fixture is not None and hasattr(fixture, "observe"):
+            fixture.observe(base, r)
         acc = trainer.accelerator
         assert acc.native_amp == amp and (acc.scaler is not None) == half
         if half:
@@ -1014,6 +1018,8 @@ def main(fixture=None):
             scaler=None if acc.scaler is None else type(acc.scaler).__name__,
             final_scaler={} if acc.scaler is None else acc.scaler.state_dict(),
         )
+        if fixture is not None and hasattr(fixture, "finalize"):
+            fixture.finalize(r)
         r.update(status="passed", final_state_digest=fingerprint(state()))
         if fixture is not None:
             r["tied_parameter_checks"] = fixture.check_calls
