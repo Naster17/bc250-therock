@@ -72,9 +72,13 @@ def main(fixture=None):
             "fp32",
             "bf16",
         ]
-        amp = not frozen and a.case not in ["fp32-control", "fp32"]
+        amp = (not frozen and a.case not in ["fp32-control", "fp32"]) or bool(
+            getattr(fixture, "frozen_bf16", False)
+        )
         dtype = torch.float16 if half else torch.bfloat16
-        bf16 = a.case in ["bf16-control", "bf16"]
+        bf16 = a.case in ["bf16-control", "bf16"] or bool(
+            getattr(fixture, "frozen_bf16", False)
+        )
         one_step = (
             a.case
             in [
@@ -718,7 +722,7 @@ def main(fixture=None):
                             amp_loss = torch.zeros(())
                             amp_grads = [
                                 torch.zeros_like(p, dtype=torch.float32)
-                                for p in oracle_amp.parameters()
+                                for p in trainable(oracle_amp).values()
                             ]
                             for rank_rows in batches:
                                 oracle_amp.zero_grad(set_to_none=True)
@@ -736,15 +740,14 @@ def main(fixture=None):
                                     )
                                     (part * 2 * local["scale_before"]).backward()
                                     amp_loss += part.detach()
-                                for total, p in zip(amp_grads, oracle_amp.parameters()):
+                                for total, p in zip(
+                                    amp_grads, trainable(oracle_amp).values()
+                                ):
                                     total.add_(
                                         p.grad.float() / (2 * local["scale_before"])
                                     )
-                            raw = [
-                                local["preclip"][name]
-                                for name, _ in oracle.named_parameters()
-                            ]
-                            high = [p.grad for p in oracle.parameters()]
+                            raw = [local["preclip"][name] for name in trainable(oracle)]
+                            high = [p.grad for p in trainable(oracle).values()]
                             errors = dict(
                                 step=ts.global_step,
                                 CPU_AMP=global_relative(raw, amp_grads),

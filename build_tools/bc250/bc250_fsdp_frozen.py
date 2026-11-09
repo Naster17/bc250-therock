@@ -81,13 +81,13 @@ class BC250FrozenFSDPTrainer(BC250FSDPTrainer):
             and all(not current[n].requires_grad for n in policy.frozen_names)
         )
 
+    def _validate_frozen_precision(self):
+        if self.args.bf16 or self.args.fp16:
+            raise ValueError("Frozen AMP requires separate explicit admission")
+
     def _validate_master_parameters(self):
-        if (
-            self.args.bf16
-            or self.args.fp16
-            or _clip_limit(self.args.max_grad_norm) <= 0
-            or not self._partition_matches()
-        ):
+        self._validate_frozen_precision()
+        if _clip_limit(self.args.max_grad_norm) <= 0 or not self._partition_matches():
             raise ValueError(
                 "Frozen policy requires its exact FP32 partition and positive clipping"
             )
