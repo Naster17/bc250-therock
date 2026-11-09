@@ -9,6 +9,60 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D32 completed 2026-11-09 — representative baseline; PLAN-05 OPEN.**
+  Implementation/verifier `6af433cb8`. [Report](docs/development/bc250_distributed_d32_results/README.md),
+  [verified results](docs/development/bc250_distributed_d32_results/verified-results.json).
+  New additive tools/distributed-d32 on BOTH hosts: fixed conservative admission,
+  actual eager GPT2 (45,871,104 FP32 trainable parameters, tied head, six blocks,
+  width768/12heads/vocab4096/sequence256/global8/micro1), direct native AdamW,
+  root clip.5, no dropout/cache/AMP/PEFT/checkpointing/compile/download. D05/D06's
+  smaller custom model is already qualified; this is a larger actual HF fixture.
+  Single workers process8 micros; DDP/FSDP process4 each with native no_sync until
+  final micro. One CPU FP64 global loss/ALL76 gradients per fresh worker passes
+  original D05 bounds; CPU norm/ALL clipped entries/CPU-double ALL AdamW values,
+  moments/counters pass unchanged D21/D22 bounds. Two warmups then five timed
+  updates; both orders single→DDP→FSDP and reverse. Later finite global losses
+  agree across modes/hosts within1e-5; not convergence or cross-topology replay.
+  Median ms a/b: single104247.963/248.057,105249.278/249.128; DDP1681.584/1682.027;
+  FSDP6885.565/6885.373. Single is fastest in this fixture. Both eth0 links1000Mb/s;
+  DDP input183484416B/update, FSDP gather707186688+reduce183484416B, not wire bytes.
+  FSDP owns22,935,552 master/AdamW elements per rank vs45,871,104 single/DDP.
+  Live GPU peak940.725MiB single/1114.484DDP/768.366–770.856FSDP (~18%below single).
+  Reserved GPU and measured cgroup memory nevertheless rise for FSDP. DO NOT infer
+  physical RAM saving/larger fit from the GPU allocator. Timed workers previously
+  performed CPU oracle/audits; CPU/runtime/communication attribution is unresolved.
+  Measured cgroup ranges:single2100–2332MiB,DDP2792–3048,FSDP3260–3448. Whole
+  validation peak≤4745.49MiB; host available≥8.635GiB including audits/≥9.27GiB
+  during measured training. Host+cgroup swap0, OOM counters0. CPU/GPU share RAM;
+  counters must not be summed as independent pools. Sampling200ms; kernel peak
+  recorded separately. Seven-update training segment~1.85–1.98s/11.87–12.89s/
+  48.19–48.49s; complete guarded phases33–34/53–55/93–94s include CPU/imports/
+  two-node agent orchestration even for independent single workers, not production
+  training-only job times. No checkpoint I/O/restart or larger-than-single proof.
+  Admission host≥10GiB/devicefree≥4GiB before model allocation, fixed estimates
+  exclude activations/buckets/temporaries/runtime.64 local tests including unsafe
+  resource/unknown-mode refusals, Black/criticalRuff+F401/diff pass.72 groups/
+  12 ACKed guards; no failed GPU phase or full upstream CI claim. Exact commands,
+  PIDs/CIDs/logs/ACKs under evidence/distributed-d32-r1/{single,ddp,fsdp}-{a,b},
+  sequence.json/controller logs. Guardian PIDs104:25755,26568,27143,27929,28715,
+  29300;105:24103,25319,26132,27302,28474,29301. Sequence controllers26567/25318,
+  exports29863/30120 exit0. Sources/raw metadata stay on hosts; local artifacts in
+  kernel/artifacts/distributed-d32:overlays/raw pilotJSON/metadata archives.
+  104 archive689853B SHA15f13d943bc8541654fc9c8c504a6374616dd86d9183b59f80c1d7b719c61337;
+  105657137B SHA5f3b45e1fc26481c871c68f453e14b530c708ec885e24576753b5de76075224b.
+  PLAN-01 reservation+SH locks/4CPUcpuset0–3/10GiB+12GiB/512PIDs/256MiBshm/600s
+  recovery/460s child retained. Kernel logs/registries unchanged; final idle/no
+  owned jobs/containers/armed guards. Boots2d86d523(.104r2)/e902e636(.105r3) unchanged;
+  native PLAN-02 MIOpen381eac05/Torch a524/RCCL/D09/image/packages/defaults/fallbacks
+  preserved; no native build/reboot/download/prefix mutation/apps/foreign stop.
+  Docs/flow/manifest snapshots synced BOTH. Historical Python CPU fault remains
+  distinct from fixed VM heap/D05 exit/D21 loading. No universal speed/fit claim.
+  **NEXT PLAN-05 / D33 (planned):** separate source-bound CPU qualification from
+  fresh training-only workers; repeat representative memory controls without prior
+  oracle/audit work. Use the physical-memory envelope to plan larger FSDP
+  initialization/admission. Do not deliberately OOM or extrapolate from GPU-only
+  savings. PLAN-05 stays open; six major packages still remain.
+
 - **PLAN-04 / D31 completed 2026-11-09; PLAN-04 bounded scope COMPLETE:** code
   `725e495c8`; final archive-verifier maintenance `6c4758c18`. [Report](docs/development/bc250_distributed_d31_results/README.md),
   [verified results](docs/development/bc250_distributed_d31_results/verified-results.json).
