@@ -1,0 +1,4165 @@
+diff --git a/.spin/cmds.py b/.spin/cmds.py
+index b85453271fcd38193de3dc36da2d920636d6c7ef..8dbfd67d17673ca9ee5629de790fbcc96162200d 100644
+--- a/.spin/cmds.py
++++ b/.spin/cmds.py
+@@ -1,4 +1,5 @@
+ import hashlib
++import os
+ import re
+ import subprocess
+ import sys
+@@ -283,10 +284,13 @@ def lazy_setup_lint(ctx, parent_callback, **kwargs):
+         click.echo("Linting tools set up and hashes updated.")
+     else:
+         click.echo("No changes detected in lint configuration files. Skipping setup.")
+-    click.echo("Regenerating version...")
+-    ctx.invoke(regenerate_version)
+-    click.echo("Regenerating type stubs...")
+-    ctx.invoke(regenerate_type_stubs)
++    if os.environ.get("PYTORCH_LINT_SKIP_CODEGEN") == "1":
++        click.echo("Using existing generated files for linting.")
++    else:
++        click.echo("Regenerating version...")
++        ctx.invoke(regenerate_version)
++        click.echo("Regenerating type stubs...")
++        ctx.invoke(regenerate_type_stubs)
+     click.echo("Done.")
+     _check_linters()
+ 
+diff --git a/aten/src/ATen/cuda/detail/CUDAHooks.cpp b/aten/src/ATen/cuda/detail/CUDAHooks.cpp
+index 47e83d03e6b364f3221d6f3997883a202ad9b128..eb8b128e6012633b39ecbbdd67841cefcbdcb917 100644
+--- a/aten/src/ATen/cuda/detail/CUDAHooks.cpp
++++ b/aten/src/ATen/cuda/detail/CUDAHooks.cpp
+@@ -28,8 +28,9 @@
+ #endif
+ 
+ #if defined(USE_ROCM)
+-#include <miopen/version.h>
+ #include <hipblaslt/hipblaslt-version.h>
++#include <hipblaslt/hipblaslt.h>
++#include <miopen/version.h>
+ #endif
+ 
+ #ifndef USE_ROCM
+@@ -567,18 +568,86 @@ const std::vector<std::string>& CUDAHooks::getHipblasltPreferredArchs() const {
+ }
+ 
+ const std::vector<std::string>& CUDAHooks::getHipblasltSupportedArchs() const {
+-  static const std::vector<std::string> archs = {
+-    "gfx90a", "gfx942",
++  static const std::vector<std::string> archs = [this]() {
++    std::vector<std::string> supported = {
++        "gfx90a",
++        "gfx942",
+ #if ROCM_VERSION >= 60300
+-    "gfx1100", "gfx1101", "gfx1103", "gfx1200", "gfx1201", "gfx908",
++        "gfx1100",
++        "gfx1101",
++        "gfx1103",
++        "gfx1200",
++        "gfx1201",
++        "gfx908",
+ #endif
+ #if ROCM_VERSION >= 70000
+-    "gfx950", "gfx1150", "gfx1151",
++        "gfx950",
++        "gfx1150",
++        "gfx1151",
+ #endif
+ #if ROCM_VERSION >= 71400
+-    "gfx1250"
+-#endif
+-  };
++        "gfx1250"
++#endif
++    };
++    // gfx1013 support is supplied by an optional scalar backend. A ROCm version
++    // alone does not identify it: query the linked library before allowing an
++    // explicit cuBLASLt preference. Keep the default rocBLAS preference intact.
++    for (auto index : c10::irange(deviceCount())) {
++      const std::string device_arch = getDeviceProperties(index)->gcnArchName;
++      if (device_arch.substr(0, device_arch.find(':')) != "gfx1013") {
++        continue;
++      }
++      at::DeviceGuard guard(at::Device(at::DeviceType::CUDA, index));
++      hipblasLtHandle_t handle = nullptr;
++      hipblasLtMatmulDesc_t desc = nullptr;
++      hipblasLtMatrixLayout_t layout = nullptr;
++      hipblasLtMatmulPreference_t preference = nullptr;
++      auto status = hipblasLtCreate(&handle);
++      if (status == HIPBLAS_STATUS_SUCCESS) {
++        status =
++            hipblasLtMatmulDescCreate(&desc, HIPBLAS_COMPUTE_32F, HIP_R_32F);
++      }
++      if (status == HIPBLAS_STATUS_SUCCESS) {
++        status = hipblasLtMatrixLayoutCreate(&layout, HIP_R_32F, 1, 1, 1);
++      }
++      if (status == HIPBLAS_STATUS_SUCCESS) {
++        status = hipblasLtMatmulPreferenceCreate(&preference);
++      }
++      hipblasLtMatmulHeuristicResult_t result{};
++      int count = 0;
++      if (status == HIPBLAS_STATUS_SUCCESS) {
++        status = hipblasLtMatmulAlgoGetHeuristic(
++            handle,
++            desc,
++            layout,
++            layout,
++            layout,
++            layout,
++            preference,
++            1,
++            &result,
++            &count);
++      }
++      if (preference) {
++        hipblasLtMatmulPreferenceDestroy(preference);
++      }
++      if (layout) {
++        hipblasLtMatrixLayoutDestroy(layout);
++      }
++      if (desc) {
++        hipblasLtMatmulDescDestroy(desc);
++      }
++      if (handle) {
++        hipblasLtDestroy(handle);
++      }
++      if (status == HIPBLAS_STATUS_SUCCESS && count == 1 &&
++          result.state == HIPBLAS_STATUS_SUCCESS && result.workspaceSize == 0) {
++        supported.emplace_back("gfx1013");
++      }
++      break;
++    }
++    return supported;
++  }();
+   return archs;
+ }
+ #endif
+diff --git a/aten/src/ATen/native/cuda/AveragePool2d.cu b/aten/src/ATen/native/cuda/AveragePool2d.cu
+index 96202c75d8ddfc7194b2d0d58fb6bae52a4381c5..71dd612efbeb8e77be814c2a3ce193e98e179ec2 100644
+--- a/aten/src/ATen/native/cuda/AveragePool2d.cu
++++ b/aten/src/ATen/native/cuda/AveragePool2d.cu
+@@ -194,8 +194,8 @@ __global__ void avg_pool2d_backward_out_cuda_frame_nhwc(const index_t nthreads,
+     bool count_include_pad, bool use_divisor) {
+   CUDA_KERNEL_LOOP_TYPE(index, nthreads, index_t) {
+     const int c = index % channels;
+-    const int w = (index / channels) % width;
+-    const int h = (index / channels / width) % height;
++    const int w = (index / channels) % width + pad_w;
++    const int h = (index / channels / width) % height + pad_h;
+     const int n = index / channels / width / height;
+ 
+     const int phstart = (h < kernel_h) ? 0 : (h - kernel_h) / stride_h + 1;
+diff --git a/aten/src/ATen/native/cuda/int8mm.cu b/aten/src/ATen/native/cuda/int8mm.cu
+index 922c9e1748a5d42234b4fc890ef0e04f5d736a9c..9a8414549f3e5bbb33714ad43cf68286b080aa99 100644
+--- a/aten/src/ATen/native/cuda/int8mm.cu
++++ b/aten/src/ATen/native/cuda/int8mm.cu
+@@ -78,9 +78,9 @@ at::Tensor _weight_int8pack_mm_cuda(
+   auto N = w_int8.size(0); // output dim
+ 
+   // Ensure inputs are in the correct types for the kernel
+-  auto x_f32 = x.to(at::kFloat);
++  auto x_f32 = x.to(at::kFloat).contiguous();
+   auto w_int8_contiguous = w_int8.contiguous();
+-  auto scale_f32 = scale.to(at::kFloat);
++  auto scale_f32 = scale.to(at::kFloat).contiguous();
+ 
+   // --- Allocate output ---
+   auto out = at::empty({B, N}, x_f32.options());
+diff --git a/aten/src/ATen/native/native_functions.yaml b/aten/src/ATen/native/native_functions.yaml
+index 9ca22e7a12046485ffc5ae16dedc0bff07437162..f32a10bbcace0bece65b470aca23b370a40ec442 100644
+--- a/aten/src/ATen/native/native_functions.yaml
++++ b/aten/src/ATen/native/native_functions.yaml
+@@ -3332,6 +3332,18 @@
+     CUDA: _cslt_sparse_mm
+   tags: needs_fixed_stride_order
+ 
++- func: _cslt_to_dense(Tensor packed, int k) -> Tensor
++  dispatch:
++    CUDA: _cslt_to_dense
++
++- func: _cslt_compress_backward(Tensor grad, Tensor packed, int k) -> Tensor
++  dispatch:
++    CUDA: _cslt_compress_backward
++
++- func: _cslt_sparse_mm_backward(Tensor grad, Tensor compressed_A, Tensor dense_B, Tensor? bias, Tensor? alpha, bool transpose_result, bool[4] output_mask) -> (Tensor, Tensor, Tensor, Tensor)
++  dispatch:
++    CUDA: _cslt_sparse_mm_backward
++
+ - func: _cslt_sparse_mm_search(Tensor compressed_A, Tensor dense_B, Tensor? bias=None, Tensor? alpha=None, ScalarType? out_dtype=None, bool transpose_result=False) -> int
+   dispatch:
+     CUDA: _cslt_sparse_mm_search
+diff --git a/aten/src/ATen/native/sparse/cuda/SparseBlas.cpp b/aten/src/ATen/native/sparse/cuda/SparseBlas.cpp
+index b01180ab5ffb6d21ca0df444c5e09a906950b7bb..a33ac845ba1475e107a51f33cf31e813aab2216b 100644
+--- a/aten/src/ATen/native/sparse/cuda/SparseBlas.cpp
++++ b/aten/src/ATen/native/sparse/cuda/SparseBlas.cpp
+@@ -281,6 +281,12 @@ std::tuple<Tensor&, Tensor&> triangular_solve_out_sparse_csr_cuda(
+     Tensor& X,
+     Tensor& clone_A) {
+   sparse::impl::cuda::triangular_solve_out_sparse_csr(A, B, X, upper, transpose, unitriangular);
++#ifdef USE_ROCM
++  if (!unitriangular && A.dim() == 2 && X.dim() == 2 &&
++      X.numel() != 0 && A._nnz() != 0) {
++    sparse::impl::cuda::apply_sparse_triangular_solve_pivot_mask(A, X);
++  }
++#endif
+   return std::tuple<Tensor&, Tensor&>(X, clone_A);
+ }
+ 
+diff --git a/aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h b/aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h
+index 61eb96f9b9a10fb53a0911923b6be996e25e0ca8..a23337877dfc30a68a62885f4097a823b0458abd 100644
+--- a/aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h
++++ b/aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h
+@@ -36,6 +36,13 @@ void triangular_solve_out_sparse_csr(
+     bool transpose,
+     bool unitriangular);
+ 
++#ifdef USE_ROCM
++// Mark exact missing/zero diagonal pivots after ROCm's division-avoiding solve.
++void apply_sparse_triangular_solve_pivot_mask(
++    const at::sparse_csr::SparseCsrTensor& A,
++    const Tensor& X);
++#endif
++
+ void sampled_addmm_out_sparse_csr(
+     const Tensor& mat1,
+     const Tensor& mat2,
+diff --git a/aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu b/aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu
+index 5331db6926114f260075a763f1766bfcf8c64a12..32bc10341bb936f6a4e6d0aad6671c5dd3c52c8b 100644
+--- a/aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu
++++ b/aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu
+@@ -808,4 +808,96 @@ Tensor _sparse_csr_linear_solve(const Tensor& A, const Tensor& b, const bool lef
+ }
+ 
+ 
++#ifdef USE_ROCM
++namespace sparse::impl::cuda {
++namespace {
++
++__device__ bool sparse_pivot_is_exact_zero(float value) {
++  return (__float_as_uint(value) & 0x7fffffffu) == 0;
++}
++
++__device__ bool sparse_pivot_is_exact_zero(double value) {
++  return (__double_as_longlong(value) & 0x7fffffffffffffffLL) == 0;
++}
++
++template <typename real_t>
++__device__ bool sparse_pivot_is_exact_zero(c10::complex<real_t> value) {
++  return sparse_pivot_is_exact_zero(value.real()) &&
++      sparse_pivot_is_exact_zero(value.imag());
++}
++
++template <typename scalar_t, typename index_t>
++__global__ void sparse_triangular_pivot_mask_kernel(
++    const index_t* crow,
++    const index_t* columns,
++    const scalar_t* values,
++    scalar_t* output,
++    int64_t rows,
++    int64_t nrhs,
++    int64_t block_size,
++    int64_t value_stride,
++    int64_t diagonal_stride,
++    int64_t output_row_stride,
++    int64_t output_col_stride) {
++  for (int64_t row = int64_t(blockIdx.x) * blockDim.x + threadIdx.x;
++       row < rows;
++       row += int64_t(blockDim.x) * gridDim.x) {
++    const int64_t block_row = row / block_size;
++    index_t lo = crow[block_row];
++    const index_t end = crow[block_row + 1];
++    index_t hi = end;
++    // These native solve paths already require sorted compressed indices.
++    while (lo < hi) {
++      const index_t mid = lo + (hi - lo) / 2;
++      if (columns[mid] < block_row) {
++        lo = mid + 1;
++      } else {
++        hi = mid;
++      }
++    }
++    if (lo == end || columns[lo] != block_row ||
++        sparse_pivot_is_exact_zero(values[int64_t(lo) * value_stride +
++               (row % block_size) * diagonal_stride])) {
++      // rocSPARSE avoids division by zero and may otherwise return finite
++      // placeholders. A NaN at the pivot row makes the singular result explicit.
++      // Other rows are unspecified on singular input; healthy output is untouched.
++      for (int64_t col = 0; col < nrhs; ++col) {
++        output[row * output_row_stride + col * output_col_stride] = scalar_t(NAN);
++      }
++    }
++  }
++}
++
++} // namespace
++
++void apply_sparse_triangular_solve_pivot_mask(
++    const at::sparse_csr::SparseCsrTensor& A,
++    const Tensor& X) {
++  const auto values = A.values();
++  const auto crow = A.crow_indices();
++  const auto columns = A.col_indices();
++  const int64_t block_size = A.layout() == kSparseBsr ? values.size(-1) : 1;
++  const int64_t diagonal_stride =
++      A.layout() == kSparseBsr ? values.stride(1) + values.stride(2) : 0;
++  constexpr int threads = 256;
++  const int blocks = std::min<int64_t>((A.size(0) + threads - 1) / threads, 65535);
++  AT_DISPATCH_FLOATING_AND_COMPLEX_TYPES(
++      A.scalar_type(), "sparse_triangular_pivot_mask", [&] {
++        AT_DISPATCH_INDEX_TYPES(crow.scalar_type(), "sparse_triangular_pivot_mask_index", [&] {
++          sparse_triangular_pivot_mask_kernel<scalar_t, index_t>
++              <<<blocks, threads, 0, at::cuda::getCurrentCUDAStream()>>>(
++                  crow.const_data_ptr<index_t>(),
++                  columns.const_data_ptr<index_t>(),
++                  values.const_data_ptr<scalar_t>(),
++                  X.data_ptr<scalar_t>(),
++                  A.size(0), X.size(1), block_size, values.stride(0),
++                  diagonal_stride, X.stride(0), X.stride(1));
++          C10_CUDA_KERNEL_LAUNCH_CHECK();
++        });
++      });
++}
++
++} // namespace sparse::impl::cuda
++#endif
++
+ } // namespace at::native
+diff --git a/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp b/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp
+index f0f4172ccf6f4b3f33f5f2223d0278c173650f51..7972b8623cab4ed616cf01654653afb5f9d691b6 100644
+--- a/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp
++++ b/aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp
+@@ -27,9 +27,9 @@ static bool g_hipSparseLtSupported = false;
+ 
+ static const std::vector<std::string>& hipSparseLtSupportedArchs() {
+ #if ROCM_VERSION >= 71400
+-  static const std::vector<std::string> archs = {"gfx950", "gfx942", "gfx1250"};
++  static const std::vector<std::string> archs = {"gfx950", "gfx942", "gfx1250", "gfx1013"};
+ #elif ROCM_VERSION >= 71200
+-  static const std::vector<std::string> archs = {"gfx950", "gfx942"};
++  static const std::vector<std::string> archs = {"gfx950", "gfx942", "gfx1013"};
+ #else
+   static const std::vector<std::string> archs = {};
+ #endif
+@@ -73,7 +73,97 @@ static bool isHipSparseLtSupported() {
+ }
+ #endif
+ 
++static bool usesGfx1013ScalarSparseLt() {
++#ifdef USE_ROCM
++  const std::string_view arch(at::cuda::getCurrentDeviceProperties()->gcnArchName);
++  return arch == "gfx1013" || arch.substr(0, 8) == "gfx1013:";
++#else
++  return false;
++#endif
++}
++
++// Native packs store retained values followed by byte-sized 1:2/2:4 indices.
++static std::tuple<Tensor, Tensor> unpackGfx1013(const Tensor& packed, int64_t k) {
++  TORCH_CHECK(usesGfx1013ScalarSparseLt(), "Sparse Lt backward/unpacking requires gfx1013");
++  TORCH_CHECK(packed.dim() == 2 && packed.is_contiguous() && k > 0,
++      "Invalid native sparse pack");
++  const auto dtype = packed.scalar_type();
++  TORCH_CHECK(dtype == kFloat || dtype == kHalf || dtype == kBFloat16,
++      "Sparse Lt backward/unpacking requires floating-point storage");
++  const int64_t group = dtype == kFloat ? 2 : 4;
++  TORCH_CHECK(k % group == 0, "Invalid native sparse contraction size");
++  const auto m = packed.size(0), groups = k / group, kept = group / 2;
++  const auto value_count = m * k / 2;
++  auto raw = packed.view(kByte).flatten();
++  TORCH_CHECK(raw.numel() >= value_count * packed.itemsize() + m * groups,
++      "Native sparse pack is too small");
++  auto tags = raw.narrow(0, value_count * packed.itemsize(), m * groups)
++                  .to(kLong).view({m, groups, 1});
++  auto shifts = at::arange(kept, packed.options().dtype(kLong)).mul(2);
++  auto indices = at::bitwise_and(at::bitwise_right_shift(tags, shifts), 3);
++  TORCH_CHECK(indices.lt(group).all().item<bool>(), "Invalid native sparse metadata");
++  return {packed.flatten().narrow(0, 0, value_count).view({m, groups, kept}), indices};
++}
++
++Tensor _cslt_to_dense(const Tensor& packed, int64_t k) {
++  auto [values, indices] = unpackGfx1013(packed, k);
++  const int64_t m = packed.size(0), group = packed.scalar_type() == kFloat ? 2 : 4;
++  return at::zeros({m, k / group, group}, packed.options())
++      .scatter(2, indices, values).view({m, k});
++}
++
++Tensor _cslt_compress_backward(const Tensor& grad, const Tensor& packed, int64_t k) {
++  auto [values, indices] = unpackGfx1013(packed, k);
++  const int64_t m = packed.size(0), group = packed.scalar_type() == kFloat ? 2 : 4;
++  auto retained_grad = grad.flatten().narrow(0, 0, m * k / 2).view(values.sizes());
++  return at::zeros({m, k / group, group}, packed.options())
++      .scatter(2, indices, retained_grad).view({m, k});
++}
++
++std::tuple<Tensor, Tensor, Tensor, Tensor> _cslt_sparse_mm_backward(
++    const Tensor& grad, const Tensor& packed, const Tensor& dense,
++    const std::optional<Tensor>& bias, const std::optional<Tensor>& alpha,
++    bool transpose_result, std::array<bool, 4> output_mask) {
++  auto a = at::native::_cslt_to_dense(packed, dense.size(0)).to(kFloat);
++  auto b = dense.to(kFloat);
++  auto g = (transpose_result ? grad.t() : grad).to(kFloat);
++  const bool has_alpha = alpha.has_value() && alpha->defined();
++  const bool has_bias = bias.has_value() && bias->defined();
++  auto scaled = has_alpha
++      ? g.mul(alpha->numel() == 1 ? alpha->to(kFloat) : alpha->to(kFloat).view({-1, 1}))
++      : g;
++  Tensor dp, db, dbias, dalpha;
++  if (output_mask[0]) {
++    auto da = at::mm(scaled, b.t());
++    auto [values, indices] = unpackGfx1013(packed, dense.size(0));
++    const auto group = packed.scalar_type() == kFloat ? 2 : 4;
++    auto retained = da.view({packed.size(0), dense.size(0) / group, group})
++                        .gather(2, indices).to(packed.scalar_type());
++    dp = at::zeros_like(packed);
++    dp.flatten().narrow(0, 0, retained.numel()).copy_(retained.flatten());
++  }
++  if (output_mask[1]) {
++    db = at::mm(a.t(), scaled).to(dense.scalar_type());
++  }
++  if (output_mask[2] && has_bias) {
++    dbias = g.sum(1).to(bias->scalar_type());
++  }
++  if (output_mask[3] && has_alpha) {
++    auto product = g.mul(at::mm(a, b));
++    dalpha = (alpha->numel() == 1 ? product.sum() : product.sum(1))
++                 .to(alpha->scalar_type()).view(alpha->sizes());
++  }
++  return {dp, db, dbias, dalpha};
++}
++
+ at::Tensor _cslt_compress(const Tensor& sparse_input) {
++  const bool native_gfx1013 = usesGfx1013ScalarSparseLt();
++  if (native_gfx1013) {
++    TORCH_CHECK(sparse_input.is_cuda() && sparse_input.dim() == 2 &&
++        sparse_input.is_contiguous(), "gfx1013 sparse compression requires a contiguous GPU matrix");
++    TORCH_CHECK(sparse_input.size(0) > 0 && sparse_input.size(1) > 0,
++        "gfx1013 sparse compression requires nonempty dimensions");
++  }
+   if (!handle_initialized) {
+     TORCH_CUDASPARSE_CHECK(cusparseLtInit(&handle));
+     handle_initialized = true;
+@@ -96,11 +186,12 @@ at::Tensor _cslt_compress(const Tensor& sparse_input) {
+     case at::ScalarType::BFloat16:
+       type = CUDA_R_16BF;
+       break;
+-#ifndef USE_ROCM
+     case at::ScalarType::Float:
++#ifdef USE_ROCM
++      TORCH_CHECK(native_gfx1013, "FP32 hipSPARSELt compression requires the native gfx1013 scalar backend");
++#endif
+       type = CUDA_R_32F;
+       break;
+-#endif
+ #if defined(CUSPARSELT_VERSION) && CUSPARSELT_VERSION >= 602 || defined(USE_ROCM)
+     case at::ScalarType::Float8_e4m3fn:
+       type = CUDA_R_8F_E4M3;
+@@ -168,6 +259,35 @@ std::tuple<at::Tensor, int64_t, int64_t, int64_t, int64_t> _cslt_sparse_mm_impl(
+     int split_k,
+     int split_k_mode,
+     bool search_alg_id) {
++  const bool native_gfx1013 = usesGfx1013ScalarSparseLt();
++  if (native_gfx1013) {
++    TORCH_CHECK(compressed_A.is_cuda() && dense_B.is_cuda() &&
++        compressed_A.device() == dense_B.device(), "gfx1013 sparse matmul inputs must share a GPU");
++    TORCH_CHECK(compressed_A.dim() == 2 && compressed_A.is_contiguous() &&
++        dense_B.dim() == 2 && (dense_B.is_contiguous() || dense_B.t().is_contiguous()),
++        "gfx1013 sparse matmul requires a contiguous pack and row/column-contiguous dense matrix");
++    TORCH_CHECK(compressed_A.scalar_type() == dense_B.scalar_type(),
++        "gfx1013 sparse matmul input dtypes must match");
++    TORCH_CHECK(compressed_A.size(0) > 0 && dense_B.size(0) > 0 && dense_B.size(1) > 0,
++        "gfx1013 sparse matmul requires nonempty dimensions");
++    TORCH_CHECK(!out_dtype_opt.has_value(),
++        "gfx1013 scalar hipSPARSELt supports same-dtype output only; omit out_dtype");
++    if (bias_opt.has_value()) {
++      const auto& bias = *bias_opt;
++      TORCH_CHECK(bias.is_cuda() && bias.device() == dense_B.device() &&
++          bias.dim() == 1 && bias.numel() == compressed_A.size(0) && bias.is_contiguous(),
++          "gfx1013 sparse bias must be a contiguous GPU vector with one value per row");
++      TORCH_CHECK(bias.scalar_type() == at::kFloat ||
++          (dense_B.scalar_type() != at::kChar && bias.scalar_type() == dense_B.scalar_type()),
++          "gfx1013 sparse bias must be FP32 or match the floating input dtype");
++    }
++    if (alpha_opt.has_value() && alpha_opt->numel() != 1) {
++      TORCH_CHECK(alpha_opt->is_cuda() && alpha_opt->device() == dense_B.device() &&
++          alpha_opt->scalar_type() == at::kFloat && alpha_opt->is_contiguous() &&
++          alpha_opt->dim() == 1 && alpha_opt->numel() == compressed_A.size(0),
++          "gfx1013 sparse alpha must be a scalar or a contiguous FP32 GPU vector with one value per row");
++    }
++  }
+   if (!handle_initialized) {
+     TORCH_CUDASPARSE_CHECK(cusparseLtInit(&handle));
+     handle_initialized = true;
+@@ -212,14 +332,15 @@ std::tuple<at::Tensor, int64_t, int64_t, int64_t, int64_t> _cslt_sparse_mm_impl(
+       C_type = CUDA_R_16BF;
+       compute_type = CUSPARSE_COMPUTE_32F;
+       break;
+-#ifndef USE_ROCM
+     case at::ScalarType::Float:
++#ifdef USE_ROCM
++      TORCH_CHECK(native_gfx1013, "FP32 hipSPARSELt matmul requires the native gfx1013 scalar backend");
++#endif
+       input_type = CUDA_R_32F;
+       output_type = CUDA_R_32F;
+       C_type = CUDA_R_32F;
+       compute_type = CUSPARSE_COMPUTE_32F;
+       break;
+-#endif
+ // cuSPARSELt >= 0.6.2 or hipSparseLt: add Float8 support
+ #if defined(CUSPARSELT_VERSION) && CUSPARSELT_VERSION >= 602 || defined(USE_ROCM)
+     case at::ScalarType::Float8_e4m3fn:
+@@ -265,7 +386,7 @@ std::tuple<at::Tensor, int64_t, int64_t, int64_t, int64_t> _cslt_sparse_mm_impl(
+   ScalarType out_dtype = dense_B.scalar_type();
+   // special check for mixed dtype support for 8 bit dtypes
+   // cslt 0.5.2+: int8 int8 -> {fp16, bf16, int32} support
+-  if (out_dtype_opt.has_value()) {
++  if (out_dtype_opt.has_value() && !native_gfx1013) {
+     out_dtype = out_dtype_opt.value();
+     if (input_type == CUDA_R_8I) {
+       switch (out_dtype) {
+@@ -346,6 +467,15 @@ std::tuple<at::Tensor, int64_t, int64_t, int64_t, int64_t> _cslt_sparse_mm_impl(
+       CUSPARSE_ORDER_ROW,
+       CUSPARSELT_SPARSITY_50_PERCENT));
+ 
++  if (native_gfx1013) {
++    size_t bytes, scratch;
++    TORCH_CUDASPARSE_CHECK(cusparseLtSpMMACompressedSize2(
++        &handle, &sparse_input_descriptor, &bytes, &scratch));
++    const auto row_bytes = m * compressed_A.itemsize();
++    TORCH_CHECK(compressed_A.size(1) == (bytes + row_bytes - 1) / row_bytes,
++        "gfx1013 compressed shape does not match the dense contraction dimension");
++  }
++
+   // initialize dense input descriptor
+   cusparseLtMatDescriptor_t dense_input_descriptor;
+   TORCH_CUDASPARSE_CHECK(cusparseLtDenseDescriptorInit(
+@@ -404,6 +534,13 @@ std::tuple<at::Tensor, int64_t, int64_t, int64_t, int64_t> _cslt_sparse_mm_impl(
+   if (bias_opt.has_value()) {
+     auto& bias = bias_opt.value();
+     void* dBias = bias.data_ptr();
++#ifdef USE_ROCM
++    if (native_gfx1013) {
++      hipDataType bias_type = bias.scalar_type() == at::kFloat ? HIP_R_32F : input_type;
++      TORCH_CUDASPARSE_CHECK(cusparseLtMatmulDescSetAttribute(
++          &handle, &matmul, HIPSPARSELT_MATMUL_BIAS_TYPE, &bias_type, sizeof(bias_type)));
++    }
++#endif
+     TORCH_CUDASPARSE_CHECK(cusparseLtMatmulDescSetAttribute(
+         &handle,
+         &matmul,
+@@ -423,8 +560,8 @@ std::tuple<at::Tensor, int64_t, int64_t, int64_t, int64_t> _cslt_sparse_mm_impl(
+       &alg_id,
+       sizeof(alg_id)));
+ 
+-  cusparseLtSplitKMode_t splitKMode;
+-  int max_alg_id;
++  cusparseLtSplitKMode_t splitKMode = static_cast<cusparseLtSplitKMode_t>(0);
++  int max_alg_id = 0;
+   if (split_k != 1) {
+     TORCH_CUDASPARSE_CHECK(cusparseLtMatmulAlgSetAttribute(
+         &handle,
+@@ -611,6 +748,18 @@ int64_t _cslt_sparse_mm_search(
+ 
+ namespace at::native {
+ 
++Tensor _cslt_to_dense(const Tensor&, int64_t) {
++  TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
++}
++Tensor _cslt_compress_backward(const Tensor&, const Tensor&, int64_t) {
++  TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
++}
++std::tuple<Tensor, Tensor, Tensor, Tensor> _cslt_sparse_mm_backward(
++    const Tensor&, const Tensor&, const Tensor&, const std::optional<Tensor>&,
++    const std::optional<Tensor>&, bool, std::array<bool, 4>) {
++  TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
++}
++
+ at::Tensor _cslt_compress(const Tensor& sparse_input) {
+   TORCH_CHECK(false, "cuSPARSELt not supported on your machine.");
+ }
+diff --git a/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp b/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp
+index 8654bd597c70ea179700b56cf9455aa243211b85..e0d10f2848a2b78c272f5426bd81567f9469f15f 100644
+--- a/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp
++++ b/aten/src/ATen/native/transformers/cuda/sdp_utils.cpp
+@@ -971,7 +971,9 @@ bool can_use_flash_attention(sdp_params const& params, bool debug) {
+ 
+ bool can_use_mem_efficient_attention(sdp_params const& params, bool debug) {
+ #ifndef USE_MEM_EFF_ATTENTION
+-  TORCH_WARN_ONCE(!debug, "Torch was not compiled with memory efficient attention.");
++  if (debug) {
++    TORCH_WARN("Torch was not compiled with memory efficient attention.");
++  }
+   return false;
+ #endif
+   // Constraints specific to mem efficient attention
+diff --git a/test/distributed/test_c10d_ops_nccl.py b/test/distributed/test_c10d_ops_nccl.py
+index 3daf424ace7121b6df174006848391bcbb437bbb..38df41887eb114a91d0252921d54ec8985bcb7e0 100644
+--- a/test/distributed/test_c10d_ops_nccl.py
++++ b/test/distributed/test_c10d_ops_nccl.py
+@@ -197,7 +197,7 @@ class ProcessGroupNCCLOpTest(MultiProcContinuousTest):
+ 
+         # Premul Sum
+         if torch.cuda.nccl.version() >= (2, 11, 1):
+-            for dtype in torch.half, torch.float, torch.double:
++            for dtype in torch.half, torch.bfloat16, torch.float, torch.double:
+                 for factor in (
+                     3.0,
+                     torch.tensor([5.0], device=local_device_id, dtype=dtype),
+diff --git a/test/distributed/test_nccl.py b/test/distributed/test_nccl.py
+index 910f8b92736a6aaa1d91a773718a14ef8638710c..1a686ffc8f7be6dc838e2ce7b6eaab8336472ecf 100644
+--- a/test/distributed/test_nccl.py
++++ b/test/distributed/test_nccl.py
+@@ -57,6 +57,27 @@ broadcast_dtypes = (
+ 
+ 
+ class TestNCCL(TestCase):
++    @skip_but_pass_in_sandcastle_if(IS_WINDOWS, "NCCL doesn't support Windows")
++    @dtypes(
++        torch.float8_e4m3fn,
++        torch.float8_e5m2,
++        torch.float8_e4m3fnuz,
++        torch.float8_e5m2fnuz,
++    )
++    def test_float8_reductions_rejected(self, device, dtype):
++        if not c10d.is_nccl_available():
++            self.skipTest("NCCL not available")
++        tensor = torch.empty(17, device=device, dtype=dtype)
++        output = torch.empty_like(tensor)
++        operations = (
++            lambda: nccl.all_reduce([tensor], [output]),
++            lambda: nccl.reduce([tensor], output),
++            lambda: nccl.reduce_scatter([tensor], [output]),
++        )
++        for operation in operations:
++            with self.assertRaisesRegex(RuntimeError, "numeric reductions.*Float8"):
++                operation()
++
+     @skip_but_pass_in_sandcastle_if(IS_WINDOWS, "NCCL doesn't support Windows")
+     def test_unique_id(self, device):
+         uid = nccl.unique_id()
+diff --git a/test/test_bc250_attention_a07.py b/test/test_bc250_attention_a07.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e94fac2543747b1d832bdb8a3d6af61afd5af679
+--- /dev/null
++++ b/test/test_bc250_attention_a07.py
+@@ -0,0 +1,317 @@
++# Owner(s): ["module: nn"]
++import hashlib
++import importlib.util
++import json
++import os
++from pathlib import Path
++from unittest import mock
++
++import torch
++import torch.nn.functional as F
++from torch.nn.attention import sdpa_kernel, SDPBackend
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
++from torch.testing._internal.common_utils import parametrize, run_tests, TestCase
++from torch.utils.checkpoint import checkpoint
++
++
++if os.environ.get("BC250_A07_CANDIDATE"):
++    spec = importlib.util.spec_from_file_location(
++        "attention_d256_candidate", os.environ["BC250_A07_CANDIDATE"]
++    )
++    ops = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(ops)
++else:
++    from torch.nn.attention import _gfx1013 as ops
++ROWS = []
++
++
++def record(name, **data):
++    ROWS.append(
++        dict(
++            name=name,
++            status="passed",
++            module=ops.__file__,
++            source_sha256=hashlib.sha256(Path(ops.__file__).read_bytes()).hexdigest(),
++            **data,
++        )
++    )
++    Path(os.environ["BC250_A07_ROWS"]).write_text(json.dumps(ROWS, indent=2) + "\n")
++
++
++def reference(q, k, v, mask=None, causal=False, scale=None):
++    k = k.repeat_interleave(q.shape[1] // k.shape[1], 1)
++    v = v.repeat_interleave(q.shape[1] // v.shape[1], 1)
++    score = (q @ k.transpose(-1, -2)) * (
++        q.shape[-1] ** -0.5 if scale is None else scale
++    )
++    if causal:
++        allowed = torch.ones(q.shape[-2], k.shape[-2], dtype=torch.bool).tril()
++        score = score.masked_fill(~allowed, -float("inf"))
++    if mask is not None:
++        score = (
++            score.masked_fill(~mask, -float("inf"))
++            if mask.dtype == torch.bool
++            else score + mask
++        )
++    empty = (score == -float("inf")).all(-1, keepdim=True)
++    prob = score.masked_fill(empty, 0).softmax(-1).masked_fill(empty, 0)
++    return prob @ v
++
++
++class TestAttentionD256(TestCase):
++    def setUp(self):
++        super().setUp()
++        torch.manual_seed(70717)
++        torch.set_num_threads(4)
++        self.assertEqual(
++            torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013"
++        )
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    @parametrize(
++        "case",
++        [
++            (2, 4, 2, 17, 19, 256, "none", None),
++            (1, 2, 1, 33, 41, 256, "causal", None),
++            (1, 2, 1, 17, 33, 256, "bool", 0.13),
++            (1, 4, 2, 19, 23, 256, "additive", -0.2),
++            (1, 2, 1, 5, 7, 129, "none", 0.0),
++            (1, 2, 1, 19, 3, 256, "causal", None),
++            (1, 2, 1, 3, 19, 255, "causal", None),
++        ],
++    )
++    def test_cpu_reference(self, device, dtype, case):
++        b, h, hk, m, n, d, mode, scale = case
++        xs = [
++            (torch.randn(b, heads, length, d * 2, device=device, dtype=dtype) * 0.2)[
++                ..., ::2
++            ]
++            .detach()
++            .requires_grad_()
++            for heads, length in [(h, m), (hk, n), (hk, n)]
++        ]
++        cpu = [x.detach().cpu().double().requires_grad_() for x in xs]
++        mask = None
++        if mode == "bool":
++            mask = torch.rand(b, 1, m, n, device=device) > 0.25
++            mask[:, :, 0] = False
++            mask[:, :, 1, :16] = False
++        elif mode == "additive":
++            mask = torch.randn(m, n, device=device) * 0.1
++            mask[0] = -float("inf")
++        kwargs = dict(
++            attn_mask=mask, is_causal=mode == "causal", scale=scale, enable_gqa=h != hk
++        )
++        stream = torch.cuda.Stream()
++        stream.wait_stream(torch.cuda.current_stream())
++        with torch.cuda.stream(stream):
++            y = ops.scaled_dot_product_attention(*xs, **kwargs)
++            g = torch.randn_like(y) * 0.1
++            actual = torch.autograd.grad(y, xs, g)
++        torch.cuda.current_stream().wait_stream(stream)
++        ref = reference(
++            *cpu, None if mask is None else mask.cpu(), mode == "causal", scale
++        )
++        wanted = torch.autograd.grad(ref, cpu, g.cpu().double())
++        tol = {
++            torch.float32: (3e-5, 5e-4),
++            torch.float16: (0.003, 0.008),
++            torch.bfloat16: (0.03, 0.05),
++        }[dtype]
++        relative = []
++        for a, r in [(y, ref), *zip(actual, wanted)]:
++            self.assertEqual(a.cpu().double(), r, atol=tol[0], rtol=tol[1])
++            error = float((a.cpu().double() - r).norm() / r.norm().clamp_min(1e-20))
++            self.assertLess(
++                error,
++                {torch.float32: 5e-6, torch.float16: 8e-4, torch.bfloat16: 6e-3}[dtype],
++            )
++            relative.append(error)
++        record(self._testMethodName, case=case, output_qkv_relative_l2=relative)
++
++    @dtypes(torch.float16, torch.bfloat16)
++    @parametrize("mixed", [False, True])
++    def test_autocast(self, device, dtype, mixed):
++        xs = [
++            torch.randn(
++                1,
++                heads,
++                17,
++                256,
++                device=device,
++                dtype=torch.float16 if mixed and i == 1 else torch.float32,
++            ).requires_grad_()
++            for i, heads in enumerate((4, 2, 2))
++        ]
++        refs = [x.detach().clone().requires_grad_() for x in xs]
++        g = torch.randn(1, 4, 17, 256, device=device, dtype=dtype) * 0.1
++        with torch.autocast("cuda", dtype=dtype):
++            y = ops.scaled_dot_product_attention(*xs, is_causal=True, enable_gqa=True)
++            with sdpa_kernel(SDPBackend.MATH):
++                ref = F.scaled_dot_product_attention(
++                    *refs, is_causal=True, enable_gqa=True
++                )
++        grads = torch.autograd.grad(y, xs, g)
++        wanted = torch.autograd.grad(ref, refs, g)
++        self.assertEqual(y.dtype, dtype)
++        for a, b in [(y, ref), *zip(grads, wanted)]:
++            self.assertEqual(
++                a,
++                b,
++                atol=0.03 if dtype == torch.bfloat16 else 0.003,
++                rtol=0.05 if dtype == torch.bfloat16 else 0.008,
++            )
++        record(self._testMethodName, mixed=mixed)
++
++    @dtypes(torch.float32, torch.bfloat16)
++    def test_checkpoint(self, device, dtype):
++        xs = [
++            torch.randn(1, heads, 33, 256, device=device, dtype=dtype).requires_grad_()
++            for heads in (4, 2, 2)
++        ]
++
++        def fn(*values):
++            return ops.scaled_dot_product_attention(
++                *values, is_causal=True, enable_gqa=True
++            )
++
++        y = fn(*xs)
++        g = torch.randn_like(y)
++        expected = torch.autograd.grad(y, xs, g)
++        z = checkpoint(fn, *xs, use_reentrant=False)
++        actual = torch.autograd.grad(z, xs, g)
++        self.assertEqual(y, z, atol=0, rtol=0)
++        for a, b in zip(actual, expected):
++            self.assertEqual(a, b, atol=0, rtol=0)
++        record(self._testMethodName)
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    def test_empty(self, device, dtype):
++        for m, n in ((3, 0), (0, 3), (0, 0)):
++            xs = [
++                torch.randn(
++                    1, heads, length, 256, device=device, dtype=dtype
++                ).requires_grad_()
++                for heads, length in ((2, m), (1, n), (1, n))
++            ]
++            y = ops.scaled_dot_product_attention(*xs, enable_gqa=True)
++            gradients = torch.autograd.grad(y.sum(), xs)
++            self.assertEqual(y, torch.zeros_like(y), atol=0, rtol=0)
++            for g in gradients:
++                self.assertEqual(g, torch.zeros_like(g), atol=0, rtol=0)
++        record(self._testMethodName, empty_geometries=3)
++
++    @dtypes(torch.bfloat16)
++    def test_long_geometry(self, device, dtype):
++        xs = [
++            (
++                torch.randn(1, heads, 1024, 256, device=device, dtype=dtype) * 0.2
++            ).requires_grad_()
++            for heads in (8, 2, 2)
++        ]
++        refs = [x.detach().clone().requires_grad_() for x in xs]
++        y = ops.scaled_dot_product_attention(*xs, is_causal=True, enable_gqa=True)
++        with sdpa_kernel(SDPBackend.MATH):
++            ref = F.scaled_dot_product_attention(*refs, is_causal=True, enable_gqa=True)
++        g = torch.randn_like(y) * 0.1
++        actual = torch.autograd.grad(y, xs, g)
++        expected = torch.autograd.grad(ref, refs, g)
++        errors = []
++        for a, b in [(y, ref), *zip(actual, expected)]:
++            self.assertEqual(a, b, atol=0.03, rtol=0.05)
++            error = float(
++                (a.float() - b.float()).norm() / b.float().norm().clamp_min(1e-20)
++            )
++            self.assertLess(error, 0.006)
++            errors.append(error)
++        record(
++            self._testMethodName,
++            output_qkv_relative_l2=errors,
++            shape=[1, 8, 2, 1024, 256],
++        )
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    def test_inference(self, device, dtype):
++        xs = [
++            torch.randn(1, heads, 17, 256, device=device, dtype=dtype).requires_grad_()
++            for heads in (4, 2, 2)
++        ]
++        cpu = [x.detach().cpu().double() for x in xs]
++        mask = torch.ones(17, 17, device=device, dtype=torch.bool)
++        mask[0] = False
++        with (
++            torch.no_grad(),
++            mock.patch.object(
++                F,
++                "scaled_dot_product_attention",
++                side_effect=AssertionError("Inference must stay tiled"),
++            ),
++        ):
++            y = ops.scaled_dot_product_attention(*xs, attn_mask=mask, enable_gqa=True)
++        ref = reference(*cpu, mask.cpu())
++        self.assertEqual(
++            y.cpu().double(),
++            ref,
++            atol=0.03
++            if dtype == torch.bfloat16
++            else 0.003
++            if dtype == torch.float16
++            else 3e-5,
++            rtol=0.05
++            if dtype == torch.bfloat16
++            else 0.008
++            if dtype == torch.float16
++            else 5e-4,
++        )
++        self.assertEqual(y.requires_grad, False)
++        record(self._testMethodName, fully_tiled_inference=True)
++
++    @dtypes(torch.bfloat16)
++    def test_hybrid_forward(self, device, dtype):
++        xs = [
++            torch.randn(1, heads, 17, 256, device=device, dtype=dtype).requires_grad_()
++            for heads in (4, 2, 2)
++        ]
++        with mock.patch.object(
++            F, "scaled_dot_product_attention", wraps=F.scaled_dot_product_attention
++        ) as math_forward:
++            y = ops.scaled_dot_product_attention(*xs, is_causal=True, enable_gqa=True)
++            grads = torch.autograd.grad(y.sum(), xs)
++        self.assertEqual(math_forward.call_count, 1)
++        self.assertTrue(
++            all(x.dtype == torch.float32 for x in math_forward.call_args.args)
++        )
++        self.assertTrue(all(bool(g.isfinite().all()) for g in grads))
++        record(self._testMethodName, reference_forward_calls=1)
++
++    @dtypes(torch.float32)
++    def test_refusals(self, device, dtype):
++        xs = [
++            torch.randn(1, 2, 3, 256, device=device, requires_grad=True)
++            for _ in range(3)
++        ]
++        with self.assertRaises(ValueError):
++            ops.scaled_dot_product_attention(
++                *(torch.randn(1, 2, 3, 257, device=device) for _ in range(3))
++            )
++        with self.assertRaises(NotImplementedError):
++            ops.scaled_dot_product_attention(*xs, dropout_p=0.1)
++        with self.assertRaises(NotImplementedError):
++            ops.scaled_dot_product_attention(
++                *xs, attn_mask=torch.zeros(3, 3, device=device, requires_grad=True)
++            )
++        with self.assertRaises(ValueError):
++            ops.scaled_dot_product_attention(
++                *xs,
++                attn_mask=torch.ones(3, 3, device=device, dtype=torch.bool),
++                is_causal=True,
++            )
++        record(self._testMethodName, refusals=4)
++
++
++instantiate_device_type_tests(TestAttentionD256, globals(), only_for="cuda")
++if __name__ == "__main__":
++    run_tests()
+diff --git a/test/test_bc250_gated_delta.py b/test/test_bc250_gated_delta.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..f9472d8af8a952369b379809714932e14cfc839c
+--- /dev/null
++++ b/test/test_bc250_gated_delta.py
+@@ -0,0 +1,266 @@
++# Owner(s): ["module: nn"]
++import hashlib
++import importlib.util
++import json
++import os
++from pathlib import Path
++from unittest import mock
++
++import torch
++import torch.nn.functional as F
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
++from torch.testing._internal.common_utils import parametrize, run_tests, TestCase
++
++
++if os.environ.get("BC250_A06_INSTALLED"):
++    from torch.nn import bc250_gated_delta as ops
++else:
++    spec = importlib.util.spec_from_file_location(
++        "gated_delta_candidate",
++        os.environ.get(
++            "BC250_A06_CANDIDATE", Path(__file__).with_name("bc250_gated_delta.py")
++        ),
++    )
++    ops = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(ops)
++ROWS = []
++
++
++def record(name, **data):
++    ROWS.append(
++        dict(
++            name=name,
++            status="passed",
++            source_sha256=hashlib.sha256(Path(ops.__file__).read_bytes()).hexdigest(),
++            module=ops.__file__,
++            **data,
++        )
++    )
++    Path(os.environ["BC250_A06_ROWS"]).write_text(json.dumps(ROWS, indent=2) + "\n")
++
++
++def reference_prepare(q, k, v, g, beta, normalize):
++    b, t, h, dk = q.shape
++    q, k, v, g, beta = [x.transpose(1, 2).contiguous() for x in (q, k, v, g, beta)]
++    if normalize:
++        q = q * (q.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++        k = k * (k.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++    q = q * dk**-0.5
++    pad = (-t) % 64
++    q, k, v = [F.pad(x, (0, 0, 0, pad)) for x in (q, k, v)]
++    g, beta = [F.pad(x, (0, pad)) for x in (g, beta)]
++    shape = (b, h, -1, 64)
++    return (
++        q.reshape(*shape, dk),
++        k.reshape(*shape, dk),
++        (k * beta[..., None]).reshape(*shape, dk),
++        (v * beta[..., None]).reshape(*shape, v.shape[-1]),
++        g.reshape(shape).cumsum(-1),
++    )
++
++
++def recurrent_reference(q, k, v, g, beta, normalize, initial=None):
++    if normalize:
++        q = q * (q.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++        k = k * (k.square().sum(-1, keepdim=True) + 1e-6).rsqrt()
++    q = q * q.shape[-1] ** -0.5
++    b, t, h, dk = q.shape
++    state = (
++        torch.zeros((b, h, dk, v.shape[-1]), dtype=q.dtype, device=q.device)
++        if initial is None
++        else initial
++    )
++    outputs = []
++    for i in range(t):
++        state = state * g[:, i].exp()[..., None, None]
++        error = v[:, i] - (k[:, i, :, :, None] * state).sum(-2)
++        state = (
++            state + k[:, i, :, :, None] * (beta[:, i, :, None] * error)[..., None, :]
++        )
++        outputs.append((q[:, i, :, :, None] * state).sum(-2))
++    return torch.stack(outputs, 1), state
++
++
++def inputs(b, t, h, dk, dv, dtype, device):
++    q, k = [
++        torch.randn(b, t, h, dk, dtype=dtype, device=device) * 0.15 for _ in range(2)
++    ]
++    v = torch.randn(b, t, h, dv, dtype=dtype, device=device) * 0.2
++    g = -(torch.rand(b, t, h, device=device) * 0.15 + 0.01)
++    beta = torch.rand(b, t, h, device=device) * 0.8 + 0.1
++    return [x.detach().requires_grad_() for x in (q, k, v, g, beta)]
++
++
++class TestGatedDelta(TestCase):
++    def setUp(self):
++        super().setUp()
++        torch.manual_seed(171006)
++        torch.set_num_threads(2)
++        self.assertEqual(
++            torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013"
++        )
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    @parametrize("normalize", [False, True])
++    @parametrize(
++        "geometry", [(2, 7, 3, 7, 11), (1, 65, 2, 32, 16), (1, 129, 2, 128, 128)]
++    )
++    def test_prepare(self, device, dtype, normalize, geometry):
++        xs = inputs(*geometry, dtype, device)
++        # Noncontiguous BLHD/BLH inputs exercise GPU copy autograd edges.
++        xs = [
++            x.transpose(1, 2).contiguous().transpose(1, 2).detach().requires_grad_()
++            for x in xs
++        ]
++        refs = [x.detach().cpu().double().requires_grad_() for x in xs]
++        expected = reference_prepare(*refs, normalize)
++        stream = torch.cuda.Stream()
++        stream.wait_stream(torch.cuda.current_stream())
++        with torch.cuda.stream(stream):
++            ys = ops.prepare_gated_delta(*xs, normalize=normalize)
++            grads = [torch.randn_like(y) * 0.2 for y in ys]
++            actual = torch.autograd.grad(ys, xs, grads)
++        torch.cuda.current_stream().wait_stream(stream)
++        wanted = torch.autograd.grad(expected, refs, [g.cpu().double() for g in grads])
++        for y, ref in zip(ys, expected):
++            self.assertEqual(y.cpu().double(), ref, atol=2e-5, rtol=2e-5)
++        tol = {
++            torch.float32: (3e-5, 6e-5),
++            torch.float16: (0.003, 0.005),
++            torch.bfloat16: (0.025, 0.03),
++        }[dtype]
++        for grad, ref in zip(actual, wanted):
++            self.assertEqual(grad.cpu().double(), ref, atol=tol[0], rtol=tol[1])
++        record(self._testMethodName, all_five_gradients=True)
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    @parametrize("normalize", [False, True])
++    @parametrize("length", [1, 65, 129])
++    def test_recurrent(self, device, dtype, normalize, length):
++        xs = inputs(1, length, 2, 7, 9, dtype, device)
++        state = (torch.randn(1, 2, 7, 9, device=device) * 0.03).requires_grad_()
++        refs = [x.detach().cpu().double().requires_grad_() for x in (*xs, state)]
++        y, s = ops.chunk_gated_delta_rule(
++            *xs,
++            initial_state=state,
++            output_final_state=True,
++            use_qk_l2norm_in_kernel=normalize,
++        )
++        yr, sr = recurrent_reference(*refs[:5], normalize, refs[5])
++        gy, gs = torch.randn_like(y) * 0.1, torch.randn_like(s) * 0.1
++        actual = torch.autograd.grad((y, s), (*xs, state), (gy, gs))
++        expected = torch.autograd.grad(
++            (yr, sr), refs, (gy.cpu().double(), gs.cpu().double())
++        )
++        tol = {
++            torch.float32: (2e-5, 2e-4),
++            torch.float16: (0.001, 0.008),
++            torch.bfloat16: (0.006, 0.04),
++        }[dtype]
++        for a, r in [(y, yr), (s, sr), *zip(actual, expected)]:
++            self.assertEqual(a.cpu().double(), r, atol=tol[0], rtol=tol[1])
++        record(self._testMethodName, cpu_recurrent_reference=True, state_gradient=True)
++
++    @dtypes(torch.float32)
++    def test_zero_and_subsets(self, device, dtype):
++        for index in range(5):
++            xs = inputs(1, 7, 2, 7, 9, dtype, device)
++            with torch.no_grad():
++                xs[0].zero_()
++                xs[1].zero_()
++                xs[3].zero_()
++                xs[4].zero_()
++            refs = [x.detach().cpu().double().requires_grad_() for x in xs]
++            ys = ops.prepare_gated_delta(*xs, normalize=True)
++            expected = reference_prepare(*refs, True)
++            actual = torch.autograd.grad(ys[index].sum(), xs, allow_unused=True)
++            wanted = torch.autograd.grad(expected[index].sum(), refs, allow_unused=True)
++            for x, a, r in zip(xs, actual, wanted):
++                self.assertEqual(
++                    torch.zeros_like(x).cpu().double()
++                    if a is None
++                    else a.cpu().double(),
++                    torch.zeros_like(x).cpu().double() if r is None else r,
++                    atol=2e-5,
++                    rtol=2e-5,
++                )
++        record(
++            self._testMethodName, absent_output_grads=True, zero_norms_and_gates=True
++        )
++
++    @dtypes(torch.float16, torch.bfloat16)
++    def test_low_precision_gates(self, device, dtype):
++        xs = inputs(2, 64, 3, 32, 7, dtype, device)
++        xs = [x.detach().to(dtype).requires_grad_() for x in xs]
++        refs = [x.detach().cpu().double().requires_grad_() for x in xs]
++        ys = ops.prepare_gated_delta(*xs, normalize=True)
++        expected = reference_prepare(*refs, True)
++        grads = [torch.randn_like(y) * 0.1 for y in ys]
++        actual = torch.autograd.grad(ys, xs, grads)
++        wanted = torch.autograd.grad(expected, refs, [g.cpu().double() for g in grads])
++        for y, ref in zip(ys, expected):
++            self.assertEqual(y.cpu().double(), ref, atol=2e-5, rtol=2e-5)
++        tol = (0.003, 0.005) if dtype == torch.float16 else (0.025, 0.03)
++        for grad, ref in zip(actual, wanted):
++            self.assertEqual(grad.cpu().double(), ref, atol=tol[0], rtol=tol[1])
++        record(self._testMethodName, exact_chunk=True, low_precision_gates=True)
++
++    @dtypes(torch.float16, torch.bfloat16)
++    def test_low_precision_full_uses_reference(self, device, dtype):
++        xs = inputs(1, 65, 2, 7, 9, dtype, device)
++        refs = [x.detach().cpu().double().requires_grad_() for x in xs]
++        with mock.patch.object(
++            ops,
++            "prepare_gated_delta",
++            side_effect=AssertionError(
++                "Native low-precision preparation is experimental"
++            ),
++        ):
++            y, state = ops.chunk_gated_delta_rule(
++                *xs, output_final_state=True, use_qk_l2norm_in_kernel=True
++            )
++            actual = torch.autograd.grad((y.sum() + state.sum()), xs)
++        ref, sr = recurrent_reference(*refs, True)
++        expected = torch.autograd.grad(ref.sum() + sr.sum(), refs)
++        for a, b in [(y, ref), (state, sr), *zip(actual, expected)]:
++            self.assertEqual(
++                a.cpu().double(),
++                b,
++                atol=0.025 if dtype == torch.bfloat16 else 0.003,
++                rtol=0.04 if dtype == torch.bfloat16 else 0.008,
++            )
++        record(self._testMethodName, reference_ordered_low_precision=True)
++
++    @dtypes(torch.float32)
++    def test_refusals(self, device, dtype):
++        xs = inputs(1, 7, 2, 7, 9, dtype, device)
++        cases = [
++            [xs[0].cpu(), *xs[1:]],
++            [xs[0].half(), *xs[1:]],
++            [xs[0], xs[1][:, :, :, :3], *xs[2:]],
++            [*xs[:3], xs[3].long(), xs[4]],
++            [*xs[:4], xs[4][:, :2]],
++        ]
++        for case in cases:
++            with self.assertRaises((ValueError, TypeError)):
++                ops.prepare_gated_delta(*case)
++        with self.assertRaises(ValueError):
++            ops.prepare_gated_delta(*inputs(1, 1, 1, 129, 8, dtype, device))
++        with self.assertRaises(ValueError):
++            ops.chunk_gated_delta_rule(*xs, chunk_size=32)
++        with self.assertRaises(ValueError):
++            ops.chunk_gated_delta_rule(
++                *xs,
++                initial_state=torch.zeros(
++                    1, 2, 7, 9, device=device, dtype=torch.float16
++                ),
++            )
++        record(self._testMethodName, refusals=8)
++
++
++instantiate_device_type_tests(TestGatedDelta, globals(), only_for="cuda")
++if __name__ == "__main__":
++    run_tests()
+diff --git a/test/test_bc250_hipsparselt.py b/test/test_bc250_hipsparselt.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..1fc728997d01524a6e31ccc589a3f31611f5f034
+--- /dev/null
++++ b/test/test_bc250_hipsparselt.py
+@@ -0,0 +1,190 @@
++# Owner(s): ["module: sparse"]
++# Native gfx1013 scalar hipSPARSELt integration contracts.
++import json
++import os
++from pathlib import Path
++
++import torch
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
++from torch.testing._internal.common_utils import parametrize, run_tests, TestCase
++
++
++ROWS = []
++
++
++def record(name, **data):
++    ROWS.append(dict(name=name, status="passed", **data))
++    path = os.environ.get("BC250_A04_RESULT_PATH")
++    if path:
++        Path(path).write_text(json.dumps(ROWS, indent=2) + "\n")
++
++
++def sparse_input(m, k, dtype):
++    group = 2 if dtype == torch.float32 else 4
++    kept = group // 2
++    values = torch.randint(-3, 4, (m, k)).to(dtype)
++    mask = torch.zeros(m, k // group, group, dtype=torch.bool)
++    start = torch.arange(m * (k // group)).reshape(m, k // group) % group
++    for i in range(kept):
++        mask.scatter_(2, ((start + i) % group).unsqueeze(-1), True)
++    return values.masked_fill(~mask.reshape(m, k), 0)
++
++
++class TestBC250SparseLt(TestCase):
++    def setUp(self):
++        super().setUp()
++        self.assertEqual(
++            torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013"
++        )
++        torch.manual_seed(250404)
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16, torch.int8)
++    @parametrize("geometry", [(7, 9, 12), (32, 16, 32)])
++    @parametrize("column_major", [False, True])
++    def test_pack_mm(self, device, dtype, geometry, column_major):
++        m, n, k = geometry
++        cpu_a = sparse_input(m, k, dtype)
++        cpu_b = torch.randint(-3, 4, (k, n)).to(dtype)
++        stream = torch.cuda.Stream()
++        with torch.cuda.stream(stream):
++            a = cpu_a.to(device)
++            b = cpu_b.to(device)
++            if column_major:
++                b = b.t().contiguous().t()
++            packed = torch._cslt_compress(a)
++            # Decode the native value/index format independently of the GEMM.
++            raw = packed.view(torch.uint8).flatten().cpu()
++            group = 2 if dtype == torch.float32 else 4
++            kept = group // 2
++            value_bytes = m * k // 2 * a.element_size()
++            values = raw[:value_bytes].view(dtype).reshape(m, k // group, kept)
++            metadata = (
++                raw[value_bytes : value_bytes + m * k // group]
++                .reshape(m, k // group)
++                .long()
++            )
++            decoded = torch.zeros(m, k // group, group, dtype=dtype)
++            for i in range(kept):
++                index = (metadata >> (2 * i)) & 3
++                self.assertTrue(bool((index < group).all()))
++                decoded.scatter_(2, index.unsqueeze(-1), values[:, :, i : i + 1])
++            self.assertEqual(decoded.reshape(m, k), cpu_a, atol=0, rtol=0)
++            product = cpu_a.double() @ cpu_b.double()
++            executions = 0
++            for epilogue in ["plain", "scalar_gpu", "vector", "typed_bias"]:
++                if epilogue == "typed_bias" and dtype == torch.int8:
++                    continue
++                bias_cpu = torch.arange(m).float() / 8 - 1
++                kwargs = {}
++                expected = product
++                if epilogue == "scalar_gpu":
++                    kwargs = dict(
++                        alpha=torch.tensor(-0.75, device=device),
++                        bias=bias_cpu.to(device),
++                    )
++                    expected = -0.75 * product + bias_cpu.double()[:, None]
++                elif epilogue == "vector":
++                    alpha_cpu = (torch.arange(m) % 4 + 1).float() / 4
++                    kwargs = dict(alpha=alpha_cpu.to(device), bias=bias_cpu.to(device))
++                    expected = (
++                        alpha_cpu.double()[:, None] * product
++                        + bias_cpu.double()[:, None]
++                    )
++                elif epilogue == "typed_bias":
++                    typed_bias = bias_cpu.to(dtype)
++                    kwargs = dict(bias=typed_bias.to(device))
++                    expected = product + typed_bias.double()[:, None]
++                if dtype == torch.int8:
++                    expected = expected.round().clamp(-128, 127).to(dtype)
++                else:
++                    expected = expected.to(dtype)
++                for transpose in [False, True]:
++                    actual = torch._cslt_sparse_mm(
++                        packed, b, transpose_result=transpose, **kwargs
++                    )
++                    self.assertEqual(
++                        actual.cpu(), expected.t() if transpose else expected
++                    )
++                    executions += 1
++            self.assertEqual(a.cpu(), cpu_a, atol=0, rtol=0)
++            self.assertEqual(b.cpu(), cpu_b, atol=0, rtol=0)
++        record(
++            self._testMethodName,
++            dtype=str(dtype),
++            geometry=geometry,
++            column_major=column_major,
++            matmul_executions=executions,
++            metadata_roundtrip=True,
++        )
++
++    @dtypes(torch.float16, torch.bfloat16)
++    def test_public_wrapper(self, device, dtype):
++        cpu_a = sparse_input(32, 32, dtype)
++        cpu_b = torch.randn(32, 16).to(dtype)
++        a = torch.sparse.to_sparse_semi_structured(cpu_a.to(device))
++        result = torch.mm(a, cpu_b.to(device))
++        self.assertEqual(result.cpu(), (cpu_a.double() @ cpu_b.double()).to(dtype))
++        record(self._testMethodName, dtype=str(dtype))
++
++    def test_search(self, device):
++        a = sparse_input(7, 12, torch.float32).to(device)
++        b = torch.randn(12, 9, device=device)
++        packed = torch._cslt_compress(a)
++        self.assertTrue(torch.backends.cusparselt.is_available())
++        self.assertEqual(torch.backends.cusparselt.version(), 209)
++        algorithm, split_k, split_mode, count = torch._C._cusparselt.mm_search(
++            packed, b, None, None, None, False
++        )
++        self.assertEqual((algorithm, split_k, split_mode, count), (0, 1, 0, 1))
++        with self.assertWarnsRegex(UserWarning, "deprecated"):
++            algorithm = torch._cslt_sparse_mm_search(packed, b)
++        self.assertEqual(algorithm, 0)
++        self.assertEqual(
++            torch._cslt_sparse_mm(packed, b, alg_id=algorithm).cpu(),
++            (a.cpu().double() @ b.cpu().double()).float(),
++        )
++        record(self._testMethodName, algorithm=algorithm)
++
++    def test_contracts(self, device):
++        a = sparse_input(7, 12, torch.float32).to(device)
++        b = torch.ones(12, 9, device=device)
++        packed = torch._cslt_compress(a)
++        bad = [
++            lambda: torch._cslt_compress(a.t()),
++            lambda: torch._cslt_compress(torch.empty(0, 12, device=device)),
++            lambda: torch._cslt_sparse_mm(packed.flatten(), b),
++            lambda: torch._cslt_sparse_mm(packed, b.half()),
++            lambda: torch._cslt_sparse_mm(packed, torch.ones(14, 9, device=device)),
++            lambda: torch._cslt_sparse_mm(
++                packed, torch.ones(12, 18, device=device)[:, ::2]
++            ),
++            lambda: torch._cslt_sparse_mm(packed, b, alpha=torch.ones(7)),
++            lambda: torch._cslt_sparse_mm(packed, b, alpha=torch.tensor(1.0)),
++            lambda: torch._cslt_sparse_mm(
++                packed, b, alpha=torch.ones(7, device=device, dtype=torch.float16)
++            ),
++            lambda: torch._cslt_sparse_mm(packed, b, bias=torch.ones(6, device=device)),
++            lambda: torch._cslt_sparse_mm(packed, b, bias=torch.ones(7)),
++            lambda: torch._cslt_sparse_mm(packed, b, split_k=2),
++            lambda: torch._cslt_sparse_mm(packed, b, alg_id=5),
++        ]
++        for call in bad:
++            with self.assertRaises(RuntimeError):
++                call()
++        q = torch._cslt_compress(a.to(torch.int8))
++        with self.assertRaisesRegex(RuntimeError, "same-dtype"):
++            torch._cslt_sparse_mm(q, b.to(torch.int8), out_dtype=torch.int32)
++        self.assertEqual(
++            torch._cslt_sparse_mm(packed, b).cpu(),
++            (a.cpu().double() @ b.cpu().double()).float(),
++        )
++        record(self._testMethodName, refusal_contracts=len(bad) + 1)
++
++
++instantiate_device_type_tests(TestBC250SparseLt, globals(), only_for=("cuda",))
++
++if __name__ == "__main__":
++    run_tests()
+diff --git a/test/test_bc250_profiler_a09.py b/test/test_bc250_profiler_a09.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..d5cfd5d9259e4a29afd2b84f7272cb02f3a1e6d5
+--- /dev/null
++++ b/test/test_bc250_profiler_a09.py
+@@ -0,0 +1,226 @@
++# Owner(s): ["oncall: profiler"]
++import json
++import math
++import os
++import statistics
++import time
++from pathlib import Path
++
++import torch
++from torch.profiler import profile, ProfilerActivity, record_function, schedule
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
++from torch.testing._internal.common_utils import run_tests, TestCase
++
++
++ROWS = []
++OUTPUT = Path(os.environ["BC250_A09_OUTPUT"])
++OUTPUT.mkdir(exist_ok=True)
++
++
++def record(name, **data):
++    ROWS.append(dict(name=name, status="passed", **data))
++    (OUTPUT / "rows.json").write_text(json.dumps(ROWS, indent=2) + "\n")
++
++
++def trace_summary(prof, path):
++    prof.export_chrome_trace(str(path))
++    events = json.loads(path.read_text())["traceEvents"]
++    kernels = [e for e in events if e.get("cat") == "kernel"]
++    runtime = [e for e in events if e.get("cat") in ("cuda_runtime", "hip_runtime")]
++    return events, kernels, runtime
++
++
++class TestBC250Profiler(TestCase):
++    def setUp(self):
++        super().setUp()
++        self.assertTrue(torch.autograd.kineto_available())
++        self.assertIn(ProfilerActivity.CUDA, torch.profiler.supported_activities())
++        self.assertIn("gfx1013", torch.cuda.get_device_properties(0).gcnArchName)
++        torch.manual_seed(1909)
++
++    @dtypes(torch.float32, torch.bfloat16)
++    def test_trace_and_gradients(self, device, dtype):
++        a = (torch.randn(64, 96, device=device) * 0.1).to(dtype).requires_grad_()
++        b = (torch.randn(96, 48, device=device) * 0.1).to(dtype).requires_grad_()
++        ca, cb = [x.detach().cpu().double().requires_grad_() for x in (a, b)]
++
++        def work(x, y):
++            z = (x @ y).sin()
++            gradients = torch.autograd.grad(z.square().mean(), (x, y))
++            return z, gradients
++
++        expected, expected_gradients = work(ca, cb)
++        plain, plain_gradients = work(a, b)
++        torch.cuda.synchronize()
++        with profile(
++            activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
++            record_shapes=True,
++            profile_memory=True,
++        ) as prof:
++            with record_function("bc250_a09_reference_work"):
++                actual, gradients = work(a, b)
++                # Keep the asynchronous work inside the host range for correlation.
++                torch.cuda.synchronize()
++        tolerance = 0.04 if dtype == torch.bfloat16 else 0.0002
++        self.assertEqual(actual, plain, atol=0, rtol=0)
++        for got, original, cpu in zip(gradients, plain_gradients, expected_gradients):
++            self.assertEqual(got, original, atol=0, rtol=0)
++            self.assertEqual(got.cpu().double(), cpu, atol=2e-6, rtol=tolerance)
++        self.assertEqual(actual.cpu().double(), expected, atol=0.002, rtol=tolerance)
++        events, kernels, runtime = trace_summary(
++            prof, OUTPUT / (self._testMethodName + ".json")
++        )
++        self.assertTrue(kernels)
++        self.assertTrue(runtime)
++        self.assertTrue(all(math.isfinite(e["dur"]) and e["dur"] > 0 for e in kernels))
++        markers = [
++            e
++            for e in events
++            if e.get("name") == "bc250_a09_reference_work"
++            and e.get("cat") == "user_annotation"
++        ]
++        self.assertEqual(len(markers), 1)
++        marker = markers[0]
++        self.assertTrue(
++            all(
++                marker["ts"] - 1000 <= e["ts"] <= marker["ts"] + marker["dur"] + 1000
++                for e in kernels
++            )
++        )
++        linked = [e for e in prof.events() if e.kernels]
++        self.assertTrue(linked)
++        kernel_ids = {e.get("args", {}).get("correlation") for e in kernels}
++        runtime_ids = {e.get("args", {}).get("correlation") for e in runtime}
++        self.assertTrue((kernel_ids & runtime_ids) - {None})
++        record(
++            self._testMethodName,
++            kernels=len(kernels),
++            runtime_events=len(runtime),
++            linked_cpu_events=len(linked),
++            exact_profiled_output_and_gradients=True,
++            cpu_reference=True,
++        )
++
++    def test_memory(self, device):
++        torch.cuda.synchronize()
++        before = torch.cuda.memory_allocated()
++        with profile(
++            activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
++            profile_memory=True,
++            record_shapes=True,
++            with_stack=True,
++        ) as prof:
++            with record_function("bc250_a09_allocation"):
++                x = torch.ones(1024, 1024, device=device)
++                self.assertEqual(x.sum().item(), 1024 * 1024)
++                del x
++                torch.cuda.synchronize()
++        events, kernels, _ = trace_summary(prof, OUTPUT / "memory.json")
++        memory = [e for e in events if e.get("name") == "[memory]"]
++        self.assertTrue(memory)
++        deltas = [e.get("args", {}).get("Bytes", 0) for e in memory]
++        self.assertTrue(any(v >= 4 * 1024 * 1024 for v in deltas))
++        self.assertTrue(any(v <= -4 * 1024 * 1024 for v in deltas))
++        self.assertTrue(kernels)
++        self.assertEqual(torch.cuda.memory_allocated(), before)
++        record(
++            self._testMethodName,
++            allocation_and_free_recorded=True,
++            allocation_bytes=4 * 1024 * 1024,
++            memory_events=len(memory),
++        )
++
++    def test_schedule_and_stream(self, device):
++        captures = []
++        x = torch.randn(32, 32, device=device)
++        stream = torch.cuda.Stream()
++        stream.wait_stream(torch.cuda.current_stream())
++
++        def ready(prof):
++            _, kernels, _ = trace_summary(
++                prof, OUTPUT / f"scheduled-{len(captures)}.json"
++            )
++            self.assertTrue(kernels)
++            captures.append(len(kernels))
++
++        with profile(
++            activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
++            schedule=schedule(wait=1, warmup=1, active=2, repeat=2),
++            on_trace_ready=ready,
++        ) as prof:
++            for _ in range(8):
++                with torch.cuda.stream(stream):
++                    y = x.sin() + 1
++                stream.synchronize()
++                self.assertEqual(y.cpu(), x.cpu().sin() + 1, atol=2e-6, rtol=2e-6)
++                prof.step()
++        self.assertEqual(len(captures), 2)
++        record(self._testMethodName, captures=captures, nondefault_stream=True)
++
++    def test_copies(self, device):
++        host = torch.arange(65536, dtype=torch.float32).pin_memory()
++        target = torch.empty_like(host, device=device)
++        result = torch.empty_like(host, pin_memory=True)
++        torch.cuda.synchronize()
++        with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA]) as prof:
++            target.copy_(host, non_blocking=True)
++            result.copy_(target, non_blocking=True)
++            torch.cuda.synchronize()
++        self.assertEqual(result, host, atol=0, rtol=0)
++        events, _, runtime = trace_summary(prof, OUTPUT / "copies.json")
++        copies = [e for e in events if e.get("cat") == "gpu_memcpy"]
++        self.assertGreaterEqual(len(copies), 2)
++        self.assertTrue(all(math.isfinite(e["dur"]) and e["dur"] > 0 for e in copies))
++        copy_ids = {e.get("args", {}).get("correlation") for e in copies}
++        runtime_ids = {e.get("args", {}).get("correlation") for e in runtime}
++        self.assertTrue((copy_ids & runtime_ids) - {None})
++        record(self._testMethodName, gpu_copies=len(copies), exact_roundtrip=True)
++
++    def test_cpu_only(self, device):
++        with profile(activities=[ProfilerActivity.CPU]) as prof:
++            with record_function("bc250_a09_cpu_only"):
++                value = torch.arange(33).sum().item()
++        self.assertEqual(value, 528)
++        _, kernels, _ = trace_summary(prof, OUTPUT / "cpu-only.json")
++        self.assertFalse(kernels)
++        self.assertTrue(prof.events())
++        record(self._testMethodName, no_gpu_events=True)
++
++    def test_overhead(self, device):
++        x = torch.randn(128, 128, device=device)
++
++        def work():
++            for _ in range(5):
++                y = x @ x
++                y.sin_()
++            torch.cuda.synchronize()
++
++        work()
++        plain, traced = [], []
++        for _ in range(3):
++            start = time.perf_counter()
++            work()
++            plain.append(time.perf_counter() - start)
++            start = time.perf_counter()
++            with profile(
++                activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA]
++            ) as prof:
++                work()
++            traced.append(time.perf_counter() - start)
++            self.assertTrue(any(e.kernels for e in prof.events()))
++        self.assertTrue(all(math.isfinite(x) and x > 0 for x in plain + traced))
++        record(
++            self._testMethodName,
++            plain_seconds=plain,
++            profiled_seconds=traced,
++            median_wall_ratio=statistics.median(traced) / statistics.median(plain),
++            scope="Three short eager windows including profiler setup/teardown; diagnostic overhead, not throughput or hardware counter qualification",
++        )
++
++
++instantiate_device_type_tests(TestBC250Profiler, globals(), only_for="cuda")
++if __name__ == "__main__":
++    run_tests()
+diff --git a/test/test_bc250_profiler_order.py b/test/test_bc250_profiler_order.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..673096e2e86d26daf7e8458a2508098e3a756076
+--- /dev/null
++++ b/test/test_bc250_profiler_order.py
+@@ -0,0 +1,167 @@
++# Owner(s): ["oncall: profiler"]
++"""Fresh-process ROCm profiler ordering regressions; no external profiler required."""
++
++import argparse
++import json
++import math
++import os
++import subprocess
++import sys
++import tempfile
++from pathlib import Path
++
++import torch
++from torch.profiler import profile, ProfilerActivity
++from torch.testing._internal.common_utils import run_tests, TestCase
++
++
++CHECK = TestCase()
++
++
++def worker(order, output, expect_missing=False):
++    torch.set_num_threads(4)
++    output.mkdir(parents=True, exist_ok=True)
++    report = dict(status="running", order=order, captures=[], references=[])
++
++    def save():
++        (output / "result.json").write_text(json.dumps(report, indent=2) + "\n")
++
++    def capture(label, gpu, fn):
++        activities = [ProfilerActivity.CPU]
++        if gpu:
++            activities.append(ProfilerActivity.CUDA)
++        with profile(activities=activities, profile_memory=True) as prof:
++            value = fn()
++        path = output / (label + ".json")
++        prof.export_chrome_trace(str(path))
++        events = json.loads(path.read_text())["traceEvents"]
++        kernels = [e for e in events if e.get("cat") == "kernel"]
++        copies = [e for e in events if e.get("cat") == "gpu_memcpy"]
++        runtime = [e for e in events if e.get("cat") in ("cuda_runtime", "hip_runtime")]
++        CHECK.assertTrue(any(e.get("cat") == "cpu_op" for e in events))
++        entry = dict(
++            label=label,
++            gpu_requested=gpu,
++            kernels=len(kernels),
++            copies=len(copies),
++            runtime=len(runtime),
++        )
++        if gpu and (not expect_missing):
++            CHECK.assertTrue(kernels and len(copies) >= 2, entry)
++            CHECK.assertTrue(
++                all(math.isfinite(e["dur"]) and e["dur"] > 0 for e in kernels + copies)
++            )
++            kernel_ids = {e.get("args", {}).get("correlation") for e in kernels}
++            copy_ids = {e.get("args", {}).get("correlation") for e in copies}
++            runtime_ids = {e.get("args", {}).get("correlation") for e in runtime}
++            CHECK.assertTrue((kernel_ids & runtime_ids) - {None}, entry)
++            CHECK.assertTrue((copy_ids & runtime_ids) - {None}, entry)
++            CHECK.assertTrue(any(e.kernels for e in prof.events()))
++            entry["correlated_kernel_and_copy"] = True
++        elif gpu:
++            CHECK.assertTrue(not kernels and (not copies), entry)
++            entry["expected_baseline_defect_reproduced"] = True
++        else:
++            CHECK.assertTrue(not kernels and (not copies), entry)
++        report["captures"].append(entry)
++        save()
++        return value
++
++    def cpu():
++        value = torch.arange(33).sum().item()
++        CHECK.assertTrue(value == 528)
++        return value
++
++    if order == "masked":
++        CHECK.assertTrue(
++            not torch.cuda.is_available() and (not torch.cuda.is_initialized())
++        )
++        capture("masked-cpu", False, cpu)
++        CHECK.assertTrue(not torch.cuda.is_initialized())
++        report.update(status="passed", no_visible_device=True)
++        save()
++        return
++    if order == "cpu-cold":
++        CHECK.assertTrue(not torch.cuda.is_initialized())
++        capture("cold-cpu", False, cpu)
++        CHECK.assertTrue(
++            not torch.cuda.is_initialized(),
++            "CPU capture must not run Torch CUDA lazy init",
++        )
++    CHECK.assertTrue(
++        torch.cuda.get_device_properties(0).gcnArchName.split(":")[0] == "gfx1013"
++    )
++    torch.manual_seed(190912)
++    a = (torch.randn(32, 48, device="cuda") * 0.1).requires_grad_()
++    b = (torch.randn(48, 24, device="cuda") * 0.1).requires_grad_()
++    stream = torch.cuda.Stream()
++    stream.wait_stream(torch.cuda.current_stream())
++    host = torch.arange(65536, dtype=torch.float32).pin_memory()
++    target = torch.empty_like(host, device="cuda")
++    back = torch.empty_like(host, pin_memory=True)
++
++    def work():
++        with torch.cuda.stream(stream):
++            y = (a @ b).sin()
++            grad = torch.autograd.grad(y.square().mean(), (a, b))
++            target.copy_(host, non_blocking=True)
++            back.copy_(target, non_blocking=True)
++        stream.synchronize()
++        torch.testing.assert_close(back, host, rtol=0, atol=0)
++        return (y, grad)
++
++    plain, plain_grad = work()
++    ca, cb = [x.detach().cpu().double().requires_grad_() for x in (a, b)]
++    cy = (ca @ cb).sin()
++    cg = torch.autograd.grad(cy.square().mean(), (ca, cb))
++    torch.testing.assert_close(plain.cpu().double(), cy, atol=2e-06, rtol=0.0002)
++    for actual, expected in zip(plain_grad, cg):
++        torch.testing.assert_close(
++            actual.cpu().double(), expected, atol=2e-06, rtol=0.0002
++        )
++    if order == "cpu-first":
++        capture("first-cpu", False, cpu)
++    for i in range(2):
++        y, gradients = capture(f"gpu-{i}", True, work)
++        torch.testing.assert_close(y, plain, rtol=0, atol=0)
++        for actual, expected in zip(gradients, plain_grad):
++            torch.testing.assert_close(actual, expected, rtol=0, atol=0)
++        capture(f"cpu-after-{i}", False, work)
++    report["references"].append(
++        "exact profiled/unprofiled output+both gradients and pinned copy roundtrip; CPU float64 references; nondefault stream"
++    )
++    report.update(status="passed", expected_baseline_defect=expect_missing)
++    save()
++
++
++class TestBC250ProfilerOrder(TestCase):
++    def test_fresh_process_orders(self):
++        if torch.version.hip is None or not torch.cuda.is_available():
++            self.skipTest("Requires native ROCm device")
++        for order in ("cpu-first", "gpu-first", "cpu-cold", "masked"):
++            with self.subTest(order=order), tempfile.TemporaryDirectory() as output:
++                env = dict(os.environ)
++                if order == "masked":
++                    env["HIP_VISIBLE_DEVICES"] = "999999"
++                subprocess.run(
++                    [sys.executable, __file__, "--worker", order, "--output", output],
++                    env=env,
++                    check=True,
++                    timeout=90,
++                )
++
++
++if __name__ == "__main__":
++    if "--worker" in sys.argv:
++        parser = argparse.ArgumentParser(description=__doc__)
++        parser.add_argument(
++            "--worker",
++            choices=("cpu-first", "gpu-first", "cpu-cold", "masked"),
++            required=True,
++        )
++        parser.add_argument("--output", type=Path, required=True)
++        parser.add_argument("--expect-missing", action="store_true")
++        args = parser.parse_args()
++        worker(args.worker, args.output, args.expect_missing)
++    else:
++        run_tests()
+diff --git a/test/test_bc250_sparse_autograd.py b/test/test_bc250_sparse_autograd.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..8248fc574505dc96b29965cce2e5418f9480289f
+--- /dev/null
++++ b/test/test_bc250_sparse_autograd.py
+@@ -0,0 +1,208 @@
++# Owner(s): ["module: sparse"]
++# Native gfx1013 first-order structured sparse gradients and bounded timings.
++import json
++import os
++from pathlib import Path
++
++import torch
++from torch.testing._internal.common_device_type import (
++    dtypes,
++    instantiate_device_type_tests,
++)
++from torch.testing._internal.common_utils import parametrize, run_tests, TestCase
++
++
++ROWS = []
++
++
++def record(name, **data):
++    ROWS.append(dict(name=name, status="passed", **data))
++    Path(os.environ["BC250_SPARSE_ROWS"]).write_text(json.dumps(ROWS, indent=2) + "\n")
++
++
++def structured(m, k, dtype):
++    group = 2 if dtype == torch.float32 else 4
++    mask = torch.zeros(m, k // group, group, dtype=torch.bool)
++    start = torch.arange(m * (k // group)).view(m, k // group) % group
++    for i in range(group // 2):
++        mask.scatter_(2, ((start + i) % group).unsqueeze(-1), True)
++    mask = mask.view(m, k)
++    values = (torch.randint(1, 4, (m, k)) * 0.125).to(dtype)
++    return values * mask, mask
++
++
++class TestSparseAutograd(TestCase):
++    def setUp(self):
++        super().setUp()
++        torch.manual_seed(251016)
++        torch.set_num_threads(2)
++        self.assertEqual(
++            torch.cuda.get_device_properties(0).gcnArchName.split(":")[0], "gfx1013"
++        )
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    @parametrize("transpose", [False, True])
++    @parametrize("alpha_mode", ["none", "scalar", "vector"])
++    def test_raw(self, device, dtype, transpose, alpha_mode):
++        a, mask = structured(7, 12, dtype)
++        b = (torch.randn(12, 9) * 0.2).to(dtype)
++        gpu_a = a.to(device).requires_grad_()
++        gpu_b = b.to(device).t().contiguous().t().detach().requires_grad_()
++        bias = torch.linspace(-0.2, 0.3, 7, device=device, requires_grad=True)
++        alpha = (
++            None
++            if alpha_mode == "none"
++            else torch.tensor(-0.75, device=device, requires_grad=True)
++            if alpha_mode == "scalar"
++            else torch.linspace(0.25, 1, 7, device=device, requires_grad=True)
++        )
++        kwargs = dict(bias=bias, transpose_result=transpose)
++        if alpha is not None:
++            kwargs["alpha"] = alpha
++        stream = torch.cuda.Stream()
++        stream.wait_stream(torch.cuda.current_stream())
++        with torch.cuda.stream(stream):
++            packed = torch._cslt_compress(gpu_a)
++            y = torch._cslt_sparse_mm(packed, gpu_b, **kwargs)
++            g = torch.linspace(
++                -0.25, 0.5, y.numel(), device=device, dtype=dtype
++            ).view_as(y)
++            inputs = [gpu_a, gpu_b, bias] + ([] if alpha is None else [alpha])
++            actual = torch.autograd.grad(y, inputs, g)
++        torch.cuda.current_stream().wait_stream(stream)
++        ca, cb = a.double().requires_grad_(), b.double().requires_grad_()
++        cbi = bias.detach().cpu().double().requires_grad_()
++        calpha = (
++            None if alpha is None else alpha.detach().cpu().double().requires_grad_()
++        )
++        ref = (ca * mask) @ cb
++        if calpha is not None:
++            ref = ref * (calpha if calpha.numel() == 1 else calpha[:, None])
++        ref = (ref + cbi[:, None]).to(dtype).double()
++        if transpose:
++            ref = ref.t()
++        refs = torch.autograd.grad(
++            ref, [ca, cb, cbi] + ([] if calpha is None else [calpha]), g.cpu().double()
++        )
++        tol = {
++            torch.float32: (2e-6, 4e-5),
++            torch.float16: (0.002, 0.006),
++            torch.bfloat16: (0.015, 0.04),
++        }[dtype]
++        self.assertEqual(y.cpu().double(), ref, atol=tol[0], rtol=tol[1])
++        for result, expected in zip(actual, refs):
++            self.assertEqual(result.cpu().double(), expected, atol=tol[0], rtol=tol[1])
++        self.assertEqual(gpu_a.grad, None)
++        record(self._testMethodName, dtype=str(dtype), all_gradients=True)
++
++    @dtypes(torch.float16, torch.bfloat16)
++    @parametrize("trainable_weight", [False, True])
++    @parametrize("linear", [False, True])
++    @parametrize("rows", [32, 64])
++    def test_public(self, device, dtype, trainable_weight, linear, rows):
++        a, mask = structured(rows, 32, dtype)
++        w = a.to(device).requires_grad_(trainable_weight)
++        x = (torch.randn(16, 32, device=device, dtype=dtype) * 0.2).requires_grad_()
++        sparse = torch.sparse.to_sparse_semi_structured(w)
++        bias = torch.linspace(
++            -0.2, 0.2, rows, device=device, dtype=dtype, requires_grad=True
++        )
++        y = (
++            torch.nn.functional.linear(x, sparse, bias)
++            if linear
++            else torch.mm(sparse, x.t()).t()
++        )
++        y.square().float().mean().backward()
++        cw = a.double().requires_grad_(trainable_weight)
++        cx = x.detach().cpu().double().requires_grad_()
++        cbias = bias.detach().cpu().double().requires_grad_()
++        ref = cx @ (cw * mask).t()
++        if linear:
++            ref = ref + cbias
++        ref = ref.to(dtype)
++        ref.square().float().mean().backward()
++        tol = 0.003 if dtype == torch.bfloat16 else 0.0005
++        self.assertEqual(y.cpu(), ref, atol=tol, rtol=0.04)
++        self.assertEqual(x.grad.cpu().double(), cx.grad, atol=tol, rtol=0.04)
++        if linear:
++            self.assertEqual(bias.grad.cpu().double(), cbias.grad, atol=tol, rtol=0.04)
++        if trainable_weight:
++            self.assertIsNotNone(w.grad)
++            self.assertEqual(w.grad.cpu().double(), cw.grad, atol=tol, rtol=0.04)
++            self.assertEqual(
++                w.grad.cpu()[~mask],
++                torch.zeros_like(w.grad.cpu()[~mask]),
++                atol=0,
++                rtol=0,
++            )
++        record(self._testMethodName, source_weight_gradient=trainable_weight)
++
++    @dtypes(torch.float32, torch.float16, torch.bfloat16)
++    def test_gradient_subsets(self, device, dtype):
++        a, mask = structured(7, 12, dtype)
++        b = (torch.randn(12, 9) * 0.2).to(dtype)
++        for requested in ["a", "b", "bias", "alpha", "ab"]:
++            ga = a.to(device).requires_grad_(
++                "a" in requested and requested != "bias" and requested != "alpha"
++            )
++            gb = b.to(device).requires_grad_(requested in ("b", "ab"))
++            bias = (
++                torch.zeros(7, device=device, requires_grad=True)
++                if requested == "bias"
++                else None
++            )
++            alpha = (
++                torch.tensor(0.5, device=device, requires_grad=True)
++                if requested == "alpha"
++                else None
++            )
++            actual = torch._cslt_sparse_mm(
++                torch._cslt_compress(ga), gb, bias=bias, alpha=alpha
++            )
++            actual.sum().backward()
++            ca = a.double().requires_grad_(ga.requires_grad)
++            cb = b.double().requires_grad_(gb.requires_grad)
++            cbi = (
++                None if bias is None else bias.detach().cpu().double().requires_grad_()
++            )
++            calpha = (
++                None
++                if alpha is None
++                else alpha.detach().cpu().double().requires_grad_()
++            )
++            expected = (ca * mask) @ cb
++            if calpha is not None:
++                expected = expected * calpha
++            if cbi is not None:
++                expected = expected + cbi[:, None]
++            expected.to(dtype).sum().backward()
++            tol = (
++                0.02
++                if dtype == torch.bfloat16
++                else 0.003
++                if dtype == torch.float16
++                else 3e-6
++            )
++            for gpu, cpu in zip([ga, gb, bias, alpha], [ca, cb, cbi, calpha]):
++                if gpu is not None and gpu.requires_grad:
++                    self.assertEqual(
++                        gpu.grad.cpu().double(), cpu.grad, atol=tol, rtol=0.04
++                    )
++        record(self._testMethodName, independent_gradient_subsets=5)
++
++    def test_retained_zero(self, device):
++        # Empty groups still retain deterministic slots; they must receive gradients.
++        a = torch.zeros(7, 12, device=device, requires_grad=True)
++        b = torch.ones(12, 9, device=device, requires_grad=True)
++        packed = torch._cslt_compress(a)
++        torch._cslt_sparse_mm(packed, b).sum().backward()
++        self.assertEqual(a.grad[:, ::2], torch.full((7, 6), 9.0, device=device))
++        self.assertEqual(a.grad[:, 1::2], torch.zeros(7, 6, device=device))
++        self.assertEqual(b.grad, torch.zeros_like(b))
++        record(self._testMethodName)
++
++
++instantiate_device_type_tests(TestSparseAutograd, globals(), only_for=("cuda",))
++
++if __name__ == "__main__":
++    run_tests()
+diff --git a/test/test_bc250_sparse_triangular.py b/test/test_bc250_sparse_triangular.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..ac0b34967091cc1a5ee4737830eebbcd8ec96cf0
+--- /dev/null
++++ b/test/test_bc250_sparse_triangular.py
+@@ -0,0 +1,403 @@
++# Owner(s): ["module: sparse"]
++"""N2.13 bounded public sparse triangular solve matrix and dense CPU references."""
++
++import argparse
++import itertools
++import json
++import subprocess
++import sys
++import tempfile
++import time
++from pathlib import Path
++
++from torch.testing._internal.common_utils import run_tests, TestCase
++
++
++CHECK = TestCase()
++
++
++def main() -> None:
++    ap = argparse.ArgumentParser(description=__doc__)
++    ap.add_argument("--output", type=Path, required=True)
++    ap.add_argument(
++        "--group",
++        choices=("matrix", "edge", "extended", "unit", "trace"),
++        default="matrix",
++    )
++    args = ap.parse_args()
++    import torch
++
++    torch.set_num_threads(4)
++    torch.manual_seed(1013213)
++    CHECK.assertTrue(
++        torch.cuda.get_device_properties(0).gcnArchName.split(":")[0] == "gfx1013"
++    )
++    report = dict(
++        status="running", group=args.group, checks=[], torch_path=torch.__file__
++    )
++    args.output.parent.mkdir(parents=True, exist_ok=True)
++
++    def save():
++        args.output.write_text(json.dumps(report, indent=2) + "\n")
++
++    def check(name, fn):
++        start = time.monotonic()
++        try:
++            result = fn()
++            torch.cuda.synchronize()
++            report["checks"].append(
++                dict(
++                    name=name,
++                    status="passed",
++                    seconds=time.monotonic() - start,
++                    **result,
++                )
++            )
++        except Exception as e:
++            report["checks"].append(
++                dict(
++                    name=name,
++                    status="failed",
++                    error=str(e),
++                    seconds=time.monotonic() - start,
++                )
++            )
++        save()
++
++    def run(dtype, layout, index, nrhs, upper, unit, transpose, n_override=None):
++        n = n_override if n_override is not None else (18 if layout == "bsr" else 17)
++        block = 3 if layout == "bsr" and n_override is not None else 2
++        raw = torch.randn(n, n, dtype=dtype) * 0.025
++        # Poison the ignored triangle, including entries inside diagonal blocks.
++        raw += (
++            torch.tril(torch.ones_like(raw), -1)
++            if upper
++            else torch.triu(torch.ones_like(raw), 1)
++        ) * 7
++        raw.diagonal().fill_(5 if unit else 2)
++        dense = (torch.triu(raw) if upper else torch.tril(raw)).to(
++            torch.complex128 if dtype.is_complex else torch.float64
++        )
++        if unit:
++            dense.diagonal().fill_(1)
++        matrix = dense.mT if transpose else dense
++        sparse = (
++            raw.to_sparse_bsr((block, block))
++            if layout == "bsr"
++            else raw.to_sparse_csr()
++        )
++        values = sparse.values().cuda()
++        value_layout = "row"
++        if layout == "bsr" and transpose:
++            values = values.mT.contiguous().mT
++            value_layout = "column"
++        constructor = (
++            torch.sparse_bsr_tensor if layout == "bsr" else torch.sparse_csr_tensor
++        )
++        a = constructor(
++            sparse.crow_indices().to(index).cuda(),
++            sparse.col_indices().to(index).cuda(),
++            values,
++            size=raw.shape,
++            check_invariants=True,
++        )
++        saved = [x.clone() for x in (a.crow_indices(), a.col_indices(), a.values())]
++        known = torch.randn(n, nrhs, dtype=matrix.dtype) * 0.2
++        rhs = (matrix @ known).to(dtype)
++        ref = torch.linalg.solve_triangular(
++            matrix, rhs.to(matrix.dtype), upper=upper != transpose, unitriangular=unit
++        )
++        variant = (int(upper) + int(unit) + int(transpose)) % 3
++        backing = torch.full(
++            (2 * n + 2, 2 * nrhs + 3),
++            911 - 237j if dtype.is_complex else 911,
++            dtype=dtype,
++            device="cuda",
++        )
++        x = backing[1 : 2 * n + 1 : 2, 1 : 2 * nrhs + 1 : 2]
++        mask = torch.zeros_like(backing, dtype=torch.bool)
++        mask[1 : 2 * n + 1 : 2, 1 : 2 * nrhs + 1 : 2] = True
++        untouched = backing[~mask].clone()
++        if variant == 0:
++            b = rhs.cuda()
++        elif variant == 1:
++            b = rhs.mT.contiguous().cuda().mT
++        else:
++            b = torch.empty((2 * n, 2 * nrhs), dtype=dtype, device="cuda")[::2, ::2]
++            b.copy_(rhs.cuda())
++        before = b.clone()
++        stream = torch.cuda.Stream()
++        stream.wait_stream(torch.cuda.current_stream())
++        with torch.cuda.stream(stream):
++            result = torch.triangular_solve(
++                b,
++                a,
++                upper=upper,
++                transpose=transpose,
++                unitriangular=unit,
++                out=(x, torch.empty(0, dtype=dtype, device="cuda")),
++            )
++        stream.synchronize()
++        CHECK.assertTrue(
++            result.solution.data_ptr() == x.data_ptr()
++            and result.cloned_coefficient.numel() == 0
++        )
++        tol = 3e-5 if dtype in (torch.float32, torch.complex64) else 2e-12
++        torch.testing.assert_close(x.cpu().to(matrix.dtype), ref, atol=tol, rtol=tol)
++        residual = float(
++            (matrix @ x.cpu().to(matrix.dtype) - rhs.to(matrix.dtype)).norm()
++            / (
++                matrix.norm() * x.cpu().to(matrix.dtype).norm()
++                + rhs.to(matrix.dtype).norm()
++            )
++        )
++        CHECK.assertTrue(residual < tol, residual)
++        torch.testing.assert_close(b, before, rtol=0, atol=0)
++        torch.testing.assert_close(backing[~mask], untouched, rtol=0, atol=0)
++        for original, old in zip(
++            (a.crow_indices(), a.col_indices(), a.values()), saved
++        ):
++            torch.testing.assert_close(original, old, rtol=0, atol=0)
++        return dict(
++            residual=residual,
++            order=n,
++            nrhs=nrhs,
++            index_dtype=str(index),
++            format=layout,
++            value_layout=value_layout,
++            rhs_layout=variant,
++            output_strides=list(x.stride()),
++            nondefault_stream=True,
++            input_and_output_guards=True,
++        )
++
++    if args.group == "matrix":
++        for dtype, layout, index, nrhs, upper, unit, transpose in itertools.product(
++            (torch.float32, torch.float64, torch.complex64, torch.complex128),
++            ("csr", "bsr"),
++            (torch.int32, torch.int64),
++            (1, 3),
++            (False, True),
++            (False, True),
++            (False, True),
++        ):
++            name = f"{dtype}_{layout}_{index}_rhs{nrhs}_upper{upper}_unit{unit}_trans{transpose}"
++            check(name, lambda: run(dtype, layout, index, nrhs, upper, unit, transpose))
++    elif args.group == "extended":
++        for dtype, layout, nrhs, size in itertools.product(
++            (torch.float32, torch.float64, torch.complex64, torch.complex128),
++            ("csr", "bsr"),
++            (1, 3),
++            (65, 257),
++        ):
++            n = size if layout == "csr" else size + 1
++            check(
++                f"{dtype}_{layout}_rhs{nrhs}_n{n}",
++                lambda: run(
++                    dtype,
++                    layout,
++                    torch.int64,
++                    nrhs,
++                    nrhs == 3,
++                    nrhs == 1,
++                    size == 257,
++                    n,
++                ),
++            )
++    elif args.group == "unit":
++        for dtype, layout, nrhs, upper, trans in itertools.product(
++            (torch.float32, torch.float64, torch.complex64, torch.complex128),
++            ("csr", "bsr"),
++            (1, 3),
++            (False, True),
++            (False, True),
++        ):
++
++            def unit(dtype=dtype, layout=layout, nrhs=nrhs, upper=upper, trans=trans):
++                dense = torch.zeros(6, 6, dtype=dtype)
++                dense[0, 2] = 0.1 if upper else 0
++                dense[2, 0] = 0 if upper else 0.1
++                a = (
++                    dense.to_sparse_bsr((2, 2))
++                    if layout == "bsr"
++                    else dense.to_sparse_csr()
++                )
++                matrix = dense.to(
++                    torch.complex128 if dtype.is_complex else torch.float64
++                )
++                matrix.diagonal().fill_(1)
++                if trans:
++                    matrix = matrix.mT
++                rhs = torch.randn(6, nrhs, dtype=dtype)
++                expected = torch.linalg.solve_triangular(
++                    matrix,
++                    rhs.to(matrix.dtype),
++                    upper=upper != trans,
++                    unitriangular=True,
++                )
++                actual = torch.triangular_solve(
++                    rhs.cuda(),
++                    a.cuda(),
++                    upper=upper,
++                    transpose=trans,
++                    unitriangular=True,
++                ).solution
++                tol = 3e-5 if dtype in (torch.float32, torch.complex64) else 2e-12
++                torch.testing.assert_close(
++                    actual.cpu().to(matrix.dtype), expected, atol=tol, rtol=tol
++                )
++                return dict(implicit_unit_diagonal=True, order=6, nrhs=nrhs)
++
++            check(
++                f"{dtype}_{layout}_rhs{nrhs}_upper{upper}_trans{trans}_implicit-unit",
++                unit,
++            )
++    elif args.group == "trace":
++        with torch.profiler.profile(
++            activities=[
++                torch.profiler.ProfilerActivity.CPU,
++                torch.profiler.ProfilerActivity.CUDA,
++            ]
++        ) as prof:
++            result = run(torch.complex64, "csr", torch.int64, 3, False, False, False)
++            torch.cuda.synchronize()
++        trace = args.output.with_name("trace.json")
++        prof.export_chrome_trace(str(trace))
++        kernels = [
++            e["name"]
++            for e in json.loads(trace.read_text())["traceEvents"]
++            if e.get("cat") == "kernel"
++            and "sparse_triangular_pivot_mask_kernel" in e.get("name", "")
++        ]
++        CHECK.assertEqual(len(kernels), 1)
++        report["checks"].append(
++            dict(name="native-pivot-mask", status="passed", kernels=kernels, **result)
++        )
++    else:
++        for dtype, layout, nrhs, kind in itertools.product(
++            (torch.float32, torch.float64, torch.complex64, torch.complex128),
++            ("csr", "bsr"),
++            (1, 3),
++            ("missing", "zero", "missing-block", "empty", "empty-unit"),
++        ):
++
++            def edge(dtype=dtype, layout=layout, nrhs=nrhs, kind=kind):
++                dense = torch.eye(6, dtype=dtype) * 2
++                dense[2, 0] = 0.1
++                if kind == "missing":
++                    dense[3, 3] = 0
++                if kind == "zero":
++                    dense[3, 3] = 0
++                if kind == "missing-block":
++                    dense[2:4, 2:4] = 0
++                if kind.startswith("empty"):
++                    dense.zero_()
++                a = (
++                    dense.to_sparse_bsr((2, 2))
++                    if layout == "bsr"
++                    else dense.to_sparse_csr()
++                )
++                if kind == "zero" and layout == "csr":
++                    # Retain an explicitly stored numerical zero diagonal.
++                    a = (
++                        dense
++                        + torch.diag(torch.tensor([0, 0, 0, 1, 0, 0], dtype=dtype))
++                    ).to_sparse_csr()
++                    row = a.crow_indices()
++                    cols = a.col_indices()
++                    vals = a.values().clone()
++                    vals[
++                        (torch.arange(len(cols)) >= row[3])
++                        & (torch.arange(len(cols)) < row[4])
++                        & (cols == 3)
++                    ] = 0
++                    a = torch.sparse_csr_tensor(
++                        row, cols, vals, size=(6, 6), check_invariants=True
++                    )
++                ga = a.cuda()
++                old_indices = [
++                    z.clone()
++                    for z in (ga.crow_indices(), ga.col_indices(), ga.values())
++                ]
++                backing = torch.full(
++                    (14, 2 * nrhs + 3),
++                    711 - 29j if dtype.is_complex else 711,
++                    dtype=dtype,
++                    device="cuda",
++                )
++                out = backing[1:13:2, 1 : 2 * nrhs + 1 : 2]
++                mask = torch.zeros_like(backing, dtype=torch.bool)
++                mask[1:13:2, 1 : 2 * nrhs + 1 : 2] = True
++                guards = backing[~mask].clone()
++                rhs = torch.ones(6, nrhs, dtype=dtype, device="cuda")
++                saved_rhs = rhs.clone()
++                stream = torch.cuda.Stream()
++                stream.wait_stream(torch.cuda.current_stream())
++                with torch.cuda.stream(stream):
++                    result = torch.triangular_solve(
++                        rhs,
++                        ga,
++                        upper=False,
++                        unitriangular=kind == "empty-unit",
++                        out=(out, torch.empty(0, dtype=dtype, device="cuda")),
++                    ).solution
++                stream.synchronize()
++                CHECK.assertTrue(result.data_ptr() == out.data_ptr())
++                if kind.startswith("empty"):
++                    CHECK.assertTrue(bool(result.isnan().all()))
++                else:
++                    pivot = 2 if kind == "missing-block" else 3
++                    CHECK.assertTrue(bool(result[pivot].isnan().all()), result)
++                torch.testing.assert_close(backing[~mask], guards, rtol=0, atol=0)
++                torch.testing.assert_close(rhs, saved_rhs, rtol=0, atol=0)
++                for original, saved in zip(
++                    (ga.crow_indices(), ga.col_indices(), ga.values()), old_indices
++                ):
++                    torch.testing.assert_close(original, saved, rtol=0, atol=0)
++                return dict(
++                    nan=int(result.isnan().sum()),
++                    inf=int(result.isinf().sum()),
++                    numel=result.numel(),
++                    behavior="nan-at-pivot-or-legacy-empty",
++                    output_guards=True,
++                    nondefault_stream=True,
++                )
++
++            check(f"{dtype}_{layout}_rhs{nrhs}_{kind}", edge)
++    failed = [r["name"] for r in report["checks"] if r["status"] != "passed"]
++    report.update(status="failed" if failed else "passed", failed=failed)
++    save()
++    print("N213_SUMMARY", len(report["checks"]), "failed", len(failed), flush=True)
++    for row in report["checks"]:
++        if row["status"] == "failed":
++            print("FAIL", row["name"], row["error"][:450], flush=True)
++    CHECK.assertTrue(not failed)
++
++
++class TestBC250SparseTriangular(TestCase):
++    def test_reference_groups(self):
++        import torch
++
++        if torch.version.hip is None or not torch.cuda.is_available():
++            self.skipTest("Requires native ROCm GPU")
++        for group in ("matrix", "edge", "extended", "unit", "trace"):
++            with self.subTest(group=group), tempfile.TemporaryDirectory() as folder:
++                subprocess.run(
++                    [
++                        sys.executable,
++                        __file__,
++                        "--output",
++                        str(Path(folder) / "result.json"),
++                        "--group",
++                        group,
++                    ],
++                    check=True,
++                    timeout=120,
++                )
++
++
++if __name__ == "__main__":
++    if "--output" in sys.argv:
++        main()
++    else:
++        run_tests()
+diff --git a/test/test_linalg.py b/test/test_linalg.py
+index 515f046024a504bb1e0f5d4456a192485aa26ae0..1172b316e9c8da7a0456e33016f749583ec2fcef 100644
+--- a/test/test_linalg.py
++++ b/test/test_linalg.py
+@@ -27,8 +27,7 @@ from torch.testing._internal.common_utils import \
+      TEST_WITH_ROCM, IS_FBCODE, IS_REMOTE_GPU, iter_indices,
+      make_fullrank_matrices_with_distinct_singular_values,
+      freeze_rng_state, IS_ARM64, IS_SANDCASTLE, TEST_OPT_EINSUM, isRocmArchAnyOf, parametrize, skipIfTorchDynamo,
+-     skipIfRocmArch, skipIfRocmVersionAtLeast, setBlasBackendsToDefaultFinally, setLinalgBackendsToDefaultFinally, serialTest, skipIfRocm,
+-     with_ieee_matmul_precision, runOnRocmArch, MI200_ARCH, MI300_ARCH, MI350_ARCH, NAVI_ARCH, TEST_CUDA)
++     skipIfRocmArch, skipIfRocmVersionAtLeast, setBlasBackendsToDefaultFinally, setLinalgBackendsToDefaultFinally, serialTest, with_ieee_matmul_precision, runOnRocmArch, MI200_ARCH, MI300_ARCH, MI350_ARCH, NAVI_ARCH, TEST_CUDA)
+ from torch.testing._internal.common_device_type import \
+     (instantiate_device_type_tests, dtypes, has_cusolver, onlyCPU, skipCPUIfNoLapack, precisionOverride,
+      skipCUDAIf,
+@@ -6933,6 +6932,35 @@ scipy_lobpcg  | {eq_err_scipy:10.2e}  | {eq_err_general_scipy:10.2e}  | {iters2:
+         mean_err = ((res - ref).abs() / ref).mean()
+         self.assertTrue(mean_err < 0.05)
+ 
++    @onlyCUDA
++    @dtypes(torch.float16, torch.bfloat16, torch.float32)
++    @parametrize("layout", ["transpose", "slice", "expand"])
++    @parametrize("strided_scale", [False, True])
++    def test_weight_int8pack_mm_layouts(self, device, dtype, layout, strided_scale):
++        if layout == "transpose":
++            x = torch.arange(21, device=device, dtype=dtype).reshape(7, 3).t() / 8
++        elif layout == "slice":
++            x = torch.arange(42, device=device, dtype=dtype).reshape(3, 14)[:, ::2]
++        else:
++            x = torch.arange(7, device=device, dtype=dtype).expand(3, 7)
++        self.assertFalse(x.is_contiguous())
++        weight = (torch.arange(35, device=device).reshape(7, 5) % 7 - 3).to(torch.int8).t()
++        scale = torch.arange(1, 6, device=device, dtype=torch.float32) / 8
++        if strided_scale:
++            storage = torch.full((10,), 19.0, device=device)
++            storage[::2] = scale
++            scale = storage[::2]
++        x_before, weight_before, scale_before = x.clone(), weight.clone(), scale.clone()
++        expected = (
++            x.cpu().double() @ weight.cpu().double().t()
++        ) * scale.cpu().double()
++        self.assertEqual(
++            torch._weight_int8pack_mm(x, weight, scale), expected.to(dtype), atol=0, rtol=0
++        )
++        self.assertEqual(x, x_before)
++        self.assertEqual(weight, weight_before)
++        self.assertEqual(scale, scale_before)
++
+     @slowTest
+     @onlyCPU
+     @largeTensorTest('12GB', device='cpu')
+diff --git a/tools/autograd/derivatives.yaml b/tools/autograd/derivatives.yaml
+index 0bf6e80b5b804d7a9444cdb097b66e49929a5122..4d454f334205119732f5584d196d879e64991e87 100644
+--- a/tools/autograd/derivatives.yaml
++++ b/tools/autograd/derivatives.yaml
+@@ -3285,3 +3285,9 @@
+ - name: _foreach_mm(Tensor[] self, Tensor[] mat2) -> Tensor[]
+   self: mm_mat1_backward(grads[i], mat2[i], self[i].sym_sizes(), self[i].sym_strides(), self[i].layout(), 1)
+   mat2: mm_mat2_backward(grads[i], self[i], mat2[i].sym_sizes(), mat2[i].sym_strides(), mat2[i].layout(), 1)
++
++- name: _cslt_compress(Tensor input) -> Tensor
++  input: _cslt_compress_backward(grad, result, input.sym_size(1).expect_int())
++
++- name: _cslt_sparse_mm(Tensor compressed_A, Tensor dense_B, Tensor? bias=None, Tensor? alpha=None, ScalarType? out_dtype=None, bool transpose_result=False, int alg_id=0, int split_k=1, int split_k_mode=-1) -> Tensor
++  compressed_A, dense_B, bias, alpha: _cslt_sparse_mm_backward(grad, compressed_A, dense_B, bias, alpha, transpose_result, grad_input_mask)
+diff --git a/torch/CMakeLists.txt b/torch/CMakeLists.txt
+index 23aa88ddcb9198a4a99a6c91b68b486724248e62..356ca1dfb97d7f755a147d789125f31bef126ad3 100644
+--- a/torch/CMakeLists.txt
++++ b/torch/CMakeLists.txt
+@@ -195,9 +195,17 @@ if(USE_CUDNN OR USE_ROCM)
+     endif()
+ endif()
+ 
+-if(USE_CUSPARSELT)
++if(USE_CUSPARSELT OR (USE_ROCM AND CAFFE2_USE_HIPSPARSELT))
+     list(APPEND TORCH_PYTHON_SRCS ${TORCH_SRC_DIR}/csrc/cuda/shared/cusparselt.cpp)
+ endif()
++if(USE_ROCM AND CAFFE2_USE_HIPSPARSELT)
++    list(APPEND TORCH_PYTHON_LINK_LIBRARIES roc::hipsparselt)
++    set_property(SOURCE
++        ${TORCH_SRC_DIR}/csrc/Module.cpp
++        ${TORCH_SRC_DIR}/csrc/cuda/Module.cpp
++        ${TORCH_SRC_DIR}/csrc/cuda/shared/cusparselt.cpp
++        APPEND PROPERTY COMPILE_DEFINITIONS USE_HIPSPARSELT)
++endif()
+ 
+ if(USE_MPS)
+     list(APPEND TORCH_PYTHON_SRCS ${MPS_PYTHON_SRCS})
+diff --git a/torch/_inductor/compile_fx.py b/torch/_inductor/compile_fx.py
+index f447ba9ea2da1fa94f1f0ffac48f81b554d7d359..8a539d9f4d34775c873934d6b28a812bfc07e855 100644
+--- a/torch/_inductor/compile_fx.py
++++ b/torch/_inductor/compile_fx.py
+@@ -316,7 +316,7 @@ def _warn_tf32_disabled() -> None:
+     if (
+         torch.cuda.is_available()
+         and torch.backends.cuda.matmul.fp32_precision != "tf32"
+-        and torch.cuda.get_device_capability() >= (8, 0)
++        and torch.cuda.is_tf32_supported()
+     ):
+         warnings.warn(
+             "TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. "
+diff --git a/torch/csrc/Module.cpp b/torch/csrc/Module.cpp
+index 5bc69ddb2a04ee05acf630851db8052adf2d1927..41e61d662d9d22fde03392943f1fc7c36afdf58f 100644
+--- a/torch/csrc/Module.cpp
++++ b/torch/csrc/Module.cpp
+@@ -2553,7 +2553,7 @@ PyObject* initModule() {
+ #endif
+   ASSERT_TRUE(set_module_attr("_has_cudnn", has_cudnn));
+ 
+-#if defined(USE_CUSPARSELT) || defined(USE_ROCM)
++#if defined(USE_CUSPARSELT) || defined(USE_HIPSPARSELT)
+   PyObject* has_cusparselt = Py_True;
+ #else
+   PyObject* has_cusparselt = Py_False;
+diff --git a/torch/csrc/cuda/Module.cpp b/torch/csrc/cuda/Module.cpp
+index 1fb145a2d847470d8fb222795be39d741c76ed3d..8cf163eeafbe784a8dabe18bfd8843a571244266 100644
+--- a/torch/csrc/cuda/Module.cpp
++++ b/torch/csrc/cuda/Module.cpp
+@@ -2412,7 +2412,7 @@ void initNvtxBindings(PyObject* module);
+ #if defined(USE_CUDNN) || defined(USE_ROCM)
+ void initCudnnBindings(PyObject* module);
+ #endif
+-#if defined(USE_CUSPARSELT)
++#if defined(USE_CUSPARSELT) || defined(USE_HIPSPARSELT)
+ void initCusparseltBindings(PyObject* module);
+ #endif
+ 
+@@ -2427,7 +2427,7 @@ void initModule(PyObject* module) {
+ #if defined(USE_CUDNN) || defined(USE_ROCM)
+   shared::initCudnnBindings(module);
+ #endif
+-#if defined(USE_CUSPARSELT)
++#if defined(USE_CUSPARSELT) || defined(USE_HIPSPARSELT)
+   shared::initCusparseltBindings(module);
+ #endif
+   shared::initGdsBindings(module);
+diff --git a/torch/csrc/cuda/nccl.cpp b/torch/csrc/cuda/nccl.cpp
+index 0cd76d5d8fee66a84f4bea39eced981ed9c40eb3..0c8ad5a06f5a04f545da78ceb9511e60bd866aed 100644
+--- a/torch/csrc/cuda/nccl.cpp
++++ b/torch/csrc/cuda/nccl.cpp
+@@ -319,6 +319,13 @@ static void check_tensor(
+   }
+ }
+ 
++static void check_reduction_type(const at::Tensor& tensor) {
++  TORCH_CHECK(
++      !c10::isFloat8Type(tensor.scalar_type()),
++      "NCCL numeric reductions do not support Float8 tensors; "
++      "Float8 byte-copy operations remain available");
++}
++
+ void check_inputs(
+     TensorList inputs,
+     TensorList outputs,
+@@ -580,6 +587,7 @@ void reduce(
+       root >= 0 && static_cast<size_t>(root) < inputs.size(), "invalid root");
+ 
+   check_inputs(inputs, output, root, 1, 1);
++  check_reduction_type(inputs[0]);
+   const auto len = inputs.size();
+ 
+   auto data_type = to_nccl_data_type(inputs[0]);
+@@ -634,6 +642,7 @@ void all_reduce(
+ #ifdef USE_NCCL
+   using namespace torch::cuda::nccl::detail;
+   check_inputs(inputs, outputs, 1, 1);
++  check_reduction_type(inputs[0]);
+   const auto len = inputs.size();
+ 
+   auto data_type = to_nccl_data_type(inputs[0]);
+@@ -677,6 +686,7 @@ void reduce_scatter(
+   using namespace torch::cuda::nccl::detail;
+   const auto len = inputs.size();
+   check_inputs(inputs, outputs, 1, len);
++  check_reduction_type(inputs[0]);
+ 
+   auto data_type = to_nccl_data_type(inputs[0]);
+ 
+diff --git a/torch/csrc/cuda/shared/cusparselt.cpp b/torch/csrc/cuda/shared/cusparselt.cpp
+index e26341871890daa2398792d04eddf8631f7761c3..be790658a8ef6a3143b67c57b95046ca62c7cd38 100644
+--- a/torch/csrc/cuda/shared/cusparselt.cpp
++++ b/torch/csrc/cuda/shared/cusparselt.cpp
+@@ -1,12 +1,17 @@
+ #include <torch/csrc/utils/pybind.h>
+ 
+-#ifdef USE_CUSPARSELT
++#if defined(USE_CUSPARSELT) || defined(USE_HIPSPARSELT)
+ #include <ATen/native/sparse/cuda/cuSPARSELtOps.h>
+ 
+ namespace {
+ 
+ size_t getVersionInt() {
++#ifdef USE_ROCM
++  return hipsparseltVersionMajor * 100000 + hipsparseltVersionMinor * 100 +
++      hipsparseltVersionPatch;
++#else
+   return CUSPARSELT_VERSION;
++#endif
+ }
+ 
+ std::tuple<int64_t, int64_t, int64_t, int64_t> mmSearch(
+diff --git a/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp b/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp
+index 7eee36cb5f89158acf06de6f022dbdc29383ec5b..abe1f4fb3a9c170985ee970dc50332cae9067b06 100644
+--- a/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp
++++ b/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp
+@@ -7,6 +7,7 @@
+ #include <mutex>
+ #include <sstream>
+ #include <stdexcept>
++#include <string>
+ #include <tuple>
+ #include <utility>
+ 
+@@ -54,7 +55,17 @@ const std::map<ReduceOp::RedOpType, ncclRedOp_t> ncclOp = {
+     {ReduceOp::AVG, ncclAvg},
+ };
+ 
+-inline bool isUnsupportedFloat8(at::ScalarType t) {
++inline bool isUnsupportedFloat8(const at::Tensor& tensor) {
++  const auto t = tensor.scalar_type();
++#ifdef USE_ROCM
++  if (c10::isFloat8Type(t) && tensor.is_cuda()) {
++    const auto* props = at::cuda::getDeviceProperties(tensor.get_device());
++    // The native gfx1013 RCCL profile excludes FP8 reduction kernels.
++    if (std::string(props->gcnArchName).compare(0, 7, "gfx1013") == 0) {
++      return true;
++    }
++  }
++#endif
+   return (
+       t == at::ScalarType::Float8_e5m2fnuz ||
+       t == at::ScalarType::Float8_e4m3fnuz ||
+@@ -115,7 +126,7 @@ ncclRedOpRAII getNcclReduceOp(
+         case ncclFloat:
+           return unpackPreMulSum<float, ncclFloat>(reduceOp, comm);
+         case ncclBfloat16:
+-          return unpackPreMulSum<float, ncclBfloat16>(reduceOp, comm);
++          return unpackPreMulSum<at::BFloat16, ncclBfloat16>(reduceOp, comm);
+         case ncclDouble:
+           return unpackPreMulSum<double, ncclDouble>(reduceOp, comm);
+         default:
+@@ -4455,7 +4466,7 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::allreduce_sparse(
+   TORCH_CHECK(tensors.size() == 1, MULTI_DEVICE_ERROR_MSG);
+   auto tensor = tensors.back();
+   TORCH_CHECK(
+-      !isUnsupportedFloat8(tensor.scalar_type()),
++      !isUnsupportedFloat8(tensor),
+       "Unsupported Float8 type for NCCL reduction");
+ #ifdef IS_NCCLX
+   tensor = tensor.coalesce();
+@@ -4580,7 +4591,7 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::allreduce(
+     }
+   }
+   TORCH_CHECK(
+-      !isUnsupportedFloat8(tensor.scalar_type()),
++      !isUnsupportedFloat8(tensor),
+       "Unsupported Float8 type for NCCL reduction");
+   RECORD_PARAM_COMMS_DATA_WITH_ASYNC_OP(
+       std::make_tuple(
+@@ -4610,7 +4621,7 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::allreduce_coalesced(
+     const AllreduceCoalescedOptions& opts) {
+   auto total_numel = check_gpu_tensors_same_device(tensors);
+   TORCH_CHECK(
+-      !isUnsupportedFloat8(tensors.back().scalar_type()),
++      !isUnsupportedFloat8(tensors.back()),
+       "Unsupported Float8 type for NCCL reduction");
+ 
+   RECORD_PARAM_COMMS_DATA_WITH_ASYNC_OP(
+@@ -4767,6 +4778,9 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::reduce(
+     tensor = at::view_as_real(tensor);
+   }
+   check_gpu_single_tensor(tensor);
++  TORCH_CHECK(
++      !isUnsupportedFloat8(tensor),
++      "Unsupported Float8 type for NCCL reduction");
+   RECORD_PARAM_COMMS_DATA_WITH_ASYNC_OP(
+       std::make_tuple(
+           static_cast<int64_t>(seqCollective_) + 1,
+@@ -4829,6 +4843,9 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::_reduce_oop(
+         ValueError,
+         "Tensor input and output of _reduce_oop must have the same number of elements ");
+   }
++  TORCH_CHECK(
++      !isUnsupportedFloat8(inputTensor),
++      "Unsupported Float8 type for NCCL reduction");
+   return collective(
+       inputTensor,
+       outputTensor,
+@@ -5014,7 +5031,7 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::reduce_scatter(
+   check_gpu_single_tensor(outputTensor);
+   auto inputTensors_ = inputTensors.back();
+   TORCH_CHECK(
+-      !isUnsupportedFloat8(outputTensor.scalar_type()),
++      !isUnsupportedFloat8(outputTensor),
+       "Unsupported Float8 type for NCCL reduction");
+ 
+   RECORD_PARAM_COMMS_DATA_WITH_ASYNC_OP(
+@@ -5128,7 +5145,7 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::_reduce_scatter_base(
+ 
+   const auto& tensor = outputTensor;
+   TORCH_CHECK(
+-      !isUnsupportedFloat8(tensor.scalar_type()),
++      !isUnsupportedFloat8(tensor),
+       "Unsupported Float8 type for NCCL reduction");
+   RECORD_PARAM_COMMS_DATA_WITH_ASYNC_OP(
+       std::make_tuple(
+@@ -5196,7 +5213,7 @@ c10::intrusive_ptr<Work> ProcessGroupNCCL::reduce_scatter_tensor_coalesced(
+     std::vector<at::Tensor>& inputs,
+     const ReduceScatterOptions& opts) {
+   TORCH_CHECK(
+-      !isUnsupportedFloat8(inputs.back().scalar_type()),
++      !isUnsupportedFloat8(inputs.back()),
+       "Unsupported Float8 type for NCCL reduction");
+ 
+   RECORD_PARAM_COMMS_DATA_WITH_ASYNC_OP(
+diff --git a/torch/csrc/profiler/kineto_shim.cpp b/torch/csrc/profiler/kineto_shim.cpp
+index 86ab9b70a297466cb9948836777c6a67e8265480..7efe64c550efea318039a0582d0e90ce664493ca 100644
+--- a/torch/csrc/profiler/kineto_shim.cpp
++++ b/torch/csrc/profiler/kineto_shim.cpp
+@@ -1,3 +1,4 @@
++#include <ATen/Context.h>
+ #include <torch/csrc/profiler/collection.h>
+ #include <torch/csrc/profiler/kineto_shim.h>
+ 
+@@ -301,7 +302,15 @@ void prepareTrace(
+ #ifdef USE_KINETO
+   libkineto::api().resetKinetoTLS();
+   if (!libkineto::api().isProfilerRegistered()) {
+-    libkineto_init(/*cpuOnly=*/cpuOnly, /*logOnError=*/true);
++    bool cpuOnlyInit = cpuOnly;
++#ifdef USE_ROCM
++    // Kineto fixes ROCm tracing capability at construction. Keep an available
++    // GPU backend even when the first capture selects only CPU activities;
++    // the activity set below still controls which events each capture records.
++    // With no visible GPU, retain CPU-only initialization.
++    cpuOnlyInit = cpuOnly && at::getNumGPUs() == 0;
++#endif
++    libkineto_init(/*cpuOnly=*/cpuOnlyInit, /*logOnError=*/true);
+     libkineto::api().suppressLogMessages();
+   }
+ 
+diff --git a/torch/nn/attention/_gfx1013.py b/torch/nn/attention/_gfx1013.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..8a9eace71734b71e5bbd820467c194390b32bfcd
+--- /dev/null
++++ b/torch/nn/attention/_gfx1013.py
+@@ -0,0 +1,503 @@
++# SPDX-License-Identifier: BSD-3-Clause
++"""Opt-in scalar, tiled SDPA for BC-250. No global dispatcher registration.
++
++Eager first-order autograd only. Finite Q/K/V, no dropout, head dimension <=256,
++sequence lengths <=4096. Boolean and finite/-inf additive masks may broadcast to
++[batch, query_heads, queries, keys]. Mask gradients are unsupported. This is a
++memory-saving prototype, not a performance-qualified FlashAttention backend.
++"""
++
++import math
++
++import triton
++import triton.language as tl
++
++import torch
++from torch.autograd.function import once_differentiable
++
++
++@triton.jit
++def _mask_scores(
++    score,
++    Mask,
++    b,
++    h,
++    rows,
++    cols,
++    S0: tl.constexpr,
++    S1: tl.constexpr,
++    S2: tl.constexpr,
++    S3: tl.constexpr,
++    HAS_MASK: tl.constexpr,
++    BOOL_MASK: tl.constexpr,
++    CAUSAL: tl.constexpr,
++    valid,
++):
++    if HAS_MASK:
++        bias = tl.load(
++            Mask + b * S0 + h * S1 + rows * S2 + cols * S3, mask=valid, other=0
++        )
++        if BOOL_MASK:
++            score = tl.where(bias, score, -float("inf"))
++        else:
++            score += bias.to(tl.float32)
++    if CAUSAL:
++        valid = valid & (rows >= cols)
++    return tl.where(valid, score, -float("inf"))
++
++
++@triton.jit
++def _forward(
++    Q,
++    K,
++    V,
++    Mask,
++    O,
++    LSE,
++    M: tl.constexpr,
++    N: tl.constexpr,
++    H: tl.constexpr,
++    HK: tl.constexpr,
++    D: tl.constexpr,
++    S0: tl.constexpr,
++    S1: tl.constexpr,
++    S2: tl.constexpr,
++    S3: tl.constexpr,
++    SCALE: tl.constexpr,
++    HAS_MASK: tl.constexpr,
++    BOOL_MASK: tl.constexpr,
++    CAUSAL: tl.constexpr,
++    BD: tl.constexpr,
++    T: tl.constexpr,
++    LSE_ONLY: tl.constexpr,
++):
++    row = tl.program_id(0)
++    bh = tl.program_id(1)
++    b, h = bh // H, bh % H
++    kh = h // (H // HK)
++    d = tl.arange(0, BD)
++    q = tl.load(Q + (bh * M + row) * D + d, d < D, 0).to(tl.float32)
++    maximum = -float("inf")
++    normalizer = 0.0
++    acc = tl.full((BD,), 0, tl.float32)
++    # Upper-left causal attention cannot read keys beyond this query row.
++    end = tl.minimum(N, row + 1) if CAUSAL else N
++    for start in range(tl.cdiv(end, T)):
++        cols = start * T + tl.arange(0, T)
++        k = tl.load(
++            K + ((b * HK + kh) * N + cols[:, None]) * D + d[None, :],
++            (cols[:, None] < N) & (d[None, :] < D),
++            0,
++        ).to(tl.float32)
++        score = tl.sum(k * q[None, :], 1) * SCALE
++        score = _mask_scores(
++            score,
++            Mask,
++            b,
++            h,
++            row,
++            cols,
++            S0,
++            S1,
++            S2,
++            S3,
++            HAS_MASK,
++            BOOL_MASK,
++            CAUSAL,
++            cols < N,
++        )
++        next_max = tl.maximum(maximum, tl.max(score, 0))
++        safe_max = tl.where(next_max == -float("inf"), 0.0, next_max)
++        alpha = tl.exp(maximum - safe_max)
++        p = tl.exp(score - safe_max)
++        if not LSE_ONLY:
++            v = tl.load(
++                V + ((b * HK + kh) * N + cols[:, None]) * D + d[None, :],
++                (cols[:, None] < N) & (d[None, :] < D),
++                0,
++            ).to(tl.float32)
++            acc = acc * alpha + tl.sum(p[:, None] * v, 0)
++        normalizer = normalizer * alpha + tl.sum(p, 0)
++        maximum = next_max
++    denominator = tl.where(normalizer > 0, normalizer, 1.0)
++    if not LSE_ONLY:
++        tl.store(O + (bh * M + row) * D + d, acc / denominator, d < D)
++    tl.store(
++        LSE + bh * M + row,
++        tl.where(normalizer > 0, maximum + tl.log(denominator), -float("inf")),
++    )
++
++
++@triton.jit
++def _backward_q(
++    Q,
++    K,
++    V,
++    Mask,
++    O,
++    LSE,
++    DO,
++    DQ,
++    M: tl.constexpr,
++    N: tl.constexpr,
++    H: tl.constexpr,
++    HK: tl.constexpr,
++    D: tl.constexpr,
++    S0: tl.constexpr,
++    S1: tl.constexpr,
++    S2: tl.constexpr,
++    S3: tl.constexpr,
++    SCALE: tl.constexpr,
++    HAS_MASK: tl.constexpr,
++    BOOL_MASK: tl.constexpr,
++    CAUSAL: tl.constexpr,
++    BD: tl.constexpr,
++    T: tl.constexpr,
++):
++    row, bh = tl.program_id(0), tl.program_id(1)
++    b, h = bh // H, bh % H
++    kh = h // (H // HK)
++    d = tl.arange(0, BD)
++    offset = (bh * M + row) * D + d
++    q = tl.load(Q + offset, d < D, 0).to(tl.float32)
++    go = tl.load(DO + offset, d < D, 0).to(tl.float32)
++    o = tl.load(O + offset, d < D, 0)
++    delta = tl.sum(go * o, 0)
++    lse = tl.load(LSE + bh * M + row)
++    acc = tl.full((BD,), 0, tl.float32)
++    end = tl.minimum(N, row + 1) if CAUSAL else N
++    for start in range(tl.cdiv(end, T)):
++        cols = start * T + tl.arange(0, T)
++        offsets = ((b * HK + kh) * N + cols[:, None]) * D + d[None, :]
++        valid = (cols[:, None] < N) & (d[None, :] < D)
++        k = tl.load(K + offsets, valid, 0).to(tl.float32)
++        v = tl.load(V + offsets, valid, 0).to(tl.float32)
++        score = tl.sum(k * q[None, :], 1) * SCALE
++        score = _mask_scores(
++            score,
++            Mask,
++            b,
++            h,
++            row,
++            cols,
++            S0,
++            S1,
++            S2,
++            S3,
++            HAS_MASK,
++            BOOL_MASK,
++            CAUSAL,
++            cols < N,
++        )
++        p = tl.exp(score - tl.where(lse == -float("inf"), 0.0, lse))
++        ds = p * (tl.sum(v * go[None, :], 1) - delta)
++        acc += tl.sum(ds[:, None] * k, 0) * SCALE
++    tl.store(DQ + offset, acc, d < D)
++
++
++@triton.jit
++def _backward_kv(
++    Q,
++    K,
++    V,
++    Mask,
++    O,
++    LSE,
++    DO,
++    DK,
++    DV,
++    M: tl.constexpr,
++    N: tl.constexpr,
++    H: tl.constexpr,
++    HK: tl.constexpr,
++    D: tl.constexpr,
++    S0: tl.constexpr,
++    S1: tl.constexpr,
++    S2: tl.constexpr,
++    S3: tl.constexpr,
++    SCALE: tl.constexpr,
++    HAS_MASK: tl.constexpr,
++    BOOL_MASK: tl.constexpr,
++    CAUSAL: tl.constexpr,
++    BD: tl.constexpr,
++    T: tl.constexpr,
++):
++    col, bkh = tl.program_id(0), tl.program_id(1)
++    b, kh = bkh // HK, bkh % HK
++    d = tl.arange(0, BD)
++    offset = (bkh * N + col) * D + d
++    k = tl.load(K + offset, d < D, 0).to(tl.float32)
++    v = tl.load(V + offset, d < D, 0).to(tl.float32)
++    dk = tl.full((BD,), 0, tl.float32)
++    dv = tl.full((BD,), 0, tl.float32)
++    # Each KV row owns its gradients, including all grouped query heads. No atomics.
++    for group in range(H // HK):
++        h = kh * (H // HK) + group
++        bh = b * H + h
++        # This key contributes only to query rows >=col. Keep the boundary
++        # tile masked; keys beyond all query rows naturally produce zero.
++        first = col // T if CAUSAL else 0
++        for start in range(first, tl.cdiv(M, T)):
++            rows = start * T + tl.arange(0, T)
++            offsets = (bh * M + rows[:, None]) * D + d[None, :]
++            valid = (rows[:, None] < M) & (d[None, :] < D)
++            q = tl.load(Q + offsets, valid, 0).to(tl.float32)
++            go = tl.load(DO + offsets, valid, 0).to(tl.float32)
++            o = tl.load(O + offsets, valid, 0)
++            delta = tl.sum(go * o, 1)
++            lse = tl.load(LSE + bh * M + rows, rows < M, -float("inf"))
++            score = tl.sum(q * k[None, :], 1) * SCALE
++            score = _mask_scores(
++                score,
++                Mask,
++                b,
++                h,
++                rows,
++                col,
++                S0,
++                S1,
++                S2,
++                S3,
++                HAS_MASK,
++                BOOL_MASK,
++                CAUSAL,
++                rows < M,
++            )
++            p = tl.exp(score - tl.where(lse == -float("inf"), 0.0, lse))
++            ds = p * (tl.sum(go * v[None, :], 1) - delta)
++            dk += tl.sum(ds[:, None] * q, 0) * SCALE
++            dv += tl.sum(p[:, None] * go, 0)
++    tl.store(DK + offset, dk, d < D)
++    tl.store(DV + offset, dv, d < D)
++
++
++class _Attention(torch.autograd.Function):
++    @staticmethod
++    def forward(ctx, q, k, v, mask, causal, scale, reference_forward):
++        b, h, m, d = q.shape
++        hk, n = k.shape[1:3]
++        # FP32 output is retained for the softmax gradient's row reduction;
++        # storing only rounded BF16 output would degrade that reduction.
++        if reference_forward:
++            from torch.nn.attention import sdpa_kernel, SDPBackend
++
++            reference_mask = mask if mask.numel() else None
++            if reference_mask is not None and reference_mask.dtype != torch.bool:
++                reference_mask = reference_mask.float()
++            with torch.autocast("cuda", enabled=False), sdpa_kernel(SDPBackend.MATH):
++                o = torch.nn.functional.scaled_dot_product_attention(
++                    q.float(),
++                    k.float(),
++                    v.float(),
++                    attn_mask=reference_mask,
++                    is_causal=causal,
++                    scale=scale,
++                    enable_gqa=h != hk,
++                )
++        else:
++            o = torch.empty(q.shape, device=q.device, dtype=torch.float32)
++        lse = torch.empty((b, h, m), device=q.device, dtype=torch.float32)
++        strides = mask.stride() if mask.numel() else (0, 0, 0, 0)
++        params = (
++            m,
++            n,
++            h,
++            hk,
++            d,
++            *strides,
++            scale,
++            mask.numel() > 0,
++            mask.dtype == torch.bool,
++            causal,
++            triton.next_power_of_2(d),
++            32 if causal and 64 <= d <= 128 else 16,
++        )
++        with torch.cuda.device(q.device):
++            if b * h * m:
++                _forward[(m, b * h)](
++                    q,
++                    k,
++                    v,
++                    mask,
++                    o,
++                    lse,
++                    *params,
++                    LSE_ONLY=reference_forward,
++                    num_warps=4,
++                )
++        ctx.save_for_backward(q, k, v, mask, o, lse)
++        ctx.params = params
++        return o.to(q.dtype)
++
++    @staticmethod
++    @once_differentiable
++    def backward(ctx, grad):
++        q, k, v, mask, o, lse = ctx.saved_tensors
++        b, h, m, d = q.shape
++        hk, n = k.shape[1:3]
++        grad = grad.contiguous()
++        dq, dk, dv = torch.empty_like(q), torch.empty_like(k), torch.empty_like(v)
++        with torch.cuda.device(q.device):
++            if b * h * m:
++                _backward_q[(m, b * h)](
++                    q, k, v, mask, o, lse, grad, dq, *ctx.params, num_warps=4
++                )
++            if b * hk * n:
++                _backward_kv[(n, b * hk)](
++                    q, k, v, mask, o, lse, grad, dk, dv, *ctx.params, num_warps=4
++                )
++        return dq, dk, dv, None, None, None, None
++
++
++def scaled_dot_product_attention(
++    query,
++    key,
++    value,
++    attn_mask=None,
++    dropout_p=0.0,
++    is_causal=False,
++    *,
++    scale=None,
++    enable_gqa=False,
++):
++    """Explicit BC-250 tiled attention; same leading layout as functional SDPA.
++
++    Unsupported options raise; this function never silently falls back. Importing
++    it does not change functional SDPA, build capabilities, or backend flags.
++    No higher-order gradients, torch.compile, CUDA graphs, or dropout support is
++    claimed. BF16 head widths >128 in training use a reference math forward
++    result plus native tiled backward to limit model-level rounding drift.
++    That forward has quadratic temporary storage; saved state stays linear.
++    CUDA autocast casts eligible floating inputs to its target dtype,
++    as functional SDPA does, while preserving gradients through those casts.
++    """
++    if torch.compiler.is_compiling():
++        raise NotImplementedError("gfx1013 tiled SDPA currently supports eager only")
++    tensors = (query, key, value)
++    if any(t.layout != torch.strided or t.ndim != 4 for t in tensors):
++        raise ValueError("Expected strided [B,H,L,D] Q/K/V")
++    if any(t.device != query.device for t in tensors):
++        raise ValueError("Q/K/V must share device")
++    if torch.is_autocast_enabled("cuda") and all(
++        t.dtype in (torch.float32, torch.float16, torch.bfloat16) for t in tensors
++    ):
++        target = torch.get_autocast_dtype("cuda")
++        tensors = tuple(t.to(target) for t in tensors)
++        query, key, value = tensors
++        if attn_mask is not None and attn_mask.dtype in (
++            torch.float32,
++            torch.float16,
++            torch.bfloat16,
++        ):
++            attn_mask = attn_mask.to(target)
++    if any(t.dtype != query.dtype for t in tensors):
++        raise ValueError("Q/K/V must share dtype outside autocast")
++    if query.dtype not in (torch.float32, torch.float16, torch.bfloat16):
++        raise ValueError("Only FP32/FP16/BF16 Q/K/V are supported")
++    if query.device.type != "cuda" or not torch.version.hip:
++        raise ValueError("Requires native gfx1013 ROCm")
++    if (
++        torch.cuda.get_device_properties(query.device).gcnArchName.split(":")[0]
++        != "gfx1013"
++    ):
++        raise ValueError("This prototype is restricted to gfx1013")
++    b, h, m, d = query.shape
++    bk, hk, n, dk = key.shape
++    if (
++        bk != b
++        or value.shape != key.shape
++        or dk != d
++        or not 1 <= d <= 256
++        or not h
++        or not hk
++        or h % hk
++        or (h != hk and not enable_gqa)
++    ):
++        raise ValueError("Unsupported batch/head/dimension combination")
++    if max(m, n) > 4096 or any(t.numel() >= 2**31 for t in tensors):
++        raise ValueError("Prototype bound: sequence <=4096 and tensor elements <2**31")
++    if dropout_p != 0:
++        raise NotImplementedError("Dropout is not implemented")
++    scale = 1.0 / math.sqrt(d) if scale is None else float(scale)
++    if not math.isfinite(scale):
++        raise ValueError("Scale must be finite")
++    if attn_mask is not None:
++        if is_causal:
++            raise ValueError("Explicit mask and is_causal cannot be combined")
++        if (
++            attn_mask.device != query.device
++            or attn_mask.layout != torch.strided
++            or attn_mask.dtype not in (torch.bool, torch.float32, query.dtype)
++        ):
++            raise ValueError(
++                "Mask must be boolean or compatible floating point on the same device"
++            )
++        if attn_mask.requires_grad:
++            raise NotImplementedError("Mask gradients are not implemented")
++        attn_mask = attn_mask.expand(b, h, m, n)
++    else:
++        attn_mask = query.new_empty((0,))
++    with torch.cuda.device(query.device):
++        return _Attention.apply(
++            *(t.contiguous() for t in tensors),
++            attn_mask,
++            bool(is_causal),
++            scale,
++            d > 128
++            and query.dtype == torch.bfloat16
++            and torch.is_grad_enabled()
++            and any(t.requires_grad for t in tensors),
++        )
++
++
++def register_transformers_attention():
++    """Explicitly register ``bc250_tiled`` with the installed Transformers package.
++
++    Select with ``attn_implementation="bc250_tiled"`` after calling this helper.
++    Requires zero attention dropout; output attention weights are unavailable.
++    """
++    from transformers.masking_utils import ALL_MASK_ATTENTION_FUNCTIONS
++    from transformers.modeling_utils import ALL_ATTENTION_FUNCTIONS
++
++    def attention(
++        module,
++        query,
++        key,
++        value,
++        attention_mask,
++        dropout=0.0,
++        scaling=None,
++        is_causal=None,
++        **kwargs,
++    ):
++        # Reject optional semantics instead of quietly producing ordinary SDPA.
++        for name in ("softcap", "sliding_window", "head_mask"):
++            if kwargs.get(name) is not None:
++                raise NotImplementedError(f"bc250_tiled does not support {name}")
++        causal = (
++            (
++                getattr(module, "is_causal", True)
++                and query.shape[-2] > 1
++                and attention_mask is None
++            )
++            if is_causal is None
++            else is_causal
++        )
++        output = scaled_dot_product_attention(
++            query,
++            key,
++            value,
++            attention_mask,
++            dropout,
++            causal,
++            scale=scaling,
++            enable_gqa=query.shape[1] != key.shape[1],
++        )
++        return output.transpose(1, 2).contiguous(), None
++
++    ALL_ATTENTION_FUNCTIONS.register("bc250_tiled", attention)
++    # Custom attention names also need a mask builder; without this registration
++    # Transformers may omit padding/packed-position masks for the unknown name.
++    ALL_MASK_ATTENTION_FUNCTIONS.register(
++        "bc250_tiled", ALL_MASK_ATTENTION_FUNCTIONS["sdpa"]
++    )
+diff --git a/torch/nn/bc250_gated_delta.py b/torch/nn/bc250_gated_delta.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..26756bb4351904336729cc87704bb0d2d8be55e2
+--- /dev/null
++++ b/torch/nn/bc250_gated_delta.py
+@@ -0,0 +1,374 @@
++# SPDX-License-Identifier: MIT
++"""Opt-in gfx1013 gated-delta preparation and eager chunked GPU attention.
++
++Standalone preparation uses scalar Triton kernels. The full operation uses
++reference-ordered ATen preparation for FP16/BF16 and native preparation for FP32.
++Triangular solves, matmuls and the chunk scan use ATen. This is not the FLA package/backend.
++Only floating eager first-order training is supported; chunk size is 64.
++"""
++
++import triton
++import triton.language as tl
++
++import torch
++import torch.nn.functional as F
++from torch.autograd.function import once_differentiable
++
++
++@triton.jit
++def _prepare(
++    Q,
++    K,
++    V,
++    BETA,
++    OQ,
++    OK,
++    KB,
++    VB,
++    T: tl.constexpr,
++    H: tl.constexpr,
++    DK: tl.constexpr,
++    DV: tl.constexpr,
++    TP: tl.constexpr,
++    NORM: tl.constexpr,
++    D: tl.constexpr,
++):
++    row = tl.program_id(0)
++    t = row % TP
++    h = (row // TP) % H
++    b = row // (TP * H)
++    token = (b * T + t) * H + h
++    d = tl.arange(0, D)
++    q = tl.load(Q + token * DK + d, (t < T) & (d < DK), 0).to(tl.float32)
++    k = tl.load(K + token * DK + d, (t < T) & (d < DK), 0).to(tl.float32)
++    v = tl.load(V + token * DV + d, (t < T) & (d < DV), 0).to(tl.float32)
++    beta = tl.load(BETA + token, t < T, 0).to(tl.float32)
++    if NORM:
++        q = q * tl.rsqrt(tl.sum(q * q, 0) + 1.0e-6)
++        k = k * tl.rsqrt(tl.sum(k * k, 0) + 1.0e-6)
++    tl.store(OQ + row * DK + d, q * DK**-0.5, d < DK)
++    tl.store(OK + row * DK + d, k, d < DK)
++    tl.store(KB + row * DK + d, k * beta, d < DK)
++    tl.store(VB + row * DV + d, v * beta, d < DV)
++
++
++@triton.jit
++def _prepare_backward(
++    Q,
++    K,
++    V,
++    BETA,
++    GQ,
++    GK,
++    GKB,
++    GVB,
++    DQ,
++    DKOUT,
++    DVOUT,
++    DB,
++    T: tl.constexpr,
++    H: tl.constexpr,
++    DK: tl.constexpr,
++    DV: tl.constexpr,
++    TP: tl.constexpr,
++    NORM: tl.constexpr,
++    D: tl.constexpr,
++):
++    row = tl.program_id(0)
++    t = row % T
++    h = (row // T) % H
++    b = row // (T * H)
++    token = (b * T + t) * H + h
++    padded = (b * H + h) * TP + t
++    d = tl.arange(0, D)
++    q = tl.load(Q + token * DK + d, d < DK, 0).to(tl.float32)
++    k = tl.load(K + token * DK + d, d < DK, 0).to(tl.float32)
++    v = tl.load(V + token * DV + d, d < DV, 0).to(tl.float32)
++    beta = tl.load(BETA + token).to(tl.float32)
++    gq = tl.load(GQ + padded * DK + d, d < DK, 0) * DK**-0.5
++    gkb = tl.load(GKB + padded * DK + d, d < DK, 0)
++    gvb = tl.load(GVB + padded * DV + d, d < DV, 0)
++    gk = tl.load(GK + padded * DK + d, d < DK, 0) + gkb * beta
++    kn = k
++    if NORM:
++        rq = tl.rsqrt(tl.sum(q * q, 0) + 1.0e-6)
++        rk = tl.rsqrt(tl.sum(k * k, 0) + 1.0e-6)
++        qn = q * rq
++        kn = k * rk
++        gq = (gq - qn * tl.sum(gq * qn, 0)) * rq
++        gk = (gk - kn * tl.sum(gk * kn, 0)) * rk
++    tl.store(DQ + token * DK + d, gq, d < DK)
++    tl.store(DKOUT + token * DK + d, gk, d < DK)
++    tl.store(DVOUT + token * DV + d, gvb * beta, d < DV)
++    tl.store(DB + token, tl.sum(gkb * kn, 0) + tl.sum(gvb * v, 0))
++
++
++@triton.jit
++def _decay(
++    G,
++    C,
++    T: tl.constexpr,
++    H: tl.constexpr,
++    TP: tl.constexpr,
++    BACKWARD: tl.constexpr,
++    CHUNK: tl.constexpr,
++):
++    block = tl.program_id(0)
++    chunks: tl.constexpr = TP // CHUNK
++    chunk = block % chunks
++    h = (block // chunks) % H
++    b = block // (chunks * H)
++    i = tl.arange(0, CHUNK)
++    if BACKWARD:
++        i = CHUNK - 1 - i
++        x = tl.load(G + block * CHUNK + i)
++        y = tl.cumsum(x, 0)
++        t = chunk * CHUNK + i
++        tl.store(C + (b * T + t) * H + h, y, t < T)
++    else:
++        t = chunk * CHUNK + i
++        x = tl.load(G + (b * T + t) * H + h, t < T, 0).to(tl.float32)
++        tl.store(C + block * CHUNK + i, tl.cumsum(x, 0))
++
++
++class _Preparation(torch.autograd.Function):
++    @staticmethod
++    def forward(ctx, q, k, v, g, beta, normalize):
++        b, t, h, dk = q.shape
++        dv = v.shape[-1]
++        tp = triton.cdiv(t, 64) * 64
++        shape = (b, h, tp // 64, 64)
++        oq = torch.empty((*shape, dk), device=q.device, dtype=torch.float32)
++        ok, kb = torch.empty_like(oq), torch.empty_like(oq)
++        vb = torch.empty((*shape, dv), device=q.device, dtype=torch.float32)
++        decay = torch.empty(shape, device=q.device, dtype=torch.float32)
++        with torch.cuda.device(q.device):
++            _prepare[(b * h * tp,)](
++                q,
++                k,
++                v,
++                beta,
++                oq,
++                ok,
++                kb,
++                vb,
++                t,
++                h,
++                dk,
++                dv,
++                tp,
++                normalize,
++                triton.next_power_of_2(max(dk, dv)),
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++            _decay[(b * h * (tp // 64),)](
++                g,
++                decay,
++                t,
++                h,
++                tp,
++                False,
++                64,
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++        ctx.save_for_backward(q, k, v, beta)
++        ctx.normalize, ctx.tp, ctx.g_dtype = normalize, tp, g.dtype
++        ctx.set_materialize_grads(False)
++        return oq, ok, kb, vb, decay
++
++    @staticmethod
++    @once_differentiable
++    def backward(ctx, gq, gk, gkb, gvb, gc):
++        q, k, v, beta = ctx.saved_tensors
++        b, t, h, dk = q.shape
++        dv, tp = v.shape[-1], ctx.tp
++        shape = (b, h, tp // 64, 64)
++        grads = []
++        for grad, width in ((gq, dk), (gk, dk), (gkb, dk), (gvb, dv)):
++            grads.append(
++                grad.contiguous()
++                if grad is not None
++                else torch.zeros((*shape, width), device=q.device, dtype=torch.float32)
++            )
++        dq, dkout, dvout, db = [torch.empty_like(x) for x in (q, k, v, beta)]
++        dg = None
++        with torch.cuda.device(q.device):
++            _prepare_backward[(b * h * t,)](
++                q,
++                k,
++                v,
++                beta,
++                *grads,
++                dq,
++                dkout,
++                dvout,
++                db,
++                t,
++                h,
++                dk,
++                dv,
++                tp,
++                ctx.normalize,
++                triton.next_power_of_2(max(dk, dv)),
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++            if gc is not None:
++                dg = torch.empty((b, t, h), device=q.device, dtype=ctx.g_dtype)
++                _decay[(b * h * (tp // 64),)](
++                    gc.contiguous(),
++                    dg,
++                    t,
++                    h,
++                    tp,
++                    True,
++                    64,
++                    num_warps=4,
++                    enable_fp_fusion=False,
++                )
++        return dq, dkout, dvout, dg, db, None
++
++
++def _validate_inputs(query, key, value, g, beta, normalize):
++    tensors = (query, key, value, g, beta)
++    if not all(isinstance(x, torch.Tensor) for x in tensors):
++        raise TypeError("Expected Q/K/V/log-decay/beta tensors")
++    if not all(x.is_cuda and x.device == query.device for x in tensors):
++        raise ValueError("All tensors must share one gfx1013 device")
++    if (
++        torch.cuda.get_device_properties(query.device).gcnArchName.split(":")[0]
++        != "gfx1013"
++    ):
++        raise ValueError("Native gfx1013 is required")
++    types = (torch.float32, torch.float16, torch.bfloat16)
++    if (
++        query.dtype not in types
++        or key.dtype != query.dtype
++        or value.dtype != query.dtype
++    ):
++        raise ValueError("Q/K/V must have the same FP32/FP16/BF16 dtype")
++    if g.dtype not in types or beta.dtype not in types:
++        raise ValueError("Log-decay and beta must be FP32/FP16/BF16")
++    if query.ndim != 4 or key.shape != query.shape or value.ndim != 4:
++        raise ValueError("Expected equal BLHD Q/K and BLHV values")
++    b, t, h, dk = query.shape
++    if value.shape[:3] != (b, t, h) or g.shape != (b, t, h) or beta.shape != g.shape:
++        raise ValueError("Batch, sequence and expanded heads must match")
++    if (
++        min(b, t, h, dk, value.shape[-1]) < 1
++        or max(dk, value.shape[-1]) > 128
++        or b * h * triton.cdiv(t, 64) * 64 > 1048576
++    ):
++        raise ValueError("Unsupported empty, head-width or padded token geometry")
++    if not isinstance(normalize, bool):
++        raise TypeError("normalize must be boolean")
++
++
++def prepare_gated_delta(query, key, value, g, beta, *, normalize=True):
++    """Return FP32 padded/chunked (Q/sqrt(D), K, beta*K, beta*V, cumsum(g)).
++
++    Inputs are BLHD Q/K/V and BLH log-decay/beta on actual gfx1013; Q/K have
++    equal dimensions, all heads already expanded. Q/K normalization uses eps1e-6.
++    Valid strided tensors are copied on GPU. Chunk width is 64, Dk/Dv <=128.
++    Only eager first-order gradients are qualified, including both gates.
++    """
++    _validate_inputs(query, key, value, g, beta, normalize)
++    return _Preparation.apply(
++        *(x.contiguous() for x in (query, key, value, g, beta)), normalize
++    )
++
++
++def _reference_ordered_prepare(query, key, value, g, beta, normalize):
++    _validate_inputs(query, key, value, g, beta, normalize)
++    b, t, h, dk = query.shape
++    query, key, value, beta, g = [
++        x.transpose(1, 2).to(torch.float32, memory_format=torch.contiguous_format)
++        for x in (query, key, value, beta, g)
++    ]
++    if normalize:
++        # Preserve reference operation order: small rounding changes can affect
++        # gradients after multiple BF16 layers. square() has a different VJP.
++        query = query * torch.rsqrt((query * query).sum(-1, keepdim=True) + 1e-6)
++        key = key * torch.rsqrt((key * key).sum(-1, keepdim=True) + 1e-6)
++    query = query * dk**-0.5
++    pad = (-t) % 64
++    query, key, value = [F.pad(x, (0, 0, 0, pad)) for x in (query, key, value)]
++    beta, g = [F.pad(x, (0, pad)) for x in (beta, g)]
++    vb, kb = value * beta.unsqueeze(-1), key * beta.unsqueeze(-1)
++    query, key, kb, vb = [
++        x.reshape(b, h, -1, 64, x.shape[-1]) for x in (query, key, kb, vb)
++    ]
++    return query, key, kb, vb, g.reshape(b, h, -1, 64).cumsum(-1)
++
++
++def chunk_gated_delta_rule(
++    query,
++    key,
++    value,
++    g,
++    beta,
++    chunk_size=64,
++    initial_state=None,
++    output_final_state=False,
++    use_qk_l2norm_in_kernel=False,
++):
++    """Precision-aware GPU preparation, ATen triangular solves and chunk scan.
++
++    Explicit API; does not install a Transformers hook or advertise FLA support.
++    FP16/BF16 use reference-ordered ATen preparation for model-gradient parity;
++    FP32 outside autocast uses native preparation. The standalone native API remains
++    explicit and experimental for low-precision model integration.
++    Initial state is FP32 [B,H,Dk,Dv] on the same device. Output has query dtype;
++    returned final state is FP32. Log-decay is expected nonpositive, as in FLA.
++    """
++    if chunk_size != 64:
++        raise ValueError("Only chunk_size=64 is supported")
++    prepare = (
++        prepare_gated_delta
++        if isinstance(query, torch.Tensor)
++        and query.dtype == torch.float32
++        and not torch.is_autocast_enabled("cuda")
++        else _reference_ordered_prepare
++    )
++    q, k, kb, vb, decay = prepare(
++        query, key, value, g, beta, normalize=use_qk_l2norm_in_kernel
++    )
++    b, t, h, dk = query.shape
++    dv = value.shape[-1]
++    if initial_state is not None and (
++        initial_state.shape != (b, h, dk, dv)
++        or initial_state.device != query.device
++        or initial_state.dtype != torch.float32
++    ):
++        raise ValueError("Initial state must be same-device FP32 [B,H,Dk,Dv]")
++    mask = torch.ones((64, 64), device=query.device, dtype=torch.bool).triu(1)
++    pair = (
++        (decay.unsqueeze(-1) - decay.unsqueeze(-2))
++        .masked_fill(mask, -float("inf"))
++        .exp()
++    )
++    system = (kb @ k.transpose(-1, -2)) * pair
++    attention = (q @ k.transpose(-1, -2)) * pair
++    decayed_k_beta = kb * decay.exp().unsqueeze(-1)
++    u = torch.linalg.solve_triangular(system, vb, upper=False, unitriangular=True)
++    w = torch.linalg.solve_triangular(
++        system, decayed_k_beta, upper=False, unitriangular=True
++    )
++    q = q * decay.exp().unsqueeze(-1)
++    k = k * (decay[..., -1:] - decay).exp().unsqueeze(-1)
++    chunk_decay = decay[..., -1].exp()[..., None, None]
++    state = (
++        torch.zeros((b, h, dk, dv), device=query.device, dtype=torch.float32)
++        if initial_state is None
++        else initial_state
++    )
++    out = torch.zeros_like(u)
++    for i in range(q.shape[2]):
++        delta = u[:, :, i] - w[:, :, i] @ state
++        inter_chunk = q[:, :, i] @ state
++        out[:, :, i] = inter_chunk + attention[:, :, i] @ delta
++        state = state * chunk_decay[:, :, i] + k[:, :, i].transpose(-1, -2) @ delta
++    out = out.flatten(2, 3)[:, :, :t].transpose(1, 2)
++    return out.to(query.dtype).contiguous(), state if output_final_state else None
+diff --git a/torch/nn/bc250_training_ops.py b/torch/nn/bc250_training_ops.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..cd8c22d5c3b57007530f81c87947093a49eecaa1
+--- /dev/null
++++ b/torch/nn/bc250_training_ops.py
+@@ -0,0 +1,394 @@
++# SPDX-License-Identifier: MIT
++"""Opt-in BC-250 eager first-order causal convolution and chunked causal loss.
++
++Native scalar Triton convolution avoids MIOpen search for this bounded operation.
++Chunked loss recomputes FP32 probabilities in backward; no full FP32 logits copy.
++No fused gated-delta/FLA implementation, graph or higher-order gradient contract.
++"""
++
++import functools
++
++import triton
++import triton.language as tl
++
++import torch
++import torch.nn.functional as F
++from torch.autograd.function import once_differentiable
++
++
++@functools.lru_cache(None)
++def _native(device: torch.device) -> bool:
++    return (
++        getattr(torch.cuda.get_device_properties(device), "gcnArchName", "").split(":")[
++            0
++        ]
++        == "gfx1013"
++    )
++
++
++@triton.jit
++def _conv(
++    X,
++    W,
++    B,
++    Y,
++    Z,
++    L: tl.constexpr,
++    C: tl.constexpr,
++    N: tl.constexpr,
++    XB: tl.constexpr,
++    XC: tl.constexpr,
++    XT: tl.constexpr,
++    WC: tl.constexpr,
++    WK: tl.constexpr,
++    BS: tl.constexpr,
++    K: tl.constexpr,
++    BIAS: tl.constexpr,
++    ACT: tl.constexpr,
++    BLOCK: tl.constexpr,
++):
++    i = tl.program_id(0) * BLOCK + tl.arange(0, BLOCK)
++    t = i % L
++    c = (i // L) % C
++    b = i // (L * C)
++    acc = tl.full((BLOCK,), 0, tl.float32)
++    for k in tl.static_range(K):
++        source = t + k - (K - 1)
++        x = tl.load(
++            X + b * XB + c * XC + source * XT, (i < N) & (source >= 0), other=0
++        ).to(tl.float32)
++        w = tl.load(W + c * WC + k * WK, i < N, other=0).to(tl.float32)
++        acc = acc + x * w
++    if BIAS:
++        acc = acc + tl.load(B + c * BS, i < N, other=0).to(tl.float32)
++    # Match conv-output rounding before the separate activation in the reference.
++    z = acc.to(Y.dtype.element_ty).to(tl.float32)
++    if ACT:
++        tl.store(Z + i, z, i < N)
++        z = z * tl.sigmoid(z)
++    tl.store(Y + i, z, i < N)
++
++
++@triton.jit
++def _conv_dx(
++    G,
++    W,
++    Z,
++    DX,
++    L: tl.constexpr,
++    C: tl.constexpr,
++    N: tl.constexpr,
++    WC: tl.constexpr,
++    WK: tl.constexpr,
++    K: tl.constexpr,
++    ACT: tl.constexpr,
++    BLOCK: tl.constexpr,
++):
++    i = tl.program_id(0) * BLOCK + tl.arange(0, BLOCK)
++    t = i % L
++    c = (i // L) % C
++    base = i - t
++    acc = tl.full((BLOCK,), 0, tl.float32)
++    for k in tl.static_range(K):
++        target = t + (K - 1) - k
++        valid = (i < N) & (target < L)
++        g = tl.load(G + base + target, valid, other=0).to(tl.float32)
++        if ACT:
++            z = tl.load(Z + base + target, valid, other=0).to(tl.float32)
++            sigmoid = tl.sigmoid(z)
++            g = (
++                (g * sigmoid * (1 + z * (1 - sigmoid)))
++                .to(G.dtype.element_ty)
++                .to(tl.float32)
++            )
++        w = tl.load(W + c * WC + k * WK, i < N, other=0).to(tl.float32)
++        acc = acc + g * w
++    tl.store(DX + i, acc, i < N)
++
++
++@triton.jit
++def _conv_dparams(
++    X,
++    G,
++    Z,
++    P,
++    L: tl.constexpr,
++    BL: tl.constexpr,
++    C: tl.constexpr,
++    XB: tl.constexpr,
++    XC: tl.constexpr,
++    XT: tl.constexpr,
++    K: tl.constexpr,
++    TILES: tl.constexpr,
++    ACT: tl.constexpr,
++    BLOCK: tl.constexpr,
++):
++    c, tap, tile = tl.program_id(0), tl.program_id(1), tl.program_id(2)
++    index = tile * BLOCK + tl.arange(0, BLOCK)
++    b, t = index // L, index % L
++    offset = b * C * L + c * L + t
++    g = tl.load(G + offset, index < BL, other=0).to(tl.float32)
++    if ACT:
++        z = tl.load(Z + offset, index < BL, other=0).to(tl.float32)
++        sigmoid = tl.sigmoid(z)
++        g = (
++            (g * sigmoid * (1 + z * (1 - sigmoid)))
++            .to(G.dtype.element_ty)
++            .to(tl.float32)
++        )
++    if tap < K:
++        source = t + tap - (K - 1)
++        x = tl.load(
++            X + b * XB + c * XC + source * XT, (index < BL) & (source >= 0), other=0
++        ).to(tl.float32)
++        g = g * x
++    tl.store(P + (c * (K + 1) + tap) * TILES + tile, tl.sum(g, 0))
++
++
++@triton.jit
++def _conv_dparams_reduce(
++    P, DW, DB, K: tl.constexpr, TILES: tl.constexpr, BLOCK: tl.constexpr
++):
++    c, tap = tl.program_id(0), tl.program_id(1)
++    i = tl.arange(0, BLOCK)
++    value = tl.sum(tl.load(P + (c * (K + 1) + tap) * TILES + i, i < TILES, other=0), 0)
++    if tap < K:
++        tl.store(DW + c * K + tap, value)
++    else:
++        tl.store(DB + c, value)
++
++
++class _CausalConv(torch.autograd.Function):
++    @staticmethod
++    def forward(ctx, x, w, b, activation):
++        y = torch.empty(x.shape, dtype=x.dtype, device=x.device)
++        z = torch.empty_like(y) if activation else y
++        _conv[(triton.cdiv(x.numel(), 256),)](
++            x,
++            w,
++            b if b is not None else w,
++            y,
++            z,
++            x.shape[2],
++            x.shape[1],
++            x.numel(),
++            *x.stride(),
++            *w.stride(),
++            b.stride(0) if b is not None else 0,
++            w.shape[1],
++            b is not None,
++            activation,
++            256,
++            num_warps=4,
++            enable_fp_fusion=False,
++        )
++        ctx.save_for_backward(x, w, z)
++        ctx.has_bias = b is not None
++        ctx.activation = activation
++        return y
++
++    @staticmethod
++    @once_differentiable
++    def backward(ctx, dy):
++        x, w, z = ctx.saved_tensors
++        g = dy.contiguous()
++        dx = None
++        if ctx.needs_input_grad[0]:
++            dx = torch.empty_like(g)
++            _conv_dx[(triton.cdiv(g.numel(), 256),)](
++                g,
++                w,
++                z,
++                dx,
++                g.shape[2],
++                g.shape[1],
++                g.numel(),
++                *w.stride(),
++                w.shape[1],
++                ctx.activation,
++                256,
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++        dw = db = None
++        if ctx.needs_input_grad[1] or (ctx.has_bias and ctx.needs_input_grad[2]):
++            tiles = triton.cdiv(g.shape[0] * g.shape[2], 512)
++            # Fixed partial reductions avoid floating-point atomic accumulation.
++            partial = torch.empty(
++                (w.shape[0], w.shape[1] + 1, tiles),
++                device=x.device,
++                dtype=torch.float32,
++            )
++            dw = torch.empty(w.shape, device=w.device, dtype=w.dtype)
++            db = torch.empty((w.shape[0],), device=w.device, dtype=w.dtype)
++            _conv_dparams[(w.shape[0], w.shape[1] + 1, tiles)](
++                x,
++                g,
++                z,
++                partial,
++                x.shape[2],
++                x.shape[0] * x.shape[2],
++                x.shape[1],
++                *x.stride(),
++                w.shape[1],
++                tiles,
++                ctx.activation,
++                512,
++                num_warps=4,
++                enable_fp_fusion=False,
++            )
++            _conv_dparams_reduce[(w.shape[0], w.shape[1] + 1)](
++                partial,
++                dw,
++                db,
++                w.shape[1],
++                tiles,
++                triton.next_power_of_2(tiles),
++                num_warps=4,
++            )
++        return dx, dw, db if ctx.has_bias else None, None
++
++
++def supports_causal_conv(
++    x: torch.Tensor, w: torch.Tensor, b: torch.Tensor | None, activation: str | None
++) -> bool:
++    return (
++        x.is_cuda
++        and _native(x.device)
++        and x.ndim == 3
++        and w.ndim == 2
++        and w.device == x.device
++        and w.dtype == x.dtype
++        and x.dtype in (torch.float32, torch.float16, torch.bfloat16)
++        and 0 < x.numel() < 2**31
++        and x.shape[1] <= 65535
++        and x.shape[0] * x.shape[2] <= 1048576
++        and x.shape[1] == w.shape[0]
++        and 1 <= w.shape[1] <= 4
++        and (
++            b is None
++            or (
++                b.device == x.device and b.dtype == x.dtype and b.shape == (x.shape[1],)
++            )
++        )
++        and activation in (None, "silu", "swish")
++    )
++
++
++def causal_conv(x, w, b=None, activation=None):
++    """Depthwise causal cross-correlation, with optional SiLU and first derivatives.
++
++    Shapes are x[B,C,L], w[C,K], b[C]. Native gfx1013 K<=4 uses scalar
++    Triton; other valid calls use ordinary ATen. No global routing is installed.
++    """
++    if activation not in (None, "silu", "swish"):
++        raise ValueError("activation must be None, silu or swish")
++    if x.ndim != 3 or w.ndim != 2 or w.shape[0] != x.shape[1]:
++        raise ValueError("Expected x[B,C,L] and w[C,K]")
++    if x.is_cuda and torch.is_autocast_enabled("cuda"):
++        dtype = torch.get_autocast_dtype("cuda")
++        x, w = [t.to(dtype) if t.dtype == torch.float32 else t for t in (x, w)]
++        if b is not None and b.dtype == torch.float32:
++            b = b.to(dtype)
++    if supports_causal_conv(x, w, b, activation):
++        return _CausalConv.apply(x, w, b, activation is not None)
++    y = F.conv1d(x, w.unsqueeze(1), b, padding=w.shape[1] - 1, groups=x.shape[1])[
++        ..., : x.shape[2]
++    ]
++    return F.silu(y) if activation is not None else y
++
++
++class _ChunkCE(torch.autograd.Function):
++    @staticmethod
++    def forward(ctx, logits, targets, denominator, chunk):
++        flat = logits.view(-1, logits.shape[-1])
++        target = targets.reshape(-1)
++        loss = torch.zeros((), dtype=torch.float32, device=logits.device)
++        for start in range(0, flat.shape[0], chunk):
++            loss = loss + F.cross_entropy(
++                flat[start : start + chunk].float(),
++                target[start : start + chunk],
++                ignore_index=-100,
++                reduction="sum",
++            )
++        ctx.save_for_backward(logits, target, denominator)
++        ctx.chunk = chunk
++        return loss / denominator
++
++    @staticmethod
++    @once_differentiable
++    def backward(ctx, dout):
++        logits, target, denominator = ctx.saved_tensors
++        flat = logits.view(-1, logits.shape[-1])
++        grad = torch.empty_like(logits)
++        gf = grad.view_as(flat)
++        for start in range(0, flat.shape[0], ctx.chunk):
++            labels = target[start : start + ctx.chunk]
++            valid = labels != -100
++            probabilities = torch.softmax(
++                flat[start : start + ctx.chunk].float(), dim=-1
++            )
++            rows = torch.arange(labels.numel(), device=logits.device)
++            probabilities[rows, labels.masked_fill(~valid, 0)] -= valid.float()
++            probabilities.mul_(dout.float() / denominator)
++            probabilities.masked_fill_(~valid[:, None], 0)
++            gf[start : start + ctx.chunk].copy_(probabilities)
++        return grad, None, None, None
++
++
++def chunked_causal_loss(
++    logits,
++    labels,
++    vocab_size=None,
++    num_items_in_batch=None,
++    ignore_index=-100,
++    shift_labels=None,
++    chunk_tokens=64,
++):
++    """First-order FP32 chunked causal CE; contiguous f32/f16/bf16 logits.
++
++    Labels are shifted unless shift_labels is supplied. Only ignore_index=-100
++    is supported. All-ignored mean returns NaN with zero gradients, like ATen.
++    Full input logits and their gradient remain allocated.
++    """
++    if logits.ndim < 2 or logits.shape[-1] < 1 or not logits.is_contiguous():
++        raise ValueError(
++            "Chunked loss requires contiguous logits with token and vocabulary dimensions"
++        )
++    if (
++        logits.dtype not in (torch.float32, torch.float16, torch.bfloat16)
++        or ignore_index != -100
++    ):
++        raise ValueError("Unsupported chunked loss dtype/ignore index")
++    if vocab_size is not None and logits.shape[-1] != vocab_size:
++        raise ValueError("Vocab size mismatch")
++    if (
++        not isinstance(chunk_tokens, int)
++        or isinstance(chunk_tokens, bool)
++        or not 1 <= chunk_tokens <= 256
++    ):
++        raise ValueError("Chunk size must be1..256")
++    if shift_labels is None:
++        if labels.shape != logits.shape[:-1]:
++            raise ValueError("Labels must match logit token shape")
++        shift_labels = F.pad(labels, (0, 1), value=ignore_index)[..., 1:].contiguous()
++    target = shift_labels.to(logits.device)
++    if target.shape != logits.shape[:-1] or target.dtype != torch.long:
++        raise ValueError("Labels must match logit token shape and use int64")
++    if not bool(
++        ((target == -100) | ((target >= 0) & (target < logits.shape[-1]))).all()
++    ):
++        raise ValueError("Labels must be ignored or valid vocabulary indices")
++    if num_items_in_batch is None:
++        denominator = (target != -100).sum().float()
++    else:
++        denominator = torch.as_tensor(
++            num_items_in_batch, device=logits.device, dtype=torch.float32
++        )
++        if (
++            denominator.numel() != 1
++            or denominator.requires_grad
++            or not bool(torch.isfinite(denominator).all() & (denominator > 0).all())
++        ):
++            raise ValueError("Explicit item count must be a positive scalar")
++    return _ChunkCE.apply(logits, target, denominator, chunk_tokens)
+diff --git a/torch/sparse/semi_structured.py b/torch/sparse/semi_structured.py
+index fd6ba178588f009cde4baab187004ec758704e0d..bebf10860773300d56631fd1100a3d24123abe56 100644
+--- a/torch/sparse/semi_structured.py
++++ b/torch/sparse/semi_structured.py
+@@ -39,6 +39,36 @@ _SEMI_STRUCTURED_SPARSE_CONFIG = namedtuple(
+ )
+ 
+ 
++def _gfx1013_from_dense(original, alg_id):
++    # torch.sparse is imported before torch.autograd during extension setup.
++    class _Gfx1013FromDense(torch.autograd.Function):
++        @staticmethod
++        def forward(ctx, original, alg_id):
++            result = SparseSemiStructuredTensorCUSPARSELT.from_dense(
++                original.detach(), alg_id
++            )
++            ctx.save_for_backward(result.packed)
++            ctx.shape = original.shape
++            return result
++
++        @staticmethod
++        @torch.autograd.function.once_differentiable
++        def backward(ctx, grad):
++            (packed,) = ctx.saved_tensors
++            m, k = ctx.shape
++            tags = packed.view(torch.uint8).flatten()[
++                m * k // 2 * packed.element_size() :
++            ]
++            tags = tags[: m * k // 4].long().view(m, k // 4, 1)
++            shifts = torch.arange(2, device=packed.device) * 2
++            indices = (tags >> shifts) & 3
++            mask = torch.zeros((m, k // 4, 4), device=packed.device, dtype=torch.bool)
++            mask.scatter_(2, indices, True)
++            return grad * mask.view(m, k), None
++
++    return _Gfx1013FromDense.apply(original, alg_id)
++
++
+ class SparseSemiStructuredTensor(torch.Tensor):
+     """
+     This class implements semi-structured sparsity as a Tensor subclass.
+@@ -572,6 +602,16 @@ class SparseSemiStructuredTensorCUSPARSELT(SparseSemiStructuredTensor):
+         alg_id: int = SparseSemiStructuredTensor._DEFAULT_ALG_ID,
+     ) -> "SparseSemiStructuredTensorCUSPARSELT":
+         cls._validate_device_dim_dtype_shape(original_tensor)
++        if (
++            torch.is_grad_enabled()
++            and original_tensor.requires_grad
++            and torch.version.hip
++            and torch.cuda.get_device_properties(
++                original_tensor.device
++            ).gcnArchName.split(":")[0]
++            == "gfx1013"
++        ):
++            return _gfx1013_from_dense(original_tensor, alg_id)
+         # pyrefly: ignore [no-matching-overload]
+         return cls(
+             shape=original_tensor.shape,
+@@ -685,6 +725,19 @@ class SparseSemiStructuredTensorCUSPARSELT(SparseSemiStructuredTensor):
+                 f"with A.dtype=B.dtype={self.dtype}. "
+                 "mm is not supported for float8_e4m3fn, please use `torch._scaled_mm` instead."
+             )
++        if (
++            self.packed is None
++            and self.packed_t is not None
++            and torch.version.hip
++            and torch.cuda.get_device_properties(self.device).gcnArchName.split(":")[0]
++            == "gfx1013"
++        ):
++            # A row-sparse matrix need not be row-sparse after transposition.
++            dense = torch._cslt_to_dense(self.packed_t, self.shape[0]).t()
++            result = dense @ (B.t() if should_transpose_dense else B)
++            if bias is not None:
++                result = result + bias[:, None]
++            return result.t().contiguous() if should_transpose_dense else result
+         if self.packed is None:
+             raise NotImplementedError(
+                 f"`{self.__class__.__name__}` matmul: operation is not supported"

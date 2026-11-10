@@ -1,0 +1,806 @@
+{
+  "status": "passed",
+  "boot_id": "2774d201-60ab-4285-a2f6-63ffcaf9873c",
+  "applied": [
+    {
+      "patch": "0001-qualified-native-torch.patch",
+      "sha256": "24b5964617b6124281d3e5ae7874aba853e2d0abdcc11f2a28ee5bb2601d3fa3",
+      "files_verified": 35
+    },
+    {
+      "patch": "0002-agent-exit-lifetime.patch",
+      "sha256": "130637a696e737380bfc4fbc8c4bf6857195edd250c897da5ff60b9ef04d165a",
+      "files_verified": 35
+    }
+  ],
+  "source_delta_files": 35,
+  "profiles": {
+    "daily": {
+      "prefix": "/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/daily",
+      "torch_source": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-quant-b052",
+      "runtime_sha256": "d4e1e144a4da8b19098980455fa657d5964e76525e4125853a4f1fd0d4102fe3",
+      "revisions": {
+        "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+        "rocm_libraries_revision": "8389197c134a7337932021ab7137987a585664ae",
+        "rocm_systems_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+        "triton_revision": "ee65ff3b85f99d52e678b252a99c8425fa46e329"
+      },
+      "source_files": [
+        {
+          "path": ".spin/cmds.py",
+          "sha256": "413c9d4039432c230b6d6910f0ac755fe4660081bc8e12fff97336be3e707514",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/cuda/detail/CUDAHooks.cpp",
+          "sha256": "b785a129f0e6dacfc448377cedc1997a191fef8fb9173dcc5c7e53f70d294289",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/cuda/AveragePool2d.cu",
+          "sha256": "ed8d3b4ababbc6de64d0db1343c8dd9f9d934e9bcca18adeef23a9ad7c50e061",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/cuda/int8mm.cu",
+          "sha256": "99f105302ff49de19e22d8b5e8dd6ef66dc0167995055b1523a05f09da260b1e",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/native_functions.yaml",
+          "sha256": "e721207b2901592203121128dee1fea7d5544f1727b0ba5abce943d833f2061a",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/SparseBlas.cpp",
+          "sha256": "87f06ad6a509023b42c4e4c1ae7f03b440d2c9b3a90b80d552e7f7f62c935207",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h",
+          "sha256": "4341b71a2cf821873956eecf7d7961c9843c18b581550fb42dcc4ba799dd196c",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu",
+          "sha256": "001a2c5a17cdae5df68cc3899e379badcdd0715e89dfc2417af128e09bb3062a",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp",
+          "sha256": "966d3500760e9ec19356af897feab59423873f27664883a703423e51826f3024",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/transformers/cuda/sdp_utils.cpp",
+          "sha256": "9f035e5c3316244bbaf5ce69bdd3d6704dd7633152435a48e1c778a6bee75a58",
+          "matches_native": true
+        },
+        {
+          "path": "test/distributed/elastic/agent/server/test/api_test.py",
+          "sha256": "a9e886746dd6838cbe6d487b0a64495292574539904778cdadcdad8852aa09bd",
+          "matches_native": true
+        },
+        {
+          "path": "test/distributed/test_c10d_ops_nccl.py",
+          "sha256": "5833f1a8ed07c27cc7ce5ac569eb09127b84fb3337666692cb91d95c097d932d",
+          "matches_native": true
+        },
+        {
+          "path": "test/distributed/test_nccl.py",
+          "sha256": "277f4b0ecba9708038730987b653eef01a12752b71c4c44f24b560826ccd132c",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_attention_a07.py",
+          "sha256": "57f9b58c4fafa93f7cafb48e575a6256b820d51d69986e44a7a6d82718b3efbb",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_gated_delta.py",
+          "sha256": "49afcabe2fed8b7700653e977048ffb733094206aaae4c344a2fb2e8b912b79d",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_hipsparselt.py",
+          "sha256": "c9ea1851859950b22cdafc991153f2ef60954b74887ff07f636aef59df772229",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_profiler_a09.py",
+          "sha256": "897265c5dd78e59ba6e47d0ecef40b2ae3c8aad1f9257a381e8b7115bc9ac1a5",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_profiler_order.py",
+          "sha256": "91bf978716be2b1f16d294d90efa7b565993a95af8f9ff42c9024bbd360f4766",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_sparse_autograd.py",
+          "sha256": "1b338428991219c71253b5e221360f62c6cec87387bc299b8f30b2031a33518e",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_sparse_triangular.py",
+          "sha256": "880f5a13884df20f584ab8f0142c6bbd7a8f2b8940a492b5758af89a9c23369f",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_linalg.py",
+          "sha256": "594b87c3cbd532007527af5ee0ae2edc4aaeb07aa31b955b05b29243025ffd4c",
+          "matches_native": true
+        },
+        {
+          "path": "tools/autograd/derivatives.yaml",
+          "sha256": "5a0a7c7775fe801206fea8be5d7fb214756e817b880c68ba32f88dfa909a3cef",
+          "matches_native": true
+        },
+        {
+          "path": "torch/CMakeLists.txt",
+          "sha256": "e72c0bfae669fb35153729c00b9901358101a30dd85f9694c6a4d0468beb86ec",
+          "matches_native": true
+        },
+        {
+          "path": "torch/_inductor/compile_fx.py",
+          "sha256": "40dd543ab067bdcbe0439e5ed2e9c0b95b7ed1caa72c5be9bf47971bbb723101",
+          "matches_native": true
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "sha256": "310c7acb141b7887beeecdac753b0c30216ab214d15b723701b9fc2fbe2cc68c",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/cuda/Module.cpp",
+          "sha256": "f5fc68fae2a69945f9b4a033d668eb6ff6c32940d1efa6ab58610a64b38c0fab",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/cuda/nccl.cpp",
+          "sha256": "699d787a75b67bb8fd86a9900dec4e383b1508a013be3196538b9228684003ae",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/cuda/shared/cusparselt.cpp",
+          "sha256": "52079b3ed1e16d99cc7052d88b58f7aaa6954fa0c610ebadf024270154636330",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+          "sha256": "8c5e9606c9e35e0692a4a28acf1feb8176baa11981386ca6fedf6c7813397bf1",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/profiler/kineto_shim.cpp",
+          "sha256": "8374ebd8ca33b84490b4c3e1295bf7d3c19e290f3a2e46d282f7b79c3c084f63",
+          "matches_native": true
+        },
+        {
+          "path": "torch/distributed/elastic/agent/server/api.py",
+          "sha256": "625fa4ccf0fa2beaec4dcee1ad995a9d2b4fceba52546cf60bc943cb3f328afc",
+          "matches_native": true
+        },
+        {
+          "path": "torch/nn/attention/_gfx1013.py",
+          "sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+          "matches_native": true
+        },
+        {
+          "path": "torch/nn/bc250_gated_delta.py",
+          "sha256": "21398daf2bdae7b6cfdaac08e510c97f94c5ed8d709213de638ca181a868c64e",
+          "matches_native": true
+        },
+        {
+          "path": "torch/nn/bc250_training_ops.py",
+          "sha256": "fe4724c1b3fb60372622d28b8feb2a9a718f906d4c574660727154edb914f938",
+          "matches_native": true
+        },
+        {
+          "path": "torch/sparse/semi_structured.py",
+          "sha256": "824d85d9c2e442916f37eed27fcc9b68d208ad93c0e2a3878a6c8900cb83a7ad",
+          "matches_native": true
+        }
+      ],
+      "build_options": [
+        "USE_DISTRIBUTED:STRING=1",
+        "USE_KINETO:STRING=1",
+        "USE_NCCL:BOOL=0",
+        "USE_ROCM:BOOL=ON"
+      ]
+    },
+    "rccl-single": {
+      "prefix": "/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/rccl-single",
+      "torch_source": "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-quant-b053",
+      "runtime_sha256": "00f61263864c437049b2567c8b1bff316dd5a5e6bb484027dc88d24c59454d4b",
+      "revisions": {
+        "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+        "rocm_libraries_revision": "8389197c134a7337932021ab7137987a585664ae",
+        "rocm_systems_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+        "triton_revision": "ee65ff3b85f99d52e678b252a99c8425fa46e329"
+      },
+      "source_files": [
+        {
+          "path": ".spin/cmds.py",
+          "sha256": "413c9d4039432c230b6d6910f0ac755fe4660081bc8e12fff97336be3e707514",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/cuda/detail/CUDAHooks.cpp",
+          "sha256": "b785a129f0e6dacfc448377cedc1997a191fef8fb9173dcc5c7e53f70d294289",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/cuda/AveragePool2d.cu",
+          "sha256": "ed8d3b4ababbc6de64d0db1343c8dd9f9d934e9bcca18adeef23a9ad7c50e061",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/cuda/int8mm.cu",
+          "sha256": "99f105302ff49de19e22d8b5e8dd6ef66dc0167995055b1523a05f09da260b1e",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/native_functions.yaml",
+          "sha256": "e721207b2901592203121128dee1fea7d5544f1727b0ba5abce943d833f2061a",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/SparseBlas.cpp",
+          "sha256": "87f06ad6a509023b42c4e4c1ae7f03b440d2c9b3a90b80d552e7f7f62c935207",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h",
+          "sha256": "4341b71a2cf821873956eecf7d7961c9843c18b581550fb42dcc4ba799dd196c",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu",
+          "sha256": "001a2c5a17cdae5df68cc3899e379badcdd0715e89dfc2417af128e09bb3062a",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp",
+          "sha256": "966d3500760e9ec19356af897feab59423873f27664883a703423e51826f3024",
+          "matches_native": true
+        },
+        {
+          "path": "aten/src/ATen/native/transformers/cuda/sdp_utils.cpp",
+          "sha256": "9f035e5c3316244bbaf5ce69bdd3d6704dd7633152435a48e1c778a6bee75a58",
+          "matches_native": true
+        },
+        {
+          "path": "test/distributed/elastic/agent/server/test/api_test.py",
+          "sha256": "a9e886746dd6838cbe6d487b0a64495292574539904778cdadcdad8852aa09bd",
+          "matches_native": true
+        },
+        {
+          "path": "test/distributed/test_c10d_ops_nccl.py",
+          "sha256": "5833f1a8ed07c27cc7ce5ac569eb09127b84fb3337666692cb91d95c097d932d",
+          "matches_native": true
+        },
+        {
+          "path": "test/distributed/test_nccl.py",
+          "sha256": "277f4b0ecba9708038730987b653eef01a12752b71c4c44f24b560826ccd132c",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_attention_a07.py",
+          "sha256": "57f9b58c4fafa93f7cafb48e575a6256b820d51d69986e44a7a6d82718b3efbb",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_gated_delta.py",
+          "sha256": "49afcabe2fed8b7700653e977048ffb733094206aaae4c344a2fb2e8b912b79d",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_hipsparselt.py",
+          "sha256": "c9ea1851859950b22cdafc991153f2ef60954b74887ff07f636aef59df772229",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_profiler_a09.py",
+          "sha256": "897265c5dd78e59ba6e47d0ecef40b2ae3c8aad1f9257a381e8b7115bc9ac1a5",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_profiler_order.py",
+          "sha256": "91bf978716be2b1f16d294d90efa7b565993a95af8f9ff42c9024bbd360f4766",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_sparse_autograd.py",
+          "sha256": "1b338428991219c71253b5e221360f62c6cec87387bc299b8f30b2031a33518e",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_bc250_sparse_triangular.py",
+          "sha256": "880f5a13884df20f584ab8f0142c6bbd7a8f2b8940a492b5758af89a9c23369f",
+          "matches_native": true
+        },
+        {
+          "path": "test/test_linalg.py",
+          "sha256": "594b87c3cbd532007527af5ee0ae2edc4aaeb07aa31b955b05b29243025ffd4c",
+          "matches_native": true
+        },
+        {
+          "path": "tools/autograd/derivatives.yaml",
+          "sha256": "5a0a7c7775fe801206fea8be5d7fb214756e817b880c68ba32f88dfa909a3cef",
+          "matches_native": true
+        },
+        {
+          "path": "torch/CMakeLists.txt",
+          "sha256": "e72c0bfae669fb35153729c00b9901358101a30dd85f9694c6a4d0468beb86ec",
+          "matches_native": true
+        },
+        {
+          "path": "torch/_inductor/compile_fx.py",
+          "sha256": "40dd543ab067bdcbe0439e5ed2e9c0b95b7ed1caa72c5be9bf47971bbb723101",
+          "matches_native": true
+        },
+        {
+          "path": "torch/csrc/Module.cpp",
+          "sha256": "310c7acb141b7887beeecdac753b0c30216ab214d15b723701b9fc2fbe2cc68c",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/cuda/Module.cpp",
+          "sha256": "f5fc68fae2a69945f9b4a033d668eb6ff6c32940d1efa6ab58610a64b38c0fab",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/cuda/nccl.cpp",
+          "sha256": "699d787a75b67bb8fd86a9900dec4e383b1508a013be3196538b9228684003ae",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/cuda/shared/cusparselt.cpp",
+          "sha256": "52079b3ed1e16d99cc7052d88b58f7aaa6954fa0c610ebadf024270154636330",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+          "sha256": "8c5e9606c9e35e0692a4a28acf1feb8176baa11981386ca6fedf6c7813397bf1",
+          "matches_native": false
+        },
+        {
+          "path": "torch/csrc/profiler/kineto_shim.cpp",
+          "sha256": "8374ebd8ca33b84490b4c3e1295bf7d3c19e290f3a2e46d282f7b79c3c084f63",
+          "matches_native": true
+        },
+        {
+          "path": "torch/distributed/elastic/agent/server/api.py",
+          "sha256": "625fa4ccf0fa2beaec4dcee1ad995a9d2b4fceba52546cf60bc943cb3f328afc",
+          "matches_native": true
+        },
+        {
+          "path": "torch/nn/attention/_gfx1013.py",
+          "sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+          "matches_native": true
+        },
+        {
+          "path": "torch/nn/bc250_gated_delta.py",
+          "sha256": "21398daf2bdae7b6cfdaac08e510c97f94c5ed8d709213de638ca181a868c64e",
+          "matches_native": true
+        },
+        {
+          "path": "torch/nn/bc250_training_ops.py",
+          "sha256": "fe4724c1b3fb60372622d28b8feb2a9a718f906d4c574660727154edb914f938",
+          "matches_native": true
+        },
+        {
+          "path": "torch/sparse/semi_structured.py",
+          "sha256": "824d85d9c2e442916f37eed27fcc9b68d208ad93c0e2a3878a6c8900cb83a7ad",
+          "matches_native": true
+        }
+      ],
+      "build_options": [
+        "USE_DISTRIBUTED:STRING=1",
+        "USE_KINETO:STRING=1",
+        "USE_NCCL:BOOL=1",
+        "USE_ROCM:BOOL=ON"
+      ]
+    }
+  },
+  "sdk_elf": {
+    "build": {
+      "sha256": "bcbb20f952044af85c068278561ecba9fc563db965a8b4df0fbb6a3163ea2c33",
+      "bytes": 17575368,
+      "sections": {
+        "": {
+          "offset": 0,
+          "size": 0,
+          "flags": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        ".dynsym": {
+          "offset": 624,
+          "size": 34824,
+          "flags": 2,
+          "sha256": "b3c48943c0610bf2c442e6dab089c92ca8abc81db4a4ca4ae601ceb7eb751725"
+        },
+        ".gnu.version": {
+          "offset": 35448,
+          "size": 2902,
+          "flags": 2,
+          "sha256": "fae36ab1491fa87c405240ae505c1cafd17ce08904778c92f5aa9be3483d82d1"
+        },
+        ".gnu.version_r": {
+          "offset": 38352,
+          "size": 912,
+          "flags": 2,
+          "sha256": "22e40d7e7fd5623ae90e1e7cb089ae3dcb7a7407fba0f9288c7f0f5b12282e12"
+        },
+        ".gnu.hash": {
+          "offset": 39264,
+          "size": 6716,
+          "flags": 2,
+          "sha256": "6f27a369c5073b66be2dcbd0d4dbbca5cdcfadaf640b946eaa43bfd93ddb62b2"
+        },
+        ".dynstr": {
+          "offset": 45980,
+          "size": 83229,
+          "flags": 2,
+          "sha256": "918a327b5db5f6032b5c847a6607139bdc29f33374e95dc865cad12fe574bf35"
+        },
+        ".rela.dyn": {
+          "offset": 129216,
+          "size": 271200,
+          "flags": 2,
+          "sha256": "6e27f933f2d6bdf0202ec72c818ca1a393c331914769a5a196b74f4b14b4762d"
+        },
+        ".rela.plt": {
+          "offset": 400416,
+          "size": 20376,
+          "flags": 66,
+          "sha256": "2546fc19199e5408bdfebede514d7d54fbef4ba163086a959d927b1d9aaba129"
+        },
+        ".gcc_except_table": {
+          "offset": 420792,
+          "size": 504592,
+          "flags": 2,
+          "sha256": "8ef7f064b42ccb474cf2b46eae1b539384ca134209853c559b4bdb413e574acb"
+        },
+        ".rodata": {
+          "offset": 925440,
+          "size": 465344,
+          "flags": 50,
+          "sha256": "1a55b9931e93bf38dba25f4fdc0fa21cae299bdd465cb5258c86729f3f98d8d9"
+        },
+        ".eh_frame_hdr": {
+          "offset": 1390784,
+          "size": 100780,
+          "flags": 2,
+          "sha256": "d89468c9b93b3037d3b880c3df9d0ea73d0e647c63af7e2547a24def969d3682"
+        },
+        ".eh_frame": {
+          "offset": 1491568,
+          "size": 774416,
+          "flags": 2,
+          "sha256": "fdc33718ec595f2815ba0da98b6e29986b1bfc1ede2eb048c331f2db38c403eb"
+        },
+        ".text": {
+          "offset": 2265984,
+          "size": 10818800,
+          "flags": 6,
+          "sha256": "33648c471fbb9553c28539d24c2f189cc6a4691258d2139d98105327e03a3a29"
+        },
+        ".init": {
+          "offset": 13084784,
+          "size": 27,
+          "flags": 6,
+          "sha256": "0eb4db8cd0bcc9629fcbc75ecb54709f61dd394b886bafd8fc0369d6f8a05ad8"
+        },
+        ".fini": {
+          "offset": 13084812,
+          "size": 13,
+          "flags": 6,
+          "sha256": "6a4f3e5efc7c1f7ee7d6f21afd9ed040ba1d7f0b97bb12b016f5b176cc558bd8"
+        },
+        "malloc_hook": {
+          "offset": 13084832,
+          "size": 564,
+          "flags": 6,
+          "sha256": "705122e98accfc39c3a328bd5bfe5c63afb8fd7213655ea820a8eb064c4b69b8"
+        },
+        ".plt": {
+          "offset": 13085408,
+          "size": 13600,
+          "flags": 6,
+          "sha256": "ce65721df081d7d59569ab498866a3fadf9baf2d925b595d1d1299f4c8780c6a"
+        },
+        ".tdata": {
+          "offset": 13099008,
+          "size": 100,
+          "flags": 1027,
+          "sha256": "50a9af1ea0a368cf121e52205a51096adb57060616ef197da9ab1914dc236ef4"
+        },
+        ".init_array": {
+          "offset": 13099112,
+          "size": 680,
+          "flags": 3,
+          "sha256": "3893c122a235d76ac34b7853ae88aae7b72c2785f12e0e5ba05506aa89f4cf6c"
+        },
+        ".fini_array": {
+          "offset": 13099792,
+          "size": 16,
+          "flags": 3,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        ".data.rel.ro": {
+          "offset": 13099808,
+          "size": 42848,
+          "flags": 3,
+          "sha256": "16706ce936e82216e8bb6eb334c0fac519723e9c6344436d2cc7061b078c52a2"
+        },
+        ".dynamic": {
+          "offset": 13142656,
+          "size": 544,
+          "flags": 3,
+          "sha256": "6bff559d8e391670982e3c1140dabacbf8a98f870cff0041ed5cf1c9e6eef2df"
+        },
+        ".got": {
+          "offset": 13143200,
+          "size": 2616,
+          "flags": 3,
+          "sha256": "7c6d6bd4746a3d259fdb36d82afb1d8bde75591cd4a1f396975274a0c12ae6ba"
+        },
+        ".data": {
+          "offset": 13145824,
+          "size": 164360,
+          "flags": 3,
+          "sha256": "d212f30c64939cf9ea696bac801532efeeb420c4e61a56ece4b7ade52d0e91a8"
+        },
+        ".got.plt": {
+          "offset": 13310184,
+          "size": 6816,
+          "flags": 3,
+          "sha256": "2687bbf0a60a215d8b37a834da07cb368a5e81ebd91dcac68318c6d0a12137a4"
+        },
+        ".comment": {
+          "offset": 13317000,
+          "size": 259,
+          "flags": 48,
+          "sha256": "7cf4f481877517f06d7da3fb49fe331d507c2bd1d05cc1eac9a5a0859138d903"
+        },
+        ".symtab": {
+          "offset": 13317264,
+          "size": 801600,
+          "flags": 0,
+          "sha256": "1d6ef9e9160cd287a6b77d0cf1ebccb26de6963d42c46d68af6eb3dca7f86510"
+        },
+        ".shstrtab": {
+          "offset": 14118864,
+          "size": 294,
+          "flags": 0,
+          "sha256": "3b255919a4d66d1983aebeb6b40d2047628409bd8f1daad328c997c812d02041"
+        },
+        ".strtab": {
+          "offset": 14119158,
+          "size": 3454158,
+          "flags": 0,
+          "sha256": "426deaaf9597ee18bc3a8a4246d732a3cb14e7c3ee39c22b9959c40bc32ca62e"
+        }
+      },
+      "runtime_paths": [
+        {
+          "tag": 29,
+          "value": "$ORIGIN:/workspace/build/compiler/amd-comgr/dist/lib:/workspace/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/lib:",
+          "offset": 129047
+        }
+      ]
+    },
+    "runtime": {
+      "sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+      "bytes": 17575368,
+      "sections": {
+        "": {
+          "offset": 0,
+          "size": 0,
+          "flags": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        ".dynsym": {
+          "offset": 624,
+          "size": 34824,
+          "flags": 2,
+          "sha256": "b3c48943c0610bf2c442e6dab089c92ca8abc81db4a4ca4ae601ceb7eb751725"
+        },
+        ".gnu.version": {
+          "offset": 35448,
+          "size": 2902,
+          "flags": 2,
+          "sha256": "fae36ab1491fa87c405240ae505c1cafd17ce08904778c92f5aa9be3483d82d1"
+        },
+        ".gnu.version_r": {
+          "offset": 38352,
+          "size": 912,
+          "flags": 2,
+          "sha256": "22e40d7e7fd5623ae90e1e7cb089ae3dcb7a7407fba0f9288c7f0f5b12282e12"
+        },
+        ".gnu.hash": {
+          "offset": 39264,
+          "size": 6716,
+          "flags": 2,
+          "sha256": "6f27a369c5073b66be2dcbd0d4dbbca5cdcfadaf640b946eaa43bfd93ddb62b2"
+        },
+        ".dynstr": {
+          "offset": 45980,
+          "size": 83229,
+          "flags": 2,
+          "sha256": "cb0933b7cd349cba5c0776633667820ac6957b6c6926c0d1ece2b44e8c98d096"
+        },
+        ".rela.dyn": {
+          "offset": 129216,
+          "size": 271200,
+          "flags": 2,
+          "sha256": "6e27f933f2d6bdf0202ec72c818ca1a393c331914769a5a196b74f4b14b4762d"
+        },
+        ".rela.plt": {
+          "offset": 400416,
+          "size": 20376,
+          "flags": 66,
+          "sha256": "2546fc19199e5408bdfebede514d7d54fbef4ba163086a959d927b1d9aaba129"
+        },
+        ".gcc_except_table": {
+          "offset": 420792,
+          "size": 504592,
+          "flags": 2,
+          "sha256": "8ef7f064b42ccb474cf2b46eae1b539384ca134209853c559b4bdb413e574acb"
+        },
+        ".rodata": {
+          "offset": 925440,
+          "size": 465344,
+          "flags": 50,
+          "sha256": "1a55b9931e93bf38dba25f4fdc0fa21cae299bdd465cb5258c86729f3f98d8d9"
+        },
+        ".eh_frame_hdr": {
+          "offset": 1390784,
+          "size": 100780,
+          "flags": 2,
+          "sha256": "d89468c9b93b3037d3b880c3df9d0ea73d0e647c63af7e2547a24def969d3682"
+        },
+        ".eh_frame": {
+          "offset": 1491568,
+          "size": 774416,
+          "flags": 2,
+          "sha256": "fdc33718ec595f2815ba0da98b6e29986b1bfc1ede2eb048c331f2db38c403eb"
+        },
+        ".text": {
+          "offset": 2265984,
+          "size": 10818800,
+          "flags": 6,
+          "sha256": "33648c471fbb9553c28539d24c2f189cc6a4691258d2139d98105327e03a3a29"
+        },
+        ".init": {
+          "offset": 13084784,
+          "size": 27,
+          "flags": 6,
+          "sha256": "0eb4db8cd0bcc9629fcbc75ecb54709f61dd394b886bafd8fc0369d6f8a05ad8"
+        },
+        ".fini": {
+          "offset": 13084812,
+          "size": 13,
+          "flags": 6,
+          "sha256": "6a4f3e5efc7c1f7ee7d6f21afd9ed040ba1d7f0b97bb12b016f5b176cc558bd8"
+        },
+        "malloc_hook": {
+          "offset": 13084832,
+          "size": 564,
+          "flags": 6,
+          "sha256": "705122e98accfc39c3a328bd5bfe5c63afb8fd7213655ea820a8eb064c4b69b8"
+        },
+        ".plt": {
+          "offset": 13085408,
+          "size": 13600,
+          "flags": 6,
+          "sha256": "ce65721df081d7d59569ab498866a3fadf9baf2d925b595d1d1299f4c8780c6a"
+        },
+        ".tdata": {
+          "offset": 13099008,
+          "size": 100,
+          "flags": 1027,
+          "sha256": "50a9af1ea0a368cf121e52205a51096adb57060616ef197da9ab1914dc236ef4"
+        },
+        ".init_array": {
+          "offset": 13099112,
+          "size": 680,
+          "flags": 3,
+          "sha256": "3893c122a235d76ac34b7853ae88aae7b72c2785f12e0e5ba05506aa89f4cf6c"
+        },
+        ".fini_array": {
+          "offset": 13099792,
+          "size": 16,
+          "flags": 3,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        ".data.rel.ro": {
+          "offset": 13099808,
+          "size": 42848,
+          "flags": 3,
+          "sha256": "16706ce936e82216e8bb6eb334c0fac519723e9c6344436d2cc7061b078c52a2"
+        },
+        ".dynamic": {
+          "offset": 13142656,
+          "size": 544,
+          "flags": 3,
+          "sha256": "6bff559d8e391670982e3c1140dabacbf8a98f870cff0041ed5cf1c9e6eef2df"
+        },
+        ".got": {
+          "offset": 13143200,
+          "size": 2616,
+          "flags": 3,
+          "sha256": "7c6d6bd4746a3d259fdb36d82afb1d8bde75591cd4a1f396975274a0c12ae6ba"
+        },
+        ".data": {
+          "offset": 13145824,
+          "size": 164360,
+          "flags": 3,
+          "sha256": "d212f30c64939cf9ea696bac801532efeeb420c4e61a56ece4b7ade52d0e91a8"
+        },
+        ".got.plt": {
+          "offset": 13310184,
+          "size": 6816,
+          "flags": 3,
+          "sha256": "2687bbf0a60a215d8b37a834da07cb368a5e81ebd91dcac68318c6d0a12137a4"
+        },
+        ".comment": {
+          "offset": 13317000,
+          "size": 259,
+          "flags": 48,
+          "sha256": "7cf4f481877517f06d7da3fb49fe331d507c2bd1d05cc1eac9a5a0859138d903"
+        },
+        ".symtab": {
+          "offset": 13317264,
+          "size": 801600,
+          "flags": 0,
+          "sha256": "1d6ef9e9160cd287a6b77d0cf1ebccb26de6963d42c46d68af6eb3dca7f86510"
+        },
+        ".shstrtab": {
+          "offset": 14118864,
+          "size": 294,
+          "flags": 0,
+          "sha256": "3b255919a4d66d1983aebeb6b40d2047628409bd8f1daad328c997c812d02041"
+        },
+        ".strtab": {
+          "offset": 14119158,
+          "size": 3454158,
+          "flags": 0,
+          "sha256": "426deaaf9597ee18bc3a8a4246d732a3cb14e7c3ee39c22b9959c40bc32ca62e"
+        }
+      },
+      "runtime_paths": [
+        {
+          "tag": 29,
+          "value": "$ORIGIN/rocm_sysdeps/lib:$ORIGIN/llvm/lib:$ORIGIN/llvm/lib/x86_64-unknown-linux-gnu:$ORIGIN",
+          "offset": 129047
+        }
+      ]
+    },
+    "changed_sections": [
+      ".dynstr"
+    ],
+    "rpath_transformations": [
+      {
+        "old": "$ORIGIN:/workspace/build/compiler/amd-comgr/dist/lib:/workspace/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/lib:",
+        "new": "$ORIGIN/rocm_sysdeps/lib:$ORIGIN/llvm/lib:$ORIGIN/llvm/lib/x86_64-unknown-linux-gnu:$ORIGIN",
+        "offset": 129047
+      }
+    ],
+    "rpath_only_exact_replay": true,
+    "replay_sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+    "ci_configuration": [
+      "ROCPROFILER_BUILD_CI:BOOL=ON"
+    ],
+    "compiler_ci_definition_present": true
+  },
+  "sdk_source_sha256": {
+    "source/lib/rocprofiler-sdk/agent.cpp": "828fde96c907885b731222f390b6a4d23b045355ddf1b0f9ac6988e1dcf18b1d",
+    "source/lib/common/logging.hpp": "0e2889d797254e209b7ac400a1c755b8565c476e276916c89326a1985db12337",
+    "cmake/rocprofiler_build_settings.cmake": "4332bf8e66e629bc684b08aea6f082b7c032fa834a0b3c9ad21ed923974a56a8",
+    "cmake/rocprofiler_options.cmake": "9491a30d4f50a5410a5d257df4094df42466a9761daa36cbc0d1c729ecb4103f"
+  },
+  "scope": "35-file focused host replay; full Git tree replay separately on workstation; no native build or GPU execution"
+}

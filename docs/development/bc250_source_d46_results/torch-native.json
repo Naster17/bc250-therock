@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "baseline": "c779020750d7dc99a39ea8c104ef8df1fc9d0755",
+  "expected_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+  "expected_tree": "3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112",
+  "reconstructed_tree": "3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112",
+  "patches": [
+    {
+      "name": "0001-qualified-native-torch.patch",
+      "sha256": "24b5964617b6124281d3e5ae7874aba853e2d0abdcc11f2a28ee5bb2601d3fa3"
+    }
+  ]
+}

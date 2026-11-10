@@ -1,0 +1,75 @@
+{
+  "components": [
+    {
+      "component": "Torch",
+      "repository": "torch",
+      "qualified_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+      "current_head": "8d8b18df558cb478727ba2179f2e01dfce20ea40",
+      "qualified_tree": "3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    },
+    {
+      "component": "Torch agent bridge",
+      "repository": "torch",
+      "qualified_revision": "8d8b18df558cb478727ba2179f2e01dfce20ea40",
+      "current_head": "8d8b18df558cb478727ba2179f2e01dfce20ea40",
+      "qualified_tree": "33a862732a52c8825a3d1f9c0b609d06fba0df65",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    },
+    {
+      "component": "ROCm systems",
+      "repository": "therock/rocm-systems",
+      "qualified_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+      "current_head": "38fd6ba67d0aa7491d3efaee3da98da4eb0a5727",
+      "qualified_tree": "1d1dfed58ac9f37cf76ebac77fa6bc7af8479cf5",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    },
+    {
+      "component": "ROCm libraries base",
+      "repository": "therock/rocm-libraries",
+      "qualified_revision": "8389197c134a7337932021ab7137987a585664ae",
+      "current_head": "e1d8d1ff9208a163e6d821731e70ff12913cb832",
+      "qualified_tree": "612be59e0b0d9f18280520cc7d9534d9cca4ec31",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    },
+    {
+      "component": "MIOpen overlay",
+      "repository": "therock/rocm-libraries",
+      "qualified_revision": "e1d8d1ff9208a163e6d821731e70ff12913cb832",
+      "current_head": "e1d8d1ff9208a163e6d821731e70ff12913cb832",
+      "qualified_tree": "046ed8e3dcad83d4b0a1885fd150ecb468268668",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    },
+    {
+      "component": "Triton",
+      "repository": "triton",
+      "qualified_revision": "ee65ff3b85f99d52e678b252a99c8425fa46e329",
+      "current_head": "ee65ff3b85f99d52e678b252a99c8425fa46e329",
+      "qualified_tree": "5f62ee9e8cf42e582bd1d1de5462f6e1f3f5110d",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    },
+    {
+      "component": "r2 imported source",
+      "repository": "kernel/source",
+      "qualified_revision": "6f57bb40d26d1cbec862807fc89a9c61af1b9a39",
+      "current_head": "6f57bb40d26d1cbec862807fc89a9c61af1b9a39",
+      "qualified_tree": "d81aaa44b41008134c7cbf686bf2cf08789b7846",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    },
+    {
+      "component": "r3 qualified source",
+      "repository": "kernel/linux-r3",
+      "qualified_revision": "0957f1aa4717bb5ea19545bdcb01d6899e94bb9f",
+      "current_head": "0957f1aa4717bb5ea19545bdcb01d6899e94bb9f",
+      "qualified_tree": "d3555d907b65c6e5d9556fbc4a6858e09e8e6239",
+      "scope": "Git pin/object availability only; no clean full build or dependency closure claim"
+    }
+  ],
+  "sdk_native_source_match": {
+    "source/lib/rocprofiler-sdk/agent.cpp": true,
+    "source/lib/common/logging.hpp": true,
+    "cmake/rocprofiler_build_settings.cmake": true,
+    "cmake/rocprofiler_options.cmake": true
+  },
+  "PLAN07_complete": false
+}

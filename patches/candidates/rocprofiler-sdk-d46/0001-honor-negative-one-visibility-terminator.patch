@@ -1,0 +1,15 @@
+diff --git a/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp b/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp
+--- a/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp
++++ b/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp
+@@ -195,6 +195,11 @@
+             for(const auto& itr : rocprofiler::sdk::parse::tokenize(env_value, ", "))
+             {
+                 if(itr.empty()) continue;
++
++                // A terminating visibility sentinel selects no further GPU agents.
++                // Preserve selections matched earlier in the list; do not escalate
++                // this supported filter value to a fatal CI diagnostic.
++                if(itr == "-1") break;
+ 
+                 ROCP_TRACE << "Processing " << env_varname << " token: " << itr;
+ 

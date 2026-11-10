@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "baseline": "c779020750d7dc99a39ea8c104ef8df1fc9d0755",
+  "expected_revision": "8d8b18df558cb478727ba2179f2e01dfce20ea40",
+  "expected_tree": "33a862732a52c8825a3d1f9c0b609d06fba0df65",
+  "reconstructed_tree": "33a862732a52c8825a3d1f9c0b609d06fba0df65",
+  "patches": [
+    {
+      "name": "0001-qualified-native-torch.patch",
+      "sha256": "24b5964617b6124281d3e5ae7874aba853e2d0abdcc11f2a28ee5bb2601d3fa3"
+    },
+    {
+      "name": "0002-agent-exit-lifetime.patch",
+      "sha256": "130637a696e737380bfc4fbc8c4bf6857195edd250c897da5ff60b9ef04d165a"
+    }
+  ]
+}

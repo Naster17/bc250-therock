@@ -1,0 +1,33 @@
+{
+  "free_bytes": 5409996800,
+  "reserve_bytes": 5368709120,
+  "above_reserve_bytes": 41287680,
+  "agent_objects": [
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/aqlprofile/tests/integration/CMakeFiles/aqlprofile-v2-test.dir/agent.cpp.o",
+      "bytes": 47936
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/tests/CMakeFiles/rocprofiler-sdk-lib-tests.dir/agent.cpp.o",
+      "bytes": 388800
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/tests/CMakeFiles/rocprofiler-sdk-lib-tests.dir/details/agent.cpp.o",
+      "bytes": 25256
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o",
+      "bytes": 127688
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/gnulinux/agent.cpp.o",
+      "bytes": 204336
+    },
+    {
+      "path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/wsl/agent.cpp.o",
+      "bytes": 55312
+    }
+  ],
+  "build_dso_bytes": 17575368,
+  "decision": "No build admitted: compiler/link/cache/candidate/rollback peak budget not yet established."
+}

@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "files": 5,
+  "patch_sha256": "69a739b25c4d8f5d3201cd2666cee5bfcec14fb0c5976c9f9cc7c5c01564054a",
+  "scope": "Reference overlay reproduces five observed generated files; not an independent HIPify execution"
+}

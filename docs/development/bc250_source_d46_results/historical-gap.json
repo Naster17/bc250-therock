@@ -1,0 +1,9 @@
+{
+  "status": "historical-gap-reproduced",
+  "missing_files": [
+    "aten/src/ATen/native/transformers/cuda/sdp_utils.cpp",
+    "torch/_inductor/compile_fx.py",
+    "torch/nn/attention/_gfx1013.py"
+  ],
+  "actual_tree": "000645ddf8342578b15d43b11ae4a9f053b242b0"
+}
