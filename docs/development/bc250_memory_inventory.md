@@ -6,6 +6,28 @@ plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
 
+
+## D50 portable recursive dependency contents (2026-11-10)
+
+Implementation eb6147ea0; [report](bc250_source_d50_results/README.md).
+D47 parent anchors37 direct pins;77 discovered locations/69 available/64 unique
+commit payloads,75,522 blobs/107 license-copying-notice files. Eight unavailable
+branches under aiter/flash-attention/mslk remain explicit and unexpanded; complete
+source closure=false. Raw commit hash plus private exact tree replay binds content,
+mode/symlink/gitlink/license identities. Local r1 catches Python tar trailing-slash
+symlink normalization; safety-checked spelling preservation fixes it, full local r2
+and104 replay pass. Gloo overlay private tree913f01fb/cudaSHA7dc2ce53 exactly retained
+host source; TensorPipe/libuv included. Both CMake/version proofs retained, native
+version git_version Unknown preserved rather than inventing a rebuild/source ID.
+140tests/six new regressions/three altered exports refused/static checks pass.
+258,723,840B portable package,82,862B metadata archive; tools/source-d50 and
+ evidence/source-d50-r1; controller30288done,54.477s CPU replay/no GPU/native build.
+2GiBAS/120CPU perprocess/420wall/100ms/3GiBhost+5GiBdisk reserves; no cgroup claim.
+D49 runtime/boot2774d201r2 unchanged; no source/build/cache/prefix/app changes.
+104docs20261110-d50-final,105unchanged. Historical Python/KFD/clock causes OPEN.
+Next D51 classify eight branches/required pins and close build-version/toolchain/
+wheel/generated-input inventory. PLAN07 OPEN/four packages remain.
+
 ## D49 native SDK repair activated on .104 (2026-11-10)
 
 Implementation b6de91cb4; SDK143f1d8782; [report](bc250_sdk_d49_results/README.md).

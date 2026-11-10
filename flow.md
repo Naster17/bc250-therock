@@ -10,6 +10,51 @@ release claims must not override this cursor and current manifests.
 ## Resume cursor
 
 
+
+- **D50 completed 2026-11-10 — portable available recursive Torch dependencies; PLAN-07 OPEN.**
+  Implementation eb6147ea0. [Report](docs/development/bc250_source_d50_results/README.md).
+  D47 parent-manifest anchor fixes37 direct pins. Traversal discovers77 locations:
+  69 available,64 unique pinned commit payloads,75,522 tracked blobs,107 tracked
+  license/copying/notice-named files. Eight unavailable/unexpanded branches under
+  aiter/flash-attention/mslk explicitly recorded; descendants below them unknown.
+  Complete recursive closure=false; no whole-stack offline-build/license claim.
+  Raw commit SHA1 binds each tree to the parent gitlink, private Git index recreates
+  exact tree including modes/symlinks/nested pins; no original objects/history needed.
+  First local replay fails ittapi symlink ../../ -> ../.. normalization by Python
+  tar data filter. Fixed only trailing-slash preservation AFTER standard target
+  safety check; other normalization refused. Failed r1 kept; full local r2 and
+  independent104 replay pass all64 payloads. Six focused regressions;140 local
+  tests/Black/critical Ruff+F401/diff pass, three altered driver/Gloo/CMake exports
+  refused. Modified source archive with updated SHA still fails commit/tree test.
+  Existing Gloo overlay applied only in private replay: tree913f01fb, cuda.cuSHA
+  7dc2ce53bf518ba455b0e47e7b2e09976261db008b7d2a83669f02c9451f997f
+  EXACT retained104 pytorch-work dependency source. TensorPipe/libuv included.
+  Raw daily/RCCL CMake/version inputs bound; FLASH/MEM_EFF/MSLK off, Gloo/TensorPipe on.
+  Both version.py say2.13.0a0+gfx1013/HIP7.17/ROCm10.2/git_version Unknown; preserve
+  that historical metadata, use pinned manifests for native provenance. Future
+  build-version env must be explicit; original build env cannot be inferred from it.
+  Package local kernel/artifacts/source-d50/portable-dependencies-d50-r1.tar
+  258,723,840B SHA1c624f9d672ef3798a72b9974a6778b3a58c36bcafeefc4d06a04da0781e5540;
+  same host tools/source-d50/. Package subdir dependencies-r1, private proof in
+  evidence/source-d50-r1/replay; result.json/replay.json/worker.log/metadata retained.
+  Host metadata local kernel/artifacts/source-d50/104-evidence-r1.tar.gz82,862B SHA
+  06262318fe63377a24f9ba82682ac47c0a348f8195ae934cb4165683c1eb96b6;
+  same host evidence/source-d50-evidence-r1.tar.gz. Controller30288finished,
+  evidence/source-d50-controller.log; no jobs/guards. CPU-only UID1000 affinity0-3/
+  2GiB address-space+120CPU seconds per inherited process/420wall/100ms owned-PG
+  stop at3GiBhost/5GiBdisk; not aggregate cgroup limits.54.477s replay cost, notperf.
+  Min host14,889,078,784B/disk21,882,839,040B. SHruntime only for metadata audit.
+  No GPU test/native build/prefix/source/cache/image/kernel/reboot/app/checkpoint
+  changes. D49 SDK2a975370 remains active, boot2774d201r2/native controls unchanged;
+  finalidle/watchdogactive. Own tmpfs transfer copied+SHAverified durably, duplicate
+  removed only; source/build/caches preserved.105unaccessed/unchanged/D43docs.
+  .104docs20261110-d50-final synced at handoff. PythonCPU/KFD/105clocksource causes
+  still unknown, distinct fixed SDKsentinel/VMheap/D05/D21; no new crash-fix claim.
+  **NEXT D51:** classify eight missing branches against exact native build inputs,
+  package required missing pins in private stores, close explicit build-version/
+  toolchain/Python-wheel/generated-input inventory. PLAN07 still OPEN; four
+  important packages PLAN07-10 remain. Keep105 unchanged; no blind backend enable.
+
 - **D49 completed 2026-11-10 — repaired native SDK activated on .104; rollback qualified.**
   Implementation b6de91cb4; SDK source143f1d878296176c738274202092bb247b7b771c.
   [Report](docs/development/bc250_sdk_d49_results/README.md),
