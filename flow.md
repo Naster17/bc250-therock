@@ -9,6 +9,46 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-06 / D45 completed 2026-11-10 — bounded mixed stability; PLAN-06 bounded scope COMPLETE.**
+  Source0ef00f158. [Report](docs/development/bc250_mixed_d45_results/README.md),
+  [records](docs/development/bc250_mixed_d45_results/verified-results.json).
+  Six fresh104 processes alternatingdaily/RCCL, seeds4500–4505: each FP32 matmul/
+  conv/mathSDPA/realFFT output+loss+ALLinputgrad vsCPUdouble,2denseAdamWupdates
+  ALLparams/moments/counters vsindependentCPUupdate.162comparisons/12updates pass,
+  predeclaredatol5e-5/rtol5e-4 unchanged.27checks/process,6uniqueCIDs/PIDs/peropJSON/
+  faulthandler45s. No usermodel/app/AMP/compile/distributedcollective qualification.
+  EXboard+SHruntime,4CPU0–3/4GiBRAM+combined(swapallowance0)/512PID/256MiBshm;
+  100ms3GiBhost/5GiBdisk/60schild/600s independent recovery retained. GPUallocated
+  67,128,320B each; largest sampled cgrouppeak932,622,336B, hostmin13,893,718,016B.
+  Sampledcontainerswap/OOMkill0, strictbefore/afterkernel logs EXACT all6. No host
+  pagingIO/afterexitcgroup peak/performance/universalstability claim. GuardsACK;
+  controller19038done/exportdone/finalidle/nativeboardservice/watchdogactive.
+  Foreign-arrival postflight failure recordsfailed+ACK afterownworkgone toavoid
+  rebootingforeignapp; branchunexercised. Stops onlyowned labels, preserves apps.
+  HistoricalPythonCPUIP0x3b3e6 remainsunknown/nooriginalcore; KFD B07.7 exec-after-HIP
+  frontendmitigated byrunpy butkernelmm/queuecauseuntraced;105clocksource timeout
+  OPEN/pr_info_once. QuietD45 doesNOTrepair anycause. Distinct fixedVMheap/D05/D21.
+  Additionalnativevisibility lead: profiler logging.hpp mapsROCP_CI_LOG(WARNING)
+  toFATAL underROCPROFILER_CI. RetainedSDK configCI=ON/ninja-DROCPROFILER_CI=1;
+  activeDSOa6dc1c88 differs retainedbuildbcbb20f9. ExactbuildprovenanceUNRESOLVED,
+  do notclaim byte-matchedCIcohort or replaceSDKblindly. D44refusalstillactive104.
+  No nativecode/library/default/profile/registry/prefix/image/kernel/boot/reboot/
+  package/app/105change, no rebuild.104boot2774d201r2;105priorDocker mustberechecked.
+  Black/criticalRuff+F401/syntax/diff/independentmetadatareader +3private source/ACK/
+  workerarchive refusals pass. No fullupstream/new120unittestrunclaim. Localarchive
+  kernel/artifacts/distributed-d45/104-evidence-r1.tar.gz253974B SHA
+  f37a05accdf5e6e111854f2b9e06b2ccfb76fd0d96a642ef0d5321ab60baea47.
+  Hosttools tools/mixed-d45, evidence/mixed-d45-r1, mixed-d45-controller.log;
+  archived evidence/mixed-d45-evidence-r1.tar.gz. Allownedjobsdone/noarmedguard.
+  .104docs snapshot20261110-d45-final synced at handoff;105unchangedD43docs.
+  **NEXT PLAN-07 / D46:** CPU-only source→installedartifact inventory; audit old
+  SDPAthreefile reconstructiongap againstactualpatchedTorchGit/configs/qualified
+  bytes, andresolveSDKCI/source/build/packagingidentity before minimalparserrepair
+  buildplan. No blindrebuild/reset/globalCIdisable.104space~98MiB above5GiBreserve:
+  require incremental/cache/link/stage/rollback storagebudget before nativebuild.
+  FOURimportantpackages remainPLAN07–10; unknownCPU/KFD/clockcauses stayOPEN in
+  releaseknownlimits, no endlesscapacity/kernel rework or quiet-pass repairclaim.
+
 - **PLAN-06 / D44 completed 2026-11-10 — specific HIP visibility import crash refused on .104; PLAN-06 OPEN.**
   Source9d03c5c90. [Report](docs/development/bc250_visibility_d44_results/README.md),
   [replay](docs/development/bc250_visibility_d44_results/verified-results.json).

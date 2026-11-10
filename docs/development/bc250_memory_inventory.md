@@ -5,6 +5,26 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## D45 bounded mixed stability qualified (2026-11-10)
+
+Source0ef00f158; [report](bc250_mixed_d45_results/README.md).
+Six fresh104 processes daily/RCCL alternating pass162fixedCPUdouble references:
+FP32matmul/conv/mathSDPA/realFFT output/loss/ALLinputgrad and2denseAdamWupdates
+ALLparams/moments/counters each. Fixedatol5e-5/rtol5e-4,12updates/6CIDs, noapp.
+Allstrictkernellogs unchanged; GPUpeak67,128,320B, sampled cgrouppeak932,622,336B,
+minhost13,893,718,016B; sampledcontainerswap/OOMkill0. EXboard+SHruntime/4GiBcaps/
+3GiBhost+5GiBdisk/60child/600guard, ACK/idle/alljobsdone. Foreign-arrival ACKafter
+ownexit prevents rebootingunrelatedwork; branchuntested. Independentmetadatagates/
+3alteredarchives/staticlintpass; no fullCI/longrun/performance/pagingIOclaim.
+No nativeprefix/library/source/default/kernel/105change;104boot2774d201r2.
+HistoricalPythonCPUIP0x3b3e6/KFDqueue-mm/105clocksource causesstillUNKNOWN/OPEN.
+Newlead: profilerSDK warning mapsFATAL inCImode; retainedbuildCI=ON butbuiltDSO
+bcbb20f9 !=activea6dc1c88, exactprovenanceunresolved. D44refusal remains104only;
+no SDKnativefixclaim. PLAN06boundedcomplete; nextPLAN07/D46 source/artifactaudit,
+oldSDPAthreefilegap andSDKCI/build/packaging mapping before anyrepairbudget.
+Fourimportantpackagesremain, optionalAPIexpansion separate.104~98MiB over5GiBdisk
+reserve, do not begin nativebuild without explicitresource/storage plan.
+
 ## D44 specific HIP visibility safeguard deployed on .104 (2026-11-10)
 
 Source9d03c5c90; [report](bc250_visibility_d44_results/README.md).

@@ -22,11 +22,11 @@ kernel log is byte-identical before/after; no log filtering or clearing.
 | Profile / seed | Guarded child s | GPU allocated peak MiB | Sampled cgroup peak MiB | Min sampled host available GiB |
 | --- | ---: | ---: | ---: | ---: |
 | daily /4500 | 11.936 | 64.019 | 889.418 | 12.940 |
-| RCCL /4501 | 8.507 | 64.019 | 706.824 | 13.081 |
-| daily /4502 | 8.103 | 64.019 | 700.070 | 13.047 |
-| RCCL /4503 | 8.509 | 64.019 | 704.340 | 13.018 |
+| rccl-single /4501 | 8.507 | 64.019 | 706.824 | 13.081 |
+| daily /4502 | 8.103 | 64.019 | 700.070 | 13.046 |
+| rccl-single /4503 | 8.509 | 64.019 | 704.340 | 13.017 |
 | daily /4504 | 8.083 | 64.019 | 696.281 | 13.056 |
-| RCCL /4505 | 8.531 | 64.019 | 705.112 | 13.101 |
+| rccl-single /4505 | 8.531 | 64.019 | 704.922 | 13.101 |
 
 These are test costs, not controlled performance comparisons. Cgroup values are
 the largest observed `memory.peak` reads while the container existed, not an
