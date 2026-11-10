@@ -33,6 +33,7 @@ def main():
     cache_events, norms = [], []
     unit_forwards = 0
     root_forwards = 0
+    unit_backwards = 0
     optimizer = None
     updates = 0
     native_backward, native_optimizer = (
@@ -78,10 +79,18 @@ def main():
             trim("after-forward-" + str(root_forwards))
             root_forwards += 1
 
+        def unit_after_backward(module, grad_input, grad_output):
+            nonlocal unit_backwards
+            trim("unit-backward-" + str(unit_backwards))
+            unit_backwards += 1
+            # Returning None preserves all gradients.
+
         units = [module for module in model.modules() if isinstance(module, base.FSDP)]
         assert len(units) == base.CONFIG["blocks"] + 1
         for module in units:
             module.register_forward_pre_hook(unit_before)
+            if module is not model:
+                module.register_full_backward_hook(unit_after_backward)
         model.register_forward_hook(root_after)
         optimizer = native_optimizer(model)
         step = optimizer.step
@@ -157,6 +166,7 @@ def main():
             cache_trim_events=cache_events,
             completed_updates=updates,
             FSDP_unit_forward_calls=unit_forwards,
+            FSDP_unit_backward_calls=unit_backwards,
             root_forward_calls=root_forwards,
             finite_gradient_norms=norms,
             full_audits_forbidden=True,

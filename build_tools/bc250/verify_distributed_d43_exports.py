@@ -15,14 +15,14 @@ from capacity_plan_d42 import admit, headroom, HOST_REGISTRY_SHA256, GUARD_SECON
 from qualification_d43 import DESCRIPTOR_SHA256
 
 PINS = {
-    "distributed_d43_train.py": "1147ffd6d41b84a1522dc0d2e81fb94b052351f6c54ef78d93802fbc1dfe083d",
+    "distributed_d43_train.py": "5ae241c0de6280b7eef220665d8c563c815fa2138523c1641ce8ebb3004e4a14",
     "qualification_d43.py": "ac59bfbeb085199ef29db1156418f6e921451327ffaac1d57d565815795bd9cf",
     "qualification_d43.json": "1d8fef22942169acbd759d3639a9730d4090dd68ebf211debb660aea3121e7e1",
-    "guard_distributed_d43_on_host.py": "ed5b9acb9c52ed60b262d2958df45be525aaf908bd20207c2155a63e09e2e7d9",
+    "guard_distributed_d43_on_host.py": "3adb58aa41dbdd37cddd0c95cfd54059d4ce152b8680b7d59177d587a652281c",
     "distributed_d43_bounded_launch.py": "67f097ce3ce7bc2cf7ad6cf11a98d508f09111b65f4790b77ba14b6b76425cbb",
-    "export_distributed_d43_on_host.py": "dbd88695c5fef7afe30b740e5d7fd3dc059f2ff41ba5b0fbec26fb64753c398b",
+    "export_distributed_d43_on_host.py": "37adb0240e50afebbe802aed9319db3ffcf747b2730686cfc52ea0dda823020d",
 }
-LABELS = ["control-recheck", "large-training"]
+LABELS = ["control", "large-training"]
 
 
 def prerequisite(workspace):
@@ -44,7 +44,7 @@ def prerequisite(workspace):
 
 def read(path, rank, prior):
     report, old = prior
-    root = "home/nik/bc250work/evidence/distributed-d43-r2/"
+    root = "home/nik/bc250work/evidence/distributed-d43-r3/"
     source = "home/nik/bc250work/tools/distributed-d43/"
     with tarfile.open(path) as archive:
 
@@ -179,7 +179,8 @@ def read(path, rank, prior):
             )
             assert w["FSDP_unit_forward_calls"] == 8 * (config["blocks"] + 1)
             assert w["root_forward_calls"] == 8
-            assert len(w["cache_trim_events"]) == 24 + 8 * (config["blocks"] + 1)
+            assert w["FSDP_unit_backward_calls"] == 8 * config["blocks"]
+            assert len(w["cache_trim_events"]) == 24 + 8 * (2 * config["blocks"] + 1)
             phases = [
                 e
                 for e in w["cache_trim_events"]

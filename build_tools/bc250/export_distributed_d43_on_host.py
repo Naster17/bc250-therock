@@ -10,12 +10,12 @@ from board_preflight import reservation
 from capacity_plan_d42 import HOST_REGISTRY_SHA256
 from qualification_d43 import proof
 
-LABELS = ["control-recheck", "large-training"]
+LABELS = ["control", "large-training"]
 
 
 def main():
     work = Path("/home/nik/bc250work")
-    root = work / "evidence/distributed-d43-r2"
+    root = work / "evidence/distributed-d43-r3"
     rank = 0 if os.uname().nodename == "bc250" else 1
     with reservation("d43-final-export") as idle:
         registry = Path("/opt/bc250-stack/distributed/d01.json")
@@ -56,13 +56,14 @@ def main():
             selected_daily=str(Path("/opt/bc250-stack/current").resolve()),
         )
         (root / "handoff.json").write_text(json.dumps(handoff, indent=2) + "\n")
-        archive = work / "evidence/distributed-d43-evidence-r2.tar.gz"
+        archive = work / "evidence/distributed-d43-evidence-r3.tar.gz"
         assert not archive.exists()
         with tarfile.open(archive, "w:gz", compresslevel=1) as t:
             for path in [
                 root,
                 work / "tools/distributed-d43",
                 work / "evidence/distributed-d43-r1",
+                work / "evidence/distributed-d43-r2",
                 registry,
             ]:
                 t.add(
