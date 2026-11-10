@@ -13,6 +13,27 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **Storage follow-up completed 2026-11-11.**
+  .104 freed 2.26GiB and reached 57.46GiB before docs sync.
+  [Report](docs/development/bc250_storage_cleanup_20261110/README.md),
+  [receipts](docs/development/bc250_storage_cleanup_20261110/followup-results.json).
+  First ten-root attempt refused deletion after detecting real rollback/candidate
+  links and retained mounts to four historical Torch trees. They remain in place.
+  Verified smaller archives and discarded redundant full backup.
+  Retired six MIOpen stage/package roots, A02 profiling output, B052 candidate
+  staging, B033 build copy and exact duplicate B053 evidence transfer. Four
+  exited B033 containers had generated metadata only. Captured logs, removed
+  those containers, verified all Podman image IDs. 59 protected hashes/links match.
+  340 Ninja/CMake inputs show no retired-path references. Preserve active b052/b053,
+  retained b037, historical rollback paths and sparse-followup third-party overlay.
+  No GPU workload or profile activation. .105 outside this batch.
+  All producer and retirement jobs complete. Removed own host transfer scratch/FIFO.
+  .104 journals evidence/maintenance/20261111, workstation archives
+  kernel/artifacts/storage-cleanup-20261111. Root and TheRock AGENTS.md now require
+  cleanup at task close and grouping durable inputs, results and recovery material.
+  **NEXT D54:** builder/toolchain ELF/CMake/link closure and isolated clean-build
+  admission from preserved D52/D53 kits. Historical runtime faults unchanged.
+
 - **Storage cleanup and release prep completed 2026-11-10.**
   Implementations afdac891a/e3f8c899d.
   [Report](docs/development/bc250_storage_cleanup_20261110/README.md),

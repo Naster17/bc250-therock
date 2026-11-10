@@ -1,0 +1,109 @@
+{
+  "summary": {
+    "status": "passed",
+    "free_before": 59273547776,
+    "free_after": 61699842048,
+    "retired_roots": 10,
+    "duplicate": {
+      "removed": "/home/nik/bc250work/rocm-10.2-gfx1013/quant-b053/evidence.tar.gz",
+      "retained": "kernel/artifacts/quant-b053/evidence.tar.gz",
+      "sha256": "171924233619ce789f958f195d275b6fd07e4522b45a54ed883a015212710eb6"
+    },
+    "protected_files": 59,
+    "retired_containers": 4,
+    "images_match": true,
+    "boot_id": "5c7ba874-75e0-41c1-8f5c-9096cc2697c5",
+    "prefix_links": {
+      "/opt/bc250-stack/current": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+      "/opt/bc250-stack/profiles/rccl-single": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/rccl-single",
+      "/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/daily": "/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/daily"
+    },
+    "preflight": {
+      "attempt": "legacy-build-closeout-final",
+      "memory_available_bytes": 14817067008,
+      "gpu_clients": [
+        {
+          "pid": 3161,
+          "uid": 0,
+          "comm": "cyan-skillfish-"
+        }
+      ],
+      "docker_containers": [],
+      "podman_containers": [],
+      "watchdog": "active"
+    },
+    "transfer_removed": true
+  },
+  "archives": [
+    {
+      "status": "passed",
+      "manifest_bytes": 52446,
+      "admitted_manifest_bytes": 67108864,
+      "entries": 267,
+      "file_bytes": 1891027188,
+      "archive_bytes": 299611402,
+      "sha256": "d42e7107d454e6d13cb67cbf6c017f4e54b4a23cce0b65835443633594c8abde",
+      "external_or_unresolved_links": 0,
+      "scope": "Current retained payload bytes; not historical identity, ELF closure, license clearance or clean-build qualification",
+      "manifest_sha256": "c36b0b5b06413bc00013d2fa87d65d02866522299efe66456aa11fe114aaee8b",
+      "path": "kernel/artifacts/storage-cleanup-20261111/legacy-miopen-stages.tar.gz"
+    },
+    {
+      "status": "passed",
+      "manifest_bytes": 811790,
+      "admitted_manifest_bytes": 67108864,
+      "entries": 4322,
+      "file_bytes": 277859619,
+      "archive_bytes": 214033943,
+      "sha256": "96a66fb9457ab1e2cdc7e04c6e0d407f92270c310114830868b79d7489175dd7",
+      "external_or_unresolved_links": 31,
+      "scope": "Current retained payload bytes; not historical identity, ELF closure, license clearance or clean-build qualification",
+      "manifest_sha256": "e85f5db68ed0c05ebc7c03fc24be0780629786d2330c5818e8fb9171fdde411e",
+      "path": "kernel/artifacts/storage-cleanup-20261111/legacy-small-stages.tar.gz"
+    }
+  ],
+  "protected_legacy_torch": {
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09": [
+      "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/profiler-order-before/torch",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09/.dockerignore",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09/.github/ci_commit_pins/triton.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09/AGENTS.md",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09/build/bin/protoc",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09/docs/requirements.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-a09/torch/bin/protoc"
+    ],
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-order": [
+      "/home/nik/bc250work/rocm-10.2-gfx1013/recovery/sparse-n213-before/torch",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-order/.dockerignore",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-order/.github/ci_commit_pins/triton.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-order/AGENTS.md",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-order/build/bin/protoc",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-order/docs/requirements.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-profiler-order/torch/bin/protoc"
+    ],
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b035": [
+      "/home/nik/bc250work/rocm-10.2-gfx1013/rccl-b035/candidate-release-r3/torch",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/rccl-b035/candidate-release-r1/torch",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/rccl-b035/candidate-release-r2/torch",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b035/.dockerignore",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b035/.github/ci_commit_pins/triton.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b035/AGENTS.md",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b035/build/bin/protoc",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b035/docs/requirements.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-rccl-b035/torch/bin/protoc"
+    ],
+    "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031": [
+      "/home/nik/bc250work/rocm-10.2-gfx1013/distributed-b031/candidate-release-r1/torch",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031/.dockerignore",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031/.github/ci_commit_pins/triton.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031/AGENTS.md",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031/build/bin/protoc",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031/docs/requirements.txt",
+      "/home/nik/bc250work/rocm-10.2-gfx1013/pytorch-distributed-b031/torch/bin/protoc"
+    ]
+  },
+  "build_inputs": {
+    "files": 340,
+    "matches": []
+  }
+}

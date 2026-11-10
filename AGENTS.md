@@ -19,6 +19,11 @@ Respect the recorded .104 development and authorized .105 deployment roles, reco
 user-owned untracked src/ constraints. Documentation-only memory updates do not
 require ROCm/Torch rebuilds or GPU requalification.
 
+Close task-owned scratch before handoff. Keep reusable inputs and results in
+their documented locations, verify unique outputs before retiring copies, and
+remove completed transfer files and duplicate staging. Follow the workspace
+AGENTS.md cleanup and storage layout rules when operating in bc250stack.
+
 ## Quick Start
 
 ```bash

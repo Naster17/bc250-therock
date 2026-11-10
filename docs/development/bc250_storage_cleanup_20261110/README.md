@@ -95,3 +95,37 @@ audited read-only. A common SDK deployment needs target qualification before
 promotion. D54 remains the next build milestone. The reclaimed space clears
 the old 40 GiB disk allocation, with ELF/CMake/link closure and build-resource
 admission still pending.
+
+
+## November 11 follow-up
+
+The folder audit covered the remaining suffixed Torch and native build paths.
+The first retirement attempt found rollback or candidate-release links to
+`pytorch-profiler-a09`, `pytorch-profiler-order`, `pytorch-distributed-b031`
+and `pytorch-rccl-b035`. Three also appeared in retained container mounts.
+The check refused deletion. Their temporary duplicate archive was discarded
+after verifying the narrower stage archive.
+
+The narrower pass retired six old MIOpen stages and DB packages, the A02
+profile output, the B05.2 candidate staging copy and the B03.3 RCCL build
+copy. Four exited B03.3 containers contained only generated mount directories,
+an empty container marker and the standard mtab link in their writable layers.
+Their available logs were saved before removal. The Podman image ID set matched
+before and after. The redundant B05.3 evidence archive matched the workstation
+copy by size and SHA256, and its two metadata files moved into the journal.
+
+The runtime and rollback paths were checked against installed metadata, live
+processes, symlinks and retained container mounts. The build audit covered 340
+Ninja/CMake files. Both current Torch recipes still refer to
+`pytorch-sparse-followup/third_party`. D54 uses the retained native component
+builds and compiler metadata for closure checks.
+
+The journals are under `evidence/maintenance/20261111` on .104. The workstation
+recovery archives and receipts are under `kernel/artifacts/storage-cleanup-20261111`.
+The workspace and TheRock AGENTS.md files now require task-owned scratch and
+completed container cleanup before handoff.
+
+The follow-up reclaimed **2.26 GiB** and reached **57.46 GiB** free
+before documentation sync. All 59 protected file identities and the runtime
+links matched. The transfer directory and its FIFO were removed.
+[Follow-up receipts](followup-results.json).

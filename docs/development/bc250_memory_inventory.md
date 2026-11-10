@@ -9,6 +9,16 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## Legacy build storage follow-up (2026-11-11)
+
+.104 reclaimed another 2.26 GiB by retiring verified MIOpen stages,
+RCCL and candidate packaging copies and an exact duplicate evidence archive.
+Four exited B03.3 containers with generated writable metadata were retired
+after saving diagnostics. Retained Torch trees have active, rollback, candidate
+or build input dependencies. See [the follow-up receipts](bc250_storage_cleanup_20261110/followup-results.json)
+and the workspace layout guide. All 59 protected identities match, and the
+task transfer directory was removed. D54 remains next.
+
 ## Release development storage and source audit (2026-11-10)
 
 .104 reclaimed 44.20 GiB after retiring verified redundant proof, staging,
