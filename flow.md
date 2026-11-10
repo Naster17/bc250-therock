@@ -9,6 +9,37 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-05 / D43 IN PROGRESS 2026-11-10 — training-only capacity; not qualified.**
+  Sources 8a590d02f (worker/guard/proof), 7c0dc6234 (export/replay),
+  4f684e984 (r2 forward cache policy after actual RAM stop). Native defaults unchanged.
+  tools/distributed-d43 BOTH; D42 descriptor SHA1d8fef22942169acbd759d3639a9730d4090dd68ebf211debb660aea3121e7e1.
+  Fixed original D35 eight-update loop: initial+2 warmup+5 timed; no raw reference
+  reads/full audits, D42 shape/rank/source proof pinned, norm finite each step and
+  ALL final local GPU params/gradients/moments finite/counter8.112 local tests/lint pass.
+  R1 control BOTH passed/ACK, median17.9963s. R1 large completed first update but
+  105 hit host reserve during second forward: available3,214,176,256B<3GiB,
+  cgroup1,937,588,224B.105 own-stop,104 peer manually own-stopped after RCCL timeout;
+  both guardsACK/logs unchanged/no OOM/reboot. Preserve evidence/distributed-d43-r1
+  and tools/distributed-d43/preliminary-r1. No relaxed bounds/reserves/native math.
+  R2 additionally releases unused GPU cache via public FSDP unit forward prehooks
+  and root postforward hook; live allocations asserted unchanged each time, emits
+  bounded GPU live/reserved telemetry. Original model/wrap/optimizer/collectives intact.
+  **RUNNING BOTH** guard_distributed_d43_on_host.py --shape control --label control
+  --port29751; guardians1046064/1055796, tools/distributed-d43, Podman label
+  bc250.d43=d43-r2-control. Logs evidence/distributed-d43-control-r2-controller.log
+  and evidence/distributed-d43-r2/control/{gpu.log,rank.json,final.json,guard/state.json}.
+  At checkpoint four forward passes observed; result UNKNOWN. Existing EX reservation/
+  SHruntime,4CPU0–3,hard10GiB/12combined,owned-stop host3GiB/cgroup9GiB/disk5GiB,
+  child1400/isolatedguard1800 retained.104boot2774d201 r2/105e902e636 r3.
+  **NEXT:** inspect current r2 control final/ACK; if pass compare ALL eight norms/
+  five global losses/state counts exactly to r1, then run r2 large-training at29753
+  on BOTH. If reserve stop inspect exact phase/telemetry, never lower reserves.
+  Exporter staged BOTH; final archives intended distributed-d43-evidence-r2.tar.gz.
+  Local verifier replays D42/predecessors, source/finite/update mutations prepared
+  kernel/artifacts/distributed-d43/check_negative_archives.py. No archive exists yet.
+  Clocksource105 remote-read timeout remainsOPEN; historical Python CPU fault stays
+  distinct fixed VMheap/D05 exit/D21 restore. No native prefix/install/reboot/apps.
+
 - **PLAN-05 / D42 completed 2026-11-10 —1.024B source-bound two-host GPU audit; PLAN-05 OPEN.**
   Sources48f58f74c/cachef9f9ab563/boundedCPU4582251e3; finaldistributed-d42-r5 BOTH.
   [Report](docs/development/bc250_distributed_d42_results/README.md),
