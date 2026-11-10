@@ -1,0 +1,32 @@
+{
+  "retired-source-proofs-r1.tar.gz": {
+    "path": "kernel/artifacts/storage-cleanup-20261110/retired-source-proofs-r1.tar.gz",
+    "bytes": 3285101081,
+    "sha256": "c25f0be8dfc97fa1103953b4d6230540b3539630f00799b8a9eb8189ce56bd1c"
+  },
+  "retired-staging-r2.tar.gz": {
+    "path": "kernel/artifacts/storage-cleanup-20261110/retired-staging-r2.tar.gz",
+    "bytes": 4469298417,
+    "sha256": "1dc1317a8dedeeab9590104e742f1824115f006364802f969ce3b8b2a9033ac6"
+  },
+  "retired-docs-r1.tar.gz": {
+    "path": "kernel/artifacts/storage-cleanup-20261110/retired-docs-r1.tar.gz",
+    "bytes": 369759155,
+    "sha256": "a2dd73a8514de4e8974758870c8b1657b07d28dff68dd10954132af0457d80b4"
+  },
+  "retired-workspace.tar.gz": {
+    "path": "kernel/artifacts/storage-cleanup-20261110/retired-workspace.tar.gz",
+    "bytes": 200101730,
+    "sha256": "fca188d104bba76f43912ece70eb408b65e688dbb357bf996f1a8c2bf624b98a"
+  },
+  "source-audit/code-variants.tar.gz": {
+    "path": "kernel/artifacts/storage-cleanup-20261110/source-audit/code-variants.tar.gz",
+    "bytes": 1181533,
+    "sha256": "b13de8f56f203bcfbeaed8142263d0e9f39abea78ba30a3e823d610774ef06fa"
+  },
+  "source-audit/loose-code.tar.gz": {
+    "path": "kernel/artifacts/storage-cleanup-20261110/source-audit/loose-code.tar.gz",
+    "bytes": 59357,
+    "sha256": "65158f3755a906c8253f9dbadc69d227aa1f55150d82cb5f2b1a774514a7ecb0"
+  }
+}

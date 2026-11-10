@@ -1,0 +1,205 @@
+{
+  "scan_counts": {
+    "therock": {
+      "head": 1379,
+      "baseline": 6,
+      "head_only_missing": 3852,
+      "different": 11
+    },
+    "rocm-libraries": {
+      "head": 54789,
+      "different": 2,
+      "head_only_missing": 1,
+      "baseline": 3
+    },
+    "rocm-systems": {
+      "head": 22722,
+      "baseline": 4,
+      "different": 21
+    },
+    "torch-daily": {
+      "head": 21285,
+      "different": 180,
+      "baseline": 2,
+      "missing_baseline": 34
+    },
+    "torch-rccl": {
+      "head": 21285,
+      "different": 180,
+      "baseline": 2,
+      "missing_baseline": 34
+    },
+    "triton": {
+      "head": 1693
+    }
+  },
+  "classification": {
+    "therock": {
+      "classified": {
+        "already_in_git": 11
+      },
+      "review": []
+    },
+    "rocm-libraries": {
+      "classified": {
+        "lfs_payload_matches": 2
+      },
+      "review": []
+    },
+    "rocm-systems": {
+      "classified": {
+        "lfs_payload_matches": 21
+      },
+      "review": []
+    },
+    "torch-daily": {
+      "classified": {
+        "crlf_only": 19,
+        "already_in_git": 139
+      },
+      "review": [
+        "torch/_inductor/codegen/cpp_wrapper_gpu.py",
+        "torch/csrc/Module.cpp",
+        "torch/csrc/cuda/Module.cpp",
+        "torch/csrc/cuda/nccl.cpp",
+        "torch/csrc/cuda/nccl.h",
+        "torch/csrc/cuda/shared/cusparselt.cpp",
+        "torch/csrc/distributed/c10d/NCCLUtils.hpp",
+        "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+        "torch/csrc/distributed/c10d/ProcessGroupNCCL.hpp",
+        "torch/csrc/distributed/c10d/ProcessGroupUCC.cpp",
+        "torch/csrc/distributed/c10d/init.cpp",
+        "torch/csrc/distributed/c10d/symm_mem/CUDASymmetricMemoryUtils.cpp",
+        "torch/csrc/dynamo/compiled_autograd.h",
+        "torch/csrc/dynamo/guards.cpp",
+        "torch/csrc/inductor/aoti_eager/kernel_holder.cpp",
+        "torch/csrc/inductor/aoti_runtime/interface.h",
+        "torch/csrc/inductor/aoti_runtime/model_base.h",
+        "torch/csrc/inductor/aoti_runtime/model_container.h",
+        "torch/csrc/profiler/collection.cpp",
+        "torch/csrc/profiler/cupti_monitor_native.cpp",
+        "torch/csrc/profiler/cupti_monitor_native.h",
+        "torch/csrc/stable/macros.h"
+      ]
+    },
+    "torch-rccl": {
+      "classified": {
+        "crlf_only": 19,
+        "already_in_git": 139
+      },
+      "review": [
+        "torch/_inductor/codegen/cpp_wrapper_gpu.py",
+        "torch/csrc/Module.cpp",
+        "torch/csrc/cuda/Module.cpp",
+        "torch/csrc/cuda/nccl.cpp",
+        "torch/csrc/cuda/nccl.h",
+        "torch/csrc/cuda/shared/cusparselt.cpp",
+        "torch/csrc/distributed/c10d/NCCLUtils.hpp",
+        "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+        "torch/csrc/distributed/c10d/ProcessGroupNCCL.hpp",
+        "torch/csrc/distributed/c10d/ProcessGroupUCC.cpp",
+        "torch/csrc/distributed/c10d/init.cpp",
+        "torch/csrc/distributed/c10d/symm_mem/CUDASymmetricMemoryUtils.cpp",
+        "torch/csrc/dynamo/compiled_autograd.h",
+        "torch/csrc/dynamo/guards.cpp",
+        "torch/csrc/inductor/aoti_eager/kernel_holder.cpp",
+        "torch/csrc/inductor/aoti_runtime/interface.h",
+        "torch/csrc/inductor/aoti_runtime/model_base.h",
+        "torch/csrc/inductor/aoti_runtime/model_container.h",
+        "torch/csrc/profiler/collection.cpp",
+        "torch/csrc/profiler/cupti_monitor_native.cpp",
+        "torch/csrc/profiler/cupti_monitor_native.h",
+        "torch/csrc/stable/macros.h"
+      ]
+    },
+    "triton": {
+      "classified": {},
+      "review": []
+    }
+  },
+  "lfs_verified": 23,
+  "host_release_matrix": {
+    "104": {
+      "host": "bc250",
+      "kernel": "7.1.5-bc250rocm-r2",
+      "boot_id": "5c7ba874-75e0-41c1-8f5c-9096cc2697c5",
+      "profiles": {
+        "daily": {
+          "prefix": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+          "runtime_sha256": "d4e1e144a4da8b19098980455fa657d5964e76525e4125853a4f1fd0d4102fe3",
+          "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+          "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+          "files": {
+            "rocm/lib/librocprofiler-sdk.so.1.4.2": "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b",
+            "rocm/lib/libamdhip64.so": "a1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b",
+            "rocm/lib/libMIOpen.so": "381eac05240e33acced9472fb7c3071afe8bc4f434407e67a29ce64423b935ac",
+            "torch/torch/lib/libtorch_hip.so": "2f2761cd7f259612863406ab0e85d7b1b5ce8b59a32655bf9ac7db9359d0df27",
+            "torch/torch/lib/libtorch_cpu.so": "9586351bda1617acaefacacedd938435464cd92337df1ec3e61044c453478195"
+          }
+        },
+        "rccl-single": {
+          "prefix": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/rccl-single",
+          "runtime_sha256": "00f61263864c437049b2567c8b1bff316dd5a5e6bb484027dc88d24c59454d4b",
+          "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+          "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+          "files": {
+            "rocm/lib/librocprofiler-sdk.so.1.4.2": "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b",
+            "rocm/lib/libamdhip64.so": "a1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b",
+            "rocm/lib/libMIOpen.so": "381eac05240e33acced9472fb7c3071afe8bc4f434407e67a29ce64423b935ac",
+            "torch/torch/lib/libtorch_hip.so": "a31cbb159d3edfb4b7e1cc59dfcc325db185c4c540e1fcaa952e09e833335533",
+            "torch/torch/lib/libtorch_cpu.so": "8a1b0e1fecef7afc9309d0460b2fbd13df20b8bd667d7036c58a341a020e5346"
+          }
+        }
+      },
+      "fallback": "/opt/bc250-stack/releases/10.2-gfx1013-20261013-4b000d542"
+    },
+    "105": {
+      "host": "bc500",
+      "kernel": "7.1.5-bc250rocm-r2",
+      "boot_id": "1b9227be-2b3e-495d-ac31-2438017fe562",
+      "profiles": {
+        "daily": {
+          "prefix": "/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/daily",
+          "runtime_sha256": "054f3d4e07157ac078082e8e7b497df86b0156b597ae149997fa922e1516c7b5",
+          "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+          "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+          "files": {
+            "rocm/lib/librocprofiler-sdk.so.1.4.2": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+            "rocm/lib/libamdhip64.so": "a1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b",
+            "rocm/lib/libMIOpen.so": "381eac05240e33acced9472fb7c3071afe8bc4f434407e67a29ce64423b935ac",
+            "torch/torch/lib/libtorch_hip.so": "2f2761cd7f259612863406ab0e85d7b1b5ce8b59a32655bf9ac7db9359d0df27",
+            "torch/torch/lib/libtorch_cpu.so": "9586351bda1617acaefacacedd938435464cd92337df1ec3e61044c453478195"
+          }
+        },
+        "rccl-single": {
+          "prefix": "/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/rccl-single",
+          "runtime_sha256": "ee0f9d1e1b3a1d6ecac518af0518ddc920581301bde4d57950d8cd852e3a10fa",
+          "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+          "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+          "files": {
+            "rocm/lib/librocprofiler-sdk.so.1.4.2": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+            "rocm/lib/libamdhip64.so": "a1162308076a99ff5cf5e4e15ca8bff53928d8bc4e624c42033d7e15dd2d1e3b",
+            "rocm/lib/libMIOpen.so": "381eac05240e33acced9472fb7c3071afe8bc4f434407e67a29ce64423b935ac",
+            "torch/torch/lib/libtorch_hip.so": "a31cbb159d3edfb4b7e1cc59dfcc325db185c4c540e1fcaa952e09e833335533",
+            "torch/torch/lib/libtorch_cpu.so": "8a1b0e1fecef7afc9309d0460b2fbd13df20b8bd667d7036c58a341a020e5346"
+          }
+        }
+      },
+      "fallback": "/opt/bc250-stack/before-dev-current"
+    }
+  },
+  "audio_patch_ids_match": [
+    "8f0f90f",
+    "045081c",
+    "1ae7f5d"
+  ],
+  "live_elf_checks": {
+    "sdk": 43,
+    "runtime": 69,
+    "tmp_dynamic_references": 0
+  },
+  "build_recipe_scan": {
+    "files": 340,
+    "legacy_staging_references": 0
+  }
+}

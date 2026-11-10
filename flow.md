@@ -13,6 +13,40 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **Storage cleanup and release prep completed 2026-11-10.**
+  Implementations afdac891a/e3f8c899d.
+  [Report](docs/development/bc250_storage_cleanup_20261110/README.md),
+  [archive receipts](docs/development/bc250_storage_cleanup_20261110/artifacts.json).
+  .104 reclaimed 44.20GiB, 11,902,251,008B to 59,362,246,656B before docs sync.
+  Retired 18,695 obsolete .o files, 5 archived proof copies, redundant D52 OCI
+  and closed transfer staging. Then retired 654 verified roots (26 tmp, 115
+  evidence, 56 helper, 457 loose files), 57 docs snapshots and 21 legacy WS roots.
+  All recoverable except obsolete objects, which can be rebuilt from retained
+  sources/configs/cache. Original OCI image/local archive and D35/D41 oracles kept.
+  Staging r1 refused old FIFO. R2 strict root-readable archive preserved guard
+  records, FIFO metadata and deduplicated bytes. 126,368 entries, 4,469,298,417B
+  SHA1dc1317a8dedeeab9590104e742f1824115f006364802f969ce3b8b2a9033ac6.
+  Producer13799/13800, retirement16474/16472/17580 done. No owned jobs/guards.
+  Raw journals now .104 evidence/maintenance/20261110; local verified payloads
+  kernel/artifacts/storage-cleanup-20261110. Tmp empty except usage README.
+  D52 kit now tools/source-d52/package-r1/torch-source-d52-r1.tar.gz with its
+  original evidence path as a compatibility link. 59 protected identities and
+  prefix links equal. Six provider registrations and two launcher checks pass.
+  166 local tests. .104 observed r2 boot5c7ba874 after inter-pass reboot.
+  Active ELF audit 69 runtime/43 SDK, 340 Ninja/CMake files and live registry
+  paths checked. .104 source audit captured 371 code variants and verified 23
+  LFS pointers. Loose port patches already in Git including three audio patches.
+  22 shared Torch HIP translation variants preserved for D54 comparison, no
+  authored source patch inferred from generated output. .105 read-only audit
+  matches .104 image/Torch a524980 and checked HIP/MIOpen/Torch libraries.
+  SDK differs: D49 2a975370 on .104 and qualified a6dc1c88 on .105.
+  Target qualification precedes SDK promotion. No release build or GPU test here.
+  PythonCPU/KFD/105clocksource issues remain distinct from the SDK repair.
+  **NEXT D54:** audit saved builder/SDK/header/ELF/CMake/link inputs and admit
+  an isolated clean build. 55.3GiB free clears the earlier 40GiB disk estimate.
+  Use the preserved D52/D53 kits and 22-file observed HIP output reference.
+  Check complete resource and dependency closure before building. PLAN07 open.
+
 - **D53 completed 2026-11-10 — external native build payload preserved; clean-build budget refused, PLAN-07 OPEN.**
   Implementation ba613c857. [Report](docs/development/bc250_source_d53_results/README.md),
   [receipts](docs/development/bc250_source_d53_results/artifacts.json).

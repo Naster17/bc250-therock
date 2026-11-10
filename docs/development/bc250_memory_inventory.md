@@ -9,6 +9,21 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## Release development storage and source audit (2026-11-10)
+
+.104 reclaimed 44.20 GiB after retiring verified redundant proof, staging,
+evidence, helper, docs and legacy workspace copies plus obsolete objects.
+[Report and recovery receipts](bc250_storage_cleanup_20261110/README.md).
+55.3 GiB free before final docs sync. Live evidence remains at its registered
+paths, with maintenance records grouped under evidence/maintenance/20261110.
+D52 source archive moved to tools/source-d52/package-r1 with an old-path link.
+The tracked source audit recovered raw build variants and verified Git/LFS
+identities. The reviewed audio and core patches are already present in the
+local histories. Retain the observed 22-file Torch HIP output reference for D54.
+Both host profiles match on the checked Torch/HIP/MIOpen binaries and image.
+The profiler SDK differs by the qualified D49 repair on .104. .105 comparison
+was read-only. D54 remains the next dependency and clean-build admission step.
+
 ## D53 external compiler/ROCm/RCCL payload (2026-11-10)
 
 Implementation ba613c857; [report](bc250_source_d53_results/README.md).
