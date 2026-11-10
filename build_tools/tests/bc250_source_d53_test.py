@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 """Payload identity, duplicate-member and link-boundary regressions."""
+import gzip
 import io
 import json
 import os
@@ -8,9 +9,10 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "bc250"))
-from external_kit_d53 import create, verify
+from external_kit_d53 import create, verify, inventory
 from admit_clean_build_d53 import admission
 
 
@@ -49,6 +51,36 @@ class ExternalKitTest(unittest.TestCase):
                 report["external_or_unresolved_links"],
                 [dict(path="rocm/external", target="/outside/input")],
             )
+
+    def test_manifest_admission_is_explicit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = self.fixture(Path(directory))
+            with self.assertRaises(AssertionError):
+                verify(archive, max_manifest_bytes=16)
+            self.assertEqual(
+                verify(archive, max_manifest_bytes=4096)["status"], "passed"
+            )
+
+    def test_complete_gzip_published_before_source_recheck(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "file").write_bytes(b"content")
+            sink = io.BytesIO()
+            output = io.BufferedWriter(sink, buffer_size=1024**2)
+            calls = 0
+
+            def checked_inventory(roots):
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    self.assertTrue(
+                        gzip.decompress(sink.getvalue()).endswith(b"\0" * 1024)
+                    )
+                return inventory(roots)
+
+            with patch("external_kit_d53.inventory", side_effect=checked_inventory):
+                create(dict(source=str(root)), output)
+            output.detach()
 
     def test_content_change_refused(self):
         with tempfile.TemporaryDirectory() as directory:

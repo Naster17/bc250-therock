@@ -70,12 +70,14 @@ def create(roots, output):
                     and info.linkname == row["target"]
                 )
                 archive.addfile(info)
+    # Publish the gzip trailer before the potentially long source recheck.
+    output.flush()
     # Detect ordinary input mutations while exporting. Consumer independently hashes tar bytes.
     assert inventory(roots) == manifest, "Inputs changed during export"
     return manifest
 
 
-def verify(path):
+def verify(path, max_manifest_bytes=64 * 1024**2):
     with gzip.open(path, "rb") as compressed:
         with tarfile.open(fileobj=compressed, mode="r|") as archive:
             members = iter(archive)
@@ -83,7 +85,7 @@ def verify(path):
             assert (
                 first.name == "manifest.json"
                 and first.isfile()
-                and first.size < 64 * 1024**2
+                and 0 < first.size <= max_manifest_bytes
             )
             manifest = json.load(archive.extractfile(first))
             assert manifest["schema"] == 1
@@ -127,6 +129,8 @@ def verify(path):
         checksum = digest(stream)
     return dict(
         status="passed",
+        manifest_bytes=first.size,
+        admitted_manifest_bytes=max_manifest_bytes,
         entries=len(seen),
         file_bytes=total,
         archive_bytes=Path(path).stat().st_size,
@@ -143,11 +147,13 @@ def main():
     parser.add_argument("--roots", type=Path)
     parser.add_argument("--archive", type=Path)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--manifest-limit-mib", type=int, default=64)
     args = parser.parse_args()
     if args.operation == "create":
         result = create(json.loads(args.roots.read_text()), sys.stdout.buffer)
     else:
-        result = verify(args.archive)
+        assert 1 <= args.manifest_limit_mib <= 256
+        result = verify(args.archive, args.manifest_limit_mib * 1024**2)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
 
 
