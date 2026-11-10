@@ -110,3 +110,12 @@ peak budget fits; bounded RAM scratch and verified workstation retention of owne
 temporary transfers may be considered, without deleting sources/builds/caches or
 reducing reserves. Four important packages remain, PLAN07–10. Historical unknown
 Python/KFD/clocksource issues remain separate known limitations.
+
+Final documentation extraction briefly reduced free space to5,355,589,632B,
+below the5GiB reserve. Three owned duplicate D44/D45/D46 docs transfer tars were
+then SHA/size-verified against existing workstation archives and removed from
+host tool directories only:28,533,182B reclaimed, free5,384,122,368B before the
+small handoff update. Extracted host snapshots and workstation archives remain;
+no source/build/cache/release/image was removed. [Receipt](transfer-cleanup.json).
+Final handoff snapshot uses hardlinks for unchanged documents and atomically
+replaces changed files, retaining the earlier snapshot without another full copy.

@@ -42,7 +42,12 @@ release claims must not override this cursor and current manifests.
   samehost evidence/source-d46-evidence-r1.tar.gz. SDKproposal remainslocalGitonly.
   No prefix/nativecode/library/default/profile/registry/image/kernel/reboot/app/
   cache/checkpoint/build change.104boot2774d201r2;105unaccessed/unchanged/D43docs.
-  .104docs snapshot20261110-d46-final synced at handoff, manifest updated.
+  .104docs snapshot20261110-d46-handoff synced, earlierfinalsnapshot preserved.
+  Docsextractionbrieflyfree5,355,589,632B<5GiBreserve. SHA/sizeverified duplicate
+  D44/D45/D46docstransfers removedONLYhosttools(28,533,182B); workstationarchives/
+  extractedhostsnapshots retained, free5,384,122,368Bbefore smallhandoffupdates.
+  Receipt inreport transfer-cleanup.json. Handoffhardlinks unchangeddocs/atomic
+  changedfilereplacements avoidfullcopy; no source/build/cache/release/image deletion.
   HistoricalPythonCPUIP0x3b3e6/KFDmm-queue/105clocksource causes stillOPEN, separate
   fixedVMheap/D05/D21. No performance/runtimeimprovement or universalcorrectnessclaim.
   **NEXT PLAN-07 / D47:** portableTorchsource snapshot/replay independent shared

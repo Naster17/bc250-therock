@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "removed_duplicate_transfers": [
+    {
+      "local": "kernel/artifacts/distributed-d44/docs-final.tar.gz",
+      "remote": "/home/nik/bc250work/tools/visibility-d44/docs-final.tar.gz",
+      "sha256": "8f1a58a861d0344ca6337be076ce76b1c9c22c89189c098517c2734e211fd0ef",
+      "bytes": 9488649
+    },
+    {
+      "local": "kernel/artifacts/distributed-d45/docs-final.tar.gz",
+      "remote": "/home/nik/bc250work/tools/mixed-d45/docs-final.tar.gz",
+      "sha256": "574db507ecb07d379974bf3e45aa74ca73c6371ef4fde8af8bed0e9c7adf8749",
+      "bytes": 9489531
+    },
+    {
+      "local": "kernel/artifacts/source-d46/docs-final.tar.gz",
+      "remote": "/home/nik/bc250work/tools/source-d46/docs-final.tar.gz",
+      "sha256": "62c7bb179ad5c5e176f4c1a7abee9efe2ec2985312943f8a97b6f7a97cc76ada",
+      "bytes": 9555002
+    }
+  ],
+  "reclaimed_bytes": 28533182,
+  "remaining_free_bytes": 5384122368,
+  "reserve_bytes": 5368709120,
+  "host_snapshots_preserved": true,
+  "workstation_archives_verified": true
+}
