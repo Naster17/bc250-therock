@@ -215,7 +215,12 @@ def read(path, rank, prior):
                 )
                 assert s["host_available_bytes"] >= 3 * GIB
                 assert set(s["traffic_input_bytes"]) == {"gathers", "reductions"}
-                assert all(v > 0 for v in s["traffic_input_bytes"].values())
+                root_elements = (config["vocab"] + config["positions"]) * config[
+                    "width"
+                ] + 2 * config["width"]
+                assert s["traffic_input_bytes"] == dict(
+                    gathers=count * 4 - root_elements * 2, reductions=count * 4
+                )
             assert w["median_update_seconds"] == statistics.median(
                 s["seconds_max_rank"] for s in w["samples"]
             )
