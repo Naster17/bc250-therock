@@ -37,16 +37,25 @@ def prerequisite(workspace):
     )
     prior, oracle = predecessors(workspace)
     workers = {}
+    proof_shas = {}
     for rank, entry in enumerate(report["archives"]):
         path = workspace / entry["path"]
         assert hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"]
         _, w, _ = read42(path, rank, prior[rank], oracle)
         workers[rank] = w
-    return report, workers
+        with tarfile.open(path) as archive:
+            for label in ["control", "large-audit"]:
+                data = archive.extractfile(
+                    "home/nik/bc250work/evidence/distributed-d42-r5/"
+                    + label
+                    + "/rank.json"
+                ).read()
+                proof_shas[rank, label] = hashlib.sha256(data).hexdigest()
+    return report, workers, proof_shas
 
 
 def read(path, rank, prior):
-    report, old = prior
+    report, old, proof_shas = prior
     root = "home/nik/bc250work/evidence/distributed-d43-r3/"
     source = "home/nik/bc250work/tools/distributed-d43/"
     with tarfile.open(path) as archive:
@@ -90,6 +99,7 @@ def read(path, rank, prior):
             item = descriptor["proofs"][f"{rank}-{shape}"]
             old_label = "control" if shape == "control" else "large-audit"
             assert item["worker"] == old[rank][old_label]
+            assert item["sha256"] == proof_shas[rank, old_label]
             assert w["status"] == f["status"] == "passed" and f["worker"] == w
             assert (
                 w["phase"] == f["phase"] == "measure"
@@ -342,6 +352,7 @@ def main():
         local_tests=112,
         rows=lr + rr,
         fresh_training_only_1B_capacity_qualified=True,
+        PLAN05_bounded_capacity_scope_complete=True,
         long_run_or_restart_at_1B_qualified=False,
         performance_speedup_claim=False,
         native_runtime_changed=False,
