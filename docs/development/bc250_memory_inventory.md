@@ -7,6 +7,27 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+
+## D51 selected native build-input evidence (2026-11-10)
+
+Implementation f9e45aace; [report](bc250_source_d51_results/README.md).
+Eight D50 missing branches excluded for retained five-off-flag configs;0 family
+references in3239/3241 compile entries+Ninja graphs, source CMake guards pinned.
+No fetch needed for selected config; other-config recursive branches still open.
+Original build image28ad36e6 distinct runtime1bb4ac0e; retained version/number/
+arch exports explicit. Both image probes bind7tools/35vs49 Python inventories.
+Actual CMake3.31.12 vs pip metadata4.4.0 resolved by selected binary hash; compiler
+HIP hash measured now from retained RO build tree, no historical-byte claim.
+Portable1,130,174B metadata/recipe/source-proof kit passes local/104 replay;
+144tests/four new cases/three altered kits refused/static checks pass. No full
+image/wheel/toolchain payload/license/clean-build closure claimed. Native
+version Unknown preserved. Controllers32552/1044done, evidence/source-d51-r1/r2,
+tools/source-d51. R2 CPU2.474s/1GiBnoswap/120s child/EXboard+SHruntime/noGPU.
+D49SDK2a975370/boot2774d201r2 unchanged; native controls/apps/cache/builds preserved.
+104docs20261110-d51-final,105unchanged; historical fault causes remain OPEN.
+Next D52 budget original-build image export and fresh source/recipe assembly,
+required generated/header/link input inventory; PLAN07OPEN/four packages remain.
+
 ## D50 portable recursive dependency contents (2026-11-10)
 
 Implementation eb6147ea0; [report](bc250_source_d50_results/README.md).

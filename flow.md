@@ -11,6 +11,52 @@ release claims must not override this cursor and current manifests.
 
 
 
+
+- **D51 completed 2026-11-10 — selected native input disposition/portable evidence; PLAN-07 OPEN.**
+  Implementation f9e45aace. [Report](docs/development/bc250_source_d51_results/README.md).
+  Eight missing D50 branches excluded for exact daily/RCCL configs: five optional
+  FLASH/MEM_EFF/CK_SDPA/CK_GEMM/MSLK flags off;0 family references in complete3239/
+  3241 compile entries AND Ninja graphs, pinned source CMake guards archived.
+  Required missing-branch fetches0; branches still unexpanded for other configs.
+  Original build records identify immutable image28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06,
+  distinct current runtime1bb4ac0e. Both retained scripts pin build version
+  2.13.0a0+gfx1013/number1/nativegfx1013 and authorized pip-only invocation;
+  native git_version Unknown preserved, no invented rebuild. D50 version-input
+  inventory gap resolved from scripts, not inferred from version.py.
+  Read-only CPU probes:35 build/49 runtime Python distributions+RECORD hashes,
+  seven actual tool hashes/versions. GCC13.3/Clang24 LLVM7667f52/Python3.12.3/
+  Ninja1.13/ccache4.9.1. HIP compiler measured NOW from retained RO build mount,
+  not embedded image/no historical-byte-identity claim. Actual CMake3.31.12
+  vs Python cmake distribution4.4.0 detected; PATH binary hash equals cache tool.
+  Initial supplemental text decode refused ELF; binary read resolves assumption.
+  R1 probe kept, finalR2 binds selected-path hash in both images. No compiler/codegen.
+  Native9 pyproject requirements, complete retained graphs/caches/toolchain/scripts,
+  version outputs/five pinned source files+Torch license packaged. Triton wheel
+  2d65d6fe313,852,959B retained. No full wheelhouse/image/toolchain payload export.
+  Portable package kernel/artifacts/source-d51/portable-build-inputs-d51-r1.tar.gz
+  1,130,174B SHAddb71d39c18d82e7b3a4acace088037ae58176c65a303b9ab8c50686c04b580b;
+  same host tools/source-d51/, extracted build-inputs-r1. Workstation+104 kit replay
+  pass without original checkout/image/GPU/network.144localtests/four new feature/
+  include/version cases, three altered source/backend/CMake kits refused, Black/
+  critical Ruff+F401/diff pass. Updated metadata SHA cannot admit enabled backend.
+  Raw finalR2 metadata kernel/artifacts/source-d51/104-evidence-r1.tar.gz1,084,737B
+  SHA542fe580f63524c7efba82afc5832b12a4d067e323dec76351d65d496b0bc788;
+  host evidence/source-d51-evidence-r1.tar.gz. Host evidence/source-d51-r1/r2 kept;
+  controllers32552/1044finished, source-d51-controller.log/source-d51-r2-controller.log.
+  R2 cost2.474s, notperf; minhost15,084,756,992B/disk21,467,734,016B. EXboard+SHruntime,
+  noGPU nodes/Torch import/network/pull; image probe2CPU0-3/1GiBnoswap/128PID/64MiBtmp/
+  120s child/100ms3GiBhost+5GiBdisk reserves, owned stops only. No cgrouppeak/paging claim.
+  No source/cache/build/nativeprefix/library/image/kernel/reboot/app/checkpoint change;
+  D49SDK2a975370/boot2774d201r2 unchanged, finalidle/nativecyan/watchdogactive/nojobs.
+  .104docs20261110-d51-final synced at handoff;105unaccessed/unchanged/D43docs.
+  Historical PythonCPU/KFD/105clocksource causes remain unknown, separate fixed
+  SDKsentinel/VMheap/D05/D21; no crash/stability/performance improvement claim.
+  **NEXT D52:** admit storage for preserving/exporting original image28ad36e6,
+  assemble fresh selected-source/recipe kit from D47/D50/D51 and inventory required
+  generated/header/link inputs before clean native rebuild. Inventory is explicit;
+  payload/license/clean-build closure OPEN. Four packages PLAN07-10 remain.
+  Keep105/currentprefix/source/build/cache unchanged; no blind optional-backend enable.
+
 - **D50 completed 2026-11-10 — portable available recursive Torch dependencies; PLAN-07 OPEN.**
   Implementation eb6147ea0. [Report](docs/development/bc250_source_d50_results/README.md).
   D47 parent-manifest anchor fixes37 direct pins. Traversal discovers77 locations:

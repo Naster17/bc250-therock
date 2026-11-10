@@ -36,7 +36,9 @@ said these values could not be inferred from version.py alone. Generated
 source8d8b18d remain distinct; no metadata rewrite invents a native rebuild.
 
 The original image and runtime were probed with no network, GPU nodes or Torch
-import. Seven actual tool executable paths/resolutions/hashes/version outputs are
+import. HIP Clang comes from the retained read-only mounted ROCm build tree,
+not from either image; its hash is measured now, not a retained digest proving
+byte identity at the time of the historical Torch builds. Seven actual tool executable paths/resolutions/hashes/version outputs are
 bound in each image, with35 versus49 installed Python distributions and their
 available RECORD metadata hashes. Package metadata is an inventory, not a checksum
 verification of every installed package file or a complete license review.
