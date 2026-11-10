@@ -1,0 +1,32 @@
+From 143f1d878296176c738274202092bb247b7b771c Mon Sep 17 00:00:00 2001
+From: Naster17 <naster17.dev@gmail.com>
+Date: Tue, 10 Nov 2026 16:26:02 +0100
+Subject: [PATCH] Honor the terminating -1 visibility selector in profiler
+ agent filtering
+
+Stop evaluating later GPU agents before the invalid-token CI diagnostic, preserving selections matched earlier in the list. This prevents the supported masking sentinel from aborting Torch import.
+
+Test: isolated one-unit ccache build and retained-input relink on BC250; candidate direct HIP/CUDA/ROCR -1 imports, valid0/terminated selectors and FP64 output/backward plus CPU-first profiler gates in daily and RCCL profiles. UUID unsupported by this board; production SDK unchanged.
+---
+ .../rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp     | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp b/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp
+index ac56e51f7c..e6adbcae83 100644
+--- a/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp
++++ b/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp
+@@ -196,6 +196,11 @@ update_agent_runtime_visibility(rocprofiler_agent_t& agent_info)
+             {
+                 if(itr.empty()) continue;
+ 
++                // A terminating visibility sentinel selects no further GPU agents.
++                // Preserve selections matched earlier in the list; do not escalate
++                // this supported filter value to a fatal CI diagnostic.
++                if(itr == "-1") break;
++
+                 ROCP_TRACE << "Processing " << env_varname << " token: " << itr;
+ 
+                 auto _idx_v = idx++;
+-- 
+2.56.0
+

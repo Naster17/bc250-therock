@@ -1,4 +1,9 @@
-# D46 native visibility proposal — NOT built or qualified
+# D46 visibility proposal (historical source-only receipt)
+
+D48 now builds and qualifies the identical five-line change as rocm-systems
+`143f1d878296176c738274202092bb247b7b771c`. The active SDK is still unchanged;
+[qualification and remaining limits](../../../docs/development/bc250_sdk_d48_results/README.md).
+The paragraphs below retain the original D46 source-only scope.
 
 The candidate applies to `rocm-systems` native revision
 `1f9609fd69c4923291f58934495520fe62e66ef8`. The four relevant retained SDK files
