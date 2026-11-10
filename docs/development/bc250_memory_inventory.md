@@ -5,6 +5,29 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## D42 1.024B source-bound GPU audit completed (2026-11-10)
+
+[Report](bc250_distributed_d42_results/README.md), sources48f58f74c/f9f9ab563/4582251e3.
+Two native gfx1013 FP32 FSDP ranks pass ALL244parameter loss/raw/norm/clip/updated/
+localAdamW moment+step gates vsD41 FP64oracle at1,024,471,040params. Identicalrank
+raw/clip/updatedhashes; fresh352.96Mcontrol nativehashesexactD39/D40. Oneupdate only.
+Two safely stopped attempts exposed unused GPUcache and CPUoracle scratch pressure:
+phase-boundary empty_cache preserves liveallocations, CPUAdamW reference1Mchunks/
+1139chunks/ALLvalues/16MiBmomentpair, syntheticchunk/fullbitexact proof. No relaxed
+reserves/bounds/nativeoptimizer/defaultchanges. GPUliveaudit~8265.7MiB, hostmin
+3.249GiBguardian, swap/OOM0. 24groups/4ACKs/108localtests/4archive refusals/lintpass.
+CPUready600s beforeGPUinit, nativePG120s unchanged; isolatedguard1800/child1400,
+originalkernelguard600 unchanged.104boundedread-onlysource→105128MiBreader/no cache/
+spool/fallback;49.175GBrawtransport includes4readseach, refs104only. Source/jobsgone.
+104rebootaftercompletedtest, causeunknown; separateexport/testbootIDs verified.
+105r4 clocksource remotereadtimeout remainsOPEN (pr_info_once/retry, quietlogs do
+not prove recovery); distinct historicalPythonCPUfault/fixedVMheap/D05/D21. Native
+prefixes/kernels/fallbacks/apps unchanged; currentdocs syncedBOTH. PLAN05stillOPEN.
+NextD43: fresh training-only1.024B capacity+memory/shortmultiupdates+timings with
+D42proofbound, nofullreference audit inworker; maintainownership/reserves/recovery.
+Single all-residentFP32statefloor16.392GB>RAM; no deliberateOOM or broaderAMP/offload
+impossibilityclaim. Earlier D41 next/status sentences below are historical.
+
 ## D411.024B CPU oracle completed (2026-11-09)
 
 [Report](bc250_distributed_d41_results/README.md), producer3afa04930/finitef75cb361e.

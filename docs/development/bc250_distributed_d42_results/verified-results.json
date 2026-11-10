@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "groups": 24,
+  "guards": 4,
+  "local_tests": 108,
+  "parameters": 1024471040,
+  "source_bound_GPU_oracle_audit_qualified": true,
+  "single_resident_FP32_state_floor_exceeds_host_RAM": true,
+  "training_only_capacity_or_speed_qualified": false,
+  "native_runtime_changed": false,
+  "PLAN05_complete": false,
+  "rows": [
+    {
+      "host": 0,
+      "shape": "control",
+      "loss": 9.364227294921875,
+      "CPU_loss": 9.364227904214559,
+      "max_raw_gradient_error": 2.1940768522681064e-07,
+      "max_clip_error": 1.300937118860028e-08,
+      "local_state_elements": 176478720,
+      "peak_live_audit_MiB": 2991.669921875,
+      "peak_reserved_audit_MiB": 3186.0,
+      "cgroup_peak_MiB": 2255.12890625,
+      "host_min_available_GiB": 8.784481048583984,
+      "worker_seconds": 208.60148653299984,
+      "guarded_phase_seconds": 258.86052264599857
+    },
+    {
+      "host": 0,
+      "shape": "large",
+      "loss": 9.416439056396484,
+      "CPU_loss": 9.416439180620552,
+      "max_raw_gradient_error": 3.2195939733865864e-07,
+      "max_clip_error": 1.5453220930233e-08,
+      "local_state_elements": 512235520,
+      "peak_live_audit_MiB": 8265.712890625,
+      "peak_reserved_audit_MiB": 8514.0,
+      "cgroup_peak_MiB": 4715.74609375,
+      "host_min_available_GiB": 3.488086700439453,
+      "worker_seconds": 603.5999250809982,
+      "guarded_phase_seconds": 723.0129673050033
+    },
+    {
+      "host": 1,
+      "shape": "control",
+      "loss": 9.364227294921875,
+      "CPU_loss": 9.364227904214559,
+      "max_raw_gradient_error": 2.1940768522681064e-07,
+      "max_clip_error": 1.300937118860028e-08,
+      "local_state_elements": 176478720,
+      "peak_live_audit_MiB": 2973.9296875,
+      "peak_reserved_audit_MiB": 3202.0,
+      "cgroup_peak_MiB": 2241.5078125,
+      "host_min_available_GiB": 8.589374542236328,
+      "worker_seconds": 208.85007676900568,
+      "guarded_phase_seconds": 221.70363995100342
+    },
+    {
+      "host": 1,
+      "shape": "large",
+      "loss": 9.416439056396484,
+      "CPU_loss": 9.416439180620552,
+      "max_raw_gradient_error": 3.2195939733865864e-07,
+      "max_clip_error": 1.5453220930233e-08,
+      "local_state_elements": 512235520,
+      "peak_live_audit_MiB": 8265.291015625,
+      "peak_reserved_audit_MiB": 8578.0,
+      "cgroup_peak_MiB": 4715.9921875,
+      "host_min_available_GiB": 3.2826271057128906,
+      "worker_seconds": 603.6603885879958,
+      "guarded_phase_seconds": 616.8253666669989
+    }
+  ],
+  "test_boot_ids": [
+    "2d86d523-c909-415b-86fa-a75be9460dde",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "export_boot_ids": [
+    "5bdbf2f8-ea07-4af5-8e6b-004eba46355b",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d42/104-evidence-r5.tar.gz",
+      "bytes": 3620521,
+      "sha256": "7320a9b908b46f05315f8eec7dd780f21bad7a4920ceceb47ae0de98b3acb7ae"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d42/105-evidence-r5.tar.gz",
+      "bytes": 3519928,
+      "sha256": "577555241fc90bc2b78e7700338885e915c9833ed7786bfbdc39b1f3aee14962"
+    }
+  ]
+}

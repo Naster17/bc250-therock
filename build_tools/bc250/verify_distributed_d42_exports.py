@@ -7,6 +7,7 @@ import json
 import math
 from pathlib import Path
 import tarfile
+from uuid import UUID
 from verify_distributed_d35_exports import read as read35
 from verify_distributed_d36_exports import read as read36
 from verify_distributed_d39_exports import read as read39
@@ -109,7 +110,10 @@ def read(path, rank, old, oracle):
 
         h = record("handoff.json")
         assert h["status"] == "passed" and h["rank"] == rank
-        assert h["boot_id"] == old[0]["boot_id"] and h["kernel"] == old[0]["kernel"]
+        # The export may follow a later reboot. Each test and its ACK must still
+        # belong to the qualified test boot; never substitute the export boot.
+        assert str(UUID(h["boot_id"])) == h["boot_id"]
+        assert h["kernel"] == old[0]["kernel"]
         assert h["original_source_blobs_reverified_on_104"] == (rank == 0)
         assert not any(m.name.endswith(".raw") for m in archive.getmembers())
         for filename, pin in {**SOURCE_SHA256, **HOST_SHA256}.items():
@@ -177,7 +181,7 @@ def read(path, rank, old, oracle):
                 and state["timeout_seconds"] == GUARD_SECONDS
             )
             assert all(state[k] == ack[k] for k in ["nonce", "boot_id", "phase"])
-            assert state["boot_id"] == h["boot_id"] == f["boot_id"]
+            assert state["boot_id"] == old[0]["boot_id"] == f["boot_id"]
             assert w["birth"]["uuid"] not in uuids and f["container_id"] not in cids
             uuids.add(w["birth"]["uuid"])
             cids.add(f["container_id"])
@@ -421,7 +425,8 @@ def main():
         native_runtime_changed=False,
         PLAN05_complete=False,
         rows=lr + rr,
-        boot_ids=[left["boot_id"], right["boot_id"]],
+        test_boot_ids=[prior[0][0]["boot_id"], prior[1][0]["boot_id"]],
+        export_boot_ids=[left["boot_id"], right["boot_id"]],
         archives=[
             dict(
                 path=str(path),

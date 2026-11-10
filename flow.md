@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-09 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-10 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -9,50 +9,51 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **PLAN-05 / D42 IN PROGRESS 2026-11-09 — r5 large audit ACTIVE; not qualified.**
-  Sources: initial48f58f74c, cache fixf9f9ab563, bounded CPU AdamW reference4582251e3.
-  Current final-candidate namespace tools/distributed-d42 BOTH; series distributed-d42-r5.
-  r5 control BOTH passed/ACKed, ALL native ref/scalar/state hashes EXACT D39/D40
-  (CPU moment-scratch report changes intentionally192MiB→16MiB). CPU chunk reference
-  tested bit-exact versus original full-vector weights/moments/step on2M+13 elements,
-  3chunks, bothhosts. GPU update/ALL original numerical tolerances unchanged.
-  CPU updated-value reference now1M-element chunks/≤16MiB FP64 moment pair, full
-  initial blob≤64MiB retained; ALL parameter values still checked, no subsampling.
-  Trim only unused GPU cache afterwrap/beforebackward + beforethree audit passes +
-  before localmoment checks; 5 before/after live/reserved/host events. Original GPU
-  model/gradients/norm/clip/nativeAdamW unchanged. Native/default/image unchanged.
-  **RUNNING BOTH:** python3 ~/bc250work/tools/distributed-d42/guard_distributed_d42_on_host.py
-  --shape large --label large-audit --port 29745 --ready-port 29746. Guardians1048914/
-  10530445;104deadline9016/source9017/CID0fe06620a1b0. At~105s,105remote preflight
-  still active,104container waiting for peer; GPU result UNKNOWN. Own Podman label
-  bc250.d42=d42-r5-large-audit. Logs BOTH evidence/distributed-d42-large-r5-controller.log
-  and evidence/distributed-d42-r5/large-audit/{gpu.log,source.json,guard/state.json,
-  rank.json,final.json} as created. Read live status there; do not start another job.
-  D41 oracle99b36b92 stays104;128MiB bounded reader105/no rawcopy/spool. CPU readiness
-  TCPStore600s beforeGPUinit; nativeGPU PG120s unchanged/client-finished teardown.
-  Child1400/isolated guard1800 (originalkernel600 unchanged, ASTsamealgorithm except
-  max/doc/error, maxACK/expiry/above-max tests).4CPU0–3/10GiB+12combined/512PID/
-  256MiBshm/EXboardreservation+SHruntime/100ms own-stop host<3GiB/cgroup≥9GiB/disk<5GiB.
-  Local108 tests/lint pass; CPU equivalence runs inside native worker beforebackward.
-  Earlier history preserved (all stopped/ACKed, no OOM/reboot/kernelGPUfault):
-  r1 pre-GPU registry105/oldguardcap104 refusal; r2 controlpassed; r3 TCPStore exit
-  hardened/controlpassed, large raw-stage hostRAM safe stop. r4cache trim released
-  ~4GiB unused afterwrap +~2GiB afterbackward at1.024B; ALL raw+clipping gates passed,
-  nativeGPU optimizerstep executed, but CPU updated-reference check hit hostreserve
-  (1043,020,918,784B/1053,073,622,016B, cgroup2.65–2.85GB). This drove r5 CPU chunking;
-  do not claim r4 complete. Logs/source backups/overlays r1…r4 retained.
-  r4 firstcontrol mathpassed,105strictlogguard refused '[43484.262225] clocksource:
-  Watchdog remote CPU 3 read timed out'. TSCunchanged BOTH. Sourcekernel/linux-r3
-  0957f1aa4 clocksource.c:590 pr_info_once; WD_CPU_TIMEOUT retries, notmarkTSCunstable.
-  Quiet later logs cannot prove cause fixed or absence of recurrence. Warning OPEN,
-  separate VMheap/PythonCPUfault. r4control-recheck strictpassBOTH, hashes exact.
-  **NEXT:** monitor r5large until BOTH final/ACK or inspect exact failure; do not
-  relax gates/reserves. Current local exporter/verifier r5 pins/LABELScontrol/large-audit
-  (exporter already staged BOTH at launch). Ifpasses export, scp evidence-r5.tar.gz
-  to kernel/artifacts/distributed-d42; verifier replays D35/D36/D39/D40/D41; run 3
-  negative archives, docs/inventory/manifest/milestone commits/both-hostdocs sync.
-  Keep native profiles/boots/r2 fallback/oldrefs/caches/apps unchanged. Future fresh
-  training-only capacity/memory gate separate; no performance/GPUfit claim yet.
+- **PLAN-05 / D42 completed 2026-11-10 —1.024B source-bound two-host GPU audit; PLAN-05 OPEN.**
+  Sources48f58f74c/cachef9f9ab563/boundedCPU4582251e3; finaldistributed-d42-r5 BOTH.
+  [Report](docs/development/bc250_distributed_d42_results/README.md),
+  [verified results](docs/development/bc250_distributed_d42_results/verified-results.json).
+  OwnedGPT2 FP32 FSDP1,024,471,040params/20blocks/width2048/seq128/global2;
+  ALL244 raw/clipped/updated parameters +localAdamW moments/counters pass ORIGINAL
+  bounds againstD41 FP64oracle99b36b92. GPUloss9.416439056396484 vsCPU9.416439180620552;
+  rawmax3.21960e-7/clipmax1.54533e-8, combinedtolerance. BOTHraw/clip/updatedhashesexact;
+  eachrank512,235,520localstateelements. Fresh352.96McontrolallnativehashesEXACTD39/D40.
+  21units/63summons, no wholemodel gather. Two actual RAM-safe stops drove repairs:
+  r3rawaudit reserve stop→release unused GPU cache (~4GiB afterwrap/~2GiB afterbackward);
+  r4 ALLraw+clippassed/nativeAdamWexecuted, CPUupdatedoracle reserve stop→r5 CPUAdamW
+  ref1M-elementchunks/1139chunks/ALLvalues/16MiB momentpair vsfullparameter scratch.
+  FullinitialFP32blob≤64MiB; otherauditmemory separate. Synthetic2M+13/3chunks CPU
+  weights/moments/stepbitexact vsfullvector, bothhosts. Fivecacheevents preserve live
+  allocations; nativeoptimizer/tolerances/reserves unchanged. Alloldattempts retained.
+  LargeGPUliveaudit8265.713/8265.291MiB, reserved8514/8578MiB; cgroup4715.75/4715.99MiB;
+  worker hostmin3.488/3.283GiB, guardianmin3.484/3.249GiB. Swap/OOM0. Worker603.6s,
+  guardian723.0/616.8s includesreads/checks, NOtrainingthroughputclaim. Single-resident
+  FP32p/g/m/vfloor16,391,536,640B>hostRAM, no deliberateOOM/AMP-offload impossibilityclaim.
+  ExplicitCPUreadybarrier600s beforeGPUinit; GPU120unchanged/client-finishedteardown.
+  Elasticagentalreadywaits guardianverify; workerremoteverifyalone≥98sideal1Gb/s,
+  twoaggregatepasses≥197s (notbothnecessarilyinsideoldGPUtimeout). TempUID1000source
+  104→105 port29842, whitelist/1MiB/256MiBAS/64FD,1953requests/49.175GBraw+manifest;
+  128MiBmaxreader/0diskcache/fallback/spool, sourceSTOPPEDbeforeACK. D41refs104only.
+  EXreservation+SHruntime/4CPU0–3/hard10GiB+12combined/512PID/256MiBshm; ownedstop
+  host<3GiB/cgroup≥9GiB/disk<5GiB,1400schild/isolated1800guard. Originalkernel600cap
+  unchanged; ASTsamealgorithmexceptcap/doc/error, localACK/expiry/maxrefusaltests.
+  24groups/4ACKguards/108localtests/4alteredarchive refusals/lint/diffpass; predecessor
+  D35/D36/D39/D40/D41replayed. Finalarchiveslocal kernel/artifacts/distributed-d42:
+  1043,620,521B SHA7320a9b908b46f05315f8eec7dd780f21bad7a4920ceceb47ae0de98b3acb7ae;
+  1053,519,928B SHA577555241fc90bc2b78e7700338885e915c9833ed7786bfbdc39b1f3aee14962.
+  Guardians1048914/10530445/export4467/29062 exit0, alljobsfinished/guardsACKed/idle.
+  r4firstcontrol105clocksource 'Watchdog remote CPU3 read timed out' remainsOPEN:
+  kernel0957f1aa4 pr_info_once/retry notTSCunstable; quietlaterlogs≠causefixed/no recurrence.
+  TSCunchanged. HistoricalPythonCPUfault distinct fixedVMheap/D05exit/D21restore.
+  Testboots2d86d523r2/e902e636r3;104laterreboot02:21Nov10 AFTERfinal23:55:41Nov9,
+  causeunknownhere. Exportboot1045bdbf2f8/105same; verifierchecks test+ACKboot separately.
+  PostexportpreflightBOTHidle/watchdogactive. Nativeprefixes/Torch/MIOpen/D09/images/
+  defaults/fallbacks/apps untouched; no build/install/reboot issued. Docs/manifest
+  snapshot20261110-d42-final synced BOTH at handoff, transfers grouped/evidence preserved.
+  **NEXT PLAN-05 / D43:** fresh training-only1.024B FP32 FSDP capacity/memory gate,
+  boundtoD42proof, nofullCPUrefs/auditsintimedworker. Boundedfinite multiupdates,
+  warm/completejob timings/actual host+device+communication costs, retain reserves/
+  locks/guards. No larger-fit/generaltraining/speed claim from this one auditedupdate.
 
 - **PLAN-05 / D41 completed 2026-11-09 —1.024B CPU oracle published; PLAN-05 OPEN.**
   Producer `3afa04930`, final finite scanner `f75cb361e`.
