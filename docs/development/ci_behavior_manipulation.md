@@ -50,6 +50,63 @@ The following labels may be added to a pull request to modify CI behavior:
 | `ci:build-jax`             | Opt-in to building JAX packages.                                                                                                                                                                  |
 | `ci:skip-jax`              | Skip JAX package builds.                                                                                                                                                                          |
 
+#### Label and test inputs for sanitizer workflows
+
+Workflows that call
+[`setup_multi_arch.yml`](../../.github/workflows/setup_multi_arch.yml) can set
+three inputs that apply only to `pull_request` events. They are for per-variant
+workflows such as
+[`multi_arch_ci_host_asan.yml`](../../.github/workflows/multi_arch_ci_host_asan.yml).
+Callers that do not pass them keep the behavior described above.
+
+| Input                        | Default | Description                                                                                                                                                                                                                                                                    |
+| ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pull_request_opt_in_label`  | `""`    | When set, the run is skipped unless the pull request has this label. Empty disables the check.                                                                                                                                                                                 |
+| `pull_request_opt_out_label` | `""`    | When set, the run is skipped if the pull request has this label. Empty disables the check.                                                                                                                                                                                     |
+| `pull_request_tests`         | `false` | Boolean. For sanitizer variants (`asan*`, `host-asan*`), run tests on families that have a test runner even when the family's `tests_on_trigger` does not include `presubmit`. For the `host-asan` variant, also use the regular runner when the family has no sandbox runner. |
+
+Label names are compared exactly (case-sensitive) against the labels on the
+pull request. The input values themselves are stripped of leading and trailing
+whitespace.
+
+> [!NOTE]
+> The `asan` variant also has its own label check (the `ci:asan` / `ci:host-asan`
+> check below, and the rewrite of `asan` to `host-asan` on pull requests), so
+> the `asan` workflow accepts either label. Other variant workflows use only
+> the opt-in or opt-out label.
+
+`pull_request_tests` does not override `ci:build:gfx...`, `ci:cpu-test-only`,
+`run-full-tests-only`, families without a test runner, or a `test_runner:...`
+label for which the family has no matching kernel runner.
+
+##### Skip precedence on pull requests
+
+CI is skipped by the first of these checks that matches. Each check is evaluated
+only if the earlier ones did not skip. The reason is written to the job summary
+and the step log.
+
+| Order | Check                                                                    | Result                                  |
+| ----- | ------------------------------------------------------------------------ | --------------------------------------- |
+| 1     | `ci:skip` label                                                          | Skip                                    |
+| 2     | Path filters: only skippable files changed                               | Skip                                    |
+| 3     | `pull_request_opt_in_label` is set and the pull request does not have it | Skip                                    |
+| 4     | `pull_request_opt_out_label` is set and the pull request has it          | Skip (wins over a present opt-in label) |
+| 5     | `asan` variant without `ci:asan` or `ci:host-asan`                       | Skip                                    |
+| 6     | None of the above                                                        | Run                                     |
+
+Interactions with other labels:
+
+| Labels and inputs                                        | Outcome                                                                                                                              |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Opt-in input set, pull request has only `ci:asan`        | Skip. `ci:asan` does not satisfy the opt-in input.                                                                                   |
+| `asan` variant, opt-in input set, no labels              | Skip for the missing opt-in label (check 3 comes before check 5).                                                                    |
+| Opt-in and opt-out labels both present                   | Skip for the opt-out label.                                                                                                          |
+| `ci:skip` with either input                              | Skip for `ci:skip`.                                                                                                                  |
+| `ci:gfx...` or `ci:run-all-archs`, opt-in label missing  | Skip. Arch labels do not bypass either input.                                                                                        |
+| `ci:gfx...` or `ci:run-all-archs`, opt-in label present  | Run, and the arch labels select families as usual.                                                                                   |
+| `ci:gfx...` or `ci:run-all-archs`, opt-out label present | Skip.                                                                                                                                |
+| `push`, `schedule` or `workflow_dispatch`                | The opt-in and opt-out inputs and `pull_request_tests` are ignored. Tests follow the existing nightly gating for sanitizer variants. |
+
 #### Build/Test-specific architecture labels
 
 For fine-grained control over which architectures build vs. test, you can use
