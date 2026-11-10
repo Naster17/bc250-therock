@@ -15,7 +15,7 @@ LABELS = ["control", "large-training"]
 
 def main():
     work = Path("/home/nik/bc250work")
-    root = work / "evidence/distributed-d43-r1"
+    root = work / "evidence/distributed-d43-r2"
     rank = 0 if os.uname().nodename == "bc250" else 1
     with reservation("d43-final-export") as idle:
         registry = Path("/opt/bc250-stack/distributed/d01.json")
@@ -56,10 +56,15 @@ def main():
             selected_daily=str(Path("/opt/bc250-stack/current").resolve()),
         )
         (root / "handoff.json").write_text(json.dumps(handoff, indent=2) + "\n")
-        archive = work / "evidence/distributed-d43-evidence-r1.tar.gz"
+        archive = work / "evidence/distributed-d43-evidence-r2.tar.gz"
         assert not archive.exists()
         with tarfile.open(archive, "w:gz", compresslevel=1) as t:
-            for path in [root, work / "tools/distributed-d43", registry]:
+            for path in [
+                root,
+                work / "tools/distributed-d43",
+                work / "evidence/distributed-d43-r1",
+                registry,
+            ]:
                 t.add(
                     path,
                     arcname=str(path).lstrip("/"),

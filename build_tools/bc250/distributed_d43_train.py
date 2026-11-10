@@ -3,6 +3,7 @@
 """Fresh D35 eight-update measurement bound to the D42 shape/rank/math proof."""
 import argparse
 import math
+import json
 import os
 from pathlib import Path
 import shutil
@@ -30,6 +31,8 @@ def main():
     select(a.shape)
     assert not base.torch.cuda.is_initialized()
     cache_events, norms = [], []
+    unit_forwards = 0
+    root_forwards = 0
     optimizer = None
     updates = 0
     native_backward, native_optimizer = (
@@ -52,6 +55,7 @@ def main():
         assert before["allocated_bytes"] == after["allocated_bytes"]
         assert after["reserved_bytes"] <= before["reserved_bytes"]
         cache_events.append(dict(stage=stage, before=before, after=after))
+        print("D43 cache", stage, json.dumps(cache_events[-1]), flush=True)
 
     def backward(model, index, physical_rank, world, traffic):
         trim("before-backward-" + str(index))
@@ -61,6 +65,24 @@ def main():
 
     def make_optimizer(model):
         nonlocal optimizer
+
+        # Public FSDP forward hooks release unused pool pages between units.
+        # No tensor, wrapping policy, collective or optimizer arithmetic changes.
+        def unit_before(module, inputs):
+            nonlocal unit_forwards
+            trim("unit-forward-" + str(unit_forwards))
+            unit_forwards += 1
+
+        def root_after(module, inputs, output):
+            nonlocal root_forwards
+            trim("after-forward-" + str(root_forwards))
+            root_forwards += 1
+
+        units = [module for module in model.modules() if isinstance(module, base.FSDP)]
+        assert len(units) == base.CONFIG["blocks"] + 1
+        for module in units:
+            module.register_forward_pre_hook(unit_before)
+        model.register_forward_hook(root_after)
         optimizer = native_optimizer(model)
         step = optimizer.step
 
@@ -134,6 +156,8 @@ def main():
             raw_reference_reads=0,
             cache_trim_events=cache_events,
             completed_updates=updates,
+            FSDP_unit_forward_calls=unit_forwards,
+            root_forward_calls=root_forwards,
             finite_gradient_norms=norms,
             full_audits_forbidden=True,
         )

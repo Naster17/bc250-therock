@@ -15,12 +15,12 @@ from capacity_plan_d42 import admit, headroom, HOST_REGISTRY_SHA256, GUARD_SECON
 from qualification_d43 import DESCRIPTOR_SHA256
 
 PINS = {
-    "distributed_d43_train.py": "ed33832f4884ddc816135aa82ef7b8b4cd10dd7372907e556a21762831675488",
+    "distributed_d43_train.py": "1147ffd6d41b84a1522dc0d2e81fb94b052351f6c54ef78d93802fbc1dfe083d",
     "qualification_d43.py": "ac59bfbeb085199ef29db1156418f6e921451327ffaac1d57d565815795bd9cf",
     "qualification_d43.json": "1d8fef22942169acbd759d3639a9730d4090dd68ebf211debb660aea3121e7e1",
-    "guard_distributed_d43_on_host.py": "71a00d80d3bcc108ac416f5a91699b672ba3409999931b38226fcdf76a2bc348",
+    "guard_distributed_d43_on_host.py": "ed5b9acb9c52ed60b262d2958df45be525aaf908bd20207c2155a63e09e2e7d9",
     "distributed_d43_bounded_launch.py": "67f097ce3ce7bc2cf7ad6cf11a98d508f09111b65f4790b77ba14b6b76425cbb",
-    "export_distributed_d43_on_host.py": "04a7ac9d9350839961f4fea9392bb265deeded0769498776ea7512421d4ee9c9",
+    "export_distributed_d43_on_host.py": "8aee88e90fa70fb2271752d10d00d958ba1e3cdf846d782d48f2612c00a0f22b",
 }
 LABELS = ["control", "large-training"]
 
@@ -44,7 +44,7 @@ def prerequisite(workspace):
 
 def read(path, rank, prior):
     report, old = prior
-    root = "home/nik/bc250work/evidence/distributed-d43-r1/"
+    root = "home/nik/bc250work/evidence/distributed-d43-r2/"
     source = "home/nik/bc250work/tools/distributed-d43/"
     with tarfile.open(path) as archive:
 
@@ -66,6 +66,11 @@ def read(path, rank, prior):
         assert descriptor["report"] == report
         h = record("handoff.json")
         assert h["status"] == "passed" and h["rank"] == rank
+        assert (
+            h["selected_daily"]
+            == "/opt/bc250-stack/candidates/miopen-plan02-r4/profiles/daily"
+        )
+        assert h["kernel"] == ["7.1.5-bc250rocm-r2", "7.2.10-bc250rocm-r3"][rank]
         assert str(UUID(h["boot_id"])) == h["boot_id"]
         assert not h["idle"]["docker_containers"] and not h["idle"]["podman_containers"]
         assert h["idle"]["watchdog"] == "active"
@@ -125,6 +130,11 @@ def read(path, rank, prior):
             assert f["container_id"] not in containers
             containers.add(f["container_id"])
             assert f["kernel"] == h["kernel"] and f["boot_id"] == h["boot_id"]
+            assert f["selected_tools"] == "/opt/bc250-stack/tools/distributed-d09"
+            assert (
+                f["launcher_sha256"]
+                == "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7"
+            )
             assert (
                 f["agent_shutdown_clean"]
                 and f["kernel_log_unchanged"]
@@ -167,11 +177,20 @@ def read(path, rank, prior):
                 == w["state"]["AdamW_moment_elements_each"]
                 == count // 2
             )
-            assert len(w["cache_trim_events"]) == 16
+            assert w["FSDP_unit_forward_calls"] == 8 * (config["blocks"] + 1)
+            assert w["root_forward_calls"] == 8
+            assert len(w["cache_trim_events"]) == 24 + 8 * (config["blocks"] + 1)
+            phases = [
+                e
+                for e in w["cache_trim_events"]
+                if e["stage"].startswith(("before-backward-", "after-backward-"))
+            ]
+            assert [e["stage"] for e in phases] == [
+                prefix + "-backward-" + str(i)
+                for i in range(8)
+                for prefix in ["before", "after"]
+            ]
             for index, event in enumerate(w["cache_trim_events"]):
-                assert event["stage"] == (
-                    "before" if index % 2 == 0 else "after"
-                ) + "-backward-" + str(index // 2)
                 assert (
                     event["before"]["allocated_bytes"]
                     == event["after"]["allocated_bytes"]
@@ -255,6 +274,30 @@ def read(path, rank, prior):
                     guarded_phase_seconds=f["guarded_phase_seconds"],
                 )
             )
+            if shape == "control":
+                legacy_root = "home/nik/bc250work/evidence/distributed-d43-r1/control/"
+                legacy = json.load(archive.extractfile(legacy_root + "rank.json"))
+                legacy_source = source + "preliminary-r1/distributed_d43_train.py"
+                legacy_pin = (
+                    "ed33832f4884ddc816135aa82ef7b8b4cd10dd7372907e556a21762831675488"
+                )
+                assert (
+                    hashlib.sha256(
+                        archive.extractfile(legacy_source).read()
+                    ).hexdigest()
+                    == legacy_pin
+                )
+                assert legacy["sources"] == {
+                    **expected,
+                    "distributed_d43_train.py": legacy_pin,
+                }
+                assert legacy["status"] == "passed" and legacy["completed_updates"] == 8
+                assert legacy["initial_global_loss"] == w["initial_global_loss"]
+                assert legacy["finite_gradient_norms"] == w["finite_gradient_norms"]
+                assert [x["global_loss"] for x in legacy["samples"]] == [
+                    x["global_loss"] for x in w["samples"]
+                ]
+                assert legacy["state"] == w["state"]
             workers[label] = w
         assert parameters(CONFIG) * 16 > h["host_MemTotal_bytes"]
         return h, workers, rows
