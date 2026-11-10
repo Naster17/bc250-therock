@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "processes": 18,
+  "negative_imports": 8,
+  "numerical_checks": 138,
+  "gpu_traces": 20,
+  "archive_sha256": "759648024bd274dee3a0e7710d6d5f6f253dccdec86cc81dd793738313aa71b6",
+  "helper_sha256": "d33f2504de50eac21baf6f43ff4eb30a05c602881cda9b12b3df13360a2c3588",
+  "sdk_sha256": "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b",
+  "old_sdk_sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+  "min_host_available_bytes": 14229344256,
+  "min_disk_free_bytes": 24240054272,
+  "seconds": {
+    "activation-r1": 87.31817977800165,
+    "rollback-r1": 15.064227565999317,
+    "final-r1": 29.171964460998424
+  },
+  "final": {
+    "status": "passed",
+    "sdk_sha256": "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b",
+    "old_sdk_sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+    "helper_sha256": "d33f2504de50eac21baf6f43ff4eb30a05c602881cda9b12b3df13360a2c3588",
+    "boot_id": "2774d201-60ab-4285-a2f6-63ffcaf9873c",
+    "kernel": "7.1.5-bc250rocm-r2",
+    "pointers": {
+      "/opt/bc250-stack/current": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+      "/opt/bc250-stack/profiles/rccl-single": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/rccl-single",
+      "/opt/bc250-stack/native-cohort": "/opt/bc250-stack/candidates/sdk-d49-r1",
+      "/usr/local/bin/bc250-ck": "/opt/bc250-stack/candidates/sdk-d49-r1/tools/bc250_ck.py",
+      "/usr/local/bin/bc250-migraphx": "/opt/bc250-stack/candidates/sdk-d49-r1/tools/bc250_migraphx.py",
+      "/usr/local/bin/bc250-ort": "/opt/bc250-stack/candidates/sdk-d49-r1/tools/bc250_ort.py"
+    },
+    "distributed": {
+      "release": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/rccl-single",
+      "runtime_sha256": "00f61263864c437049b2567c8b1bff316dd5a5e6bb484027dc88d24c59454d4b",
+      "lock": "/opt/bc250-stack/current/.runtime.lock",
+      "qualified_hosts": [
+        "192.168.1.104",
+        "192.168.1.105"
+      ],
+      "ranks": 2,
+      "GPUs_per_host": 1,
+      "backend": "nccl/RCCL",
+      "transport": "eth0 Socket Ring/Simple; P2P/IB/SDMA/symmetric off",
+      "scope": "bounded two-host four-dtype sums, three-step CPU-reference DDP/SGD, nested FSDP/AdamW parameter/state shards and same-world checkpoint resume; training scaling, large-model capacity and other protocols unqualified",
+      "old_daily_unchanged": true,
+      "D04_report": "/home/nik/bc250work/distributed-d04-fsdp-r1/final.json",
+      "launcher_tools": "/opt/bc250-stack/tools/distributed-d09",
+      "agent_exit_fix": {
+        "original_agent_api_sha256": "625fa4ccf0fa2beaec4dcee1ad995a9d2b4fceba52546cf60bc943cb3f328afc",
+        "patched_agent_api_sha256": "8bb38215f15723143c363c0f1bd49a04b2cfda77bacad98cb13c81a9fde9de04",
+        "torch_source_fix_revision": "8d8b18d",
+        "scope": "static two-host agent exit lifetime; native Torch a524980 unchanged; source-derived launcher bridge"
+      },
+      "agent_exit_recovery": "/home/nik/bc250work/evidence/distributed-d05-tool-install-r1",
+      "consumer_environment": {
+        "schema": 1,
+        "recovery": "/home/nik/bc250work/evidence/distributed-d09-tool-install-r1",
+        "torch_identity_sha256": "363531175767cf2bbc275b788bfc888c4c194d14959ae93108616340c3dab66b",
+        "launcher_sha256": "24852dd19da5dec84ece153f4b890f03112e53c34211fe231dbcf48e6b326cc7"
+      },
+      "native_precision_cohort": {
+        "root": "/opt/bc250-stack/candidates/miopen-plan02-r4",
+        "MIOpen_sha256": "381eac05240e33acced9472fb7c3071afe8bc4f434407e67a29ce64423b935ac",
+        "scope": "PLAN-02 native forward accumulation; Torch/RCCL unchanged"
+      },
+      "native_sdk_override": {
+        "schema": 1,
+        "component": "rocprofiler-sdk",
+        "source_revision": "143f1d878296176c738274202092bb247b7b771c",
+        "library_sha256": "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b",
+        "replaced_sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+        "qualification": "D48",
+        "scope": "Exact -1 visibility terminator; CI checks retained; no other native component rebuild"
+      }
+    },
+    "preflight": {
+      "attempt": "d49-export-final",
+      "memory_available_bytes": 15212515328,
+      "gpu_clients": [
+        {
+          "pid": 3099,
+          "uid": 0,
+          "comm": "cyan-skillfish-"
+        }
+      ],
+      "docker_containers": [],
+      "podman_containers": [],
+      "watchdog": "active"
+    },
+    "root_preserved": true,
+    "host105_accessed": false
+  }
+}

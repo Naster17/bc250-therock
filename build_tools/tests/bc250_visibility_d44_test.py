@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 SCRIPT = Path(__file__).resolve().parents[1] / "bc250/bc250_torch.py"
 spec = importlib.util.spec_from_file_location("visibility_launcher", SCRIPT)
@@ -14,6 +15,14 @@ spec.loader.exec_module(launcher)
 
 
 class VisibilityTest(unittest.TestCase):
+    def setUp(self):
+        # D44 tests the legacy cohort even on a host with the repaired SDK.
+        guard = patch.object(
+            launcher, "qualified_negative_visibility", return_value=False
+        )
+        guard.start()
+        self.addCleanup(guard.stop)
+
     def test_caller_and_explicit_override_refused(self):
         for arguments, environment in [
             (["-c", "pass"], {"HIP_VISIBLE_DEVICES": "-1"}),

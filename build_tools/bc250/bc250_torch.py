@@ -243,10 +243,11 @@ def validate_options(options: LaunchOptions) -> None:
         raise ValueError("Shared memory size must be positive, e.g. 1g or 512m")
     for name, value in options.environment.items():
         check_environment(name, value)
-    # D12 retained an import-time ROCr SIGSEGV with this HIP sentinel. Refuse
-    # that specific input before elevation/container startup, including contexts.
-    # Do not reinterpret ROCR filters, UUIDs, CUDA aliases or trailing terminators.
-    if options.environment.get("HIP_VISIBLE_DEVICES") == "-1":
+    # Legacy SDKs abort on this sentinel. Admit only the exact D48-qualified
+    # installed SDK and native cohort; repeat under the runtime lock at launch.
+    if options.environment.get(
+        "HIP_VISIBLE_DEVICES"
+    ) == "-1" and not qualified_negative_visibility(options):
         raise ValueError(
             "HIP_VISIBLE_DEVICES=-1 is refused by this BC-250 launcher after a "
             "recorded ROCr import crash. Unset HIP_VISIBLE_DEVICES for CPU-only "
@@ -266,6 +267,33 @@ def selected_release(options: LaunchOptions) -> Path:
         else Path("/opt/bc250-stack/profiles/rccl-single")
     )
     return path.resolve(strict=True)
+
+
+D48_SDK_SHA256 = "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b"
+D48_RUNTIME_SHA256 = {
+    "daily": "d4e1e144a4da8b19098980455fa657d5964e76525e4125853a4f1fd0d4102fe3",
+    "rccl-single": "00f61263864c437049b2567c8b1bff316dd5a5e6bb484027dc88d24c59454d4b",
+}
+
+
+def qualified_negative_visibility(options: LaunchOptions) -> bool:
+    """Admit the repaired sentinel only for the byte-bound native cohort."""
+    try:
+        release = selected_release(options)
+        if hashlib.sha256((release / "runtime.json").read_bytes()).hexdigest() != (
+            D48_RUNTIME_SHA256[options.runtime_profile]
+        ):
+            return False
+        library = release / "rocm/lib/librocprofiler-sdk.so.1.4.2"
+        for alias in ("librocprofiler-sdk.so", "librocprofiler-sdk.so.1"):
+            if (library.parent / alias).resolve(strict=True) != library.resolve(
+                strict=True
+            ):
+                return False
+        with library.open("rb") as stream:
+            return hashlib.file_digest(stream, "sha256").hexdigest() == D48_SDK_SHA256
+    except (OSError, KeyError, ValueError):
+        return False
 
 
 def qualified_rccl_profile(
@@ -383,6 +411,11 @@ def build_command(
     groups: list[int],
     environment_file: Path,
 ) -> list[str]:
+    # Root launchers call this while holding the stable runtime lock.
+    validate_options(options)
+    if options.environment.get("HIP_VISIBLE_DEVICES") == "-1":
+        if release.resolve(strict=True) != selected_release(options):
+            raise ValueError("Visibility qualification differs from launch release")
     rccl_profile = qualified_rccl_profile(release, manifest, options)
     arguments, script_mounts = (
         (options.arguments, [])
