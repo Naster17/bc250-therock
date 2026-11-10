@@ -9,6 +9,50 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-07 / D46 completed 2026-11-10 — complete Torch deltas and exact SDK RPATH provenance; PLAN-07 OPEN.**
+  Source4ea1bd17b. [Report](docs/development/bc250_source_d46_results/README.md).
+  Reproduced old0001/0002 gap EXACT3files sdp_utils.cpp/compile_fx.py/_gfx1013.py;
+  allalreadyinpatchedGit. New SEPARATE patches/bc250-pytorch-complete fromc779020:
+  0001→nativea524980 TREE3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112;
+  0002→sourceHEAD8d8b18d TREE33a862732a52c8825a3d1f9c0b609d06fba0df65.
+  Fullprivatebare/index treeequalitybothpasses; applicablewrongtreepatch refused.
+  Oldseries/historypreserved; neverapplybothseries.35pathbaseline/native/HEADmanifest.
+  CPU104privatefocused35filereplay bothpatches pass; daily/RCCL30rawsourcefilesexact,
+  SAME5C++ files showpost-HIPifychanges. Referenceoverlay reproduces5generatedbytes
+  exactlyBOTHprofiles; notindependentcodegen/notbuildinput. Piponlycodegenrulekept.
+  Initial UID1000 lockpermission refusal BEFOREoutputs; authorizedrootSHruntime
+  auditpassed. No GPU/reservation/recoveryguard/build/sourceworkingtree mutation.
+  SDKbuildbcbb20f9→activea6dc1c88 gapONLY.dynstr: zero-pad/replaceRPATHat129047
+  EXACTwholefileSHAa6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2.
+  Code/allothersectionsunchanged. CI=ON/compiler-DROCPROFILER_CI=1;4relevantSDK
+  retainedsource/configfiles matchnative1f9609fd6. D45identityuncertaintyRESOLVED;
+  warning→FATALmechanism nowartifact/source/configbound. NotoldunknownCPUfault.
+  Minimal -1terminatorproposal patches/candidates/rocprofiler-sdk-d46 PRIVATEapply
+  checked treeacf507bcef600d600547a6ad957979a5db1cdc74 ONLY; NOTbuilt/tested/installed.
+  GlobalCIchecksunchanged, D44productionrefusal active104only, no nativefixclaim.
+  8componentpintreesavailable/124localtests(4newELFtests)/Black/criticalRuff+F401/
+  syntax/scopeddiffpass. Patchcontextblankmarkers needpatchspecificwhitespace;
+  actualcompletepatchapplication --whitespace=error passes. No fullCI/GPUretestclaim.
+  Torchshallow23commits: sharedlocalobjects !=portablebaseline/dependencyclosure.
+  FullSDKbuild17,575,368B/agentobject127,688B; admissionfree5,409,996,800B only
+  41,287,680Babove5GiBreserve; no compiler/link/cache/stage/rollback budget admitted.
+  Hostownedtools tools/source-d46, evidence/source-d46-r1 +source-d46-controller.log;
+  allCPUjobsdone/noarmedguard. Hostarchive local kernel/artifacts/source-d46/
+  104-evidence-r1.tar.gz973572B SHA081b595f248372adc836823ff3c3ca716045aa80ca840b8c422f8359bf3ceca5;
+  samehost evidence/source-d46-evidence-r1.tar.gz. SDKproposal remainslocalGitonly.
+  No prefix/nativecode/library/default/profile/registry/image/kernel/reboot/app/
+  cache/checkpoint/build change.104boot2774d201r2;105unaccessed/unchanged/D43docs.
+  .104docs snapshot20261110-d46-final synced at handoff, manifest updated.
+  HistoricalPythonCPUIP0x3b3e6/KFDmm-queue/105clocksource causes stillOPEN, separate
+  fixedVMheap/D05/D21. No performance/runtimeimprovement or universalcorrectnessclaim.
+  **NEXT PLAN-07 / D47:** portableTorchsource snapshot/replay independent shared
+  objects, explicitshallowbaseline/submodule/dependency/license/buildinputclosure;
+  matchingSDKsource/config candidatebuild/testadmission alongside. BudgetboundedRAM
+  scratch/persistentstage/compiler/link/ccache/rollback before nativeSDKbuild; never
+  reduce3GiBhost/5GiBdisk reserves or deletepreservedsources/builds/caches. D44refusal
+  retainedthroughnativecandidatequalification. FOURimportantpackagesremainPLAN07–10;
+  sourceclosure notyetcomplete, unknownfaults remainreleaseknownlimits.
+
 - **PLAN-06 / D45 completed 2026-11-10 — bounded mixed stability; PLAN-06 bounded scope COMPLETE.**
   Source0ef00f158. [Report](docs/development/bc250_mixed_d45_results/README.md),
   [records](docs/development/bc250_mixed_d45_results/verified-results.json).

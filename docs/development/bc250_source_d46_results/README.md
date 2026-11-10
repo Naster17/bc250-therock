@@ -75,7 +75,10 @@ toolchain/generated-file reconstruction. The library base8389197 plus later MIOp
 overlaye1d8d1f must remain distinct, as must native Torch and its Python agent bridge.
 
 124 local unit tests (four new ELF refusal/replay tests), Black, critical Ruff+F401,
-syntax/diff checks pass. Complete tree replays, .104 focused source/overlay checks
+syntax and source/docs diff checks pass. Unified-diff artifacts retain required
+blank context markers; patch-specific whitespace settings are used for those
+files, while complete source patch application uses `--whitespace=error`.
+Complete tree replays, .104 focused source/overlay checks
 and the applicable-wrong-tree negative control pass. No full upstream CI or new
 GPU correctness/performance claim. Source-only work did not need a native rebuild.
 

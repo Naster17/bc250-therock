@@ -5,6 +5,27 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## D46 source reconstruction and SDK identity (2026-11-10)
+
+Source4ea1bd17b; [report](bc250_source_d46_results/README.md).
+Old3fileSDPAgap reproduced; separatecompleteTorchseries fromc779020 yields EXACT
+nativea524980tree3e3edf7f andsourceHEAD8d8b18dtree33a86273. Privatefulltreereplays
+pass; wrongtreepatchrefused. Existingoldseries/Githistories preserved.104focused35
+pathreplaypasses;30rawnativepaths matchbothprofiles,5post-HIPifyC++ files differ.
+Retainedreferenceoverlay reproduces5observedgeneratedfiles, notindependentcodegen
+orpatchtobuildtwice. Piponlybuild/codegenretained.8componentGitpintreesavailable;
+Torchshallow23commits/sharedobjects, portablefullsource/dependencyclosurestillOPEN.
+SDKbcbb20f9→activea6dc1c88 EXACTrpath-onlybyte replay(.dynstr offset129047), code/
+allothersectionsunchanged. CI=ON/-DROCPROFILER_CI=1;4relevantSDKfiles matchnative
+1f9609fd6. Identityuncertaintyresolved; knownwarning-to-fatal mechanism nowbound.
+Minimal-1terminatorproposal ONLYsourceapplychecked/notbuilt/notqualified/notinstalled;
+D44refusal unchanged104only.124localtests/4newELFtests/static/scopedpatch/source
+checks pass. No native/GPU/build/prefix/kernel/app/105change; alljobsdone/no guard.
+.104admissiononly41,287,680Bover5GiBreserve; SDKDSO17,575,368B doesnotaloneestablish
+compiler/link/cache/stage/rollbackbudget. NextPLAN07/D47 portableTorchsourcepack/
+submodule/license/buildinputs +SDKcandidatebuildadmission. PLAN07OPEN/fourpackages
+remain; historicalPythonCPU/KFD/105clocksource causesunchanged/unknown.
+
 ## D45 bounded mixed stability qualified (2026-11-10)
 
 Source0ef00f158; [report](bc250_mixed_d45_results/README.md).
