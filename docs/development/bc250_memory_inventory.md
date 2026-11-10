@@ -22,7 +22,9 @@ pagingIO unmeasured. Baseline-aware replay refuses occupancy growth/container sw
 no claim no swapIO. Initial r2 control Docker-veth log refusal preserved/rechecked.
 24groups/4finalACKs/116localtests/4archive mutations/lintpass. Finalr4metadata exports
 (r3 retained), all oldattempts/sources kept; guards/ownership/resourcecaps unchanged.
-Native prefixes/kernels/fallbacks/apps unchanged; finalidle/docs syncedBOTH.105clock
+Native prefixes/kernels/fallbacks/apps unchanged; exportidle/docs syncedBOTH.
+Later handoff104idle,105 new unrelated Docker workload (preserved); check ownership
+before next GPU task.105clock
 remote-read warning stillOPEN; PythonCPUfault separate fixedVMheap/D05exit/D21load.
 Single allresidentFP32statefloor16.392GB>RAM; no deliberateOOM or AMP/offload
 impossibilityclaim. No longrun/restart/generalmodel claim. PLAN05 bounded capacity

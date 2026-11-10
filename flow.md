@@ -49,9 +49,12 @@ release claims must not override this cursor and current manifests.
   1043,089,642B SHA817fb3fa54781394b21f1ee016b3171f5cf704bb2ea6dbe7ebe52967e5203c40;
   1053,115,157B SHAad46f415ba5d273f7df9fdfc8a3a3928ff8cbd7d7364312a8fc9df36533ae7c3.
   Finalcontrol guardians1048932/1059259, large9842/10185, export12241/12614 exit0.
-  Alltestsfinished/guardsACK/idle. Boots2774d201r2/e902e636r3 unchangedduringD43;
+  All owned tests finished/guardsACK; export preflight BOTH idle. Later final
+  handoff104idle;105 NEW unrelated Docker workload present (left untouched),
+  so do not assume105free for next GPU phase. Qualification logs precede this.
+  Boots2774d201r2/e902e636r3 unchangedduringD43;
   native Torch/ROCm/MIOpen/D09/defaults/images/fallbacks/apps untouched. No rebuild/
-  install/reboot/foreignstop. Docs snapshot20261110-d43-final synced BOTH at handoff;
+  install/reboot/foreignstop. Docs snapshot20261110-d43-handoff synced BOTH at handoff;
   ownedtransfers grouped/evidence retained. Clocksource105 remote-read timeout remains
   OPEN (pr_info_once); historical Python CPUfault distinct fixed VMheap/D05/D21.
   Capacity: single allresidentFP32p/g/m/vfloor16,391,536,640B>either hostRAM, while
