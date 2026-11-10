@@ -1,0 +1,91 @@
+{
+  "status": "passed",
+  "archive_sha256": "f37a05accdf5e6e111854f2b9e06b2ccfb76fd0d96a642ef0d5321ab60baea47",
+  "rows": [
+    {
+      "profile": "daily",
+      "seed": 4500,
+      "checks": 27,
+      "seconds": 11.935614054000325,
+      "gpu_allocated_peak": 67128320,
+      "gpu_reserved_peak": 69206016,
+      "sampled_cgroup_peak": 932622336,
+      "min_host_available": 13893718016
+    },
+    {
+      "profile": "rccl-single",
+      "seed": 4501,
+      "checks": 27,
+      "seconds": 8.507129331001124,
+      "gpu_allocated_peak": 67128320,
+      "gpu_reserved_peak": 69206016,
+      "sampled_cgroup_peak": 741158912,
+      "min_host_available": 14045093888
+    },
+    {
+      "profile": "daily",
+      "seed": 4502,
+      "checks": 27,
+      "seconds": 8.102770968000186,
+      "gpu_allocated_peak": 67128320,
+      "gpu_reserved_peak": 69206016,
+      "sampled_cgroup_peak": 734076928,
+      "min_host_available": 14008442880
+    },
+    {
+      "profile": "rccl-single",
+      "seed": 4503,
+      "checks": 27,
+      "seconds": 8.509201557000779,
+      "gpu_allocated_peak": 67128320,
+      "gpu_reserved_peak": 69206016,
+      "sampled_cgroup_peak": 738553856,
+      "min_host_available": 13977411584
+    },
+    {
+      "profile": "daily",
+      "seed": 4504,
+      "checks": 27,
+      "seconds": 8.083233538000059,
+      "gpu_allocated_peak": 67128320,
+      "gpu_reserved_peak": 69206016,
+      "sampled_cgroup_peak": 730103808,
+      "min_host_available": 14019145728
+    },
+    {
+      "profile": "rccl-single",
+      "seed": 4505,
+      "checks": 27,
+      "seconds": 8.530783591999352,
+      "gpu_allocated_peak": 67128320,
+      "gpu_reserved_peak": 69206016,
+      "sampled_cgroup_peak": 739164160,
+      "min_host_available": 14067355648
+    }
+  ],
+  "reference_checks": 162,
+  "fresh_processes": 6,
+  "optimizer_updates": 12,
+  "sdk_ci_build_matches_runtime": false,
+  "sdk_triage": {
+    "retained_build": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build",
+    "runtime_sdk": "/opt/bc250-stack/candidates/miopen-plan02-r4/rocm/lib/librocprofiler-sdk.so.1.4.2",
+    "runtime_sdk_bytes": 17575368,
+    "runtime_sdk_sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+    "ci_configuration": [
+      "ROCPROFILER_BUILD_CI:BOOL=ON"
+    ],
+    "compiler_ci_definition_present": true,
+    "build_artifacts": [
+      {
+        "path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/librocprofiler-sdk.so.1.4.2",
+        "sha256": "bcbb20f952044af85c068278561ecba9fc563db965a8b4df0fbb6a3163ea2c33"
+      }
+    ],
+    "note": "Build config is retained evidence; byte equality with runtime is required before attributing it to the active DSO."
+  },
+  "historical_python_fault_fixed": false,
+  "kfd_root_cause_fixed": false,
+  "clocksource_fixed": false,
+  "native_binaries_changed": false
+}
