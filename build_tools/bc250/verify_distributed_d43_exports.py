@@ -21,6 +21,9 @@ PINS = {
     "guard_distributed_d43_on_host.py": "3adb58aa41dbdd37cddd0c95cfd54059d4ce152b8680b7d59177d587a652281c",
     "distributed_d43_bounded_launch.py": "67f097ce3ce7bc2cf7ad6cf11a98d508f09111b65f4790b77ba14b6b76425cbb",
     "export_distributed_d43_on_host.py": "37adb0240e50afebbe802aed9319db3ffcf747b2730686cfc52ea0dda823020d",
+    "deadline_guard_d42.py": "bce97bfb137c77ff28f1ad30ea23f9aada593174c58e91a2e1628a5b8b011d7c",
+    "board_preflight.py": "039274868dd9aeda1995a0737d4d79d560afc13cc37f570ff154d62d21217083",
+    "docker_preflight.py": "a78449d410d9765f464ef36681a17126500ca4dd9d71bdda894445815971aa38",
 }
 LABELS = ["control", "large-training"]
 

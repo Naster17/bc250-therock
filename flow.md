@@ -31,26 +31,36 @@ release claims must not override this cursor and current manifests.
   local numbers preserved kernel/artifacts/distributed-d43/{104,105}-control-r{1,2}.json.
   Export/replaydec42254d selects final labels control-recheck + large-training;
   all failed evidence preserved. Exporter/verifier current versions staged BOTH.
-  **RUNNING BOTH** guard_distributed_d43_on_host.py --shape large
-  --label large-training --port29753; guardians1047965/1058281, tools/distributed-d43,
-  Podman label bc250.d43=d43-r2-large-training. Logs BOTH
-  evidence/distributed-d43-large-r2-controller.log and evidence/distributed-d43-r2/
-  large-training/{gpu.log,rank.json,final.json,guard/state.json}. Large result UNKNOWN;
-  do not start another test. Existing EX reservation/SHruntime,4CPU0–3,hard10GiB/
-  12combined,owned-stop host3GiB/cgroup9GiB/disk5GiB,child1400/isolatedguard1800.
-  104boot2774d201 r2/105e902e636 r3. Root SSH sessions10472410/10599060 still open.
-  **NEXT:** monitor large final/ACK/reserves. If reserve stop inspect unit GPU
-  telemetry; no relaxed thresholds. If pass export BOTH using
-  tools/distributed-d43/export_distributed_d43_on_host.py, controller logs named
-  evidence/distributed-d43-export-r2-controller.log; intended final archive
-  evidence/distributed-d43-evidence-r2.tar.gz (none yet). Scp local artifacts,
-  run verify_distributed_d43_exports.py (D42+predecessor replay) and local
-  kernel/artifacts/distributed-d43/check_negative_archives.py (3 mutations).
-  Final report draft kernel/artifacts/distributed-d43/README-draft.md contains
-  UNQUALIFIED future success text/placeholders: use ONLY if actual final passes.
-  Then docs/inventory/manifest/remaining plan/milestone commits/both-hostdocs sync.
-  If full8-update capacity passes, PLAN05 bounded scope may close; next priority
-  PLAN06 current stability/visibility/crash evidence, not endless fixture expansion.
+  R2 large completed second forward (live6,928,079,360B/reserved7,077,888,000B
+  after root trim on105) then hit hostreserve during second backward: available
+  3,216,723,968B/cgroup1,735,995,392B.105 own-stop/104 peerownstop; BOTH ACK/logs
+  unchanged/no OOM/reboot. Preserve r1/r2 evidence and preliminary-r1/r2 sources.
+  **R3 source31aa4415d:** public full-backward hooks on nonroot FSDP units trim
+  only unused cache/returnNone/preserveallgrads. Forward hooks unchanged; live
+  byte counts asserted unchanged.8×blocks backward callbacks expected;352 total
+  trims at1.024B/224 at352.96M. Native math/wrap/collectives/reserves unchanged.
+  **RUNNING BOTH** guard_distributed_d43_on_host.py --shape control --label control
+  --port29757; guardians1048932/1059259, tools/distributed-d43, ownlabel
+  bc250.d43=d43-r3-control. Logs evidence/distributed-d43-control-r3-controller.log
+  and evidence/distributed-d43-r3/control/{gpu.log,rank.json,final.json,guard/state.json}.
+  Four updates completed at checkpoint; overall result UNKNOWN. Root SSH10472410/
+  10599060 open.104boot2774d201r2/105e902e636r3. Same locks/caps: EXreservation+
+  SHruntime/4CPU0–3/hard10GiB+12combined/host3GiB/cgroup9GiB/disk5GiB/child1400/
+  isolatedguard1800; originalkernel600/nativeGPU120 unchanged.112localtests/lintpass.
+  **NEXT:** inspect current r3 control final/ACK and compare ALL8norms/5losses/state
+  to r1 (local control-r1.json available). If strictpass start r3 large-training
+  at29759 BOTH; monitor full8updates/reserves. If safe stop inspect exact telemetry,
+  never relax bounds. Exporter stagedR3 BOTH, intended finalarchive
+  evidence/distributed-d43-evidence-r3.tar.gz (none yet). Local verifier newest
+  additionally pins deadline/board/docker helpers; must stage latest verifier
+  (only archive reader, not GPU source) before export. Source31aa plus uncommitted
+  verifier pin additions currently. Export log should be distributed-d43-export-r3-controller.log.
+  Replay D42/predecessors then kernel/artifacts/distributed-d43/check_negative_archives.py
+  (3 mutations), now uses R3 prefixes. README-draft.md has UNQUALIFIED future success
+  text/table placeholder: publish ONLY after final actual pass. Then source/docs/
+  inventory/manifest/remaining plan/milestone commits/bothhostdocssync/ownedtransfer
+  grouping. PLAN05 may close bounded capacity scope IF8updates pass; nextPLAN06
+  stability/visibility/crash evidence, no endless fixture expansion. No native changes.
   Clocksource105 remote-read timeout remainsOPEN; historical Python CPU fault stays
   distinct fixed VMheap/D05 exit/D21 restore. No native prefix/install/reboot/apps.
 
