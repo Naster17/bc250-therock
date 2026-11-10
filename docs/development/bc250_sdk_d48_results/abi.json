@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "dynamic_symbols": 1450,
+  "needed": [
+    "libamd_comgr.so.3",
+    "librocm_sysdeps_dw.so.1",
+    "librocm_sysdeps_drm.so.2",
+    "librocm_sysdeps_drm_amdgpu.so.1",
+    "libstdc++.so.6",
+    "libm.so.6",
+    "libgcc_s.so.1",
+    "libc.so.6",
+    "ld-linux-x86-64.so.2"
+  ],
+  "soname": [
+    "librocprofiler-sdk.so.1"
+  ]
+}

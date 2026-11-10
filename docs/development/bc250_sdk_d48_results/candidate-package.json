@@ -1,0 +1,20 @@
+{
+  "path": "kernel/artifacts/sdk-d48/sdk-d48-candidate-r1.tar.gz",
+  "bytes": 4040834,
+  "sha256": "98d26859f7d57fed98ec2c5e2aa09c8121c1b55fc12b1b5470a4745a736ccf3e",
+  "manifest": {
+    "status": "candidate-qualified-not-installed",
+    "source_revision": "143f1d878296176c738274202092bb247b7b771c",
+    "native_sdk_base_revision": "1f9609fd69c4923291f58934495520fe62e66ef8",
+    "library_sha256": "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b",
+    "library_bytes": 17575272,
+    "old_library_sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+    "source_sha256": "5aa899d0c9921077fb411f9d649e6735b2381a49c97a2fe4caa79db5bb03fcc0",
+    "ci_enabled": true,
+    "rpath": "$ORIGIN/rocm_sysdeps/lib:$ORIGIN/llvm/lib:$ORIGIN/llvm/lib/x86_64-unknown-linux-gnu:$ORIGIN",
+    "qualification": "D48 .104 daily/RCCL ordinal/default controls,6 negative imports,32 native traces; UUID unavailableGPU-XX",
+    "cohort_image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+    "standalone_sdk_distribution": false,
+    "activation_requires": "D49 coherent prefix/provider identity + EX runtime-update lock, rollback and ordinary launcher tests"
+  }
+}

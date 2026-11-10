@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "archive_sha256": "ef15397c5b5c49ccfa6800709759cc154f2135fa54f936a3086865846db11a4d",
+  "candidate_sha256": "2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b",
+  "old_sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2",
+  "source_sha256": "5aa899d0c9921077fb411f9d649e6735b2381a49c97a2fe4caa79db5bb03fcc0",
+  "processes": 23,
+  "negative_imports": 6,
+  "numeric_checks": 227,
+  "gpu_traces": 32,
+  "dynamic_symbols": 1450,
+  "uuid_selection_qualified": false,
+  "active_prefix_changed": false,
+  "historical_python_cpu_fault_fixed": false,
+  "clocksource_fixed": false
+}
