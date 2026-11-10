@@ -9,6 +9,54 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-07 / D47 completed 2026-11-10 — portable Torch parent snapshot/replay and SDK resource/input admission; PLAN-07 OPEN.**
+  Source0bd04bc50. [Report](docs/development/bc250_source_d47_results/README.md).
+  Standalone package local kernel/artifacts/source-d47/portable-torch-source-d47-r1.tar
+  66,703,360B SHAffb18da3ea5e79349965c467d1ef2194a9bbe2863a93d01e08f1f6245d8e5143.
+  Fullbaseline21,491blobfiles+37gitlinkidentities, mainLICENSEblobc23172f7; no shared
+  Gitobjects/sourcehistory/networkneeded. NewprivateGitindex/objectstore recreates
+  EXACTbaselineabdd861b/native3e3edf7f/HEAD33a86273trees. OriginalshallowGitpreserved;
+  privateHEADunborn/verificationONLY, notconfigurednativebuildtree. No falsefullbuild.
+  All37directdependency pinsavailablelocal/HEADsmatch;53licensefileidentitiesrecorded,
+  dependencycontents/27immediatenestedgitlinks/buildversion/toolchain/wheels/Gloooverlay
+  stillseparateclosure. No offlinewhole-stack/buildreadyclaim. Nativea524+sourcebridge
+  8d8b18ddistinctionretained. No dependencycontentfetch or source/build/cachedeletion.
+  Workstationreplaypass;104r1pass, then ambientGitpathisolation hardened ALLGitcalls
+  inclls-tree/export, regression coversGIT_DIR/GIT_INDEX_FILE; oldsources/runs kept.
+  Final104r2sourceSHAacf65cc4402f740cf3a9a9cbbbe03d65d1b195128abd079998ed4477df5c2b7f
+  fullreplaypass12.398s inclmetadata(notbuild/trainingperf). CPU UID1000/affinity0–3/
+  2GiBAS+120CPUseconds perprocess(inherited,notcgroupcap)/180swall;100ms ownedPGstop
+  host3GiB/disk5GiBreserves. Hostmin15,200,382,976B/diskmin24,443,985,920B finalr2.
+  Userfreedspace:initial14.04GB→later24GB+, notagentcleanup. NoGPU/recoveryguard/native
+  build; SHruntime onlyreadSDKmetadata. Controllers1130/2722finished/noownedjobs.
+  SDKstructuredcompile/linkargv captured,181explicitlinkinputs accounted178host+3
+  glibcstaticlibs inmatching1bb4ac0eimage. Initialhost-onlypathcheckmissing3 expected
+  onAlpine; readonlystdimageprobe passed/pullnever/networkoff/noGPU/1CPU256MiB64PIDs.
+  Compile_commands omitsccachelauncher; retainedNinjahasccache. OriginalargvMUSTNOT
+  executeunredirected: readonlysource/build, isolatedsource/object/depfile/DSOoutputs.
+  Resourceenvelope4GiBextradisk+4GiBcandidateRAM/jobs1/link1/ccache20G(noreset), host3GiB/
+  disk5GiBreserves nowfits; freshactualresources/ownership/outputredirection beforebuild.
+  SDKcandidateNOTbuilt/tested/installed; CIchecks/D44refusal/nativeprefixes unchanged.
+  128localtests(4newportableintegrity/envcases)/Black/criticalRuff+F401/syntax/diffpass;
+  actualapplicabletamperedpatchwithUPDATEDpayloadSHA stillrefusedbypinnednativetree.
+  MetadatareplaychecksdriverSHA/trees/limits/finalidle. No fullupstream/GPUnewclaim.
+  Metadataarchive local kernel/artifacts/source-d47/104-evidence-r1.tar.gz98529B SHA
+  29dc89e752b280504fa5aeb1a6bd0608bd4e0771b6bf9199f2c597c3720809e7; hostevidence/
+  source-d47-evidence-r1.tar.gz. Fullbaseline/source/replaydirs omittedfrommetadata,
+  retainedseparatelytools/source-d47/portable-torch-r1 andevidence/source-d47-r1/r2.
+  Finalidle/nativecyanservice/watchdogactive, bootsame2774d201r2; no container/armedguard.
+  No originalsource/build/cache/prefix/library/profile/registry/image/kernel/boot/app/
+  checkpointchange.105unaccessed/unchanged (userreportsfreedspacethere, noinspection).
+  .104docs snapshot20261110-d47-final synced athandoff;105D43docs unchanged.
+  HistoricalPythonCPUIP0x3b3e6/KFDmm-queue/105clocksource causesOPEN, distinct SDKimport/
+  fixedVMheap/D05/D21. FOURimportantpackagesPLAN07–10remain; recursiveclosureOPEN.
+  **NEXT D48:** isolatednativeSDK-1sentinelcandidate compile/link fromverifiedrecipe/
+  sourceafterfreshadmission. RedirectALLoutputs, preserveCI/nativeactiveprefix/D44
+  refusal. Direct HIP/CUDA/ROCR-1import/devicecount +valid0 andnativeGPUoutput/backward/
+  CPU-firstprofilertracegates bothprofiles, bindloadedDSOpaths/hashes, EXboard+SHruntime/
+  independentrecovery forGPU. No activationuntilqualified/EXprefixchecks. Recursive
+  deps/licenses/Gloolegacyoverlay/buildversionclosure remainsPLAN07workalongside.
+
 - **PLAN-07 / D46 completed 2026-11-10 — complete Torch deltas and exact SDK RPATH provenance; PLAN-07 OPEN.**
   Source4ea1bd17b. [Report](docs/development/bc250_source_d46_results/README.md).
   Reproduced old0001/0002 gap EXACT3files sdp_utils.cpp/compile_fx.py/_gfx1013.py;

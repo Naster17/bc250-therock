@@ -5,6 +5,28 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## D47 portable Torch parent source and SDK admission (2026-11-10)
+
+Source0bd04bc50; [report](bc250_source_d47_results/README.md).
+Offlineparentpackage66,703,360B +standaloneGit/stdlibreplayer verifies21,491blobs/
+37gitlinkidentities/mainLICENSE through EXACTbaseline/native/HEADtreehashes, no
+alternates/sourcehistory/network. PrivateunbornHEADverificationrepo only, notbuild
+setup.37directpinsavailablelocal/53licenseidentities; depscontents/27nestedlinks/
+Gloooverlay/buildversion/toolchain/wheelsstillclosurework. OriginalshallowGitkept.
+Workstation+104r1/r2pass; finalGit-envhardeningtested/oldrunskept. CPUperprocess2GiBAS/
+120CPUseconds/affinity0–3/180wall, host3GiB/disk5GiB100msstopownedPG. NoGPU/build.
+R2hostmin15.20GB/disk24.44GB(userfreedspace),12.398stestcost,noperfclaim.
+SDK181explicitlinkinputs178host+3glibcimageverified,noGPU/1CPU256MiBread-onlyprobe.
+Structuredargvavailable; neverexecuteunredirectedretainedoutputs. Candidate4GiBdisk/
+4GiBRAM/jobs1/link1/ccache20G resourceenvelopefits; recheckactualadmissionbeforebuild.
+128tests/4newintegrity-envcases/actualupdated-SHAtamperrefusal/staticchecks pass.
+Alljobsdone/finalidle/noarmedguard/104boot2774d201r2; nativeprefix/source/build/cache/
+SDK/default/kernel/app/105unchanged. D44refusalretained, SDKcandidateunbuilt.
+NextD48 nativeSDKcandidatebuild/negativeimport/devicecount +validGPUbackward/profiler
+qualification bothprofiles withloadedDSObinding/locks/recovery; activationseparate
+EXprefixprocedure afterpass. PLAN07recursiveclosureOPEN/fourpackagesremain.
+UnknownPythonCPU/KFD/105clocksource causesstillseparate/unfixed.
+
 ## D46 source reconstruction and SDK identity (2026-11-10)
 
 Source4ea1bd17b; [report](bc250_source_d46_results/README.md).
