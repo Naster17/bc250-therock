@@ -52,6 +52,34 @@ class ExternalKitTest(unittest.TestCase):
                 [dict(path="rocm/external", target="/outside/input")],
             )
 
+    def test_deduplicated_payload_and_fifo(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source"
+            source.mkdir()
+            (source / "a").write_bytes(b"same bytes")
+            (source / "b").write_bytes(b"same bytes")
+            (source / "c").write_bytes(b"other data")
+            os.mkfifo(source / "closed-pipe")
+            archive = root / "deduplicated.tar.gz"
+            with archive.open("wb") as stream:
+                create({"source": source}, stream, deduplicate=True)
+            report = verify(archive)
+            self.assertEqual(report["file_bytes"], 30)
+            with tarfile.open(archive) as src:
+                self.assertEqual(src.getmember("source/b").linkname, "source/a")
+                self.assertTrue(src.getmember("source/closed-pipe").isfifo())
+
+            def change(member, data):
+                if member.name == "source/b":
+                    member.linkname = "source/c"
+                return member, data
+
+            changed = root / "wrong-reference.tar.gz"
+            self.rewrite(archive, changed, change)
+            with self.assertRaises(AssertionError):
+                verify(changed)
+
     def test_manifest_admission_is_explicit(self):
         with tempfile.TemporaryDirectory() as directory:
             archive = self.fixture(Path(directory))

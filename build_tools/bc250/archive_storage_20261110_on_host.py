@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Preserve inspected redundant source proofs before retiring host copies."""
+"""Preserve inspected workspace copies before retiring them."""
+import argparse
 import fcntl
 import json
 import os
@@ -12,7 +13,6 @@ import subprocess
 import time
 
 WORK = Path("/home/nik/bc250work")
-ROOT = WORK / "evidence/storage-cleanup-20261110-archive-r1"
 TOOLS = WORK / "tools/storage-cleanup-20261110"
 
 
@@ -28,20 +28,27 @@ def sample():
     )
 
 
-def limits():
-    os.setgroups([])
-    os.setgid(1000)
-    os.setuid(1000)
+def limits(staging):
+    if not staging:
+        os.setgroups([])
+        os.setgid(1000)
+        os.setuid(1000)
     os.sched_setaffinity(0, {0, 1})
     resource.setrlimit(resource.RLIMIT_AS, (3 * 1024**3, 3 * 1024**3))
-    resource.setrlimit(resource.RLIMIT_CPU, (900, 900))
+    cpu = 1200 if staging else 900
+    resource.setrlimit(resource.RLIMIT_CPU, (cpu, cpu))
 
 
 def main():
     assert os.geteuid() == 0 and os.uname().nodename == "bc250"
-    ROOT.mkdir(exist_ok=False)
-    os.chown(ROOT, 1000, 1000)
-    fifo = ROOT / "payload.fifo"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--staging", action="store_true")
+    staging = parser.parse_args().staging
+    label = "staging-r2" if staging else "archive-r1"
+    root = WORK / "evidence" / f"storage-cleanup-20261110-{label}"
+    root.mkdir(exist_ok=False)
+    os.chown(root, 1000, 1000)
+    fifo = root / "payload.fifo"
     os.mkfifo(fifo, 0o600)
     os.chown(fifo, 1000, 1000)
     roots = {
@@ -51,7 +58,15 @@ def main():
         "d52-r1": str(WORK / "evidence/source-d52-assembly-r1/assembled"),
         "d52-r2": str(WORK / "evidence/source-d52-assembly-r2/assembled"),
     }
-    (ROOT / "roots.json").write_text(json.dumps(roots, indent=2) + "\n")
+    if staging:
+        roots = json.loads((TOOLS / "staging-roots.json").read_text())
+        allowed = (
+            WORK / "rocm-10.2-gfx1013/tmp",
+            WORK / "evidence",
+            WORK / "tools",
+        )
+        assert roots and all(Path(path).parent in allowed for path in roots.values())
+    (root / "roots.json").write_text(json.dumps(roots, indent=2) + "\n")
     record = dict(
         status="running",
         pid=os.getpid(),
@@ -69,10 +84,11 @@ def main():
             "python3",
             str(TOOLS / "external_kit_d53.py"),
             "create",
+            *(["--deduplicate"] if staging else []),
             "--roots",
-            str(ROOT / "roots.json"),
+            str(root / "roots.json"),
             "--output",
-            str(ROOT / "manifest.json"),
+            str(root / "manifest.json"),
         ]
         record["command"] = command
         child = None
@@ -83,17 +99,17 @@ def main():
                 and point["disk_free_bytes"] >= 5 * 1024**3
             )
             # Shell FIFO open happens in the child, so a missing reader is bounded too.
-            with (ROOT / "worker.log").open("w") as log:
+            with (root / "worker.log").open("w") as log:
                 child = subprocess.Popen(
                     ["sh", "-c", 'exec "$@" > "$D53_FIFO"', "sh", *command],
                     env=dict(os.environ, D53_FIFO=str(fifo), HOME="/home/nik"),
-                    preexec_fn=limits,
+                    preexec_fn=lambda: limits(staging),
                     start_new_session=True,
                     stdout=subprocess.DEVNULL,
                     stderr=log,
                 )
                 record["child_pid"] = child.pid
-                (ROOT / "status.json").write_text(json.dumps(record, indent=2) + "\n")
+                (root / "status.json").write_text(json.dumps(record, indent=2) + "\n")
                 while child.poll() is None:
                     point = sample()
                     record["samples"].append(point)
@@ -101,7 +117,7 @@ def main():
                         point["available_bytes"] >= 3 * 1024**3
                         and point["disk_free_bytes"] >= 5 * 1024**3
                     )
-                    assert time.monotonic() - started < 1200
+                    assert time.monotonic() - started < (1800 if staging else 1200)
                     time.sleep(0.1)
                 assert child.returncode == 0, child.returncode
             record.update(
@@ -125,7 +141,7 @@ def main():
                 except subprocess.TimeoutExpired:
                     os.killpg(child.pid, signal.SIGKILL)
                     child.wait(timeout=10)
-            (ROOT / "result.json").write_text(json.dumps(record, indent=2) + "\n")
+            (root / "result.json").write_text(json.dumps(record, indent=2) + "\n")
 
 
 if __name__ == "__main__":
