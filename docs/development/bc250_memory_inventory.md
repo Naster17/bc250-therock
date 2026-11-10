@@ -5,6 +5,27 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## D48 native SDK sentinel candidate qualified, inactive (2026-11-10)
+
+SDKsource143f1d8782/helpers67e682956; [report](bc250_sdk_d48_results/README.md).
+-1terminatesSDKvisibilitylist beforeCIFATAL, earlierselectionsretained; CIchecksON.
+Oneunitccachebuild/retainedlink/privateoutputs/normalizedRPATH, originalhostbuild
+RO. R1missedlink.d outputcaughtRO; R2redirectsfixed/cachehit. Candidate2a975370
+17,575,272B/source5aa899d0;1450symbolcontract/DT_NEEDED/SONAMEequaloldSDK.
+23finalfreshdaily/RCCLprocesses pass6negativeimports/CPU0devices,14candidateGPU
+ordinal/default/termination,2normaloldcontrols +1oldpreloaddiagnostic.227numeric
+checks,32ordinaryGPUtraces,ALLcandidatemathhashesexactoldcontrols, loadedDSObound.
+Oldpreloadalsoemptiestraces; standardLDresolutionworks, noLD_PRELOADdeployment.
+HSAUUIDGPU-XX unsupported;6plannedUUIDcasesunavailable, notsyntheticallyqualified.
+131tests/3newbuildrefusals/independentrawtrace-provider-ELFreplay/3mutatedarchives
+pass. Allstrictkernellogs unchanged/ACK/finalidle/nojobs,104boot2774d201r2.
+NativeactiveSDK/D44refusal unchanged; source143fcommittedonlylocalcomponent,
+originalhostsource/build/prefix/kernel/app/105preserved,cacheordinaryupdatesnoreset.
+NextD49versioned104activation/EXprefixlocks/provideridentities/publicchecks/rollback;
+keep105unchanged/legacyguard, public-1onlywithqualifiedinstalledSDKbinding.
+PLAN07source/dependency/licenseclosureOPEN/fourpackagesremain. Specificimportfix
+isqualifiedcandidate, notactive; unknownhistoricalPythonCPU/KFD/clockcausesunfixed.
+
 ## D47 portable Torch parent source and SDK admission (2026-11-10)
 
 Source0bd04bc50; [report](bc250_source_d47_results/README.md).

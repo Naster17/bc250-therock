@@ -9,6 +9,60 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **D48 completed 2026-11-10 — native SDK sentinel candidate built/qualified; NOT active, PLAN-07 OPEN.**
+  SDKsource143f1d878296176c738274202092bb247b7b771c; TheRockhelpers67e682956.
+  [Report](docs/development/bc250_sdk_d48_results/README.md),
+  [replay](docs/development/bc250_sdk_d48_results/verified-results.json).
+  Exact-1terminator nowhandled before SDKinvalid-tokenCI FATAL, preserving prior
+  matchedselections. CIglobalchecksON. Localrocm-systems sourcecommitted; original
+  hostsource/build read-only. Oneunitccachecompile +retained181-inputlink in1bb4ac0e,
+  ownoutputs/RPATHnormalization. R1compiled butmissed linker--dependency-file output;
+  ROmount refusedretainedlink.d write. R2redirectsdepfile too,ccachehit/0.641s relink,
+  NOTcleanbuild/perfclaim. Oldr1resultstale'running' meansfailedcontrollerexit1,notlive.
+  CandidateSHA2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b,
+  17,575,272B; sourceSHA5aa899d0c9921077fb411f9d649e6735b2381a49c97a2fe4caa79db5bb03fcc0.
+  OldactiveSDK a6dc1c88 unchanged.1450dynamicbinding/type/visibility/definedsymbols+
+  DT_NEEDED/SONAMEcontracts equal, notallAPI/ABIpropertyclaim. Ccache20G/noreset,
+  normalentry/statupdates,1CPU4GiBnoswap256PID/600s CPUbuild/EXboard+SHruntime.
+  R3final23freshprocesses daily/RCCL:6HIP/CUDA/ROCR-1imports CPU0devices/noTorchlazyinit;
+  14candidateGPUdefault/0/0,-1 +2ordinaryoldSDKcontrols;1oldSDKpreloaddiagnostic.
+  227numericchecksinccontrols,CPUFP64 output+firstinput/weightgrad2e-6/2e-4,
+  exactprofiledreplays/pinnedH2D-D2H/nondefaultstream. ALLcandidateGPUdigests exact
+  respectiveoldcontrol.32ordinaryGPUtraces realkernels+copies/positive/correlated;
+  everyprocessbinds loadedSDKpath/SHA. No fullmodel/AMP/compiler/NCCLcollective/counter/
+  universalcorrectness/throughputclaim. Finalkernelbefore/after EXACTall23, guardACK.
+  HSAreturnsGPU-XX=UUIDunsupported pernativeheader; planned6UUIDcasesunavailable,
+  nosyntheticidentity. R1testfailedstrictUUIDfixture AFTERcontrolmath/profilepassed;
+  sources/trace retained. R2candidateLD_PRELOAD arithmeticpass/emptyGPUtracefail.
+  R3UNCHANGEDSDKpreload reproducesemptytraces,ordinaryold+newresolutionworks:
+  selectprivateSDKviaLD_LIBRARY_PATH+SONAMEaliases,neverpreloadforactivation.
+  Exactinternalregistrationtimingnottraced; no numeric/tracegate relaxation.
+  Testlimits4CPU0–3/4GiBnoswap512PID/256MiBshm/60child/420total/600independentguard;
+  100ms ownedstop3GiBhost/5GiBdisk.168.950stestcost,hostmin14,205,579,264B, nocgroup/
+  hostpagingIOpeakclaim. No reboot, bootsame2774d201r2/finalidle/nativecyan/watchdog.
+  Controllers5337(fail)/5960(buildpass)/6807/8382(testfail)/11032(finalpass) finished;
+  allownedcontainersgone/guardsACK. SourceCPPGit143f/patch0005 inamd-mainline series;
+  originalhostsources/builds/activeprefix/libraries/images/profiles/registry/kernel/
+  bootfallback/apps/checkpoints untouched; normalcacheupdatesonly.105unaccessed.
+  131localtests(3newredirection/CI/overwritecases)/Black/criticalRuff+F401/scopeddiff/
+  rawtrace+provider+ELFreplaypass;3alteredsource/provider/tracearchives refused.
+  Localmetadata kernel/artifacts/sdk-d48/104-evidence-r1.tar.gz1,345,232B SHA
+  ef15397c5b5c49ccfa6800709759cc154f2135fa54f936a3086865846db11a4d;
+  candidate sdk-d48-candidate-r1.tar.gz4,040,834B SHA
+  98d26859f7d57fed98ec2c5e2aa09c8121c1b55fc12b1b5470a4745a736ccf3e.
+  Candidateartifactrequires recordednativecohort/notstandaloneSDK/releaseSBOM.
+  Hosttools tools/sdk-d48; evidence/sdk-d48-build-r1/r2 andtests-r1/r2/r3(actual
+  separatefullsdk-d48-*dirs); metadata evidence/sdk-d48-evidence-r1.tar.gz.
+  Privatequalifiedview evidence/sdk-d48-build-r2/prefix; activeSDK+D44refusal STILLold.
+  .104docs snapshot20261110-d48-final synced athandoff, .105D43docs unchanged.
+  **NEXT D49:** inspectprovider/prefixpreservationbaseline, stageversioned104activation
+  preservingoldSDK/fallback; EXruntime-update procedure, accuratedaily/RCCL/distributed
+  metadata,ordinarypublic/profilechecks +rollbackqualification beforeselection.
+  Keep105unchanged. Public-1admission onlyboundtoqualifiedinstalledSDKidentity;
+  legacycohortsretainD44refusal. PLAN07recursive dependency/license/Gloo-overlay/
+  build-versionclosureOPEN, FOURimportantpackagesremain. UnknownPythonCPU0x3b3e6/
+  KFDmm-queue/105clocksource causes remainseparate/unfixed; fixedVMheap/D05/D21distinct.
+
 - **PLAN-07 / D47 completed 2026-11-10 — portable Torch parent snapshot/replay and SDK resource/input admission; PLAN-07 OPEN.**
   Source0bd04bc50. [Report](docs/development/bc250_source_d47_results/README.md).
   Standalone package local kernel/artifacts/source-d47/portable-torch-source-d47-r1.tar
