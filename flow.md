@@ -24,19 +24,33 @@ release claims must not override this cursor and current manifests.
   R2 additionally releases unused GPU cache via public FSDP unit forward prehooks
   and root postforward hook; live allocations asserted unchanged each time, emits
   bounded GPU live/reserved telemetry. Original model/wrap/optimizer/collectives intact.
-  **RUNNING BOTH** guard_distributed_d43_on_host.py --shape control --label control
-  --port29751; guardians1046064/1055796, tools/distributed-d43, Podman label
-  bc250.d43=d43-r2-control. Logs evidence/distributed-d43-control-r2-controller.log
-  and evidence/distributed-d43-r2/control/{gpu.log,rank.json,final.json,guard/state.json}.
-  At checkpoint four forward passes observed; result UNKNOWN. Existing EX reservation/
-  SHruntime,4CPU0–3,hard10GiB/12combined,owned-stop host3GiB/cgroup9GiB/disk5GiB,
-  child1400/isolatedguard1800 retained.104boot2774d201 r2/105e902e636 r3.
-  **NEXT:** inspect current r2 control final/ACK; if pass compare ALL eight norms/
-  five global losses/state counts exactly to r1, then run r2 large-training at29753
-  on BOTH. If reserve stop inspect exact phase/telemetry, never lower reserves.
-  Exporter staged BOTH; final archives intended distributed-d43-evidence-r2.tar.gz.
-  Local verifier replays D42/predecessors, source/finite/update mutations prepared
-  kernel/artifacts/distributed-d43/check_negative_archives.py. No archive exists yet.
+  R2 first control numerical/finite/exit pass;105 overall strict log gate refused
+  unrelated Docker veth up/down activity. No filtering or foreign stop. Both guards
+  ACK. R2 control-recheck BOTH strictpass/ACK/logs unchanged at29755, guardians
+  1047030/1057332. R2control ALL8 norms/5losses/state counts EXACT r1 BOTH;
+  local numbers preserved kernel/artifacts/distributed-d43/{104,105}-control-r{1,2}.json.
+  Export/replaydec42254d selects final labels control-recheck + large-training;
+  all failed evidence preserved. Exporter/verifier current versions staged BOTH.
+  **RUNNING BOTH** guard_distributed_d43_on_host.py --shape large
+  --label large-training --port29753; guardians1047965/1058281, tools/distributed-d43,
+  Podman label bc250.d43=d43-r2-large-training. Logs BOTH
+  evidence/distributed-d43-large-r2-controller.log and evidence/distributed-d43-r2/
+  large-training/{gpu.log,rank.json,final.json,guard/state.json}. Large result UNKNOWN;
+  do not start another test. Existing EX reservation/SHruntime,4CPU0–3,hard10GiB/
+  12combined,owned-stop host3GiB/cgroup9GiB/disk5GiB,child1400/isolatedguard1800.
+  104boot2774d201 r2/105e902e636 r3. Root SSH sessions10472410/10599060 still open.
+  **NEXT:** monitor large final/ACK/reserves. If reserve stop inspect unit GPU
+  telemetry; no relaxed thresholds. If pass export BOTH using
+  tools/distributed-d43/export_distributed_d43_on_host.py, controller logs named
+  evidence/distributed-d43-export-r2-controller.log; intended final archive
+  evidence/distributed-d43-evidence-r2.tar.gz (none yet). Scp local artifacts,
+  run verify_distributed_d43_exports.py (D42+predecessor replay) and local
+  kernel/artifacts/distributed-d43/check_negative_archives.py (3 mutations).
+  Final report draft kernel/artifacts/distributed-d43/README-draft.md contains
+  UNQUALIFIED future success text/placeholders: use ONLY if actual final passes.
+  Then docs/inventory/manifest/remaining plan/milestone commits/both-hostdocs sync.
+  If full8-update capacity passes, PLAN05 bounded scope may close; next priority
+  PLAN06 current stability/visibility/crash evidence, not endless fixture expansion.
   Clocksource105 remote-read timeout remainsOPEN; historical Python CPU fault stays
   distinct fixed VMheap/D05 exit/D21 restore. No native prefix/install/reboot/apps.
 
