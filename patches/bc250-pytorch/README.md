@@ -1,5 +1,13 @@
 # BC-250 PyTorch patches
 
+D46 (2026-11-10) adds a separately verified complete export at
+[`../bc250-pytorch-complete`](../bc250-pytorch-complete/README.md). It closes the
+historical three-file gap for the qualified native source and current source head.
+This old incremental directory remains unchanged/incomplete historical evidence;
+do not combine its patches with the complete series. Full dependency/bundle/build
+reconstruction remains PLAN-07 work. Older gap statements below describe this
+historical series, not missing files in the current Git repository.
+
 Patch0010 is a three-commit incremental mbox on Torch `da45369`: native sparse
 triangular pivot marking (`a434d03`/`dc8fea0`) and test qualification `2b449c4`.
 Only libtorch_hip.so changes; the old profiler-order runtime is retained.

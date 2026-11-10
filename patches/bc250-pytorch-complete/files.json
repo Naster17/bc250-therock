@@ -1,0 +1,212 @@
+[
+  {
+    "path": ".spin/cmds.py",
+    "baseline_sha256": "2d7b22d72321014810c0a7098cab5676d200864a6c6a4e9ee8290fe99b097955",
+    "native_sha256": "413c9d4039432c230b6d6910f0ac755fe4660081bc8e12fff97336be3e707514",
+    "source_head_sha256": "413c9d4039432c230b6d6910f0ac755fe4660081bc8e12fff97336be3e707514"
+  },
+  {
+    "path": "aten/src/ATen/cuda/detail/CUDAHooks.cpp",
+    "baseline_sha256": "491b9f42e3cdc4dd7f26fa9ac48e78cbf185449cb75fc4e2111a27cd8cff1fde",
+    "native_sha256": "b785a129f0e6dacfc448377cedc1997a191fef8fb9173dcc5c7e53f70d294289",
+    "source_head_sha256": "b785a129f0e6dacfc448377cedc1997a191fef8fb9173dcc5c7e53f70d294289"
+  },
+  {
+    "path": "aten/src/ATen/native/cuda/AveragePool2d.cu",
+    "baseline_sha256": "f1e4e992804a87a0e2eae73467ea7f9771f1b8a71775e5ca90562df6d456068a",
+    "native_sha256": "ed8d3b4ababbc6de64d0db1343c8dd9f9d934e9bcca18adeef23a9ad7c50e061",
+    "source_head_sha256": "ed8d3b4ababbc6de64d0db1343c8dd9f9d934e9bcca18adeef23a9ad7c50e061"
+  },
+  {
+    "path": "aten/src/ATen/native/cuda/int8mm.cu",
+    "baseline_sha256": "7f084841d830ac257507ea0d2d1df7aefc57ff3e4e84113177f1e23b6632d846",
+    "native_sha256": "99f105302ff49de19e22d8b5e8dd6ef66dc0167995055b1523a05f09da260b1e",
+    "source_head_sha256": "99f105302ff49de19e22d8b5e8dd6ef66dc0167995055b1523a05f09da260b1e"
+  },
+  {
+    "path": "aten/src/ATen/native/native_functions.yaml",
+    "baseline_sha256": "63bd04646fa7ee7a496a8f3095204ae0c8cfcde5b1282789ea92f9faa713491c",
+    "native_sha256": "e721207b2901592203121128dee1fea7d5544f1727b0ba5abce943d833f2061a",
+    "source_head_sha256": "e721207b2901592203121128dee1fea7d5544f1727b0ba5abce943d833f2061a"
+  },
+  {
+    "path": "aten/src/ATen/native/sparse/cuda/SparseBlas.cpp",
+    "baseline_sha256": "3d62b477a7160b063e224b4819d554a13098941203b0eb97ac726fa124a6d834",
+    "native_sha256": "87f06ad6a509023b42c4e4c1ae7f03b440d2c9b3a90b80d552e7f7f62c935207",
+    "source_head_sha256": "87f06ad6a509023b42c4e4c1ae7f03b440d2c9b3a90b80d552e7f7f62c935207"
+  },
+  {
+    "path": "aten/src/ATen/native/sparse/cuda/SparseBlasImpl.h",
+    "baseline_sha256": "8e813a7f3351c3c4a97cda1e15bf871e9ec0dc68242e9562201139f7646c8dbe",
+    "native_sha256": "4341b71a2cf821873956eecf7d7961c9843c18b581550fb42dcc4ba799dd196c",
+    "source_head_sha256": "4341b71a2cf821873956eecf7d7961c9843c18b581550fb42dcc4ba799dd196c"
+  },
+  {
+    "path": "aten/src/ATen/native/sparse/cuda/SparseCsrTensorMath.cu",
+    "baseline_sha256": "01c5a2b973d68d9183c8d764811f146655e8edcffa12034f1df1a3356adf7ff7",
+    "native_sha256": "001a2c5a17cdae5df68cc3899e379badcdd0715e89dfc2417af128e09bb3062a",
+    "source_head_sha256": "001a2c5a17cdae5df68cc3899e379badcdd0715e89dfc2417af128e09bb3062a"
+  },
+  {
+    "path": "aten/src/ATen/native/sparse/cuda/cuSPARSELtOps.cpp",
+    "baseline_sha256": "75d9cd939ab121876a9bf52b4dec730f61fbe83e849650e9872a90e642f79fff",
+    "native_sha256": "966d3500760e9ec19356af897feab59423873f27664883a703423e51826f3024",
+    "source_head_sha256": "966d3500760e9ec19356af897feab59423873f27664883a703423e51826f3024"
+  },
+  {
+    "path": "aten/src/ATen/native/transformers/cuda/sdp_utils.cpp",
+    "baseline_sha256": "8c082626a10b400c6fed19ad23de64a266e22da30399b72dde1a524034420a8b",
+    "native_sha256": "9f035e5c3316244bbaf5ce69bdd3d6704dd7633152435a48e1c778a6bee75a58",
+    "source_head_sha256": "9f035e5c3316244bbaf5ce69bdd3d6704dd7633152435a48e1c778a6bee75a58"
+  },
+  {
+    "path": "test/distributed/elastic/agent/server/test/api_test.py",
+    "baseline_sha256": "a9e886746dd6838cbe6d487b0a64495292574539904778cdadcdad8852aa09bd",
+    "native_sha256": "a9e886746dd6838cbe6d487b0a64495292574539904778cdadcdad8852aa09bd",
+    "source_head_sha256": "4f590c07a578a6fe4006e7fb4c0e319d196c14dd8a367d4ecd69f0fe1f81dd4d"
+  },
+  {
+    "path": "test/distributed/test_c10d_ops_nccl.py",
+    "baseline_sha256": "c24d42508cafbd2085b04a1651de20f8c0894751fbe89e712a6ede80cf2b8ce8",
+    "native_sha256": "5833f1a8ed07c27cc7ce5ac569eb09127b84fb3337666692cb91d95c097d932d",
+    "source_head_sha256": "5833f1a8ed07c27cc7ce5ac569eb09127b84fb3337666692cb91d95c097d932d"
+  },
+  {
+    "path": "test/distributed/test_nccl.py",
+    "baseline_sha256": "f56fb47fd1520e0d577b67ca94b512554f9e6704e777a9220a16bfe42cc8c21f",
+    "native_sha256": "277f4b0ecba9708038730987b653eef01a12752b71c4c44f24b560826ccd132c",
+    "source_head_sha256": "277f4b0ecba9708038730987b653eef01a12752b71c4c44f24b560826ccd132c"
+  },
+  {
+    "path": "test/test_bc250_attention_a07.py",
+    "baseline_sha256": null,
+    "native_sha256": "57f9b58c4fafa93f7cafb48e575a6256b820d51d69986e44a7a6d82718b3efbb",
+    "source_head_sha256": "57f9b58c4fafa93f7cafb48e575a6256b820d51d69986e44a7a6d82718b3efbb"
+  },
+  {
+    "path": "test/test_bc250_gated_delta.py",
+    "baseline_sha256": null,
+    "native_sha256": "49afcabe2fed8b7700653e977048ffb733094206aaae4c344a2fb2e8b912b79d",
+    "source_head_sha256": "49afcabe2fed8b7700653e977048ffb733094206aaae4c344a2fb2e8b912b79d"
+  },
+  {
+    "path": "test/test_bc250_hipsparselt.py",
+    "baseline_sha256": null,
+    "native_sha256": "c9ea1851859950b22cdafc991153f2ef60954b74887ff07f636aef59df772229",
+    "source_head_sha256": "c9ea1851859950b22cdafc991153f2ef60954b74887ff07f636aef59df772229"
+  },
+  {
+    "path": "test/test_bc250_profiler_a09.py",
+    "baseline_sha256": null,
+    "native_sha256": "897265c5dd78e59ba6e47d0ecef40b2ae3c8aad1f9257a381e8b7115bc9ac1a5",
+    "source_head_sha256": "897265c5dd78e59ba6e47d0ecef40b2ae3c8aad1f9257a381e8b7115bc9ac1a5"
+  },
+  {
+    "path": "test/test_bc250_profiler_order.py",
+    "baseline_sha256": null,
+    "native_sha256": "91bf978716be2b1f16d294d90efa7b565993a95af8f9ff42c9024bbd360f4766",
+    "source_head_sha256": "91bf978716be2b1f16d294d90efa7b565993a95af8f9ff42c9024bbd360f4766"
+  },
+  {
+    "path": "test/test_bc250_sparse_autograd.py",
+    "baseline_sha256": null,
+    "native_sha256": "1b338428991219c71253b5e221360f62c6cec87387bc299b8f30b2031a33518e",
+    "source_head_sha256": "1b338428991219c71253b5e221360f62c6cec87387bc299b8f30b2031a33518e"
+  },
+  {
+    "path": "test/test_bc250_sparse_triangular.py",
+    "baseline_sha256": null,
+    "native_sha256": "880f5a13884df20f584ab8f0142c6bbd7a8f2b8940a492b5758af89a9c23369f",
+    "source_head_sha256": "880f5a13884df20f584ab8f0142c6bbd7a8f2b8940a492b5758af89a9c23369f"
+  },
+  {
+    "path": "test/test_linalg.py",
+    "baseline_sha256": "d3ccaabd7e36c27093825999409e541a7b440f19b398d518eee84ac729a06ae0",
+    "native_sha256": "594b87c3cbd532007527af5ee0ae2edc4aaeb07aa31b955b05b29243025ffd4c",
+    "source_head_sha256": "594b87c3cbd532007527af5ee0ae2edc4aaeb07aa31b955b05b29243025ffd4c"
+  },
+  {
+    "path": "tools/autograd/derivatives.yaml",
+    "baseline_sha256": "b99f77f0bd4117c1ad57646f493edd7a794c7385f4d6e889ef12a30503facce0",
+    "native_sha256": "5a0a7c7775fe801206fea8be5d7fb214756e817b880c68ba32f88dfa909a3cef",
+    "source_head_sha256": "5a0a7c7775fe801206fea8be5d7fb214756e817b880c68ba32f88dfa909a3cef"
+  },
+  {
+    "path": "torch/CMakeLists.txt",
+    "baseline_sha256": "a381d7b56ff595741ed71fc7bed95ee2b86165ea1cce5ab05696e9d1f00d9940",
+    "native_sha256": "e72c0bfae669fb35153729c00b9901358101a30dd85f9694c6a4d0468beb86ec",
+    "source_head_sha256": "e72c0bfae669fb35153729c00b9901358101a30dd85f9694c6a4d0468beb86ec"
+  },
+  {
+    "path": "torch/_inductor/compile_fx.py",
+    "baseline_sha256": "a9b68fb1e93a95d8ea01f12c53fd65232007679ff14a51d52814e5d85c1c5b67",
+    "native_sha256": "40dd543ab067bdcbe0439e5ed2e9c0b95b7ed1caa72c5be9bf47971bbb723101",
+    "source_head_sha256": "40dd543ab067bdcbe0439e5ed2e9c0b95b7ed1caa72c5be9bf47971bbb723101"
+  },
+  {
+    "path": "torch/csrc/Module.cpp",
+    "baseline_sha256": "1822edcda8ceec355dc433ebf1761a7ce073ff5d3ae137c1c98441d0e9e0ed81",
+    "native_sha256": "09951806cfab304005842158b980f88935cf594c03c929f6d293500f5d9c1d2e",
+    "source_head_sha256": "09951806cfab304005842158b980f88935cf594c03c929f6d293500f5d9c1d2e"
+  },
+  {
+    "path": "torch/csrc/cuda/Module.cpp",
+    "baseline_sha256": "41882344c7cdea92481e1d3186f1571df35e20f45653be16f59bdd0958f61016",
+    "native_sha256": "f80daebd41a72faf3af281cff77dbbf4c4c5812f2f80333072e9636072c27128",
+    "source_head_sha256": "f80daebd41a72faf3af281cff77dbbf4c4c5812f2f80333072e9636072c27128"
+  },
+  {
+    "path": "torch/csrc/cuda/nccl.cpp",
+    "baseline_sha256": "c465c0c9f9d7a446fac1433c6ed5b54d2ee9e4db68ed284df6c463d5e3ad7134",
+    "native_sha256": "f197f6c6343928452d3582b1a7962516bd5493467430bbc1706232f112379313",
+    "source_head_sha256": "f197f6c6343928452d3582b1a7962516bd5493467430bbc1706232f112379313"
+  },
+  {
+    "path": "torch/csrc/cuda/shared/cusparselt.cpp",
+    "baseline_sha256": "76eec70ae8b743cb9dc85f3cbe640e982042b8aac3dc8f54345e1e2cb33be8aa",
+    "native_sha256": "d3db95270ed6b3e65e13b087c0d5c7b8ab5cc041efc1c53166870885bcfd9b5a",
+    "source_head_sha256": "d3db95270ed6b3e65e13b087c0d5c7b8ab5cc041efc1c53166870885bcfd9b5a"
+  },
+  {
+    "path": "torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp",
+    "baseline_sha256": "bf4210311fe0c2a61ac9ccfcda0656edb281b985109881315e0b5dfd6beec9cc",
+    "native_sha256": "d23f68c7beb27e27151b7cec3dd801041a43afc55997d205b95250c32554d320",
+    "source_head_sha256": "d23f68c7beb27e27151b7cec3dd801041a43afc55997d205b95250c32554d320"
+  },
+  {
+    "path": "torch/csrc/profiler/kineto_shim.cpp",
+    "baseline_sha256": "8ad44814f7e2128f47276bce2ca79d9b0ddbc1f22cd2308ef2e2dd65fac2a03d",
+    "native_sha256": "8374ebd8ca33b84490b4c3e1295bf7d3c19e290f3a2e46d282f7b79c3c084f63",
+    "source_head_sha256": "8374ebd8ca33b84490b4c3e1295bf7d3c19e290f3a2e46d282f7b79c3c084f63"
+  },
+  {
+    "path": "torch/distributed/elastic/agent/server/api.py",
+    "baseline_sha256": "625fa4ccf0fa2beaec4dcee1ad995a9d2b4fceba52546cf60bc943cb3f328afc",
+    "native_sha256": "625fa4ccf0fa2beaec4dcee1ad995a9d2b4fceba52546cf60bc943cb3f328afc",
+    "source_head_sha256": "8bb38215f15723143c363c0f1bd49a04b2cfda77bacad98cb13c81a9fde9de04"
+  },
+  {
+    "path": "torch/nn/attention/_gfx1013.py",
+    "baseline_sha256": null,
+    "native_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7",
+    "source_head_sha256": "d61ac116d82ef933d9627babf3344e07645763c0c4007f8e732832bf3d29b8d7"
+  },
+  {
+    "path": "torch/nn/bc250_gated_delta.py",
+    "baseline_sha256": null,
+    "native_sha256": "21398daf2bdae7b6cfdaac08e510c97f94c5ed8d709213de638ca181a868c64e",
+    "source_head_sha256": "21398daf2bdae7b6cfdaac08e510c97f94c5ed8d709213de638ca181a868c64e"
+  },
+  {
+    "path": "torch/nn/bc250_training_ops.py",
+    "baseline_sha256": null,
+    "native_sha256": "fe4724c1b3fb60372622d28b8feb2a9a718f906d4c574660727154edb914f938",
+    "source_head_sha256": "fe4724c1b3fb60372622d28b8feb2a9a718f906d4c574660727154edb914f938"
+  },
+  {
+    "path": "torch/sparse/semi_structured.py",
+    "baseline_sha256": "fbe86c89565ec673e137dcba220a6d86db3267d9db9a6100fb69a4b46efc6d04",
+    "native_sha256": "824d85d9c2e442916f37eed27fcc9b68d208ad93c0e2a3878a6c8900cb83a7ad",
+    "source_head_sha256": "824d85d9c2e442916f37eed27fcc9b68d208ad93c0e2a3878a6c8900cb83a7ad"
+  }
+]
