@@ -1,0 +1,1046 @@
+{
+  "status": "passed",
+  "sources": {
+    "board_preflight.py": "039274868dd9aeda1995a0737d4d79d560afc13cc37f570ff154d62d21217083",
+    "docker_preflight.py": "a78449d410d9765f464ef36681a17126500ca4dd9d71bdda894445815971aa38",
+    "build_inputs_d51.py": "cd066b0acff9c86c23f8dd05b188ce603ef08928562061e04e9268c399d7dc2d",
+    "audit_build_inputs_d51_on_host.py": "c0be5da1793214f9a2f4752d2a937da9184a55f7081eef81ed11ed8b3312059c",
+    "probe_build_image_d51.py": "2570985bff1e4f61f2dd5c6ed776e7bc2d38e5f4d19223fd7315e7c9501970fd"
+  },
+  "profiles": {
+    "daily": {
+      "classification": {
+        "compile_entries": 3239,
+        "flags": {
+          "USE_FLASH_ATTENTION": "0",
+          "USE_MEM_EFF_ATTENTION": "0",
+          "USE_ROCM_CK_SDPA": "0",
+          "USE_ROCM_CK_GEMM": "0",
+          "USE_MSLK": "0"
+        },
+        "references": {
+          "third_party/aiter": [],
+          "third_party/flash-attention": [],
+          "third_party/mslk": []
+        },
+        "missing": [
+          {
+            "path": "third_party/aiter/3rdparty/composable_kernel",
+            "pin": "fcc9372c009c8e0a23fece77b582da83b04a654f",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/flash-attention/csrc/composable_kernel",
+            "pin": "791afc64655301487cac6e5361c677a0a4b82059",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/flash-attention/csrc/cutlass",
+            "pin": "7127592069c2fe01b041e174ba4345ef9b279671",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/flash-attention/third_party/aiter",
+            "pin": "b4b75165fbd2456dfd0f074c5b2ef91bc87d97e5",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/composable_kernel",
+            "pin": "7fe50dc3da2069d6645d9deb8c017a876472a977",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/cutlass",
+            "pin": "571edeb2d0ac872a8392fc49285b156b07884b4e",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/googletest",
+            "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/hipify_torch",
+            "pin": "63b6a7b541fa7f08f8475ca7d74054db36ff2691",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          }
+        ]
+      },
+      "settings": {
+        "CCACHE_MAXSIZE": "20G",
+        "CMAKE_PREFIX_PATH": "$prefix",
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_HIP_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_HIP_COMPILER": "$prefix/lib/llvm/bin/clang++",
+        "CMAKE_TOOLCHAIN_FILE": "/workspace/helpers/torch_toolchain.cmake",
+        "CMAKE_BUILD_TYPE": "Release",
+        "MAX_JOBS": "4",
+        "CMAKE_JOB_POOLS": "link=1",
+        "CMAKE_JOB_POOL_LINK": "link",
+        "PYTORCH_ROCM_ARCH": "gfx1013",
+        "PYTORCH_BUILD_VERSION": "2.13.0a0+gfx1013",
+        "PYTORCH_BUILD_NUMBER": "1",
+        "USE_ROCM": "1",
+        "USE_CUDA": "0",
+        "USE_CUDNN": "0",
+        "USE_MAGMA": "0",
+        "BLAS": "OpenBLAS",
+        "USE_FLASH_ATTENTION": "0",
+        "USE_MEM_EFF_ATTENTION": "0",
+        "USE_ROCM_CK_GEMM": "0",
+        "USE_ROCM_CK_SDPA": "0",
+        "USE_MSLK": "0",
+        "USE_DISTRIBUTED": "1",
+        "USE_GLOO": "1",
+        "USE_C10D_GLOO": "1",
+        "USE_TENSORPIPE": "1",
+        "USE_NCCL": "0",
+        "USE_MPI": "0",
+        "USE_UCC": "0",
+        "USE_GLOO_IBVERBS": "0",
+        "USE_GLOO_WITH_OPENSSL": "0",
+        "USE_KINETO": "1",
+        "USE_CUSPARSELT": "0",
+        "CMAKE_FRESH": "1"
+      },
+      "files": {
+        "build_torch_b052.sh": "3c590429e23a466680ee4382502f9f867e36594fc68f6d4109bf6e75cb355d9b",
+        "torch_toolchain.cmake": "7f78ed905a06269ef626e1910222b31c2550a8ade743768a4e85ba61f4d04b7a",
+        "retained-build.json": "0f1677927ccf439920e470a8bf38b6369e9d9d3bad11e86d5bac8ba3f236b8f8",
+        "compile_commands.json": "97fa437fe2269ab72978500d79e2dd62c89fc0e88c73b941ea7468b66505e83e",
+        "build.ninja": "46498d1cfbe7dc1974c41c0402d094dc6eaadc0dd00ebb336522ae172fafc181",
+        "version.py": "0899cb9ff22cacf0b7c831da771f08bc00e9565adec2bfa53e64768a7b99fc9e",
+        "CMakeCache.txt": "2406c7db4260aae3404bd6cf8cdaa9db4f70938e82cb15d3326753934e10b147"
+      },
+      "compiler_settings": {
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "/usr/bin/ccache",
+        "CMAKE_C_COMPILER": "/usr/bin/gcc",
+        "CMAKE_HIP_COMPILER": "/workspace/build/dist/rocm/lib/llvm/bin/clang++",
+        "CMAKE_MAKE_PROGRAM": "/opt/torch-venv/bin/ninja",
+        "Python_EXECUTABLE": "/opt/torch-venv/bin/python",
+        "CMAKE_COMMAND": "/usr/local/therock-tools/bin/cmake"
+      },
+      "ninja_family_mentions": {
+        "third_party/aiter": 0,
+        "third_party/flash-attention": 0,
+        "third_party/mslk": 0
+      }
+    },
+    "rccl-single": {
+      "classification": {
+        "compile_entries": 3241,
+        "flags": {
+          "USE_FLASH_ATTENTION": "0",
+          "USE_MEM_EFF_ATTENTION": "0",
+          "USE_ROCM_CK_SDPA": "0",
+          "USE_ROCM_CK_GEMM": "0",
+          "USE_MSLK": "0"
+        },
+        "references": {
+          "third_party/aiter": [],
+          "third_party/flash-attention": [],
+          "third_party/mslk": []
+        },
+        "missing": [
+          {
+            "path": "third_party/aiter/3rdparty/composable_kernel",
+            "pin": "fcc9372c009c8e0a23fece77b582da83b04a654f",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/flash-attention/csrc/composable_kernel",
+            "pin": "791afc64655301487cac6e5361c677a0a4b82059",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/flash-attention/csrc/cutlass",
+            "pin": "7127592069c2fe01b041e174ba4345ef9b279671",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/flash-attention/third_party/aiter",
+            "pin": "b4b75165fbd2456dfd0f074c5b2ef91bc87d97e5",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/composable_kernel",
+            "pin": "7fe50dc3da2069d6645d9deb8c017a876472a977",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/cutlass",
+            "pin": "571edeb2d0ac872a8392fc49285b156b07884b4e",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/googletest",
+            "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          },
+          {
+            "path": "third_party/mslk/external/hipify_torch",
+            "pin": "63b6a7b541fa7f08f8475ca7d74054db36ff2691",
+            "disposition": "excluded-from-this-retained-native-configuration",
+            "evidence": "all five optional flags off; no family token in complete retained compile database; source CMake guards separately archived",
+            "future_configuration": "requires fresh dependency/feature admission; descendants remain unexpanded"
+          }
+        ]
+      },
+      "settings": {
+        "CCACHE_MAXSIZE": "20G",
+        "CMAKE_PREFIX_PATH": "/home/nik/bc250work/rocm-10.2-gfx1013/rccl-b034/install-r1:$CMAKE_PREFIX_PATH",
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_HIP_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_HIP_COMPILER": "$prefix/lib/llvm/bin/clang++",
+        "CMAKE_TOOLCHAIN_FILE": "/workspace/helpers/torch_toolchain.cmake",
+        "CMAKE_BUILD_TYPE": "Release",
+        "MAX_JOBS": "4",
+        "CMAKE_JOB_POOLS": "link=1",
+        "CMAKE_JOB_POOL_LINK": "link",
+        "PYTORCH_ROCM_ARCH": "gfx1013",
+        "PYTORCH_BUILD_VERSION": "2.13.0a0+gfx1013",
+        "PYTORCH_BUILD_NUMBER": "1",
+        "USE_ROCM": "1",
+        "USE_CUDA": "0",
+        "USE_CUDNN": "0",
+        "USE_MAGMA": "0",
+        "BLAS": "OpenBLAS",
+        "USE_FLASH_ATTENTION": "0",
+        "USE_MEM_EFF_ATTENTION": "0",
+        "USE_ROCM_CK_GEMM": "0",
+        "USE_ROCM_CK_SDPA": "0",
+        "USE_MSLK": "0",
+        "USE_DISTRIBUTED": "1",
+        "USE_GLOO": "1",
+        "USE_C10D_GLOO": "1",
+        "USE_TENSORPIPE": "1",
+        "USE_NCCL": "1",
+        "USE_SYSTEM_NCCL": "1",
+        "USE_MPI": "0",
+        "USE_UCC": "0",
+        "USE_GLOO_IBVERBS": "0",
+        "USE_GLOO_WITH_OPENSSL": "0",
+        "USE_KINETO": "1",
+        "USE_CUSPARSELT": "0",
+        "CMAKE_FRESH": "1"
+      },
+      "files": {
+        "torch_toolchain.cmake": "7f78ed905a06269ef626e1910222b31c2550a8ade743768a4e85ba61f4d04b7a",
+        "retained-build.json": "2e833bc6b3be4acbca183f60eb7164ae937c306961049839b642dda9ab063c1f",
+        "compile_commands.json": "f40ad198b84cefe08f814b0bd967c9a63c31b6855849833400ea7c883f68863b",
+        "build.ninja": "99d72258c0b79dbfb619ea3f697fa72a927e6cc9ee46f6a5521aa9f944d32fff",
+        "build_torch_b053.sh": "7e86a0fd88b44c498c424aed84e0981f5d91504b2df286ba54fc886631f59faa",
+        "version.py": "0899cb9ff22cacf0b7c831da771f08bc00e9565adec2bfa53e64768a7b99fc9e",
+        "CMakeCache.txt": "9c153e7ef58b946200c23641699be1b6cdfe8a6aaaa67d7ae082647d7a1d51e0"
+      },
+      "compiler_settings": {
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "/usr/bin/ccache",
+        "CMAKE_C_COMPILER": "/usr/bin/gcc",
+        "CMAKE_HIP_COMPILER": "/workspace/build/dist/rocm/lib/llvm/bin/clang++",
+        "CMAKE_MAKE_PROGRAM": "/opt/torch-venv/bin/ninja",
+        "Python_EXECUTABLE": "/opt/torch-venv/bin/python",
+        "CMAKE_COMMAND": "/usr/local/therock-tools/bin/cmake"
+      },
+      "ninja_family_mentions": {
+        "third_party/aiter": 0,
+        "third_party/flash-attention": 0,
+        "third_party/mslk": 0
+      }
+    }
+  },
+  "images": {
+    "native-build": {
+      "image": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+      "result": {
+        "status": "passed",
+        "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "tools": {
+          "gcc": {
+            "path": "/usr/bin/gcc",
+            "resolved": "/usr/bin/x86_64-linux-gnu-gcc-13",
+            "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+            "version": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+          },
+          "gxx": {
+            "path": "/usr/bin/g++",
+            "resolved": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+            "version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+          },
+          "hip_clang": {
+            "path": "/workspace/build/dist/rocm/lib/llvm/bin/clang++",
+            "resolved": "/workspace/build/dist/rocm/lib/llvm/bin/clang-24",
+            "sha256": "55833a05d08dc3fefbc99bb8645bbe1bd33a19ab65485483575cd028041f97c4",
+            "version": "AMD clang version 24.0.0git (https://github.com/ROCm/llvm-project.git 7667f52dd687899256a3285ab0bce3c53bc73394)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /workspace/build/dist/rocm/lib/llvm/bin\nConfiguration file: /workspace/build/dist/rocm/lib/llvm/bin/clang++.cfg"
+          },
+          "cmake": {
+            "path": "/usr/local/therock-tools/bin/cmake",
+            "resolved": "/usr/local/therock-tools/bin/cmake",
+            "sha256": "d8ed20c9688adaf5ee8d387072424aa732c5f589e860347e0dfa51cca37dc863",
+            "version": "cmake version 3.31.12\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+          },
+          "ninja": {
+            "path": "/opt/torch-venv/bin/ninja",
+            "resolved": "/opt/torch-venv/bin/ninja",
+            "sha256": "696f9628a79d9ce50314cf9556d7cd1a1d1ec52b8fd52828f6f9db1719565b67",
+            "version": "1.13.0.git.kitware.jobserver-pipe-1"
+          },
+          "ccache": {
+            "path": "/usr/bin/ccache",
+            "resolved": "/usr/bin/ccache",
+            "sha256": "3ce30c8fe66f2d2db45d1913871059557e2c04ddecd6cb389bbba17f2b77dd63",
+            "version": "ccache version 4.9.1\nFeatures: file-storage http-storage redis+unix-storage redis-storage\n\nCopyright (C) 2002-2007 Andrew Tridgell\nCopyright (C) 2009-2024 Joel Rosdahl and other contributors\n\nSee <https://ccache.dev/credits.html> for a complete list of contributors.\n\nThis program is free software; you can redistribute it and/or modify it under\nthe terms of the GNU General Public License as published by the Free Software\nFoundation; either version 3 of the License, or (at your option) any later\nversion."
+          },
+          "python": {
+            "path": "/opt/torch-venv/bin/python",
+            "resolved": "/usr/bin/python3.12",
+            "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+            "version": "Python 3.12.3"
+          }
+        },
+        "packages": [
+          {
+            "name": "build",
+            "version": "1.5.0",
+            "record_sha256": [
+              "773f14f41447ee24d8d9082c4dd072dee4755eea069b05ee5ba5ad7ce77bfe14"
+            ]
+          },
+          {
+            "name": "certifi",
+            "version": "2026.7.22",
+            "record_sha256": [
+              "54fa8ebe7e5d1cd4a48064f94e706e5f7a6cdcccef364379692ed7657bfed982"
+            ]
+          },
+          {
+            "name": "charset-normalizer",
+            "version": "3.5.2",
+            "record_sha256": [
+              "ac38f8381e190bf4b026c8f28440295d6f500d047768efbcfa94bc50572eb65e"
+            ]
+          },
+          {
+            "name": "click",
+            "version": "8.3.3",
+            "record_sha256": [
+              "8e3690cb8b308b8b0be631598786ea6b7d869ce104d584963319292d8c60e260"
+            ]
+          },
+          {
+            "name": "cmake",
+            "version": "4.4.0",
+            "record_sha256": [
+              "b4b2c71d137c64b9992ad0658f53a5cc32aaf82d202af49e129f3ac378af5c4e"
+            ]
+          },
+          {
+            "name": "expecttest",
+            "version": "0.3.0",
+            "record_sha256": [
+              "b7524b0424570fc773b851bc1764c5a2fcf6e52fed0cbcb94ea6565beb79f78b"
+            ]
+          },
+          {
+            "name": "filelock",
+            "version": "3.29.7",
+            "record_sha256": [
+              "e41ecb4750c5c09706e52e2c875687f1e2292ef85dfeba04fc2a60cdf6f36fe3"
+            ]
+          },
+          {
+            "name": "fsspec",
+            "version": "2026.6.0",
+            "record_sha256": [
+              "ac27f708e05b9e5dd144a9c90d8932961f8adacb74df8b7e129de9031b21cf82"
+            ]
+          },
+          {
+            "name": "hypothesis",
+            "version": "6.156.6",
+            "record_sha256": [
+              "d50c141e461be5d4e980941bfe2ecdd5a364ebb8e950dd51f00aa9863870a9fe"
+            ]
+          },
+          {
+            "name": "idna",
+            "version": "3.20",
+            "record_sha256": [
+              "a6028a81d8c67008852fbb47b16f951dc642b67b71940c4eeecf8c0242d5bb5f"
+            ]
+          },
+          {
+            "name": "importlib_metadata",
+            "version": "9.0.1",
+            "record_sha256": [
+              "29fb675dd006ca31442c941947ee608c4e53a1150cae97ec6f65b711539f3076"
+            ]
+          },
+          {
+            "name": "Jinja2",
+            "version": "3.1.6",
+            "record_sha256": [
+              "da15deb8d05491bab5298a2eefddb92f0672127b29eb017f771010798716639f"
+            ]
+          },
+          {
+            "name": "lintrunner",
+            "version": "0.13.1",
+            "record_sha256": [
+              "bf698c96b0f742167271e3a00948991dceabc7602077beae89dd9d4edee0756b"
+            ]
+          },
+          {
+            "name": "MarkupSafe",
+            "version": "3.0.4",
+            "record_sha256": [
+              "f1c1ebcc3629b6371b96ab97205f93935cd971b2cceb082f1dd7a9a20fe6f22d"
+            ]
+          },
+          {
+            "name": "mpmath",
+            "version": "1.3.0",
+            "record_sha256": [
+              "89869bb99d259b6078aa20ebadb44d921aa20595ffa58ab929e3082d7f3f5529"
+            ]
+          },
+          {
+            "name": "networkx",
+            "version": "3.6.1",
+            "record_sha256": [
+              "fb9159ff8300a6d92fede24ad43a6d9fd001bc0d0dfe1fee6dd4c94db6214869"
+            ]
+          },
+          {
+            "name": "ninja",
+            "version": "1.13.0",
+            "record_sha256": [
+              "3977f578cbd28657755ee82cb5408b0888d1615de131e1e32f2564e8135ad375"
+            ]
+          },
+          {
+            "name": "numpy",
+            "version": "2.5.1",
+            "record_sha256": [
+              "ecd5cba2edfd9335a20e89df95971d926f174b13c7963a75a7f18b9764c8797a"
+            ]
+          },
+          {
+            "name": "optree",
+            "version": "0.19.1",
+            "record_sha256": [
+              "b2af96780eb05dd76d4f547eae8b5650132d5d941639cf8e8ab81773d1bf15c8"
+            ]
+          },
+          {
+            "name": "packaging",
+            "version": "26.2",
+            "record_sha256": [
+              "e7df3bdc00f09d469c08a2f18154918a335e02a4373205feb82386d9343d9172"
+            ]
+          },
+          {
+            "name": "pip",
+            "version": "26.1.2",
+            "record_sha256": [
+              "65779d2af4694e81969375d5f0f39b148d2763520394ee0b1943523170499a4c"
+            ]
+          },
+          {
+            "name": "psutil",
+            "version": "7.2.2",
+            "record_sha256": [
+              "b28445afbcb938e8a146ed1e7357406fdb031c24c828c819a04b1ef502d683fb"
+            ]
+          },
+          {
+            "name": "pyproject_hooks",
+            "version": "1.3.3",
+            "record_sha256": [
+              "463104a61fbb43bb7fa3c54f5862da5270fe2f46c622740eec693108e5479fc6"
+            ]
+          },
+          {
+            "name": "PyYAML",
+            "version": "6.0.3",
+            "record_sha256": [
+              "a9c0ccbc49ef1a683ce5d972601d050cc0ebcc4ce6b4163fa574b7acdf8479a3"
+            ]
+          },
+          {
+            "name": "requests",
+            "version": "2.34.2",
+            "record_sha256": [
+              "da741c2b9ead7ebcdbe3837ca1f094090666b76db41385596e6c57ee5d90938e"
+            ]
+          },
+          {
+            "name": "setuptools",
+            "version": "81.0.0",
+            "record_sha256": [
+              "49c19089068af152dfb773a9ac4c52cbb725d6f7037f93aaba2ddbdbd0fefdd7",
+              "2bee6072cbcec6390c57107c8dfcb0422918a98ecdb5a2cc362187f13d42e96f",
+              "0f69db719b54220d6a4adff8bfb04ac98affea3dc8b54054a1a787a17567f4d1",
+              "52a6b8ee0de15cf7fd99625f43b97cd2e3942ac86f16054ea90de48e66f29355",
+              "63b936c308d0fcbe1390e824567cc007536c32a849adb02278e95f1d4c736c31",
+              "4599d876ceb42b7eef03aa39e235c4ebeab6aea2409dbe634496852393d1f837",
+              "baafd2d6d94c1bde453e4c805ac05511dc53986e0a63b02f674ef0f788bec146",
+              "9ed1b134c0aa83722f36e99f3918aa9610ce3a0a514d793bbb74a368d441a01d",
+              "f50503333aae9517807d2fb4d81fc27cb60aa644666f50176812626d6224ce5d",
+              "3d0d2f1cc018593c4d8baa2395baf0b1c1c645bbd8c18cd064f49cb4e4c95ea0",
+              "225430ce95640e8d4fcdb93cdae2fc38d685aec016d0e293d5fb99a695886fed",
+              "b0297c3ada17b8727e15ddd6d1e38c8a90a997f779fcf978996f6fec62ecb702",
+              "3bfab660a24704f84228e4bb1ce1f0e3fa9ff80e5c806352a626b2f460ead836"
+            ]
+          },
+          {
+            "name": "six",
+            "version": "1.17.0",
+            "record_sha256": [
+              "9f1c0d6da86acfde698b1a0a31931cba957b2896a49bce80c4b0e3cac9d03aef"
+            ]
+          },
+          {
+            "name": "sortedcontainers",
+            "version": "2.4.0",
+            "record_sha256": [
+              "73170c6ce9aafaabbbd800465ed252e0b5c5abea9aefe68ac965bb9bc392b532"
+            ]
+          },
+          {
+            "name": "spin",
+            "version": "0.18",
+            "record_sha256": [
+              "945cc70c28ddf201daa9479799e99adcc070665057fb0ffa3a1ed8d35ac66f60"
+            ]
+          },
+          {
+            "name": "sympy",
+            "version": "1.14.0",
+            "record_sha256": [
+              "e119a429e678ede6652656a66a34041e70a4b36a59197d602d716bb75760363f"
+            ]
+          },
+          {
+            "name": "typing_extensions",
+            "version": "4.16.0",
+            "record_sha256": [
+              "9861cb1104df8ec0ce0e5de06999ed8540a156766893cf404a41e9adb275afff"
+            ]
+          },
+          {
+            "name": "urllib3",
+            "version": "2.8.0",
+            "record_sha256": [
+              "5d88c4832d0406a7fd3c000f924b00394c2d7f694b332bc441370d1a7f5fe392"
+            ]
+          },
+          {
+            "name": "uv",
+            "version": "0.13.0",
+            "record_sha256": [
+              "f16381944ad979ab884236779815fbbe0b64c05971d81653944857459ea0204e"
+            ]
+          },
+          {
+            "name": "wheel",
+            "version": "0.47.0",
+            "record_sha256": [
+              "f8e02030bfbaa391f929d22985a855634b9f3b9badd54d5c717e48cfa77b0844"
+            ]
+          },
+          {
+            "name": "zipp",
+            "version": "4.1.1",
+            "record_sha256": [
+              "cf529beea901032b4452866ee20e6077ad702769cb0c13fd9c504d84c3e636e5"
+            ]
+          }
+        ],
+        "build_packages": {
+          "setuptools": "81.0.0",
+          "ninja": "1.13.0",
+          "numpy": "2.5.1",
+          "packaging": "26.2",
+          "pyyaml": "6.0.3",
+          "requests": "2.34.2",
+          "six": "1.17.0",
+          "typing-extensions": "4.16.0",
+          "pip": "26.1.2",
+          "wheel": "0.47.0",
+          "cmake": "4.4.0"
+        },
+        "cmake_on_path": "/opt/bc250-tools/cmake",
+        "cmake_on_path_sha256": "d8ed20c9688adaf5ee8d387072424aa732c5f589e860347e0dfa51cca37dc863",
+        "torch_imported": false,
+        "gpu_nodes_exposed": false
+      }
+    },
+    "runtime": {
+      "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+      "result": {
+        "status": "passed",
+        "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "tools": {
+          "gcc": {
+            "path": "/usr/bin/gcc",
+            "resolved": "/usr/bin/x86_64-linux-gnu-gcc-13",
+            "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+            "version": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+          },
+          "gxx": {
+            "path": "/usr/bin/g++",
+            "resolved": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+            "version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+          },
+          "hip_clang": {
+            "path": "/workspace/build/dist/rocm/lib/llvm/bin/clang++",
+            "resolved": "/workspace/build/dist/rocm/lib/llvm/bin/clang-24",
+            "sha256": "55833a05d08dc3fefbc99bb8645bbe1bd33a19ab65485483575cd028041f97c4",
+            "version": "AMD clang version 24.0.0git (https://github.com/ROCm/llvm-project.git 7667f52dd687899256a3285ab0bce3c53bc73394)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /workspace/build/dist/rocm/lib/llvm/bin\nConfiguration file: /workspace/build/dist/rocm/lib/llvm/bin/clang++.cfg"
+          },
+          "cmake": {
+            "path": "/usr/local/therock-tools/bin/cmake",
+            "resolved": "/usr/local/therock-tools/bin/cmake",
+            "sha256": "d8ed20c9688adaf5ee8d387072424aa732c5f589e860347e0dfa51cca37dc863",
+            "version": "cmake version 3.31.12\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+          },
+          "ninja": {
+            "path": "/opt/torch-venv/bin/ninja",
+            "resolved": "/opt/torch-venv/bin/ninja",
+            "sha256": "696f9628a79d9ce50314cf9556d7cd1a1d1ec52b8fd52828f6f9db1719565b67",
+            "version": "1.13.0.git.kitware.jobserver-pipe-1"
+          },
+          "ccache": {
+            "path": "/usr/bin/ccache",
+            "resolved": "/usr/bin/ccache",
+            "sha256": "3ce30c8fe66f2d2db45d1913871059557e2c04ddecd6cb389bbba17f2b77dd63",
+            "version": "ccache version 4.9.1\nFeatures: file-storage http-storage redis+unix-storage redis-storage\n\nCopyright (C) 2002-2007 Andrew Tridgell\nCopyright (C) 2009-2024 Joel Rosdahl and other contributors\n\nSee <https://ccache.dev/credits.html> for a complete list of contributors.\n\nThis program is free software; you can redistribute it and/or modify it under\nthe terms of the GNU General Public License as published by the Free Software\nFoundation; either version 3 of the License, or (at your option) any later\nversion."
+          },
+          "python": {
+            "path": "/opt/torch-venv/bin/python",
+            "resolved": "/usr/bin/python3.12",
+            "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+            "version": "Python 3.12.3"
+          }
+        },
+        "packages": [
+          {
+            "name": "bc250-quant",
+            "version": "0.1.0",
+            "record_sha256": [
+              "263726dddd1238b21f8ee55112e20e08325c162975ee76299307e43132422b6f"
+            ]
+          },
+          {
+            "name": "build",
+            "version": "1.5.0",
+            "record_sha256": [
+              "773f14f41447ee24d8d9082c4dd072dee4755eea069b05ee5ba5ad7ce77bfe14"
+            ]
+          },
+          {
+            "name": "certifi",
+            "version": "2026.7.22",
+            "record_sha256": [
+              "54fa8ebe7e5d1cd4a48064f94e706e5f7a6cdcccef364379692ed7657bfed982"
+            ]
+          },
+          {
+            "name": "charset-normalizer",
+            "version": "3.5.2",
+            "record_sha256": [
+              "ac38f8381e190bf4b026c8f28440295d6f500d047768efbcfa94bc50572eb65e"
+            ]
+          },
+          {
+            "name": "click",
+            "version": "8.3.3",
+            "record_sha256": [
+              "8e3690cb8b308b8b0be631598786ea6b7d869ce104d584963319292d8c60e260"
+            ]
+          },
+          {
+            "name": "cmake",
+            "version": "4.4.0",
+            "record_sha256": [
+              "b4b2c71d137c64b9992ad0658f53a5cc32aaf82d202af49e129f3ac378af5c4e"
+            ]
+          },
+          {
+            "name": "expecttest",
+            "version": "0.3.0",
+            "record_sha256": [
+              "b7524b0424570fc773b851bc1764c5a2fcf6e52fed0cbcb94ea6565beb79f78b"
+            ]
+          },
+          {
+            "name": "filelock",
+            "version": "3.29.7",
+            "record_sha256": [
+              "e41ecb4750c5c09706e52e2c875687f1e2292ef85dfeba04fc2a60cdf6f36fe3"
+            ]
+          },
+          {
+            "name": "flatbuffers",
+            "version": "25.12.19",
+            "record_sha256": [
+              "7ced0220c7592df5b72b146f346c83ab7a393f26fb8e32dac348d6f57a6a80aa"
+            ]
+          },
+          {
+            "name": "fsspec",
+            "version": "2026.6.0",
+            "record_sha256": [
+              "ac27f708e05b9e5dd144a9c90d8932961f8adacb74df8b7e129de9031b21cf82"
+            ]
+          },
+          {
+            "name": "hypothesis",
+            "version": "6.156.6",
+            "record_sha256": [
+              "d50c141e461be5d4e980941bfe2ecdd5a364ebb8e950dd51f00aa9863870a9fe"
+            ]
+          },
+          {
+            "name": "idna",
+            "version": "3.20",
+            "record_sha256": [
+              "a6028a81d8c67008852fbb47b16f951dc642b67b71940c4eeecf8c0242d5bb5f"
+            ]
+          },
+          {
+            "name": "importlib_metadata",
+            "version": "9.0.1",
+            "record_sha256": [
+              "29fb675dd006ca31442c941947ee608c4e53a1150cae97ec6f65b711539f3076"
+            ]
+          },
+          {
+            "name": "Jinja2",
+            "version": "3.1.6",
+            "record_sha256": [
+              "da15deb8d05491bab5298a2eefddb92f0672127b29eb017f771010798716639f"
+            ]
+          },
+          {
+            "name": "lintrunner",
+            "version": "0.13.1",
+            "record_sha256": [
+              "bf698c96b0f742167271e3a00948991dceabc7602077beae89dd9d4edee0756b"
+            ]
+          },
+          {
+            "name": "MarkupSafe",
+            "version": "3.0.4",
+            "record_sha256": [
+              "f1c1ebcc3629b6371b96ab97205f93935cd971b2cceb082f1dd7a9a20fe6f22d"
+            ]
+          },
+          {
+            "name": "ml_dtypes",
+            "version": "0.6.0",
+            "record_sha256": [
+              "e5200a81e1df1985e9980d184206a7bdfcd02ebe07ec0c5074f4b11b220865d1"
+            ]
+          },
+          {
+            "name": "mpmath",
+            "version": "1.3.0",
+            "record_sha256": [
+              "89869bb99d259b6078aa20ebadb44d921aa20595ffa58ab929e3082d7f3f5529"
+            ]
+          },
+          {
+            "name": "networkx",
+            "version": "3.6.1",
+            "record_sha256": [
+              "fb9159ff8300a6d92fede24ad43a6d9fd001bc0d0dfe1fee6dd4c94db6214869"
+            ]
+          },
+          {
+            "name": "ninja",
+            "version": "1.13.0",
+            "record_sha256": [
+              "3977f578cbd28657755ee82cb5408b0888d1615de131e1e32f2564e8135ad375"
+            ]
+          },
+          {
+            "name": "numpy",
+            "version": "2.5.1",
+            "record_sha256": [
+              "ecd5cba2edfd9335a20e89df95971d926f174b13c7963a75a7f18b9764c8797a"
+            ]
+          },
+          {
+            "name": "onnx",
+            "version": "1.23.2",
+            "record_sha256": [
+              "de38a67207c26b3b717996c9d53d8d36e0c044a579847e8e808423a3cf149040"
+            ]
+          },
+          {
+            "name": "onnx-ir",
+            "version": "1.1.0",
+            "record_sha256": [
+              "e3c104f71d72760fb3f0d5b2cde38fdeb160ade6130a3f713f3e1065cd83eb42"
+            ]
+          },
+          {
+            "name": "onnxruntime",
+            "version": "1.31.0",
+            "record_sha256": [
+              "cf831534d48c80d10b198fb879ec4f2d5f11f0649d63498c59e3ac96ba474d7c"
+            ]
+          },
+          {
+            "name": "onnxscript",
+            "version": "0.7.2",
+            "record_sha256": [
+              "eb6fa96534ae5b3ed1a8e5146a587446498c17e23af326b38bc0cde108c6b3ab"
+            ]
+          },
+          {
+            "name": "optree",
+            "version": "0.19.1",
+            "record_sha256": [
+              "b2af96780eb05dd76d4f547eae8b5650132d5d941639cf8e8ab81773d1bf15c8"
+            ]
+          },
+          {
+            "name": "packaging",
+            "version": "26.2",
+            "record_sha256": [
+              "e7df3bdc00f09d469c08a2f18154918a335e02a4373205feb82386d9343d9172"
+            ]
+          },
+          {
+            "name": "pillow",
+            "version": "13.0.0",
+            "record_sha256": [
+              "8c4cb4a17fc6157acd9df7301dadc088b8581f9b062b45dd383fbea00f5b8266"
+            ]
+          },
+          {
+            "name": "pip",
+            "version": "26.1.2",
+            "record_sha256": [
+              "65779d2af4694e81969375d5f0f39b148d2763520394ee0b1943523170499a4c"
+            ]
+          },
+          {
+            "name": "protobuf",
+            "version": "7.36.2",
+            "record_sha256": [
+              "10b05c29eea0b64a77bcbd3d8fbd8ad092465b239b37e37ab921c0b248062fbf"
+            ]
+          },
+          {
+            "name": "psutil",
+            "version": "7.2.2",
+            "record_sha256": [
+              "b28445afbcb938e8a146ed1e7357406fdb031c24c828c819a04b1ef502d683fb"
+            ]
+          },
+          {
+            "name": "pyproject_hooks",
+            "version": "1.3.3",
+            "record_sha256": [
+              "463104a61fbb43bb7fa3c54f5862da5270fe2f46c622740eec693108e5479fc6"
+            ]
+          },
+          {
+            "name": "PyYAML",
+            "version": "6.0.3",
+            "record_sha256": [
+              "a9c0ccbc49ef1a683ce5d972601d050cc0ebcc4ce6b4163fa574b7acdf8479a3"
+            ]
+          },
+          {
+            "name": "requests",
+            "version": "2.34.2",
+            "record_sha256": [
+              "da741c2b9ead7ebcdbe3837ca1f094090666b76db41385596e6c57ee5d90938e"
+            ]
+          },
+          {
+            "name": "setuptools",
+            "version": "81.0.0",
+            "record_sha256": [
+              "49c19089068af152dfb773a9ac4c52cbb725d6f7037f93aaba2ddbdbd0fefdd7",
+              "2bee6072cbcec6390c57107c8dfcb0422918a98ecdb5a2cc362187f13d42e96f",
+              "0f69db719b54220d6a4adff8bfb04ac98affea3dc8b54054a1a787a17567f4d1",
+              "52a6b8ee0de15cf7fd99625f43b97cd2e3942ac86f16054ea90de48e66f29355",
+              "63b936c308d0fcbe1390e824567cc007536c32a849adb02278e95f1d4c736c31",
+              "4599d876ceb42b7eef03aa39e235c4ebeab6aea2409dbe634496852393d1f837",
+              "baafd2d6d94c1bde453e4c805ac05511dc53986e0a63b02f674ef0f788bec146",
+              "9ed1b134c0aa83722f36e99f3918aa9610ce3a0a514d793bbb74a368d441a01d",
+              "f50503333aae9517807d2fb4d81fc27cb60aa644666f50176812626d6224ce5d",
+              "3d0d2f1cc018593c4d8baa2395baf0b1c1c645bbd8c18cd064f49cb4e4c95ea0",
+              "225430ce95640e8d4fcdb93cdae2fc38d685aec016d0e293d5fb99a695886fed",
+              "b0297c3ada17b8727e15ddd6d1e38c8a90a997f779fcf978996f6fec62ecb702",
+              "3bfab660a24704f84228e4bb1ce1f0e3fa9ff80e5c806352a626b2f460ead836"
+            ]
+          },
+          {
+            "name": "six",
+            "version": "1.17.0",
+            "record_sha256": [
+              "9f1c0d6da86acfde698b1a0a31931cba957b2896a49bce80c4b0e3cac9d03aef"
+            ]
+          },
+          {
+            "name": "sortedcontainers",
+            "version": "2.4.0",
+            "record_sha256": [
+              "73170c6ce9aafaabbbd800465ed252e0b5c5abea9aefe68ac965bb9bc392b532"
+            ]
+          },
+          {
+            "name": "spin",
+            "version": "0.18",
+            "record_sha256": [
+              "945cc70c28ddf201daa9479799e99adcc070665057fb0ffa3a1ed8d35ac66f60"
+            ]
+          },
+          {
+            "name": "sympy",
+            "version": "1.14.0",
+            "record_sha256": [
+              "e119a429e678ede6652656a66a34041e70a4b36a59197d602d716bb75760363f"
+            ]
+          },
+          {
+            "name": "torch",
+            "version": "2.13.0a0+gfx1013",
+            "record_sha256": [
+              "b53bd1fdea540005fedae4914b79afeb021fad5bf992bbc059f65e369d2e7015"
+            ]
+          },
+          {
+            "name": "torchaudio",
+            "version": "2.11.0+gfx1013",
+            "record_sha256": [
+              "0276d8ac8ba5162c0e1150792766b52ad757648a8894595b30473ad65914901b"
+            ]
+          },
+          {
+            "name": "torchcodec",
+            "version": "0.17.0+gfx1013",
+            "record_sha256": [
+              "ecb33e3d127e6405409a9002aab9ffcd25cdbbb8ba5b7de556f172a16da18058"
+            ]
+          },
+          {
+            "name": "torchvision",
+            "version": "0.28.0+gfx1013",
+            "record_sha256": [
+              "1ac2ac27281b4bd1f3891706b07ff2d47fa40a6ffb524d273393df7afd72b7a1"
+            ]
+          },
+          {
+            "name": "triton",
+            "version": "3.8.0",
+            "record_sha256": [
+              "ca18d7dcb8118ab47930764f461af65a18de99ae6eb35034b07ccd0371d4cc44"
+            ]
+          },
+          {
+            "name": "typing_extensions",
+            "version": "4.16.0",
+            "record_sha256": [
+              "9861cb1104df8ec0ce0e5de06999ed8540a156766893cf404a41e9adb275afff"
+            ]
+          },
+          {
+            "name": "urllib3",
+            "version": "2.8.0",
+            "record_sha256": [
+              "5d88c4832d0406a7fd3c000f924b00394c2d7f694b332bc441370d1a7f5fe392"
+            ]
+          },
+          {
+            "name": "uv",
+            "version": "0.13.0",
+            "record_sha256": [
+              "f16381944ad979ab884236779815fbbe0b64c05971d81653944857459ea0204e"
+            ]
+          },
+          {
+            "name": "wheel",
+            "version": "0.47.0",
+            "record_sha256": [
+              "f8e02030bfbaa391f929d22985a855634b9f3b9badd54d5c717e48cfa77b0844"
+            ]
+          },
+          {
+            "name": "zipp",
+            "version": "4.1.1",
+            "record_sha256": [
+              "cf529beea901032b4452866ee20e6077ad702769cb0c13fd9c504d84c3e636e5"
+            ]
+          }
+        ],
+        "build_packages": {
+          "setuptools": "81.0.0",
+          "ninja": "1.13.0",
+          "numpy": "2.5.1",
+          "packaging": "26.2",
+          "pyyaml": "6.0.3",
+          "requests": "2.34.2",
+          "six": "1.17.0",
+          "typing-extensions": "4.16.0",
+          "pip": "26.1.2",
+          "wheel": "0.47.0",
+          "cmake": "4.4.0"
+        },
+        "cmake_on_path": "/opt/bc250-tools/cmake",
+        "cmake_on_path_sha256": "d8ed20c9688adaf5ee8d387072424aa732c5f589e860347e0dfa51cca37dc863",
+        "torch_imported": false,
+        "gpu_nodes_exposed": false
+      }
+    }
+  },
+  "retained_wheels": [
+    {
+      "name": "triton-3.8.0-cp312-cp312-linux_x86_64.whl",
+      "bytes": 313852959,
+      "sha256": "2d65d6fefe359116521640e3cc2257bd03b4b24f6877fc8e28946ee9c57544d8"
+    }
+  ]
+}

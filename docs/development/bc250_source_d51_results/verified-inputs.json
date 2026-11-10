@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "compile_entries": {
+    "daily": 3239,
+    "rccl-single": 3241
+  },
+  "missing_branches_dispositioned": 8,
+  "required_missing_branch_fetches": 0,
+  "native_build_image": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+  "runtime_image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+  "original_build_packages": 35,
+  "runtime_packages": 49,
+  "build_system_requirements": [
+    "setuptools>=77.0.0,<82",
+    "cmake>=3.27",
+    "ninja",
+    "numpy",
+    "packaging>=24.2",
+    "pyyaml",
+    "requests",
+    "six",
+    "typing-extensions>=4.10.0"
+  ],
+  "tool_version": "CMake actual3.31.12 differs installed Python distribution4.4.0",
+  "manifest_sha256": "ac83e700a73a5dd380dd6511e580c84cb26b6d11f6b7b568200d47f91f9c3a84",
+  "seconds": 2.473681542000122,
+  "min_host_available_bytes": 15084756992,
+  "min_disk_free_bytes": 21467734016,
+  "limits": "Native selected configuration only; image/wheel/toolchain payload export and full clean-build/license closure remain separate"
+}
