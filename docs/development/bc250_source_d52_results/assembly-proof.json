@@ -1,0 +1,610 @@
+{
+  "status": "passed",
+  "source_head": "8d8b18df558cb478727ba2179f2e01dfce20ea40",
+  "parent_tree": "33a862732a52c8825a3d1f9c0b609d06fba0df65",
+  "parent_blob_files": 21501,
+  "materialized_dependency_locations": 69,
+  "dependency_blob_files_with_duplicate_locations": 78598,
+  "checks": [
+    {
+      "path": "android/libs/fbjni",
+      "pin": "7e1e1fe3858c63c251c637ae41a20de425dde96f",
+      "tree": "395ffc4053c8cedaaca92effa5d23c14be40b8d7",
+      "blob_files": 118,
+      "overlay": false
+    },
+    {
+      "path": "third_party/FP16",
+      "pin": "4dfe081cf6bcd15db339cf2680b9281b8451eeb3",
+      "tree": "163fb25e56cc7dea72ff60812fb7023d961b08cf",
+      "blob_files": 45,
+      "overlay": false
+    },
+    {
+      "path": "third_party/FXdiv",
+      "pin": "b408327ac2a15ec3e43352421954f5b1967701d1",
+      "tree": "78613e826a675f4ed72c4571935e5d398db44cd1",
+      "blob_files": 21,
+      "overlay": false
+    },
+    {
+      "path": "third_party/NNPACK",
+      "pin": "c07e3a0400713d546e0dea2d5466dd22ea389c73",
+      "tree": "2926babb9a8747e598b488024b644b5542f856e5",
+      "blob_files": 258,
+      "overlay": false
+    },
+    {
+      "path": "third_party/NVTX",
+      "pin": "3ebbc93ded7285963bff932c678fa367eb393ba6",
+      "tree": "31452df3d50e81917e3e6b9968a2d140a8026718",
+      "blob_files": 748,
+      "overlay": false
+    },
+    {
+      "path": "third_party/VulkanMemoryAllocator",
+      "pin": "1d8f600fd424278486eade7ed3e877c99f0846b1",
+      "tree": "2ae80133b8d9cc6febaaeef61c374d0da711e079",
+      "blob_files": 266,
+      "overlay": false
+    },
+    {
+      "path": "third_party/XNNPACK",
+      "pin": "51a0103656eff6fc9bfd39a4597923c4b542c883",
+      "tree": "955097a5276de2f506a24d53611ddcdee7b0f0a0",
+      "blob_files": 10912,
+      "overlay": false
+    },
+    {
+      "path": "third_party/aiter",
+      "pin": "9a469a608b2c10b7157df573a38d31e5bf4038b4",
+      "tree": "ed6d5f8d2639eef8cbdf2b29a964b9e1d4979088",
+      "blob_files": 4189,
+      "overlay": false
+    },
+    {
+      "path": "third_party/benchmark",
+      "pin": "299e5928955cc62af9968370293b916f5130916f",
+      "tree": "c5503b9eac1c625dc2eed1b7e4e6502d5628cb95",
+      "blob_files": 192,
+      "overlay": false
+    },
+    {
+      "path": "third_party/composable_kernel",
+      "pin": "9f4f62da466d092a5e62a0af062cabf8a4577417",
+      "tree": "8ac6af36963bb6a2fda2b8f35efb3067743efa54",
+      "blob_files": 6434,
+      "overlay": false
+    },
+    {
+      "path": "third_party/cpp-httplib",
+      "pin": "811dd0b6f2382f50f801f3cfdb5ba349d08bb575",
+      "tree": "ae3cbdb476d9bc75f9fbc140555d5d2b9c45d76f",
+      "blob_files": 329,
+      "overlay": false
+    },
+    {
+      "path": "third_party/cpuinfo",
+      "pin": "bc3c01e230c6974283e4b89421cfb0e232435589",
+      "tree": "0f9b497a3f298d624f160784844e566e7626385e",
+      "blob_files": 567,
+      "overlay": false
+    },
+    {
+      "path": "third_party/cudnn_frontend",
+      "pin": "c4a97621eca52fa0c3a1862a411a16be580b25c6",
+      "tree": "02e7ef0c6ba9c5ebb184f5f0e076eb2a30d64f51",
+      "blob_files": 627,
+      "overlay": false
+    },
+    {
+      "path": "third_party/cutlass",
+      "pin": "da5e086dab31d63815acafdac9a9c5893b1c69e2",
+      "tree": "e41cda383c529729667cab3511a850d1f501de46",
+      "blob_files": 6882,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm",
+      "pin": "d08742c6602efedc6a3c9fca124b96ad555316e4",
+      "tree": "f2a5f2b7b0dcaafeef89354603e0f145a1ef35df",
+      "blob_files": 1832,
+      "overlay": false
+    },
+    {
+      "path": "third_party/flash-attention",
+      "pin": "6c4f74fb338e0c3cdb07ac6f5eab5f54fc367c15",
+      "tree": "f665266ca0149cf33d5e4373bf9ec5f4a180c458",
+      "blob_files": 1040,
+      "overlay": false
+    },
+    {
+      "path": "third_party/flatbuffers",
+      "pin": "a2cd1ea3b6d3fee220106b5fed3f7ce8da9eb757",
+      "tree": "47abbaae5db188e692dd04ac88d948089413eae1",
+      "blob_files": 1857,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fmt",
+      "pin": "407c905e45ad75fc29bf0f9bb7c5c2fd3475976f",
+      "tree": "07e6ac840f6697f4a83181d249a4c6aaf23b374e",
+      "blob_files": 128,
+      "overlay": false
+    },
+    {
+      "path": "third_party/gemmlowp/gemmlowp",
+      "pin": "3fb5c176c17c765a3492cd2f0321b0dab712f350",
+      "tree": "af09301c63e9145ec1d755c6a60d5a85c6fa151e",
+      "blob_files": 143,
+      "overlay": false
+    },
+    {
+      "path": "third_party/gloo",
+      "pin": "bcd1672ee07538123ea8f4fac76832efc58fb8ef",
+      "tree": "913f01fbb91a02ba2e30284fbe744e6b746e66f9",
+      "blob_files": 276,
+      "overlay": true
+    },
+    {
+      "path": "third_party/googletest",
+      "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+      "tree": "ad23b2ceac4a6eef2278c48545b62ffc1f0c134a",
+      "blob_files": 250,
+      "overlay": false
+    },
+    {
+      "path": "third_party/ideep",
+      "pin": "e087b6e4b32a7ba684db82231d1558123968ac1d",
+      "tree": "95cb7a5a90022ebdff647577b61a695666365214",
+      "blob_files": 37,
+      "overlay": false
+    },
+    {
+      "path": "third_party/ittapi",
+      "pin": "0c57540822deb5dae43bef6c1cc9b3be4772a033",
+      "tree": "184ff97b3dccd2f477ef6e2b114df69848ad897f",
+      "blob_files": 179,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto",
+      "pin": "094d3c1d072362d0a919a77299459eee94f97931",
+      "tree": "48941c1e8d15c8efe63cdf776b2f962cb294cb5a",
+      "blob_files": 225,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kleidiai",
+      "pin": "d7770c89632329a9914ef1a90289917597639cbe",
+      "tree": "dfea3ecc4b5b219ff5401da4fcf8176db7454291",
+      "blob_files": 542,
+      "overlay": false
+    },
+    {
+      "path": "third_party/mimalloc",
+      "pin": "02a2f5df9d7d46d30263b83832eebeeab62dc5fe",
+      "tree": "770ce32e97331fcc1735064e0cfdaf4777c80b82",
+      "blob_files": 368,
+      "overlay": false
+    },
+    {
+      "path": "third_party/mslk",
+      "pin": "3d332d1c0c0ac7765852c97b3979c9ef913e037f",
+      "tree": "7c487c741f0c3d9234068d604a9bcf008a66928b",
+      "blob_files": 1674,
+      "overlay": false
+    },
+    {
+      "path": "third_party/nlohmann",
+      "pin": "55f93686c01528224f448c19128836e7df245f72",
+      "tree": "1eb780542e829bf1615828ed0d5f407497bbce7b",
+      "blob_files": 1163,
+      "overlay": false
+    },
+    {
+      "path": "third_party/onnx",
+      "pin": "e709452ef2bbc1d113faf678c24e6d3467696e83",
+      "tree": "56e6e728856c4ee05080da7c647510805053d569",
+      "blob_files": 7640,
+      "overlay": false
+    },
+    {
+      "path": "third_party/pocketfft",
+      "pin": "0fa0ef591e38c2758e3184c6c23e497b9f732ffa",
+      "tree": "0f2b864f2b23cef54d40f7b41f4c268f63257e9f",
+      "blob_files": 4,
+      "overlay": false
+    },
+    {
+      "path": "third_party/protobuf",
+      "pin": "d1eca4e4b421cd2997495c4b4e65cea6be4e9b8a",
+      "tree": "eb9ff8be9f03dea55be282f489145b6368d96918",
+      "blob_files": 2409,
+      "overlay": false
+    },
+    {
+      "path": "third_party/psimd",
+      "pin": "072586a71b55b7f8c584153d223e95687148a900",
+      "tree": "49ce251d2c0ff0fc666283ff56ee36e881971752",
+      "blob_files": 7,
+      "overlay": false
+    },
+    {
+      "path": "third_party/pthreadpool",
+      "pin": "a56dcd79c699366e7ac6466792c3025883ff7704",
+      "tree": "cd8cb9b0e8bd4cb1251304906ca48583bff5286f",
+      "blob_files": 44,
+      "overlay": false
+    },
+    {
+      "path": "third_party/pybind11",
+      "pin": "d03662f0984f652b60e7ddce53d3868002275197",
+      "tree": "2a968b9d6a9bf9684630bf40c4113e28767b8caa",
+      "blob_files": 370,
+      "overlay": false
+    },
+    {
+      "path": "third_party/python-peachpy",
+      "pin": "f45429b087dd7d5bc78bb40dc7cf06425c252d67",
+      "tree": "8fc2fdd6e67c8a6743c0f487fe85fe3cd14a7a4b",
+      "blob_files": 123,
+      "overlay": false
+    },
+    {
+      "path": "third_party/sleef",
+      "pin": "5a1d179df9cf652951b59010a2d2075372d67f68",
+      "tree": "2d82d520c04b78bd03ca627c229a68d2fe11b0bb",
+      "blob_files": 238,
+      "overlay": false
+    },
+    {
+      "path": "third_party/tensorpipe",
+      "pin": "2b4cd91092d335a697416b2a3cb398283246849d",
+      "tree": "256c4b49ba9101d3bceb690eabae0312a567dd09",
+      "blob_files": 292,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm/external/asmjit",
+      "pin": "a3199e8857792cd10b7589ff5d58343d2c9008ea",
+      "tree": "5ccd19c0eae54d7017cebe318c0183835652d295",
+      "blob_files": 225,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm/external/composable_kernel",
+      "pin": "7fe50dc3da2069d6645d9deb8c017a876472a977",
+      "tree": "e0381177409a899037c7d1664bb6b8f1b440ce00",
+      "blob_files": 4605,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm/external/cpuinfo",
+      "pin": "161a9ec374884f4b3e85725cb22e05f9458fdc93",
+      "tree": "d990ead5980dafd52612acd8fbebfb78e7725f8e",
+      "blob_files": 569,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm/external/cutlass",
+      "pin": "571edeb2d0ac872a8392fc49285b156b07884b4e",
+      "tree": "c3b7dd55442c3ea03a781fa1d21ad5bf93d811bb",
+      "blob_files": 6659,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm/external/googletest",
+      "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+      "tree": "ad23b2ceac4a6eef2278c48545b62ffc1f0c134a",
+      "blob_files": 250,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm/external/hipify_torch",
+      "pin": "63b6a7b541fa7f08f8475ca7d74054db36ff2691",
+      "tree": "13ff30b3ba59d0bbec45c96548e2f8968c6eb1dc",
+      "blob_files": 16,
+      "overlay": false
+    },
+    {
+      "path": "third_party/fbgemm/external/json",
+      "pin": "55f93686c01528224f448c19128836e7df245f72",
+      "tree": "1eb780542e829bf1615828ed0d5f407497bbce7b",
+      "blob_files": 1163,
+      "overlay": false
+    },
+    {
+      "path": "third_party/ideep/mkl-dnn",
+      "pin": "80afa71049cd69a3df32adcccb623b12cd7baa22",
+      "tree": "54e98ccd830216b33223ab2d2ce6d6c83f01c215",
+      "blob_files": 4764,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog",
+      "pin": "d2ffe0a4e3acace628db49974246b66fc3e85fb1",
+      "tree": "63081b9c11c620ae6e578357c2fc3d209c35b127",
+      "blob_files": 334,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/fmt",
+      "pin": "40626af88bd7df9a5fb80be7b25ac85b122d6c21",
+      "tree": "8c2c445c4fb81ad4d799193ba4bcb2de48af0ee6",
+      "blob_files": 132,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/googletest",
+      "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+      "tree": "ad23b2ceac4a6eef2278c48545b62ffc1f0c134a",
+      "blob_files": 250,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/json",
+      "pin": "55f93686c01528224f448c19128836e7df245f72",
+      "tree": "1eb780542e829bf1615828ed0d5f407497bbce7b",
+      "blob_files": 1163,
+      "overlay": false
+    },
+    {
+      "path": "third_party/onnx/third_party/pybind11",
+      "pin": "a2e59f0e7065404b44dfe92a28aca47ba1378dc4",
+      "tree": "6d7d5b73a5716237418e592498875df577475ad3",
+      "blob_files": 279,
+      "overlay": false
+    },
+    {
+      "path": "third_party/protobuf/third_party/benchmark",
+      "pin": "5b7683f49e1e9223cf9927b24f6fd3d6bd82e3f8",
+      "tree": "3951d685b7e2ce52bbd59751423f4809fe0b99d3",
+      "blob_files": 83,
+      "overlay": false
+    },
+    {
+      "path": "third_party/protobuf/third_party/googletest",
+      "pin": "5ec7f0c4a113e2f18ac2c6cc7df51ad6afc24081",
+      "tree": "1dcea79edca2cbd2123acd4a920c4f9882b5a4f7",
+      "blob_files": 334,
+      "overlay": false
+    },
+    {
+      "path": "third_party/tensorpipe/third_party/googletest",
+      "pin": "aee0f9d9b5b87796ee8a0ab26b7587ec30e8858e",
+      "tree": "f19e19e4f65a0d3193c4bb9ef00498d9b170fc11",
+      "blob_files": 262,
+      "overlay": false
+    },
+    {
+      "path": "third_party/tensorpipe/third_party/libnop",
+      "pin": "910b55815be16109f04f4180e9adee14fb4ce281",
+      "tree": "12e55d6df7ace64a4a516f3bd50f4a8e77dafd4e",
+      "blob_files": 103,
+      "overlay": false
+    },
+    {
+      "path": "third_party/tensorpipe/third_party/libuv",
+      "pin": "5152db2cbfeb5582e9c27c5ea1dba2cd9e10759b",
+      "tree": "048a967ccac12c3d6b7f7fa07d8a747f9832e4a0",
+      "blob_files": 467,
+      "overlay": false
+    },
+    {
+      "path": "third_party/tensorpipe/third_party/pybind11",
+      "pin": "a23996fce38ff6ccfbcdc09f1e63f2c4be5ea2ef",
+      "tree": "c13d71283de9d7af8c910b6f8a263d800321c6bc",
+      "blob_files": 178,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/DCGM",
+      "pin": "ffde4e54bc7249a6039a5e6b45b395141e1217f9",
+      "tree": "192abaaee94d1eb1deb0ccb9bcb1b2c4bccf4298",
+      "blob_files": 885,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/cpr",
+      "pin": "871ed52d350214a034f6ef8a3b8f51c5ce1bd400",
+      "tree": "a2b4e9e002327998b13896cfc3e825aa10d49bc7",
+      "blob_files": 147,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/fmt",
+      "pin": "cd4af11efc9c622896a3e4cb599fa28668ca3d05",
+      "tree": "d34b616bc37486720b180495184abe023ff72d48",
+      "blob_files": 193,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/gflags",
+      "pin": "e171aa2d15ed9eb17054558e0b3a6a413bb01067",
+      "tree": "6db509260199be10212c9181d574c8b741aa5222",
+      "blob_files": 51,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/glog",
+      "pin": "b33e3bad4c46c8a6345525fd822af355e5ef9446",
+      "tree": "30bf9364ef92bfcc97b4cb53d3ec6ca16baa71ac",
+      "blob_files": 87,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/googletest",
+      "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+      "tree": "ad23b2ceac4a6eef2278c48545b62ffc1f0c134a",
+      "blob_files": 250,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/json",
+      "pin": "4f8fba14066156b73f1189a2b8bd568bde5284c5",
+      "tree": "1bd59763710c48e9f71f70c12646b30188f80e1c",
+      "blob_files": 886,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/pfs",
+      "pin": "f68a2fa8ea36c783bdd760371411fcb495aa3150",
+      "tree": "efcf051dace6083b5f5e79dfc39579898a646080",
+      "blob_files": 79,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/prometheus-cpp",
+      "pin": "b1234816facfdda29845c46696a02998a4af115a",
+      "tree": "9fc56a07c8bd171ad7c3e1a4398e4f51e321a74e",
+      "blob_files": 145,
+      "overlay": false
+    },
+    {
+      "path": "third_party/tensorpipe/third_party/pybind11/tools/clang",
+      "pin": "6a00cbc4a9b8e68b71caf7f774b3f9c753ae84d5",
+      "tree": "6c524ce53259b0275306bba38c898b3e7a9350b7",
+      "blob_files": 6,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/gflags/doc",
+      "pin": "8411df715cf522606e3b1aca386ddfc0b63d34b4",
+      "tree": "2f95332627860ced1b134061c240476622e6c7ac",
+      "blob_files": 3,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/prometheus-cpp/3rdparty/civetweb",
+      "pin": "d7ba35bbb649209c66e582d5a0244ba988a15159",
+      "tree": "75a47d5ee1f4870fac8b6b7425b84628504b56a9",
+      "blob_files": 1342,
+      "overlay": false
+    },
+    {
+      "path": "third_party/kineto/libkineto/third_party/dynolog/third_party/prometheus-cpp/3rdparty/googletest",
+      "pin": "e2239ee6043f73722e7aa812a459f54a28552929",
+      "tree": "8cf1e36614fc6ca89eb70fa2aeaad0b4ebf0c34a",
+      "blob_files": 259,
+      "overlay": false
+    }
+  ],
+  "parent_replay": {
+    "status": "passed",
+    "trees": {
+      "baseline": "abdd861bee54ca83fd7ed9a742dd9db1b7536831",
+      "native": "3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112",
+      "source_head": "33a862732a52c8825a3d1f9c0b609d06fba0df65"
+    },
+    "baseline_entries": 21528,
+    "baseline_blob_files": 21491,
+    "gitlink_pins": 37,
+    "license_blob": "c23172f7aff0254e4f0f163fb2e6e355cbaec5f4",
+    "object_alternates": false,
+    "source_history_required": false,
+    "dependency_contents_bundled": false,
+    "native_build": false,
+    "payloads": {
+      "baseline.tar.gz": "4a845006a06ec300bbd24616cdff752b4f908d7628dd01da5603209f43d4f7f3",
+      "0001-qualified-native-torch.patch": "24b5964617b6124281d3e5ae7874aba853e2d0abdcc11f2a28ee5bb2601d3fa3",
+      "0002-agent-exit-lifetime.patch": "130637a696e737380bfc4fbc8c4bf6857195edd250c897da5ff60b9ef04d165a"
+    }
+  },
+  "dependency_replay": {
+    "status": "passed",
+    "nodes": 77,
+    "available_nodes": 69,
+    "unique_payloads": 64,
+    "blob_files": 75522,
+    "license_files": 107,
+    "missing": [
+      {
+        "path": "third_party/aiter/3rdparty/composable_kernel",
+        "pin": "fcc9372c009c8e0a23fece77b582da83b04a654f",
+        "reason": "local path is not an initialized independent checkout"
+      },
+      {
+        "path": "third_party/flash-attention/csrc/composable_kernel",
+        "pin": "791afc64655301487cac6e5361c677a0a4b82059",
+        "reason": "local path is not an initialized independent checkout"
+      },
+      {
+        "path": "third_party/flash-attention/csrc/cutlass",
+        "pin": "7127592069c2fe01b041e174ba4345ef9b279671",
+        "reason": "local path is not an initialized independent checkout"
+      },
+      {
+        "path": "third_party/flash-attention/third_party/aiter",
+        "pin": "b4b75165fbd2456dfd0f074c5b2ef91bc87d97e5",
+        "reason": "local path is not an initialized independent checkout"
+      },
+      {
+        "path": "third_party/mslk/external/composable_kernel",
+        "pin": "7fe50dc3da2069d6645d9deb8c017a876472a977",
+        "reason": "local path is not an initialized independent checkout"
+      },
+      {
+        "path": "third_party/mslk/external/cutlass",
+        "pin": "571edeb2d0ac872a8392fc49285b156b07884b4e",
+        "reason": "local path is not an initialized independent checkout"
+      },
+      {
+        "path": "third_party/mslk/external/googletest",
+        "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+        "reason": "local path is not an initialized independent checkout"
+      },
+      {
+        "path": "third_party/mslk/external/hipify_torch",
+        "pin": "63b6a7b541fa7f08f8475ca7d74054db36ff2691",
+        "reason": "local path is not an initialized independent checkout"
+      }
+    ],
+    "complete_recursive_source_closure": false,
+    "gloo_overlay_tree": "913f01fbb91a02ba2e30284fbe744e6b746e66f9",
+    "gloo_cuda_sha256": "7dc2ce53bf518ba455b0e47e7b2e09976261db008b7d2a83669f02c9451f997f",
+    "parent_manifest_sha256": "8adfc0a3c057ee49a9c8fc695bb7d34bf6b717a606d7aa3233adbc3a3178d130",
+    "manifest_sha256": "4108fd0a2c143f72f5ffbb0788aa2ed0608836fd2caddfc2176c1b16d8a935a8"
+  },
+  "build_input_replay": {
+    "status": "passed",
+    "compile_entries": {
+      "daily": 3239,
+      "rccl-single": 3241
+    },
+    "missing_branches_dispositioned": 8,
+    "required_missing_branch_fetches": 0,
+    "native_build_image": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+    "runtime_image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+    "original_build_packages": 35,
+    "runtime_packages": 49,
+    "build_system_requirements": [
+      "setuptools>=77.0.0,<82",
+      "cmake>=3.27",
+      "ninja",
+      "numpy",
+      "packaging>=24.2",
+      "pyyaml",
+      "requests",
+      "six",
+      "typing-extensions>=4.10.0"
+    ],
+    "tool_version": "CMake actual3.31.12 differs installed Python distribution4.4.0",
+    "manifest_sha256": "ac83e700a73a5dd380dd6511e580c84cb26b6d11f6b7b568200d47f91f9c3a84",
+    "seconds": 2.473681542000122,
+    "min_host_available_bytes": 15084756992,
+    "min_disk_free_bytes": 21467734016,
+    "limits": "Native selected configuration only; image/wheel/toolchain payload export and full clean-build/license closure remain separate"
+  },
+  "excluded_empty_paths": [
+    "third_party/aiter/3rdparty/composable_kernel",
+    "third_party/flash-attention/csrc/composable_kernel",
+    "third_party/flash-attention/csrc/cutlass",
+    "third_party/flash-attention/third_party/aiter",
+    "third_party/mslk/external/composable_kernel",
+    "third_party/mslk/external/cutlass",
+    "third_party/mslk/external/googletest",
+    "third_party/mslk/external/hipify_torch"
+  ],
+  "scope": "Fresh materialized source and recorded recipes; verification Git indices remain unborn; no configure/codegen/native build or complete external SDK/toolchain closure"
+}

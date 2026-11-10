@@ -1,0 +1,22 @@
+{
+  "native_builder": {
+    "path": "kernel/artifacts/source-d52/native-builder-28ad36e6.oci.tar",
+    "bytes": 682451968,
+    "sha256": "c57dbec6f76fc0f651eca005435320f47092f8f4dc478026053d058390998f88"
+  },
+  "source": {
+    "path": "kernel/artifacts/source-d52/torch-source-d52-r1.tar.gz",
+    "bytes": 346534969,
+    "sha256": "6867ed719c201cf7bc368800aa64c5e16a2e3a4c3c03485ad502684e2feb5723"
+  },
+  "tools": {
+    "path": "kernel/artifacts/source-d52/portable-tools-d52-r1.tar.gz",
+    "bytes": 4936,
+    "sha256": "f06f5b23578e7223bbeb299cbfdf1d1b6409e1f9de75d5899da01b9f6b48116e"
+  },
+  "metadata": {
+    "path": "kernel/artifacts/source-d52/104-evidence-r1.tar.gz",
+    "bytes": 860815,
+    "sha256": "c36a2f45c766f5adfe160f0112a2f2b697d8e9fea1df277885adc792e66e1225"
+  }
+}
