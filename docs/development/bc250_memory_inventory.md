@@ -5,6 +5,29 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+
+## D49 native SDK repair activated on .104 (2026-11-10)
+
+Implementation b6de91cb4; SDK143f1d8782; [report](bc250_sdk_d49_results/README.md).
+Selected cohort sdk-d49-r1 preserves old miopen-plan02-r4 fallback. Only SDK
+inode detached in27,905-entry hardlink tree; original unchanged. Baseline
+runtime.json bytes retained plus explicit native-overrides.json SDK delta;
+provider wrappers/registrations and D01 release/SDK metadata coherent.
+Public/D09 helperd33f2504 admits HIP -1 only for pinned baseline/SDK/aliases,
+rechecked under runtime lock; legacy guard retained. Normal loader, no preload.
+12activation+2actualrollback+4reselection processes pass138 numerical checks,
+20raw GPU traces/eight CPUnegative imports; GPU digests exact old controls,
+CPU FP64 first-gradient/pinned-copy gates, strict unchanged logs/three ACKs.
+Six provider registration identities pass; no new provider GPU/collective/model
+qualification or performance claim.134local tests/three altered archives refused.
+EX board+SH runtime tests, EX+EX selections,4GiB noswap/60s child/600s recovery/
+3GiBhost+5GiBdisk reserves. SDK2a975370 active104only; olda6dc1c88 preserved.
+Host tools/sdk-d49, evidence/sdk-d49-*; controller7740done/idle/no armed guard.
+104docs20261110-d49-final;105unaccessed/unchanged/D43docs. Boot2774d201r2 unchanged.
+Exact-1 SDK import crash repaired104, historical Python CPU/KFD/105clocksource
+causes remain OPEN and distinct from fixed VMheap/D05/D21. PLAN07 OPEN/four
+packages remain; next D50 recursive Torch dependency/license/Gloo/build inputs.
+
 ## D48 native SDK sentinel candidate qualified, inactive (2026-11-10)
 
 SDKsource143f1d8782/helpers67e682956; [report](bc250_sdk_d48_results/README.md).

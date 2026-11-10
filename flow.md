@@ -9,6 +9,55 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+
+- **D49 completed 2026-11-10 — repaired native SDK activated on .104; rollback qualified.**
+  Implementation b6de91cb4; SDK source143f1d878296176c738274202092bb247b7b771c.
+  [Report](docs/development/bc250_sdk_d49_results/README.md),
+  [replay](docs/development/bc250_sdk_d49_results/verified-results.json).
+  Active cohort `/opt/bc250-stack/candidates/sdk-d49-r1`, both daily/RCCL profiles;
+  original miopen-plan02-r4 fully preserved as fallback. SDK SHA2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b.
+  cp-al structural/inode comparison covers27,905 entries; only SDK file detached
+  atomically. Original tree unchanged; not a new full-byte rehash of all libraries.
+  Exact baseline runtime.json bytes preserved for package identities; adjacent
+  native-overrides.json explicitly records SDK-only source/hash/qualification delta.
+  Independent provider wrappers/registrations; D01 release points to new RCCL
+  profile, retains baseline runtime hash/Torch identity and records SDK override.
+  Public/D09 shared helper SHAd33f2504de50eac21baf6f43ff4eb30a05c602881cda9b12b3df13360a2c3588:
+  exact HIP -1 admitted only with qualified baseline+SDK+SONAME aliases, repeated
+  under runtime lock. Legacy cohorts retain D44 refusal. Ordinary loader order,
+  no preload/global CI disable. Custom preload/auditor/native overlays unqualified.
+  Three phases:12 first activation +2 restored old GPU +4 final processes;
+  138 numerical checks/20 actual GPU traces/eight negative imports, loaded SDK
+  paths/hashes bound. GPU output/dx/dw digests EXACT restored old and D48 controls.
+  CPU FP64 gates2e-6/2e-4, pinned copies/nondefault stream/exact profiled replays;
+  all strict kernel logs unchanged, three guards ACK. Six CK/MX/ORT registration
+  identity checks pass, no new provider GPU/collective/model/AMP/counter/speed claim.
+  EX board+SH runtime tests; EX board+EX stable runtime selections/rollback.
+  4CPU0-3/4GiB noswap/512PIDs/256MiB shm/60s child/420s batch/600s recovery;
+  100ms sampling,3GiB host/5GiB disk reserves. Min host14,229,344,256B,
+  disk24,240,054,272B; phase wall87.318/15.064/29.172s, not performance results.
+  134 local tests/three new identity regressions/Black/critical Ruff+F401/diff pass;
+  independent raw source/trace/rollback replay and three altered archives refused.
+  Executed archived probe/controller differ from committed harness only by removal
+  of three unused imports; installed shared helper exactly matches committed source.
+  Metadata local kernel/artifacts/sdk-d49/104-evidence-r1.tar.gz1,658,051B SHA
+  759648024bd274dee3a0e7710d6d5f6f253dccdec86cc81dd793738313aa71b6;
+  host evidence/sdk-d49-evidence-r1.tar.gz, tools/sdk-d49. Controller7740finished;
+  evidence/sdk-d49-{controller,install,activation-r1,rollback-r1,final-r1,export}.
+  No owned workload/armed guard remains. Boot2774d201r2 unchanged; native board
+  controls/watchdog preserved. No build/source/cache/image/kernel/app/checkpoint
+  deletion or mutation; no new native build, reused qualified D48 candidate.
+  .104docs20261110-d49-final synced at handoff; .105 unaccessed/unchanged/D43docs.
+  Historical exact-1 SDK import fault is now fixed on104; old Python CPU0x3b3e6
+  has no original core/backtrace, KFDmm/queue cause untraced,105clocksource OPEN.
+  Quiet logs do not fix those causes. VMheap/D05/D21 fixes remain separate.
+  **NEXT D50 / PLAN-07:** portable Torch recursive dependency contents/licenses
+  starting D47's37 direct pins/27 immediate nested links; explicitly inventory
+  missing objects and Gloo legacy-platform overlay/build-version inputs, then
+  bounded source package/replay. Toolchain/wheel/license closure still OPEN;
+  four important packages PLAN07-10 remain. Keep105 unchanged. Do not rerun
+  capacity/kernel sweeps or rebuild the already-qualified SDK without a new need.
+
 - **D48 completed 2026-11-10 — native SDK sentinel candidate built/qualified; NOT active, PLAN-07 OPEN.**
   SDKsource143f1d878296176c738274202092bb247b7b771c; TheRockhelpers67e682956.
   [Report](docs/development/bc250_sdk_d48_results/README.md),
