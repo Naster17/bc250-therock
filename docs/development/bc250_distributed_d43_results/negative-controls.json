@@ -1,0 +1,22 @@
+[
+  {
+    "case": "source-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "finite-state-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "update-counter-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  },
+  {
+    "case": "host-swap-growth-tamper",
+    "status": "refused-as-required",
+    "reason": ""
+  }
+]

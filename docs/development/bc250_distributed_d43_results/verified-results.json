@@ -1,0 +1,137 @@
+{
+  "status": "passed",
+  "groups": 24,
+  "guards": 4,
+  "local_tests": 116,
+  "rows": [
+    {
+      "host": 0,
+      "shape": "control",
+      "parameters": 352957440,
+      "median_update_seconds": 18.347174392998568,
+      "global_losses": [
+        9.41783332824707,
+        9.460594177246094,
+        9.467031955718994,
+        9.44968318939209,
+        9.378628253936768
+      ],
+      "measured_peak_live_MiB": 3205.0107421875,
+      "measured_peak_reserved_MiB": 3378.0,
+      "cgroup_peak_MiB": 2136.12109375,
+      "host_min_available_GiB": 8.954700469970703,
+      "host_swap_baseline_bytes": 0,
+      "container_swap_peak_bytes": 0,
+      "paging_IO_measured": false,
+      "guardian_min_available_GiB": 8.954700469970703,
+      "traffic_input_bytes": {
+        "gathers": 1385871360,
+        "reductions": 1411829760
+      },
+      "worker_seconds": 152.96070269400002,
+      "guarded_phase_seconds": 166.53061991200002
+    },
+    {
+      "host": 0,
+      "shape": "large",
+      "parameters": 1024471040,
+      "median_update_seconds": 53.36479215101281,
+      "global_losses": [
+        9.587030410766602,
+        9.575589179992676,
+        9.595732688903809,
+        9.65270185470581,
+        9.586855411529541
+      ],
+      "measured_peak_live_MiB": 8587.8828125,
+      "measured_peak_reserved_MiB": 8808.0,
+      "cgroup_peak_MiB": 4731.90625,
+      "host_min_available_GiB": 3.620361328125,
+      "host_swap_baseline_bytes": 0,
+      "container_swap_peak_bytes": 0,
+      "paging_IO_measured": false,
+      "guardian_min_available_GiB": 3.620361328125,
+      "traffic_input_bytes": {
+        "gathers": 4063272960,
+        "reductions": 4097884160
+      },
+      "worker_seconds": 441.6424158860002,
+      "guarded_phase_seconds": 455.612614358
+    },
+    {
+      "host": 1,
+      "shape": "control",
+      "parameters": 352957440,
+      "median_update_seconds": 18.347174392998568,
+      "global_losses": [
+        9.41783332824707,
+        9.460594177246094,
+        9.467031955718994,
+        9.44968318939209,
+        9.378628253936768
+      ],
+      "measured_peak_live_MiB": 3183.2353515625,
+      "measured_peak_reserved_MiB": 3374.0,
+      "cgroup_peak_MiB": 2141.05859375,
+      "host_min_available_GiB": 8.66061019897461,
+      "host_swap_baseline_bytes": 2756608,
+      "container_swap_peak_bytes": 0,
+      "paging_IO_measured": false,
+      "guardian_min_available_GiB": 8.660823822021484,
+      "traffic_input_bytes": {
+        "gathers": 1385871360,
+        "reductions": 1411829760
+      },
+      "worker_seconds": 152.73801421299868,
+      "guarded_phase_seconds": 166.10912311798893
+    },
+    {
+      "host": 1,
+      "shape": "large",
+      "parameters": 1024471040,
+      "median_update_seconds": 53.36479215101281,
+      "global_losses": [
+        9.587030410766602,
+        9.575589179992676,
+        9.595732688903809,
+        9.65270185470581,
+        9.586855411529541
+      ],
+      "measured_peak_live_MiB": 8585.4296875,
+      "measured_peak_reserved_MiB": 8884.0,
+      "cgroup_peak_MiB": 4729.12890625,
+      "host_min_available_GiB": 3.2821693420410156,
+      "host_swap_baseline_bytes": 2756608,
+      "container_swap_peak_bytes": 0,
+      "paging_IO_measured": false,
+      "guardian_min_available_GiB": 3.2822914123535156,
+      "traffic_input_bytes": {
+        "gathers": 4063272960,
+        "reductions": 4097884160
+      },
+      "worker_seconds": 441.4318189610058,
+      "guarded_phase_seconds": 455.1584809479973
+    }
+  ],
+  "fresh_training_only_1B_capacity_qualified": true,
+  "PLAN05_bounded_capacity_scope_complete": true,
+  "long_run_or_restart_at_1B_qualified": false,
+  "performance_speedup_claim": false,
+  "native_runtime_changed": false,
+  "boot_ids": [
+    "2774d201-60ab-4285-a2f6-63ffcaf9873c",
+    "e902e636-127d-4c95-abb6-61392a29da54"
+  ],
+  "archives": [
+    {
+      "path": "kernel/artifacts/distributed-d43/104-evidence-r4.tar.gz",
+      "bytes": 3089642,
+      "sha256": "817fb3fa54781394b21f1ee016b3171f5cf704bb2ea6dbe7ebe52967e5203c40"
+    },
+    {
+      "path": "kernel/artifacts/distributed-d43/105-evidence-r4.tar.gz",
+      "bytes": 3115157,
+      "sha256": "ad46f415ba5d273f7df9fdfc8a3a3928ff8cbd7d7364312a8fc9df36533ae7c3"
+    }
+  ]
+}

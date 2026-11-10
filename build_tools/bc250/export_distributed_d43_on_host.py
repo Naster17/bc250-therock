@@ -56,7 +56,7 @@ def main():
             selected_daily=str(Path("/opt/bc250-stack/current").resolve()),
         )
         (root / "handoff.json").write_text(json.dumps(handoff, indent=2) + "\n")
-        archive = work / "evidence/distributed-d43-evidence-r3.tar.gz"
+        archive = work / "evidence/distributed-d43-evidence-r4.tar.gz"
         assert not archive.exists()
         with tarfile.open(archive, "w:gz", compresslevel=1) as t:
             for path in [

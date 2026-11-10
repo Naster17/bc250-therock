@@ -5,6 +5,32 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## D43 fresh1.024B training capacity completed (2026-11-10)
+
+[Report](bc250_distributed_d43_results/README.md), sources8a590d02f/4f684e984/31aa4415d.
+Two native FP32 FSDP ranks complete8updates at1,024,471,040params/seq128/global2,
+without rawCPUreference reads/fullstate gathers in timed updates. D42 exact shape/
+rank/source proof prerequisite; firstlossparity,8finitegradientnorms, ALL final local
+GPU params/gradients/moments finite/counter8. Eachrank512,235,520localstateelements.
+Two genuine second-update reserve stops drove forward and public backward cache
+hooks (returnNone/gradients preserved); unused pages only/live bytecounts unchanged,
+no lowered reserve/math bound or native optimizer change. Control8norms/5losses/
+statecounts EXACT r1 BOTH. Large median53.365s; liveGPU8587.9/8585.4MiB, sampledhost
+min3.620/3.282GiB; complete guardedjob~455s. Explicit capacity benefit, no speedup.
+Container swap/OOM0;105hostswapbaseline2,756,608B pre-existing/unchanged (104zero),
+pagingIO unmeasured. Baseline-aware replay refuses occupancy growth/container swap;
+no claim no swapIO. Initial r2 control Docker-veth log refusal preserved/rechecked.
+24groups/4finalACKs/116localtests/4archive mutations/lintpass. Finalr4metadata exports
+(r3 retained), all oldattempts/sources kept; guards/ownership/resourcecaps unchanged.
+Native prefixes/kernels/fallbacks/apps unchanged; finalidle/docs syncedBOTH.105clock
+remote-read warning stillOPEN; PythonCPUfault separate fixedVMheap/D05exit/D21load.
+Single allresidentFP32statefloor16.392GB>RAM; no deliberateOOM or AMP/offload
+impossibilityclaim. No longrun/restart/generalmodel claim. PLAN05 bounded capacity
+scope COMPLETE, FIVE importantpackages remain. NextPLAN06/D44: inspect retained
+fault/visibility evidence/current launcher; bounded invalid-selection reproduction
+and prelaunch refusal/diagnostics repair, then declared stability pass. Older next
+sentences below are historical; do not repeat completed kernel/capacity work.
+
 ## D42 1.024B source-bound GPU audit completed (2026-11-10)
 
 [Report](bc250_distributed_d42_results/README.md), sources48f58f74c/f9f9ab563/4582251e3.

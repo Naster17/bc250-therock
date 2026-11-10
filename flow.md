@@ -9,65 +9,61 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
-- **PLAN-05 / D43 IN PROGRESS 2026-11-10 — training-only capacity; not qualified.**
-  Sources 8a590d02f (worker/guard/proof), 7c0dc6234 (export/replay),
-  4f684e984 (r2 forward cache policy after actual RAM stop). Native defaults unchanged.
-  tools/distributed-d43 BOTH; D42 descriptor SHA1d8fef22942169acbd759d3639a9730d4090dd68ebf211debb660aea3121e7e1.
-  Fixed original D35 eight-update loop: initial+2 warmup+5 timed; no raw reference
-  reads/full audits, D42 shape/rank/source proof pinned, norm finite each step and
-  ALL final local GPU params/gradients/moments finite/counter8.112 local tests/lint pass.
-  R1 control BOTH passed/ACK, median17.9963s. R1 large completed first update but
-  105 hit host reserve during second forward: available3,214,176,256B<3GiB,
-  cgroup1,937,588,224B.105 own-stop,104 peer manually own-stopped after RCCL timeout;
-  both guardsACK/logs unchanged/no OOM/reboot. Preserve evidence/distributed-d43-r1
-  and tools/distributed-d43/preliminary-r1. No relaxed bounds/reserves/native math.
-  R2 additionally releases unused GPU cache via public FSDP unit forward prehooks
-  and root postforward hook; live allocations asserted unchanged each time, emits
-  bounded GPU live/reserved telemetry. Original model/wrap/optimizer/collectives intact.
-  R2 first control numerical/finite/exit pass;105 overall strict log gate refused
-  unrelated Docker veth up/down activity. No filtering or foreign stop. Both guards
-  ACK. R2 control-recheck BOTH strictpass/ACK/logs unchanged at29755, guardians
-  1047030/1057332. R2control ALL8 norms/5losses/state counts EXACT r1 BOTH;
-  local numbers preserved kernel/artifacts/distributed-d43/{104,105}-control-r{1,2}.json.
-  Export/replaydec42254d selects final labels control-recheck + large-training;
-  all failed evidence preserved. Exporter/verifier current versions staged BOTH.
-  R2 large completed second forward (live6,928,079,360B/reserved7,077,888,000B
-  after root trim on105) then hit hostreserve during second backward: available
-  3,216,723,968B/cgroup1,735,995,392B.105 own-stop/104 peerownstop; BOTH ACK/logs
-  unchanged/no OOM/reboot. Preserve r1/r2 evidence and preliminary-r1/r2 sources.
-  **R3 source31aa4415d:** public full-backward hooks on nonroot FSDP units trim
-  only unused cache/returnNone/preserveallgrads. Forward hooks unchanged; live
-  byte counts asserted unchanged.8×blocks backward callbacks expected;352 total
-  trims at1.024B/224 at352.96M. Native math/wrap/collectives/reserves unchanged.
-  R3 control BOTH strictpass/ACK/logs unchanged; native norms ALL8/losses5/state
-  counts EXACT r1 BOTH. Median18.347174393s vsr117.99629412 (~1.95%higher singlepair,
-  no speed gain claim),224trims/native inputbytecounts unchanged. Local
-  kernel/artifacts/distributed-d43/{104,105}-control-r3.json preserved.
-  **RUNNING BOTH** guard_distributed_d43_on_host.py --shape large
-  --label large-training --port29759; guardians1049842/10510185, ownlabel
-  bc250.d43=d43-r3-large-training, tools/distributed-d43. Logs BOTH
-  evidence/distributed-d43-large-r3-controller.log and evidence/distributed-d43-r3/
-  large-training/{gpu.log,rank.json,final.json,guard/state.json}. Atcheckpoint
-  initial update completed, second forward unit30; later capacity UNKNOWN.
-  Root SSH10472410/10599060 open.104boot2774d201r2/105e902e636r3. All original
-  locks/caps/reserves/guard budgets retained. Local source5ee6dce92 checkpoint+
-  uncommitted verifier-only exact inputbyte checks; must stage finalverifier aftertest.
-  **NEXT:** monitor current r3 large until final/ACK or precise reservefailure.
-  No another launch/relaxed thresholds. If pass export BOTH (exporter current staged)
-  via tools/distributed-d43/export_distributed_d43_on_host.py, log
-  evidence/distributed-d43-export-r3-controller.log; intended
-  evidence/distributed-d43-evidence-r3.tar.gz (none yet). Source checker newestlocal
-  pins deadline/board/docker helpers + exact native perstep collectiveinputbytes;
-  stage after GPU job, then scp archives to kernel/artifacts/distributed-d43.
-  Verify via verify_distributed_d43_exports.py (D42+predecessors replay) and
-  kernel/artifacts/distributed-d43/check_negative_archives.py (3 mutations,R3).
-  README-draft.md has UNQUALIFIED future success text/table placeholder: publish
-  ONLY if final actualpass. Then docs/inventory/manifest/plan/commits/bothhostdocs
-  snapshot20261110-d43-final, ownedtransfergrouping, idlepreflight+closeSSH.
-  PLAN05 may close boundedcapacityscope IF8updatespass; nextPLAN06 stability/
-  visibility/crash triage. No source/model math/installed prefix/default change.
-  Clocksource105 remote-read timeout remainsOPEN; historical Python CPU fault stays
-  distinct fixed VMheap/D05 exit/D21 restore. No native prefix/install/reboot/apps.
+- **PLAN-05 / D43 completed 2026-11-10 — eight native1.024B FSDP updates; PLAN-05 bounded scope COMPLETE.**
+  Sources8a590d02f/7c0dc6234, forwardcache4f684e984/backwardcache31aa4415d,
+  proof/byte replaya0ec08c66; final baseline-aware reader/export documented in report.
+  [Report](docs/development/bc250_distributed_d43_results/README.md),
+  [verified results](docs/development/bc250_distributed_d43_results/verified-results.json).
+  Optional tools/distributed-d43 BOTH; GPUseries distributed-d43-r3. D42 descriptor
+  1d8fef22942169acbd759d3639a9730d4090dd68ebf211debb660aea3121e7e1 binds both shapes/ranks.
+  Original D35 FP32 GPT2 trainingloop/width2048/20blocks/seq128/global2/micro1,
+  AdamW1e-4/eps1e-5/wd.01/foreachFalse/clip.5. No AMP/checkpoint/offload/compile.
+  One firstloss parity +2warmup+5timed updates, eightfiniteclipnorms; ALL final local
+  GPU params/gradients/moments finite in1Mchunks/counter8 (outside timer). Eachrank
+  512,235,520localstateelements. No raw CPUrefs/HTTP/fullstate gathers/CPUoracle.
+  Firststep math bound to D42 independent oracle; not eight-step CPUref/convergence.
+  Actual r1 large firstupdate passed but105 reserve stopped secondforward at
+  available3,214,176,256B. R2 forwardhook trims passed secondforward then stopped
+  secondbackward at3,216,723,968B. Both attempts owned-only stopped/ACK/logs unchanged,
+  no OOM/reboot; peer RCCLtimeout after cancellation is consequential, not newmathbug.
+  R3 public FSDP nonroot full-backward hooks returnNone and trim unused cache;
+  forwardpre/rootpost andphase trims retained. Live bytes equal before/after EVERY
+  trim; model/wrap/collectives/optimizer/tolerances/reserves unchanged. Large160
+  backwardcalls/352trims, control96/224. R3 control ALL8norms/5losses/statecounts EXACT
+  r1 BOTH. Median18.347s vs17.996 baseline pair (~1.95% higher, no universal gain).
+  Large median53.3648s/update, GPUlive8587.883/8585.430MiB/reserved8808/8884MiB;
+  cgroup4731.906/4729.129MiB, sampled hostmin3.620/3.282GiB. Worker441.6s vs
+  guardian455.6/455.2s includes startup/finalscan/teardown. Native collectiveinput
+  gather4,063,272,960/reduce4,097,884,160B per timedstep/rank; not wirebytes/isolatedtime.
+  First r2 control mathpass but105 strictlog gate refused unrelatedDocker veth;
+  unmodified recheckstrictpass, no filters/foreignstop. Preserve ALL oldruns/sourcebackups.
+  Container swap/OOM0;105 hostswapPREEXISTING2,756,608B constant throughout bothshapes,
+  104zero. Initial absolutezero-hostswap reader assumption refused; explicit constant
+  occupancy baseline gate now tested/refusesgrowth. No pagingIO counters collected:
+  do not claim zero hostswap or no swapIO. Runtime reserves/caps unchanged.
+  24groups/4finalACKguards/116localtests/4 alteredarchive refusals/lint/diffpass;
+  original D42worker bytehashes +D35/D36/D39/D40/D41 replayed. Guard budgets/locks:
+  EXreservation+SHruntime/4CPU0–3/hard10GiB+12combined/512PID/256MiBshm,100ms ownedstop
+  host3GiB/cgroup9GiB/disk5GiB/child1400/isolatedguard1800; originalkernel600/GPU120 unchanged.
+  Finalr4 metadata archives local kernel/artifacts/distributed-d43 (r3 preserved):
+  1043,089,642B SHA817fb3fa54781394b21f1ee016b3171f5cf704bb2ea6dbe7ebe52967e5203c40;
+  1053,115,157B SHAad46f415ba5d273f7df9fdfc8a3a3928ff8cbd7d7364312a8fc9df36533ae7c3.
+  Finalcontrol guardians1048932/1059259, large9842/10185, export12241/12614 exit0.
+  Alltestsfinished/guardsACK/idle. Boots2774d201r2/e902e636r3 unchangedduringD43;
+  native Torch/ROCm/MIOpen/D09/defaults/images/fallbacks/apps untouched. No rebuild/
+  install/reboot/foreignstop. Docs snapshot20261110-d43-final synced BOTH at handoff;
+  ownedtransfers grouped/evidence retained. Clocksource105 remote-read timeout remains
+  OPEN (pr_info_once); historical Python CPUfault distinct fixed VMheap/D05/D21.
+  Capacity: single allresidentFP32p/g/m/vfloor16,391,536,640B>either hostRAM, while
+  this two-rank recipe safely runs8updates. No deliberateOOM/AMP-offload impossibility/
+  universalmodel/longrun/restart/speedupclaim. PLAN05 bounded scope closed; FIVE
+  importantpackages remain (PLAN06–10), optional expansion separate.
+  **NEXT PLAN-06 / D44 (planned):** inspect retained Python CPU/KFD/invalidvisibility/
+  clocksource evidence and current public launcher validation. Choose a bounded
+  invalid GPU selection reproduction and implement prelaunch refusal/diagnostics
+  where demonstrated; preserve recovery/ownership/defaults/apps. Then predeclare
+  mixed-workload stability scope; do not reopen completed kernel work or invent
+  endless capacity fixtures. Unreproduced historical faults stay cause unknown.
 
 - **PLAN-05 / D42 completed 2026-11-10 —1.024B source-bound two-host GPU audit; PLAN-05 OPEN.**
   Sources48f58f74c/cachef9f9ab563/boundedCPU4582251e3; finaldistributed-d42-r5 BOTH.

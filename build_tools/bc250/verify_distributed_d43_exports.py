@@ -20,12 +20,24 @@ PINS = {
     "qualification_d43.json": "1d8fef22942169acbd759d3639a9730d4090dd68ebf211debb660aea3121e7e1",
     "guard_distributed_d43_on_host.py": "3adb58aa41dbdd37cddd0c95cfd54059d4ce152b8680b7d59177d587a652281c",
     "distributed_d43_bounded_launch.py": "67f097ce3ce7bc2cf7ad6cf11a98d508f09111b65f4790b77ba14b6b76425cbb",
-    "export_distributed_d43_on_host.py": "37adb0240e50afebbe802aed9319db3ffcf747b2730686cfc52ea0dda823020d",
+    "export_distributed_d43_on_host.py": "87d76afb37638db116f8004812a3eb780daa925daa2429d504222348a44b7187",
     "deadline_guard_d42.py": "bce97bfb137c77ff28f1ad30ea23f9aada593174c58e91a2e1628a5b8b011d7c",
     "board_preflight.py": "039274868dd9aeda1995a0737d4d79d560afc13cc37f570ff154d62d21217083",
     "docker_preflight.py": "a78449d410d9765f464ef36681a17126500ca4dd9d71bdda894445815971aa38",
 }
 LABELS = ["control", "large-training"]
+
+
+def swap_occupancy(trace):
+    """No container swap or changing host occupancy; this is not a paging-I/O counter."""
+    assert trace
+    baseline = trace[0]["host_swap_used_bytes"]
+    assert baseline >= 0
+    assert all(
+        s["memory.swap.current"] == 0 and s["host_swap_used_bytes"] == baseline
+        for s in trace
+    )
+    return baseline
 
 
 def prerequisite(workspace):
@@ -131,7 +143,7 @@ def read(path, rank, prior):
                 )
             assert (
                 w["qualification_sha256"]
-                == f["D42_qualification_sha256"]
+                == f["D43_qualification_sha256"]
                 == item["sha256"]
             )
             assert w["qualification_birth_uuid"] == item["worker"]["birth"]["uuid"]
@@ -257,11 +269,7 @@ def read(path, rank, prior):
                 headroom(s["memory_bytes"], s["available_bytes"], s["free_bytes"])
             trace = w["memory_samples"]
             assert trace
-            assert (
-                max(s["memory.swap.current"] for s in trace)
-                == max(s["host_swap_used_bytes"] for s in trace)
-                == 0
-            )
+            host_swap_baseline = swap_occupancy(trace)
             assert all(
                 w["cgroup_events_before"][k] == w["cgroup_events_after"][k] == 0
                 for k in ["oom", "oom_kill"]
@@ -284,6 +292,9 @@ def read(path, rank, prior):
                     cgroup_peak_MiB=max(s["memory.peak"] for s in trace) / 1024**2,
                     host_min_available_GiB=min(s["host_available_bytes"] for s in trace)
                     / GIB,
+                    host_swap_baseline_bytes=host_swap_baseline,
+                    container_swap_peak_bytes=0,
+                    paging_IO_measured=False,
                     guardian_min_available_GiB=min(
                         s["available_bytes"] for s in f["headroom_samples"]
                     )
@@ -349,7 +360,7 @@ def main():
         status="passed",
         groups=24,
         guards=4,
-        local_tests=112,
+        local_tests=116,
         rows=lr + rr,
         fresh_training_only_1B_capacity_qualified=True,
         PLAN05_bounded_capacity_scope_complete=True,
