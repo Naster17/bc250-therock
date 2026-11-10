@@ -5,6 +5,26 @@ project memory; [flow.md](../../flow.md) is the short resume cursor and ordered
 plan. Read the relevant section here before investigating a supposedly missing
 feature. Update affected entries after substantive work, preserving evidence.
 
+## D44 specific HIP visibility safeguard deployed on .104 (2026-11-10)
+
+Source9d03c5c90; [report](bc250_visibility_d44_results/README.md).
+Old HIP_VISIBLE_DEVICES=-1 import reproduces139: profilerSDK agent.cpp invalid-token
+fatal/abort then Python segfault/libc general-protection fault. Shared launcher now
+refuses exactly that input before elevation/container; inherited/explicit/envfile/
+context checks. Other filters unchanged, not blanket-qualified.12CPU-double GPU
+loss/backward+CPU-first checks across daily default/0 andRCCL0,120localtests and
+3alteredarchive refusals pass. Actual UID1000 public torch/train exit2, distributed
+existing tracebackexit1 before doas/worker.104public/sharedD09 helperSHAa7b3a5b8;
+oldc5167f17 saved evidence/visibility-d44-install-r1. EXboard+EXruntime install;
+GPUtests EXboard+SHruntime/600guard/60child/4GiBcaps/3GiBhost+5GiBdiskreserves.
+Allcandidate kernel logs unchanged; oldbaseline newlibcfault preserved separately.
+R1 extensionless-loader testbug retained, authoritative r2 fixedexplicitloader.
+Independent archive replay pass, allownedjobsdone/guardACK/idle. No native rebuild,
+parserrepair/registry/profile/kernel/reboot/app/105change. HistoricalPythonCPUIP0x3b3e6,
+KFDuncertainty/105clocksource timeout remainOPEN, distinct fixedVMheap/D05/D21.
+PLAN06OPEN; next D45 predeclared sixprocess smallmixed output/backward/AdamW
+stability pass on104 (report has exact bounds), no unknown-cause repair claim.
+
 ## D43 fresh1.024B training capacity completed (2026-11-10)
 
 [Report](bc250_distributed_d43_results/README.md), sources8a590d02f/4f684e984/31aa4415d.

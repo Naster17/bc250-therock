@@ -9,6 +9,47 @@ release claims must not override this cursor and current manifests.
 
 ## Resume cursor
 
+- **PLAN-06 / D44 completed 2026-11-10 — specific HIP visibility import crash refused on .104; PLAN-06 OPEN.**
+  Source9d03c5c90. [Report](docs/development/bc250_visibility_d44_results/README.md),
+  [replay](docs/development/bc250_visibility_d44_results/verified-results.json).
+  Retained D12 HIP_VISIBLE_DEVICES=-1 reproduced through old native launcher:
+  exit139, profiler SDK agent.cpp:216 invalid-token fatal, Python abort/segfault,
+  new libc general-protection fault. Not historical CPU IP0x3b3e6 or fixed VMheap.
+  New shared validate_options refuses EXACT HIP_VISIBLE_DEVICES=-1 before elevation/
+  container creation, inherited/env/envfile/private contexts. Other filter semantics
+  unchanged/unqualified. Candidate refusal exit2/zero containers; CPU import stays
+  CUDA-uninitialized; default/explicit0 daily +explicit0 RCCL GPU loss/ALLinput+weight
+  gradients vsCPUdouble pass12checks at1e-5. Candidate logs EXACT unchanged.
+  EXboard+SHruntime,4CPU0–3/4GiB RAM+combined(no container swap allowance)/512PID/
+  256MiBshm,100ms3GiBhost+5GiBdisk reserve/60schild/600s recovery guard retained.
+  Sampled hostavailable>=14,505,086,976B; no cgrouppeak/pagingIO/performance claim.
+  Initial r1 adapter failed old extensionless file load BEFORE runtime (not a crash
+  reproduction); sources/logs kept. Fixed explicit SourceFileLoader; authoritative r2.
+  Controllers23508/26957 done, guardACK/idle/native cyan-skillfish only/watchdogactive.
+  Installed under EXboard+EXruntime BOTH104shared copies: /usr/local/bin/bc250-torch
+  and /opt/bc250-stack/tools/distributed-d09/bc250_torch.py. SHAa7b3a5b8db0bf178356271258da3b0dd6fb816461192e817a92a1c40d908a5cb;
+  oldc5167f17 backups evidence/visibility-d44-install-r1/{0,1}-bc250_torch.py.
+  Actual UID1000 torch/train refuseexit2, distributed existing tracebackexit1 before
+  doas/worker. Native parser not repaired; observed fatal first in profiler SDK,
+  historical message says ROCr import. Native Torch/ROCm/MIOpen/RCCL/D09entrypoint/
+  registry/images/profiles/kernels/bootfallbacks/apps unchanged; no build/reboot.
+  .104boot2774d201r2;105unaccessed/unchanged, priorforeignDocker must berechecked.
+  120localtests/Black/criticalRuff+F401/syntax/diff/independentreader pass;3mutated
+  source/ACK/worker archives refused. Finalarchive local kernel/artifacts/distributed-d44/
+  104-evidence-r1.tar.gz492032B SHA99b1b95f3df6e6da1700099f83f46868d3cbf6f83f52a312b6ad5f881ee3e214;
+  host evidence/visibility-d44-evidence-r1.tar.gz retains r1/r2/installation/sources.
+  Ownedtools tools/visibility-d44; all jobs finished/no armed guard. .104 docs snapshot
+  20261110-d44-final at handoff; .105 docs remain20261110-d43-handoff.
+  HistoricalPythonCPUfault/KFD uncertainty and105clocksource remoteCPUtimeout OPEN;
+  later quiet logs/pr_info_once cannot prove fixed/no recurrence. No stability claim.
+  **NEXT PLAN-06 / D45:** predeclared six fresh104 owned processes alternatingdaily/
+  RCCL; each small FP32 matmul/conv/mathSDPA/realFFT output+firstbackward vsCPUdouble,
+  plus2denseAdamWupdates/state checks. Fix seeds/atol5e-5rtol5e-4 beforeGPU; same
+  4GiBcaps/3GiBhost/5GiBdisk/60schild/600s guard/ownership. Peropstages/faulthandler/
+  resources/strictlogs; stoponlyowned onfailure, do not extend run or claim unknown
+  CPU/KFD/clock causes fixed. Foreign workload invalidates test but is never stopped.
+  PLAN06 staysOPEN, FIVE importantpackages remain. No capacity/kernel restart.
+
 - **PLAN-05 / D43 completed 2026-11-10 — eight native1.024B FSDP updates; PLAN-05 bounded scope COMPLETE.**
   Sources8a590d02f/7c0dc6234, forwardcache4f684e984/backwardcache31aa4415d,
   proof/byte replaya0ec08c66; final baseline-aware reader/export documented in report.
