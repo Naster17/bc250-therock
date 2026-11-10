@@ -20,9 +20,9 @@ PINS = {
     "qualification_d43.json": "1d8fef22942169acbd759d3639a9730d4090dd68ebf211debb660aea3121e7e1",
     "guard_distributed_d43_on_host.py": "ed5b9acb9c52ed60b262d2958df45be525aaf908bd20207c2155a63e09e2e7d9",
     "distributed_d43_bounded_launch.py": "67f097ce3ce7bc2cf7ad6cf11a98d508f09111b65f4790b77ba14b6b76425cbb",
-    "export_distributed_d43_on_host.py": "8aee88e90fa70fb2271752d10d00d958ba1e3cdf846d782d48f2612c00a0f22b",
+    "export_distributed_d43_on_host.py": "dbd88695c5fef7afe30b740e5d7fd3dc059f2ff41ba5b0fbec26fb64753c398b",
 }
-LABELS = ["control", "large-training"]
+LABELS = ["control-recheck", "large-training"]
 
 
 def prerequisite(workspace):

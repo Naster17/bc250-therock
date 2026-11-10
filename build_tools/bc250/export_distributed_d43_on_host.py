@@ -10,7 +10,7 @@ from board_preflight import reservation
 from capacity_plan_d42 import HOST_REGISTRY_SHA256
 from qualification_d43 import proof
 
-LABELS = ["control", "large-training"]
+LABELS = ["control-recheck", "large-training"]
 
 
 def main():
