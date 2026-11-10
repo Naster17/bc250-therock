@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "archive_sha256": "99b1b95f3df6e6da1700099f83f46868d3cbf6f83f52a312b6ad5f881ee3e214",
+  "source_sha256": "a7b3a5b8db0bf178356271258da3b0dd6fb816461192e817a92a1c40d908a5cb",
+  "gpu_reference_checks": 12,
+  "installed_refusals": 3,
+  "native_parser_fixed": false,
+  "historical_cpu_fault_fixed": false,
+  "mixed_stability_qualified": false,
+  "host": "192.168.1.104",
+  "boot_id": "2774d201-60ab-4285-a2f6-63ffcaf9873c"
+}

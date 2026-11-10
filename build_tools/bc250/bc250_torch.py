@@ -243,6 +243,16 @@ def validate_options(options: LaunchOptions) -> None:
         raise ValueError("Shared memory size must be positive, e.g. 1g or 512m")
     for name, value in options.environment.items():
         check_environment(name, value)
+    # D12 retained an import-time ROCr SIGSEGV with this HIP sentinel. Refuse
+    # that specific input before elevation/container startup, including contexts.
+    # Do not reinterpret ROCR filters, UUIDs, CUDA aliases or trailing terminators.
+    if options.environment.get("HIP_VISIBLE_DEVICES") == "-1":
+        raise ValueError(
+            "HIP_VISIBLE_DEVICES=-1 is refused by this BC-250 launcher after a "
+            "recorded ROCr import crash. Unset HIP_VISIBLE_DEVICES for CPU-only "
+            "Python work and avoid torch.cuda initialization; use 0 to select "
+            "this board's GPU. This does not disable GPU access."
+        )
     for source, mode in options.mounts:
         if mode not in ("rw", "ro"):
             raise ValueError(f"Invalid mount mode: {mode}")
