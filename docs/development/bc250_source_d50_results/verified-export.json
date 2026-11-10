@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "scope": "metadata/source/retained-input consistency; complete dependency-tree replay is separate",
+  "archive_sha256": "06262318fe63377a24f9ba82682ac47c0a348f8195ae934cb4165683c1eb96b6",
+  "seconds": 54.477376193000964,
+  "min_host_available_bytes": 14889078784,
+  "min_disk_free_bytes": 21882839040,
+  "nodes": 77,
+  "available_nodes": 69,
+  "unique_payloads": 64,
+  "blob_files": 75522,
+  "license_files": 107,
+  "complete_recursive_source_closure": false,
+  "gloo_overlay_tree": "913f01fbb91a02ba2e30284fbe744e6b746e66f9",
+  "gloo_cuda_sha256": "7dc2ce53bf518ba455b0e47e7b2e09976261db008b7d2a83669f02c9451f997f"
+}

@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "nodes": 77,
+  "available_nodes": 69,
+  "unique_payloads": 64,
+  "blob_files": 75522,
+  "license_files": 107,
+  "missing": [
+    {
+      "path": "third_party/aiter/3rdparty/composable_kernel",
+      "pin": "fcc9372c009c8e0a23fece77b582da83b04a654f",
+      "reason": "local path is not an initialized independent checkout"
+    },
+    {
+      "path": "third_party/flash-attention/csrc/composable_kernel",
+      "pin": "791afc64655301487cac6e5361c677a0a4b82059",
+      "reason": "local path is not an initialized independent checkout"
+    },
+    {
+      "path": "third_party/flash-attention/csrc/cutlass",
+      "pin": "7127592069c2fe01b041e174ba4345ef9b279671",
+      "reason": "local path is not an initialized independent checkout"
+    },
+    {
+      "path": "third_party/flash-attention/third_party/aiter",
+      "pin": "b4b75165fbd2456dfd0f074c5b2ef91bc87d97e5",
+      "reason": "local path is not an initialized independent checkout"
+    },
+    {
+      "path": "third_party/mslk/external/composable_kernel",
+      "pin": "7fe50dc3da2069d6645d9deb8c017a876472a977",
+      "reason": "local path is not an initialized independent checkout"
+    },
+    {
+      "path": "third_party/mslk/external/cutlass",
+      "pin": "571edeb2d0ac872a8392fc49285b156b07884b4e",
+      "reason": "local path is not an initialized independent checkout"
+    },
+    {
+      "path": "third_party/mslk/external/googletest",
+      "pin": "52eb8108c5bdec04579160ae17225d66034bd723",
+      "reason": "local path is not an initialized independent checkout"
+    },
+    {
+      "path": "third_party/mslk/external/hipify_torch",
+      "pin": "63b6a7b541fa7f08f8475ca7d74054db36ff2691",
+      "reason": "local path is not an initialized independent checkout"
+    }
+  ],
+  "complete_recursive_source_closure": false,
+  "gloo_overlay_tree": "913f01fbb91a02ba2e30284fbe744e6b746e66f9",
+  "gloo_cuda_sha256": "7dc2ce53bf518ba455b0e47e7b2e09976261db008b7d2a83669f02c9451f997f",
+  "parent_manifest_sha256": "8adfc0a3c057ee49a9c8fc695bb7d34bf6b717a606d7aa3233adbc3a3178d130",
+  "manifest_sha256": "4108fd0a2c143f72f5ffbb0788aa2ed0608836fd2caddfc2176c1b16d8a935a8"
+}
