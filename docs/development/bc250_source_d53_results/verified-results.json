@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "entries": 28008,
+  "file_bytes": 10726325706,
+  "archive_bytes": 2467945440,
+  "sha256": "76a018fae10972070ff414dbe5ef7c55e94f2674076cb86b8d69fd317db28d98",
+  "external_or_unresolved_links": [],
+  "scope": "Current retained payload bytes; not historical identity, ELF closure, license clearance or clean-build qualification",
+  "implementation_revision": "ba613c857",
+  "host_controller": {
+    "status": "passed",
+    "pid": 14238,
+    "boot_id": "2774d201-60ab-4285-a2f6-63ffcaf9873c",
+    "active_prefix": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+    "command": [
+      "python3",
+      "/home/nik/bc250work/tools/source-d53/external_kit_d53.py",
+      "create",
+      "--roots",
+      "/home/nik/bc250work/evidence/source-d53-r1/roots.json",
+      "--output",
+      "/home/nik/bc250work/evidence/source-d53-r1/manifest.json"
+    ],
+    "child_pid": 14239,
+    "seconds": 289.0992050029963,
+    "active_prefix_after": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+    "boot_after": "2774d201-60ab-4285-a2f6-63ffcaf9873c"
+  },
+  "minima": {
+    "available_bytes": 15165878272,
+    "disk_free_bytes": 12425912320
+  },
+  "manifest_entries_sha256": "324ba5d1c89ec26df94ff748a3a77537f9ca656592326f33b33084ed5d022297",
+  "compiler_matches_d51": true,
+  "selected_identities": {
+    "rocm/lib/llvm/bin/clang-24": {
+      "path": "rocm/lib/llvm/bin/clang-24",
+      "mode": 493,
+      "kind": "file",
+      "bytes": 158800,
+      "sha256": "55833a05d08dc3fefbc99bb8645bbe1bd33a19ab65485483575cd028041f97c4"
+    },
+    "rocm/lib/librocprofiler-sdk.so.1.4.2": {
+      "path": "rocm/lib/librocprofiler-sdk.so.1.4.2",
+      "mode": 420,
+      "kind": "file",
+      "bytes": 17575368,
+      "sha256": "a6dc1c884c4f446e23a2afc8185b26ef9fd55b57cdd1d15324d46054b902b9c2"
+    },
+    "rccl/lib/librccl.so.1.0": {
+      "path": "rccl/lib/librccl.so.1.0",
+      "mode": 420,
+      "kind": "file",
+      "bytes": 13271416,
+      "sha256": "ca790dc73b76a94a7dc97538608cd94b789e73cc18d756b0631111c18230583e"
+    }
+  },
+  "license_named_entries": 52,
+  "local_tests": 160,
+  "clean_build_admission": {
+    "admitted": false,
+    "free_bytes": 12432261120,
+    "required_bytes": 42949672960,
+    "shortfall_bytes": 30517411840,
+    "proposed_budget": {
+      "fresh_source_and_hipify": 3221225472,
+      "native_objects_and_codegen": 8589934592,
+      "link_and_install_scratch": 4294967296,
+      "isolated_ccache_growth": 21474836480,
+      "preserved_free_reserve": 5368709120
+    },
+    "scope": "Sequential one-profile proposal reusing immutable read-only SDK; no extraction duplicate. Not a measured sufficient peak or permission to launch. Memory/ELF/license/recipe closure requires separate gates.",
+    "path": "/home/nik/bc250work"
+  }
+}

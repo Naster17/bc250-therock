@@ -1,0 +1,17 @@
+{
+  "external-inputs-d53-r1.tar.gz": {
+    "path": "kernel/artifacts/source-d53/external-inputs-d53-r1.tar.gz",
+    "bytes": 2467945440,
+    "sha256": "76a018fae10972070ff414dbe5ef7c55e94f2674076cb86b8d69fd317db28d98"
+  },
+  "104-evidence-r1.tar.gz": {
+    "path": "kernel/artifacts/source-d53/104-evidence-r1.tar.gz",
+    "bytes": 1331009,
+    "sha256": "9d0097243f26ab0cc9f323c53f7bd0c79ebb69c62c61684830150fcc47538c12"
+  },
+  "portable-tools-d53-r1.tar.gz": {
+    "path": "kernel/artifacts/source-d53/portable-tools-d53-r1.tar.gz",
+    "bytes": 3964,
+    "sha256": "e807cf280f32b7ca0e193ed1b43e1e987b64e5213243951014eb29628470f892"
+  }
+}

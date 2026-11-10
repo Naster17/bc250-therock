@@ -13,6 +13,45 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D53 completed 2026-11-10 — external native build payload preserved; clean-build budget refused, PLAN-07 OPEN.**
+  Implementation ba613c857. [Report](docs/development/bc250_source_d53_results/README.md),
+  [receipts](docs/development/bc250_source_d53_results/artifacts.json).
+  Entire retained ROCm/compiler prefix+B03.4RCCL+toolchain/two ccache helpers
+  streamed104 FIFO→workstation, no second SDK/archive on board.28,008 entries:
+  24,522 files/3,262 dirs/224 links;10,726,325,706 file bytes. Archive2,467,945,440B
+  SHA76a018fae10972070ff414dbe5ef7c55e94f2674076cb86b8d69fd317db28d98.
+  Each file SHA/size/mode and directory/link spelling verified independently here;
+  actual archive manifest EXACT separately exported host manifest. Exporter repeats
+  full source inventory afterward, equal. All lexical link targets present, not
+  ELF/CMake/include closure or relocated execution proof. No extraction/native build.
+  HIPClang55833a05 matches D51 current observation; RCCLca790dc7 retainedB03/B05.
+  SDK a6dc1c88 retained build input, separate active repairedD49SDK2a975370.
+  Fifty-two license-named entries, no whole-source/license/publication clearance.
+  Metadata1,331,009B SHA9d0097243f26ab0cc9f323c53f7bd0c79ebb69c62c61684830150fcc47538c12;
+  portable stdlib tools3,964B SHAe807cf280f32b7ca0e193ed1b43e1e987b64e5213243951014eb29628470f892.
+  kernel/artifacts/source-d53; host tools/source-d53 and evidence/source-d53-r1,
+  source-d53-controller.log. Controller14238/child14239finished; resultpassed,
+  status.json initial launch only. No owned jobs/containers/guards. RootSSH closed.
+  EXboard+SHruntime/UID1000/CPU0-1/2GiBAS+600CPU inherited/900wall/100ms/
+  3GiBhost+5GiBdisk stops only ownedPG; no aggregate/cgroup/paging peak claim.
+  Local transfer16GiB initial/5GiB reserve/900wall. Costs289.099export/277.299transfer,
+  not performance; minhost15,165,878,272B/disk12,425,912,320B.
+  Proposed sequential clean-build40GiB budget (3source+8objects+4link+20newcache+
+  5reserve) REFUSED current12,432,261,120B free, short30,517,411,840B. This proposal
+  is NOT measured mandatory/sufficient peak. Reuse-existing-cache with bounded
+  incremental growth may reduce allocation; keep20G configured/no reset.
+  160 local tests/seven new payload/hardlink/mode/duplicate/missing/gzip/budget
+  regressions, Black/pycompile pass. Tiny fixture caught TarInfo file-type mode
+  bits; permissions explicitly masked. No failed full host export. Exact executed
+  helper retained; final verifier adds gzip-trailer hardening to verification only.
+  CurrentD49profiles/sdk/boot2774d201r2/nativecontrols/originalsources/builds/cache/
+  images/apps/fallbacks unchanged.104docs20261110-d53-final;105unaccessed/D43docs.
+  PythonCPU/KFD/105clocksource unknown causes remain separate/unfixed.
+  **NEXT D54:** bounded image/toolchain ELF/CMake/link closure probes and revised
+  storage-admitted isolated clean-build layout. Reuse preserved image/source/SDK,
+  do not re-export/repeat sweeps or launch failed-budget build. Keep105/current
+  prefix/originalsources/caches unchanged. PLAN07 open/four important packages remain.
+
 - **D52 completed 2026-11-10 — builder preserved, fresh source/recipes assembled; PLAN-07 OPEN.**
   Implementation f05489d31. [Report](docs/development/bc250_source_d52_results/README.md),
   [receipts](docs/development/bc250_source_d52_results/artifacts.json).

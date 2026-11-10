@@ -9,6 +9,28 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D53 external compiler/ROCm/RCCL payload (2026-11-10)
+
+Implementation ba613c857; [report](bc250_source_d53_results/README.md).
+Complete retained prefix/RCCL/toolchain/two ccache helpers streamed to workstation:
+2,467,945,440B SHA76a018fae10972070ff414dbe5ef7c55e94f2674076cb86b8d69fd317db28d98.
+28,008 entries/10,726,325,706 file bytes; every actual archive entry checked against
+manifest, EXACT separate host manifest; before/after source inventory equal.
+224 lexical link targets present; not ELF/header/CMake/relocation/build closure.
+HIPClang55833a05 matches D51/RCCLca790dc7 retained; build SDK a6dc remains distinct
+activeD49SDK2a975370.52 license-named files, license/source closure still open.
+160 local tests/seven new cases/Black/pycompile pass; gzip CRC enforced. Executed
+helper before verifier-only hardening preserved. Owned controller14238/child14239
+finished/no jobs/guards. EXboard+SHruntime/CPU0-1/2GiBAS/600CPU/900wall/100ms/
+3GiBhost+5GiBdisk reserves. Export289.099s; minhost15,165,878,272B/disk12,425,912,320B.
+Proposed40GiB sequential fresh-source/build/link/new20GiBcache+5GiB reserve fails
+12.4GB free. Proposal not measured mandatory peak; next D54 audit ELF/CMake/link
+closure and revised storage plan with existing-cache bounded growth/no reset.
+No configure/HIPify/nativebuild/GPU/prefix/kernel/app/cache changes;105 untouched.
+104docs20261110-d53-final; payload local kernel/artifacts/source-d53, host metadata
+in tools/source-d53/evidence/source-d53-r1. PLAN07 open/four packages remain;
+historical PythonCPU/KFD/105clocksource causes still unknown/separate.
+
 ## D52 original builder preservation and fresh source assembly (2026-11-10)
 
 Implementation f05489d31; [report](bc250_source_d52_results/README.md).
