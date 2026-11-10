@@ -1,0 +1,1238 @@
+{
+  "status": "missing-inputs",
+  "compile_argv": [
+    "/workspace/build/core/clr/dist/lib/llvm/bin/clang++",
+    "-DAMD_INTERNAL_BUILD=1",
+    "-DROCPROFILER_ATT_DECODER_SOVERSION_MAJOR=0",
+    "-DROCPROFILER_ATT_DECODER_SOVERSION_MINOR=2",
+    "-DROCPROFILER_ATT_DECODER_SOVERSION_PATCH=2",
+    "-DROCPROFILER_BUILD_AQLPROFILE=1",
+    "-DROCPROFILER_CI=1",
+    "-DROCPROFILER_HAS_GHC_LIB_FILESYSTEM=1",
+    "-DROCPROFILER_SDK_USE_SYSTEM_HIPFILE=1",
+    "-DROCPROFILER_SDK_USE_SYSTEM_RCCL=0",
+    "-DROCPROFILER_SDK_USE_SYSTEM_ROCDECODE=0",
+    "-DROCPROFILER_SDK_USE_SYSTEM_ROCJPEG=0",
+    "-DROCPROFILER_SDK_USE_SYSTEM_ROCSHMEM=0",
+    "-DUSE_PROF_API=1",
+    "-DYAML_CPP_STATIC_DEFINE",
+    "-D__HIP_PLATFORM_AMD__=1",
+    "-Drocprofiler_EXPORTS=1",
+    "-I/workspace/build/profiler/rocprofiler-sdk/build/source/include",
+    "-I/workspace/source/rocm-systems/projects/rocprofiler-sdk/source/include",
+    "-I/workspace/build/profiler/rocprofiler-sdk/build/source",
+    "-I/workspace/source/rocm-systems/projects/rocprofiler-sdk/source",
+    "-I/workspace/source/rocm-systems/shared/sha256/include",
+    "-I/workspace/source/rocm-systems/projects/rocprofiler-sdk/external/abseil-cpp",
+    "-I/workspace/source/rocm-systems/projects/rocprofiler-sdk/external/ptl/source",
+    "-I/workspace/build/profiler/rocprofiler-sdk/build/external/ptl/source",
+    "-isystem",
+    "/workspace/build/third-party/sysdeps/linux/util-linux/build/stage/lib/rocm_sysdeps/include",
+    "-isystem",
+    "/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/include",
+    "-isystem",
+    "/workspace/build/third-party/sysdeps/linux/numactl/build/stage/lib/rocm_sysdeps/include",
+    "-isystem",
+    "/workspace/build/core/clr/dist/include",
+    "-isystem",
+    "/workspace/build/core/ROCR-Runtime/dist/include",
+    "-isystem",
+    "/workspace/build/storage-libs/hipfile/dist/include",
+    "-isystem",
+    "/workspace/build/third-party/sysdeps/linux/sqlite3/build/dist/lib/rocm_sysdeps/include",
+    "-isystem",
+    "/workspace/source/rocm-systems/projects/rocprofiler-sdk/external/filesystem/include",
+    "-isystem",
+    "/workspace/source/rocm-systems/projects/rocprofiler-sdk/external/fmt/include",
+    "-isystem",
+    "/workspace/build/third-party/yaml-cpp/dist/include",
+    "-isystem",
+    "/workspace/source/rocm-systems/projects/rocprofiler-sdk/external/elfio",
+    "-isystem",
+    "/workspace/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/include",
+    "-isystem",
+    "/workspace/build/compiler/amd-comgr/dist/include",
+    "-isystem",
+    "/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/pkgconfig/../../include",
+    "-isystem",
+    "/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/pkgconfig/../../include/libdrm",
+    "-resource-dir",
+    "/workspace/build/core/clr/dist/lib/llvm/lib/clang/24",
+    "-Wno-documentation-unknown-command",
+    "-Wno-documentation-pedantic",
+    "-Wno-unused-command-line-argument",
+    "-Wno-explicit-specialization-storage-class",
+    "--hip-path=/workspace/build/core/clr/dist",
+    "--hip-device-lib-path=/workspace/build/core/clr/dist/lib/llvm/amdgcn/bitcode",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-fvisibility=hidden",
+    "-fvisibility-inlines-hidden",
+    "-W",
+    "-Wall",
+    "-Wno-unknown-pragmas",
+    "-faligned-new",
+    "-fstack-protector-strong",
+    "-Wstack-protector",
+    "-o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o",
+    "-c",
+    "/workspace/source/rocm-systems/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp"
+  ],
+  "link_argv": [
+    "/workspace/build/core/clr/dist/lib/llvm/bin/clang++",
+    "-fPIC",
+    "-resource-dir",
+    "/workspace/build/core/clr/dist/lib/llvm/lib/clang/24",
+    "-Wno-documentation-unknown-command",
+    "-Wno-documentation-pedantic",
+    "-Wno-unused-command-line-argument",
+    "-Wno-explicit-specialization-storage-class",
+    "--hip-path=/workspace/build/core/clr/dist",
+    "--hip-device-lib-path=/workspace/build/core/clr/dist/lib/llvm/amdgcn/bitcode",
+    "-O3",
+    "-L/workspace/build/third-party/sysdeps/linux/zlib/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/zlib/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/zstd/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/zstd/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/numactl/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/numactl/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/bzip2/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/bzip2/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/liblzma/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/liblzma/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/elfutils/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/elfutils/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/compiler/amd-llvm/stage/lib/llvm/lib",
+    "-Wl,-rpath-link,/workspace/build/compiler/amd-llvm/stage/lib/llvm/lib",
+    "-L/workspace/build/compiler/amd-llvm/stage/lib/llvm/lib/x86_64-unknown-linux-gnu",
+    "-Wl,-rpath-link,/workspace/build/compiler/amd-llvm/stage/lib/llvm/lib/x86_64-unknown-linux-gnu",
+    "-L/workspace/build/compiler/amd-comgr/stage/lib",
+    "-Wl,-rpath-link,/workspace/build/compiler/amd-comgr/stage/lib",
+    "-L/workspace/build/core/rocm-kpack/stage/lib",
+    "-Wl,-rpath-link,/workspace/build/core/rocm-kpack/stage/lib",
+    "-L/workspace/build/base/rocprofiler-register/stage/lib",
+    "-Wl,-rpath-link,/workspace/build/base/rocprofiler-register/stage/lib",
+    "-L/workspace/build/core/ROCR-Runtime/stage/lib",
+    "-Wl,-rpath-link,/workspace/build/core/ROCR-Runtime/stage/lib",
+    "-L/workspace/build/core/clr/stage/lib",
+    "-Wl,-rpath-link,/workspace/build/core/clr/stage/lib",
+    "-L/workspace/build/profiler/aqlprofile/stage/lib",
+    "-Wl,-rpath-link,/workspace/build/profiler/aqlprofile/stage/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/util-linux/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/util-linux/build/stage/lib/rocm_sysdeps/lib",
+    "-L/workspace/build/third-party/sysdeps/linux/sqlite3/build/stage/lib/rocm_sysdeps/lib",
+    "-Wl,-rpath-link,/workspace/build/third-party/sysdeps/linux/sqlite3/build/stage/lib/rocm_sysdeps/lib",
+    "-pthread",
+    "-Xlinker",
+    "--dependency-file=source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-shared-library.dir/link.d",
+    "-shared",
+    "-Wl,-soname,librocprofiler-sdk.so.1",
+    "-o",
+    "lib/librocprofiler-sdk.so.1.4.2",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent_mapping.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/attach.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/buffer.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/buffer_tracing.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/callback_tracing.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counter_config.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/device_counting_service.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/dispatch_counting_service.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/external_correlation.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/intercept_table.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/internal_threading.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/ompt.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocprofiler.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/runtime_initialization.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/agent_cache.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/aql_packet.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/async_copy.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/hsa_barrier.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/hsa.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/memory_allocation.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/profile_serializer.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue_controller.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue_interposition.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/scratch_memory.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/signal_pool.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/pc_sampling.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/event.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/graph.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/hip.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/stream.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hipfile/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hipfile/hipfile.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/code_object.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hsa/code_object.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hsa/kernel_symbol.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hip/code_object.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/context.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/correlation_id.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/domain.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/metrics.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/dimensions.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/evaluate_ast.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/core.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/id_decode.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/dispatch_handlers.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/sample_processing.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/controller.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/device_counting.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/ioctl.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/firmware_restrictions.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/aql/helpers.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/aql/packet_construct.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/parser/pc_record_interface.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/queue_hooks.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/hsa_adapter.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/utils.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/service.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/cid_manager.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/code_object.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/ioctl/ioctl_adapter.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/marker/marker.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/marker/range_marker.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/core.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/service.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/code_object.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/decode.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/dl.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/threading.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/hsa_util.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/queue_hooks.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/core.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/service.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/decode.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/interface.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/dispatch_handlers.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/queue_hooks.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/device_counting.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/tracing/profiling_time.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/kernel_dispatch.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/profiling_time.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/tracing.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/kernel_replay.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/local_context.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/memory_snapshot.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/memory_tracker.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/replay_callbacks.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/utils.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/dlog_abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/doorbell_map.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_correlation.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_profiler.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_reader.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/signal_less.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/resource.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rccl/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rccl/rccl.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocdecode/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocdecode/rocdecode.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocjpeg/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocjpeg/rocjpeg.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocshmem/abi.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocshmem/rocshmem.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/gnulinux/agent.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/wsl/agent.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/wsl/dxg_topology.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/ompt/ompt.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration/iterate.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration/late.cpp.o",
+    "source/lib/rocprofiler-sdk/counters/parser/CMakeFiles/rocprofiler-sdk-expr-parser.dir/parser.cpp.o",
+    "source/lib/rocprofiler-sdk/counters/parser/CMakeFiles/rocprofiler-sdk-expr-parser.dir/scanner.cpp.o",
+    "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-shared-library.dir/shared_library.cpp.o",
+    "-Wl,-rpath,\\$ORIGIN:/workspace/build/compiler/amd-comgr/dist/lib:/workspace/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/lib:",
+    "lib/librocprofiler-sdk-common.a",
+    "lib/librocprofiler-sdk-common.a",
+    "lib/librocm-sha256.a",
+    "/workspace/build/third-party/yaml-cpp/dist/lib/libyaml-cpp.a",
+    "lib/libptl.a",
+    "/workspace/build/compiler/amd-comgr/dist/lib/libamd_comgr.so.3.5.0",
+    "/workspace/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/lib/libdw.so",
+    "lib/librocprofiler-sdk-aqlprofile.a",
+    "/usr/lib/x86_64-linux-gnu/libpthread.a",
+    "/usr/lib/x86_64-linux-gnu/libdl.a",
+    "/usr/lib/x86_64-linux-gnu/librt.a",
+    "lib/libabsl_log_initialize.a",
+    "lib/libabsl_log_internal_check_op.a",
+    "lib/libabsl_leak_check.a",
+    "lib/libabsl_log_internal_conditions.a",
+    "lib/libabsl_log_internal_message.a",
+    "lib/libabsl_log_internal_nullguard.a",
+    "lib/libabsl_log_internal_format.a",
+    "lib/libabsl_str_format_internal.a",
+    "lib/libabsl_log_internal_structured_proto.a",
+    "lib/libabsl_log_internal_log_sink_set.a",
+    "lib/libabsl_log_internal_globals.a",
+    "lib/libabsl_log_sink.a",
+    "lib/libabsl_log_entry.a",
+    "lib/libabsl_log_internal_proto.a",
+    "lib/libabsl_strerror.a",
+    "lib/libabsl_log_globals.a",
+    "lib/libabsl_vlog_config_internal.a",
+    "lib/libabsl_log_internal_fnmatch.a",
+    "lib/libabsl_synchronization.a",
+    "lib/libabsl_graphcycles_internal.a",
+    "lib/libabsl_kernel_timeout_internal.a",
+    "lib/libabsl_time.a",
+    "lib/libabsl_civil_time.a",
+    "lib/libabsl_time_zone.a",
+    "lib/libabsl_tracing_internal.a",
+    "lib/libabsl_failure_signal_handler.a",
+    "lib/libabsl_examine_stack.a",
+    "lib/libabsl_symbolize.a",
+    "lib/libabsl_demangle_internal.a",
+    "lib/libabsl_demangle_rust.a",
+    "lib/libabsl_decode_rust_punycode.a",
+    "lib/libabsl_utf8_for_code_point.a",
+    "lib/libabsl_stacktrace.a",
+    "lib/libabsl_borrowed_fixup_buffer.a",
+    "lib/libabsl_hash.a",
+    "lib/libabsl_strings.a",
+    "lib/libabsl_strings_internal.a",
+    "lib/libabsl_int128.a",
+    "lib/libabsl_city.a",
+    "lib/libabsl_throw_delegate.a",
+    "lib/libabsl_debugging_internal.a",
+    "lib/libabsl_malloc_internal.a",
+    "lib/libabsl_base.a",
+    "lib/libabsl_raw_logging_internal.a",
+    "lib/libabsl_log_severity.a",
+    "lib/libabsl_spinlock_wait.a",
+    "-lrt",
+    "lib/libfmt.a",
+    "/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/libdrm.so",
+    "/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/libdrm_amdgpu.so"
+  ],
+  "retained_working_directory": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build",
+  "agent_object": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o",
+  "inputs": [
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent_mapping.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent_mapping.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/attach.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/attach.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/buffer.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/buffer.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/buffer_tracing.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/buffer_tracing.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/callback_tracing.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/callback_tracing.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counter_config.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counter_config.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/device_counting_service.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/device_counting_service.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/dispatch_counting_service.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/dispatch_counting_service.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/external_correlation.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/external_correlation.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/intercept_table.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/intercept_table.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/internal_threading.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/internal_threading.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/ompt.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/ompt.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocprofiler.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocprofiler.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/runtime_initialization.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/runtime_initialization.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/agent_cache.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/agent_cache.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/aql_packet.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/aql_packet.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/async_copy.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/async_copy.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/hsa_barrier.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/hsa_barrier.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/hsa.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/hsa.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/memory_allocation.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/memory_allocation.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/profile_serializer.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/profile_serializer.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue_controller.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue_controller.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue_interposition.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue_interposition.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/queue.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/scratch_memory.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/scratch_memory.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/signal_pool.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/signal_pool.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/pc_sampling.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hsa/pc_sampling.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/event.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/event.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/graph.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/graph.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/hip.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/hip.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/stream.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hip/stream.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hipfile/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hipfile/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hipfile/hipfile.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/hipfile/hipfile.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/code_object.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/code_object.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hsa/code_object.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hsa/code_object.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hsa/kernel_symbol.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hsa/kernel_symbol.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hip/code_object.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/code_object/hip/code_object.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/context.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/context.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/correlation_id.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/correlation_id.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/domain.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/context/domain.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/metrics.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/metrics.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/dimensions.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/dimensions.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/evaluate_ast.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/evaluate_ast.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/core.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/core.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/id_decode.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/id_decode.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/dispatch_handlers.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/dispatch_handlers.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/sample_processing.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/sample_processing.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/controller.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/controller.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/device_counting.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/device_counting.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/ioctl.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/ioctl.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/firmware_restrictions.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/counters/firmware_restrictions.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/aql/helpers.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/aql/helpers.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/aql/packet_construct.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/aql/packet_construct.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/parser/pc_record_interface.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/parser/pc_record_interface.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/queue_hooks.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/queue_hooks.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/hsa_adapter.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/hsa_adapter.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/utils.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/utils.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/service.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/service.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/cid_manager.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/cid_manager.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/code_object.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/code_object.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/ioctl/ioctl_adapter.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/pc_sampling/ioctl/ioctl_adapter.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/marker/marker.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/marker/marker.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/marker/range_marker.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/marker/range_marker.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/core.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/core.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/service.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/service.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/code_object.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/code_object.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/decode.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/decode.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/dl.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/dl.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/threading.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/threading.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/hsa_util.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/hsa_util.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/queue_hooks.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/thread_trace/queue_hooks.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/core.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/core.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/service.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/service.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/decode.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/decode.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/interface.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/interface.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/dispatch_handlers.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/dispatch_handlers.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/queue_hooks.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/queue_hooks.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/device_counting.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/spm/device_counting.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/tracing/profiling_time.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/tracing/profiling_time.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/kernel_dispatch.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/kernel_dispatch.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/profiling_time.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/profiling_time.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/tracing.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_dispatch/tracing.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/kernel_replay.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/kernel_replay.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/local_context.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/local_context.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/memory_snapshot.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/memory_snapshot.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/memory_tracker.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/memory_tracker.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/replay_callbacks.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/replay_callbacks.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/utils.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kernel_replay/utils.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/dlog_abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/dlog_abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/doorbell_map.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/doorbell_map.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_correlation.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_correlation.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_profiler.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_profiler.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_reader.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/kfd_reader.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/signal_less.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/signal_less.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/resource.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/kfd/resource.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rccl/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rccl/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rccl/rccl.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rccl/rccl.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocdecode/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocdecode/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocdecode/rocdecode.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocdecode/rocdecode.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocjpeg/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocjpeg/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocjpeg/rocjpeg.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocjpeg/rocjpeg.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocshmem/abi.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocshmem/abi.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocshmem/rocshmem.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/rocshmem/rocshmem.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/gnulinux/agent.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/gnulinux/agent.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/wsl/agent.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/wsl/agent.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/wsl/dxg_topology.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/platform/wsl/dxg_topology.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/ompt/ompt.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/ompt/ompt.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration/iterate.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration/iterate.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration/late.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/registration/late.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/counters/parser/CMakeFiles/rocprofiler-sdk-expr-parser.dir/parser.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/counters/parser/CMakeFiles/rocprofiler-sdk-expr-parser.dir/parser.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/counters/parser/CMakeFiles/rocprofiler-sdk-expr-parser.dir/scanner.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/counters/parser/CMakeFiles/rocprofiler-sdk-expr-parser.dir/scanner.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-shared-library.dir/shared_library.cpp.o",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-shared-library.dir/shared_library.cpp.o",
+      "present": true
+    },
+    {
+      "argument": "lib/librocprofiler-sdk-common.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/librocprofiler-sdk-common.a",
+      "present": true
+    },
+    {
+      "argument": "lib/librocprofiler-sdk-common.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/librocprofiler-sdk-common.a",
+      "present": true
+    },
+    {
+      "argument": "lib/librocm-sha256.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/librocm-sha256.a",
+      "present": true
+    },
+    {
+      "argument": "/workspace/build/third-party/yaml-cpp/dist/lib/libyaml-cpp.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/yaml-cpp/dist/lib/libyaml-cpp.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libptl.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libptl.a",
+      "present": true
+    },
+    {
+      "argument": "/workspace/build/compiler/amd-comgr/dist/lib/libamd_comgr.so.3.5.0",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/compiler/amd-comgr/dist/lib/libamd_comgr.so.3.5.0",
+      "present": true
+    },
+    {
+      "argument": "/workspace/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/lib/libdw.so",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/lib/libdw.so",
+      "present": true
+    },
+    {
+      "argument": "lib/librocprofiler-sdk-aqlprofile.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/librocprofiler-sdk-aqlprofile.a",
+      "present": true
+    },
+    {
+      "argument": "/usr/lib/x86_64-linux-gnu/libpthread.a",
+      "host_path": "/usr/lib/x86_64-linux-gnu/libpthread.a",
+      "present": false
+    },
+    {
+      "argument": "/usr/lib/x86_64-linux-gnu/libdl.a",
+      "host_path": "/usr/lib/x86_64-linux-gnu/libdl.a",
+      "present": false
+    },
+    {
+      "argument": "/usr/lib/x86_64-linux-gnu/librt.a",
+      "host_path": "/usr/lib/x86_64-linux-gnu/librt.a",
+      "present": false
+    },
+    {
+      "argument": "lib/libabsl_log_initialize.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_initialize.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_check_op.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_check_op.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_leak_check.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_leak_check.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_conditions.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_conditions.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_message.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_message.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_nullguard.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_nullguard.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_format.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_format.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_str_format_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_str_format_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_structured_proto.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_structured_proto.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_log_sink_set.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_log_sink_set.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_globals.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_globals.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_sink.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_sink.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_entry.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_entry.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_proto.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_proto.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_strerror.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_strerror.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_globals.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_globals.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_vlog_config_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_vlog_config_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_internal_fnmatch.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_internal_fnmatch.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_synchronization.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_synchronization.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_graphcycles_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_graphcycles_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_kernel_timeout_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_kernel_timeout_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_time.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_time.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_civil_time.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_civil_time.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_time_zone.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_time_zone.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_tracing_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_tracing_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_failure_signal_handler.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_failure_signal_handler.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_examine_stack.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_examine_stack.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_symbolize.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_symbolize.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_demangle_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_demangle_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_demangle_rust.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_demangle_rust.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_decode_rust_punycode.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_decode_rust_punycode.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_utf8_for_code_point.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_utf8_for_code_point.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_stacktrace.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_stacktrace.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_borrowed_fixup_buffer.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_borrowed_fixup_buffer.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_hash.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_hash.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_strings.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_strings.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_strings_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_strings_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_int128.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_int128.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_city.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_city.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_throw_delegate.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_throw_delegate.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_debugging_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_debugging_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_malloc_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_malloc_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_base.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_base.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_raw_logging_internal.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_raw_logging_internal.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_log_severity.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_log_severity.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libabsl_spinlock_wait.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libabsl_spinlock_wait.a",
+      "present": true
+    },
+    {
+      "argument": "lib/libfmt.a",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build/lib/libfmt.a",
+      "present": true
+    },
+    {
+      "argument": "/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/libdrm.so",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/libdrm.so",
+      "present": true
+    },
+    {
+      "argument": "/workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/libdrm_amdgpu.so",
+      "host_path": "/home/nik/bc250work/rocm-10.2-gfx1013/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/libdrm_amdgpu.so",
+      "present": true
+    }
+  ],
+  "compiler": "/home/nik/bc250work/rocm-10.2-gfx1013/build/core/clr/dist/lib/llvm/bin/clang++",
+  "compiler_present": true,
+  "restrictions": [
+    "Do not execute these original argv: they target the retained build output.",
+    "Candidate must redirect source/object/depfile/library outputs into an owned directory.",
+    "Read-only original build/source mounts; matching recorded image; ccache20G/jobs1/link1.",
+    "Resource admission is provisional; recheck locks, ownership and actual resources before build/tests."
+  ],
+  "native_build_started": false
+}

@@ -1,0 +1,14 @@
+{
+  "attempt": "plan01-idle-control",
+  "docker_containers": [],
+  "gpu_clients": [
+    {
+      "comm": "cyan-skillfish-",
+      "pid": 3099,
+      "uid": 0
+    }
+  ],
+  "memory_available_bytes": 15260909568,
+  "podman_containers": [],
+  "watchdog": "active"
+}

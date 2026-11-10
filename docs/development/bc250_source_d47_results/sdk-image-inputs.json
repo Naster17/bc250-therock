@@ -1,0 +1,43 @@
+{
+  "command": [
+    "podman",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--read-only",
+    "--network=none",
+    "--cap-drop=all",
+    "--security-opt=no-new-privileges",
+    "--cpus=1",
+    "--memory=256m",
+    "--memory-swap=256m",
+    "--pids-limit=64",
+    "--label=bc250.d47=image-inputs",
+    "--entrypoint=python3",
+    "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+    "-c",
+    "import hashlib,json,pathlib; paths=['/usr/lib/x86_64-linux-gnu/libpthread.a', '/usr/lib/x86_64-linux-gnu/libdl.a', '/usr/lib/x86_64-linux-gnu/librt.a']; print(json.dumps({p: {'bytes': pathlib.Path(p).stat().st_size, 'sha256': hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()} for p in paths}))"
+  ],
+  "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+  "exit": 0,
+  "stderr": "",
+  "no_gpu_mappings": true,
+  "no_torch_import": true,
+  "files": {
+    "/usr/lib/x86_64-linux-gnu/libpthread.a": {
+      "bytes": 8,
+      "sha256": "f0a17a43c74d2fe5474fa2fd29c8f14799e777d7d75a2cc4d11c20a6e7b161c5"
+    },
+    "/usr/lib/x86_64-linux-gnu/libdl.a": {
+      "bytes": 8,
+      "sha256": "f0a17a43c74d2fe5474fa2fd29c8f14799e777d7d75a2cc4d11c20a6e7b161c5"
+    },
+    "/usr/lib/x86_64-linux-gnu/librt.a": {
+      "bytes": 8,
+      "sha256": "f0a17a43c74d2fe5474fa2fd29c8f14799e777d7d75a2cc4d11c20a6e7b161c5"
+    }
+  },
+  "status": "passed",
+  "combined_link_input_count": 181,
+  "recipe_admission": "inputs-verified; candidate output-redirection and fresh resource/ownership gates still required"
+}

@@ -1,0 +1,826 @@
+{
+  "format": 1,
+  "baseline": "c779020750d7dc99a39ea8c104ef8df1fc9d0755",
+  "native": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+  "source_head": "8d8b18df558cb478727ba2179f2e01dfce20ea40",
+  "baseline_tree": "abdd861bee54ca83fd7ed9a742dd9db1b7536831",
+  "native_tree": "3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112",
+  "source_head_tree": "33a862732a52c8825a3d1f9c0b609d06fba0df65",
+  "baseline_entries": 21528,
+  "baseline_blob_files": 21491,
+  "gitlinks": [
+    {
+      "path": "android/libs/fbjni",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "7e1e1fe3858c63c251c637ae41a20de425dde96f"
+    },
+    {
+      "path": "third_party/FP16",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "4dfe081cf6bcd15db339cf2680b9281b8451eeb3"
+    },
+    {
+      "path": "third_party/FXdiv",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "b408327ac2a15ec3e43352421954f5b1967701d1"
+    },
+    {
+      "path": "third_party/NNPACK",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "c07e3a0400713d546e0dea2d5466dd22ea389c73"
+    },
+    {
+      "path": "third_party/NVTX",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "3ebbc93ded7285963bff932c678fa367eb393ba6"
+    },
+    {
+      "path": "third_party/VulkanMemoryAllocator",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "1d8f600fd424278486eade7ed3e877c99f0846b1"
+    },
+    {
+      "path": "third_party/XNNPACK",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "51a0103656eff6fc9bfd39a4597923c4b542c883"
+    },
+    {
+      "path": "third_party/aiter",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "9a469a608b2c10b7157df573a38d31e5bf4038b4"
+    },
+    {
+      "path": "third_party/benchmark",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "299e5928955cc62af9968370293b916f5130916f"
+    },
+    {
+      "path": "third_party/composable_kernel",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "9f4f62da466d092a5e62a0af062cabf8a4577417"
+    },
+    {
+      "path": "third_party/cpp-httplib",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "811dd0b6f2382f50f801f3cfdb5ba349d08bb575"
+    },
+    {
+      "path": "third_party/cpuinfo",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "bc3c01e230c6974283e4b89421cfb0e232435589"
+    },
+    {
+      "path": "third_party/cudnn_frontend",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "c4a97621eca52fa0c3a1862a411a16be580b25c6"
+    },
+    {
+      "path": "third_party/cutlass",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "da5e086dab31d63815acafdac9a9c5893b1c69e2"
+    },
+    {
+      "path": "third_party/fbgemm",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d08742c6602efedc6a3c9fca124b96ad555316e4"
+    },
+    {
+      "path": "third_party/flash-attention",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "6c4f74fb338e0c3cdb07ac6f5eab5f54fc367c15"
+    },
+    {
+      "path": "third_party/flatbuffers",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "a2cd1ea3b6d3fee220106b5fed3f7ce8da9eb757"
+    },
+    {
+      "path": "third_party/fmt",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "407c905e45ad75fc29bf0f9bb7c5c2fd3475976f"
+    },
+    {
+      "path": "third_party/gemmlowp/gemmlowp",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "3fb5c176c17c765a3492cd2f0321b0dab712f350"
+    },
+    {
+      "path": "third_party/gloo",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "bcd1672ee07538123ea8f4fac76832efc58fb8ef"
+    },
+    {
+      "path": "third_party/googletest",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "52eb8108c5bdec04579160ae17225d66034bd723"
+    },
+    {
+      "path": "third_party/ideep",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "e087b6e4b32a7ba684db82231d1558123968ac1d"
+    },
+    {
+      "path": "third_party/ittapi",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "0c57540822deb5dae43bef6c1cc9b3be4772a033"
+    },
+    {
+      "path": "third_party/kineto",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "094d3c1d072362d0a919a77299459eee94f97931"
+    },
+    {
+      "path": "third_party/kleidiai",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d7770c89632329a9914ef1a90289917597639cbe"
+    },
+    {
+      "path": "third_party/mimalloc",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "02a2f5df9d7d46d30263b83832eebeeab62dc5fe"
+    },
+    {
+      "path": "third_party/mslk",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "3d332d1c0c0ac7765852c97b3979c9ef913e037f"
+    },
+    {
+      "path": "third_party/nlohmann",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "third_party/onnx",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "e709452ef2bbc1d113faf678c24e6d3467696e83"
+    },
+    {
+      "path": "third_party/pocketfft",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "0fa0ef591e38c2758e3184c6c23e497b9f732ffa"
+    },
+    {
+      "path": "third_party/protobuf",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d1eca4e4b421cd2997495c4b4e65cea6be4e9b8a"
+    },
+    {
+      "path": "third_party/psimd",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "072586a71b55b7f8c584153d223e95687148a900"
+    },
+    {
+      "path": "third_party/pthreadpool",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "a56dcd79c699366e7ac6466792c3025883ff7704"
+    },
+    {
+      "path": "third_party/pybind11",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d03662f0984f652b60e7ddce53d3868002275197"
+    },
+    {
+      "path": "third_party/python-peachpy",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "f45429b087dd7d5bc78bb40dc7cf06425c252d67"
+    },
+    {
+      "path": "third_party/sleef",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "5a1d179df9cf652951b59010a2d2075372d67f68"
+    },
+    {
+      "path": "third_party/tensorpipe",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "2b4cd91092d335a697416b2a3cb398283246849d"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "android/libs/fbjni",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "7e1e1fe3858c63c251c637ae41a20de425dde96f",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "03180a369898993eb1f3a30a73140eff3d65a5b1"
+        }
+      ],
+      "local_head": "7e1e1fe3858c63c251c637ae41a20de425dde96f"
+    },
+    {
+      "path": "third_party/FP16",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "4dfe081cf6bcd15db339cf2680b9281b8451eeb3",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "eabec6c86a3c7117090954b3756012b37b7c3786"
+        }
+      ],
+      "local_head": "4dfe081cf6bcd15db339cf2680b9281b8451eeb3"
+    },
+    {
+      "path": "third_party/FXdiv",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "b408327ac2a15ec3e43352421954f5b1967701d1",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "f25bb419286df488daf0b7a5dc0bdb804d42afc4"
+        }
+      ],
+      "local_head": "b408327ac2a15ec3e43352421954f5b1967701d1"
+    },
+    {
+      "path": "third_party/NNPACK",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "c07e3a0400713d546e0dea2d5466dd22ea389c73",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "779b7ccda8b4e467f173df7b9289a0c860cc9597"
+        }
+      ],
+      "local_head": "c07e3a0400713d546e0dea2d5466dd22ea389c73"
+    },
+    {
+      "path": "third_party/NVTX",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "3ebbc93ded7285963bff932c678fa367eb393ba6",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.txt",
+          "oid": "1e3e238e261289910d1d3978e626703d2107cfe8"
+        },
+        {
+          "path": "docs/LICENSE.txt",
+          "oid": "1e3e238e261289910d1d3978e626703d2107cfe8"
+        },
+        {
+          "path": "python/LICENSE.txt",
+          "oid": "1e3e238e261289910d1d3978e626703d2107cfe8"
+        },
+        {
+          "path": "tools/docs/github-markdown-css/license",
+          "oid": "fa7ceba3eb4a9657a9db7f3ffca4e4e97a9019de"
+        }
+      ],
+      "local_head": "3ebbc93ded7285963bff932c678fa367eb393ba6"
+    },
+    {
+      "path": "third_party/VulkanMemoryAllocator",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "1d8f600fd424278486eade7ed3e877c99f0846b1",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.txt",
+          "oid": "a080d9bf71fcf40b4714c6fab0130f6a9d973d7f"
+        }
+      ],
+      "local_head": "1d8f600fd424278486eade7ed3e877c99f0846b1"
+    },
+    {
+      "path": "third_party/XNNPACK",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "51a0103656eff6fc9bfd39a4597923c4b542c883",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "aa0e3666823dc336c360c27d8d10abf5efd9c252"
+        }
+      ],
+      "local_head": "51a0103656eff6fc9bfd39a4597923c4b542c883"
+    },
+    {
+      "path": "third_party/aiter",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "9a469a608b2c10b7157df573a38d31e5bf4038b4",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "6311bdec0f330b61adb89cd32f719a43717504ed"
+        }
+      ],
+      "local_head": "9a469a608b2c10b7157df573a38d31e5bf4038b4"
+    },
+    {
+      "path": "third_party/benchmark",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "299e5928955cc62af9968370293b916f5130916f",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+        }
+      ],
+      "local_head": "299e5928955cc62af9968370293b916f5130916f"
+    },
+    {
+      "path": "third_party/composable_kernel",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "9f4f62da466d092a5e62a0af062cabf8a4577417",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "68f6ae5746ddd5c79829fd7cc7e32584ffd9d822"
+        },
+        {
+          "path": "docs/license.rst",
+          "oid": "1e5389ccc10b944fd61fc546b41d8b27af22a5f0"
+        }
+      ],
+      "local_head": "9f4f62da466d092a5e62a0af062cabf8a4577417"
+    },
+    {
+      "path": "third_party/cpp-httplib",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "811dd0b6f2382f50f801f3cfdb5ba349d08bb575",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "3e5ed359a2bb16f52c383745c25f14bb7a81c9e4"
+        }
+      ],
+      "local_head": "811dd0b6f2382f50f801f3cfdb5ba349d08bb575"
+    },
+    {
+      "path": "third_party/cpuinfo",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "bc3c01e230c6974283e4b89421cfb0e232435589",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "3f9a4f020cec01f29e5b9dce6630e02d82f2118d"
+        },
+        {
+          "path": "deps/clog/LICENSE",
+          "oid": "306de3d8f1628f0bf0c9f5c5f9dcff2265ca092b"
+        }
+      ],
+      "local_head": "bc3c01e230c6974283e4b89421cfb0e232435589"
+    },
+    {
+      "path": "third_party/cudnn_frontend",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "c4a97621eca52fa0c3a1862a411a16be580b25c6",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.txt",
+          "oid": "eef9c4461c4c6c4dea849ad4af5dd9a4d0837f91"
+        },
+        {
+          "path": "include/cudnn_frontend/thirdparty/nlohmann/LICENSE.MIT",
+          "oid": "1c1f7a690d815db3a79ea3d4c9138a497e2e7702"
+        }
+      ],
+      "local_head": "c4a97621eca52fa0c3a1862a411a16be580b25c6"
+    },
+    {
+      "path": "third_party/cutlass",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "da5e086dab31d63815acafdac9a9c5893b1c69e2",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.txt",
+          "oid": "a7389952d7a79b91417b2b8f91f21dbd6c257d2d"
+        },
+        {
+          "path": "python/LICENSE.txt",
+          "oid": "bad38aaafcbd3b4345abbd755c47aaff0a2a4873"
+        }
+      ],
+      "local_head": "da5e086dab31d63815acafdac9a9c5893b1c69e2"
+    },
+    {
+      "path": "third_party/fbgemm",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d08742c6602efedc6a3c9fca124b96ad555316e4",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "1c8dd93e668d0fee72d84557dd239e5bfde52a6c"
+        },
+        {
+          "path": "fbgemm_gpu/docs/src/general/License.rst",
+          "oid": "dfef06104a2d114940d6a64cfe935f00b1665b96"
+        },
+        {
+          "path": "fbgemm_gpu/experimental/hstu/LICENSE",
+          "oid": "a8cfb81bfdc05461df62febb1cde4e2cef77d6f5"
+        },
+        {
+          "path": "fbgemm_gpu/src/quantize_ops/mx/LICENSE",
+          "oid": "9e841e7a26e4eb057b24511e7b92d42b257a80e5"
+        },
+        {
+          "path": "fbgemm_gpu/test/quantize/mx/LICENSE",
+          "oid": "9e841e7a26e4eb057b24511e7b92d42b257a80e5"
+        }
+      ],
+      "local_head": "d08742c6602efedc6a3c9fca124b96ad555316e4"
+    },
+    {
+      "path": "third_party/flash-attention",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "6c4f74fb338e0c3cdb07ac6f5eab5f54fc367c15",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "5860e4b33f3d9d85fc636137c559331d51783a5b"
+        },
+        {
+          "path": "flash_attn/cute/LICENSE",
+          "oid": "5860e4b33f3d9d85fc636137c559331d51783a5b"
+        }
+      ],
+      "local_head": "6c4f74fb338e0c3cdb07ac6f5eab5f54fc367c15"
+    },
+    {
+      "path": "third_party/flatbuffers",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "a2cd1ea3b6d3fee220106b5fed3f7ce8da9eb757",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+        },
+        {
+          "path": "dart/LICENSE",
+          "oid": "c02ca2f7a135a36281a16bc70be494d969bcfc10"
+        },
+        {
+          "path": "swift/LICENSE",
+          "oid": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+        }
+      ],
+      "local_head": "a2cd1ea3b6d3fee220106b5fed3f7ce8da9eb757"
+    },
+    {
+      "path": "third_party/fmt",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "407c905e45ad75fc29bf0f9bb7c5c2fd3475976f",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "1cd1ef92696b65b2ecb0e560e622f0a0e869dcf3"
+        }
+      ],
+      "local_head": "407c905e45ad75fc29bf0f9bb7c5c2fd3475976f"
+    },
+    {
+      "path": "third_party/gemmlowp/gemmlowp",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "3fb5c176c17c765a3492cd2f0321b0dab712f350",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+        }
+      ],
+      "local_head": "3fb5c176c17c765a3492cd2f0321b0dab712f350"
+    },
+    {
+      "path": "third_party/gloo",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "bcd1672ee07538123ea8f4fac76832efc58fb8ef",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "221dd2a126789f1092239f05f9d1e976f12ea237"
+        },
+        {
+          "path": "gloo/transport/uv/LICENSE.uvw",
+          "oid": "47515e97eeeade2c4e983476e04b5cfb7d6ef1f1"
+        }
+      ],
+      "local_head": "bcd1672ee07538123ea8f4fac76832efc58fb8ef"
+    },
+    {
+      "path": "third_party/googletest",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "52eb8108c5bdec04579160ae17225d66034bd723",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "1941a11f8ce94389160b458927a29ba217542818"
+        }
+      ],
+      "local_head": "52eb8108c5bdec04579160ae17225d66034bd723"
+    },
+    {
+      "path": "third_party/ideep",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "e087b6e4b32a7ba684db82231d1558123968ac1d",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "2956417a74d1013d7e83b15e2d8e42332db0a1d5"
+        }
+      ],
+      "local_head": "e087b6e4b32a7ba684db82231d1558123968ac1d"
+    },
+    {
+      "path": "third_party/ittapi",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "0c57540822deb5dae43bef6c1cc9b3be4772a033",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "rust/ittapi-sys/LICENSES",
+          "oid": "06ad40db40b426ca6c609aa4663782c2b8d02e92"
+        }
+      ],
+      "local_head": "0c57540822deb5dae43bef6c1cc9b3be4772a033"
+    },
+    {
+      "path": "third_party/kineto",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "094d3c1d072362d0a919a77299459eee94f97931",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "840d3e1bce02641f8f044628378c3d1d171ea9b3"
+        }
+      ],
+      "local_head": "094d3c1d072362d0a919a77299459eee94f97931"
+    },
+    {
+      "path": "third_party/kleidiai",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d7770c89632329a9914ef1a90289917597639cbe",
+      "local_pin_available": true,
+      "license_files": [],
+      "local_head": "d7770c89632329a9914ef1a90289917597639cbe"
+    },
+    {
+      "path": "third_party/mimalloc",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "02a2f5df9d7d46d30263b83832eebeeab62dc5fe",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "53315ebee557ac22f3396ea1781df0440c26bb15"
+        }
+      ],
+      "local_head": "02a2f5df9d7d46d30263b83832eebeeab62dc5fe"
+    },
+    {
+      "path": "third_party/mslk",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "3d332d1c0c0ac7765852c97b3979c9ef913e037f",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "241b03e582be2f655d171e8075b6951610713cc6"
+        },
+        {
+          "path": "mslk/attention/flash_attn/LICENSE",
+          "oid": "5860e4b33f3d9d85fc636137c559331d51783a5b"
+        }
+      ],
+      "local_head": "3d332d1c0c0ac7765852c97b3979c9ef913e037f"
+    },
+    {
+      "path": "third_party/nlohmann",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "55f93686c01528224f448c19128836e7df245f72",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.MIT",
+          "oid": "a1dacc8dbbd907c4b622ff1f08e279c27465dcbc"
+        },
+        {
+          "path": "docs/mkdocs/docs/home/license.md",
+          "oid": "b9a0c4f456bd89d20a96870ae18964103a9b661e"
+        }
+      ],
+      "local_head": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "third_party/onnx",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "e709452ef2bbc1d113faf678c24e6d3467696e83",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+        }
+      ],
+      "local_head": "e709452ef2bbc1d113faf678c24e6d3467696e83"
+    },
+    {
+      "path": "third_party/pocketfft",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "0fa0ef591e38c2758e3184c6c23e497b9f732ffa",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.md",
+          "oid": "c3a4c06a92d024e12ab76ce6b20eae815979552e"
+        }
+      ],
+      "local_head": "0fa0ef591e38c2758e3184c6c23e497b9f732ffa"
+    },
+    {
+      "path": "third_party/protobuf",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d1eca4e4b421cd2997495c4b4e65cea6be4e9b8a",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "19b305b00060a774a9180fb916c14b49edb2008f"
+        }
+      ],
+      "local_head": "d1eca4e4b421cd2997495c4b4e65cea6be4e9b8a"
+    },
+    {
+      "path": "third_party/psimd",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "072586a71b55b7f8c584153d223e95687148a900",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "0a117cb6df979fa54425efac9e4e90e171fb5639"
+        }
+      ],
+      "local_head": "072586a71b55b7f8c584153d223e95687148a900"
+    },
+    {
+      "path": "third_party/pthreadpool",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "a56dcd79c699366e7ac6466792c3025883ff7704",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "27aa856e421b97959e3454523ce7108601f31677"
+        }
+      ],
+      "local_head": "a56dcd79c699366e7ac6466792c3025883ff7704"
+    },
+    {
+      "path": "third_party/pybind11",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "d03662f0984f652b60e7ddce53d3868002275197",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE",
+          "oid": "e466b0dfda14f3a7c8ece512937eb99c8b7b6d68"
+        }
+      ],
+      "local_head": "d03662f0984f652b60e7ddce53d3868002275197"
+    },
+    {
+      "path": "third_party/python-peachpy",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "f45429b087dd7d5bc78bb40dc7cf06425c252d67",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.rst",
+          "oid": "89a13b8de4acdc8a709c640b1ba1ba4b19e3f9d7"
+        }
+      ],
+      "local_head": "f45429b087dd7d5bc78bb40dc7cf06425c252d67"
+    },
+    {
+      "path": "third_party/sleef",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "5a1d179df9cf652951b59010a2d2075372d67f68",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.txt",
+          "oid": "36b7cd93cdfbac762f5be4c6ce276df2ea6305c2"
+        }
+      ],
+      "local_head": "5a1d179df9cf652951b59010a2d2075372d67f68"
+    },
+    {
+      "path": "third_party/tensorpipe",
+      "mode": "160000",
+      "kind": "commit",
+      "oid": "2b4cd91092d335a697416b2a3cb398283246849d",
+      "local_pin_available": true,
+      "license_files": [
+        {
+          "path": "LICENSE.txt",
+          "oid": "e30e3230a50fd240868e3c6508072906479064fa"
+        }
+      ],
+      "local_head": "2b4cd91092d335a697416b2a3cb398283246849d"
+    }
+  ],
+  "main_license_oid": "c23172f7aff0254e4f0f163fb2e6e355cbaec5f4",
+  "payloads": {
+    "baseline.tar.gz": "4a845006a06ec300bbd24616cdff752b4f908d7628dd01da5603209f43d4f7f3",
+    "0001-qualified-native-torch.patch": "24b5964617b6124281d3e5ae7874aba853e2d0abdcc11f2a28ee5bb2601d3fa3",
+    "0002-agent-exit-lifetime.patch": "130637a696e737380bfc4fbc8c4bf6857195edd250c897da5ff60b9ef04d165a"
+  },
+  "scope": "Complete tracked parent source and gitlink identities; dependency contents/toolchain/wheels not bundled",
+  "source_git_shallow": "true"
+}

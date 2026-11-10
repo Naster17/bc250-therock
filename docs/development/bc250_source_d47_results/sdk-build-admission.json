@@ -1,0 +1,33 @@
+{
+  "status": "resource-admitted-recipe-audit-pending",
+  "resources": {
+    "available_bytes": 15212310528,
+    "disk_free_bytes": 24804593664
+  },
+  "planned_peak_extra_disk_bytes": 4294967296,
+  "planned_candidate_memory_bytes": 4294967296,
+  "host_reserve_bytes": 3221225472,
+  "disk_reserve_bytes": 5368709120,
+  "jobs": 1,
+  "link_jobs": 1,
+  "ccache_maxsize": "20G; preserve existing cache/statistics; owned stop if actual disk reserve is threatened",
+  "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+  "build": "/home/nik/bc250work/rocm-10.2-gfx1013/build/profiler/rocprofiler-sdk/build",
+  "sdk_bytes": 17575368,
+  "selected_cache": [
+    "CMAKE_BUILD_TYPE:STRING=Release",
+    "ROCPROFILER_BUILD_CI:BOOL=ON"
+  ],
+  "original_build_and_source": "read-only; isolated modified source/object/link output required",
+  "native_build_started": false,
+  "qualification": "candidate negative imports + valid GPU/reference/profiler gates before any activation",
+  "agent_compile_commands": [
+    {
+      "directory": "/workspace/build/profiler/rocprofiler-sdk/build",
+      "command": "/workspace/build/core/clr/dist/lib/llvm/bin/clang++ -DAMD_INTERNAL_BUILD=1 -DROCPROFILER_ATT_DECODER_SOVERSION_MAJOR=0 -DROCPROFILER_ATT_DECODER_SOVERSION_MINOR=2 -DROCPROFILER_ATT_DECODER_SOVERSION_PATCH=2 -DROCPROFILER_BUILD_AQLPROFILE=1 -DROCPROFILER_CI=1 -DROCPROFILER_HAS_GHC_LIB_FILESYSTEM=1 -DROCPROFILER_SDK_USE_SYSTEM_HIPFILE=1 -DROCPROFILER_SDK_USE_SYSTEM_RCCL=0 -DROCPROFILER_SDK_USE_SYSTEM_ROCDECODE=0 -DROCPROFILER_SDK_USE_SYSTEM_ROCJPEG=0 -DROCPROFILER_SDK_USE_SYSTEM_ROCSHMEM=0 -DUSE_PROF_API=1 -DYAML_CPP_STATIC_DEFINE -D__HIP_PLATFORM_AMD__=1 -Drocprofiler_EXPORTS=1 -I/workspace/build/profiler/rocprofiler-sdk/build/source/include -I/workspace/source/rocm-systems/projects/rocprofiler-sdk/source/include -I/workspace/build/profiler/rocprofiler-sdk/build/source -I/workspace/source/rocm-systems/projects/rocprofiler-sdk/source -I/workspace/source/rocm-systems/shared/sha256/include -I/workspace/source/rocm-systems/projects/rocprofiler-sdk/external/abseil-cpp -I/workspace/source/rocm-systems/projects/rocprofiler-sdk/external/ptl/source -I/workspace/build/profiler/rocprofiler-sdk/build/external/ptl/source -isystem /workspace/build/third-party/sysdeps/linux/util-linux/build/stage/lib/rocm_sysdeps/include -isystem /workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/include -isystem /workspace/build/third-party/sysdeps/linux/numactl/build/stage/lib/rocm_sysdeps/include -isystem /workspace/build/core/clr/dist/include -isystem /workspace/build/core/ROCR-Runtime/dist/include -isystem /workspace/build/storage-libs/hipfile/dist/include -isystem /workspace/build/third-party/sysdeps/linux/sqlite3/build/dist/lib/rocm_sysdeps/include -isystem /workspace/source/rocm-systems/projects/rocprofiler-sdk/external/filesystem/include -isystem /workspace/source/rocm-systems/projects/rocprofiler-sdk/external/fmt/include -isystem /workspace/build/third-party/yaml-cpp/dist/include -isystem /workspace/source/rocm-systems/projects/rocprofiler-sdk/external/elfio -isystem /workspace/build/third-party/sysdeps/linux/elfutils/build/dist/lib/rocm_sysdeps/include -isystem /workspace/build/compiler/amd-comgr/dist/include -isystem /workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/pkgconfig/../../include -isystem /workspace/build/third-party/sysdeps/linux/libdrm/build/stage/lib/rocm_sysdeps/lib/pkgconfig/../../include/libdrm -resource-dir /workspace/build/core/clr/dist/lib/llvm/lib/clang/24 -Wno-documentation-unknown-command -Wno-documentation-pedantic -Wno-unused-command-line-argument -Wno-explicit-specialization-storage-class --hip-path=/workspace/build/core/clr/dist --hip-device-lib-path=/workspace/build/core/clr/dist/lib/llvm/amdgcn/bitcode -O3  -std=c++17 -fPIC -fvisibility=hidden -fvisibility-inlines-hidden -W -Wall -Wno-unknown-pragmas -faligned-new -fstack-protector-strong -Wstack-protector -o source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o -c /workspace/source/rocm-systems/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp",
+      "file": "/workspace/source/rocm-systems/projects/rocprofiler-sdk/source/lib/rocprofiler-sdk/agent.cpp",
+      "output": "source/lib/rocprofiler-sdk/CMakeFiles/rocprofiler-sdk-object-library.dir/agent.cpp.o"
+    }
+  ],
+  "ninja_commands_exit": 0
+}

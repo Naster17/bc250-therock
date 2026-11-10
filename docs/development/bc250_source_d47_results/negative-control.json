@@ -1,0 +1,6 @@
+{
+  "case": "applicable altered patch with updated manifest payload SHA",
+  "status": "refused by pinned native tree",
+  "actual_tree": "6ff3de554091708b318bb164b5d61be60887c4c7",
+  "expected_native_tree": "3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112"
+}

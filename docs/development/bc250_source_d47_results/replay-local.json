@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "trees": {
+    "baseline": "abdd861bee54ca83fd7ed9a742dd9db1b7536831",
+    "native": "3e3edf7f1de1fd1fe4730f9ec4ed30dd038b2112",
+    "source_head": "33a862732a52c8825a3d1f9c0b609d06fba0df65"
+  },
+  "baseline_entries": 21528,
+  "baseline_blob_files": 21491,
+  "gitlink_pins": 37,
+  "license_blob": "c23172f7aff0254e4f0f163fb2e6e355cbaec5f4",
+  "object_alternates": false,
+  "source_history_required": false,
+  "dependency_contents_bundled": false,
+  "native_build": false,
+  "payloads": {
+    "baseline.tar.gz": "4a845006a06ec300bbd24616cdff752b4f908d7628dd01da5603209f43d4f7f3",
+    "0001-qualified-native-torch.patch": "24b5964617b6124281d3e5ae7874aba853e2d0abdcc11f2a28ee5bb2601d3fa3",
+    "0002-agent-exit-lifetime.patch": "130637a696e737380bfc4fbc8c4bf6857195edd250c897da5ff60b9ef04d165a"
+  }
+}
