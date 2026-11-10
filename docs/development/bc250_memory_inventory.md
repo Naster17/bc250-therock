@@ -8,6 +8,31 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+
+## D52 original builder preservation and fresh source assembly (2026-11-10)
+
+Implementation f05489d31; [report](bc250_source_d52_results/README.md).
+OCI original image28ad36e6:682,451,968B,14 compressed/uncompressed layers+config
+verified104/local, original image untouched. External HIP/ROCm not embedded.
+D47/50/51 fresh assembly69 dependencies, sourceHEAD8d8b18d/nativebasea524980,
+Gloo913f01fb;21,501+78,598=100,099 source working entries. Eight branches excluded.
+R1 catches CRLF working/canonical blob mismatch; R2 checks copied working bytes
+against verified snapshots AND preserves canonical Git checks. Failed R1 kept.
+Gitless346,534,969B archive/100,116 source+recipe entries verified local and after
+space-path extraction. Private Git proof histories preserved outside snapshot.
+New future pip recipes refuse old cache, portable RCCL mount; bash-n only passed,
+no codegen/native build. All3239/3241 retained compile units present/hashed,
+260 build-dir units/profile,103/105 include roots and38 library link rules/profile;
+transitive header/ELF closure still separate.153 tests/nine new cases/static pass.
+Portable tools4936B; metadata860,815B; kernel/artifacts/source-d52 and host tools/
+source-d52/evidence/source-d52-* retain payloads/logs. Controllers7158/7744fail/
+8899/10275done.2GiBAS/180CPU inherited/480wall/3GiBhost+5GiBdisk bounds; image export
+EXboard+SHruntime/2CPU/no memory-cap claim. No GPU/native/default/kernel/app change.
+D49SDK2a975370/boot2774d201r2 preserved,104docs20261110-d52-final;105 unchanged.
+Next D53 matching external SDK/compiler/RCCL/toolchain payload+clean-build storage
+admission. PLAN07/license/reproduction open/four packages remain; historical faults
+remain separate/unfixed.
+
 ## D51 selected native build-input evidence (2026-11-10)
 
 Implementation f9e45aace; [report](bc250_source_d51_results/README.md).

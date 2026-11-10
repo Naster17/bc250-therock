@@ -12,6 +12,60 @@ release claims must not override this cursor and current manifests.
 
 
 
+
+- **D52 completed 2026-11-10 — builder preserved, fresh source/recipes assembled; PLAN-07 OPEN.**
+  Implementation f05489d31. [Report](docs/development/bc250_source_d52_results/README.md),
+  [receipts](docs/development/bc250_source_d52_results/artifacts.json).
+  Original image28ad36e6 preserved as OCI:682,451,968B SHA
+  c57dbec6f76fc0f651eca005435320f47092f8f4dc478026053d058390998f88.
+  All14 compressed layer hashes/uncompressed diff IDs and original config identity
+  verified on104 and workstation; original image unchanged, no load/pull/retag.
+  HIP compiler/ROCm remain external build-prefix inputs, not embedded in this image.
+  D47/D50/D51 replay in fresh owned assembly: sourceHEAD8d8b18d/tree33a86273,
+  native C++ basea524980/tree3e3edf7f, Gloo overlay913f01fb.69 dependency locations
+  materialized,21,501 parent+78,598 dependency working entries=100,099 source entries.
+  Eight excluded nested branches empty, not admitted for arbitrary configurations.
+  R1 raw-Git-blob copy check fails mkl-dnn template:331 working bytes vs324 canonical,
+  pinned text/eol=crlf. R2 compares copied raw bytes to tree-verified snapshots while
+  retaining canonical Git checks; no source normalization. Parent bytes captured
+  before materialization. Failed R1 and encoding diagnostic preserved. Correct UID/
+  isolated XDG worker avoids root-attributes warnings; no global Git config changes.
+  Gitless source/recipes artifact346,534,969B SHA
+  6867ed719c201cf7bc368800aa64c5e16a2e3a4c3c03485ad502684e2feb5723.
+  Manifest-backed100,116 source+recipe entries independently verified locally,
+  extracted to a path containing a space, EVERY extracted entry rechecked. Private
+  proof Git indices/history excluded from archive but kept onhost. No native build.
+  Fresh prospective pip-only scripts remove old cache-copy and refuse existing
+  CMake cache; RCCL input now explicit /workspace/rccl. Both bash-n checks pass in
+  preserved image; recipes NOT executed. Safe defaults/nativegfx1013/20Gccache/
+  no reset/four jobs/one linker/version-number exports retained for future admission.
+  All3239/3241 retained compile units exist+SHA256;260/profile under build dirs.
+  Include roots103/105 and38 native link rules/profile inventoried. Initial rule
+  parser missed target before colon; fixed/regression, R1 inventory retained.
+  Not complete transitive headers/.ninja_deps/linked-ELF or historical-byte proof.
+ 153 local tests/nine new OCI/source/EOL/recipe/link/extraction cases; static checks
+  and metadata cross-check pass. Portable stdlib tools4936B SHA
+  f06f5b23578e7223bbeb299cbfdf1d1b6409e1f9de75d5899da01b9f6b48116e.
+  Local artifacts kernel/artifacts/source-d52/; host tools/source-d52 and evidence/
+  source-d52-{image-r1,assembly-r1,assembly-r2,inputs-r1,inputs-r2,package-r1}.
+  Metadata archive860,815B SHAc36a2f45c766f5adfe160f0112a2f2b697d8e9fea1df277885adc792e66e1225;
+  host evidence/source-d52-evidence-r1.tar.gz, metadata/tools only (large payloads separate).
+  Controllers7158/7744(failed)/8899/10275finished; image/assembly/assembly-r2/package
+  controller logs in evidence/source-d52-*-controller.log. All jobs/containers done.
+  Image storage admission2*imageSize+4GiBassembly+5GiBreserve passed; export EXboard+
+  SHruntime/CPU0-1/GOMAXPROCS2/420s save/100ms owned stop, no aggregate memory-cap claim.
+  Assembly/package UID1000/CPU0-3/2GiBAS+180CPU per inherited process/480wall/100ms/
+  3GiBhost+5GiBdisk reserves. Costs36.491/99.852/146.687s, not performance claims.
+  Min host14,907,224,064B/disk12,486,606,848B; cgroup peak/paging IO unmeasured.
+  Original sources/builds/caches/images/prefixes/kernels/apps/checkpoints/fallbacks
+  preserved; D49SDK2a975370/boot2774d201r2/native controls unchanged. Finalidle/watchdog
+  active, no owned workload.104docs20261110-d52-final synced;105 unaccessed/D43docs.
+  PythonCPU/KFD/105clocksource causes still unknown, distinct fixed SDK/VMheap/D05/D21.
+  **NEXT D53:** storage-admitted matching external ROCm/compiler/RCCL/toolchain kit,
+  immutable input identities, then clean-build resource admission for fresh source.
+  Keep105/currentprefix/original source/build/cache unchanged. PLAN07 payload/license/
+  clean-reproduction closure OPEN; four important packages PLAN07-10 remain.
+
 - **D51 completed 2026-11-10 — selected native input disposition/portable evidence; PLAN-07 OPEN.**
   Implementation f9e45aace. [Report](docs/development/bc250_source_d51_results/README.md).
   Eight missing D50 branches excluded for exact daily/RCCL configs: five optional
