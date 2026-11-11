@@ -351,7 +351,7 @@ def main():
                     [
                         "/usr/local/bin/bc250-torch",
                         "--mount",
-                        f"{scratch}:rw",
+                        str(scratch),
                         str(FIXTURES / "validate_checkpoint_continuity_n39.py"),
                         "--scratch-root",
                         str(scratch),
