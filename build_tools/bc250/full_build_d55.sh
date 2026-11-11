@@ -11,6 +11,7 @@ export PIP_NO_INDEX=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 export CCACHE_READONLY=1 CCACHE_NOSTATS=1
 export CCACHE_TEMPDIR=/tmp/ccache CCACHE_LOGFILE=/tmp/ccache.log
 export CMAKE_TOOLCHAIN_FILE=/probe/offline_inputs_d54.cmake
+ccache --show-config > /evidence/ccache-config.txt
 save_diagnostics() {
     if [[ -f build/CMakeFiles/CMakeConfigureLog.yaml ]]; then
         cp build/CMakeFiles/CMakeConfigureLog.yaml /evidence/
@@ -30,8 +31,14 @@ save_diagnostics() {
         fi
     done < /probe/hip-paths.txt > /evidence/hip-files.sha256
     if [[ -f /tmp/ccache.log ]]; then
-        grep -c 'Result: .*cache_hit' /tmp/ccache.log > /evidence/ccache-hits.txt || true
+        cp /tmp/ccache.log /evidence/ccache.log
+        # ccache 4.9.1 logs one overall miss line per invocation, but hits
+        # appear only as direct/preprocessed lines.
+        direct=$(grep -c 'Result: direct_cache_hit' /tmp/ccache.log || true)
+        preprocessed=$(grep -c 'Result: preprocessed_cache_hit' /tmp/ccache.log || true)
+        echo $((direct + preprocessed)) > /evidence/ccache-hits.txt
         grep -c 'Result: cache_miss' /tmp/ccache.log > /evidence/ccache-misses.txt || true
+        grep -c 'STARTED' /tmp/ccache.log > /evidence/ccache-invocations.txt || true
     fi
 }
 trap save_diagnostics EXIT

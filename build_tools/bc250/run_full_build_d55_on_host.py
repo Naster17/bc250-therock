@@ -20,7 +20,9 @@ IMAGE = "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06"
 SOURCE_SHA = "6867ed719c201cf7bc368800aa64c5e16a2e3a4c3c03485ad502684e2feb5723"
 SIX_SHA = "70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9"
 GIB = 1024**3
-DEADLINE = 3600
+# Attempt 1 completed all 3282 build steps at ~3600 s and was killed during
+# wheel packaging; allow headroom for the offline install and identity checks.
+DEADLINE = 7200
 
 
 def mount(source, target, mode="ro"):
