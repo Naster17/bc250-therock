@@ -9,6 +9,46 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D55 full isolated clean Torch rebuild (2026-11-11)
+
+Harness 3d494ef03, deadline/diagnostics fix d6daedcf1, ccache counter fix
+f2690ce03; [report](bc250_source_d55_results/README.md),
+[receipts](bc250_source_d55_results/artifacts.json). Both profiles now
+rebuild fully offline from preserved inputs: the D52 kit 6867ed71 + six
+70e8a77b are hash-verified per attempt and `pip install -e .
+--no-build-isolation --no-deps` runs with PIP_NO_INDEX=1 in the preserved
+builder image 28ad36e6, --network=none, 4CPU0-3/10GiB/2048PID/2GiBtmp, under
+the D54 reservation/preflight/admission/floors with a 7200s deadline. No
+--read-only rootfs (the editable install writes into the image venv); every
+preserved input (SDK build prefix a6dc1c88, rccl-b034/install-r1, ccache
+data, recipes, toolchain, six) stays RO. daily-full-1 completed all 3282
+ninja steps but hit the original 3600s deadline during wheel license
+packaging — no compile/link failure; daily-full-2 passed 1761.276s (cgroup
+peak 9,418,891,264B) and rccl-single-full-1 passed 1848.435s (peak
+9,578,196,992B), both installing torch-2.13.0a0+gfx1013 offline. HIP
+translations 22/22 byte-exact vs the D54 clean probes AND the retained
+b052/b053 variants; BatchLinearAlgebraEig.hip.o SHA 6c3e6dc0 identical
+everywhere; gfx1013 offload bundles present. 10 shared libraries hashed per
+profile: 7 byte-identical cross-profile, libtorch_cpu/libtorch_hip/
+libtorch_python differ (the NCCL-affected linkage set; recorded, not
+equated). Preserved ccache reused read-only with zero growth: daily 3023
+hits/241 misses/3291 invocations, rccl 3015/251/3293 — kit sources and
+compiler fingerprints reproduce the original cache keys. Finding: ccache
+4.9.1 in read-only/no-stats mode omits Result: summary lines; hits log
+'Succeeded getting cached result', misses 'Read-only mode; running real
+compiler'. Counters corrected; raw log + ccache --show-config retained as
+evidence; the running attempt-2 script was never overwritten in place (fix
+staged as .new, renamed after finish). Minimum available memory
+7,712,739,328B / free disk 56,769,667,072B; zero OOM/throttle events; wall
+times are admission costs, not performance. 170 local tests, Black,
+py_compile pass; ruff unavailable. 30 evidence files SHA-verified into
+kernel/artifacts/source-d55; the attempt-1 deadline receipt stays in host
+evidence/source-d55. Host tmp clean, no owned jobs/containers, watchdog
+active; sources/builds/caches/prefixes/images/profiles/boot/native controls
+unchanged; .105 unaccessed. PLAN-07 open: generated-file/license provenance
+closure from the proven rebuild path, then PLAN-08; four important packages
+PLAN07-10. .104 docs snapshot 20261111-d55-final synced at handoff.
+
 ## D54 clean-build admission and retained closure (2026-11-11)
 
 Implementation 742385f4f; [report](bc250_source_d54_results/README.md),

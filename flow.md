@@ -13,6 +13,36 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D55 completed 2026-11-11 — full isolated clean Torch rebuild, both profiles; PLAN-07 OPEN.**
+  Harness 3d494ef03 + fixes d6daedcf1/f2690ce03. [Report](docs/development/bc250_source_d55_results/README.md),
+  [receipts](docs/development/bc250_source_d55_results/artifacts.json),
+  [replay](docs/development/bc250_source_d55_results/verified-results.json).
+  Full offline `pip install -e . --no-build-isolation --no-deps` from D52 kit
+  6867ed71 + six 70e8a77b in preserved image 28ad36e6; --network=none, NO
+  --read-only (venv writes), all preserved inputs RO; 4CPU0-3/10GiB/2048PID/
+  2GiBtmp; same reservation/preflight/12GiB-20GiB admission/3GiB-5GiB floors
+  as D54; deadline 7200s. daily-full-1 hit the old 3600s deadline AFTER all
+  3282 ninja steps, during wheel license packaging (no compile/link failure);
+  daily-full-2 passed 1761.276s peak 9,418,891,264B; rccl-single-full-1 passed
+  1848.435s peak 9,578,196,992B; both installed torch-2.13.0a0+gfx1013
+  offline. HIP 22/22 byte-exact vs D54 clean AND retained b052/b053; Eig
+  object 6c3e6dc0 equal everywhere; gfx1013 offload bundles; 10 libs hashed
+  per profile, 7 identical cross-profile, 3 differ = NCCL linkage set
+  (recorded not equated). Preserved ccache RO reuse: daily 3023 hits/241
+  misses/3291 invocations, rccl 3015/251/3293; zero growth. ccache 4.9.1
+  read-only/no-stats omits Result: lines — counters fixed to 'Succeeded
+  getting cached result'/'Read-only mode; running real compiler'; raw log +
+  --show-config retained; running script never overwritten in place (.new
+  staged, renamed after finish). Min mem 7,712,739,328B/disk
+  56,769,667,072B; zero OOM/throttle; costs not performance. 170 local
+  tests/Black/pycompile pass; ruff unavailable. 30 evidence files SHA-verified
+  into kernel/artifacts/source-d55; attempt-1 receipt stays in host
+  evidence/source-d55. Host tmp clean; no owned jobs/containers; watchdog
+  active; sources/prefixes/images/profiles/boot/native controls unchanged;
+  .105 unaccessed. Docs snapshot 20261111-d55-final synced at handoff.
+  **NEXT:** PLAN-07 generated-file/license provenance closure from the proven
+  rebuild path, then PLAN-08 release; four important packages PLAN07-10.
+
 - **D54 completed 2026-11-11 — isolated clean-build admission and retained closure; PLAN-07 OPEN.**
   Implementation 742385f4f. [Report](docs/development/bc250_source_d54_results/README.md),
   [receipts](docs/development/bc250_source_d54_results/artifacts.json),
