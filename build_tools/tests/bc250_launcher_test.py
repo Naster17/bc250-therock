@@ -266,5 +266,78 @@ class LauncherWorkflowsTest(unittest.TestCase):
                 launcher.read_context(alias, os.getuid())
 
 
+class NegativeVisibilityAllowlistTest(unittest.TestCase):
+    def _release(self, directory, runtime_text, sdk_bytes, aliases=True):
+        release = Path(directory)
+        (release / "runtime.json").write_text(runtime_text)
+        lib = release / "rocm/lib"
+        lib.mkdir(parents=True)
+        target = lib / "librocprofiler-sdk.so.1.4.2"
+        target.write_bytes(sdk_bytes)
+        if aliases:
+            for name in ("librocprofiler-sdk.so", "librocprofiler-sdk.so.1"):
+                (lib / name).symlink_to(target.name)
+        return release
+
+    def test_bound_cohorts_admitted_and_unknown_refused(self):
+        sdk = b"qualified-sdk"
+        sdk_sha = hashlib.sha256(sdk).hexdigest()
+        d49_text = '{"release": "d49"}'
+        d59_text = '{"release": "d59", "validated": true}'
+        d49_sha = hashlib.sha256(d49_text.encode()).hexdigest()
+        d59_sha = hashlib.sha256(d59_text.encode()).hexdigest()
+        options = launcher.LaunchOptions(runtime_profile="daily")
+        with tempfile.TemporaryDirectory() as directory:
+            release = self._release(directory, d49_text, sdk)
+            with (
+                unittest.mock.patch.object(
+                    launcher, "selected_release", return_value=release
+                ),
+                unittest.mock.patch.object(launcher, "D48_SDK_SHA256", sdk_sha),
+                unittest.mock.patch.object(
+                    launcher,
+                    "D48_RUNTIME_SHA256",
+                    {"daily": d49_sha, "rccl-single": d49_sha},
+                ),
+                unittest.mock.patch.object(
+                    launcher,
+                    "RELEASE_D59_RUNTIME_SHA256",
+                    {"daily": d59_sha, "rccl-single": d59_sha},
+                ),
+            ):
+                self.assertTrue(launcher.qualified_negative_visibility(options))
+                (release / "runtime.json").write_text(d59_text)
+                self.assertTrue(launcher.qualified_negative_visibility(options))
+                (release / "runtime.json").write_text('{"release": "unknown"}')
+                self.assertFalse(launcher.qualified_negative_visibility(options))
+                (release / "runtime.json").write_text(d59_text)
+                (release / "rocm/lib/librocprofiler-sdk.so.1.4.2").write_bytes(b"other")
+                self.assertFalse(launcher.qualified_negative_visibility(options))
+
+    def test_broken_alias_refused(self):
+        sdk = b"qualified-sdk"
+        sdk_sha = hashlib.sha256(sdk).hexdigest()
+        text = '{"release": "d59"}'
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        options = launcher.LaunchOptions(runtime_profile="daily")
+        with tempfile.TemporaryDirectory() as directory:
+            release = self._release(directory, text, sdk, aliases=False)
+            with (
+                unittest.mock.patch.object(
+                    launcher, "selected_release", return_value=release
+                ),
+                unittest.mock.patch.object(launcher, "D48_SDK_SHA256", sdk_sha),
+                unittest.mock.patch.object(
+                    launcher, "D48_RUNTIME_SHA256", {"daily": "x", "rccl-single": "x"}
+                ),
+                unittest.mock.patch.object(
+                    launcher,
+                    "RELEASE_D59_RUNTIME_SHA256",
+                    {"daily": digest, "rccl-single": digest},
+                ),
+            ):
+                self.assertFalse(launcher.qualified_negative_visibility(options))
+
+
 if __name__ == "__main__":
     unittest.main()

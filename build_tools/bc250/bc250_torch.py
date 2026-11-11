@@ -274,14 +274,22 @@ D48_RUNTIME_SHA256 = {
     "daily": "d4e1e144a4da8b19098980455fa657d5964e76525e4125853a4f1fd0d4102fe3",
     "rccl-single": "00f61263864c437049b2567c8b1bff316dd5a5e6bb484027dc88d24c59454d4b",
 }
+# Release 10.2-gfx1013-20261111-138a66f52 materializes the same native cohort
+# with adapted release metadata; bind its validated (D59) runtime identities.
+RELEASE_D59_RUNTIME_SHA256 = {
+    "daily": "86d94f43f629b84572c2fc8639ef64beb96b32647439533f97260c7cd4e243fc",
+    "rccl-single": "f183bd3f22ec55dcd1b1e10b44afb94f9edcb076b3224c34ad630f993fb0d67c",
+}
 
 
 def qualified_negative_visibility(options: LaunchOptions) -> bool:
     """Admit the repaired sentinel only for the byte-bound native cohort."""
     try:
         release = selected_release(options)
-        if hashlib.sha256((release / "runtime.json").read_bytes()).hexdigest() != (
-            D48_RUNTIME_SHA256[options.runtime_profile]
+        digest = hashlib.sha256((release / "runtime.json").read_bytes()).hexdigest()
+        if digest not in (
+            D48_RUNTIME_SHA256[options.runtime_profile],
+            RELEASE_D59_RUNTIME_SHA256[options.runtime_profile],
         ):
             return False
         library = release / "rocm/lib/librocprofiler-sdk.so.1.4.2"
