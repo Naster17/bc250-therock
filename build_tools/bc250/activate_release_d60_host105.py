@@ -73,6 +73,7 @@ def activate():
     record["release"] = str(STAGING / "profiles/rccl-single")
     record["runtime_sha256"] = EXPECTED_RUNTIME["rccl-single"]
     atomic_write(REGISTRY, (json.dumps(record, indent=2) + "\n").encode())
+    atomic_write(RECOVERY / "registry.after.json", REGISTRY.read_bytes())
     assert CURRENT.resolve() == STAGING / "profiles/daily"
     assert RCCL_POINTER.resolve() == STAGING / "profiles/rccl-single"
     after = {
@@ -100,13 +101,35 @@ def rollback():
     print(json.dumps(after, indent=2))
 
 
+def reactivate():
+    after = json.loads((RECOVERY / "after.json").read_text())
+    assert after["status"] == "activated"
+    assert (RECOVERY / "rollback.json").exists(), "rollback must precede reactivation"
+    assert CURRENT.resolve() == OLD_DAILY
+    assert RCCL_POINTER.resolve() == OLD_RCCL
+    assert sha(RECOVERY / "registry.after.json") == after["registry_sha256"]
+    atomic_link(CURRENT, STAGING / "profiles/daily")
+    atomic_link(RCCL_POINTER, STAGING / "profiles/rccl-single")
+    atomic_write(REGISTRY, (RECOVERY / "registry.after.json").read_bytes())
+    assert CURRENT.resolve() == STAGING / "profiles/daily"
+    assert RCCL_POINTER.resolve() == STAGING / "profiles/rccl-single"
+    state = {"current": str(CURRENT.resolve()), "status": "reactivated"}
+    atomic_write(
+        RECOVERY / "reactivated.json", (json.dumps(state, indent=2) + "\n").encode()
+    )
+    print(json.dumps(state, indent=2))
+
+
 def main():
     assert os.geteuid() == 0 and os.uname().nodename == "bc500"
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--rollback", action="store_true")
+    parser.add_argument("--reActivate", action="store_true")
     args = parser.parse_args()
     if args.rollback:
         rollback()
+    elif args.reActivate:
+        reactivate()
     else:
         activate()
 
