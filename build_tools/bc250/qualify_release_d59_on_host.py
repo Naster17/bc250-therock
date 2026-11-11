@@ -427,17 +427,6 @@ def main():
 
             restore_selection()
             assert (BASE / "current").resolve() == D49_DAILY
-            post = plain(
-                "d59-post-rollback-smoke",
-                [
-                    "/usr/local/bin/bc250-torch",
-                    "-c",
-                    "import torch; print('rollback-ok', torch.__version__)",
-                ],
-                0,
-                start,
-            )
-            assert "rollback-ok" in post["stdout"]
             journal["rollback"] = "selection-restored-to-d49"
             journal["helper_note"] = (
                 "additive allowlist helper stays deployed; binds D49 and D59 cohorts"
@@ -467,6 +456,25 @@ def main():
                 EVIDENCE / "result.json",
                 (json.dumps(journal, indent=2) + "\n").encode(),
             )
+    # The D49 cohort is mutable, so its launcher takes the SH runtime lock;
+    # run the post-rollback smoke only after the EX hold is released.
+    if journal["status"] == "passed":
+        post = plain(
+            "d59-post-rollback-smoke",
+            [
+                "/usr/local/bin/bc250-torch",
+                "-c",
+                "import torch; print('rollback-ok', torch.__version__)",
+            ],
+            0,
+            start,
+        )
+        assert "rollback-ok" in post["stdout"]
+        journal["rollback_smoke"] = "passed"
+        atomic(
+            EVIDENCE / "result.json",
+            (json.dumps(journal, indent=2) + "\n").encode(),
+        )
     print(json.dumps(journal, indent=2))
 
 
