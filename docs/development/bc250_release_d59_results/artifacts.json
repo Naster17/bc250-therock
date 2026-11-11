@@ -1,0 +1,492 @@
+{
+  "0-helper.before.py": {
+    "path": "kernel/artifacts/release-d59/0-helper.before.py",
+    "bytes": 24231,
+    "sha256": "d33f2504de50eac21baf6f43ff4eb30a05c602881cda9b12b3df13360a2c3588"
+  },
+  "1-helper.before.py": {
+    "path": "kernel/artifacts/release-d59/1-helper.before.py",
+    "bytes": 24231,
+    "sha256": "d33f2504de50eac21baf6f43ff4eb30a05c602881cda9b12b3df13360a2c3588"
+  },
+  "before.json": {
+    "path": "kernel/artifacts/release-d59/before.json",
+    "bytes": 1516,
+    "sha256": "8b1ebb7421af0d5b009c007681a81b5883d9ab30feb2f1650a56ab7e2bc15d2d"
+  },
+  "checkpoint-scratch/checkpoint.pt": {
+    "path": "kernel/artifacts/release-d59/checkpoint-scratch/checkpoint.pt",
+    "bytes": 86389,
+    "sha256": "a46c03288768d99f1bea05399733705db8b44d445bcd7f341165feda037243df"
+  },
+  "checkpoint-scratch/provenance.json": {
+    "path": "kernel/artifacts/release-d59/checkpoint-scratch/provenance.json",
+    "bytes": 218,
+    "sha256": "3c0bd9d21844c6ef06c94739344740893656d0bba8a64b5245920706d6f05d5a"
+  },
+  "checkpoint-scratch/tampered.pt": {
+    "path": "kernel/artifacts/release-d59/checkpoint-scratch/tampered.pt",
+    "bytes": 43194,
+    "sha256": "d39243654c3cb858284b4986aeda8c1cd7e11c481693d87cfc3a8173560e20b7"
+  },
+  "controller.log": {
+    "path": "kernel/artifacts/release-d59/controller.log",
+    "bytes": 2085,
+    "sha256": "c1f37c8f13d595af4d0125941f230ac1a85895072c19d2e5c7d6d2af4f04594b"
+  },
+  "d59-checkpoint-owned/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-checkpoint-owned/command.json",
+    "bytes": 377,
+    "sha256": "ffdfdc7b4ac23096cfe94d9af49baca3fef60e00c467137b441ab20951a4dda5"
+  },
+  "d59-checkpoint-owned/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-checkpoint-owned/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-checkpoint-owned/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-checkpoint-owned/gpu.log",
+    "bytes": 37,
+    "sha256": "0910288c617cba167b71a0cfcc2cf1f5d39481c37ac08325fd82c0692d1ea569"
+  },
+  "d59-checkpoint-owned/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-checkpoint-owned/guard.log",
+    "bytes": 83,
+    "sha256": "ab291209957e3874a9389f64895b4039c0fad5947ab27570a203b8bbe18400ec"
+  },
+  "d59-checkpoint-owned/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-checkpoint-owned/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-checkpoint-owned/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-checkpoint-owned/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-checkpoint-owned/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-checkpoint-owned/result.json",
+    "bytes": 578,
+    "sha256": "5f8983cf67076497c584197d215ef66b78732c6dda4520e55018e630b4a7d2f0"
+  },
+  "d59-compiler-batchnorm/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/command.json",
+    "bytes": 236,
+    "sha256": "e7f57827944ed01a6b65c8ccd09a8ffcdd69e8440c124dec642a42a0a9f3222f"
+  },
+  "d59-compiler-batchnorm/compiled-gpu-trace.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/compiled-gpu-trace.json",
+    "bytes": 47648,
+    "sha256": "6eb5986cd8a2d2b54255c43a5492138729743fc3e85892e0b5360ebffd57f978"
+  },
+  "d59-compiler-batchnorm/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-compiler-batchnorm/fx-0.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/fx-0.txt",
+    "bytes": 4052,
+    "sha256": "af30aefffdffa36e21e280dee76f29a247cd12c924b2a0f4361ead519d6b4862"
+  },
+  "d59-compiler-batchnorm/fx-1.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/fx-1.txt",
+    "bytes": 4052,
+    "sha256": "af30aefffdffa36e21e280dee76f29a247cd12c924b2a0f4361ead519d6b4862"
+  },
+  "d59-compiler-batchnorm/fx-2.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/fx-2.txt",
+    "bytes": 4052,
+    "sha256": "af30aefffdffa36e21e280dee76f29a247cd12c924b2a0f4361ead519d6b4862"
+  },
+  "d59-compiler-batchnorm/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/gpu.log",
+    "bytes": 159,
+    "sha256": "dbd3ee84dc42b74721401267bd2bd9fc482734957d772acc28c3a9b94286b63a"
+  },
+  "d59-compiler-batchnorm/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/guard.log",
+    "bytes": 87,
+    "sha256": "32a155d24c82cd3495b85548776f1e5fdf1ac5b44b8aa5f2310058933f71d8d1"
+  },
+  "d59-compiler-batchnorm/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-batchnorm/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-batchnorm/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-batchnorm/result.json",
+    "bytes": 13516,
+    "sha256": "85c9c81160fb9760fe7c35f473eabda8c7a70e8d0325c25a3c2fa6d875f396af"
+  },
+  "d59-compiler-cnn/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/command.json",
+    "bytes": 224,
+    "sha256": "4bdb4d5c788d88f06f928427e5b42db4e57f72472a7c97270e4782369b9313f3"
+  },
+  "d59-compiler-cnn/compiled-gpu-trace.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/compiled-gpu-trace.json",
+    "bytes": 142457,
+    "sha256": "fca4ca79f0fd69318760cc7083c85618e443c6b9a3ef990c1def8aa419a1b665"
+  },
+  "d59-compiler-cnn/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-compiler-cnn/fx-0.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/fx-0.txt",
+    "bytes": 3810,
+    "sha256": "42898eca9670ade8283b2d5d7a6b9961e63bff261050d9400d2c81aef3a8a959"
+  },
+  "d59-compiler-cnn/fx-1.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/fx-1.txt",
+    "bytes": 3810,
+    "sha256": "42898eca9670ade8283b2d5d7a6b9961e63bff261050d9400d2c81aef3a8a959"
+  },
+  "d59-compiler-cnn/fx-2.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/fx-2.txt",
+    "bytes": 3810,
+    "sha256": "42898eca9670ade8283b2d5d7a6b9961e63bff261050d9400d2c81aef3a8a959"
+  },
+  "d59-compiler-cnn/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/gpu.log",
+    "bytes": 159,
+    "sha256": "61e148cdc6d0d2a67737ce53c46dc9edebef9cd8a94596917dd0fd4e68e64086"
+  },
+  "d59-compiler-cnn/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/guard.log",
+    "bytes": 75,
+    "sha256": "b21a2c59a7518a85ef0896400a1d5f0351901aa4f9d684608e4cd2e83d83a8fc"
+  },
+  "d59-compiler-cnn/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-cnn/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-cnn/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-cnn/result.json",
+    "bytes": 15891,
+    "sha256": "cea0b5885a2dfc6fba5041823739369ceefe40ff778484d414270eb1dfcb0161"
+  },
+  "d59-compiler-dense/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/command.json",
+    "bytes": 228,
+    "sha256": "021e06a9d4d1882c6de3192653a6daf37e63626b018e80939b6cb22adb209265"
+  },
+  "d59-compiler-dense/compiled-gpu-trace.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/compiled-gpu-trace.json",
+    "bytes": 62831,
+    "sha256": "663ffd1ceeddb6d47a0f55059e503f8935a76ecb129b1e408bb9fd764569e2b5"
+  },
+  "d59-compiler-dense/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-compiler-dense/fx-0.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/fx-0.txt",
+    "bytes": 3494,
+    "sha256": "2a8526438d7fb9096b673140b4eecf176863fc2c36eefb95791d338f104cf6d6"
+  },
+  "d59-compiler-dense/fx-1.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/fx-1.txt",
+    "bytes": 3494,
+    "sha256": "2a8526438d7fb9096b673140b4eecf176863fc2c36eefb95791d338f104cf6d6"
+  },
+  "d59-compiler-dense/fx-2.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/fx-2.txt",
+    "bytes": 3494,
+    "sha256": "2a8526438d7fb9096b673140b4eecf176863fc2c36eefb95791d338f104cf6d6"
+  },
+  "d59-compiler-dense/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/gpu.log",
+    "bytes": 159,
+    "sha256": "697b51cceb5182f065c3dc930a2c83193f455eb210818064528f9177c9c9173b"
+  },
+  "d59-compiler-dense/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/guard.log",
+    "bytes": 79,
+    "sha256": "f53c6b60ff48ee324f35ba8ea527c69af35793954384c646e73a1a5e75a9be16"
+  },
+  "d59-compiler-dense/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-dense/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-dense/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-dense/result.json",
+    "bytes": 14485,
+    "sha256": "1ef14528078ace0533f63e773bc1e5bddba5d5332ceb28cd1b9fef0c894cce50"
+  },
+  "d59-compiler-gated/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/command.json",
+    "bytes": 228,
+    "sha256": "6c3e9d422ebe4337239647e9210a707bf1bfd36e22b5f9daf898295eb0ad6d53"
+  },
+  "d59-compiler-gated/compiled-gpu-trace.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/compiled-gpu-trace.json",
+    "bytes": 71706,
+    "sha256": "e794f9c8a8a799154ac13f055520d24b33920598ae6204358fa4f1ddd69c0b33"
+  },
+  "d59-compiler-gated/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-compiler-gated/fx-0.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/fx-0.txt",
+    "bytes": 4332,
+    "sha256": "fa4f543fdb7649c3c18bad50c3ddc51dd8e3b37d22e7f460ef7e8125c63a2e39"
+  },
+  "d59-compiler-gated/fx-1.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/fx-1.txt",
+    "bytes": 4332,
+    "sha256": "fa4f543fdb7649c3c18bad50c3ddc51dd8e3b37d22e7f460ef7e8125c63a2e39"
+  },
+  "d59-compiler-gated/fx-2.txt": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/fx-2.txt",
+    "bytes": 4332,
+    "sha256": "fa4f543fdb7649c3c18bad50c3ddc51dd8e3b37d22e7f460ef7e8125c63a2e39"
+  },
+  "d59-compiler-gated/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/gpu.log",
+    "bytes": 159,
+    "sha256": "71e40a12f4ff5ac290cbb6472cda21ee047053571cadef96c17dccda7bc2f6ca"
+  },
+  "d59-compiler-gated/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/guard.log",
+    "bytes": 79,
+    "sha256": "5f7e489eb95a33ebc1acc971b9f3df82c880f36cbbffa80af16f3e3521257916"
+  },
+  "d59-compiler-gated/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-gated/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-compiler-gated/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-compiler-gated/result.json",
+    "bytes": 14890,
+    "sha256": "cc408f5c4af2bd3f17b6fcbe67db3b1ee4c2559479814e374e637cc7b58904d3"
+  },
+  "d59-distributed-b031/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/command.json",
+    "bytes": 208,
+    "sha256": "3b656c638078d1f58885402c8df0645700d735308e6a048e81fe946d891ac529"
+  },
+  "d59-distributed-b031/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-distributed-b031/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/gpu.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "d59-distributed-b031/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/guard.log",
+    "bytes": 83,
+    "sha256": "4a758ae418e60a529e03ddf13c18b402b7577f315976531c269e48ee6c151237"
+  },
+  "d59-distributed-b031/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-distributed-b031/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-distributed-b031/owned-ranks/rank0.json": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/owned-ranks/rank0.json",
+    "bytes": 874,
+    "sha256": "1168015fe3a8303ec75b6137fb6dabf7b696c9cb60d29875431d230c98504523"
+  },
+  "d59-distributed-b031/owned-ranks/rank1.json": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/owned-ranks/rank1.json",
+    "bytes": 874,
+    "sha256": "1e0ecf6828b1c9bbf192cf3afa8d695096e1d97c3d80b1638027758af83d7dc4"
+  },
+  "d59-distributed-b031/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/result.json",
+    "bytes": 3626,
+    "sha256": "17ad2e21830f5c22eae3b3866fcba628abc8b70a031548a4160c9bd7e68971c0"
+  },
+  "d59-distributed-b031/torchrun.log": {
+    "path": "kernel/artifacts/release-d59/d59-distributed-b031/torchrun.log",
+    "bytes": 930,
+    "sha256": "17e74f70d3cd55d6d9d430773e8fdb7fd1041ea3012d77de6969362de5a112f1"
+  },
+  "d59-negative-visibility.json": {
+    "path": "kernel/artifacts/release-d59/d59-negative-visibility.json",
+    "bytes": 120,
+    "sha256": "b5a0b740fd9ed5ff66bc98e16f98251e9c1eaf26fc38608af1c41bf8f094fe66"
+  },
+  "d59-post-rollback-smoke.json": {
+    "path": "kernel/artifacts/release-d59/d59-post-rollback-smoke.json",
+    "bytes": 122,
+    "sha256": "998aab48223676089f9bce9f605f023837650233c600021c31cb52c107acb436"
+  },
+  "d59-quant-b052/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-quant-b052/command.json",
+    "bytes": 196,
+    "sha256": "7c90a1034f4029ffbcc732dcadecc8084029bedff04ada21d0b55cfdcdeb3fcc"
+  },
+  "d59-quant-b052/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-quant-b052/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-quant-b052/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-quant-b052/gpu.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "d59-quant-b052/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-quant-b052/guard.log",
+    "bytes": 71,
+    "sha256": "58d4fce02a8a04178a247073f653e723990d398b20bf3838edf12fb96f703e4f"
+  },
+  "d59-quant-b052/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-quant-b052/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-quant-b052/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-quant-b052/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-quant-b052/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-quant-b052/result.json",
+    "bytes": 15029,
+    "sha256": "7b196dd99d9d3e417d9f8a8077fb98e90e46f882cef9b90cc740e4efa6caa15b"
+  },
+  "d59-rccl-daily/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-daily/command.json",
+    "bytes": 225,
+    "sha256": "0635d80701db41474ad850c4213f216d1d8455aa67c204a4bcaf925784757aab"
+  },
+  "d59-rccl-daily/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-daily/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-rccl-daily/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-daily/gpu.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "d59-rccl-daily/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-daily/guard.log",
+    "bytes": 71,
+    "sha256": "1eb4738137c79c14c1dedaabca3b435cc547412fabdd50fd005c1c8ad1d5c945"
+  },
+  "d59-rccl-daily/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-daily/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-rccl-daily/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-daily/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-rccl-daily/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-daily/result.json",
+    "bytes": 274,
+    "sha256": "a016ef0a820722d7443cbd4087365854b44434f4725b168cbe09a650fb752e51"
+  },
+  "d59-rccl-single/command.json": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-single/command.json",
+    "bytes": 253,
+    "sha256": "f5d892112065fc18c4e264c39306a8e078762364ab04a3509655080ef80ac055"
+  },
+  "d59-rccl-single/exit.json": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-single/exit.json",
+    "bytes": 82,
+    "sha256": "80f0b3d24621029653949ffd593f51b2f7bf2645353c7e51b96a2b49cae59a3e"
+  },
+  "d59-rccl-single/gpu.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-single/gpu.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "d59-rccl-single/guard.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-single/guard.log",
+    "bytes": 73,
+    "sha256": "9133ab9a6ebc1d2abd6fed31b348aad5647f315759960cfffe72bb9b1da41ed6"
+  },
+  "d59-rccl-single/kernel-after.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-single/kernel-after.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-rccl-single/kernel-before.log": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-single/kernel-before.log",
+    "bytes": 75143,
+    "sha256": "917dc5155c2f1de38aa20e9c323adbbd293d2de5d9b9089d95e814002b7f7db4"
+  },
+  "d59-rccl-single/result.json": {
+    "path": "kernel/artifacts/release-d59/d59-rccl-single/result.json",
+    "bytes": 330,
+    "sha256": "e95a67d2186c895945733814bb1f4a34a10a8b4ee231b6aed510f7edc0beba38"
+  },
+  "d59-refusal-rccl-env.json": {
+    "path": "kernel/artifacts/release-d59/d59-refusal-rccl-env.json",
+    "bytes": 156,
+    "sha256": "60b9d6bf17a300f12da5eab4368a81a35778d71d7bc6a5b66c0e58b7f74cd7bf"
+  },
+  "d59-refusal-unknown-profile.json": {
+    "path": "kernel/artifacts/release-d59/d59-refusal-unknown-profile.json",
+    "bytes": 134,
+    "sha256": "0b7c32f17a024cf6a1ddcfa47e0b276415bd8702910b3702318d1e8495826f43"
+  },
+  "registry.before.json": {
+    "path": "kernel/artifacts/release-d59/registry.before.json",
+    "bytes": 2327,
+    "sha256": "dddcdcb529ba7e41650676f9349e5472fd086d1a355c15b8fee6569cc60d4889"
+  },
+  "release-d59-controller.log": {
+    "path": "kernel/artifacts/release-d59/release-d59-controller.log",
+    "bytes": 2085,
+    "sha256": "c1f37c8f13d595af4d0125941f230ac1a85895072c19d2e5c7d6d2af4f04594b"
+  },
+  "result.json": {
+    "path": "kernel/artifacts/release-d59/result.json",
+    "bytes": 2085,
+    "sha256": "c1f37c8f13d595af4d0125941f230ac1a85895072c19d2e5c7d6d2af4f04594b"
+  },
+  "runtime-daily.before.json": {
+    "path": "kernel/artifacts/release-d59/runtime-daily.before.json",
+    "bytes": 62841,
+    "sha256": "37501c244be8e32700274d7ddce53b076fd532ce800703aa824476cdf243d945"
+  },
+  "runtime-rccl-single.before.json": {
+    "path": "kernel/artifacts/release-d59/runtime-rccl-single.before.json",
+    "bytes": 63911,
+    "sha256": "efc9a3f61a82133181d78d8f70879eaf73f4e9747e77a162c8537956ff1734fe"
+  }
+}

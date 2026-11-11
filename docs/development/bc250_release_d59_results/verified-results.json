@@ -1,0 +1,167 @@
+{
+  "task": "PLAN-08 / D59 independent-path release qualification",
+  "completed": "2026-11-11",
+  "host": "bc250 (.104)",
+  "release": "10.2-gfx1013-20261111-138a66f52",
+  "final_status": "passed (attempt 10)",
+  "qualified": {
+    "validated": true,
+    "mutable": false,
+    "runtime_sha256": {
+      "daily": "86d94f43f629b84572c2fc8639ef64beb96b32647439533f97260c7cd4e243fc",
+      "rccl-single": "f183bd3f22ec55dcd1b1e10b44afb94f9edcb076b3224c34ad630f993fb0d67c"
+    },
+    "selection_after": "restored to D49 cohort (sdk-d49-r1/profiles/daily); promotion deferred to D61",
+    "registry_after": "restored to D49 rccl-single profile",
+    "helper": "additive RELEASE_D59_RUNTIME_SHA256 allowlist stays deployed; binds D49 and D59; SDK sentinel check unchanged"
+  },
+  "suite": {
+    "gates": [
+      {
+        "label": "d59-quant-b052",
+        "checks": 220,
+        "seconds": 5.539,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-rccl-daily",
+        "checks": 5,
+        "seconds": 8.748,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-rccl-single",
+        "checks": 6,
+        "seconds": 9.147,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-compiler-dense",
+        "checks": 14,
+        "seconds": 17.358,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-compiler-gated",
+        "checks": 14,
+        "seconds": 17.365,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-compiler-cnn",
+        "checks": 14,
+        "seconds": 17.565,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-compiler-batchnorm",
+        "checks": 14,
+        "seconds": 17.169,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-distributed-b031",
+        "checks": 31,
+        "seconds": 14.36,
+        "guard": "acknowledged"
+      },
+      {
+        "label": "d59-checkpoint-owned",
+        "checks": 8,
+        "seconds": 7.351,
+        "guard": "acknowledged"
+      }
+    ],
+    "total_checks": 326,
+    "negative_visibility": "admitted-on-bound-release",
+    "refusals": [
+      "rccl-env-override",
+      "unknown-profile"
+    ],
+    "protected_checks": "passed",
+    "rollback": "selection-restored-to-d49",
+    "rollback_smoke": "passed",
+    "seconds": 121.776,
+    "per_gate_health": "boot-guard armed/acknowledged, dmesg identical, zero leftover containers, 3GiB/5GiB floors"
+  },
+  "attempts": [
+    {
+      "n": 1,
+      "status": "failed",
+      "cause": "harness --mount flag syntax (source:rw parsed as path); restored"
+    },
+    {
+      "n": 2,
+      "status": "preflight-refused",
+      "cause": "user kinetic GPU app held renderD128; no change made"
+    },
+    {
+      "n": 3,
+      "status": "failed",
+      "cause": "checkpoint fixture needs consumers env (bc250-train, not bc250-torch); restored"
+    },
+    {
+      "n": 4,
+      "status": "failed",
+      "cause": "dmesg noise from user llama-gguf 25-26GB allocation attempts; fixture passed; restored"
+    },
+    {
+      "n": 5,
+      "status": "preflight-refused",
+      "cause": "transient MemAvailable 7.6GiB < 8GiB during reclaim; no change made"
+    },
+    {
+      "n": 6,
+      "status": "failed",
+      "cause": "n39 checkpoint fixture depends on excluded finetune-n7 app (fresh-result.json prerequisite); restored; host rebooted afterwards (boot 73817cc1)"
+    },
+    {
+      "n": 7,
+      "status": "failed",
+      "cause": "dmesg noise from user llama-bench 24GB allocation attempt; fixture passed; restored"
+    },
+    {
+      "n": 8,
+      "status": "failed",
+      "cause": "owned fixture bug: map_location=cuda remapped RNG ByteTensor; restored"
+    },
+    {
+      "n": 9,
+      "status": "failed",
+      "cause": "owned fixture tamper test unreliable (mid-file byte flip can still load); restored"
+    },
+    {
+      "n": 10,
+      "status": "passed",
+      "cause": null
+    }
+  ],
+  "fixture_replacement": {
+    "excluded": "validate_checkpoint_continuity_n39.py (depends on /home/nik/finetune-n7, forbidden by workspace preservation rules)",
+    "replacement": "validate_checkpoint_release_d59.py (owned, self-contained, pure torch): 8 checks incl. bitwise model/optimizer restoration, exact resumed continuation vs in-process reference, provenance refusal, truncated-checkpoint refusal"
+  },
+  "reboot_events": [
+    {
+      "boot_id": "be4ef4dd-1dcb-42fb-bcfa-7fb3a13dc013",
+      "when": "before D58 launch (recorded in D58)"
+    },
+    {
+      "boot_id": "73817cc1-bbec-4e99-9e86-49f93177228f",
+      "when": "after D59 attempt 6; r2 kernel; post-reboot state verified safe"
+    }
+  ],
+  "host_dedication": "user dedicated .104 to stack work on 2026-11-11 after repeated app conflicts",
+  "code_revisions": [
+    "caef114c5",
+    "2cff74ebc",
+    "d7c2c63cf",
+    "211dbe50d",
+    "60cc90a6d",
+    "32b94e5c4",
+    "bafbc577e"
+  ],
+  "local_tests": 173,
+  "evidence_files_sha_verified": 98,
+  "failed_attempt_evidence": "retained on host: evidence/release-d59-attempt{1,3,4,6,7,8,9} + attempt2/5 preflight refusals",
+  "next": "D60 .105 deployment qualification via HOST105_UPDATE recorded lock/workflow; then D61 finalization and promotion decision; publication only on explicit user instruction"
+}

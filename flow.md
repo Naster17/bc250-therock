@@ -13,6 +13,38 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D59 completed 2026-11-11 — release QUALIFIED (attempt 10); selection restored to D49; PLAN-08.**
+  [Report](docs/development/bc250_release_d59_results/README.md),
+  [receipts](docs/development/bc250_release_d59_results/artifacts.json),
+  [evidence](../../kernel/artifacts/release-d59). Release
+  10.2-gfx1013-20261111-138a66f52 validated=true/mutable=false; runtime SHAs
+  daily 86d94f43/rccl f183bd3f bound in additive helper allowlist
+  RELEASE_D59_RUNTIME_SHA256 (SDK sentinel check unchanged; helper stays
+  deployed, binds D49+D59). Activation via public pointers+registry under
+  board EX + runtime EX locks; 9 gates/326 checks via ordinary callers:
+  quant-b052 220, rccl-daily+consumers 5, rccl-single+consumers 6, compiler
+  4x14, distributed-b031 31, checkpoint-owned 8; each gate boot-guard
+  armed/acknowledged + dmesg identity + no containers + 3GiB/5GiB floors.
+  Negative visibility (-1) admitted on bound release; refusals rccl-env +
+  unknown-profile; protected checks passed; rollback restored D49
+  pointers+registry; post-rollback smoke passed. Promotion deferred to D61.
+  Checkpoint gate replaced: n39 fixture depends on EXCLUDED finetune-n7 ->
+  owned validate_checkpoint_release_d59.py (8 checks: bitwise state restore,
+  exact resumed continuation, provenance + truncated-checkpoint refusal).
+  10 attempts: 1 mount-syntax bug, 2 kinetic preflight refusal, 3 consumers
+  caller fix, 4 llama-gguf dmesg noise, 5 transient memory preflight refusal,
+  6 n39 excluded-app discovery (+ host reboot 73817cc1 after, r2, verified),
+  7 llama-bench dmesg noise, 8 RNG map_location bug, 9 tamper-test
+  truncation fix, 10 PASS 121.776s. All failures restored/refused safely.
+  User dedicated .104 to stack work after app conflicts. Revisions
+  caef114c5/2cff74ebc/d7c2c63cf/211dbe50d/60cc90a6d/32b94e5c4/bafbc577e;
+  173 local tests; 98 evidence files SHA-verified; failed-attempt receipts
+  retained host evidence/release-d59-attempt*. **NEXT:** D60 .105 deployment
+  qualification (HOST105_UPDATE recorded lock/workflow; preserve r2 fallback/
+  healthcheck/board controls/user apps), D61 finalization + promotion
+  decision; publication only on explicit instruction. Three important
+  packages PLAN-08/09/10. Docs snapshot 20261111-d59-final synced at handoff.
+
 - **D58 completed 2026-11-11 — self-contained release assembled (no activation); PLAN-08.**
   [Report](docs/development/bc250_release_d58_results/README.md),
   [receipts](docs/development/bc250_release_d58_results/artifacts.json),

@@ -9,6 +9,48 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D59 independent-path release qualification (2026-11-11)
+
+[Report](bc250_release_d59_results/README.md),
+[receipts](bc250_release_d59_results/artifacts.json); evidence in
+kernel/artifacts/release-d59 (98 SHA-verified files). Release
+10.2-gfx1013-20261111-138a66f52 is qualified: validated=true, mutable=false,
+runtime.json SHAs daily 86d94f43 / rccl-single f183bd3f bound in the additive
+helper allowlist RELEASE_D59_RUNTIME_SHA256 (SDK sentinel + alias checks
+unchanged; the helper stays deployed and binds both D49 and D59 cohorts).
+Activation used the public pointer/registry mechanism under board EX +
+current-prefix EX runtime locks (inode checked). Attempt 10 passed in
+121.776 s: 9 gates / 326 checks through ordinary callers — quant-b052 220,
+rccl-daily+consumers 5, rccl-single+consumers 6, compiler dense/gated/cnn/
+batchnorm 4x14, single-host Gloo distributed-b031 31, owned checkpoint 8 —
+each with boot-guard armed/acknowledged, dmesg identity, zero leftover
+containers and 3 GiB/5 GiB floors. Negative-visibility (-1) CPU-only import
+admitted on the bound release; identity refusals verified (RCCL env override,
+unknown profile); protected checks passed (source sentinels, boot id,
+historical release). Rollback restored the D49 pointers + registry and a
+post-rollback caller smoke passed; promotion is deferred to D61. The planned
+N3.9 checkpoint continuity gate was inadmissible (depends on the excluded
+/home/nik/finetune-n7 application) and was replaced by the owned
+self-contained validate_checkpoint_release_d59.py (bitwise model/optimizer
+restoration, exact resumed continuation vs in-process reference, provenance
+refusal, truncated-checkpoint refusal). Ten attempts: harness mount-syntax
+bug; kinetic preflight refusal (user stopped it); consumers-caller fix;
+llama-gguf dmesg noise; transient-memory preflight refusal; n39 excluded-app
+discovery (host rebooted afterwards, boot 73817cc1, r2 kernel, state verified
+safe); llama-bench dmesg noise; owned-fixture RNG map_location bug;
+tamper-test truncation fix; final pass. Every failure restored or refused
+before change. After repeated app conflicts the user dedicated .104 to stack
+work ("machine all free for you"). Code revisions caef114c5, 2cff74ebc,
+d7c2c63cf, 211dbe50d, 60cc90a6d, 32b94e5c4, bafbc577e; 173 local tests incl.
+new allowlist regressions; failed-attempt receipts retained on host at
+evidence/release-d59-attempt*. Next: D60 .105 deployment qualification via
+the HOST105_UPDATE recorded lock/workflow (preserve r2 boot fallback,
+production healthcheck, native board controls, unrelated user applications),
+then D61 finalization (known-limit matrix, SBOM/license/source-recipe
+bundles) and the promotion decision; publication only on explicit user
+instruction. Three important packages remain (PLAN-08/09/10). .104 docs
+snapshot 20261111-d59-final synced at handoff.
+
 ## D58 self-contained release assembly (2026-11-11)
 
 [Report](bc250_release_d58_results/README.md),
