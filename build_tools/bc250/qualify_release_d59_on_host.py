@@ -347,16 +347,16 @@ def main():
                     31,
                 ),
                 (
-                    "d59-checkpoint-n39",
+                    "d59-checkpoint-owned",
                     [
-                        "/usr/local/bin/bc250-train",
+                        "/usr/local/bin/bc250-torch",
                         "--mount",
                         str(scratch),
-                        str(FIXTURES / "validate_checkpoint_continuity_n39.py"),
+                        str(FIXTURES / "validate_checkpoint_release_d59.py"),
                         "--scratch-root",
                         str(scratch),
                     ],
-                    1,
+                    8,
                 ),
             ]
             for label, command, count in gates:
