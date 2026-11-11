@@ -3,7 +3,8 @@
 """Bounded target-board regression using packaged launcher command construction.
 
 D60 revision: selects runtime_profile from the release manifest so the
-rccl-single profile gets its rccl mount/environment via the updated helper.
+rccl-single profile gets its rccl mount/environment via the updated helper,
+and passes --nccl-available to the distributed gate for that profile.
 Deployed over the migration qualifier (original backed up in D60 evidence).
 """
 
@@ -64,6 +65,9 @@ def main() -> None:
     save()
     try:
         for name, filename, extra, expected in GATES[:1] if args.core_only else GATES:
+            extra = list(extra)
+            if name == "distributed" and manifest.get("rccl_single_profile"):
+                extra.append("--nccl-available")
             directory = args.output / name
             directory.mkdir()
             os.chown(directory, manifest["uid"], manifest["gid"])
