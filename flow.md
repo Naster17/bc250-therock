@@ -43,7 +43,7 @@ release claims must not override this cursor and current manifests.
   ccache RO/no reset/20G kept; sources/builds/prefixes/images/profiles/boot/
   native controls unchanged; .105 unaccessed. Build SDK a6dc1c88 distinct
   from active D49 2a975370. PythonCPU/KFD/105clocksource causes still
-  unknown/separate.
+  unknown/separate. .104 docs snapshot 20261111-d54-final synced at handoff.
   **NEXT:** PLAN-07 full clean-rebuild storage/resource plan from the admitted
   layout, generated-file/license closure, four important packages PLAN07-10.
 
