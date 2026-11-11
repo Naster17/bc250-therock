@@ -13,6 +13,39 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **PLAN-07 CLOSED + D57 completed 2026-11-11 — release inventory/assembly plan; PLAN-08 started.**
+  [D57 report](docs/development/bc250_release_d57_results/README.md),
+  [receipts](docs/development/bc250_release_d57_results/artifacts.json),
+  [host inventory](../../kernel/artifacts/release-d57/host-inventory.json).
+  User accepted both scope decisions ("continue"): Triton provenance from
+  pin ee65ff3b + 4 patches + qualified wheel 2d65d6fe (no rebuild demo
+  required); D56 library-delta boundary accepted (no object-level follow-up
+  before release). PLAN-07 complete for stated scope via D47-D56. CPU-only
+  + read-only .104 inspection; no host mutation; .105 unaccessed. Release
+  inventory: current=sdk-d49-r1/profiles/daily; BOTH live profiles are
+  symlink assemblies over nik-home working trees (torch->pytorch-quant-
+  b052/b053, cache->dev-user) + dev paths (rccl, gemm csv) + 20261013
+  release python-consumers — core assembly gap is materializing a
+  self-contained versioned tree. Layout precedent releases/10.2-gfx1013-
+  20261013-4b000d542 (cache/python-consumers/rocm/torch/runtime.json/
+  validation/review); registries migraphx/miopen-dl/ort-migraphx; 10
+  bc250-* callers; launcher 761ec5803 MATRIX_PASS; preservation.json binds
+  old SDK symlink layout; matrix has only 5 sentinel files/profile —
+  release needs full SHA manifests. Assembly plan: D58 materialize release
+  10.2-gfx1013-<date>-<rev> under /opt/bc250-stack/releases (EX prefix-
+  update lock, no activation, current untouched, measure size first);
+  D59 independent-path build-free extraction/activation + bc250-* caller
+  tests + selected fwd/bwd/compiler/distributed/checkpoint regressions +
+  identity refusals + actual rollback, restore current; D60 .105 via
+  HOST105_UPDATE recorded lock (preserve r2 fallback/healthcheck/board
+  controls/user apps); D61 limits matrix/SBOM/licenses/source recipes/
+  final receipts; publication only on explicit user instruction. Standing
+  rules: reservation/preflight for GPU work, 3GiB/5GiB floors, owned-job
+  cleanup, no source reset, ccache 20G/no reset, finetune-n7 excluded.
+  **NEXT:** D58 release assembly on .104 (mutating; needs EX lock +
+  approval). Three important packages remain PLAN-08/09/10. Docs snapshot
+  20261111-d57-final synced at handoff.
+
 - **D56 completed 2026-11-11 — generated-file/license provenance closure (CPU-only); PLAN-07 OPEN.**
   [Report](docs/development/bc250_source_d56_results/README.md),
   [receipts](docs/development/bc250_source_d56_results/artifacts.json).

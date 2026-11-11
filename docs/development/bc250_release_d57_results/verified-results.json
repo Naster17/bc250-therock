@@ -1,0 +1,41 @@
+{
+  "task": "PLAN-07 closure + PLAN-08 / D57 release inventory and assembly plan",
+  "completed": "2026-11-11",
+  "mode": "CPU-only + read-only .104 inspection; no host mutation; .105 unaccessed",
+  "plan07": {
+    "status": "completed for stated scope",
+    "user_scope_decisions": {
+      "triton": "provenance accepted (pin ee65ff3b + 4 patches + qualified wheel 2d65d6fe); rebuild demonstration not required",
+      "library_deltas": "D56 documented boundary accepted; object-level follow-up not required before release"
+    },
+    "evidence_chain": "D47-D56 (source replay, dependency payloads, missing-branch exclusion, builder image + kit, external inputs, clean-build admission, full offline rebuild, provenance closure)"
+  },
+  "plan08": {
+    "status": "started",
+    "first_milestone": "D57 inventory + assembly plan (this receipt)",
+    "core_gap": "live profiles are symlink assemblies over nik-home working trees and dev paths; release must materialize a self-contained versioned tree",
+    "milestones": [
+      "D58 assembly (.104, EX lock, no activation)",
+      "D59 independent-path qualification (.104, GPU regressions + rollback)",
+      "D60 .105 deployment qualification (recorded lock/workflow)",
+      "D61 finalization (limits/SBOM/licenses/source recipes; publication only on explicit instruction)"
+    ],
+    "version_scheme": "10.2-gfx1013-<YYYYMMDD>-<shortrev> under /opt/bc250-stack/releases/",
+    "layout_precedent": "releases/10.2-gfx1013-20261013-4b000d542"
+  },
+  "host_facts": {
+    "current": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+    "callers_observed": 10,
+    "historical_releases": 2,
+    "registries": [
+      "migraphx.json",
+      "miopen-dl.json",
+      "ort-migraphx.json"
+    ],
+    "host104_free_bytes_at_d56": 61504442368
+  },
+  "local_checks": {
+    "evidence_files": 1,
+    "note": "analysis/planning milestone; no code changes"
+  }
+}

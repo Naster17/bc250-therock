@@ -9,6 +9,49 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## PLAN-07 closure and D57 release inventory / assembly plan (2026-11-11)
+
+[Report](bc250_release_d57_results/README.md),
+[receipts](bc250_release_d57_results/artifacts.json); host inventory in
+kernel/artifacts/release-d57. User-approved scope decisions ("continue"):
+Triton provenance accepted from pin ee65ff3b + four patches + qualified
+Triton 3.8 wheel SHA 2d65d6fe (no rebuild demonstration required); the D56
+library-delta documented boundary accepted (no object-level retained-rebuild
+follow-up required before release; the release ships the qualified deployed
+cohort, not rebuilt binaries). PLAN-07 marked complete for its stated scope
+via D47-D56: clean-directory reconstruction matches source hashes and
+configuration, license/dependency/generated-file provenance and all patches
+present, no build paths or undeclared mounts. PLAN-08 started with D57
+(CPU-only + read-only .104 inspection; no host mutation; .105 unaccessed).
+Release inventory findings: current points at sdk-d49-r1/profiles/daily;
+both live profiles are symlink assemblies over nik-home working trees
+(torch -> pytorch-quant-b052/b053, cache -> dev-user), dev paths (rccl ->
+dev/rccl-single-b053/rccl, rocblas-gemm-n32.csv) and the 20261013 release's
+python-consumers — the core assembly gap is materializing a self-contained
+path-independent versioned tree. Layout precedent:
+releases/10.2-gfx1013-20261013-4b000d542 (cache, python-consumers, rocm,
+torch, runtime.json, validation, review). Registries: migraphx, miopen-dl,
+ort-migraphx. Ten bc250-* callers observed. launcher.json revision 761ec5803
+with MATRIX_PASS validation; preservation.json binds the old SDK symlink
+layout (amdgcn/llvm). The release matrix records only five sentinel files
+per profile; the release requires complete per-file SHA manifests. Assembly
+plan: D58 materialize release 10.2-gfx1013-<YYYYMMDD>-<shortrev> under
+/opt/bc250-stack/releases on .104 under the EX prefix-update lock (no
+activation, current untouched, measure materialized size before copying,
+~57 GiB free); D59 build-free independent-path extraction/activation +
+ordinary bc250-* caller tests + selected forward/backward/compiler/
+distributed/checkpoint regressions + identity refusals + actual rollback,
+then restore current; D60 .105 deployment qualification via the
+HOST105_UPDATE recorded lock/workflow preserving r2 boot fallback,
+production healthcheck, native board controls and unrelated user
+applications; D61 known-limit matrix, SBOM/license bundle, source-recipe
+bundle, boot fallback docs, final receipts. Publication only on explicit
+user instruction. Standing rules: reservation/fail-closed preflight for GPU
+work, 3 GiB host / 5 GiB disk floors, owned-job cleanup, preserve
+histories/caches/checkpoints/old path links, no destructive source reset,
+ccache 20G/no reset, finetune-n7 excluded. Three important packages remain
+(PLAN-08/09/10). .104 docs snapshot 20261111-d57-final synced at handoff.
+
 ## D56 generated-file and license provenance closure (2026-11-11)
 
 [Report](bc250_source_d56_results/README.md),
