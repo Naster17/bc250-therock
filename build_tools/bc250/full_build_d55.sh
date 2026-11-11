@@ -32,12 +32,10 @@ save_diagnostics() {
     done < /probe/hip-paths.txt > /evidence/hip-files.sha256
     if [[ -f /tmp/ccache.log ]]; then
         cp /tmp/ccache.log /evidence/ccache.log
-        # ccache 4.9.1 logs one overall miss line per invocation, but hits
-        # appear only as direct/preprocessed lines.
-        direct=$(grep -c 'Result: direct_cache_hit' /tmp/ccache.log || true)
-        preprocessed=$(grep -c 'Result: preprocessed_cache_hit' /tmp/ccache.log || true)
-        echo $((direct + preprocessed)) > /evidence/ccache-hits.txt
-        grep -c 'Result: cache_miss' /tmp/ccache.log > /evidence/ccache-misses.txt || true
+        # In read-only/no-stats mode ccache 4.9.1 omits the Result: summary
+        # lines; hits and misses appear only as these markers.
+        grep -c 'Succeeded getting cached result' /tmp/ccache.log > /evidence/ccache-hits.txt || true
+        grep -c 'Read-only mode; running real compiler' /tmp/ccache.log > /evidence/ccache-misses.txt || true
         grep -c 'STARTED' /tmp/ccache.log > /evidence/ccache-invocations.txt || true
     fi
 }
