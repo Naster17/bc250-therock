@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-10 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-11 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -12,6 +12,40 @@ release claims must not override this cursor and current manifests.
 
 
 
+
+- **D54 completed 2026-11-11 — isolated clean-build admission and retained closure; PLAN-07 OPEN.**
+  Implementation 742385f4f. [Report](docs/development/bc250_source_d54_results/README.md),
+  [receipts](docs/development/bc250_source_d54_results/artifacts.json),
+  [replay](docs/development/bc250_source_d54_results/verified-results.json).
+  Prior session ran the clean probes; this pass added the retained audits,
+  RCCL byte comparison, evidence transfer and closeout. Preserved image
+  28ad36e6 + D52 kit 6867ed71 + offline six 70e8a77b; NNPACK hidden six
+  download closed via PYTHON_SIX_SOURCE_DIR. --network=none --read-only,
+  4CPU0-3/10GiB/512PID/2GiBtmp, board+SHruntime locks, 12GiB/20GiB admission,
+  3GiBhost/5GiBdisk floors, 720s deadline, owned-only stop, scratch removed.
+  daily-clean-4 passed 105.759s peak 891,113,472B; rccl-single-clean-1 passed
+  115.584s peak 1,378,820,096B. Targeted native step: BatchLinearAlgebraEig
+  .hip.o (+NCCLUtils.cpp.o rccl) + NNPACK peachpy object, gfx1013 offload
+  bundle, link/ldd/run closure vs SDK libs (+rccl); exit 54 wheel refusal by
+  design — NOT a full rebuild/wheel/GPU test. HIP translation 22/22 byte-exact
+  daily b052 AND rccl b053. Retained audits: daily 3188 records/17610 unique
+  headers, rccl 3190/17619; 0 stale/missing headers/missing link/unexpected
+  loader paths; 55/56 link inputs +7 bare; 11/12 loader objects clean.
+  RCCL_ROOT env fix binds host-path retained graphs (retained phase first
+  run). Eig object SHA equal across profiles; NNPACK object differs per
+  profile, recorded not equated. Min clean mem 13,746,327,552B/disk
+  59,656,708,096B; retained 14,479,544,320B/61,650,231,296B; costs not
+  performance. 168 local tests/two new parser regressions/Black/pycompile
+  pass; ruff unavailable this pass. 30 evidence files SHA-verified into
+  kernel/artifacts/source-d54 (31 receipt entries incl six). Host
+  evidence/source-d54 keeps all seven attempts; tools/source-d54 reusable
+  inputs; tmp clean; no owned jobs/containers/guards; watchdog active.
+  ccache RO/no reset/20G kept; sources/builds/prefixes/images/profiles/boot/
+  native controls unchanged; .105 unaccessed. Build SDK a6dc1c88 distinct
+  from active D49 2a975370. PythonCPU/KFD/105clocksource causes still
+  unknown/separate.
+  **NEXT:** PLAN-07 full clean-rebuild storage/resource plan from the admitted
+  layout, generated-file/license closure, four important packages PLAN07-10.
 
 - **Storage follow-up completed 2026-11-11.**
   .104 freed 2.26GiB and reached 57.46GiB before docs sync.

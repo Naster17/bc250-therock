@@ -1,0 +1,157 @@
+{
+  "bc250-d54-daily-clean-4/CMakeCache.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/CMakeCache.txt",
+    "bytes": 96404,
+    "sha256": "8233921614cb9e32a20aa16136351e7528622d20979d9386dac562b26649ff57"
+  },
+  "bc250-d54-daily-clean-4/CMakeConfigureLog.yaml": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/CMakeConfigureLog.yaml",
+    "bytes": 432562,
+    "sha256": "49877cf5e75d3edfcdacd52a5570a8a26f8c4758d4e6ea72478d624b35c0a917"
+  },
+  "bc250-d54-daily-clean-4/cgroup.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/cgroup.txt",
+    "bytes": 201,
+    "sha256": "e84d562428136c45c5ae92ecac180b0ccf968e4408d80a8284f4e5de76af7b84"
+  },
+  "bc250-d54-daily-clean-4/hip-files.sha256": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/hip-files.sha256",
+    "bytes": 2329,
+    "sha256": "52efe87f0b5208c6f50ceda2dbd93c4c5ea70f0be1350a1b87ce4169d5f8a350"
+  },
+  "bc250-d54-daily-clean-4/link-dynamic.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/link-dynamic.txt",
+    "bytes": 2045,
+    "sha256": "733624aa79f43b2c1edd3ea2ccc5362ac5b4a030cfe77eeab44bfd5a6a3ae553"
+  },
+  "bc250-d54-daily-clean-4/link-loader.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/link-loader.txt",
+    "bytes": 4426,
+    "sha256": "098aaaa3dd3ea0527d238cbadd21c9e7835f5d9005bcf94cc2285650e7e2d903"
+  },
+  "bc250-d54-daily-clean-4/objects.sha256": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/objects.sha256",
+    "bytes": 285,
+    "sha256": "ef22e00735dbebf5401201643f6a9800d1e796ffa4d97457dff9c28b2e219bbd"
+  },
+  "bc250-d54-daily-clean-4/offload.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/offload.txt",
+    "bytes": 429,
+    "sha256": "4d50287fb8bb1acef97cc30d55d26a985e15e6ef5ab172fb7936e24d741e2df1"
+  },
+  "bc250-d54-daily-clean-4/probe.log": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/probe.log",
+    "bytes": 1036805,
+    "sha256": "1f8fcb495f5d6284ccf3fdff7156cc4cbaf7289fc645b750579ec7bc0423173f"
+  },
+  "bc250-d54-daily-clean-4/result.json": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/result.json",
+    "bytes": 2421,
+    "sha256": "2aaa11cd9488b7ac026e04e71e1669f04bc4330d16657e88f48b1c2b873d210b"
+  },
+  "bc250-d54-daily-clean-4/target-deps.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/target-deps.txt",
+    "bytes": 71237,
+    "sha256": "5812104ba74ba2f8e8c3fb0b789862970267e041e4305ca86a164dd65c803617"
+  },
+  "bc250-d54-daily-clean-4/target-passed": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-clean-4/target-passed",
+    "bytes": 37,
+    "sha256": "c9d7f88f497b77f781cc365ec60947f649f052bd3391c8273a43a8cb7ea8ba5b"
+  },
+  "bc250-d54-daily-retained-1/probe.log": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-retained-1/probe.log",
+    "bytes": 361,
+    "sha256": "127c78b0e63fa967937bd921963d857102e154d126a6026af242a370ec3920ce"
+  },
+  "bc250-d54-daily-retained-1/result.json": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-retained-1/result.json",
+    "bytes": 1867,
+    "sha256": "d35355109feecf60f24ec822650a2bdb0d503507b9e2badb3919ed028a61c2e1"
+  },
+  "bc250-d54-daily-retained-1/retained-audit.json": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-daily-retained-1/retained-audit.json",
+    "bytes": 62763,
+    "sha256": "2ea8b5d0eac265237a87247249850924a6301b17471a5d99b32591406a61dfd3"
+  },
+  "bc250-d54-rccl-single-clean-1/CMakeCache.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/CMakeCache.txt",
+    "bytes": 96598,
+    "sha256": "631533009c9ec6183399a8f77876bff9b7631f4705896998dc010673dd2c284c"
+  },
+  "bc250-d54-rccl-single-clean-1/CMakeConfigureLog.yaml": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/CMakeConfigureLog.yaml",
+    "bytes": 432874,
+    "sha256": "00da5d9dda66cdb11f91daa87db184fc8c694de946cca6b52388491ae7af341f"
+  },
+  "bc250-d54-rccl-single-clean-1/cgroup.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/cgroup.txt",
+    "bytes": 202,
+    "sha256": "dfe912ec764eebbe01796950659d934fe19871f8c59403f9084364a18ae025ec"
+  },
+  "bc250-d54-rccl-single-clean-1/hip-files.sha256": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/hip-files.sha256",
+    "bytes": 2329,
+    "sha256": "52efe87f0b5208c6f50ceda2dbd93c4c5ea70f0be1350a1b87ce4169d5f8a350"
+  },
+  "bc250-d54-rccl-single-clean-1/link-dynamic.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/link-dynamic.txt",
+    "bytes": 2117,
+    "sha256": "609e5023edde91bd7d82d317b5da0aa105ec80f3a69308053574db2a4ea8c6aa"
+  },
+  "bc250-d54-rccl-single-clean-1/link-loader.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/link-loader.txt",
+    "bytes": 5070,
+    "sha256": "7eda28b286205dc49738c5f01d2787409ad5883ff026a0f41bbd35f069a7619c"
+  },
+  "bc250-d54-rccl-single-clean-1/objects.sha256": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/objects.sha256",
+    "bytes": 436,
+    "sha256": "0f8216974a124f2ded781375950d9fbdfd753a30f748247e798be5fc7b50ca1c"
+  },
+  "bc250-d54-rccl-single-clean-1/offload.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/offload.txt",
+    "bytes": 429,
+    "sha256": "4d50287fb8bb1acef97cc30d55d26a985e15e6ef5ab172fb7936e24d741e2df1"
+  },
+  "bc250-d54-rccl-single-clean-1/probe.log": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/probe.log",
+    "bytes": 1034046,
+    "sha256": "f264ba00f2dae40df2068bea5ea8607aef9ce9fe193270feff10efa7c6490802"
+  },
+  "bc250-d54-rccl-single-clean-1/result.json": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/result.json",
+    "bytes": 2482,
+    "sha256": "59f3754b930876f79bd1cff79d931fd3df750ca486c1790b834e50f8eae52916"
+  },
+  "bc250-d54-rccl-single-clean-1/target-deps.txt": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/target-deps.txt",
+    "bytes": 435427,
+    "sha256": "024bbad371fd3182b00bed188612b713d862080d5eec70dd055a9b509efd8fde"
+  },
+  "bc250-d54-rccl-single-clean-1/target-passed": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-clean-1/target-passed",
+    "bytes": 37,
+    "sha256": "c9d7f88f497b77f781cc365ec60947f649f052bd3391c8273a43a8cb7ea8ba5b"
+  },
+  "bc250-d54-rccl-single-retained-1/probe.log": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-retained-1/probe.log",
+    "bytes": 367,
+    "sha256": "e2c5f2f05ad8bd952d789f0187715243b3982d6305357b7adff8799367dc8e95"
+  },
+  "bc250-d54-rccl-single-retained-1/result.json": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-retained-1/result.json",
+    "bytes": 1903,
+    "sha256": "35de391e4c48b7d0e63278ecdf954958714fec8cc6e148e737ea5529408a07a9"
+  },
+  "bc250-d54-rccl-single-retained-1/retained-audit.json": {
+    "path": "kernel/artifacts/source-d54/bc250-d54-rccl-single-retained-1/retained-audit.json",
+    "bytes": 71283,
+    "sha256": "039ed86d5b25399a926acfe52b98ab93731747b8c951d20bf803de8661542966"
+  },
+  "six-1.11.0.tar.gz": {
+    "path": "kernel/artifacts/source-d54/six-1.11.0.tar.gz",
+    "bytes": 29860,
+    "sha256": "70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9"
+  }
+}

@@ -9,6 +9,45 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D54 clean-build admission and retained closure (2026-11-11)
+
+Implementation 742385f4f; [report](bc250_source_d54_results/README.md),
+[receipts](bc250_source_d54_results/artifacts.json).
+Preserved builder image 28ad36e6 + SHA-verified D52 kit 6867ed71 + offline
+six 70e8a77b admit an isolated clean configure/build probe on .104:
+--network=none --read-only, 4CPU/10GiB/512PID, board+runtime locks,
+12GiB/20GiB admission, 3GiB/5GiB floors, 720s deadline. NNPACK's hidden
+six==1.11.0 configure download (cached in old builds) is closed with
+PYTHON_SIX_SOURCE_DIR from the checksum-matching retained archive.
+daily-clean-4 passed 105.759s (cgroup peak 891,113,472B); rccl-single-clean-1
+passed 115.584s (peak 1,378,820,096B). Bounded native step compiled
+BatchLinearAlgebraEig.hip.o (+NCCLUtils.cpp.o for rccl) and the NNPACK peachpy
+object with gfx1013 offload bundles and clean link/ldd/run closure against
+the retained SDK (+RCCL); exit 54 editable-wheel refusal is by design. Not a
+full Torch rebuild, wheel, or GPU test. HIP translation outputs match the
+preserved 22-file variants byte-exact for BOTH profiles (b052 daily, b053
+rccl). Retained closure audits (first run this pass; RCCL_ROOT env binds the
+host RCCL path used by retained Ninja graphs): daily 3188 dep records/17610
+unique headers, rccl 3190/17619, zero stale/missing headers/missing link
+inputs/unexpected loader paths; 55/56 link inputs +7 bare flags; 11/12 loader
+objects resolve inside allowed roots. Eig object SHA identical across
+profiles; NNPACK object hash differs per profile and is recorded, not
+equated. Minimum clean available memory 13,746,327,552B/free disk
+59,656,708,096B; retained 14,479,544,320B/61,650,231,296B; wall times are
+admission costs, not performance. 168 local tests (two new dependency-parser
+regressions), Black, py_compile pass; ruff unavailable on workstation.
+30 evidence files SHA-verified into kernel/artifacts/source-d54 (31 receipt
+entries including the six archive). Host evidence/source-d54 retains all
+seven attempts (clean-1 ccache read-only failure; clean-2/3 agent-stopped
+during diagnosis); tools/source-d54 holds reusable harness/six/hip-paths;
+tmp clean; no owned jobs/containers/guards; watchdog active. ccache
+read-only/no reset/20G kept. Original sources/builds/caches/prefixes/images/
+profiles/boot/native controls unchanged; .105 unaccessed. Build SDK a6dc1c88
+remains distinct from active D49 SDK 2a975370. PLAN-07 open: full
+clean-rebuild storage/resource plan, generated-file/license closure, four
+important packages PLAN07-10. Historical PythonCPU/KFD/105clocksource causes
+remain unknown and separate.
+
 ## Legacy build storage follow-up (2026-11-11)
 
 .104 reclaimed another 2.26 GiB by retiring verified MIOpen stages,

@@ -1,0 +1,145 @@
+{
+  "task": "PLAN-07 / D54 clean-build admission and retained closure",
+  "completed": "2026-11-11",
+  "host": "bc250 (.104)",
+  "plan07": "open",
+  "identities": {
+    "builder_image": "28ad36e62398875f0ad77112b1d0f2b1cd0b3b55560d9cc38c6908cada8caa06",
+    "source_kit_sha256": "6867ed719c201cf7bc368800aa64c5e16a2e3a4c3c03485ad502684e2feb5723",
+    "six_archive_sha256": "70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
+    "six_license_sha256": "63478682e84e8c98f4c46308995f1f521a6886976e25421827d2a2be03581328",
+    "retained_sdk": "build/dist/rocm (a6dc1c88 build input, distinct from active D49 2a975370)",
+    "rccl": "rccl-b034/install-r1"
+  },
+  "attempts": [
+    {
+      "attempt": "bc250-d54-daily-clean-1",
+      "status": "failed",
+      "seconds": 26.74,
+      "minimum_available_bytes": 14702718976,
+      "minimum_free_bytes": 59857530880,
+      "error": "AssertionError(1)",
+      "memory_peak_bytes": null
+    },
+    {
+      "attempt": "bc250-d54-daily-clean-2",
+      "status": "failed",
+      "seconds": 53.119,
+      "minimum_available_bytes": 14548234240,
+      "minimum_free_bytes": 59856801792,
+      "error": "KeyboardInterrupt()",
+      "memory_peak_bytes": null
+    },
+    {
+      "attempt": "bc250-d54-daily-clean-3",
+      "status": "failed",
+      "seconds": 50.277,
+      "minimum_available_bytes": 14473916416,
+      "minimum_free_bytes": 59855990784,
+      "error": "KeyboardInterrupt()",
+      "memory_peak_bytes": 195473408
+    },
+    {
+      "attempt": "bc250-d54-daily-clean-4",
+      "status": "passed",
+      "seconds": 105.759,
+      "minimum_available_bytes": 14427783168,
+      "minimum_free_bytes": 59659345920,
+      "error": null,
+      "memory_peak_bytes": 891113472
+    },
+    {
+      "attempt": "bc250-d54-daily-retained-1",
+      "status": "passed",
+      "seconds": 3.806,
+      "minimum_available_bytes": 14497382400,
+      "minimum_free_bytes": 61650391040,
+      "error": null,
+      "memory_peak_bytes": null
+    },
+    {
+      "attempt": "bc250-d54-rccl-single-clean-1",
+      "status": "passed",
+      "seconds": 115.584,
+      "minimum_available_bytes": 13746327552,
+      "minimum_free_bytes": 59656708096,
+      "error": null,
+      "memory_peak_bytes": 1378820096
+    },
+    {
+      "attempt": "bc250-d54-rccl-single-retained-1",
+      "status": "passed",
+      "seconds": 3.606,
+      "minimum_available_bytes": 14479544320,
+      "minimum_free_bytes": 61650231296,
+      "error": null,
+      "memory_peak_bytes": null
+    }
+  ],
+  "clean_hip_comparison": {
+    "daily": {
+      "evidence": "bc250-d54-daily-clean-4",
+      "reference_files": 22,
+      "matched": 22,
+      "configure_seconds": 34.1,
+      "objects_sha256": {
+        "build/caffe2/CMakeFiles/torch_hip.dir/__/aten/src/ATen/native/hip/BatchLinearAlgebraEig.hip.o": "6c3e6dc0e9731d39b09eeedf4137b2a9960a6a050e7951d1d19e9e078673d56b",
+        "build/confu-deps/NNPACK/src/x86_64-fma/2d-fourier-8x8.py.o": "0a08ef5f899665cfe446c7e26b7daa16a090f8c9525732abdd877d1bba0376d8"
+      },
+      "gfx1013_offload_bundle": true,
+      "link_loader_no_missing": true
+    },
+    "rccl-single": {
+      "evidence": "bc250-d54-rccl-single-clean-1",
+      "reference_files": 22,
+      "matched": 22,
+      "configure_seconds": 31.9,
+      "objects_sha256": {
+        "build/caffe2/CMakeFiles/torch_hip.dir/__/aten/src/ATen/native/hip/BatchLinearAlgebraEig.hip.o": "6c3e6dc0e9731d39b09eeedf4137b2a9960a6a050e7951d1d19e9e078673d56b",
+        "build/caffe2/CMakeFiles/torch_hip.dir/__/torch/csrc/distributed/c10d/NCCLUtils.cpp.o": "7cf5fd453c6d2e73062e73a689eb6ba517e2a280e72c2355cc49e52d814eab6f",
+        "build/confu-deps/NNPACK/src/x86_64-fma/2d-fourier-8x8.py.o": "cfae2602c12f4c21fc40445d87a562b508f3686fb6966658dac76c21559283bf"
+      },
+      "gfx1013_offload_bundle": true,
+      "link_loader_no_missing": true
+    }
+  },
+  "retained_audits": {
+    "daily": {
+      "evidence": "bc250-d54-daily-retained-1",
+      "deps_database_sha256": "f321e6a9151ee31c90a3715394bf919656288be91db1300b42eab978974c6e63",
+      "dependency_records": 3188,
+      "stale_records": 0,
+      "unique_dependencies": 17610,
+      "missing_dependencies": [],
+      "missing_link_inputs": [],
+      "unexpected_loader_paths": [],
+      "loader_objects": 11,
+      "link_inputs": 55,
+      "bare_link_flags": 7,
+      "loader_paths": 58
+    },
+    "rccl-single": {
+      "evidence": "bc250-d54-rccl-single-retained-1",
+      "deps_database_sha256": "d0e7459357b6b293786fc9a1e8a2a93100b45ca3f3e4d54d1ffb59018d9418b2",
+      "dependency_records": 3190,
+      "stale_records": 0,
+      "unique_dependencies": 17619,
+      "missing_dependencies": [],
+      "missing_link_inputs": [],
+      "unexpected_loader_paths": [],
+      "loader_objects": 12,
+      "link_inputs": 56,
+      "bare_link_flags": 7,
+      "loader_paths": 64
+    }
+  },
+  "transfer_verification": {
+    "evidence_files": 30,
+    "hash_mismatches": []
+  },
+  "local_checks": {
+    "unittest": "168 tests OK (bc250*_test.py)",
+    "black": "3 D54 files unchanged",
+    "ruff": "unavailable on workstation; py_compile used"
+  }
+}
