@@ -139,9 +139,10 @@ def main():
     checks.append("tampered-provenance-refused-before-weights")
 
     bad_ckpt = root / "tampered.pt"
-    raw = bytearray(ckpt.read_bytes())
-    raw[len(raw) // 2] ^= 0xFF
-    bad_ckpt.write_bytes(bytes(raw))
+    raw = ckpt.read_bytes()
+    # Truncation breaks the zip central directory reliably; a mid-file byte
+    # flip can land in uncompressed tensor data and still load.
+    bad_ckpt.write_bytes(raw[: len(raw) // 2])
     refused = False
     try:
         torch.load(bad_ckpt, weights_only=True, map_location="cpu")
