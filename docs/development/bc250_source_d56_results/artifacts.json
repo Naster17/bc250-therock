@@ -1,0 +1,27 @@
+{
+  "configuration-identity.json": {
+    "path": "kernel/artifacts/source-d56/configuration-identity.json",
+    "bytes": 2537,
+    "sha256": "ea82c46b9cb607960321e4cad0dae5b48fbf1e21fb8c740643694cbbc42e7914"
+  },
+  "delta-investigation.json": {
+    "path": "kernel/artifacts/source-d56/delta-investigation.json",
+    "bytes": 2838,
+    "sha256": "baf403d0999eb6ef148b186177509d8e4d6479cf146a28d49657e1574694062d"
+  },
+  "generated-files.json": {
+    "path": "kernel/artifacts/source-d56/generated-files.json",
+    "bytes": 4257,
+    "sha256": "18d2b54c5086498c0d6644bff932d00a97fd2525ea6de3adbbc7f96d2407e8bf"
+  },
+  "license-manifest.json": {
+    "path": "kernel/artifacts/source-d56/license-manifest.json",
+    "bytes": 30440,
+    "sha256": "3cba405a9428a293397f999af87aa7434dc0100307c207051a833ef777d78045"
+  },
+  "version-metadata.json": {
+    "path": "kernel/artifacts/source-d56/version-metadata.json",
+    "bytes": 998,
+    "sha256": "e844f21be4516e4beab009e6adfb97b0dda21bb094f6aa5fb814d947de3ab913"
+  }
+}

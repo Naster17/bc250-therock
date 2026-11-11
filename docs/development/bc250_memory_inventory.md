@@ -9,6 +9,49 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D56 generated-file and license provenance closure (2026-11-11)
+
+[Report](bc250_source_d56_results/README.md),
+[receipts](bc250_source_d56_results/artifacts.json); evidence in
+kernel/artifacts/source-d56 (5 JSON files). CPU-only workstation analysis
+plus read-only .104 inspection; no build/container/GPU/reservation; .105
+unaccessed. Wheel license inventory closed: 87 unique license files (174
+log entries, identical for both profiles), all present in the D52 kit with
+SHA-256 and git blob OIDs; 44 exact matches against D47 tracked license
+OIDs (43 dependency + parent LICENSE), 41 nested third-party licenses
+inside D50 available recursive gitlink payloads, 2 parent-tracked vendored
+directories (llvm-openmp, miniz-3.0.2); zero mismatches, zero uncovered.
+Configuration identity proven: D55 CMake caches diffed against the
+D50-preserved original caches (SHAs 2406c7db daily / 9c153e7e rccl-single
+re-verified) show only four benign non-path differences per profile (CTest
+SITE container hostname, USE_C10D_XCCL/USE_XCCL BOOL->INTERNAL type
+normalizations with identical values, empty _Python_Interpreter_REASON_FAILURE
+find-module artifact); every compile-relevant flag identical. Caveat: the
+live pytorch-work/build cache on .104 was reconfigured after D50
+(USE_DISTRIBUTED=0) and is not the original; the D50-preserved copy is
+authoritative. Version metadata chain closed: recipe
+PYTORCH_BUILD_VERSION=2.13.0a0+gfx1013 -> generated torch/version.py text
+SHA 0899cb9f identical to the retained original (D50 binding) and the live
+deployed daily runtime; the original build was already Gitless
+(git_version=Unknown). Generated-file inventory enumerates six steps
+(hipify via preserved toolchain, torchgen GEN_COMMAND with GEN_ROCM_FLAG,
+version metadata, caffe2 macros.h.in, linker version script, offline six);
+input closure proven by the D55 fully offline rebuild. Library-delta
+investigation vs the deployed D49 cohort: ruled out compile flags,
+embedded source paths (deployed strings show the same /workspace/pytorch-work
+path), git metadata and __DATE__/__TIME__ timestamps; deltas confined to
+the ccache miss set (daily 241 marker lines/209 invocations, rccl 251/224;
+52 configure probes per profile; parsed remainder torch/csrc-dominated
+including 10 autograd/generated TUs); remaining hypothesis is working-tree
+drift between the deployed cohort's build time and the final retained kit
+state; definitive follow-up (retained rebuild + per-object diff or torchgen
+replay) recorded, not a provenance-closure blocker. PLAN-07 Torch
+rebuild-path provenance closed; remaining scope decisions: whether a Triton
+rebuild demonstration is required (pin ee65ff3b + four patches + qualified
+wheel SHA already preserved) and whether the library-delta follow-up is
+wanted before release. Then PLAN-08; four important packages PLAN07-10.
+.104 docs snapshot 20261111-d56-final synced at handoff.
+
 ## D55 full isolated clean Torch rebuild (2026-11-11)
 
 Harness 3d494ef03, deadline/diagnostics fix d6daedcf1, ccache counter fix

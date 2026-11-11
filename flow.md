@@ -13,6 +13,33 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D56 completed 2026-11-11 — generated-file/license provenance closure (CPU-only); PLAN-07 OPEN.**
+  [Report](docs/development/bc250_source_d56_results/README.md),
+  [receipts](docs/development/bc250_source_d56_results/artifacts.json).
+  No build/container/GPU/reservation; read-only .104 inspection only; .105
+  unaccessed. Wheel license inventory closed: 87 unique files (174 log
+  entries, both profiles identical), 87/87 in D52 kit with SHA; 44 exact
+  D47 tracked git-blob OID matches, 41 nested in D50 recursive payloads, 2
+  parent-vendored (llvm-openmp, miniz); zero mismatches/uncovered.
+  Configuration identity: D55 CMake caches vs D50-preserved ORIGINAL caches
+  (2406c7db/9c153e7e re-verified) differ only in 4 benign vars/profile
+  (SITE hostname, 2 BOOL->INTERNAL same-value, empty find-module artifact);
+  all compile flags identical. Live pytorch-work/build cache was
+  reconfigured post-D50 (USE_DISTRIBUTED=0) — not authoritative. Version
+  metadata: generated version.py 0899cb9f identical to retained original
+  and deployed daily; original already Gitless (Unknown). Generated-file
+  inventory: 6 steps (hipify, torchgen GEN_COMMAND, version, macros.h.in,
+  linker script, offline six); closure proven by D55 offline build.
+  Library-delta investigation: ruled out flags/paths/git/timestamps with
+  evidence; deltas confined to ccache miss set (241/251 marker lines,
+  209/224 invocations; 52 probes/profile; torch/csrc dominated incl 10
+  autograd/generated); remaining hypothesis working-tree drift; follow-up
+  = retained rebuild + object diff or torchgen replay (not a closure
+  blocker). PLAN-07 Torch rebuild-path provenance CLOSED; remaining scope
+  decisions: Triton rebuild demonstration, library-delta follow-up. Then
+  PLAN-08; four important packages PLAN07-10. Docs snapshot
+  20261111-d56-final synced at handoff.
+
 - **D55 completed 2026-11-11 — full isolated clean Torch rebuild, both profiles; PLAN-07 OPEN.**
   Harness 3d494ef03 + fixes d6daedcf1/f2690ce03. [Report](docs/development/bc250_source_d55_results/README.md),
   [receipts](docs/development/bc250_source_d55_results/artifacts.json),

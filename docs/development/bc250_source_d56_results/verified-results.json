@@ -1,0 +1,73 @@
+{
+  "task": "PLAN-07 / D56 generated-file and license provenance closure",
+  "completed": "2026-11-11",
+  "mode": "CPU-only workstation analysis + read-only .104 inspection; no build/container/GPU/reservation; .105 unaccessed",
+  "plan07": "open (Torch rebuild-path provenance closed; scope decisions remain)",
+  "license_closure": {
+    "wheel_license_files": 87,
+    "wheel_log_entries": 174,
+    "profiles_identical": true,
+    "in_kit_with_sha256": 87,
+    "d47_tracked_oid_exact_matches": 44,
+    "d50_recursive_payload_nested": 41,
+    "d47_parent_vendored": 2,
+    "oid_mismatches": 0,
+    "uncovered": 0
+  },
+  "configuration_identity": {
+    "original_caches_source": "kernel/artifacts/source-d50/104-evidence-r1.tar.gz (SHAs re-verified against D50 host-result.json)",
+    "daily_original_sha256": "2406c7db4260aae3404bd6cf8cdaa9db4f70938e82cb15d3326753934e10b147",
+    "rccl_original_sha256": "9c153e7ef58b946200c23641699be1b6cdfe8a6aaaa67d7ae082647d7a1d51e0",
+    "non_path_differences_per_profile": 4,
+    "benign_differences": [
+      "SITE (CTest container hostname)",
+      "USE_C10D_XCCL BOOL->INTERNAL same value",
+      "USE_XCCL BOOL->INTERNAL same value",
+      "_Python_Interpreter_REASON_FAILURE empty find-module artifact"
+    ],
+    "compile_relevant_flags_identical": true,
+    "live_pytorch_work_cache_caveat": "reconfigured after D50 (USE_DISTRIBUTED=0); not authoritative"
+  },
+  "version_metadata": {
+    "generated_version_py_sha256": "0899cb9ff22cacf0b7c831da771f08bc00e9565adec2bfa53e64768a7b99fc9e",
+    "matches_retained_original_and_deployed": true,
+    "git_version": "Unknown (original already Gitless)"
+  },
+  "generated_file_inventory": {
+    "steps_enumerated": 6,
+    "closure_proof": "D55 fully offline rebuild (no network, no undeclared mounts)",
+    "sampled_output_identities": "22/22 HIP translations + Eig object (D54/D55)"
+  },
+  "library_delta_investigation": {
+    "ruled_out": [
+      "compile flags/configuration",
+      "embedded source paths",
+      "git metadata",
+      "__DATE__/__TIME__ timestamps"
+    ],
+    "miss_set_daily": {
+      "marker_lines": 241,
+      "invocations": 209,
+      "probes": 52,
+      "unparsed": 33,
+      "parsed_library_relevant": 124
+    },
+    "miss_set_rccl": {
+      "marker_lines": 251,
+      "invocations": 224,
+      "probes": 52,
+      "unparsed": 35,
+      "parsed_library_relevant": 137
+    },
+    "remaining_hypothesis": "working-tree drift between deployed-cohort build time and final retained kit state (most likely); per-TU non-determinism (less likely)",
+    "follow_up": "retained rebuild + per-object diff, or torchgen replay vs retained original generated files; not a provenance-closure blocker"
+  },
+  "plan07_remaining_scope": [
+    "Triton rebuild demonstration decision (pin/patches/wheel provenance already preserved)",
+    "library-delta follow-up decision before release"
+  ],
+  "local_checks": {
+    "evidence_files": 5,
+    "note": "analysis-only milestone; no code changes, no test suite impact"
+  }
+}
