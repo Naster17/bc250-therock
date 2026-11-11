@@ -349,7 +349,7 @@ def main():
                 (
                     "d59-checkpoint-n39",
                     [
-                        "/usr/local/bin/bc250-torch",
+                        "/usr/local/bin/bc250-train",
                         "--mount",
                         str(scratch),
                         str(FIXTURES / "validate_checkpoint_continuity_n39.py"),
