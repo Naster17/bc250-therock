@@ -9,6 +9,54 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D60 .105 deployment qualification (2026-11-12)
+
+[Report](bc250_release_d60_results/README.md),
+[receipts](bc250_release_d60_results/artifacts.json); evidence in
+kernel/artifacts/release-d60 (23 SHA-verified files). Release
+10.2-gfx1013-20261111-138a66f52-host105 is deployed, qualified and active on
+.105 with a proven live rollback cycle. Staging used the documented D01/r4
+inode pattern because .105 had only ~16 GiB free: rocm 24,442 files
+hardlinked from the retained immutable base 10.2-gfx1013-20261023-host105
+(24,440 byte-identical) plus 222 symlinks, with two detached independent
+copies — libMIOpen.so.1.0 from the r4 candidate (same hash 381eac05) and
+librocprofiler-sdk.so.1.4.2 transferred from .104. Native change to .105:
+rocprofiler sentinel upgraded from pre-D49 a6dc1c88 to the D49 repair
+2a975370 (previously activated only on .104). 7.78 GB transferred directly
+.104->.105 in two chunks; profile .runtime.lock files hardlink the
+migration-control inode 7733260; zero external symlinks; all 24,442 rocm
+hashes verified against the D58 manifest; runtime SHAs match the D59
+identities (daily 86d94f43, rccl f183bd3f). The old .105 launcher predates
+rccl-single support, so the reviewed current helper 9c8b3c78 (rccl mount/env
++ D59 allowlist) was deployed to /usr/local/bin/bc250-torch and the migration
+toolset with backups (old 2da29b2c), plus an rccl-aware qualifier revision
+qualify_release_d60_host105.py (manifest-driven runtime_profile and
+--nccl-available for the b031 distributed gate). Target qualification before
+activation: daily r1 656 passed; rccl r1 failed (old helper lacks rccl mount),
+r2 failed at distributed (b031 --nccl-available contract), r3 656 passed;
+daily r3 core 7 passed under the updated helper. All gates boot-guard
+armed/acknowledged, dmesg identical, 4CPU/10GiB/12GiB swap, 540 s timeouts.
+Activated atomically under the migration-control EX lock (current +
+profiles/rccl-single + d01 registry, registry SHA ea7314b0); ordinary smoke
+D60-DAILY-GPU-OK, D60-CONSUMERS-OK (torchvision 0.28.0+gfx1013),
+D60-RCCL-GPU-OK. Live rollback cycle: r4 selection restored from the recovery
+record + D60-ROLLBACK-R4-OK, then --reActivate + D60-REACTIVATE-OK; the
+release is the final active selection. Incident/lesson: the first cycle ran
+the r4 smoke inside the EX control lock and deadlocked (mutable r4 launcher
+SH lock on the same inode); the owned runner was killed and smokes re-run
+outside the lock — never launch mutable cohorts while holding the EX control
+lock. Preservation: retained base rocm, M105.1 release + image 506f3b26,
+boot-health package, grub r2 fallback, production healthcheck/data, native
+board controls and user applications untouched; r4 cohort and D01 release
+preserved for rollback; no reboot (r3 kernel 7.2.10-bc250rocm-r3, boot
+08ecaaaa throughout). Full gate logs and helper backups retained on .105 at
+evidence/release-d60. Code revisions be6b17388, 131845f20, 3abf24b54,
+826121b16, ebcdaff63; 173 local tests. Next: D61 finalization (known-limit
+matrix, SBOM/license/source-recipe bundles, final receipts, promotion/
+publication decision; publication only on explicit user instruction), then
+PLAN-09 compatibility and PLAN-10 performance. .104 docs snapshot
+20261111-d60-final synced at handoff.
+
 ## D59 independent-path release qualification (2026-11-11)
 
 [Report](bc250_release_d59_results/README.md),

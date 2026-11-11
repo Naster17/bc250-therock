@@ -1,0 +1,77 @@
+{
+  "task": "PLAN-08 / D60 .105 deployment qualification",
+  "completed": "2026-11-12",
+  "host": "bc500 (.105)",
+  "release": "10.2-gfx1013-20261111-138a66f52-host105",
+  "release_path": "/opt/bc250-stack/releases/10.2-gfx1013-20261111-138a66f52-host105",
+  "status": "deployed-qualified-active; live rollback cycle proven",
+  "kernel": "7.2.10-bc250rocm-r3 (unchanged; no reboot)",
+  "boot_id": "08ecaaaa-dd13-4dd4-8574-91b3d7524a2f",
+  "staging": {
+    "rocm_hardlinked_files": 24442,
+    "rocm_symlinks": 222,
+    "rocm_detached": [
+      "lib/libMIOpen.so.1.0",
+      "lib/librocprofiler-sdk.so.1.4.2"
+    ],
+    "rocm_manifest_verified": 24442,
+    "lock_inode": 7733260,
+    "external_symlink_violations": [],
+    "runtime_sha256": {
+      "daily": "86d94f43f629b84572c2fc8639ef64beb96b32647439533f97260c7cd4e243fc",
+      "rccl-single": "f183bd3f22ec55dcd1b1e10b44afb94f9edcb076b3224c34ad630f993fb0d67c"
+    },
+    "transfer": "7.78 GB direct .104->.105 in two chunks; rocm shared with retained base per D01/r4 inode pattern"
+  },
+  "native_changes_to_105": {
+    "rocprofiler_sentinel": "a6dc1c88 (pre-D49) -> 2a975370 (D49 repair, transferred from .104, 17.6 MB)",
+    "miopen": "unchanged (381eac05, detached copy from r4 candidate)",
+    "torch": "a524980 cohort materialized from the D58/D59-qualified release"
+  },
+  "helper_update": {
+    "reason": "old .105 launcher predates rccl-single support; release includes that profile",
+    "old_sha256": "2da29b2c390fbe0019454088d55cd0f44667bb47bc1ac76b65f5cc434271ea3f",
+    "new_sha256": "9c8b3c7841436cd4615664dc4435d9a9ad23794d5f1d3080bf63e0e801948d10",
+    "deployed_to": [
+      "/usr/local/bin/bc250-torch",
+      "migration-105-20261023/bc250_torch.py"
+    ],
+    "qualifier_old_sha256": "6d22ae335ee3a73526636ac1f79b9f6cb4e0751ba53db8d2d744be3e95d6d393",
+    "qualifier_revision": "qualify_release_d60_host105.py (rccl-aware runtime_profile + --nccl-available)",
+    "backups": "evidence/release-d60/helper-backup/ on .105"
+  },
+  "target_qualification": {
+    "daily_r1": "656 passed (original helper)",
+    "rccl_r1": "failed: old helper lacks rccl mount (import librccl.so.1)",
+    "rccl_r2": "failed at distributed: b031 fixture needs --nccl-available for rccl torch (core 7 passed)",
+    "rccl_r3": "656 passed (updated helper + rccl-aware qualifier)",
+    "daily_r3": "7 core passed (updated helper re-smoke)",
+    "per_gate_health": "boot-guard armed/acknowledged, dmesg identical, 4CPU/10GiB/12GiB swap, 540s gates"
+  },
+  "activation": {
+    "mechanism": "atomic symlink replace under migration-control EX lock; current + profiles/rccl-single + d01 registry",
+    "registry_sha256_after": "ea7314b079c0669f19b0a532e0df4a051a8c83d13ad4bbc37f0062586331d28e",
+    "smoke": [
+      "D60-DAILY-GPU-OK 2.13.0a0+gfx1013",
+      "D60-CONSUMERS-OK torchvision 0.28.0+gfx1013",
+      "D60-RCCL-GPU-OK 2.13.0a0+gfx1013"
+    ]
+  },
+  "live_rollback_cycle": {
+    "rollback": "current+rccl+registry restored to r4; D60-ROLLBACK-R4-OK",
+    "reactivation": "release re-selected from recovery record; D60-REACTIVATE-OK",
+    "incident": "first cycle attempt deadlocked: mutable r4 launcher SH lock vs held EX control lock (same inode); killed owned runner, ran smokes outside the lock; recorded as design lesson",
+    "final_selection": "release daily active"
+  },
+  "preservation": "retained base rocm + M105.1 release + image 506f3b26 + boot health package + grub fallback + production healthcheck/data + native board controls + user applications untouched; old r4 cohort and D01 release preserved; no reboot",
+  "code_revisions": [
+    "be6b17388",
+    "131845f20",
+    "3abf24b54",
+    "826121b16",
+    "ebcdaff63"
+  ],
+  "local_tests": 173,
+  "evidence_files_sha_verified": 23,
+  "next": "D61 finalization: known-limit matrix, SBOM/license/source-recipe bundles, final receipts, promotion/publication decision (publication only on explicit user instruction)"
+}

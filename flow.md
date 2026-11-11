@@ -13,6 +13,39 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D60 completed 2026-11-12 — release DEPLOYED+QUALIFIED+ACTIVE on .105; live rollback proven; PLAN-08.**
+  [Report](docs/development/bc250_release_d60_results/README.md),
+  [receipts](docs/development/bc250_release_d60_results/artifacts.json),
+  [evidence](../../kernel/artifacts/release-d60). Release
+  10.2-gfx1013-20261111-138a66f52-host105 at /opt/bc250-stack/releases.
+  Staging: 16GiB free vs 18.3GB release -> D01/r4 inode pattern: rocm 24,442
+  files hardlinked from retained base (24,440 identical) + 222 symlinks; 2
+  detached repairs (MIOpen from r4 same-hash; rocprofiler transferred from
+  .104 — .105 had pre-D49 a6dc1c88, now upgraded to 2a975370). 7.78GB direct
+  .104->.105 two chunks; profile locks hardlink control inode 7733260; zero
+  external symlinks; full manifest verified. Helper update required: old
+  .105 launcher predates rccl support -> deployed reviewed 9c8b3c78 (rccl +
+  D59 allowlist) to /usr/local/bin/bc250-torch + migration toolset, backups
+  2da29b2c; rccl-aware qualifier revision (runtime_profile + --nccl-available).
+  Target qual: daily r1 656 PASS; rccl r1 fail (no rccl mount), r2 fail
+  (b031 needs --nccl-available), r3 656 PASS; daily r3 core 7 PASS. All gates
+  boot-guard/dmesg-clean/4CPU-10GiB-12GiBswap. Activated atomically under
+  migration-control EX lock (current+rccl pointer+d01 registry ea7314b0);
+  smoke D60-DAILY-GPU-OK/CONSUMERS-OK(tv 0.28.0)/RCCL-GPU-OK. LIVE ROLLBACK
+  CYCLE: r4 restored + D60-ROLLBACK-R4-OK, reactivated + D60-REACTIVATE-OK;
+  release final active. Incident: r4 smoke inside EX lock deadlocked (mutable
+  r4 SH lock same inode) — killed owned runner, smokes outside lock; rule:
+  never launch mutable cohorts under EX control lock. Preservation: base
+  rocm/M105.1 release+image 506f3b26/boot-health/grub r2 fallback/healthcheck
+  data/board controls/user apps untouched; r4+D01 preserved; NO reboot (r3
+  kernel 7.2.10, boot 08ecaaaa). 23 evidence files SHA-verified; gate logs +
+  helper backups retained host evidence/release-d60. Revisions
+  be6b17388/131845f20/3abf24b54/826121b16/ebcdaff63; 173 tests. **NEXT:** D61
+  finalization (known-limit matrix, SBOM/license/source-recipe bundles, final
+  receipts, promotion/publication decision — publication only on explicit
+  instruction); then PLAN-09/10. Docs snapshot 20261111-d60-final synced at
+  handoff.
+
 - **D59 completed 2026-11-11 — release QUALIFIED (attempt 10); selection restored to D49; PLAN-08.**
   [Report](docs/development/bc250_release_d59_results/README.md),
   [receipts](docs/development/bc250_release_d59_results/artifacts.json),

@@ -1,0 +1,117 @@
+{
+  "activate-controller.log": {
+    "path": "kernel/artifacts/release-d60/activate-controller.log",
+    "bytes": 346,
+    "sha256": "3405dcaedc76cdbd9fbc813a98a1ae0f4c52ba7165b1756eba68d68cd3402eb0"
+  },
+  "qual/daily-r1-final.json": {
+    "path": "kernel/artifacts/release-d60/qual/daily-r1-final.json",
+    "bytes": 1393,
+    "sha256": "5fe286a5b6675af8fd9a21af28e0e3692e40afc7733d6c96de5ce6b3eebbee5e"
+  },
+  "qual/daily-r3-final.json": {
+    "path": "kernel/artifacts/release-d60/qual/daily-r3-final.json",
+    "bytes": 469,
+    "sha256": "8ca1e6e9a6f76c23eb428eed515a8c1efbe4e1112190862aa1b4e81d52357542"
+  },
+  "qual/rccl-r1-final.json": {
+    "path": "kernel/artifacts/release-d60/qual/rccl-r1-final.json",
+    "bytes": 399,
+    "sha256": "ecf9e528e588c2fbd6c2c2b1e1cb8b3e3b353ecaad7b1e6f6bdbe8c172715cf0"
+  },
+  "qual/rccl-r2-final.json": {
+    "path": "kernel/artifacts/release-d60/qual/rccl-r2-final.json",
+    "bytes": 518,
+    "sha256": "08ac62f01762d2d5676afcbee5d3d78f5c60ff6ab300cc1996183732a14d111f"
+  },
+  "qual/rccl-r3-final.json": {
+    "path": "kernel/artifacts/release-d60/qual/rccl-r3-final.json",
+    "bytes": 1393,
+    "sha256": "baba8d6dc8668ed3704c671e5bdb61e231feccf9ca564d6eeef4616baa75f969"
+  },
+  "qual-controller.log": {
+    "path": "kernel/artifacts/release-d60/qual-controller.log",
+    "bytes": 413,
+    "sha256": "c0a1df01e179eba58520a7393190871812f0d4278a4a0d5b6a7adcf8d4ce680c"
+  },
+  "qual-r2-controller.log": {
+    "path": "kernel/artifacts/release-d60/qual-r2-controller.log",
+    "bytes": 383,
+    "sha256": "671d40c80f9400931a228066ee1a996db54532132e7caca7ec05d2b116b7b1bc"
+  },
+  "qual-r3-controller.log": {
+    "path": "kernel/artifacts/release-d60/qual-r3-controller.log",
+    "bytes": 89,
+    "sha256": "86fa010303458e251422ab2dfcce0e2e4f204880a5b4840a10b6df7ad8896885"
+  },
+  "recovery/after.json": {
+    "path": "kernel/artifacts/release-d60/recovery/after.json",
+    "bytes": 322,
+    "sha256": "059766de67208f1e38aa81f53dbbe4aba3da58901eb3b8a210090a16128c9987"
+  },
+  "recovery/before.json": {
+    "path": "kernel/artifacts/release-d60/recovery/before.json",
+    "bytes": 255,
+    "sha256": "7a333d532310e695dffb5f22b6cfc67060f76f5921e74b9368c0b7e1066bcaf1"
+  },
+  "recovery/reactivated.json": {
+    "path": "kernel/artifacts/release-d60/recovery/reactivated.json",
+    "bytes": 127,
+    "sha256": "e492c8b93feecae7097d9ed22ef0c1a77d29f8345bdebfe4cdfa9b477d361ec2"
+  },
+  "recovery/registry.after.json": {
+    "path": "kernel/artifacts/release-d60/recovery/registry.after.json",
+    "bytes": 1903,
+    "sha256": "ea7314b079c0669f19b0a532e0df4a051a8c83d13ad4bbc37f0062586331d28e"
+  },
+  "recovery/registry.before.json": {
+    "path": "kernel/artifacts/release-d60/recovery/registry.before.json",
+    "bytes": 1882,
+    "sha256": "d5212c7b7d351577cd029121d6cc0f9ded01d0a7da0e136716c643ddcff54327"
+  },
+  "recovery/rollback.json": {
+    "path": "kernel/artifacts/release-d60/recovery/rollback.json",
+    "bytes": 106,
+    "sha256": "58b6f53ce90ed75ff5e97a00da3cb47aee7f31185334e5e0c18183ab6112483c"
+  },
+  "rollback-controller.log": {
+    "path": "kernel/artifacts/release-d60/rollback-controller.log",
+    "bytes": 106,
+    "sha256": "58b6f53ce90ed75ff5e97a00da3cb47aee7f31185334e5e0c18183ab6112483c"
+  },
+  "smoke-consumers.log": {
+    "path": "kernel/artifacts/release-d60/smoke-consumers.log",
+    "bytes": 32,
+    "sha256": "6cfa80820fe9ea03d24fd17724721878157f9f0f47318ebeb5ad10a09d244d82"
+  },
+  "smoke-daily.log": {
+    "path": "kernel/artifacts/release-d60/smoke-daily.log",
+    "bytes": 34,
+    "sha256": "616b16f0c0b53026fbbb37235bf2120d614d7850c670a2f66379d4604466b66e"
+  },
+  "smoke-rccl.log": {
+    "path": "kernel/artifacts/release-d60/smoke-rccl.log",
+    "bytes": 33,
+    "sha256": "aaf4dc4770a1f6ed021fad0d9c7fa9e86dcca7e10f35e9e174d54e51c07d4bf2"
+  },
+  "smoke-reactivate.log": {
+    "path": "kernel/artifacts/release-d60/smoke-reactivate.log",
+    "bytes": 35,
+    "sha256": "2f8ae71b07a084f13360da1398ad95f0a738f22ac6b8a1c7e2358f2715f0d255"
+  },
+  "smoke-rollback-r4.log": {
+    "path": "kernel/artifacts/release-d60/smoke-rollback-r4.log",
+    "bytes": 36,
+    "sha256": "853244cb4c3e5787f074e72ca60e218bab398f4a8722605f84301bdbcba15ab4"
+  },
+  "staging-controller.log": {
+    "path": "kernel/artifacts/release-d60/staging-controller.log",
+    "bytes": 1135,
+    "sha256": "cf75752e3f5d9f8fca444042e843480c25f3c1460370271f66e4399db0b0ddf5"
+  },
+  "staging.json": {
+    "path": "kernel/artifacts/release-d60/staging.json",
+    "bytes": 1135,
+    "sha256": "cf75752e3f5d9f8fca444042e843480c25f3c1460370271f66e4399db0b0ddf5"
+  }
+}
