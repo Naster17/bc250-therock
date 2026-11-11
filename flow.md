@@ -13,6 +13,26 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **Space reclamation completed 2026-11-12 — verified-redundancy pass (user-approved).**
+  [Report](docs/development/bc250_space_reclaim_20261112_results/README.md),
+  [journal](docs/development/bc250_space_reclaim_20261112_results/journal.json),
+  [evidence](../../kernel/artifacts/space-reclaim-20261112). Member-by-member
+  sha256 audit of all 68,444 retired-scratch files vs the 25 same-named stores
+  (8,471 files/5,198 hashes indexed); every entry's authoritative source
+  bundles/tarballs + repair bundles/patches + preservation/reconstruction records
+  + qualification logs confirmed in its store (PLAN-07 proved reconstructibility).
+  Unique content = working intermediates only (source-reconstruction checkouts,
+  build/cache-data/lint-venv/mirror, nested b065/b066/b067 trees, re-exported
+  tarballs, disposable helper scripts/drafts). Sole unique data (D01 host
+  inventories 104/105/delta) copied+hash-verified into distributed-d01 store
+  BEFORE deletion. Deleted all 25 scratch dirs (68,444 files/5.74GB nominal);
+  archive now metadata-only (manifest+docs snapshot), catalog updated. btrfs
+  reflink extent sharing: du removed 5.73GB from artifacts (69.16->63.43GB) but
+  net blocks freed ~1.87GiB; workstation free ~7.5->~8.75GiB. No unique material
+  lost; all stores/rollback/user material intact; no btrfs admin performed.
+  **NEXT:** PLAN-09 compatibility matrix + owned new-model admission fixture,
+  then PLAN-10 performance.
+
 - **Cleanup completed 2026-11-12 — pedantic order/cleanliness pass (post PLAN-08).**
   [Report](docs/development/bc250_cleanup_20261112_results/README.md),
   [journal](docs/development/bc250_cleanup_20261112_results/journal.json).

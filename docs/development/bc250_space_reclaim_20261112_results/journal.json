@@ -1,0 +1,58 @@
+{
+  "task": "verified-redundancy space reclamation (follow-up to 2026-11-12 cleanup)",
+  "date": "2026-11-12",
+  "approval": "explicit user instruction: 'okey reclame and clear some space if posible and continue to PLAN-09'",
+  "target": "kernel/artifacts/workspace-tmp-20261112/ (25 retired October scratch entry dirs)",
+  "verification": {
+    "method": "member-by-member sha256 comparison of all 68444 scratch files against a global index of the 25 same-named per-milestone stores, then manual classification of all unique content and inspection of store tarball members",
+    "store_index": {"files": 8471, "bytes": 5960878318, "unique_hashes": 5198},
+    "scratch_preserved_byte_identical": {"files": 3070, "bytes": 659210506},
+    "scratch_unique_classified": {"files": 65374, "bytes": 5077085875},
+    "unique_content_classes": [
+      "extracted source-reconstruction checkouts (abseil/pybind11/migraphx/rocm-cmake/onnxruntime, incl .git)",
+      "build/cache-data/lint-venv/mirror trees and nested b065/b066/b067 working trees",
+      "re-exported working tarballs (source*.tar.gz, migraphx.bundle, pybind11.tar, mirror.tar.gz)",
+      "disposable helper scripts and drafts (sync_memory.py/docs.py/verify*.py/README-draft.md/next.txt/block-*.sh)"
+    ],
+    "store_preservation_confirmed": "every entry's authoritative source bundles/tarballs, repair bundles/patches, preservation/reconstruction records, qualification logs and verification present in its store; PLAN-07 D47-D56 proved reconstructibility",
+    "audit_report": "kernel/artifacts/space-reclaim-20261112/redundancy-report.json"
+  },
+  "preserved_unique_data": {
+    "files": ["104-inventory.json", "105-inventory.json", "delta.json"],
+    "relocated_to": "kernel/artifacts/distributed-d01/",
+    "hash_verified_before_deletion": true,
+    "sha256_prefix": {"104-inventory.json": "b5dea07c8280f320", "105-inventory.json": "72ddd4e7d2c4a509", "delta.json": "63df593a7f525bde"},
+    "reason": "October D01 host-state inventories; only unique data records not represented in any store"
+  },
+  "action": {
+    "deleted_entry_dirs": 25,
+    "deleted_files": 68444,
+    "deleted_bytes_nominal": 5736296381,
+    "kept_metadata": ["manifest.json", "docs-final.json", "docs-final.tar.gz"],
+    "catalog_updated": true
+  },
+  "space_outcome": {
+    "filesystem": "btrfs (data ratio 1.00, metadata ratio 2.00, fully allocated)",
+    "artifacts_du_before_bytes": 69161024745,
+    "artifacts_du_after_bytes": 63433674055,
+    "du_verified_removed_bytes": 5727350690,
+    "df_avail_before_bytes": 7526862848,
+    "df_avail_after_bytes": 9398501376,
+    "net_blocks_freed_bytes": 1871638528,
+    "explanation": "scratch shared CoW/reflink data extents with retained material; deletion released only uniquely-owned blocks (~1.87 GiB). Remaining extents stay referenced by preserved copies. No unique material lost.",
+    "btrfs_administration_performed": false
+  },
+  "preserved": [
+    "all 25 per-milestone stores and authoritative source/repair/preservation payloads",
+    "all other kernel/artifacts recovery stores",
+    "D01 inventories (relocated into D01 store)",
+    "all source/build/cache and rollback trees",
+    "all user material"
+  ],
+  "post_verification": {
+    "store_file_counts": {"migraphx-b064": 192, "migraphx-b065": 153, "onnxruntime-b0610": 606, "ck-plugin-b0711": 378},
+    "distributed_d01_intact": ["104-inventory.json", "105-inventory.json", "delta.json", "image.tar", "userspace.tar.gz", "manifest.json"],
+    "archive_remaining": ["manifest.json", "docs-final.json", "docs-final.tar.gz"]
+  },
+  "next": "PLAN-09 model/environment compatibility matrix + reusable owned new-model admission fixture"
+}

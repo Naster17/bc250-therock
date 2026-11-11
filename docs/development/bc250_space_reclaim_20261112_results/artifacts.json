@@ -1,0 +1,22 @@
+{
+  "compare_redundancy.py": {
+    "path": "kernel/artifacts/space-reclaim-20261112/compare_redundancy.py",
+    "bytes": 4150,
+    "sha256": "00c59fbfe6b0e95850a5e2c78867ce3ccf1f03d0ce18753a2924f8a53f86a0b3"
+  },
+  "deletion-receipt.json": {
+    "path": "kernel/artifacts/space-reclaim-20261112/deletion-receipt.json",
+    "bytes": 2199,
+    "sha256": "accea4305de2080dd45c238c52a4f9cd24ef91a8cc7f98cdb0442eb9a2cec4ff"
+  },
+  "preserved-inventories.json": {
+    "path": "kernel/artifacts/space-reclaim-20261112/preserved-inventories.json",
+    "bytes": 391,
+    "sha256": "896be254e76007b6ed27d484aefe1e3b969d11441a5829cf7b1e9a4a214b93f6"
+  },
+  "redundancy-report.json": {
+    "path": "kernel/artifacts/space-reclaim-20261112/redundancy-report.json",
+    "bytes": 15425877,
+    "sha256": "08f966adee77156618c3d187a3ccb074694541794b3c53c4003adb91ca46b906"
+  }
+}
