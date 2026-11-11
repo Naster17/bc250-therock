@@ -1,0 +1,67 @@
+{
+  "known-limitations.json": {
+    "path": "kernel/artifacts/release-d61/known-limitations.json",
+    "bytes": 2707,
+    "sha256": "277cf5f08a1c2f7fae6253576cb4648b1160f424aae1d7f975d1f912cbadc37f"
+  },
+  "quant-result.json": {
+    "path": "kernel/artifacts/release-d61/quant-result.json",
+    "bytes": 15029,
+    "sha256": "7b196dd99d9d3e417d9f8a8077fb98e90e46f882cef9b90cc740e4efa6caa15b"
+  },
+  "quant.log": {
+    "path": "kernel/artifacts/release-d61/quant.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "recovery/after.json": {
+    "path": "kernel/artifacts/release-d61/recovery/after.json",
+    "bytes": 305,
+    "sha256": "1205654f589e12579bc5f1257551ff0f235be053062323d3a2ca5b5c85bbdbd9"
+  },
+  "recovery/before.json": {
+    "path": "kernel/artifacts/release-d61/recovery/before.json",
+    "bytes": 538,
+    "sha256": "f2b609ea17e2eff5ec4fa68f0df4631ccffa0e99ae0b092e05348350f40a4a6a"
+  },
+  "recovery/registry.after.json": {
+    "path": "kernel/artifacts/release-d61/recovery/registry.after.json",
+    "bytes": 2346,
+    "sha256": "813c8d02b17f7dc05b5c0502b4921c85e4dc2ce0d79739f78de57a362931d96d"
+  },
+  "recovery/registry.before.json": {
+    "path": "kernel/artifacts/release-d61/recovery/registry.before.json",
+    "bytes": 2327,
+    "sha256": "dddcdcb529ba7e41650676f9349e5472fd086d1a355c15b8fee6569cc60d4889"
+  },
+  "sbom.json": {
+    "path": "kernel/artifacts/release-d61/sbom.json",
+    "bytes": 3998,
+    "sha256": "1f5531d21f412139275927b1fd126c15ba1331738cf2211a1f855a55ac434160"
+  },
+  "smoke-consumers.log": {
+    "path": "kernel/artifacts/release-d61/smoke-consumers.log",
+    "bytes": 32,
+    "sha256": "e02ff0dc152ac9ee3639cd6c0164d44f515b8453ffe2594f8c315cc83738f72d"
+  },
+  "smoke-daily.log": {
+    "path": "kernel/artifacts/release-d61/smoke-daily.log",
+    "bytes": 34,
+    "sha256": "12bf8609bacda8ca5f26d6fc02a31515841c1ea92513bf8bffbe4c393d2c5826"
+  },
+  "smoke-rccl.log": {
+    "path": "kernel/artifacts/release-d61/smoke-rccl.log",
+    "bytes": 33,
+    "sha256": "ed961bdd87d17b9fd125b4dc28585833d12dc7b42ddf611b4e4f6d923eb2bcfb"
+  },
+  "source-recipes.json": {
+    "path": "kernel/artifacts/release-d61/source-recipes.json",
+    "bytes": 2873,
+    "sha256": "37b6728ede55fefd5bfbd1a4b01787fa9c45814929bd874227918c96eeacd54e"
+  },
+  "verify-controller.log": {
+    "path": "kernel/artifacts/release-d61/verify-controller.log",
+    "bytes": 16,
+    "sha256": "22aa94304a4732e1b09656a66878a517656117232a0e4b950edeb6efe9b57849"
+  }
+}

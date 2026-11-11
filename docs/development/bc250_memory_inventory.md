@@ -9,6 +9,43 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D61 release finalization and .104 promotion — PLAN-08 complete (2026-11-12)
+
+[Report](bc250_release_d61_results/README.md),
+[receipts](bc250_release_d61_results/artifacts.json); bundle and evidence in
+kernel/artifacts/release-d61 (13 entries; 10 host evidence files
+SHA-verified). Finalization bundle: sbom.json (image 1bb4ac0e, torch a524980
+/ 2.13.0a0+gfx1013, triton pin ee65ff3b + qualified wheel 2d65d6fe, ROCm
+libraries/systems revisions, SDK sentinels, consumer wheels torchvision
+0.28.0 / torchaudio 2.11.0 / torchcodec 0.17.0, ONNX stack, opt-in bc250_fft /
+bc250_sparse, MIOpen repair, rocblas tuning, kernels r2 on .104 / r3 on .105,
+launcher 9c8b3c78, runtime identities 86d94f43 / f183bd3f);
+known-limitations.json (hardware: no MFMA/WMMA, SDMA/VM-heap disabled, RAM
+floors, profiling boundaries; software subsets: scalar/eig/sparse/SDPA/
+quantization/FP16-PEFT; performance: no general two-board speedup, D43
+measured costs; release boundaries: immutable release, rebuilt-vs-deployed
+delta, Triton scope, no long soak, finetune-n7 exclusion; deployment/rollback
+assets; corrects the stale mutable-prefix runtime string); source-recipes.json
+(D47-D56 preserved store index with key hashes: D52 kit 6867ed71, builder
+image 28ad36e6, six 70e8a77b; build recipes; D56 license bundle of 87 wheel
+licenses; Triton pin/patches/wheel; kernel recipes). .104 promotion:
+promote_release_d61_on_host.py (ed8143651) switched current +
+profiles/rccl-single + d01 registry (SHA 813c8d02) atomically under the board
+EX reservation + current-prefix EX runtime lock (inode checked) with
+fail-closed preflight; recovery set retained and --rollback restores the D49
+cohort; smokes ran after lock release (D60 lesson). Post-promotion
+verification via public callers: D61-DAILY-GPU-OK, D61-CONSUMERS-OK
+(torchvision 0.28.0+gfx1013), D61-RCCL-GPU-OK, quant regression 220 passed.
+Both hosts now run release 10.2-gfx1013-20261111-138a66f52; all rollback/boot
+assets preserved (.104 D49 cohort + historical releases; .105 r4 + D01 +
+retained base + M105.1 boot-health). PLAN-08 complete via D57 inventory/plan,
+D58 self-contained assembly, D59 .104 independent-path qualification, D60
+.105 deployment qualification, D61 finalization + promotion. Publication NOT
+performed; requires explicit user instruction. 173 local tests. Next: PLAN-09
+modern model/environment compatibility matrix, then PLAN-10 measured training
+performance; two important packages remain. .104 docs snapshot
+20261112-d61-final synced at handoff.
+
 ## D60 .105 deployment qualification (2026-11-12)
 
 [Report](bc250_release_d60_results/README.md),

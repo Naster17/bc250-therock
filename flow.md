@@ -13,6 +13,29 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D61 completed 2026-11-12 — PLAN-08 COMPLETE; release active on BOTH hosts.**
+  [Report](docs/development/bc250_release_d61_results/README.md),
+  [receipts](docs/development/bc250_release_d61_results/artifacts.json),
+  [bundle](../../kernel/artifacts/release-d61). Finalization bundle:
+  sbom.json (image 1bb4ac0e/torch a524980/triton ee65ff3b+wheel 2d65d6fe/
+  ROCm revisions/consumer wheels tv 0.28.0 ta 2.11.0 tc 0.17.0/ONNX stack/
+  opt-in modules/repairs/kernels r2+r3/launchers 9c8b3c78/runtime identities),
+  known-limitations.json (hardware/software/performance/release/deployment
+  matrix; corrects stale mutable-prefix string), source-recipes.json
+  (D47-D56 store index + key hashes + D56 license bundle 87 files).
+  .104 PROMOTED: promote_release_d61_on_host.py ed8143651 switched current +
+  rccl pointer + d01 registry (813c8d02) atomically under board EX + runtime
+  EX (inode checked) + preflight; recovery set retained (--rollback restores
+  D49). Post-promotion via public callers: D61-DAILY-GPU-OK / CONSUMERS-OK /
+  RCCL-GPU-OK (torch 2.13.0a0+gfx1013) + quant 220 PASS. Both hosts now on
+  release 10.2-gfx1013-20261111-138a66f52; rollback/boot assets preserved
+  (.104 D49+historical; .105 r4+D01+base+M105.1). PLAN-08 chain D57 plan /
+  D58 assembly / D59 .104 qual / D60 .105 deployment / D61 finalization+
+  promotion. Publication NOT performed (explicit instruction required).
+  173 tests; 10 evidence files SHA-verified. **NEXT:** PLAN-09 compatibility
+  matrix, then PLAN-10 performance; two important packages remain. Docs
+  snapshot 20261112-d61-final synced at handoff.
+
 - **D60 completed 2026-11-12 — release DEPLOYED+QUALIFIED+ACTIVE on .105; live rollback proven; PLAN-08.**
   [Report](docs/development/bc250_release_d60_results/README.md),
   [receipts](docs/development/bc250_release_d60_results/artifacts.json),

@@ -1,0 +1,44 @@
+{
+  "task": "PLAN-08 / D61 release finalization and .104 promotion",
+  "completed": "2026-11-12",
+  "plan08": "completed",
+  "release": "10.2-gfx1013-20261111-138a66f52",
+  "finalization_bundle": {
+    "sbom": "kernel/artifacts/release-d61/sbom.json",
+    "known_limitations": "kernel/artifacts/release-d61/known-limitations.json",
+    "source_recipes": "kernel/artifacts/release-d61/source-recipes.json",
+    "license_bundle": "kernel/artifacts/source-d56/license-manifest.json (87 wheel licenses)"
+  },
+  "host104_promotion": {
+    "mechanism": "atomic pointer + registry switch under board EX + runtime EX locks (inode checked), preflight passed",
+    "current": "/opt/bc250-stack/releases/10.2-gfx1013-20261111-138a66f52/profiles/daily",
+    "rccl_pointer": "/opt/bc250-stack/releases/10.2-gfx1013-20261111-138a66f52/profiles/rccl-single",
+    "registry_sha256": "813c8d02b17f7dc05b5c0502b4921c85e4dc2ce0d79739f78de57a362931d96d",
+    "recovery": "kernel/artifacts/release-d61/recovery (before/after + registry snapshots); --rollback mode in promote_release_d61_on_host.py",
+    "implementation_revision": "ed8143651"
+  },
+  "post_promotion_verification": {
+    "daily_gpu_smoke": "D61-DAILY-GPU-OK 2.13.0a0+gfx1013",
+    "consumers_smoke": "D61-CONSUMERS-OK torchvision 0.28.0+gfx1013",
+    "rccl_gpu_smoke": "D61-RCCL-GPU-OK 2.13.0a0+gfx1013",
+    "quant_regression": {
+      "status": "passed",
+      "checks": 220
+    }
+  },
+  "both_hosts_selection": {
+    "host104": "release daily (D61 promotion; D49 cohort preserved for rollback)",
+    "host105": "release daily (D60; r4/D01/base/M105.1 preserved)"
+  },
+  "plan08_evidence_chain": {
+    "D57": "release inventory + assembly plan",
+    "D58": "self-contained assembly (18.3 GB / 196,964 files, zero external symlinks, full SHA manifests)",
+    "D59": ".104 independent-path qualification (326 checks, refusals, rollback)",
+    "D60": ".105 deployment qualification (656-check suites both profiles, helper update, live rollback cycle)",
+    "D61": "finalization bundle + .104 promotion + verification"
+  },
+  "publication": "NOT performed; requires explicit user instruction",
+  "local_tests": 173,
+  "evidence_files_sha_verified": 10,
+  "next": "PLAN-09 modern model/environment compatibility matrix, then PLAN-10 measured training performance; two important packages remain"
+}
