@@ -113,7 +113,9 @@ def main():
 
     model2, opt2 = build(999)
     verify_provenance(provenance, loaded_prov)
-    payload = torch.load(ckpt, weights_only=True, map_location="cuda")
+    # Load on CPU: RNG states must stay CPU ByteTensors; state dicts copy
+    # into the CUDA model/optimizer on load_state_dict.
+    payload = torch.load(ckpt, weights_only=True, map_location="cpu")
     model2.load_state_dict(payload["model"])
     opt2.load_state_dict(payload["opt"])
     torch.set_rng_state(payload["rng"])
@@ -142,7 +144,7 @@ def main():
     bad_ckpt.write_bytes(bytes(raw))
     refused = False
     try:
-        torch.load(bad_ckpt, weights_only=True, map_location="cuda")
+        torch.load(bad_ckpt, weights_only=True, map_location="cpu")
     except Exception:
         refused = True
     assert refused
