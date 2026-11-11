@@ -9,6 +9,50 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## D58 self-contained release assembly (2026-11-11)
+
+[Report](bc250_release_d58_results/README.md),
+[receipts](bc250_release_d58_results/artifacts.json); assembly receipt and
+controller log in kernel/artifacts/release-d58. Harness 9b6f569a8
+(assemble_release_d58.py, script SHA bdc700cd) ran as root under the EX
+prefix-update lock via helpers/update_dev_prefix.py (helper SHA 8ec1a4c9,
+byte-identical to the current repo version; the manifest's 322d3e42 pins
+are historical workstream records and were left unchanged). Release
+10.2-gfx1013-20261111-138a66f52 materialized at
+/opt/bc250-stack/releases from the qualified sdk-d49-r1 cohort (image
+1bb4ac0e, torch a524980) with daily and rccl-single profiles:
+rocm/cache/python-consumers shared at top level; profiles hold fully copied
+torch trees (pytorch-quant-b052/b053), the rccl library, gemm tuning csv,
+SOURCE_* provenance, native-overrides and adapted runtime.json
+(release version set, validated=false pending D59, mutable=false immutable,
+provenance history and rccl environment/identity preserved). All profile
+links to shared subtrees are relative; the self-containment scan found zero
+external symlinks, closing the D57 path-dependency gap. 18,295,550,735
+bytes / 196,964 files copied in 267.726 s; copied sizes equal source sizes;
+free disk 55.0 -> 37.1 GiB with the 5 GiB floor enforced. Preflight asserted
+root/host, current target, zero running containers, 10 source sentinel
+hashes and disk admission; post-assembly the harness re-verified 10 release
+sentinels and the workstation independently rechecked the 4 torch-library
+hashes (4/4). Six per-file SHA manifests (rocm 24,442; cache 75,743;
+python-consumers 7,714; daily torch 44,527; rccl torch 44,537; rccl 1) live
+with the release and their digests are bound in assembly.json, re-read from
+the host and matched. current unchanged before/after; lock released; no
+owned processes. 171 local tests OK including the new adapt_runtime
+regression; black applied. Reboot event: .104 rebooted immediately before
+launch (boot aafacc82 -> be4ef4dd; cause unknown; no owned jobs running);
+post-reboot verification passed before proceeding (r2 kernel
+7.1.5-bc250rocm-r2, 10/10 cohort sentinels, current unchanged, watchdog and
+cgroups started, cyan-skillfish only, no containers, 59.1 GB free) — the r2
+fallback boot path worked as designed. Assembly only: no activation;
+sources, live profiles and historical releases untouched; .105 unaccessed.
+Next: D59 independent-path build-free extraction/activation qualification
+on .104 (bc250-* caller tests, selected forward/backward/compiler/
+distributed/checkpoint regressions, identity refusals, actual rollback,
+restore current), then D60 .105 deployment qualification and D61
+finalization; publication only on explicit user instruction. Three
+important packages remain (PLAN-08/09/10). .104 docs snapshot
+20261111-d58-final synced at handoff.
+
 ## PLAN-07 closure and D57 release inventory / assembly plan (2026-11-11)
 
 [Report](bc250_release_d57_results/README.md),

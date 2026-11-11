@@ -1,0 +1,77 @@
+{
+  "task": "PLAN-08 / D58 self-contained release assembly",
+  "completed": "2026-11-11",
+  "host": "bc250 (.104)",
+  "release": {
+    "version": "10.2-gfx1013-20261111-138a66f52",
+    "path": "/opt/bc250-stack/releases/10.2-gfx1013-20261111-138a66f52",
+    "status": "assembled; validated=False pending D59; mutable=False (immutable)",
+    "profiles": [
+      "daily",
+      "rccl-single"
+    ],
+    "image": "1bb4ac0ed3766d9c70431c1d5119e03cd4d10e710f4c04cd54254b5b87cd45d5",
+    "torch_revision": "a5249802372882dedccb91d3fd4d73be9fcdf2bd",
+    "layout": "rocm/ cache/ python-consumers/ shared at top; profiles/{daily,rccl-single}/ with materialized torch (+rccl for rccl-single), relative internal symlinks only"
+  },
+  "harness": {
+    "revision": "9b6f569a8",
+    "script_sha256": "bdc700cd7c9aa42a0d76830a1ad26bfed9e13ace0982be4e6ecc386d1a08fd40",
+    "lock_helper_sha256": "8ec1a4c9ef94de25f81cbd8ae8adf495cb9f592cb3d16f18915d7ac366385c65",
+    "lock_helper_note": "host helper byte-identical to current repo version; manifest 322d3e42 pins are historical workstream records, left unchanged",
+    "lock": "EX .runtime.lock on current daily prefix via helpers/update_dev_prefix.py",
+    "local_tests": "171 bc250 tests OK; black applied"
+  },
+  "assembly": {
+    "seconds": 267.726,
+    "bytes": 18295550735,
+    "files": 196964,
+    "source_sizes_equal_copied": true,
+    "free_bytes_before": 59097214976,
+    "free_bytes_after": 39798169600,
+    "self_containment_violations": [],
+    "source_sentinels_verified": true,
+    "release_sentinels_verified": true,
+    "independent_sentinel_recheck": "4/4 torch lib hashes re-verified from workstation against the release matrix",
+    "manifest_digests_bind_receipt_to_host": true,
+    "current_before": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+    "current_after": "/opt/bc250-stack/candidates/sdk-d49-r1/profiles/daily",
+    "current_unchanged": true,
+    "manifests": {
+      "rocm": {
+        "files": 24442,
+        "sha256": "baa621e2670fd4d621bf6921a57500edce25abec83f1d4015496b429ba36ddaf"
+      },
+      "cache": {
+        "files": 75743,
+        "sha256": "0dc9bcc09cd595c1be8272f32893644b2f85e0faf2da3fce0607f7cea9971a1d"
+      },
+      "python-consumers": {
+        "files": 7714,
+        "sha256": "ad31b01ce9e290a9e2054bd62a5f96c13551a31792eb844aaadf143aae3af4a0"
+      },
+      "profiles/daily/torch": {
+        "files": 44527,
+        "sha256": "7830d44092ef7f1b047d1c96b1ed91ec6c4b922d56d37bcaa8eec0ae72a6d9c3"
+      },
+      "profiles/rccl-single/torch": {
+        "files": 44537,
+        "sha256": "49b9c71ae951b9b0a53e18627223da5327267f02f6cd5dadb3783ed649c4c751"
+      },
+      "profiles/rccl-single/rccl": {
+        "files": 1,
+        "sha256": "e79ab7f7e14a8249b8949147bc128c02026076a579cfb226704e99217da2f36e"
+      }
+    }
+  },
+  "reboot_event": {
+    "observed": "immediately before D58 launch; .104 rebooted (ssh refused, then up 0 min)",
+    "boot_id_before": "aafacc82-dc8b-4055-a36f-7026900107da",
+    "boot_id_after": "be4ef4dd-1dcb-42fb-bcfa-7fb3a13dc013",
+    "kernel": "7.1.5-bc250rocm-r2 (r2 fallback boot path)",
+    "post_reboot_verification": "10/10 cohort sentinels OK; current unchanged; watchdog+cgroups started; only cyan-skillfish GPU client; no containers; 59.1 GB free",
+    "cause": "unknown; no owned jobs were running at the time"
+  },
+  "preservation": "sources read-only; current and live profiles untouched; no activation; historical releases preserved; .105 unaccessed",
+  "next": "D59 independent-path build-free extraction/activation qualification on .104 (caller tests, selected GPU regressions, identity refusals, actual rollback, restore current)"
+}

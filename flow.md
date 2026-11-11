@@ -13,6 +13,38 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D58 completed 2026-11-11 — self-contained release assembled (no activation); PLAN-08.**
+  [Report](docs/development/bc250_release_d58_results/README.md),
+  [receipts](docs/development/bc250_release_d58_results/artifacts.json),
+  [assembly receipt](../../kernel/artifacts/release-d58/assembly.json).
+  Harness 9b6f569a8 (script bdc700cd) under EX prefix-update lock via
+  helpers/update_dev_prefix.py (8ec1a4c9, byte-identical to repo; manifest
+  322d3e42 pins are historical records, unchanged). Release
+  10.2-gfx1013-20261111-138a66f52 at /opt/bc250-stack/releases: materialized
+  from sdk-d49-r1 cohort (image 1bb4ac0e, torch a524980), daily+rccl-single;
+  rocm/cache/python-consumers shared top-level, profiles with copied torch
+  trees b052/b053 + rccl + gemm csv + SOURCE_* + adapted runtime.json
+  (validated=false, mutable=false, provenance preserved); relative-only
+  symlinks — D57 path-dependency gap closed. 18,295,550,735B/196,964 files
+  in 267.726s; copied==source sizes; free 55.0->37.1GiB (5GiB floor).
+  Preflight: root/current-target/no-containers/10 source sentinels/disk
+  admission. Post: 10 release sentinels + independent 4/4 torch-lib recheck;
+  self-containment scan ZERO violations; 6 per-file SHA manifests
+  (rocm 24442/cache 75743/consumers 7714/daily-torch 44527/rccl-torch 44537/
+  rccl 1) bound by digest in assembly.json, re-read+matched from host.
+  current unchanged before/after; lock released; no owned processes.
+  171 local tests OK (new adapt_runtime regression), black applied.
+  REBOOT EVENT: .104 rebooted just before launch (aafacc82->be4ef4dd,
+  cause unknown, no owned jobs running); post-reboot verification passed:
+  r2 kernel, 10/10 sentinels, current unchanged, watchdog+cgroups started,
+  cyan-skillfish only, no containers. Sources/live profiles/historical
+  releases untouched; .105 unaccessed. **NEXT:** D59 independent-path
+  build-free extraction/activation qualification (bc250-* callers, selected
+  fwd/bwd/compiler/distributed/checkpoint regressions, identity refusals,
+  actual rollback, restore current); then D60 .105, D61 finalization;
+  publication only on explicit instruction. Three important packages
+  PLAN-08/09/10. Docs snapshot 20261111-d58-final synced at handoff.
+
 - **PLAN-07 CLOSED + D57 completed 2026-11-11 — release inventory/assembly plan; PLAN-08 started.**
   [D57 report](docs/development/bc250_release_d57_results/README.md),
   [receipts](docs/development/bc250_release_d57_results/artifacts.json),
