@@ -1,0 +1,57 @@
+{
+  "task": "workspace and host cleanup",
+  "date": "2026-11-12",
+  "trigger": "user request for pedantic order/cleanliness after PLAN-08 completion",
+  "git_audit": {
+    "workspace": "committed; untracked user-owned install-arch.sh left",
+    "therock": "committed; untracked user-owned src/ left",
+    "kernel/source": "clean",
+    "references/pytorch-upstream": "clean"
+  },
+  "actions": [
+    {
+      "action": "retire",
+      "source": "tmp/",
+      "destination": "kernel/artifacts/workspace-tmp-20261112/",
+      "method": "same-filesystem rename (capacity-neutral)",
+      "entries": 25,
+      "files": 68444,
+      "bytes": 5736296381,
+      "verification": "file count and total bytes identical before/after",
+      "reason": "October B06/B07/D01 scratch; reviewed outputs already in per-milestone artifact stores"
+    },
+    {
+      "action": "delete",
+      "host": "192.168.1.105",
+      "paths": [
+        "bc250work/evidence/release-d60/transfer/librocprofiler-sdk.so.1.4.2",
+        "bc250work/evidence/release-d60/rocm-base.done",
+        "bc250work/evidence/release-d60/rocm-base.err",
+        "bc250work/evidence/release-d60/transfer/ (empty dir)"
+      ],
+      "verification": "release copy sha256 2a975370ba4eb1c2fe39e406ff36b175f554a49d0aa19febbd326f641fcb590b verified identical before deletion; also preserved on .104",
+      "reason": "D60 staging consumed the transfer; leftover disposable"
+    },
+    {
+      "action": "group",
+      "host": "192.168.1.104",
+      "detail": "9 release-d59 attempt dirs + 9 controller logs -> evidence/release-d59-attempts/; release-d59-controller.log -> evidence/release-d59/",
+      "entries_grouped": 18,
+      "doc_updates": ["bc250_release_d59_results/README.md", "bc250_release_d59_results/verified-results.json"]
+    }
+  ],
+  "preserved": [
+    "kernel/artifacts recovery stores",
+    "source/build/cache trees and retained pytorch-* rollback trees",
+    "historical .105 evidence layout",
+    "all releases/rollback assets and stack images on both hosts",
+    "patches/, board-support/, references/pytorch-upstream",
+    "all user applications and data on both hosts"
+  ],
+  "follow_up_optional": "verified-redundancy deletion pass over kernel/artifacts/workspace-tmp-20261112 bulk intermediates to reclaim ~5 GB (workstation ~7.5 GB free); requires member-by-member comparison and explicit approval",
+  "final_state": {
+    "both_hosts_idle_on_release": true,
+    "owned_processes_containers": 0,
+    "task_scratch_cleared": true
+  }
+}

@@ -13,6 +13,26 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **Cleanup completed 2026-11-12 — pedantic order/cleanliness pass (post PLAN-08).**
+  [Report](docs/development/bc250_cleanup_20261112_results/README.md),
+  [journal](docs/development/bc250_cleanup_20261112_results/journal.json).
+  Git audit: workspace+therock fully committed (only user-owned install-arch.sh
+  and src/ untracked, untouched); kernel/source + references/pytorch-upstream
+  clean. Retired workspace tmp/ (25 entries/68,444 files/5.74GB October
+  B06/B07/D01 scratch) -> kernel/artifacts/workspace-tmp-20261112/ via
+  same-fs rename (capacity-neutral; count+bytes verified; catalogued); tmp/
+  left with README. Deleted .105 D60 transfer leftover librocprofiler .so
+  (release copy 2a975370 verified identical first) + rocm-base markers.
+  Grouped .104 D59 evidence: 9 attempt dirs + 9 logs -> release-d59-attempts/,
+  passing-run log -> release-d59/; D59 doc refs updated. PRESERVED: all
+  kernel/artifacts stores, source/build/cache + pytorch-* rollback trees,
+  historical .105 evidence layout, all releases/images/boot assets, patches/,
+  board-support/, references/, ALL user apps/data on both hosts. Both hosts
+  idle on release; no owned processes/containers; .qwen/tmp cleared.
+  Workstation ~7.5GB free; optional future verified-redundancy pass over the
+  retired scratch bulk could reclaim ~5GB (needs approval). **NEXT:** PLAN-09
+  compatibility matrix, then PLAN-10 performance; two important packages.
+
 - **D61 completed 2026-11-12 — PLAN-08 COMPLETE; release active on BOTH hosts.**
   [Report](docs/development/bc250_release_d61_results/README.md),
   [receipts](docs/development/bc250_release_d61_results/artifacts.json),

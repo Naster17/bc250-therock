@@ -71,7 +71,7 @@ The rotating gate failures in attempts 4/7 were environment interference,
 not release defects — the fixtures themselves passed and the kernel-log
 invariant correctly refused. After repeated conflicts the user dedicated
 .104 to stack work. Failed-attempt evidence is retained on the host
-(`evidence/release-d59-attempt*`); 98 passing-run files were transferred and
+(`evidence/release-d59-attempts/`); 98 passing-run files were transferred and
 SHA-verified. 173 local tests pass (incl. the new allowlist regressions).
 
 ## Next

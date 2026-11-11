@@ -9,6 +9,36 @@ feature. Update affected entries after substantive work, preserving evidence.
 
 
 
+## Workspace and host cleanup (2026-11-12)
+
+[Report](bc250_cleanup_20261112_results/README.md),
+[journal](bc250_cleanup_20261112_results/journal.json). Pedantic
+order/cleanliness pass after PLAN-08. Git audit confirmed workspace and
+therock fully committed (only user-owned install-arch.sh and therock/src/
+untracked, left untouched); kernel/source and references/pytorch-upstream
+clean. Retired the active workspace tmp/ (25 entries, 68,444 files,
+5,736,296,381 bytes of October B06/B07/D01 task scratch whose reviewed outputs
+are already in the per-milestone kernel/artifacts stores) into
+kernel/artifacts/workspace-tmp-20261112/ by same-filesystem rename
+(capacity-neutral; file count and bytes verified identical; catalogued in
+manifest.json); tmp/ left with a usage README. Deleted the .105 D60 transfer
+leftover librocprofiler-sdk.so.1.4.2 (release copy hash 2a975370 verified
+identical before deletion; also preserved on .104) plus rocm-base.done/.err
+markers and the empty transfer dir. Grouped .104 D59 evidence: nine attempt
+directories + nine controller logs into evidence/release-d59-attempts/, and
+the passing-run controller log into evidence/release-d59/; updated the D59
+report/receipt path references. Preserved untouched: all kernel/artifacts
+recovery stores, source/build/cache trees and retained pytorch-* rollback
+trees (embedded absolute paths), the historical .105 evidence layout
+(embedded references), all releases/rollback assets and stack images on both
+hosts, patches/, board-support/, references/pytorch-upstream, and all user
+applications/data on both hosts. Both hosts idle on the release; no owned
+processes/containers; task scratch cleared. Workstation ~7.5 GB free; an
+optional future verified-redundancy deletion pass over the retired scratch
+bulk intermediates could reclaim ~5 GB but requires member-by-member
+comparison and explicit approval. Next: PLAN-09 compatibility matrix, then
+PLAN-10 performance; two important packages remain.
+
 ## D61 release finalization and .104 promotion — PLAN-08 complete (2026-11-12)
 
 [Report](bc250_release_d61_results/README.md),
