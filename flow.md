@@ -13,6 +13,29 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **PLAN-10 completed 2026-11-12 (D64+D65) — measured training performance; ALL TEN
+  original work packages now complete.** [Report](docs/development/bc250_plan10_results/README.md),
+  [evidence](../../kernel/artifacts/plan10-d65). D64: `benchmark_training_d64.py`
+  reuses the D62 owned registry + qualified timing (lr=0 fixed weights, cold first
+  step, 3 warmup, 5×3-step synchronized intervals, median/IQR, tokens/s, peak
+  memory, finite-loss/no-AMP-overflow/loss-stability checks; FP32 master weights +
+  autocast AMP). D65: 15/15 cases pass on idle .104 release via ordinary
+  bc250-train (gpt2/qwen3/qwen35-hybrid × FP32/BF16/FP16 × eager/sdpa/tiled),
+  fixture sha b4adb7f9 bound. Findings (recorded before optimizing): FP32 fastest
+  on these tiny models (bf16/fp16 AMP ~10–20% slower — cast overhead, no compute
+  win); native tiled ≈ math sdpa; qwen35-hybrid reference gated-delta/conv path is
+  the ~3–5× bottleneck (native overlay is 5.19.0-gated, absent in frozen 5.2.0);
+  hybrid bf16/fp16 cold first step ~16.7s Triton JIT vs ~38ms steady-state.
+  Utilization boundary: gpu_busy_percent EOPNOTSUPP → recorded unavailable + hwmon
+  temp 53→54°C + governor auto. Fixed 2 fixture bugs (SEQ=64>gpt2 n_positions=32
+  position-embedding segfault → SEQ=32 + incremental per-case writes; fp16 params
+  → FP32-master AMP for GradScaler). 8 new tests; full bc250 suite 198 passed/84
+  subtests; Black clean. 0 containers pre/post, no source/provider/prefix/default
+  change, no reboot, no foreign touch; immutable release (no mutable lock).
+  Single-board scope; distributed benchmark + bottleneck optimization are
+  follow-ups. Publication still gated on explicit instruction. Stopped per user
+  instruction.
+
 - **D64 2026-11-12 — PLAN-10 owned training-performance benchmark fixture (local).**
   `build_tools/bc250/benchmark_training_d64.py` reuses the D62 owned registry/
   builders + the qualified timing methodology (lr=0 fixed weights, cold first
@@ -23,8 +46,7 @@ release claims must not override this cursor and current manifests.
   on this board → recorded unavailable + hwmon temperature + DPM governor context
   (single-board scope; distributed benchmark a follow-up, L01 was correctness-
   first). 8 new tests; full bc250 suite 198 passed/84 subtests; Black clean.
-  **NEXT:** D65 bounded GPU benchmark on idle .104, performance report +
-  bottlenecks, then stop + final summary.
+  Superseded by the PLAN-10 completion entry above (D65 done; 15/15 pass).
 
 - **PLAN-09 completed 2026-11-12 (D62+D63) — compatibility matrix + reusable owned
   new-model admission fixture.** [Report](docs/development/bc250_plan09_results/README.md),

@@ -1,0 +1,27 @@
+{
+  "admit_model_d62.py": {
+    "path": "kernel/artifacts/plan10-d65/admit_model_d62.py",
+    "bytes": 20706,
+    "sha256": "28414a0cd6dc14a90e69ab324d946e90087b3eb73a8c42308847fdc5de7f1fc0"
+  },
+  "benchmark.json": {
+    "path": "kernel/artifacts/plan10-d65/benchmark.json",
+    "bytes": 9439,
+    "sha256": "a2a3814ee69d89f19f42074a640724a87db3da87dc535647000493fabb533fad"
+  },
+  "benchmark_training_d64.py": {
+    "path": "kernel/artifacts/plan10-d65/benchmark_training_d64.py",
+    "bytes": 9960,
+    "sha256": "b4adb7f9f586453f328ce3597c38687f2a7ffa41e73445bcc2b594e86e259681"
+  },
+  "run_benchmark.sh": {
+    "path": "kernel/artifacts/plan10-d65/run_benchmark.sh",
+    "bytes": 647,
+    "sha256": "6bb6799d239c3175d4db6fb4a476e0df08499b02214696e69de318bcc46f599b"
+  },
+  "runner.log": {
+    "path": "kernel/artifacts/plan10-d65/runner.log",
+    "bytes": 1729,
+    "sha256": "1fa36f0998bc7201b7720ef69965edc38cf043aa97cb85d0c05f585afa32da8f"
+  }
+}

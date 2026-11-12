@@ -30,7 +30,9 @@ import admit_model_d62 as admission  # noqa: E402  (owned registry/builders)
 
 FIXTURE = "benchmark_training_d64"
 BATCH = 2
-SEQ = 64
+# Must fit the smallest admitted context (gpt2-tiny n_positions=32); a longer
+# sequence indexes the position embedding out of bounds and faults the GPU.
+SEQ = 32
 WARMUP = 3
 INTERVALS = 5
 STEPS_PER_INTERVAL = 3
@@ -123,7 +125,10 @@ def benchmark_case(
     report["cases"].append(case)
     try:
         torch.manual_seed(1704)
-        model = admission.build_model(name, dtype, backend, device)
+        # FP32 master weights; autocast runs compute in the target dtype (the
+        # qualified AMP pattern). Casting params to fp16 yields fp16 gradients
+        # that GradScaler.unscale_ refuses.
+        model = admission.build_model(name, "float32", backend, device)
         parameters = [p for p in model.parameters() if p.requires_grad]
         optimizer = torch.optim.AdamW(parameters, lr=0)
         compute_dtype = getattr(torch, dtype)
@@ -217,8 +222,11 @@ def main() -> int:
     if args.models:
         cases = [c for c in cases if c[0] in args.models]
     cases = [c for c in cases if c[1] in args.dtypes]
+    args.output.parent.mkdir(parents=True, exist_ok=True)
     for name, dtype, backend in cases:
         benchmark_case(report, name, dtype, backend, args.device)
+        # Persist after each case so a fault preserves completed measurements.
+        args.output.write_text(json.dumps(report, indent=2) + "\n")
         latest = report["cases"][-1]
         if latest["status"] == "passed":
             print(
