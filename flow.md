@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-11 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-12 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -12,6 +12,39 @@ release claims must not override this cursor and current manifests.
 
 
 
+
+- **B07.13 completed 2026-11-12 — installed explicit FP32/FP16 `bc250-ck` on .104;
+  the one genuinely pending optional package is now done.** Tools `be602f7ee`.
+  [Report](docs/development/bc250_ck_plugin_b0713_results/README.md),
+  [use/recovery](docs/development/bc250_ck_plugin_b0713_usage.md),
+  [evidence](../../kernel/artifacts/ck-plugin-b0713). The qualified B07.12 coherent
+  FP32/FP16 CK + repaired-MIOpen archive (SHA `a0d47ed4…`, manifest `52db5d42…`,
+  format2 worker, 27 mapped libs incl. private `runtime/libMIOpen.so.1`, API5/66)
+  is installed at `sdks/bc250-miopen-dl-gfx1013-b0712` + `tools/ck-b0713` and
+  activated: `miopen-dl.json` and the `/usr/local/bin/bc250-ck` symlink moved
+  together under the EX lock. B07.7 FP32 package/tools/version record retained as
+  the live-rollback target (`miopen-dl-b0713-rollback.json` captures the exact prior
+  registry bytes + cohort-wrapper symlink). **92 checks / 10 guards**: 18 CPU
+  (identity, 5 refusals, unregister→refusal→activate, lock exclusion, 3 drift
+  refusals, live rollback→cohort `--ck-info`→reactivate), 9 guarded gates = 72
+  (host-cli 8, installed-daily/rccl 15 each with 6 probe batteries
+  b072/b073/b076/b0710_public/b0710_half/b0711 + solver137 FP32 + 8-key seed + 4
+  gradient fixtures + backward, plain-daily/rccl 6 each, core 7, onnx 4,
+  daily-consumers 5, rccl-consumers 6), ordinary UID1000 interactive `doas` guard 2.
+  Four gate fixes vs D61: deploy captures rollback once (re-activation no longer
+  clobbers it); baseline protects `current/torch/torch/__init__.py` by hash + links
+  only for real symlinks (D61 `current/torch` is a directory); CLI `--ck-info` bare
+  (sole-argument form); installed validator spawns nested entry `--check` with the
+  clean container-base `LD_LIBRARY_PATH` (inheriting the run-worker prefix maps 3
+  extra ROCm deps and drifts from the pinned 27-lib identity). 133 protected hashes
+  / 5 links / 4 AOT match; boot `ed0d130a…`, kernel `7.1.5-bc250rocm-r2`, kernel log
+  unchanged, 0 containers, no reboot/.105/user-app touch; ordinary free
+  75,098,808,320→74,579,607,552 B. Evidence tar 739,076 B SHA `bab9d8d2…`, 221 files.
+  Ordinary defaults unchanged; plugin is explicit opt-in FP32/FP16 packed2D forward
+  only (backward via native solvers), no forced solver/global speedup claim.
+  **NEXT:** optional follow-ups not started (fork CI, upstream tracking, full-prefix
+  distribution, distributed benchmark, bottleneck optimization); B07.13 tooling
+  publication sync to the public forks pending. Stopped per user pacing rule.
 
 - **GitHub publication completed 2026-11-12 — public stack under Naster17.**
   Umbrella `bc250-stack` (architecture docs, 78-patch series, offline recipes,
