@@ -24,6 +24,14 @@ their documented locations, verify unique outputs before retiring copies, and
 remove completed transfer files and duplicate staging. Follow the workspace
 AGENTS.md cleanup and storage layout rules when operating in bc250stack.
 
+The stack is **public on GitHub under `Naster17`** (bc250-stack umbrella + 10
+component forks on `bc250/gfx1013` branches). Reviewed source changes here must be
+propagated to the matching public fork and the umbrella patch series/SBOM. The
+local source repos carry a `publish` remote; push via **HTTPS + gh token** (the
+default SSH key is a different account). See the workspace
+[docs/PUBLISHING.md](../docs/PUBLISHING.md) for the repo map, push procedure and
+gotchas (ROCm/pytorch torch base, rocm LFS bypass, stale-fork re-fork).
+
 ## Quick Start
 
 ```bash
