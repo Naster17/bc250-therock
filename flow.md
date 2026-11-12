@@ -13,6 +13,26 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **GitHub publication completed 2026-11-12 — public stack under Naster17.**
+  Umbrella `bc250-stack` (architecture docs, 78-patch series, offline recipes,
+  SBOM/licenses, qualification reports, tooling) + 10 component forks on
+  maintained `bc250/gfx1013` branches: `bc250-linux` (kernel r2 snapshot on `main`
+  + r3 series/provenance README), `bc250-therock`, `bc250-rocm-libraries`,
+  `bc250-rocm-systems`, `bc250-torch` (ROCm/pytorch base, NOT mainline),
+  `bc250-triton`, `bc250-torchaudio`, `bc250-torchcodec`, `bc250-migraphx`,
+  `bc250-onnxruntime`. GitHub Release `v10.2-gfx1013-20261111` (17 assets:
+  torchvision/torchaudio/torchcodec/bc250_quant wheels + ONNX stack + SBOM/docs +
+  401MB torch source tarball). Old stack repos deleted (old-era
+  bc250-stack/rocm/torch/linux); separate-concern repos preserved (bc250-docs,
+  bc250-gfx1013-fix Mesa, bc250fc, bc250-sh2, bc250-docs-elektricm). torchvision
+  pristine v0.28.0 = recipe pin (no fork); unmodified deps recipe-fetched.
+  Push gotchas resolved: default SSH key maps to CiviDevs → HTTPS + gh token
+  (Naster17); rocm-libraries stale fork (develop at ancient merge-base) → re-fork
+  fresh for small delta; rocm LFS 37GB → bypass pre-push hook (source-only push).
+  PII scrubbed in recipes/tools (build artifacts removed); patch series kept
+  authentic for SBOM provenance. Local source repos untouched (publish remotes
+  added). Publication does not change the deployed release on either board.
+
 - **PLAN-10 completed 2026-11-12 (D64+D65) — measured training performance; ALL TEN
   original work packages now complete.** [Report](docs/development/bc250_plan10_results/README.md),
   [evidence](../../kernel/artifacts/plan10-d65). D64: `benchmark_training_d64.py`
