@@ -209,17 +209,25 @@ def build_model(name: str, dtype: str, backend: str, device: str):
     return model.train()
 
 
+def _tensor_bytes(tensor) -> bytes:
+    """Raw bitwise bytes for any dtype (numpy has no bfloat16/float16 support)."""
+    import torch
+
+    flat = tensor.detach().cpu().contiguous().reshape(-1)
+    return flat.view(torch.uint8).numpy().tobytes()
+
+
 def state_bytes(model, opt) -> bytes:
     """Bitwise parameter + optimizer-state fingerprint (D59 pattern)."""
     import torch
 
-    parts = [p.detach().cpu().numpy().tobytes() for p in model.parameters()]
+    parts = [_tensor_bytes(p) for p in model.parameters()]
     for group in opt.param_groups:
         for p in group["params"]:
             state = opt.state.get(p, {})
             for key in ("exp_avg", "exp_avg_sq"):
                 if key in state:
-                    parts.append(state[key].detach().cpu().numpy().tobytes())
+                    parts.append(_tensor_bytes(state[key]))
             if "step" in state:
                 step = state["step"]
                 value = (
@@ -263,10 +271,19 @@ def admission_battery(
     length = 16
     ids = torch.randint(0, vocab, (2, length), device=device)
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3)
+    compute_dtype = getattr(torch, dtype)
 
-    # Forward vs an independent CPU/FP64 reference.
-    loss = _loss(model, ids)
+    def autocast():
+        return torch.autocast("cuda", dtype=compute_dtype, enabled=(dtype != "float32"))
+
+    # Forward vs an independent CPU/FP64 reference. Autocast matches the
+    # qualified usage pattern (QK-norm models upcast q/k outside autocast).
+    with autocast():
+        loss = _loss(model, ids)
     cpu = copy.deepcopy(model).cpu().double()
+    # The reference must use a CPU-compatible attention path; a tiled GPU model
+    # would otherwise carry bc250_tiled into the float64 CPU forward.
+    cpu.config._attn_implementation = "sdpa"
     ref_loss = _loss(cpu, ids.cpu())
     relative = abs(loss.item() - ref_loss.item()) / max(abs(ref_loss.item()), 1e-12)
     tolerance = 0.02 if dtype == "float32" else 0.06
@@ -282,7 +299,8 @@ def admission_battery(
 
     # Backward: finite, nonzero gradients.
     opt.zero_grad(set_to_none=True)
-    loss.backward()
+    with autocast():
+        loss.backward()
     grads = [p.grad for p in model.parameters() if p.requires_grad]
     finite = all(g is not None and torch.isfinite(g).all().item() for g in grads)
     nonzero = any(g is not None and g.abs().sum().item() > 0 for g in grads)
@@ -323,8 +341,9 @@ def admission_battery(
         ref_losses = []
         for _ in range(3):
             opt.zero_grad(set_to_none=True)
-            step_loss = _loss(model, ids)
-            step_loss.backward()
+            with autocast():
+                step_loss = _loss(model, ids)
+                step_loss.backward()
             opt.step()
             ref_losses.append(step_loss.item())
         ref_state = state_bytes(model, opt)
@@ -342,8 +361,9 @@ def admission_battery(
         resumed_losses = []
         for _ in range(3):
             fresh_opt.zero_grad(set_to_none=True)
-            step_loss = _loss(fresh, ids)
-            step_loss.backward()
+            with autocast():
+                step_loss = _loss(fresh, ids)
+                step_loss.backward()
             fresh_opt.step()
             resumed_losses.append(step_loss.item())
         exact = (
@@ -371,6 +391,10 @@ def _probe(report: dict, route: str, name: str, fn) -> None:
         report["refusals"].append({"probe": name, "error": str(exc)})
         add_check(report, name, "refused-expected", error=str(exc))
         return
+    except Exception as exc:  # record unexpected probe errors, never crash the report
+        report["routes"][route] = "error"
+        add_check(report, name, "failed", error=f"{type(exc).__name__}: {exc}")
+        return
     fired = bool(result)
     report["routes"][route] = route_status(fired, False, False)
     add_check(report, name, "passed" if fired else "failed")
@@ -378,6 +402,12 @@ def _probe(report: dict, route: str, name: str, fn) -> None:
 
 def probe_routes(report: dict, device: str) -> None:
     import torch
+
+    # The conv/quant probes load sibling owned modules whose internal imports
+    # (e.g. bc250_quant_b051) must resolve from the fixture directory.
+    fixture_dir = str(Path(__file__).resolve().parent)
+    if fixture_dir not in sys.path:
+        sys.path.insert(0, fixture_dir)
 
     dtype = torch.float32
 
@@ -420,7 +450,8 @@ def probe_routes(report: dict, device: str) -> None:
         v = torch.randn(b, t, h, dv, device=device, dtype=dtype)
         g = -torch.rand(b, t, h, device=device, dtype=dtype)
         beta = torch.rand(b, t, h, device=device, dtype=dtype)
-        out = chunk_gated_delta_rule(q, k, v, g, beta, chunk_size=64)
+        result = chunk_gated_delta_rule(q, k, v, g, beta, chunk_size=64)
+        out = result[0] if isinstance(result, tuple) else result
         return torch.isfinite(out).all().item()
 
     def causal_conv():
@@ -444,6 +475,7 @@ def probe_routes(report: dict, device: str) -> None:
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         source = torch.nn.Linear(16, 16).to(device=device, dtype=dtype)
+        source.requires_grad_(False)  # frozen W8 packs an explicitly frozen weight
         frozen = module.FrozenW8Linear.from_float(source)
         out = frozen(torch.randn(2, 16, device=device, dtype=dtype))
         return torch.isfinite(out).all().item()
@@ -453,6 +485,17 @@ def probe_routes(report: dict, device: str) -> None:
     _probe(report, "gated-delta", "gated-delta-op", gated_delta)
     _probe(report, "conv", "causal-conv-op", causal_conv)
     _probe(report, "quant-w8", "frozen-w8-op", quant_w8)
+
+
+def architecture_available(name: str) -> tuple[bool, str]:
+    """Whether the registry architecture exists in the installed transformers."""
+    import transformers
+
+    spec = registry_spec(name)
+    for attr in (spec["config_class"], spec["architecture"]):
+        if not hasattr(transformers, attr):
+            return False, f"{attr} absent in transformers {transformers.__version__}"
+    return True, ""
 
 
 def main() -> int:
@@ -482,7 +525,22 @@ def main() -> int:
     report = new_report(args.model, args.dtype, args.backend)
     report["versions"] = record_versions()
     if not args.routes_only:
-        admission_battery(report, args.model, args.dtype, args.backend, args.device)
+        available, reason = architecture_available(args.model)
+        if available:
+            try:
+                admission_battery(
+                    report, args.model, args.dtype, args.backend, args.device
+                )
+            except Exception as exc:
+                add_check(
+                    report,
+                    "admission-battery",
+                    "failed",
+                    error=f"{type(exc).__name__}: {exc}",
+                )
+        else:
+            report["model_absent"] = reason
+            add_check(report, "model-architecture", "absent", reason=reason)
     probe_routes(report, args.device)
     report["status"] = summarize(report)
     report["fixture_sha256"] = sha256_bytes(Path(__file__).read_bytes())

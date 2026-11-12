@@ -13,6 +13,31 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **PLAN-09 completed 2026-11-12 (D62+D63) — compatibility matrix + reusable owned
+  new-model admission fixture.** [Report](docs/development/bc250_plan09_results/README.md),
+  [matrix](docs/development/bc250_plan09_results/compatibility-matrix.md),
+  [evidence](../../kernel/artifacts/plan09-d63). D62: `admit_model_d62.py` —
+  owned config registry (gpt2-tiny=D26 21280 identity, qwen3-tiny, qwen35-hybrid
+  lifted from the excluded module's random-init branch), finetune-n7 import guard,
+  battery load→GPU fwd vs CPU/FP64→finite/nonzero bwd→optimizer→bitwise
+  save/resume→exact continuation (D59 backbone), op-level route probes
+  (attention flags/tiled-SDPA/gated-delta/causal-conv/frozen-W8) recording
+  fired/refused/absent; pure logic torch-free testable, GPU battery lazy. Matrix:
+  THREE on-host-verified envs on torch 2.13.0a0+gfx1013 — frozen consumers
+  5.2.0/1.12.0/0.18.1, lora-smoke app 5.22.1/1.15.0/0.21.2/trl 1.17.1/datasets
+  5.1.0, Qwen3.5 native-op overlay 5.19.0. D63: 5/5 owned combos PASS on idle .104
+  release via ordinary bc250-train (gpt2 fp32-eager + bf16-sdpa; qwen3 fp32-sdpa +
+  bf16-tiled; qwen35-hybrid fp32-sdpa); forward rel 0–1.5e-05, exact bitwise
+  resume, all 4 routes fired, 0 containers pre/post, fixture sha 28414a0c bound
+  into every report. Fixed 6 fixture bugs during qualification (bf16 numpy→uint8
+  byte view; gated-delta tuple unpack; CPU-ref inherited tiled→sdpa; W8 needs
+  frozen weight; bf16 autocast; record-don't-crash). 17 new tests; full bc250 suite
+  190 passed/84 subtests; Black clean (ruff absent on workstation). No
+  source/provider/prefix/default change, no reboot, no foreign touch; immutable
+  release (no mutable runtime lock). **NEXT:** PLAN-10 measured training
+  performance (last important package); publication still gated on explicit
+  instruction. Stopped after D63 per user instruction.
+
 - **D62 2026-11-12 — PLAN-09 admission fixture + compatibility matrix (local).**
   [Matrix](docs/development/bc250_plan09_results/compatibility-matrix.md).
   New reusable owned new-model admission fixture
@@ -30,8 +55,7 @@ release claims must not override this cursor and current manifests.
   packages.json), lora-smoke app 5.22.1/1.15.0/0.21.2/trl 1.17.1/datasets 5.1.0
   (verified on-host), Qwen3.5 overlay 5.19.0. 17 new local tests; full bc250 suite
   190 passed/84 subtests; Black clean (ruff unavailable on workstation).
-  **NEXT:** D63 bounded GPU admission on idle .104 release, populate matrix
-  admission records, then STOP + final summary (user instruction).
+  Superseded by the PLAN-09 completion entry above (D63 done; 5/5 pass).
 
 - **Space reclamation completed 2026-11-12 — verified-redundancy pass (user-approved).**
   [Report](docs/development/bc250_space_reclaim_20261112_results/README.md),

@@ -1,0 +1,42 @@
+{
+  "admit_model_d62.py": {
+    "path": "kernel/artifacts/plan09-d63/admit_model_d62.py",
+    "bytes": 20706,
+    "sha256": "28414a0cd6dc14a90e69ab324d946e90087b3eb73a8c42308847fdc5de7f1fc0"
+  },
+  "gpt2-bf16-sdpa.json": {
+    "path": "kernel/artifacts/plan09-d63/gpt2-bf16-sdpa.json",
+    "bytes": 1912,
+    "sha256": "8296699ccb39fb71dc84c96ecbd949e096029340347da38768479ae0e93d5a04"
+  },
+  "gpt2-fp32-eager.json": {
+    "path": "kernel/artifacts/plan09-d63/gpt2-fp32-eager.json",
+    "bytes": 1913,
+    "sha256": "114a508124df04086c02e6073f5e3aeef544ac7fae2d0f39780e0e5a533a2b14"
+  },
+  "qwen3-bf16-tiled.json": {
+    "path": "kernel/artifacts/plan09-d63/qwen3-bf16-tiled.json",
+    "bytes": 1882,
+    "sha256": "cb12541684706c8a4a6e105c182ca4705fa73d0920fea4d36207df744f5a28d4"
+  },
+  "qwen3-fp32-sdpa.json": {
+    "path": "kernel/artifacts/plan09-d63/qwen3-fp32-sdpa.json",
+    "bytes": 1863,
+    "sha256": "7065808c1b7abf8cf63fa56a8e82981acb3aec44fa3523459ef5f3e19519b78e"
+  },
+  "qwen35-hybrid-fp32.json": {
+    "path": "kernel/artifacts/plan09-d63/qwen35-hybrid-fp32.json",
+    "bytes": 1884,
+    "sha256": "20dd9afa20ffcb07eccddb5953947a4f73dfa6c70e004f392df34425f409a87b"
+  },
+  "run_admission.sh": {
+    "path": "kernel/artifacts/plan09-d63/run_admission.sh",
+    "bytes": 894,
+    "sha256": "88e169c616cad189c468c70cc156c73671fe1cdfe3bffb42d7c0c0e78ea02b66"
+  },
+  "runner.log": {
+    "path": "kernel/artifacts/plan09-d63/runner.log",
+    "bytes": 10124,
+    "sha256": "eac4a8c056b197b613b4fc02d16d1c25e978d8c25e56071f3256bfc3cb8596ce"
+  }
+}

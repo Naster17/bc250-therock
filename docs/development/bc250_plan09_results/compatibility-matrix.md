@@ -94,9 +94,12 @@ torch 2.13.0a0+gfx1013 from the native provider (`/workspace/pytorch-work/torch`
   frozen causal-conv ops on the hybrid Qwen3.5 architecture. Toggles
   `BC250_QWEN35_TRAINING_OPS=0` / `BC250_GATED_DELTA=0` restore references.
 - The overlay runtime lives under the excluded user application; owned fixtures
-  must lift the random-init config branch rather than import that module
-  (the D62 admission fixture does this via its `qwen35-hybrid-tiny` registry
-  entry, which records the architecture absent when 5.19.0 is not present).
+  must lift the random-init config branch rather than import that module (the
+  D62 admission fixture does this via its `qwen35-hybrid-tiny` registry entry).
+- D63 clarification: the hybrid Qwen3.5 **architecture** is also present in the
+  frozen transformers 5.2.0 and admits there with the reference (torch)
+  gated-delta/conv path. The 5.19.0 gate applies to the **native op overlay**
+  (`qwen35_training_ops.install`), not to the base architecture's availability.
 
 ## 3. Consumer wheels (release `python-consumers`)
 
@@ -143,9 +146,31 @@ proof. Forward support alone is insufficient for a training claim.
 
 ### Admission records
 
-| Model (owned config) | Env | Routes observed | Result | Evidence |
-| --- | --- | --- | --- | --- |
-| _pending D63 run_ | | | | |
+D63 bounded run on the idle .104 release (`daily` profile, torch
+2.13.0a0+gfx1013, transformers 5.2.0 / accelerate 1.12.0 / peft 0.18.1,
+`gfx1013:xnack-`), fixture `admit_model_d62.py` sha256 `28414a0c…`. Every model
+passed the full battery (load → forward vs CPU/FP64 → finite/nonzero backward →
+optimizer step → bitwise save/resume → exact resumed continuation). Op-level
+route probes fired on every run: attention backend flags (efficient/flash
+**refused**, quiet math fallback), tiled-SDPA, gated-delta, causal-conv, frozen-W8.
+Board clean: 0 containers before/after. Evidence: `kernel/artifacts/plan09-d63/`.
+
+| Model (owned config) | dtype / backend | Forward rel. err | Resume | Routes fired | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| gpt2-tiny (21280 params) | fp32 / eager | 1.0e-07 | exact | attention, conv + all probes | gpt2-fp32-eager.json |
+| gpt2-tiny | bf16 / sdpa | 1.2e-05 | exact | attention, conv + all probes | gpt2-bf16-sdpa.json |
+| qwen3-tiny (312320 params) | fp32 / sdpa | 0.0 | exact | attention + all probes | qwen3-fp32-sdpa.json |
+| qwen3-tiny | bf16 / bc250_tiled | 1.5e-05 | exact | attention(tiled) + all probes | qwen3-bf16-tiled.json |
+| qwen35-hybrid-tiny | fp32 / sdpa | 1.7e-07 | exact | attention, gated-delta, conv + all probes | qwen35-hybrid-fp32.json |
+
+Notes:
+- The hybrid Qwen3.5 **architecture** is present in transformers 5.2.0 and admits
+  with the reference (torch) gated-delta/conv path; the native op **overlay**
+  (`qwen35_training_ops.install`) is the separate 5.19.0-gated path (§2c).
+- bf16 runs use autocast (the qualified usage pattern); the CPU/FP64 reference
+  uses a CPU-compatible `sdpa` attention path, not the GPU tiled implementation.
+- These are owned random-init configs, not the pretrained Qwen3.5-2B application
+  model; admission establishes the architecture/route path, not model quality.
 
 ## 6. Requalification rules
 
