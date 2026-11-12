@@ -148,18 +148,22 @@ def main():
             record = json.loads(RECORD.read_text())
             _verify_active(record)
             assert LAUNCHER.is_symlink()
-            rollback = dict(
-                schema=1,
-                registry_bytes_b64=(
-                    base64.b64encode(REGISTRY.read_bytes()).decode()
-                    if REGISTRY.exists()
-                    else None
-                ),
-                symlink_target=os.readlink(LAUNCHER),
-                replaced_package=record["package"],
-            )
-            atomic_json(ROLLBACK, rollback)
-            ROLLBACK.chmod(0o644)
+            # Capture the pre-B07.13 state exactly once. Re-activation after an
+            # unregister/rollback must not clobber the original recovery target
+            # (the qualification cycles unregister->activate->rollback->activate).
+            if not ROLLBACK.exists():
+                rollback = dict(
+                    schema=1,
+                    registry_bytes_b64=(
+                        base64.b64encode(REGISTRY.read_bytes()).decode()
+                        if REGISTRY.exists()
+                        else None
+                    ),
+                    symlink_target=os.readlink(LAUNCHER),
+                    replaced_package=record["package"],
+                )
+                atomic_json(ROLLBACK, rollback)
+                ROLLBACK.chmod(0o644)
             atomic_json(REGISTRY, record)
             REGISTRY.chmod(0o644)
             _swap_symlink(TOOLS / "bc250_ck.py")
