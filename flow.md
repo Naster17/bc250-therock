@@ -13,6 +13,26 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D62 2026-11-12 — PLAN-09 admission fixture + compatibility matrix (local).**
+  [Matrix](docs/development/bc250_plan09_results/compatibility-matrix.md).
+  New reusable owned new-model admission fixture
+  `build_tools/bc250/admit_model_d62.py`: config-driven registry (gpt2-tiny=D26
+  21280-param identity, qwen3-tiny, qwen35-hybrid-tiny lifted from the excluded
+  module's random-init branch), owned-import guard (refuses finetune-n7 sys.path),
+  battery = load → GPU forward vs CPU/FP64 ref → finite/nonzero backward →
+  optimizer step → bitwise save/resume + exact continuation (D59 backbone, save
+  BEFORE reference continuation) → op-level route probes (attention backend
+  flags/tiled-SDPA, gated-delta, causal-conv, frozen-W8) recording
+  fired/refused/absent. Pure logic importable without torch; GPU battery lazy.
+  Matrix documents THREE verified environments on native torch 2.13.0a0+gfx1013:
+  frozen consumers transformers 5.2.0/accelerate 1.12.0/peft 0.18.1 (+triton 3.8.0/
+  numpy 2.5.1/hub 1.4.1/safetensors 0.8.0/tokenizers 0.22.2, from release
+  packages.json), lora-smoke app 5.22.1/1.15.0/0.21.2/trl 1.17.1/datasets 5.1.0
+  (verified on-host), Qwen3.5 overlay 5.19.0. 17 new local tests; full bc250 suite
+  190 passed/84 subtests; Black clean (ruff unavailable on workstation).
+  **NEXT:** D63 bounded GPU admission on idle .104 release, populate matrix
+  admission records, then STOP + final summary (user instruction).
+
 - **Space reclamation completed 2026-11-12 — verified-redundancy pass (user-approved).**
   [Report](docs/development/bc250_space_reclaim_20261112_results/README.md),
   [journal](docs/development/bc250_space_reclaim_20261112_results/journal.json),
