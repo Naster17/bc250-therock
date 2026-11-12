@@ -13,6 +13,19 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D64 2026-11-12 — PLAN-10 owned training-performance benchmark fixture (local).**
+  `build_tools/bc250/benchmark_training_d64.py` reuses the D62 owned registry/
+  builders + the qualified timing methodology (lr=0 fixed weights, cold first
+  step, 3 warmup, 5×3-step synchronized intervals, median/IQR, tokens/s, peak
+  memory, finite-loss + no-AMP-overflow + loss-stability checks). Case matrix =
+  registry backends × FP32/BF16/FP16 (15 cases: gpt2 eager/sdpa, qwen3 sdpa/tiled,
+  qwen35-hybrid sdpa). Utilization boundary: `gpu_busy_percent` returns EOPNOTSUPP
+  on this board → recorded unavailable + hwmon temperature + DPM governor context
+  (single-board scope; distributed benchmark a follow-up, L01 was correctness-
+  first). 8 new tests; full bc250 suite 198 passed/84 subtests; Black clean.
+  **NEXT:** D65 bounded GPU benchmark on idle .104, performance report +
+  bottlenecks, then stop + final summary.
+
 - **PLAN-09 completed 2026-11-12 (D62+D63) — compatibility matrix + reusable owned
   new-model admission fixture.** [Report](docs/development/bc250_plan09_results/README.md),
   [matrix](docs/development/bc250_plan09_results/compatibility-matrix.md),
