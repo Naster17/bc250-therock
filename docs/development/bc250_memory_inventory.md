@@ -2952,6 +2952,73 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   Remaining optional: broader launch reduction for long-seq LoRA; D68 finer
   selectivity/larger geometries; N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
+  **D70 LoRA step decomposition + launch-reduction feasibility completed
+  2026-11-13 (.104 release, app env, D67-pattern guardians; measurement only,
+  no source/default/release change):** first bounded scope of the broader
+  launch-reduction direction. New owned tools (bc250-therock):
+  decompose_lora_d70.py (transparent CUDA-event span wrapper around the
+  unchanged train_two_host.py: class-level Trainer.training_step /
+  Accelerator.backward / clip_grad_norm_ phase patches, INSTANCE-level patch
+  on the prepared AcceleratedOptimizer.step (accelerate re-patches the inner
+  optimizer instance around every FP16 scaler step — a class-level AdamW
+  patch is not stable), layer/MLP forward+full-backward hooks by block_type,
+  transparent fn wraps causal_conv1d_fn/torch_chunk_gated_delta_rule/eager;
+  spans finalized post-run, no in-step syncs; kill switch BC250_D70_DECOMPOSE;
+  BC250_D70_PROFILE=1 profiles exactly one steady update; raw spans dumped),
+  probe_launch_d70.py (7-section feasibility fixture: profiler, graph MLP,
+  graph tiny Qwen3.5 eager ATen, graph + D68 fused Triton, graph +
+  checkpointing, make_graphed_callables, instrumentation selftest; blocked =
+  finding, ParityError = failure), launch_reduction_d70/ guard_d70 (logic
+  byte-identical to D69) + bounded_launch (identical) + run_d70 orchestrator
+  (resume; cases decomp-1024 6 updates, profile-1024 2 updates, decomp-4096
+  1 cold update) + summarize_d70. Reproduction: 1024 steady 36.118s (0.999×
+  D69 36.166), loss 2.47170 identical, peak 6.17GiB, 4380 spans, 0 unpaired,
+  1152 dangling recompute pres exactly as diagnosed; 4096 cold 329.770s
+  (1.017× D69 324.172; r5 325.884s — cold variability, loss bit-identical),
+  peak 6.99GiB, 730 spans; GPU-timeline coverage 1.0002/0.9999, CPU wall
+  closure 0.000, exact uninstall. **1024 finding:
+  GEMM-compute-bound, NOT launch-bound — 157,675 kernel launches/update,
+  36.32s kernel device-busy ≈ 100% of the 36.1s step; ~89% Tensile FP16 GEMM
+  (dominant Cijk HHS MT64x1x64_SE GSU3 skinny-tile family 1176 calls ×
+  14.5ms = 17.1s; aten::mm 8248 calls 30.5s); GPU timeline: mixer/linear
+  54.7%, MLP 32.5%, mixer/full 5.8% (eager CORE 0.12s = 0.3%), fwd/bwd other
+  6.9%, optimizer 30ms = 0.1% (D69 optimizer-dominates hypothesis REFUTED),
+  conv+chunk fn spans ~1.2s ≈ 3%. CPU structure overlaps GPU: micro walls
+  22.4s, inter-micro gaps 10.4s, post-clip 3.3s (audit finite-check drain).
+  4096 finding: the ~9× step growth is NOT attention — mixer/linear 215.1s
+  65.2% (10.9× growth for 4× tokens, superlinear LoRA GEMM cost), MLP 84.6s
+  25.7% (7.2×), mixer/full 16.1s 4.9%, conv fn 8.95s (20.3× growth), chunk
+  5.93s (7.5×; r5 3.61s/4.5× — cold variability), eager core 1.72s
+  (14.8× ≈ L² but 0.5% of step); 8192 infeasibility is GEMM/conv scaling,
+  not attention. Probe: ALL 7
+  sections work — torch.profiler CUDA; HIP graph capture bitwise-exact
+  (loss+grads rel-L2 0) for MLP fwd+bwd 12.01→5.63ms 2.13×, tiny Qwen3.5
+  eager 28.49→13.62ms 2.09×, + D68 fused Triton 29.28→11.83ms 2.47× (75
+  native calls 0 fallbacks), + checkpointing 52.45→15.26ms 3.44×,
+  make_graphed_callables; real-model graph payoff bounded by the ~11%
+  non-GEMM share. Ranked next levers: (1) GEMM efficiency for LoRA shapes
+  (CK FP16 bc250-ck qualification / Tensile skinny-N tuning / LoRA GEMM
+  batching — separate scopes; 2× GEMM ≈ 45% step cut at 1024), (2) native
+  depthwise causal conv (20× growth), (3) graph-capture integration,
+  (4) attention routing DEMOTED (0.3–0.5%), (5) chunk fusion minor. Defects
+  retained: tiny model defaulted SDPA (config._attn_implementation fix;
+  constructor rejects the kwarg) + graphed-callables stale AccumulateGrad
+  (release eager graph) (r1); diag1 checkpoint hook semantics (recompute
+  fires fwd-PRE not fwd-POST; full bwd hooks fire once and cover recompute;
+  LIFO pairing + leftover counters); AdamW class patch vs accelerate (r2,
+  transparency evidence retained); async budget double-count + census
+  op/kernel device-time double-count (r3, DeviceType separation); single-
+  update progress print (r5, progress_label helper). 20 new tests, suite 305
+  pass, Black clean. No app source/entry/output/checkpoint change, no user
+  data (D67 owned data by hash), installed 21398daf + candidate 06c5a8e1
+  unchanged, boards clean every phase (boot a3142efc unchanged, nonce acks,
+  0 containers). Evidence kernel/artifacts/launch-reduction-d70 (+ per-file
+  artifacts.json); host /home/nik/bc250work/launch-reduction-d70 retained.
+  [Report](bc250_launch_reduction_d70_results/README.md). Publication:
+  bc250-therock tools+report (no Torch source change), umbrella bc250-stack
+  curated D70. Remaining optional: GEMM-efficiency scope (evidence-ranked
+  first), native conv, graph integration, D68 headroom, N4 deeper/upstream-
+  tracking/full-prefix/N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

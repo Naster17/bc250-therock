@@ -12,6 +12,54 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D70 LoRA step decomposition + launch-reduction feasibility completed
+  2026-11-13 — the step is GEMM-compute-bound, NOT launch-bound; graph
+  capture feasible and bitwise-exact; evidence-ranked next lever is GEMM
+  efficiency for the LoRA shapes.**
+  [Report](docs/development/bc250_launch_reduction_d70_results/README.md),
+  [evidence](../../kernel/artifacts/launch-reduction-d70). First bounded
+  scope of the broader launch-reduction direction (measurement only; no
+  app/source/default/package/release change). New owned tools:
+  decompose_lora_d70.py (transparent CUDA-event span wrapper around the
+  unchanged app entry: class-level phase patches + prepared-optimizer
+  INSTANCE patch (accelerate re-patches the inner optimizer every FP16
+  scaler step) + layer/MLP hooks + conv/chunk/eager fn wraps; finalized
+  post-run, no in-step syncs; kill switch; optional one-update profiler;
+  raw spans dumped), probe_launch_d70.py (7-section feasibility fixture),
+  launch_reduction_d70/ guardian (D69 logic identical) + orchestrator
+  (resume) + summarizer. Reproduction: 1024 steady 36.118s (0.999× D69
+  36.166), loss 2.4717 identical, peak 6.17GiB; 4096 cold 329.770s (1.017×
+  D69 324.172; r5 325.884s — cold variability, loss bit-identical), peak
+  6.99GiB; GPU-timeline coverage ~1.000, CPU closure 0, 0 unpaired hooks,
+  exact uninstall. **1024: GPU ~100% busy — 157,675 kernel launches/update,
+  36.32s device-busy, ~89% Tensile FP16 GEMM (dominant skinny-tile
+  MT64x1x64 GSU3 family 1176×14.5ms = 17.1s); mixer/linear 54.7%, MLP
+  32.5%, full-attn mixer 5.8% (eager core 0.3%), optimizer 0.1% (30ms —
+  D69 optimizer hypothesis refuted), conv+chunk ~3%. 4096: the ~9× growth
+  is NOT attention — mixer/linear 65.2% (10.9×), MLP 25.7% (7.2×), conv
+  20× (8.95s), eager core 14.8× ≈ L² but 0.5%; 8192 infeasibility is
+  GEMM/conv scaling.** Probe: torch.profiler works; HIP
+  graph capture bitwise-exact for MLP fwd+bwd (2.13×), tiny Qwen3.5 eager
+  ATen (2.09×), D68 fused Triton (2.47×, 75 native calls 0 fallbacks),
+  gradient checkpointing (3.44×), make_graphed_callables — real-model
+  payoff bounded by the ~11% non-GEMM share. Ranked next levers:
+  (1) GEMM efficiency for LoRA shapes (CK FP16 bc250-ck qualification /
+  Tensile skinny-N tuning / LoRA GEMM batching — separate scopes; 2× GEMM
+  ≈ 45% step cut), (2) native depthwise causal conv (20× growth),
+  (3) graph-capture integration, (4) attention routing DEMOTED (0.3–0.5%),
+  (5) chunk fusion minor. Defects retained: tiny-model SDPA default +
+  graphed-callables stale graph (r1); diag1 checkpoint hook semantics
+  (recompute fwd-PRE fires, fwd-POST interrupted; bwd hooks fire once and
+  cover recompute); AdamW class patch vs accelerate → instance patch (r2);
+  async budget + census op/kernel double-count (r3); single-update progress
+  print (r5). 20 new workstation tests, suite 305 pass, Black clean. D67
+  owned data by hash; boards clean every phase (boot a3142efc unchanged,
+  nonce acks, 0 containers). Host /home/nik/bc250work/launch-reduction-d70
+  retained for replay. Publication: bc250-therock tools+report (no Torch
+  source change), umbrella bc250-stack curated D70. **NEXT (optional):**
+  GEMM-efficiency scope for LoRA shapes (evidence-ranked first), native
+  conv, graph integration, or the prior backlog — see
+  BC250_REMAINING_PLAN.md. Stopped per user pacing rule.
 
 - **D69 route portability to Transformers 5.22.1 completed 2026-11-13 — port
   qualified and clean; step-level gain only ~1–2%, 8192 still beyond the
