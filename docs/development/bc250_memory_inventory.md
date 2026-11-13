@@ -2801,7 +2801,9 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   package/source/release change, no .105/user-app access. Evidence
   kernel/artifacts/bottleneck-d66 (r2/r3/r4 reports, runner r1–r4, fixtures,
   artifacts.json); host /home/nik/bc250work/bottleneck-d66 retained for replay.
-  [Report](bc250_bottleneck_d66_results/README.md). Remaining optional: fused
+  [Report](bc250_bottleneck_d66_results/README.md). Publication: bc250-therock
+  7bb99d9b8→b3860f614; umbrella bc250-stack main3802e3d→6f76f72 (curated D66
+  sections in reports/README.md + docs/PERFORMANCE.md). Remaining optional: fused
   native solve/scan, trainable-weight native conv, low-precision cast overhead,
   larger-geometry admission; distributed benchmark separate.
 

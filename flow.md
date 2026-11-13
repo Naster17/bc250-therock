@@ -43,7 +43,10 @@ release claims must not override this cursor and current manifests.
   0 containers/GPU clients pre/post, 54°C, boot a3142efc unchanged, ordinary
   bc250-train caller under the immutable release — no default/package/source/
   release change, no .105/user-app access. Host task dir
-  /home/nik/bc250work/bottleneck-d66 retained for replay. **NEXT (optional):**
+  /home/nik/bc250work/bottleneck-d66 retained for replay. Publication:
+  bc250-therock 7bb99d9b8→b3860f614; umbrella bc250-stack main 3802e3d→6f76f72
+  (curated D66 sections in reports/README.md + docs/PERFORMANCE.md).
+  **NEXT (optional):**
   fused native solve/scan kernels, trainable-weight native conv, low-precision
   cast overhead, larger-geometry admission; or distributed benchmark — see
   BC250_REMAINING_PLAN.md. Stopped per user pacing rule.
