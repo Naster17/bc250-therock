@@ -2739,6 +2739,38 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   do not reproduce the fork tree; rocm-libraries has more commits than its 33 patches
   + LFS-heavy; pytorch umbrella series is the historical incremental export — these
   three excluded from the matrix pending base/commit reconciliation. No board access.
+  **Patch-series reconciliation completed2026-11-13 (publication-only):** umbrella
+  main5e6cbfd→3802e3d; CI run43433605536 success — all8 patched components now
+  reconstruct their published forks (8 verify jobs + syntax). Regenerated from the
+  authoritative local fork histories with git format-patch base..head (content/
+  authors/messages authentic; only subject numbering/filenames normalized):
+  rocm-libraries33→38 on base3d8f334b9a7 (ROCm/rocm-libraries develop; adds the five
+  B07.12-era MIOpen CK-plugin commits: FP32 DL facade, descriptor/runtime contracts,
+  FP16 DL gates, FP32 accumulation repair, binary-cache versioning; old REPOS pin
+  therock-7.13-27423 does not exist upstream), rocm-systems6→8 on
+  d5c528019d (hip-version_10.2.62820; adds RCCL NVTX-include + iostream fixes, fixes
+  duplicate0001 numbering), pytorch complete22-patch single-base series at
+  patches/bc250-pytorch-complete on ROCm/pytorch release/2.13 c779020750 →
+  head8d8b18df5/tree33a862732a52 (exact match to D46 torch-complete.json verified
+  export; historical incremental patches/bc250-pytorch retained unchanged, never
+  combined). New index apply mode in verify_patch_series.py for LFS-heavy bases:
+  rocm-libraries base tree is9.38GiB of git blobs/54787 files (the earlier worktree
+  checkout resource failure); index mode = fetch --depth1 --filter=blob:none (~2MiB)
+  + read-tree + git apply --cached (lazy-fetch only the113 patched files' preimage
+  blobs) + write-tree --missing-ok with GIT_NO_LAZY_FETCH=1 (plain write-tree
+  lazy-fetches the entire missing blob set — diagnosed via GIT_TRACE and avoided);
+  GIT_LFS_SKIP_SMUDGE=1 on all git calls; BC-250 delta touches no LFS file, no binary
+  diffs. 8 new unittest cases (am/index agreement, tree-mismatch/corrupt-series/
+  patch-count/unknown-mode refusals), Black clean; all8 verified locally against real
+  upstreams pre-push incl. 5 am-mode regressions. Fork trees pinned: rocm-libraries
+  046ed8e3dcad, rocm-systems65deb63f0ed7, pytorch33a862732a52. Docs refreshed
+  (FORK_CI.md/REPOS.md/ARCHITECTURE.md/both pytorch READMEs). No fork branch changed
+  (forks already carried full histories), no board access, deployed release
+  unchanged. Umbrella staged in workspace tmp/patch-reconcile-20261113 (clone retired
+  after push; re-clone for future maintenance). One rocm-systems patch keeps its
+  original upstream author (Stella Laurenzo, rocr hotswap default) — authentic
+  provenance; pytorch0010/0011 commit-message build-host paths already public in the
+  old series/fork, retained per authenticity rule.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

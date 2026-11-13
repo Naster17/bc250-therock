@@ -13,6 +13,46 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **Patch-series reconciliation completed 2026-11-13 — fork CI now proves all 8
+  patched components reconstruct their published forks.** Umbrella `bc250-stack`
+  `main` `5e6cbfd→3802e3d`; **GitHub Actions run 43433605536 success** (8 verify
+  jobs + syntax). The three series the first CI run exposed as incomplete were
+  regenerated from the authoritative local fork histories (`git format-patch
+  base..head`, commit content/authors/messages unchanged): **rocm-libraries 33→38**
+  (adds the five B07.12-era MIOpen CK-plugin commits; base `3d8f334b9a7` on
+  ROCm/rocm-libraries develop — the old REPOS.md pin `therock-7.13-27423` does not
+  exist upstream), **rocm-systems 6→8** (adds the two RCCL fixes — NVTX includes
+  when tracing disabled, iostream for DDA IPC — and fixes duplicate `0001-`
+  numbering; base tag `hip-version_10.2.62820` `d5c528019d`), **pytorch complete
+  22-patch single-base series** published at `patches/bc250-pytorch-complete`
+  (base ROCm/pytorch release/2.13 `c779020750`, head `8d8b18df5`, tree
+  `33a86273…` — exactly matches the D46 verified complete export; the historical
+  incremental `patches/bc250-pytorch` is retained unchanged as evidence, never
+  combined). **New index apply mode** in `tools/verify_patch_series.py` for
+  LFS-heavy bases: rocm-libraries' base tree is ~9.4 GiB of git blobs (54,787
+  files; the earlier checkout failure), so index mode fetches `--depth 1
+  --filter=blob:none` (~2 MiB), `read-tree`, `git apply --cached` per patch
+  (lazy-fetches only the ~113 patched files' preimage blobs), then
+  `write-tree --missing-ok` with `GIT_NO_LAZY_FETCH=1` (plain write-tree would
+  lazy-fetch the entire missing blob set — diagnosed and avoided).
+  `GIT_LFS_SKIP_SMUDGE=1` on every git call; the BC-250 delta touches no
+  LFS-tracked file and has no binary diffs. 8 new unit tests
+  (`tools/tests/verify_patch_series_test.py`) prove am/index tree agreement +
+  mismatch/corruption/count refusals; Black clean. All 8 components also verified
+  locally against the real upstreams before push (5 am-mode regressions re-passed
+  with the updated tool). Fork trees pinned: rocm-libraries `046ed8e3`,
+  rocm-systems `65deb63f`, pytorch `33a86273`. Docs updated
+  (reports/FORK_CI.md, REPOS.md, ARCHITECTURE.md, both pytorch READMEs). **No fork
+  branch changed** (forks already carried full histories); no board access;
+  deployed release unchanged; patch provenance authentic (one rocm-systems patch
+  keeps its original upstream author). Umbrella staged in task scratch
+  `tmp/patch-reconcile-20261113/` (clone retired after push; re-clone
+  `https://github.com/Naster17/bc250-stack.git` for future maintenance).
+  **NEXT (optional):** bottleneck optimization (PLAN-10 ~3–5× hybrid
+  gated-delta/conv), distributed benchmark, then upstream-tracking/full-prefix
+  distribution/N4 deeper getter/N2/N6/N7/NF4/FP16-PEFT/soak on concrete need —
+  see BC250_REMAINING_PLAN.md. Stopped per user pacing rule.
+
 - **Fork CI added 2026-11-13 — patch-apply reconstruction proof, live+green on
   GitHub.** Umbrella `bc250-stack` `main` `ba3c710→5e6cbfd`: `.github/workflows/
   patch-apply.yml` + `tools/verify_patch_series.py` + `ci/components.json` +
