@@ -3019,6 +3019,64 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   curated D70. Remaining optional: GEMM-efficiency scope (evidence-ranked
   first), native conv, graph integration, D68 headroom, N4 deeper/upstream-
   tracking/full-prefix/N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
+  **D71 GEMM efficiency for the LoRA shapes completed 2026-11-13 (.104
+  release, app env, D67-pattern guardians; measurement+qualification only,
+  no deployment):** reused the qualified N32 method (private-handle
+  rocblas_gemm_ex_get_solutions enumeration, CPU-double parity
+  rtol0.015/atol0.05/rel-L2<0.004, canary guards, input preservation, 6-round
+  alternating paired timing). New owned tools (bc250-therock):
+  census_gemm_d71.py (TorchDispatchMode mm/bmm/addmm layout census with
+  strides+dtypes, torch→rocBLAS column-major conversion), bench_gemm_d71.py
+  (40-layout solution sweep + torch.mm-vs-private-handle diagnostic +
+  hipBLASLt fresh-process AB/BA), profile_shapes_d71.py (per-shape in-model
+  profile, ONE-microbatch window of update 2, stream aggregation of
+  prof.events()), gemm_efficiency_d71/ preset_d71 (release rows preserved +
+  winners≥1.05×) + guard_d71 (D69/D70-identical logic) + bounded_launch
+  (HARDENED: `timeout 430` podman backstop) + run_d71 orchestrator (resume,
+  required-output checks) + summarize_d71. **Census: 27,240 GEMM
+  calls/update, 71 distinct layouts. Sweep: EVERY FP16 layout has exactly 2
+  admitted Tensile solutions (vs N32 BF16 14/14/8); best-vs-default
+  0.96–1.05× (noise; an apparent 1.20× qkv win in a partial run did NOT
+  reproduce) → 0 preset winners. hipBLASLt 0.28–0.60× (SLOWER). torch.mm ≈
+  private-handle default in isolation (gap ~1.0). Whole-step A/B: ref
+  36.196s (1.0008× D69 36.166), candidate 36.158s (1.001×), final loss
+  BIT-IDENTICAL (Δ=0.0), finite grads, no skips, peak 6.16GiB. Per-shape
+  in-model profile (×4/update): GEMM 32.8s, all-kernel 36.3s ≈ step (GPU
+  ~100% busy, ~90% GEMM — D70 CONFIRMED). Dominant cost = base
+  [1024,6144]@[6144,2048] projection 35ms/call in-model (~16s/update); LoRA
+  A/B GEMMs cheap (0.25ms/call, ~0.4s/update). In-model vs hot-cache fixture
+  gap 4× on the large projection (35 vs 8.8ms) → memory/state-dependent, NOT
+  a bad-solution choice; isolated fixtures NOT decision-grade. Dominant
+  kernel Cijk_Ailk_Bjlk_HHS_MT64x1x64_GSU3 14.55ms/call = D70's.** REVISED
+  recommendation: STOP FP16 solution-selection tuning (exhausted); tractable
+  levers = native conv (D70 20× growth), graph capture (~10% non-GEMM, D70
+  proven bitwise-exact), D68 headroom; a GEMM breakthrough needs dedicated
+  microarchitectural R&D (resolve in-model-vs-fixture gap: backward
+  fp16_alt_impl flag / memory locality, then LoRA-into-base fusion).
+  **INCIDENT r6: full-update record_shapes profile thrashed the host (SSH
+  banner timeouts, ping alive); orchestrator 620s session timeout closed ssh
+  → SIGHUP killed guardian mid-cleanup BEFORE the boot-guard ack (written
+  only in finally); boot-guard child died with it → designed emergency
+  reboot did NOT fire; orphaned container held ~10GB. USER POWER-CYCLED
+  .104 (boot a3142efc→78b56954, r2 kernel 7.1.5-bc250rocm-r2, release
+  10.2-gfx1013-20261111-138a66f52 intact, 0 containers, no data loss, no
+  deployment to roll back; .105 untouched). Hardening r7: one-microbatch
+  profile window; `timeout 430` podman backstop (BusyBox integer-seconds
+  verified on .105); session timeout 620→900s; envelope unchanged.** Other
+  defects fixed: census config not staged (r1), SystemExit swallowed census
+  output (r2, capture + required-output resume check), PosixPath JSON (r3),
+  --mount-ro syntax not --mount src:dst:ro (r4), profiler OOM exit137 (r5,
+  key_averages(group_by_input_shape) → stream aggregation), audit schema
+  finite_gradients/optimizer_skipped (r5). 22 new tests, suite 327 pass,
+  Black clean. No app/source/default/package/release change; no user data
+  (D67 owned data by hash); installed modules unchanged. Evidence
+  kernel/artifacts/gemm-efficiency-d71 (16 files + artifacts.json); host
+  /home/nik/bc250work/gemm-efficiency-d71 retained.
+  [Report](bc250_gemm_efficiency_d71_results/README.md). Publication:
+  bc250-therock tools+report (no Torch source change), umbrella curated D71.
+  Remaining optional: native conv, graph integration, D68 headroom, GEMM
+  microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
+  N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

@@ -12,6 +12,52 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D71 GEMM efficiency for the LoRA shapes completed 2026-11-13 — the easy
+  GEMM win does NOT exist; FP16 solution selection exhausted; D70's
+  GEMM-bound attribution confirmed but the cost is the large base
+  projections, not the LoRA adapters. Direction revised.**
+  [Report](docs/development/bc250_gemm_efficiency_d71_results/README.md),
+  [evidence](../../kernel/artifacts/gemm-efficiency-d71). Reused the
+  qualified N32 method (private-handle rocblas_gemm_ex_get_solutions sweep,
+  CPU-double parity rtol 0.015/atol 0.05/rel-L2<0.004, canaries, paired
+  timing). New owned tools: census_gemm_d71.py (TorchDispatchMode layout
+  census), bench_gemm_d71.py (40-layout solution sweep + torch-vs-private
+  diagnostic + hipBLASLt AB/BA), profile_shapes_d71.py (per-shape in-model
+  profile, one-microbatch window, stream aggregation), gemm_efficiency_d71/
+  preset generator + guardian + orchestrator(resume) + summarizer.
+  **Census: 27,240 GEMM calls/update, 71 layouts. Sweep: every FP16 layout
+  has exactly 2 admitted Tensile solutions, best-vs-default 0.96–1.05×
+  (noise) → 0 preset winners. hipBLASLt 0.28–0.60× (slower). Whole-step A/B:
+  ref 36.196s (1.0008× D69), candidate 36.158s (1.001×), loss BIT-IDENTICAL
+  (Δ=0), peak 6.16GiB. Per-shape profile: GEMM 32.8s/update, all-kernel
+  36.3s/update (~90% GEMM — D70 confirmed). Dominant cost = base
+  [1024,6144]@[6144,2048] projection at 35ms/call in-model (~16s/update);
+  LoRA A/B GEMMs cheap (0.25ms/call, ~0.4s/update). In-model vs hot-cache
+  fixture gap 4× on the large projection → memory/state-dependent, NOT a
+  bad-solution choice; fixtures not decision-grade.** Revised recommendation:
+  STOP FP16 solution tuning (no headroom); tractable levers are native conv
+  (D70 20× growth), graph capture (~10% non-GEMM, D70 proven), D68 headroom;
+  a GEMM breakthrough needs dedicated microarchitectural R&D (resolve the
+  in-model-vs-fixture gap: backward fp16_alt_impl flag / memory locality,
+  then fusion). **INCIDENT (r6): the full-update record_shapes profile
+  thrashed the host; the orchestrator's 620s session timeout SIGHUP-killed
+  the guardian mid-cleanup before it wrote the boot-guard ack, and the
+  boot-guard child died with it, so the designed emergency reboot did not
+  fire; an orphaned container held ~10GB. User power-cycled .104
+  (boot a3142efc→78b56954, r2 kernel, release intact, no data loss, no
+  deployment to roll back). Hardening: one-microbatch profile window,
+  `timeout 430` podman backstop in bounded_launch (BusyBox integer-seconds),
+  session timeout 620→900s; envelope unchanged.** Defects also fixed: census
+  config staging, SystemExit capture, PosixPath JSON, --mount-ro syntax,
+  profiler OOM (stream aggregation), audit schema (finite_gradients/
+  optimizer_skipped). 22 new tests, suite 327 pass, Black clean. No
+  app/source/default/package/release change; no user data; .105 untouched.
+  Host /home/nik/bc250work/gemm-efficiency-d71 retained. Publication:
+  bc250-therock tools+report (no Torch source change), umbrella curated D71.
+  **NEXT (optional): native depthwise causal conv, graph-capture integration,
+  D68 headroom, or the GEMM microarchitectural R&D scope — see
+  BC250_REMAINING_PLAN.md. Stopped per user pacing rule.**
+
 - **D70 LoRA step decomposition + launch-reduction feasibility completed
   2026-11-13 — the step is GEMM-compute-bound, NOT launch-bound; graph
   capture feasible and bitwise-exact; evidence-ranked next lever is GEMM
