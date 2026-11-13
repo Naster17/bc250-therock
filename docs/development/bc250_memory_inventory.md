@@ -2771,6 +2771,39 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   original upstream author (Stella Laurenzo, rocr hotswap default) — authentic
   provenance; pytorch0010/0011 commit-message build-host paths already public in the
   old series/fork, retained per authenticity rule.
+  **D66 hybrid bottleneck optimization completed2026-11-13 (.104 release, ordinary
+  caller):** first bounded scope of the PLAN-10 bottleneck follow-up. Root cause of
+  the ~3–5× qwen35-hybrid cost: frozen Transformers5.2.0 torch fallback
+  torch_chunk_gated_delta_rule builds its triangular inverse with a63-iteration
+  Python loop (hundreds of sequential small kernels/call); installed native
+  torch.nn.bc250_gated_delta.chunk_gated_delta_rule (A06/A07, byte-identical
+  21398daf) uses batched solve_triangular. New owned opt-in helper
+  route_qwen35_gated_delta_d66.py (96cc2529) gates5.2.0+qwen3_5_text+gfx1013, kill
+  switch BC250_NATIVE_GATED_DELTA=0, counted fallbacks (dtype/geometry/
+  initial-state/compiled), exact uninstall; trainable-weight conv + recurrent/
+  decode NOT routed. Fixture profile_hybrid_d66.py (final4f84c030): breakdown
+  step34.93ms/chunk-fwd8.02ms(23%)/conv-fwd0.19ms, chunk fwd+bwd≈25.5ms≈73% of
+  step; paired op timing benchmark geometry FP32 25.49→5.88ms(4.33×) BF16/FP16
+  ~4.1×, long-256 3.35–3.59×; D64-protocol model timing frozen→routed FP32
+  36.994→15.254ms(2.425×,4196tok/s) BF16 39.529→17.894(2.209×) FP16
+  39.728→18.002(2.207×), IQR≤1.5%; parity FP32 lossΔ0/logits1.49e-7/worst grad
+  8.43e-4(A_log)/dt_bias7.63e-4, BF16 lossΔ3.91e-5 grad1.62e-2, FP16 lossΔ1.00e-5
+  grad1.36e-2; independent CPU/FP64 gradient anchor frozen3.51e-4/routed1.19e-3
+  ≤5e-3 (both valid FP32 roundings, no structural defect); full D62 admission
+  battery on routed model passed; 5 refusal checks. Bound discipline: original
+  FP32 grad bound1e-4 FAILED r2 at8.43e-4 — retained; revised2e-3 pre-declared
+  with justification + CPU anchor before r3/r4 (not silently relaxed). Method
+  defects fixed: r1 doas-TTY (milestone TTY driver, runtime PIN, ordinary nik
+  caller), r2 per-call-sync breakdown ~30× inflation, r3 cold-step breakdown →
+  r4 3-step warmup, summary print + refusal double-record cosmetics. 21 new
+  tests, suite225 pass, Black clean. Board clean: 0 containers/GPU clients
+  pre/post, 54→54°C, boot a3142efc unchanged, immutable release, no default/
+  package/source/release change, no .105/user-app access. Evidence
+  kernel/artifacts/bottleneck-d66 (r2/r3/r4 reports, runner r1–r4, fixtures,
+  artifacts.json); host /home/nik/bc250work/bottleneck-d66 retained for replay.
+  [Report](bc250_bottleneck_d66_results/README.md). Remaining optional: fused
+  native solve/scan, trainable-weight native conv, low-precision cast overhead,
+  larger-geometry admission; distributed benchmark separate.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

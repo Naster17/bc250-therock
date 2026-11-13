@@ -13,6 +13,41 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D66 hybrid bottleneck optimization completed 2026-11-13 — opt-in native
+  gated-delta routing qualified, 2.2–2.4× hybrid step speedup on .104.**
+  [Report](docs/development/bc250_bottleneck_d66_results/README.md),
+  [evidence](../../kernel/artifacts/bottleneck-d66). Root cause of PLAN-10's ~3–5×
+  qwen35-hybrid cost: the frozen Transformers 5.2.0 torch fallback
+  `torch_chunk_gated_delta_rule` builds its triangular inverse with a
+  **63-iteration Python loop** (hundreds of sequential small kernels); the
+  installed native `torch.nn.bc250_gated_delta.chunk_gated_delta_rule` (A06/A07,
+  byte-identical `21398daf…`) uses batched `solve_triangular`. New owned helper
+  `route_qwen35_gated_delta_d66.py` (sha `96cc2529…`) routes the model's chunk
+  call explicitly: gates 5.2.0 + qwen3_5_text + gfx1013, kill switch
+  `BC250_NATIVE_GATED_DELTA=0`, counted fallbacks (dtype/geometry/initial-state/
+  compiled), exact uninstall; conv (trainable weights) and recurrent/decode paths
+  NOT routed. Fixture `profile_hybrid_d66.py` (final sha `4f84c030…`): steady-state
+  breakdown (step 34.93ms; chunk fwd 8.02ms/23%; chunk fwd+bwd ≈25.5ms ≈73% of
+  step), paired op timing (benchmark geometry FP32 **4.33×**, BF16/FP16 ~4.1×;
+  long-256 3.35–3.59×), D64-protocol model timing frozen→routed FP32
+  36.994→15.254ms (**2.425×**, 4196 tok/s), BF16 2.209×, FP16 2.207× (IQR≤1.5%),
+  model parity (FP32 loss Δ0/logits 1.5e-7/worst grad 8.4e-4 on A_log; BF16/FP16
+  within A06/A07-style bounds), independent CPU/FP64 gradient anchor (frozen
+  3.5e-4 / routed 1.2e-3 ≤5e-3), full D62 admission battery on the routed model
+  passed, 5 refusal checks. **Bound discipline:** original FP32 grad bound 1e-4
+  FAILED in r2 at 8.43e-4 — retained on record; revised 2e-3 bound pre-declared
+  with justification + CPU anchor before r3/r4 confirmation (not silently
+  relaxed). Method defects fixed: r1 doas-TTY launch (milestone TTY driver,
+  runtime PIN), r2 per-call-sync breakdown inflation, r3 cold-step breakdown →
+  r4 warmup. 21 new tests, full suite 225 pass, Black clean. Board clean:
+  0 containers/GPU clients pre/post, 54°C, boot a3142efc unchanged, ordinary
+  bc250-train caller under the immutable release — no default/package/source/
+  release change, no .105/user-app access. Host task dir
+  /home/nik/bc250work/bottleneck-d66 retained for replay. **NEXT (optional):**
+  fused native solve/scan kernels, trainable-weight native conv, low-precision
+  cast overhead, larger-geometry admission; or distributed benchmark — see
+  BC250_REMAINING_PLAN.md. Stopped per user pacing rule.
+
 - **Patch-series reconciliation completed 2026-11-13 — fork CI now proves all 8
   patched components reconstruct their published forks.** Umbrella `bc250-stack`
   `main` `5e6cbfd→3802e3d`; **GitHub Actions run 43433605536 success** (8 verify
