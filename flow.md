@@ -1,6 +1,6 @@
 # BC-250 project memory: read first after resume or compaction
 
-Updated 2026-11-12 (local; checkpoints explicitly use UTC). This is the
+Updated 2026-11-13 (local; checkpoints explicitly use UTC). This is the
 **canonical working memory**, not a release note.
 Detailed hardware, implementation history, evidence and resolved defects:
 [bc250_memory_inventory.md](docs/development/bc250_memory_inventory.md).
@@ -42,9 +42,15 @@ release claims must not override this cursor and current manifests.
   75,098,808,320→74,579,607,552 B. Evidence tar 739,076 B SHA `bab9d8d2…`, 221 files.
   Ordinary defaults unchanged; plugin is explicit opt-in FP32/FP16 packed2D forward
   only (backward via native solvers), no forced solver/global speedup claim.
-  **NEXT:** optional follow-ups not started (fork CI, upstream tracking, full-prefix
-  distribution, distributed benchmark, bottleneck optimization); B07.13 tooling
-  publication sync to the public forks pending. Stopped per user pacing rule.
+  **Publication sync done 2026-11-13:** B07.13 tooling/docs propagated to the public
+  Naster17 forks — `bc250-therock` `bc250/gfx1013` fast-forwarded `eec815a31→dc66a9fc3`
+  (5 commits: publication record ×2 + B07.13 ×3; source as-is per established
+  practice, no full IPs/excluded-app/creds in the diff) and `bc250-stack` `main`
+  `29048c0→8b6c2bc` (curated/scrubbed B07.13 report in reports/README.md). Umbrella
+  component patch series/SBOM unaffected (B07.13 is therock tooling, not a ROCm
+  source patch; release identities unchanged). **NEXT:** optional follow-ups not
+  started (fork CI, upstream tracking, full-prefix distribution, distributed
+  benchmark, bottleneck optimization). Stopped per user pacing rule.
 
 - **GitHub publication completed 2026-11-12 — public stack under Naster17.**
   Umbrella `bc250-stack` (architecture docs, 78-patch series, offline recipes,

@@ -2703,10 +2703,13 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   native solvers; no forced solver/global speedup/universal-correctness claim.
   [Install/use/recovery](bc250_ck_plugin_b0713_usage.md),
   [report/evidence](bc250_ck_plugin_b0713_results/README.md). The one genuinely
-  pending optional package is done; all ten work packages complete. Remaining
-  optional follow-ups (fork CI/upstream tracking/full-prefix distribution/
-  distributed benchmark/bottleneck optimization) not started; B07.13 tooling
-  publication sync to public forks pending.
+  pending optional package is done; all ten work packages complete. Publication
+  sync done2026-11-13: bc250-therock bc250/gfx1013 eec815a31→dc66a9fc3 (source as-is,
+  no full IPs/excluded-app/creds in diff) + bc250-stack main29048c0→8b6c2bc
+  (curated/scrubbed B07.13 report); umbrella component patch series/SBOM unaffected
+  (therock tooling, not a ROCm source patch; release identities unchanged).
+  Remaining optional follow-ups (fork CI/upstream tracking/full-prefix distribution/
+  distributed benchmark/bottleneck optimization) not started.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16
