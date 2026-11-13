@@ -29,7 +29,11 @@ release claims must not override this cursor and current manifests.
   limits); pytorch's umbrella series is the historical incremental (incomplete)
   export. These three are excluded from the matrix pending base/commit
   reconciliation — recorded in reports/FORK_CI.md, not silently dropped. No board
-  access; publication-only. Stopped per user pacing rule.
+  access; publication-only. **NEXT (recommended):** patch-series reconciliation
+  (rocm-libraries/rocm-systems/pytorch) then extend the CI matrix; see the
+  prioritized backlog in BC250_REMAINING_PLAN.md and the operational safety
+  reminders in AGENTS.md (boot-guard nonce ack, per-boot PIDs, locks, btrfs).
+  Stopped per user pacing rule.
 
 - **N4 read-only telemetry audit completed 2026-11-13 on .104 (r2 release).**
   [Report](docs/development/bc250_n4_telemetry_results/README.md),
