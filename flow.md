@@ -13,6 +13,35 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **N4 read-only telemetry audit completed 2026-11-13 on .104 (r2 release).**
+  [Report](docs/development/bc250_n4_telemetry_results/README.md),
+  [evidence](../../kernel/artifacts/n4-telemetry-r2). Re-established governor/
+  source/overlay provenance + validated read-only clock/temp/power/fan semantics
+  on kernel `7.1.5-bc250rocm-r2`, boot `a3142efc…` (board rebooted since B07.13's
+  `ed0d130a…`). Helper `qualify_n4_telemetry_on_host.py` adapts the proven r3
+  sampler: 84 samples (~5Hz, 20 idle/44 load/20 post-load), one bounded 8s native
+  integer load (`checks=131072 launches=58592`), kernel log byte-identical,
+  mounts/governor-binary/config/fan hashes/power-policy(auto) unchanged, no
+  clock/voltage/fan/governor/overlay/boot change, no raw SMU mailbox commands.
+  **Provenance gap confirmed:** running governor `00cd65a6…` is a musl cross-build
+  (BuildID `a1de19b4…`) ≠ retained repo `240b0df` native build `e8028ca2…`; the
+  `freq1_input` overlay code is absent from every repo branch (smu/gpu-metrics/
+  fix_11/dbus-performance-mode) though the running binary exhibits it → running
+  source NOT pinned. **r2 vs r3 semantics difference:** r3 kernel `current_gfxclk`
+  read 2–47MHz (disagreeing with governor); on r2 all clock views agree on sensible
+  steps 1000/1400/1600/1800/2000MHz (patched==hwmon 84/84) because the governor
+  drives SMU and r2 reads it coherently — still governor-set, NOT independent
+  physical attained-clock calibration. Utilization still governor-derived
+  (`gpu_activity` 65535, DRM load errno22, `gpu_busy_percent` EOPNOTSUPP). Edge
+  52→70°C/Tctl 53.9→69.25°C/fan PWM90→175. **Safety fix:** first helper draft wrote
+  a plain `acknowledged` marker; the boot guard requires nonce-matched `ack.json`
+  and emergency-reboots on unacknowledged deadline — acked correctly before
+  deadline (no restart), helper fixed, clean re-run passed. **NEXT (optional):**
+  pin running governor build source + minimal guarded read-only `GetGfxFrequency`
+  (PMFW 0x37) live-clock getter after establishing SMU mailbox ownership; keep
+  hybrid per-core/power semantics separate; no legacy 8-core patch blind apply.
+  Stopped per user pacing rule.
+
 - **B07.13 completed 2026-11-12 — installed explicit FP32/FP16 `bc250-ck` on .104;
   the one genuinely pending optional package is now done.** Tools `be602f7ee`.
   [Report](docs/development/bc250_ck_plugin_b0713_results/README.md),

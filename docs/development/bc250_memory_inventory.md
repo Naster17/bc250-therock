@@ -1805,6 +1805,24 @@ Important operational facts:
   over `gpu_metrics` and hwmon freq1_input. Those views are governor-supplied;
   DPM/DRM use the suspect original Current clock slot. True attained clocks
   remain unqualified; auto does not mean stock clocks. Source/provenance below.
+- **N4 r2 update2026-11-13:** on kernel7.1.5-bc250rocm-r2 (boot a3142efc, governor
+  PID3044) the read-only audit (84 samples, bounded8s load, checks131072) found all
+  clock views (governor overlay/kernel-translated current+average/hwmon/DRM) agree
+  on sensible1000/1400/1600/1800/2000MHz steps (patched==hwmon84/84), unlike r3's
+  2–47MHz Current slot — the governor drives SMU and r2 reads it coherently. Still
+  governor-set, NOT independent physical attained-clock calibration (no raw PMFW
+  mailbox read issued). Utilization still governor-derived (gpu_activity65535, DRM
+  load errno22, gpu_busy_percent EOPNOTSUPP). Edge52→70°C/Tctl53.9→69.25°C/fan
+  PWM90→175. Running governor00cd65a6 (musl cross-build, BuildID a1de19b4) ≠ retained
+  repo240b0df native build e8028ca2; freq1_input overlay code absent from every repo
+  branch (smu/gpu-metrics/fix_11/dbus-performance-mode) → running source still not
+  pinned. Kernel log/mounts/governor-config-fan hashes/power-policy(auto) unchanged;
+  no clock/voltage/fan/governor/overlay/boot change. Boot-guard ack bug fixed
+  (nonce-matched ack.json required; emergency-reboot on unacked deadline).
+  [Report](bc250_n4_telemetry_results/README.md),
+  [evidence](../../../kernel/artifacts/n4-telemetry-r2). Remaining optional: pin
+  governor build source + guarded read-only GetGfxFrequency(PMFW0x37) live-clock
+  getter after establishing SMU mailbox ownership.
 - The SMU OC service requests CPU 3500 MHz, scale −19, max_temperature 90;
   these are settings, not verified operating frequency/voltage.
 - `/usr/local/bin/bc250-fan-curve` reads CPU k10temp/Tctl despite comments saying
