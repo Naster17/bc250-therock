@@ -13,6 +13,54 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D69 route portability to Transformers 5.22.1 completed 2026-11-13 — port
+  qualified and clean; step-level gain only ~1–2%, 8192 still beyond the
+  envelope.** [Report](docs/development/bc250_route_port_d69_results/README.md),
+  [evidence](../../kernel/artifacts/route-port-d69). Read-only reconstruction:
+  5.22.1 dropped the 63-iteration inverse loop (now batched solve_triangular;
+  loop only in the dynamo-export branch) and calls the MODULE-LEVEL global
+  torch_chunk_gated_delta_rule (kernel-hub decorated), so D66's instance patch
+  does not apply; the remaining launch-bound piece is the Python chunk scan —
+  the same structure as the installed native default path. New owned tools:
+  route_qwen35_gated_delta_d69.py (module-scope gated wrapper; version 5.22.1 +
+  gfx1013 + app model_type qwen3_5_text gates; kill switch; kwargs classifier:
+  cu_seqlens=None + control flags num_items_in_batch/output_*/use_cache/
+  return_dict ignored-and-recorded, packed/positioned/non-causal/unknown →
+  counted fallback; targets installed|fused(D68 candidate); exact-identity
+  uninstall), d69_train_wrapper.py (verifies app config, installs, forwards
+  argv to the unchanged train_two_host.py, always uninstalls + route record;
+  runpy sys.path replicated), qualify_route_d69.py, route_port_d69/ guardian
+  (D67 pattern, audit optional) + orchestrator (resume) + summarizer.
+  Qualification (app env, guardians): op parity vs 5.22.1 reference FP32
+  ≤7.3e-7 / BF16-FP16 bitwise 0; CPU-FP64 recurrence anchor 0.2–5.3% of A06
+  tolerances; tiny-model FP32 worst grad 1.25e-3 ≤2e-3 (fused==installed at
+  C=1), BF16/FP16 bitwise 0, CPU anchor native 1.17e-3 vs reference 1.86e-3
+  ≤5e-3; 7 refusal checks. LoRA (D67 owned data by hash, global batch 4,
+  rank-128 FP16 eager+checkpointing): 1024 steady ref 36.166s / installed
+  36.189s (1.000×) / fused 35.670s (1.014×); 4096 cold ref 324.172s (D67
+  326.822 ±0.8%) / fused 317.671s (1.020×); route records 864/144 native calls,
+  ZERO fallbacks, exact uninstall; 8192-fused first update exceeded the 460s
+  guardian budget → safely stopped (kernel/registry unchanged, boot a3142efc
+  unchanged, acked, 0 containers) — STILL INFEASIBLE in the envelope.
+  **Finding: the chunk op is a small share of the LoRA step; eager attention,
+  conv reference, whole-model launch/dispatch (24 layers × 4 micro ×
+  checkpointing) and the 134M-param optimizer dominate — refines D67's
+  attribution; next lever is broader launch reduction (separate scopes).**
+  Defects retained: fixture grad-tuple unpack (r1), cu_seqlens gate (r1→r2),
+  TransformersKwargs control flags incl use_cache (r2→r4, identified via
+  fallback_kwarg_keys evidence), packed-reference refusal expectation (r3),
+  runpy sys.path gap (r4→r5). 16 new workstation tests, suite 285 pass, Black
+  clean. No app source/entry/output/checkpoint change, no user data, no
+  default/package/release change; installed module 21398daf unchanged;
+  candidate 06c5a8e1 (D68) staged read-only. Host
+  /home/nik/bc250work/route-port-d69 retained for replay. Publication:
+  bc250-therock (tools+report; no Torch source change this batch), umbrella
+  bc250-stack curated D69 section. **NEXT (optional):** broader launch
+  reduction for long-seq LoRA (qualified fused/tiled attention, conv, graph
+  capture — separate scopes); remaining D68 headroom (finer selectivity,
+  larger geometries); N4 deeper/upstream-tracking/full-prefix/N2/N6/N7/NF4/
+  FP16-PEFT/soak on concrete need. Stopped per user pacing rule.
+
 - **D68 fused native solve/scan completed 2026-11-13 — opt-in selective fusion
   qualified, op 1.13–1.81× / model-step 1.15–1.17× at seq256, default bitwise
   unchanged.** [Report](docs/development/bc250_gated_delta_d68_results/README.md),

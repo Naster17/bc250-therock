@@ -2900,6 +2900,58 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   Remaining optional: finer selectivity (~5% at C=4 scan-only>both),
   trainable-weight conv, cast overhead, larger geometries; N4 deeper/
   upstream-tracking/full-prefix/N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
+  **D69 route portability to Transformers 5.22.1 completed 2026-11-13 (.104
+  release, app env, D67-pattern guardians):** reconstruction found 5.22.1
+  replaced the 63-iteration inverse loop with batched solve_triangular (loop
+  survives only in the dynamo-export branch) and calls the MODULE-LEVEL global
+  torch_chunk_gated_delta_rule (kernel-hub decorated) — D66's instance patch
+  does not apply; the remaining launch-bound piece is the Python chunk scan,
+  same structure as the installed native default path. New owned tools
+  (bc250-therock): route_qwen35_gated_delta_d69.py module-scope gated wrapper
+  (gates transformers==5.22.1 + gfx1013 + app config model_type qwen3_5_text;
+  kill switch BC250_NATIVE_GATED_DELTA; pure classify_extra_kwargs:
+  cu_seqlens=None + control flags num_items_in_batch/output_attentions/
+  output_hidden_states/output_router_logits/return_dict/use_cache ignored and
+  recorded — the torch reference ignores them; cu_seqlens/seq_idx/cu_seq_lens_k/
+  max_length_*/position_ids non-None, is_causal=False, unknown kwargs → counted
+  fallback; targets installed|fused, fused requires the D68 candidate;
+  exact-identity uninstall), d69_train_wrapper.py (model-type pre-gate, install,
+  argv verbatim to unchanged train_two_host.py via runpy + PROJECT sys.path
+  replication, always uninstall + route-record-rankN.json; knobs
+  BC250_D69_ROUTE/NATIVE/CANDIDATE), qualify_route_d69.py (op parity vs 5.22.1
+  reference, CPU-FP64 anchor, tiny Qwen3_5TextConfig model parity both targets,
+  7 refusals), route_port_d69/ guard_d69 (D67 guardian, audit optional) +
+  bounded_launch (identical envelope) + run_d69 orchestrator (resume, root-clean
+  failed phases) + summarize_d69. Qualification r4 parity ALL PASSED: op FP32
+  ≤7.3e-7 / BF16-FP16 bitwise 0 (bounds 1e-5/1e-2); CPU-FP64 anchor worst
+  0.002/0.053/0.041 of A06 tolerances; tiny model FP32 worst grad 1.25e-3≤2e-3
+  (fused==installed at C=1), BF16/FP16 bitwise 0, CPU anchor native 1.17e-3 vs
+  reference 1.86e-3 ≤5e-3. LoRA r5 (D67 owned data by hash c70264c1/8bbd13bb/
+  85737473, global batch 4, rank-128/alpha-256 all-linear FP16 eager +
+  checkpointing, dropout .05, seed 42): 1024 steady ref 36.166s (D67 36.262
+  ±0.3%) / installed 36.189s (1.000×, identical loss 2.4717) / fused 35.670s
+  (1.014×, loss 2.4727); 4096 cold ref 324.172s (D67 326.822 ±0.8%) / fused
+  317.671s (1.020×); route records 864 (1024) / 144 (4096) native calls, ZERO
+  fallbacks, uninstalled; peaks 6.16/6.97 GiB unchanged. 8192-fused first update
+  exceeded the 460s child budget → guardian safe stop (kernel/registry
+  unchanged, boot a3142efc unchanged, nonce ack, 0 containers, 18 native calls
+  recorded) — STILL INFEASIBLE in the qualified envelope. **Finding: chunk op is
+  a small share of the LoRA step; eager attention + conv reference +
+  whole-model launch/dispatch (24 layers × 4 micro × checkpointing) + 134M-param
+  optimizer dominate; refines D67 attribution; next lever = broader launch
+  reduction (separate scopes).** Defects retained: fixture grad-tuple unpack
+  (r1), cu_seqlens=None gate (r1→r2), control flags incl use_cache (r2→r4 via
+  fallback_kwarg_keys evidence), packed reference itself refuses without FLA
+  (r3 test expectation), runpy sys.path gap (r4→r5). 16 new tests, suite 285
+  pass, Black clean. No app source/entry/output/checkpoint change, no user data,
+  no default/package/release change; installed 21398daf unchanged; D68 candidate
+  06c5a8e1 staged read-only. Evidence kernel/artifacts/route-port-d69 (28 files
+  + artifacts.json); host /home/nik/bc250work/route-port-d69 retained.
+  [Report](bc250_route_port_d69_results/README.md). Publication: bc250-therock
+  tools+report (no Torch source change), umbrella bc250-stack curated D69.
+  Remaining optional: broader launch reduction for long-seq LoRA; D68 finer
+  selectivity/larger geometries; N4 deeper/upstream-tracking/full-prefix/
+  N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16
