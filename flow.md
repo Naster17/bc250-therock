@@ -40,7 +40,11 @@ release claims must not override this cursor and current manifests.
   pin running governor build source + minimal guarded read-only `GetGfxFrequency`
   (PMFW 0x37) live-clock getter after establishing SMU mailbox ownership; keep
   hybrid per-core/power semantics separate; no legacy 8-core patch blind apply.
-  Stopped per user pacing rule.
+  **Publication sync done 2026-11-13:** bc250-therock `bc250/gfx1013`
+  `4c532c755→5b61d21ad` (source as-is, no full IPs/excluded-app/creds in diff);
+  bc250-stack `main` `8b6c2bc→ba3c710` (curated/scrubbed N4 report). Umbrella
+  component patch series/SBOM unaffected (read-only audit, no source/release
+  identity change). Stopped per user pacing rule.
 
 - **B07.13 completed 2026-11-12 — installed explicit FP32/FP16 `bc250-ck` on .104;
   the one genuinely pending optional package is now done.** Tools `be602f7ee`.
