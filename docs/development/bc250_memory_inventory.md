@@ -2837,7 +2837,9 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   runtime/default/package/source change; no reboot. Evidence
   kernel/artifacts/lora-bench-d67 (4 cases + 2 stopped attempts + summary.json +
   data-manifest-rank0/1); host bc250work/lora-bench-d67 retained BOTH.
-  [Report](bc250_distributed_benchmark_d67_results/README.md). Remaining
+  [Report](bc250_distributed_benchmark_d67_results/README.md). Publication:
+  bc250-therock c0ddc2a64→c3238f5d4; umbrella bc250-stack main6f76f72→5887d18
+  (curated D67 section in reports/README.md). Remaining
   optional: deeper bottleneck scopes; N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 

@@ -44,7 +44,9 @@ release claims must not override this cursor and current manifests.
   fallback. 24 new tests, suite 249 pass, Black clean. Both boards idle
   pre/post (0 containers/GPU clients), app originals/outputs/checkpoints
   untouched, no user data, no runtime/default/source change. Host task dirs
-  bc250work/lora-bench-d67 retained BOTH for replay. **NEXT (optional):**
+  bc250work/lora-bench-d67 retained BOTH for replay. Publication:
+  bc250-therock c0ddc2a64→c3238f5d4; umbrella bc250-stack main 6f76f72→5887d18
+  (curated D67 section in reports/README.md). **NEXT (optional):**
   deeper bottleneck work (fused native solve/scan, trainable-weight conv, cast
   overhead, larger geometries), or N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need — see BC250_REMAINING_PLAN.md.
