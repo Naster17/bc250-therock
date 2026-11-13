@@ -2842,6 +2842,64 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   (curated D67 section in reports/README.md). Remaining
   optional: deeper bottleneck scopes; N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
+  **D68 fused native solve/scan completed2026-11-13 (.104 release, ordinary
+  caller):** first bounded scope of the deeper bottleneck follow-up. Owned
+  profile fixture (profile_gated_delta_d68.py, exact-replica CUDA-event
+  breakdown verified ≤1e-6 vs installed op + isolated fwd+bwd microbenchmarks):
+  native chunk op's Python scan loop ~70% of fwd+bwd at B1/H16/D128/L1024
+  (20.35/29.20ms; launch-bound autograd ~1.27ms/chunk for ~2MFLOP), batched ATen
+  solves 48% at tiny C=1 (2.33/4.84ms); combined 55–88% across geometries.
+  Patched Torch source commit262accc (module06c5a8e1; installed21398daf
+  unchanged) adds opt-in use_fused_solve_scan=True: _tril_inverse in-register
+  64-step forward-substitution inverse (analytic backward −tril(Mᵀ dM Mᵀ,-1))
+  replaces both solves; _chunk_scan_fwd/bwd column-blocked linear-recurrence
+  scan S_{i+1}=(d_i I−k_iᵀw_i)S_i+k_iᵀu_i, out_i=(q_i−attn_i w_i)S_i+attn_i u_i
+  (adjoint G_i=M_iᵀG_{i+1}+P_iᵀdout_i, saved entering states, BV≤64, initial-state
+  gradient) replaces the loop; M/N/P/R precompute stays autograd-visible ATen;
+  elementwise Triton convention (no tl.dot, num_warps4, enable_fp_fusion False,
+  wave32) per A05/A06. Selective FUSED_SCAN_MIN_CHUNKS=2 from measured
+  decomposition (inverse-only/scan-only/both switches): C=1 every variant
+  0.79–0.94× (regression), C≥2 combined wins everywhere; 256MiB saved-state cap
+  explicit refusal; FP16/BF16 keep reference-ordered prepare; default branch
+  operation order unchanged (bitwise-invariant vs installed, checked).
+  Final r6: op FP32 a06-long26.17→14.49ms(1.81×; r3 1.94×), long256 1.58×,
+  a06-short1.17×, benchmark1.0×(default); BF16/FP16 1.13–1.77×. Model (D66 route
+  96cc2529 + injected flag, D64 protocol): seq256 routed19.05→16.55ms FP32
+  (1.15×), BF16/FP16 1.17/1.16×, vs frozen2.60/2.38/2.35×; seq32 no regression
+  (C=1 keeps default). Parity: op fused-vs-default ≤1.5e-6 FP32/≤9.3e-5 low
+  (pre-declared1e-5/1e-2); CPU/FP64 token-recurrence anchor worst0.3/5.6/3.8% of
+  A06 tolerances; model seq256 FP32 lossΔ0/logits1.37e-7/worst grad1.52e-3≤2e-3,
+  BF16 1.68e-2/FP16 1.01e-2≤0.04; seq256 FP32 CPU anchor fused2.07e-4 vs frozen
+  1.45e-3 ≤5e-3 (fused 7× closer to FP64). Extended A06 battery72/72 on candidate
+  (test7dd17cec: fused recurrence3dtypes×2norm×3lengths with state grads,
+  fused-vs-default3geometries incl C=5/D128, low-precision reference-prepare,
+  refusals non-bool+state-cap). 20 new workstation tests (8 numpy FP64
+  forward-equivalence2e-12 + finite-difference inverse/adjoint-scan gradient
+  checks; 12 fixture-logic), suite269 pass, Black clean. Defects retained:
+  battery5-tuple unpack (r1, 6 errors), fixture oracle detached inputs (r1
+  cpu_anchor), unconditional C=1 regression→measured selectivity (r1/r2→r3),
+  fixture routing._native_call nested-capture leak (per-variant finally
+  uninstalled after all3dtype installs; install#2 captured patched callable;
+  seq256 routed control ran fused scan_calls19/identical peaks r3/r4;
+  root-caused r5 INJECT/RESTORE trace; fixed per-dtype uninstall + variant
+  save/restore + per-case scan counters; diag1/diag2 proved module itself
+  1.16× seq256). Board clean every run (0 containers/GPU clients pre/post,
+  54°C, boot a3142efc unchanged); ordinary bc250-train caller, SH lock by
+  caller, immutable release; new kernels JIT into designed rw user-cache
+  /workspace/user-cache/triton; no default/package/release/installed-module
+  change, no .105/user-app access. Evidence kernel/artifacts/gated-delta-d68
+  (profile-r1, qualify-r1–r6, battery rows r2/r3/r6, runner logs incl r4/r5
+  diagnosis, diag1/2, artifacts.json); host /home/nik/bc250work/gated-delta-d68
+  retained for replay. [Report](bc250_gated_delta_d68_results/README.md).
+  Publication: bc250-torch8d8b18d→262accc (first push HTTP500 but ref landed,
+  ls-remote verified); complete series22→23 patches (base c779020750, tree
+  ce527668, 0001–0022 still reconstruct D46 tree33a86273; index-mode verify
+  PASS); umbrella bc250-stack main5887d18→b16a573 (curated D68 in
+  reports/README.md + docs/PERFORMANCE.md; FORK_CI/REPOS/ARCHITECTURE refreshed;
+  fork CI run43463566419 success, 8 components + syntax).
+  Remaining optional: finer selectivity (~5% at C=4 scan-only>both),
+  trainable-weight conv, cast overhead, larger geometries; N4 deeper/
+  upstream-tracking/full-prefix/N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

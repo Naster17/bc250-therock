@@ -13,6 +13,49 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D68 fused native solve/scan completed 2026-11-13 — opt-in selective fusion
+  qualified, op 1.13–1.81× / model-step 1.15–1.17× at seq256, default bitwise
+  unchanged.** [Report](docs/development/bc250_gated_delta_d68_results/README.md),
+  [evidence](../../kernel/artifacts/gated-delta-d68). First bounded scope of the
+  deeper bottleneck follow-up. Profile (owned fixture, exact-replica event
+  breakdown + microbenchmarks): the native chunk op's Python scan loop is ~70%
+  of fwd+bwd at B1/H16/D128/L1024 (launch-bound autograd), the two batched ATen
+  solves ~48% at the tiny C=1 geometry. Patched Torch source (commit `262accc`,
+  module sha `06c5a8e1…`) adds `use_fused_solve_scan=True`: in-register Triton
+  unit-triangular inverse (analytic backward −tril(Mᵀ dM Mᵀ)) + column-blocked
+  linear-recurrence scan (S_{i+1}=M_i S_i+N_i, adjoint backward, saved states;
+  M/N/P/R precompute stays ATen), elementwise convention (no tl.dot, wave32).
+  **Selective from C≥2** (`FUSED_SCAN_MIN_CHUNKS=2`, measured decomposition:
+  every variant regresses 0.79–0.94× at C=1); 256MiB saved-state cap refusal;
+  FP16/BF16 keep reference-ordered prepare. Final r6: op FP32 a06-long
+  26.17→14.49ms (1.81×; r3 1.94×), long256 1.58×, a06-short 1.17×, benchmark
+  1.0× (default); BF16/FP16 1.13–1.77×. Model (D66 route + flag, D64 protocol):
+  seq256 routed 19.05→16.55ms FP32 (1.15×), BF16/FP16 1.17/1.16×, vs frozen
+  2.60/2.38/2.35×; seq32 no regression (flag keeps default). Parity: op
+  fused-vs-default ≤1.5e-6 FP32 / ≤9.3e-5 low (bounds 1e-5/1e-2); CPU/FP64
+  recurrence anchor 0.3–5.6% of A06 tolerances; model seq256 FP32 worst grad
+  1.52e-3 ≤2e-3, fused 7× closer to FP64 than frozen (2.1e-4 vs 1.4e-3).
+  Extended A06 battery 72/72 on candidate; default path bitwise == installed
+  `21398daf…`; refusals pass; per-case scan counters prove path selection.
+  Defects retained: battery unpack (r1), fixture oracle detach (r1), C=1
+  regression → measured selectivity (r1/r2→r3), fixture routing-injection
+  nested-capture leak contaminating the seq256 control (r3/r4, root-caused r5
+  trace, fixed r6; diag1/diag2 retained). 20 new workstation tests (8 numpy
+  FP64 math/grad checks + 12 fixture-logic), suite 269 pass, Black clean.
+  Board clean every run (0 containers/GPU clients, 54°C, boot a3142efc
+  unchanged); ordinary bc250-train caller, immutable release, new kernels JIT
+  into the designed rw user-cache; no default/package/release/installed-module
+  change, no .105/user-app access. Host /home/nik/bc250work/gated-delta-d68
+  retained for replay. Publication: bc250-torch 8d8b18d→262accc (push 500 then
+  verified landed); complete series 22→23 patches (tree ce527668, index-mode
+  verify PASS); umbrella bc250-stack main 5887d18→b16a573 (curated D68 in
+  reports/README.md + docs/PERFORMANCE.md + FORK_CI/REPOS/ARCHITECTURE;
+  fork CI run 43463566419 success, 8 components + syntax).
+  **NEXT (optional):** remaining deeper-bottleneck scopes (finer selectivity
+  ~5% at C=4, trainable-weight conv, cast overhead, larger geometries);
+  N4 deeper/upstream-tracking/full-prefix/N2/N6/N7/NF4/FP16-PEFT/soak on
+  concrete need — see BC250_REMAINING_PLAN.md. Stopped per user pacing rule.
+
 - **D67 distributed value benchmark completed 2026-11-13 — two boards buy
   capacity, not speed; LoRA is the exception (~1.94× per update).**
   [Report](docs/development/bc250_distributed_benchmark_d67_results/README.md),
