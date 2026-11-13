@@ -2806,6 +2806,40 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   sections in reports/README.md + docs/PERFORMANCE.md). Remaining optional: fused
   native solve/scan, trainable-weight native conv, low-precision cast overhead,
   larger-geometry admission; distributed benchmark separate.
+  **D67 distributed value benchmark completed2026-11-13 (BOTH hosts, authorized
+  lora-smoke integration, owned synthetic data):** consolidated D05/D32/D35/D43/
+  L01 into one decision-ready report (full-param fits-one-board 6.8–68× slower on
+  two; doesn't-fit 1.024B FSDP 53.36s/update capacity-only; LoRA L01 +23%). New
+  measurement: train_two_host.py (832017cd both hosts) + bc250_lora_support.py
+  (2f24c6fe) BC250_LORA_BENCHMARK=1, Qwen3.5-2B rank128/alpha256 all-linear FP16
+  eager+grad-checkpointing dropout.05 constant-LR seed42, owned exact-length
+  pseudo-conversations (make_owned_data.py d706e066, seed6701, 256/length,
+  cross-host SHA-256 equal; NO user data). Global batch4 matched (single
+  micro1×accum4; DDP micro1×accum2×2). 1024 steady: single36.262s/113tok/s vs
+  DDP18.679s/219tok/s =1.941× (IQR0.22/4.15%, 5 measured, finite/no-skip);
+  4096 cold first update: 325.822 vs167.567 =1.944×; peaks single6.16/6.97GiB,
+  DDP6.67/6.66 and7.47/7.48GiB. DDP backward/all-reduce overlap hides the538MB
+  gradient payload on1GbE. 8192 NOT run — reference-path cost (eager O(L²) +
+  launch-bound gated-delta, D66 root cause unfixed in5.22.1) exceeds the
+  qualified460s guardian child budget; data generated/verified only. Stopped
+  attempts retained: global-16 1024 (108s/update; kernel-log gate flagged host
+  /swapfile activation, pre-existing2026-10-22, actor unidentified, no GPU
+  faults) and global-4 4096 4-update (326.8s first update) — both nonce-acked,
+  boards clean. Guardians guard_d67.py (L01 pattern, surviving d09 preflight, SH
+  locks .104 current/.runtime.lock + .105 migration-control/.runtime.lock, 600s
+  boot-guard, 460s bounded child 4CPU/cpuset0-3/10g12g/512PID/256shm, kernel-log
+  +registry identity, foreign-container refusal). Generator defects fixed+tests:
+  shared-RNG non-monotonic search; prompt overshoot (adaptive tokens-per-word
+  sizing); transformers5.22.1 apply_chat_template BatchEncoding (UserDict,
+  len==key count) normalization; unreachable-total prompt×completion fallback.
+  24 new tests, suite249 pass, Black clean. summarize_d67.py cold+steady modes.
+  Both boards idle pre/post; app originals/outputs/checkpoints untouched; no
+  runtime/default/package/source change; no reboot. Evidence
+  kernel/artifacts/lora-bench-d67 (4 cases + 2 stopped attempts + summary.json +
+  data-manifest-rank0/1); host bc250work/lora-bench-d67 retained BOTH.
+  [Report](bc250_distributed_benchmark_d67_results/README.md). Remaining
+  optional: deeper bottleneck scopes; N4 deeper/upstream-tracking/full-prefix/
+  N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

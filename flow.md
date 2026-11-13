@@ -13,6 +13,43 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D67 distributed value benchmark completed 2026-11-13 — two boards buy
+  capacity, not speed; LoRA is the exception (~1.94× per update).**
+  [Report](docs/development/bc250_distributed_benchmark_d67_results/README.md),
+  [evidence](../../kernel/artifacts/lora-bench-d67). Consolidated D05/D32/D35/
+  D43/L01 into one decision table (full-param fits-one-board: 6.8–68× slower on
+  two; doesn't-fit: 1.024B FSDP 53.36s/update capacity-only; LoRA: L01 +23%).
+  New owned measurement via the authorized lora-smoke integration (hashes
+  832017cd/2f24c6fe identical both hosts) in BC250_LORA_BENCHMARK mode with
+  **owned synthetic exact-length data** (no user data; generator d706e066,
+  256 samples/length, cross-host SHA-256 verified): Qwen3.5-2B rank-128 LoRA
+  FP16, global batch 4 matched (single micro1×accum4; DDP micro1×accum2×2).
+  **1024 steady state: single 36.262s (113 tok/s) vs DDP 18.679s (219 tok/s) =
+  1.941×** (IQR 0.22%/4.15%, 5 measured updates, all finite/no skips);
+  **4096 cold first update: 325.822s vs 167.567s = 1.944×**. DDP overlaps the
+  538MB gradient all-reduce with backward → 1GbE almost fully hidden. 8192 NOT
+  run: reference-path cost (eager attention O(L²) + launch-bound gated-delta)
+  exceeds the qualified 460s guardian child budget even for one measured
+  update — documented infeasibility, data generated/verified only. Scope
+  adaptations retained as evidence: global-16 1024 attempt (108s/update) and
+  global-4 4096 4-update attempt (326.8s first update) safely guardian-stopped
+  at deadline (nonce-acked guards, clean boards); the global-16 attempt's
+  kernel-log gate flagged host swap activation (/swapfile pre-existing
+  2026-10-22, actor unidentified, no GPU faults, board healthy). Guardians:
+  adapted L01 pattern (guard_d67.py + surviving d09 preflight, SH locks, 600s
+  boot-guard nonce ack, 460s child, kernel-log/registry identity, foreign-
+  container refusal). Generator defects fixed+regression-tested: shared-RNG
+  non-monotonic search, prompt overshoot for multi-token syllables, transformers
+  5.22.1 BatchEncoding (UserDict len==keys) normalization, unreachable-total
+  fallback. 24 new tests, suite 249 pass, Black clean. Both boards idle
+  pre/post (0 containers/GPU clients), app originals/outputs/checkpoints
+  untouched, no user data, no runtime/default/source change. Host task dirs
+  bc250work/lora-bench-d67 retained BOTH for replay. **NEXT (optional):**
+  deeper bottleneck work (fused native solve/scan, trainable-weight conv, cast
+  overhead, larger geometries), or N4 deeper/upstream-tracking/full-prefix/
+  N2/N6/N7/NF4/FP16-PEFT/soak on concrete need — see BC250_REMAINING_PLAN.md.
+  Stopped per user pacing rule.
+
 - **D66 hybrid bottleneck optimization completed 2026-11-13 — opt-in native
   gated-delta routing qualified, 2.2–2.4× hybrid step speedup on .104.**
   [Report](docs/development/bc250_bottleneck_d66_results/README.md),
