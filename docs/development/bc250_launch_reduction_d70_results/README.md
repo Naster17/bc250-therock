@@ -293,11 +293,12 @@ not a controlled scaling study.)
 
 ## Verification
 
-- Workstation: 19 new unit tests (aggregation closure, steady median,
-  summarizer incl. cold-4096, guardian-reuse identity, orchestrator
-  configs); full bc250 suite **304 pass**, Black clean.
+- Workstation: 20 new unit tests (aggregation closure, steady median,
+  progress label, summarizer incl. cold-4096, guardian-reuse identity,
+  orchestrator configs); full bc250 suite **305 pass**, Black clean.
 - On-board: probe / decomposition / census passed with the final tools
-  (run 4); 4096 cold-update decomposition run 5; evidence
+  (run 4); 4096 cold-update decomposition passed run 6 (run 5 completed the
+  update but failed on the progress-print defect); evidence
   `kernel/artifacts/launch-reduction-d70/` (per-file SHA-256
   `artifacts.json`); host task directory
   `/home/nik/bc250work/launch-reduction-d70/` retained for replay. Board
