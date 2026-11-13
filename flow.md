@@ -45,7 +45,7 @@ release claims must not override this cursor and current manifests.
   (unbounded async backlog whose one sync ate the 36 s budget → trivial
   degradation 1.0); fixed with calibrated bounded windows (window_call_count
   clamp 50–2000) + regression test; r1 retained as labelled evidence. 23 new
-  tests, suite 349 pass, Black clean. Pre-declared thresholds meaningful 1.5 /
+  tests, suite 350 pass, Black clean. Pre-declared thresholds meaningful 1.5 /
   dominant 2.5 (above D71 noise band). No app/source/default/package/release/
   preset change; flag measured not modified; no user data; .105 untouched.
   Board boot 78b56954 unchanged, 3 guardians passed, kernel/registry unchanged,

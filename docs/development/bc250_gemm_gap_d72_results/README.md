@@ -121,7 +121,7 @@ retained as labelled evidence (`sustained-r1-windowbug.json`,
 - Workstation: 23 new unit tests (layout selection, profile-based dominant,
   flag constant, bounded window sizing, attribution bands, guardian-reuse
   identity, hardened backstop, orchestrator configs); full bc250 suite
-  **349 pass**, Black clean.
+  **350 pass**, Black clean.
 - On-board: all three guardians passed (alt-impl, sustained r2, locality).
   Evidence `kernel/artifacts/gemm-gap-d72/` (per-file SHA-256 `artifacts.json`,
   plus labelled r1 window-bug evidence); host task directory

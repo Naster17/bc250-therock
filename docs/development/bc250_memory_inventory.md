@@ -3116,7 +3116,7 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   fixed r2 with calibrated bounded windows (window_call_count clamp50–2000,
   sync each) + regression test; r1 retained as labelled evidence
   (sustained-r1-windowbug.json, summary-r1-windowbug.json). alt-impl/locality
-  unaffected (bounded 3-call synced measurements). 23 new tests, suite 349
+  unaffected (bounded 3-call synced measurements). 23 new tests, suite 350
   pass, Black clean. No app/source/default/package/release/preset change; flag
   measured not modified; no user data; .105 untouched. Board boot 78b56954
   unchanged, 3 guardians passed, kernel/registry unchanged, 0 foreign
