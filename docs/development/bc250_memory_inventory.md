@@ -3078,6 +3078,57 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
+**D72 GEMM in-model-vs-fixture gap diagnostic completed 2026-11-13 (.104
+  release, D67-pattern guardians, D71-hardened envelope; measurement only, no
+  model training/full-model profile/deployment):** tested the three causes D71
+  listed but never measured for the dominant base projection's 4×
+  in-model-vs-fixture gap (35 vs 8.8ms). New owned tool probe_gap_d72.py
+  (three modes reusing the D71 private-handle Gemm + N32 parity contract
+  rtol0.015/atol0.05/rel-L2<0.004; dominant taken from D71's per-shape profile
+  by device time, NOT a geometry proxy — the two large projections tie on
+  K×N=2048×6144) + gemm_gap_d72/ guard_d72 (D71-identical logic) +
+  bounded_launch (timeout430 backstop) + run_d72 orchestrator (resume) +
+  summarize_d72 (pure attribution). Inputs: archived D71 census+profile
+  evidence (owned, no user data). **alt-impl: backward fp16_alt_impl flag
+  (0x4; CUDABlas.cpp sets it via ROCmBackwardPassGuard on backward fp16 GEMMs;
+  D71's sweep used flags=0 only) is NOT the cause — dominant fwd 9.217ms vs
+  bwd 9.446ms = 1.025× (noise), IDENTICAL solution set [-318,-319] for both
+  flags, best bwd/fwd 0.871×; all 8 swept mm layouts 0.987–1.025×. sustained:
+  21 windows × 221 calls over 36s flat ~7.8ms/call (degradation 1.002×), clock
+  pinned 2000MHz throughout (freq_min==freq_max), temp ≤77°C → NO throttling
+  (closes N4's attained-clock question for sustained GEMM load; read-only
+  hwmon, no SMU mailbox). locality: cold pool(8 pairs)/hot 0.9997×,
+  fresh-write/hot 1.024× → NO memory-locality effect.** Attribution
+  `not_reproduced_by_isolated_fixtures` (pre-declared thresholds meaningful
+  1.5/dominant 2.5, above D71's 0.96–1.05 noise band; all ratios ~1.0): the
+  fixture runs the dominant GEMM at ~7.8–9.4ms under EVERY isolated condition
+  vs 35ms in-model — the 3.7–4.5× gap survives all tests. CONCLUSION: the gap
+  is a SYSTEMIC in-model execution effect, NOT a per-GEMM property; remaining
+  untested candidates = whole-model working-set/TLB pressure (2B params +
+  activations + optimizer state vs one ~37MB tensor pair), kernel
+  concurrency/queueing (~157k launches/update), profiler device-time
+  attribution incl. wait time. NOT fixable by per-GEMM tuning (flag/solution/
+  locality). Reinforces D71: tractable levers remain native conv/graph
+  capture/D68+non-GEMM; GEMM breakthrough needs deep microarchitectural R&D,
+  now NARROWED by eliminating the cheap causes. Defect fixed: sustained r1
+  single-window bug (wall-clock inner loop queued an unbounded async backlog
+  whose one sync ate the 36s budget → 1 window, trivial degradation1.0);
+  fixed r2 with calibrated bounded windows (window_call_count clamp50–2000,
+  sync each) + regression test; r1 retained as labelled evidence
+  (sustained-r1-windowbug.json, summary-r1-windowbug.json). alt-impl/locality
+  unaffected (bounded 3-call synced measurements). 23 new tests, suite 349
+  pass, Black clean. No app/source/default/package/release/preset change; flag
+  measured not modified; no user data; .105 untouched. Board boot 78b56954
+  unchanged, 3 guardians passed, kernel/registry unchanged, 0 foreign
+  containers, all boot-guards acknowledged, 0 containers post, 58.85°C.
+  Evidence kernel/artifacts/gemm-gap-d72 (+artifacts.json + labelled r1);
+  host /home/nik/bc250work/gemm-gap-d72 retained.
+  [Report](bc250_gemm_gap_d72_results/README.md). Publication: bc250-therock
+  tools+report (no Torch source change), umbrella curated D72. Remaining
+  optional: native conv, graph integration, D68 headroom, (narrowed) GEMM
+  microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
+  N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
+
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16
   bound: H9/W11/C4/K8/g1/f3/index1 actual0.8427734375 vs0.8424274250864983;

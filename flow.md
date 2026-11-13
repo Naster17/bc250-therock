@@ -12,6 +12,50 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **D72 GEMM in-model-vs-fixture gap diagnostic completed 2026-11-13 — none of
+  the three cheap explanations reproduces the 4× gap; the GEMM cost is
+  structural/systemic, not a per-GEMM property. Cheap GEMM paths closed.**
+  [Report](docs/development/bc250_gemm_gap_d72_results/README.md),
+  [evidence](../../kernel/artifacts/gemm-gap-d72). D71 located the dominant
+  base projection at ~35 ms/call in-model vs ~8.8 ms hot-cache fixture (4×)
+  and listed three untested causes; D72 tests all three with isolated
+  microbenchmarks (no model training, no full-model profile — avoids the D71
+  r6 host-thrash vector). New owned tool probe_gap_d72.py (three modes reusing
+  the D71 private-handle Gemm + N32 parity contract; dominant taken from D71's
+  per-shape profile, not a geometry proxy — the two large projections tie on
+  K×N) + gemm_gap_d72/ guardian (D71-identical) + hardened bounded_launch
+  (timeout 430) + orchestrator (resume) + pure summarizer. **alt-impl: the
+  backward fp16_alt_impl flag (0x4, CUDABlas.cpp ROCmBackwardPassGuard) is NOT
+  the cause — fwd 9.217 ms vs bwd 9.446 ms (1.025×, noise), identical solution
+  set [-318,-319] for both flags, best bwd/fwd 0.871×; all 8 swept mm layouts
+  0.987–1.025×. D71's sweep used flags=0 only and never exercised this path.
+  sustained: 21 windows × 221 calls over 36 s flat at ~7.8 ms/call
+  (degradation 1.002×), clock pinned 2000 MHz throughout, temp ≤77 °C → NO
+  throttling (also closes N4's attained-clock question for sustained GEMM
+  load). locality: cold pool/hot 0.9997×, fresh-write/hot 1.024× → NO memory
+  locality effect.** Attribution `not_reproduced_by_isolated_fixtures`: the
+  fixture runs the dominant GEMM at ~7.8–9.4 ms under EVERY isolated condition
+  vs 35 ms in-model (3.7–4.5× gap survives all tests). The gap is a systemic
+  in-model execution effect (remaining untested candidates: whole-model
+  working-set/TLB pressure, kernel concurrency/queueing, profiler device-time
+  attribution incl. wait time) — NOT fixable by per-GEMM tuning. Reinforces
+  D71: tractable levers remain native conv / graph capture / D68+non-GEMM; a
+  GEMM breakthrough needs deep microarchitectural R&D, now narrowed by
+  eliminating the cheap causes. Defect fixed: sustained r1 single-window bug
+  (unbounded async backlog whose one sync ate the 36 s budget → trivial
+  degradation 1.0); fixed with calibrated bounded windows (window_call_count
+  clamp 50–2000) + regression test; r1 retained as labelled evidence. 23 new
+  tests, suite 349 pass, Black clean. Pre-declared thresholds meaningful 1.5 /
+  dominant 2.5 (above D71 noise band). No app/source/default/package/release/
+  preset change; flag measured not modified; no user data; .105 untouched.
+  Board boot 78b56954 unchanged, 3 guardians passed, kernel/registry unchanged,
+  0 foreign containers, all boot-guards acknowledged, 0 containers post,
+  58.85 °C. Host /home/nik/bc250work/gemm-gap-d72 retained. Publication:
+  bc250-therock tools+report (no Torch source change), umbrella curated D72.
+  **NEXT (optional): native depthwise causal conv, graph-capture integration,
+  D68 headroom, or the (now-narrowed) GEMM microarchitectural R&D scope — see
+  BC250_REMAINING_PLAN.md. Stopped per user pacing rule.**
+
 - **D71 GEMM efficiency for the LoRA shapes completed 2026-11-13 — the easy
   GEMM win does NOT exist; FP16 solution selection exhausted; D70's
   GEMM-bound attribution confirmed but the cost is the large base
