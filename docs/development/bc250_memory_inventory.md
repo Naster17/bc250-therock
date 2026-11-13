@@ -2726,8 +2726,19 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   no full IPs/excluded-app/creds in diff) + bc250-stack main29048c0→8b6c2bc
   (curated/scrubbed B07.13 report); umbrella component patch series/SBOM unaffected
   (therock tooling, not a ROCm source patch; release identities unchanged).
-  Remaining optional follow-ups (fork CI/upstream tracking/full-prefix distribution/
+  Remaining optional follow-ups (upstream tracking/full-prefix distribution/
   distributed benchmark/bottleneck optimization) not started.
+  **Fork CI added2026-11-13 (publication-only):** bc250-stack umbrella main
+  ba3c710→5e6cbfd adds .github/workflows/patch-apply.yml + tools/verify_patch_series.py
+  + ci/components.json + reports/FORK_CI.md. Patch-apply reconstruction proof: fetch
+  recorded upstream base, git am the umbrella series, assert resulting tree ==
+  published fork bc250/gfx1013 tree. Git-only on GitHub-hosted runners (no ROCm
+  build); weekly schedule for upstream drift. 5 components verified + CI green
+  (run43421509586): triton66b3f9f/4, migraphx9567291/5, onnxruntime402979a/1,
+  torchaudio34c52a6/4, torchcodecd9dc542/1. Finding: rocm-systems' 6 published patches
+  do not reproduce the fork tree; rocm-libraries has more commits than its 33 patches
+  + LFS-heavy; pytorch umbrella series is the historical incremental export — these
+  three excluded from the matrix pending base/commit reconciliation. No board access.
 
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16

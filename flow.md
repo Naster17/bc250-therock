@@ -13,6 +13,24 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **Fork CI added 2026-11-13 — patch-apply reconstruction proof, live+green on
+  GitHub.** Umbrella `bc250-stack` `main` `ba3c710→5e6cbfd`: `.github/workflows/
+  patch-apply.yml` + `tools/verify_patch_series.py` + `ci/components.json` +
+  `reports/FORK_CI.md`. For each component it fetches only the recorded upstream
+  base, `git am`s the umbrella patch series, and asserts the resulting tree ==
+  the published fork `bc250/gfx1013` tree (`expected_tree`). Git-only (no ROCm
+  toolchain/build; full build stays with the offline recipes), so it runs on
+  GitHub-hosted runners; weekly schedule surfaces upstream drift. **5 components
+  verified + CI green** (run 43421509586): triton(base 66b3f9f/4 patches),
+  migraphx(9567291/5), onnxruntime(402979a/1), torchaudio(34c52a6/4),
+  torchcodec(d9dc542/1). **Finding (follow-up):** rocm-systems' 6 published patches
+  do NOT reproduce the fork tree (fork has more commits); rocm-libraries has more
+  commits than its 33 patches + is LFS-heavy (base worktree checkout hit resource
+  limits); pytorch's umbrella series is the historical incremental (incomplete)
+  export. These three are excluded from the matrix pending base/commit
+  reconciliation — recorded in reports/FORK_CI.md, not silently dropped. No board
+  access; publication-only. Stopped per user pacing rule.
+
 - **N4 read-only telemetry audit completed 2026-11-13 on .104 (r2 release).**
   [Report](docs/development/bc250_n4_telemetry_results/README.md),
   [evidence](../../kernel/artifacts/n4-telemetry-r2). Re-established governor/
