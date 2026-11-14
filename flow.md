@@ -12,6 +12,42 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **PLAN2-01 production-readiness stability soak PASSED 2026-11-14 — the stack
+  is reliable for sustained multi-hour LoRA training with exact checkpoint/resume
+  at stock clocks. First PLAN2 item complete.**
+  [Report](docs/development/bc250_soak_plan2_01_results/README.md),
+  [evidence](../../kernel/artifacts/soak-plan2-01). **20 chained bounded segments
+  · 200 updates · 2.073 h accumulated · all 9 reliability checks green**: steps
+  contiguous 1→200 (exact resume across every boundary), drift 0.9992, memory
+  ratio 1.000 (no leak), temp ≤65.85 °C inter-segment (≤90 bound; post-run idle
+  70.85 °C), mean update 37.31 s, all updates finite/non-skipped, loss 2.936→2.025
+  (finite, decreasing), adapter changed each segment, 20/20 guardians passed,
+  boot 2b5a9904 unchanged, kernel/registry clean, 0 foreign containers, .105
+  untouched. Method: chained ≤460 s segments joined by exact checkpoint/resume
+  (cumulative max_steps, 10 updates/seg, large epochs so final-save suppression
+  never fires); authorized lora-smoke app single-board Qwen3.5-2B rank-128 FP16
+  eager+checkpointing global batch 4, WITHOUT BC250_LORA_BENCHMARK (refuses
+  resume) but Audit rows still recorded; owned D67 data hash-verified;
+  D71-hardened guardians (SH lock, nonce ack, timeout 430 backstop, 900 s
+  session) + durable host state for resume. ONE pre-declared refinement
+  (kernel_noise.py): kernel-log check ignores ONLY benign governor "Unsupported
+  clock type" clock-query noise; real GPU faults still fail (tests prove);
+  original D71 guardian unchanged. INCIDENT JOURNEY: seg2 first attempt
+  spontaneous host reboot — read-only root cause = persistent 3500 MHz SMU
+  overclock (bc250-smu-oc, applied at boot) + amdgpu.gpu_recovery=0 → GPU hang →
+  HW/FW reset; ruled out boot-guard (deadline not reached), watchdog (SP5100 TCO
+  bootstatus=0), kernel panic (no panic=); HOST-LEVEL not stack defect
+  (ROOT-CAUSE-analysis.md + reboot-investigation/ + seg2-crash/). User stabilized
+  host to stock 2000 MHz; then benign governor kernel noise → refined guardian;
+  then user's amdgpu_top held GPU non-root → d09 preflight refused → user freed
+  GPU; then clean 2 h run. 27 soak tests, suite 377, Black clean. No
+  default/package/release change; host governor/clock/watchdog/kernel NOT
+  modified by this work (user stabilized themselves). Gate met CONDITIONAL on a
+  stable host (stock clocks; the 3500 MHz OC is outside the qualified envelope).
+  Publication: bc250-therock tools+report (no Torch source change), umbrella
+  curated PLAN2-01. **NEXT (optional, await user): PLAN2-02 NF4/QLoRA, PLAN2-03
+  native sparse/eig, … — see PLAN2.md. Stopped per pacing rule.**
+
 - **D72 GEMM in-model-vs-fixture gap diagnostic completed 2026-11-13 — none of
   the three cheap explanations reproduces the 4× gap; the GEMM cost is
   structural/systemic, not a per-GEMM property. Cheap GEMM paths closed.**

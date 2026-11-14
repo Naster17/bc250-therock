@@ -3129,6 +3129,44 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
+**PLAN2-01 production-readiness stability soak PASSED 2026-11-14 (.104 release,
+  r2 kernel, stock 2000MHz; first PLAN2 item):** the stack is reliable for
+  sustained multi-hour LoRA training with exact checkpoint/resume. **20 chained
+  bounded segments · 200 updates · 2.073h accumulated · all 9 reliability checks
+  green**: steps contiguous 1→200 (exact resume every boundary), drift 0.9992,
+  memory ratio 1.000 (no leak), temp ≤65.85°C inter-segment (≤90 bound; post-run
+  idle 70.85°C), mean update 37.31s, all finite/non-skipped, loss 2.936→2.025
+  (finite decreasing), adapter changed each segment, 20/20 guardians passed, boot
+  2b5a9904 unchanged, kernel/registry clean, 0 foreign containers, .105
+  untouched. New owned tools soak_plan2_01/ (run_soak orchestrator with durable
+  host state + resume, guard_soak D71-hardened, bounded_launch timeout430,
+  summarize_soak pure bounds, kernel_noise pre-declared benign filter). Method:
+  chained ≤460s segments joined by exact checkpoint/resume (cumulative max_steps,
+  10 updates/seg, large epochs so final-save suppression never fires); authorized
+  lora-smoke app single-board Qwen3.5-2B rank128 FP16 eager+checkpointing global
+  batch4 WITHOUT BC250_LORA_BENCHMARK (refuses resume) but Audit rows recorded;
+  owned D67 data hash-verified. ONE pre-declared refinement (kernel_noise.py):
+  kernel-log check ignores ONLY benign governor "Unsupported clock type"
+  clock-query noise; real GPU faults (ring timeout/reset/VM fault/panic) still
+  fail (tests prove); original D71 guardian unchanged. INCIDENT JOURNEY: seg2
+  first attempt spontaneous host reboot — read-only root cause = persistent
+  3500MHz SMU overclock (bc250-smu-oc applied at boot) + amdgpu.gpu_recovery=0 →
+  GPU hang → HW/FW reset; ruled out boot-guard (deadline not reached), watchdog
+  (SP5100 TCO bootstatus=0), kernel panic (no panic=); HOST-LEVEL not stack
+  defect. User stabilized host to stock 2000MHz; benign governor kernel noise →
+  refined guardian; user's amdgpu_top held GPU non-root → d09 preflight refused →
+  user freed GPU; then clean 2h run. 27 soak tests, suite 377, Black clean. No
+  default/package/release change; host governor/clock/watchdog/kernel NOT modified
+  by this work (user stabilized themselves). Gate met CONDITIONAL on stable host
+  (stock clocks; 3500MHz OC outside qualified envelope). Evidence
+  kernel/artifacts/soak-plan2-01 (20 audits+guardian finals, telemetry, summary,
+  artifacts.json, ROOT-CAUSE-analysis.md, reboot-investigation/, seg2-crash/,
+  INCIDENT note); host /home/nik/bc250work/soak-plan2-01 retained.
+  [Report](bc250_soak_plan2_01_results/README.md). Publication: bc250-therock
+  tools+report (no Torch source change), umbrella curated PLAN2-01. Next optional
+  (await user): PLAN2-02 NF4/QLoRA, PLAN2-03 native sparse/eig, PLAN2-04 attention,
+  PLAN2-05 compile, PLAN2-06 admission, PLAN2-07 FP16 PEFT — see PLAN2.md.
+
 **B07.11 FP16 tuning and HIP-direct precision repair completed2026-10-30:**
   tools2d8f1dae0/libraries source96e5a7dfc43. Original public218 fails fixed FP16
   bound: H9/W11/C4/K8/g1/f3/index1 actual0.8427734375 vs0.8424274250864983;
