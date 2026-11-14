@@ -10,6 +10,33 @@ release claims must not override this cursor and current manifests.
 ## Resume cursor
 
 
+- **PLAN2-06 broader model admission PASSED 2026-11-14 — sixth PLAN2 item
+  complete.** [Report](docs/development/bc250_admission_plan2_06_results/README.md),
+  [evidence](../../kernel/artifacts/admission-plan2-06). Scope (user-confirmed):
+  admit owned pure-torch UNet2D (diffusion-style) + RNN/LSTM/GRU through the
+  D62-style battery; NO new dependency (diffusers absent), NO app/source/default/
+  package/release change (series stays 23); D62 fixture untouched (helpers
+  imported). **6 model/dtype admissions, 60/60 checks**: unet2d-tiny FP32 (fwd
+  bitwise) + BF16 autocast (3.3e-4), rnn-tiny FP32 (bitwise), lstm-tiny FP32
+  (bitwise) + BF16 (5.0e-4), gru-tiny FP32 (bitwise). Every admission: load →
+  forward vs CPU-FP64 (D62 tol 0.02/0.06) → finite/nonzero backward → AdamW step →
+  BITWISE save/resume → exact 3-step continuation. Routes fired: UNet conv
+  (MIOpen)+attention (SDPA); RNN/LSTM/GRU recurrent (deterministic under
+  cudnn.deterministic). Params: UNet 109171, RNN 4736, LSTM 9536, GRU 7936.
+  Generalized battery parameterizes loss/inputs per architecture (D62 is causal-LM
+  specific); imports d62.state_bytes/route_status/summarize/new_report/
+  record_versions/owned_import_guard. UNet is diffusion-style noise-prediction,
+  NOT a full diffusion pipeline (no sampler/scheduler claim). Admission = bounded
+  validation, not universal correctness/model quality. Attempt: ad-r1 dtype-string
+  bug (fixed getattr(torch,dtype)); ad-r2..r7 all pass; no bound relaxed. 11 tests,
+  suite 478, Black clean. Guardian = PLAN2-01..05 envelope + stock-clock gate; boot
+  0d46a6f1 unchanged, kernel/registry clean (0 benign), 0 foreign containers,
+  boards idle pre/post, .105 untouched, host config NOT modified. No default/
+  package/release/source change; not installed into any image. Host
+  $TASK/admission-plan2-06 retained. Publication: bc250-therock tools+report,
+  umbrella curated PLAN2-06 + compatibility matrix. **NEXT (optional, await user):
+  PLAN2-07 FP16 PEFT — see PLAN2.md. Stopped per pacing rule.**
+
 - **PLAN2-05 torch.compile expansion + graph-capture integration PASSED
   2026-11-14 — fifth PLAN2 item complete.**
   [Report](docs/development/bc250_compile_graph_plan2_05_results/README.md),

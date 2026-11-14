@@ -3129,6 +3129,44 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
+**PLAN2-06 broader model admission PASSED 2026-11-14 (.104 release, r2 kernel,
+  Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; sixth PLAN2 item):** admitted
+  owned pure-torch UNet2D (diffusion-style) + RNN/LSTM/GRU through the D62-style
+  battery; NO new dependency (diffusers absent from release), NO app/source/
+  default/package/release change (series stays 23); D62 fixture untouched
+  (qualified helpers imported). **6 model/dtype admissions, 60/60 checks**:
+  unet2d-tiny FP32 (forward bitwise vs CPU-FP64) + BF16 autocast (3.3e-4),
+  rnn-tiny FP32 (bitwise), lstm-tiny FP32 (bitwise) + BF16 autocast (5.0e-4),
+  gru-tiny FP32 (bitwise). Every admission: load → forward vs independent CPU-FP64
+  (D62 tolerance 0.02 FP32 / 0.06 BF16, finite) → backward (all trainable grads
+  finite, ≥1 nonzero) → AdamW step changes bitwise fingerprint → BITWISE
+  save/resume (restored == pre-continuation) → exact 3-step resumed continuation
+  (loss sequence + final fingerprint == live reference). Routes fired: UNet conv
+  (MIOpen) + attention (SDPA) + GroupNorm/interpolate; RNN/LSTM/GRU recurrent
+  (deterministic under cudnn.deterministic=True). Params: UNet 109171, RNN 4736,
+  LSTM 9536, GRU 7936. Generalized battery (admission_plan2_06/admit.py)
+  parameterizes loss/inputs per architecture (D62 battery is causal-LM specific);
+  imports d62.state_bytes/route_status/summarize/new_report/add_check/
+  record_versions/owned_import_guard. UNet = diffusion-style noise-prediction
+  (Conv2d+GroupNorm+SiLU+down/up+mid non-causal SDPA+skips, MSE), NOT a full
+  diffusion pipeline (no diffusers/sampler/scheduler claim); RNN/LSTM/GRU =
+  next-token LM (Embedding+nn.RNN/LSTM/GRU+Linear+CE). All random-init from config,
+  no weights fetched, owned-import guard passed. Admission = bounded validation,
+  not universal correctness/model quality; forward support alone not a training
+  claim. Attempt: ad-r1 dtype-string bug (make_inputs passed str to torch.randn;
+  fixed getattr(torch,dtype)); ad-r2..r7 all pass; no bound/envelope relaxed.
+  11 tests, suite 478, Black clean. Guardian = PLAN2-01..05 envelope + stock-clock
+  gate; boot 0d46a6f1 unchanged, kernel/registry clean (0 benign), 0 foreign
+  containers, boards idle pre/post, .105 untouched, host config NOT modified. No
+  default/package/release/source change; not installed into any image. Evidence
+  kernel/artifacts/admission-plan2-06 (BOUNDS.md + admit-ad-r1..r7 + guardians/
+  preflights/kernel logs + orchestrator logs); host
+  /home/nik/bc250work/admission-plan2-06 retained.
+  [Report](bc250_admission_plan2_06_results/README.md). Publication:
+  bc250-therock tools+report (no source change), umbrella curated PLAN2-06 +
+  compatibility matrix. Remaining optional: PLAN2-07 FP16 PEFT; broader archs
+  (ViT/ConvNeXt), real diffusion pipelines, larger geometries separate.
+
 **PLAN2-05 torch.compile expansion + graph-capture integration PASSED 2026-11-14
   (.104 release, r2 kernel, Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; fifth
   PLAN2 item):** qualified on OWNED fixtures + reusable opt-in capture helper;
