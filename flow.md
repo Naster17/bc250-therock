@@ -10,6 +10,40 @@ release claims must not override this cursor and current manifests.
 ## Resume cursor
 
 
+- **PLAN2-05 torch.compile expansion + graph-capture integration PASSED
+  2026-11-14 — fifth PLAN2 item complete.**
+  [Report](docs/development/bc250_compile_graph_plan2_05_results/README.md),
+  [evidence](../../kernel/artifacts/compile-graph-plan2-05). Scope (user-confirmed):
+  qualify on OWNED fixtures + reusable opt-in capture helper; NO app entry-point/
+  Torch source/default/package/release change (series stays 23). **Part A compile
+  expansion 14/14** (cg-r5 attention+LoRA, cg-r7 embed_ce+dynamic): fullgraph=True
+  real Inductor (3–11 kernels), parity vs CPU + eager. **Part B graph integration
+  14/14** (cg-r12 in-process, cg-r13 fresh-process resume): EVERY graph parity case
+  BITWISE (rel-L2 0.0) — graphed fwd+bwd+eager AdamW FP32/FP16/BF16 autocast,
+  whole-step capturable AdamW, checkpointing, make_graphed_callables, and a
+  16-update fresh-process recapture/resume (trajectory+weights+optimizer state).
+  Refusals: dropout>0, stale eager graph. **Speed: graph capture 1.92× whole-step
+  on the owned launch-bound LoRA stack (16.31→8.48ms; 1.9–3.3× across runs);
+  torch.compile does NOT speed tiny fixtures (attention ~1.0×, LoRA/embed 0.61–
+  0.68×) — consistent with D70 GEMM-compute-bound step, graphs buy the ~10%
+  non-GEMM launch share.** Precision findings (recorded, NOT compile defects):
+  FP16 attention backward deviates ~3.4% vs matching-dtype CPU / ~24% vs FP64 in
+  EAGER too (narrow exponent; BF16 ~0.4%); dynamic FP16 compile lowers SDPA to a
+  fused kernel ~0.7–0.9% vs eager math → gated dynamic runs FP32. Compile contract:
+  compiled matches eager tightly + adds no error beyond eager vs CPU (gate =
+  max(bound, eager deviation)); numeric thresholds never relaxed (BOUNDS addenda).
+  Helper graph_step.py (GraphedStep/assert_graph_safe/capture_graphed_callable).
+  Attempt journey (harness fixes retained): frozen diff-target, FP16 anchor
+  attribution, stale del, opt.state tensor keys, whole-step warmup reset,
+  capturable/foreach-matched reference → bitwise. 16 tests, suite 467, Black clean.
+  Guardian = PLAN2-01/02/03/04 envelope + stock-clock gate; boot 0d46a6f1 unchanged,
+  kernel/registry clean (0 benign), 0 foreign containers, boards idle pre/post,
+  .105 untouched, host config NOT modified. No default/package/release/source
+  change; not installed into any image. Host $TASK/compile-graph-plan2-05 retained.
+  Publication: bc250-therock tools+report, umbrella curated PLAN2-05. **NEXT
+  (optional, await user): PLAN2-06 broader model admission, PLAN2-07 FP16 PEFT —
+  see PLAN2.md. Stopped per pacing rule.**
+
 - **PLAN2-04 attention speed qualification PASSED 2026-11-14 — the EXISTING
   opt-in gfx1013 tiled SDPA is now performance-qualified on long-seq owned
   fixtures; boundaries documented. Fourth PLAN2 item complete.**

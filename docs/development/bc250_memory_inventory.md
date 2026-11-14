@@ -3129,6 +3129,51 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
+**PLAN2-05 torch.compile expansion + graph-capture integration PASSED 2026-11-14
+  (.104 release, r2 kernel, Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; fifth
+  PLAN2 item):** qualified on OWNED fixtures + reusable opt-in capture helper;
+  NO app entry-point/Torch source/default/package/release change (series stays
+  23). **Part A compile expansion 14/14** (cg-r5 attention+LoRA 7/7, cg-r7
+  embed_ce+dynamic 7/7): torch.compile(fullgraph=True) real Inductor (3–11
+  kernels, no eager fallback), parity vs independent CPU + eager; FP32 vs CPU-FP64
+  ~1e-6, compiled-vs-eager ≤3e-5; frozen-base grads absent; dynamic FP32 reuses
+  one graph across L128/192/256. **Part B graph integration 14/14** (cg-r12
+  in-process 10/10, cg-r13 fresh-process resume 4/4): EVERY graph parity case
+  BITWISE rel-L2 0.0 — graphed fwd+bwd+eager AdamW (FP32/FP16/BF16 autocast FP32
+  masters), whole-step capturable AdamW, non-reentrant checkpointing,
+  make_graphed_callables, and a 16-update FRESH-PROCESS recapture/resume
+  (trajectory+adapter weights+optimizer exp_avg/exp_avg_sq). Refusals: dropout>0
+  (RNG), stale eager graph on static input. **Speed: graph capture 1.92×
+  whole-step on the owned launch-bound 24-layer LoRA stack (16.31→8.48ms;
+  1.9–3.3× across runs); torch.compile does NOT speed tiny fixtures (attention
+  ~1.0×, LoRA/embed 0.61–0.68×) — consistent with D70 GEMM-compute-bound step;
+  graphs buy the ~10% non-GEMM launch share, no general whole-model claim.**
+  Precision findings (recorded, attributed to dtype/implementation NOT compile):
+  FP16 attention backward deviates ~3.4% vs matching-dtype CPU / ~24% vs FP64 in
+  EAGER too (narrow exponent; BF16 ~0.4%); dynamic FP16 compile lowers SDPA to a
+  fused Inductor kernel ~0.7–0.9% vs eager math (L192/256; L128 tight) → gated
+  dynamic runs FP32. Compile contract: compiled matches eager tightly AND adds no
+  error beyond eager vs CPU (CPU-anchor gate = max(bound, eager deviation));
+  numeric thresholds never relaxed (BOUNDS.md addenda). Helper graph_step.py
+  (GraphedStep side-stream warmup + torch.cuda.graph; assert_graph_safe;
+  capture_graphed_callable). Attempt journey (harness fixes retained): cg-r1
+  frozen-base diff-target (autograd.grad over non-requires-grad params); cg-r2/r4
+  FP16 anchor attribution; cg-r3 stale del; cg-r6 dynamic FP16 fused finding;
+  cg-r8 opt.state keyed by param tensors not ids; cg-r9 whole-step warmup advanced
+  weights/state → reset to init after capture; cg-r10/r11 reference matched to
+  capturable=True foreach=False (capturable-vs-not ~1e-5) → bitwise. 16 tests,
+  suite 467, Black clean. Guardian = PLAN2-01/02/03/04 envelope + stock-clock gate;
+  boot 0d46a6f1 unchanged, kernel/registry clean (0 benign), 0 foreign containers,
+  boards idle pre/post, .105 untouched, host config NOT modified. No default/
+  package/release/source change; not installed into any image. Evidence
+  kernel/artifacts/compile-graph-plan2-05 (92 files incl. BOUNDS.md + addenda,
+  cg-r1–r13); host /home/nik/bc250work/compile-graph-plan2-05 retained.
+  [Report](bc250_compile_graph_plan2_05_results/README.md). Publication:
+  bc250-therock tools+report (no source change), umbrella curated PLAN2-05.
+  Remaining optional: PLAN2-06 broader model admission, PLAN2-07 FP16 PEFT;
+  real-model graph integration + compiled-optimizer/large-model throughput
+  separate future scopes.
+
 **PLAN2-04 attention speed qualification PASSED 2026-11-14 (.104 release, r2
   kernel, Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; fourth PLAN2 item):**
   performance-qualified the EXISTING opt-in gfx1013 tiled SDPA
