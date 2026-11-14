@@ -12,6 +12,55 @@ release claims must not override this cursor and current manifests.
 
 
 
+- **PLAN2-02 native NF4/QLoRA quantization PASSED 2026-11-14 — a native opt-in
+  4-bit weight-only recipe with qualified fwd/bwd, QLoRA composite, measured
+  memory reduction and D62 admission; the biggest LLM-capacity unlock on 16 GB.
+  Second PLAN2 item complete.**
+  [Report](docs/development/bc250_nf4_plan2_02_results/README.md),
+  [evidence](../../kernel/artifacts/nf4-plan2-02). **70/70 GPU qualification
+  checks + D62 routes-only admission passed** (all routes fired incl. new
+  `quant-nf4`). Feasibility decision (read-only first): bitsandbytes/TorchAO
+  absent (live-verified); native `_weight_int4pack_mm`/`_convert_weight_to_int4pack`
+  are HARDWARE-blocked on gfx1013 (CDNA2 gate + MFMA instructions RDNA1 lacks +
+  BF16-only) → **native NF4 via dequantize-to-FP16 + qualified rocBLAS GEMM**, a
+  pure-Python helper mirroring B05.x W8; NO new native kernel, NO Torch source
+  edit (pytorch series stays 23 patches). NF4 is a MEMORY win not compute win
+  (no INT4 matrix cores). Recipe: canonical 16-level NormalFloat-4 codebook,
+  block-wise absmax (bs 16/32/64/128/256, default 64), 2 codes/byte, FP32 scales,
+  searchsorted nearest (ties up); custom autograd Function saves COMPACT
+  codes/scales (no float base persisted), first derivatives only
+  (once_differentiable), frozen base; memory-lean nibble-gather dequant
+  (bit-identical FP32). `FrozenNF4Linear` (strict versioned state, CPU
+  storage/load, gfx1013 forward) + `QLoRALinear` (frozen NF4 base + trainable
+  adapter). Independent pure-Python scalar reference (core/reference) shares only
+  codebook constants. **Measured: persistent weight bytes 0.28125× FP16 (~3.56×
+  smaller); peak memory 0.916× on a 24-layer 1024² fixture (110.8 vs 120.9 MB);
+  pack code-match 1.000, scale-rel 0.0, dequant rel-L2 3.8e-08; recipe
+  rel-Frobenius 0.0916 (4-bit error, NOT model quality). Compute parity max
+  rel-L2: FP16 fwd 0.00045/bwd 0.00029, BF16 0.00353/0.00254, FP32 2.9e-07/1.9e-07
+  (bounds 0.004/0.01/1e-4). QLoRA 16 BF16 AdamW steps loss 0.00560→0.00188 finite
+  decreasing, adapter changed, base bitwise frozen. 14 refusals + native INT4
+  conversion/int8-backward boundaries preserved.** Attempt journey (harness
+  fixes, not stack defects, all retained): r1 code-match compared indices vs
+  packed bytes + unfrozen QLoRA source; r2 67/70 FP16 AdamW exp_avg_sq underflow
+  → NaN (fixed: BF16 adapters) + 6-layer peak 1.19× dequant transient masks win
+  (fixed: lean dequant + 24-layer fixture); r3 70/70. Pre-declared bounds
+  (BOUNDS.md) fixed before any run, never relaxed. Guardian = qualified PLAN2-01
+  envelope (SH lock, nonce 600 s boot-guard, 460 s child, timeout 430 backstop,
+  kernel_noise filter, registry identity, foreign-container refusal) + stock-clock
+  gate (pp_dpm_sclk ceiling ≤2000 MHz). 34 NF4 tests, suite 413, Black clean.
+  Boot 0d46a6f1 unchanged, kernel/registry clean (0 benign added), 0 foreign
+  containers, all guards acked, boards idle pre/post, .105 untouched, host
+  governor/clock/watchdog/kernel NOT modified. No default/package/release/source
+  change; not installed into any image. Bounds: dims ≤4096 (real 6144 projections
+  need separate admission); first derivatives only; no bitsandbytes/TorchAO
+  install, no packed-INT4 enablement, no model-quality/perplexity claim. Host
+  $TASK/nf4-plan2-02 retained (tools/configs/outputs/per-attempt evidence).
+  Publication: bc250-therock tools+report (no Torch source change), umbrella
+  curated PLAN2-02. **NEXT (optional, await user): PLAN2-03 native sparse/eig,
+  PLAN2-04 attention, PLAN2-05 compile, PLAN2-06 admission, PLAN2-07 FP16 PEFT —
+  see PLAN2.md. Stopped per pacing rule.**
+
 - **PLAN2-01 production-readiness stability soak PASSED 2026-11-14 — the stack
   is reliable for sustained multi-hour LoRA training with exact checkpoint/resume
   at stock clocks. First PLAN2 item complete.**

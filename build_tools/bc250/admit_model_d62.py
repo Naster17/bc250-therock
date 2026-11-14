@@ -100,7 +100,7 @@ MODEL_REGISTRY: dict[str, dict] = {
     },
 }
 
-ROUTE_NAMES = ("attention", "conv", "gated-delta", "quant-w8")
+ROUTE_NAMES = ("attention", "conv", "gated-delta", "quant-w8", "quant-nf4")
 
 
 # ---------------------------------------------------------------------------
@@ -480,11 +480,21 @@ def probe_routes(report: dict, device: str) -> None:
         out = frozen(torch.randn(2, 16, device=device, dtype=dtype))
         return torch.isfinite(out).all().item()
 
+    def quant_nf4():
+        from nf4_plan2_02 import ops as nf4_ops
+
+        source = torch.nn.Linear(16, 16).to(device=device, dtype=dtype)
+        source.requires_grad_(False)  # frozen NF4 packs an explicitly frozen weight
+        frozen = nf4_ops.FrozenNF4Linear.from_float(source, 16)
+        out = frozen(torch.randn(2, 16, device=device, dtype=dtype))
+        return torch.isfinite(out).all().item()
+
     _probe(report, "attention", "attention-backend-flags", attention_backend_flags)
     _probe(report, "attention", "tiled-sdpa", tiled_sdpa)
     _probe(report, "gated-delta", "gated-delta-op", gated_delta)
     _probe(report, "conv", "causal-conv-op", causal_conv)
     _probe(report, "quant-w8", "frozen-w8-op", quant_w8)
+    _probe(report, "quant-nf4", "frozen-nf4-op", quant_nf4)
 
 
 def architecture_available(name: str) -> tuple[bool, str]:

@@ -125,5 +125,15 @@ class ReportTest(unittest.TestCase):
         )
 
 
+class Nf4RouteRegistrationTest(unittest.TestCase):
+    def test_nf4_route_name_known(self):
+        self.assertIn("quant-nf4", admit.ROUTE_NAMES)
+
+    def test_nf4_probe_registered(self):
+        source = SCRIPT.read_text()
+        self.assertIn('_probe(report, "quant-nf4", "frozen-nf4-op", quant_nf4)', source)
+        self.assertIn("from nf4_plan2_02 import ops as nf4_ops", source)
+
+
 if __name__ == "__main__":
     unittest.main()
