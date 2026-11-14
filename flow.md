@@ -10,7 +10,50 @@ release claims must not override this cursor and current manifests.
 ## Resume cursor
 
 
-
+- **PLAN2-04 attention speed qualification PASSED 2026-11-14 — the EXISTING
+  opt-in gfx1013 tiled SDPA is now performance-qualified on long-seq owned
+  fixtures; boundaries documented. Fourth PLAN2 item complete.**
+  [Report](docs/development/bc250_attention_plan2_04_results/README.md),
+  [evidence](../../kernel/artifacts/attention-plan2-04). Scope (user-confirmed):
+  qualify + document only — NO Torch source/default change, pytorch series stays
+  23 patches; qualified object = installed `torch.nn.attention._gfx1013`
+  (sha256 d61ac116d82e…, installed==source verified). **63/63 qualification
+  checks** (r2 47/47: 24 small/mid parity + 13 refusals + checkpoint/
+  Transformers/autocast/empty integration + informational graph probe; r3
+  16/16: 15 long parity L1024–4096) + **168/168 bench checks** (r6 130/130,
+  r7 38/38; 41 paired fixtures, 0 unstable). Parity worst rel-L2 vs CPU-FP64:
+  FP32 7.6e-07 / FP16 4.3e-04 / BF16 3.4e-03 (bounds 3e-5/5e-3/3e-2, never
+  relaxed). **Findings: CAUSAL tiled forward 1.5–2.9× faster than math (tile
+  skipping), fwd+bwd up to 2.0× at D64 (D128 GQA mixed 0.67–1.4×); FULL
+  (non-causal) attention tiled SLOWER (fwd+bwd 0.19–0.69×) but 12–86× less peak
+  memory (D64 H16 L4096: 4152→48.2 MiB; D128 GQA L4096: 4208→72.2 MiB) — the
+  long-seq capacity unlock. Backward (recomputed scalar) is the weak point.
+  BF16 D256 hybrid keeps quadratic fwd temp (mem ratio only 0.66–0.80).**
+  Positioning: opt-in for long-seq causal speed/memory or full-attention
+  capacity; NOT a default switch; LoRA payoff stays demoted (D70). Boundaries
+  resolved as documented refusals (dropout/compile/mask-grad/higher-order/
+  D>256/seq>4096); informational probes: CUDA-graph capture of tiled fwd works
+  + replays bitwise-exact on a small fixture (graph qualification = PLAN2-05),
+  math no_grad+GQA works. Attempt journey (harness fixes, retained): r1 39/40
+  (release container lacks transformers → owned lora-smoke env PYTHONPATH soak
+  pattern; higher-order refusal tested at wrong level — once_differentiable
+  detaches on create_graph, RuntimeError surfaces differentiating again);
+  r4/r5 crashed at first GQA fixture — r5 MISDIAGNOSED no_grad+GQA boundary;
+  probes d1–d3 proved the real bug: timing helpers dropped opts (is_causal/
+  enable_gqa) from every timed call → r4/r5 D64 "causal" numbers were non-causal
+  (defect evidence only, no claims); r6/r7 re-measured everything with opts
+  forwarded + regression test. BOUNDS.md addendum records the correction; no
+  bound/gate/envelope ever relaxed. Guardian = qualified PLAN2-01/02/03 envelope
+  (SH lock, nonce 600s boot-guard, 460s child, timeout 430 backstop, kernel_noise
+  filter, registry identity, foreign-container refusal) + stock-clock gate
+  ≤2000MHz. 23 harness tests, suite 451, Black clean. Boot 0d46a6f1 unchanged,
+  kernel/registry clean (0 benign added), 0 foreign containers, boards idle
+  pre/post, .105 untouched, host config NOT modified. No default/package/
+  release/source change; not installed into any image. Host
+  $TASK/attention-plan2-04 retained. Publication: bc250-therock tools+report,
+  umbrella curated PLAN2-04. **NEXT (optional, await user): PLAN2-05 compile/
+  graph-capture, PLAN2-06 admission, PLAN2-07 FP16 PEFT — see PLAN2.md. Stopped
+  per pacing rule.**
 
 - **PLAN2-03 native sparse factorization PASSED 2026-11-14 — native general-CSR
   ILU(0)/IC(0) (hipSPARSE csrilu02/csric02) + csrsv2 preconditioned iterative solve

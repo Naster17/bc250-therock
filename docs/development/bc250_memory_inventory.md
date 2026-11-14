@@ -3129,6 +3129,48 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
+**PLAN2-04 attention speed qualification PASSED 2026-11-14 (.104 release, r2
+  kernel, Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; fourth PLAN2 item):**
+  performance-qualified the EXISTING opt-in gfx1013 tiled SDPA
+  (`torch.nn.attention._gfx1013`, sha256 d61ac116d82e…, installed==source) on
+  long-seq owned fixtures; boundaries documented. Scope user-confirmed:
+  qualify+document only, NO Torch source/default change (series stays 23).
+  **63/63 qualification checks** (r2 47/47 small/mid parity+13 refusals+
+  checkpoint/Transformers/autocast/empty integration+graph probe; r3 16/16 long
+  parity L1024–4096) + **168/168 bench checks** (r6 130/130, r7 38/38; 41 paired
+  math-vs-tiled fixtures, 0 unstable, drift gate 1.25). Parity worst rel-L2 vs
+  independent CPU-FP64: FP32 7.6e-07/FP16 4.3e-04/BF16 3.4e-03 (bounds
+  3e-5/5e-3/3e-2); tiled-vs-math assert_close all pass. **Findings: causal tiled
+  forward 1.5–2.9× faster (masked-tile skipping), fwd+bwd up to 2.0× D64 (D128
+  GQA mixed 0.67–1.4×); full/non-causal tiled slower (fwd+bwd 0.19–0.69×) but
+  12–86× less peak memory (D64 H16 L4096 4152→48.2MiB; D128 GQA L4096
+  4208→72.2MiB) = long-seq capacity unlock; recomputed scalar backward is the
+  weak point; BF16 D256 hybrid keeps quadratic fwd temp (mem 0.66–0.80×).**
+  Positioning: opt-in for long-seq causal speed/memory or full-attention
+  capacity; not a default switch; LoRA payoff demoted per D70. Boundaries =
+  documented refusals (dropout/compile/mask-grad/higher-order/D>256/seq>4096);
+  informational probes: CUDA-graph capture of tiled fwd works + bitwise-exact
+  replay on small fixture (graphs = PLAN2-05 scope), math no_grad+GQA works.
+  Attempt journey (harness fixes retained): r1 39/40 (release container lacks
+  transformers → owned lora-smoke env PYTHONPATH soak pattern; higher-order
+  refusal tested at wrong level — once_differentiable detaches on create_graph,
+  RuntimeError surfaces differentiating again); r4/r5 crashed at first GQA
+  fixture, r5 MISDIAGNOSED no_grad+GQA boundary; probes d1–d3 proved timing
+  helpers dropped opts (is_causal/enable_gqa) from every timed call → r4/r5 D64
+  "causal" numbers were non-causal (defect evidence, no claims); r6/r7
+  re-measured with opts forwarded + regression test. BOUNDS.md addendum records
+  correction; no bound/gate/envelope relaxed. Guardian = PLAN2-01/02/03 envelope
+  + stock-clock gate. 23 harness tests, suite 451, Black clean. Boot 0d46a6f1
+  unchanged, kernel/registry clean (0 benign), 0 foreign containers, boards idle
+  pre/post, .105 untouched, host config NOT modified. No default/package/
+  release/source change; not installed into any image. Evidence
+  kernel/artifacts/attention-plan2-04 (71 files incl. BOUNDS.md, r1–r7+d1–d3);
+  host /home/nik/bc250work/attention-plan2-04 retained.
+  [Report](bc250_attention_plan2_04_results/README.md). Publication:
+  bc250-therock tools+report (no source change), umbrella curated PLAN2-04.
+  Remaining optional: PLAN2-05 compile/graph-capture, PLAN2-06 admission,
+  PLAN2-07 FP16 PEFT on concrete need.
+
 **PLAN2-03 native sparse factorization PASSED 2026-11-14 (.104 release, r2
   kernel, Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; third PLAN2 item):**
   native general-CSR ILU(0)/IC(0) factorization (hipSPARSE csrilu02/csric02) +
