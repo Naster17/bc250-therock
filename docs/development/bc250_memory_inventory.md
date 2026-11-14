@@ -3129,6 +3129,46 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
+**PLAN2-07 FP16 PEFT qualification PASSED 2026-11-14 (.104 release, r2 kernel,
+  Torch 2.13.0a0+gfx1013/HIP7.17, peft 0.21.2/transformers 5.22.1 owned env, stock
+  ≤2000MHz; seventh and FINAL PLAN2 item — all seven forward-plan items done):**
+  owned-fixture FP16 PEFT proof mirroring the frozen-helper precision contracts;
+  frozen FSDP helpers (D28/D30/D31) UNTOUCHED (requalification rules respected);
+  NO app/source/default/package/release change (series stays 23). Gap closed:
+  base BC250FSDPTrainer FP16 path (fsdp_fp16_parameter_policy: FP16 working + FP32
+  master/reduce + native scaler) requires ALL-trainable (no PEFT/frozen); PEFT
+  helpers are FP32 (D28)/BF16 (D30/D31, refuses FP16) → FP16 PEFT had no qualified
+  path. **12/12 checks** on the D28 owned identity (GPT2-tiny vocab97/n_embd32/
+  n_layer2/n_head4/n_inner64 eager dropout0 cacheFalse = 21280 frozen + real peft
+  LoRA rank4/alpha8/zeroB on 8 Conv1D c_attn/c_proj/c_fc = 3072 trainable):
+  forward vs CPU-FP64 BITWISE rel 0.0; adapter grads global rel 7.3e-4 / worst
+  per-param 9.3e-4 (bounds 0.02/0.03, D25/D26/D30 gates); frozen-base no grads;
+  FP16-vs-FP32 loss rel 0.0; root-clip rel 0.0 (bound 1e-5, D22); GradScaler
+  inf-skip (forced inf in scaled grad before unscale_ → step skipped, scale
+  65536→32768); 8-update AdamW loss 4.6025→4.5601 decreasing + frozen base bitwise
+  unchanged; BITWISE save/resume (adapter+opt+scaler+RNG) + exact 3-step
+  continuation. FP16-specific: GradScaler REQUIRED (unlike BF16 no-scaler); FP32
+  master/state avoids pure-FP16 AdamW exp_avg_sq underflow (PLAN2-02 finding);
+  FP16 (10 mantissa bits) ≥ BF16 tightness. peft 0.21.2/transformers 5.22.1
+  recorded; frozen FSDP helpers stay pinned to qualified pair (transformers 5.2.0/
+  accelerate 1.12.0/peft 0.18.1), untouched. Single-process owned proof
+  (peft_fp16_plan2_07/policy/qualify/run), NOT a distributed FSDP FP16 PEFT trainer
+  (separate future scope); no model-quality/convergence claim. Attempt: fp-r1
+  rel_l2 cuda/cpu device mismatch (fixed .cpu()); fp-r2 scaler inf injected after
+  unscale_ (found_inf computed during unscale_) → inject before; fp-r3 12/12; no
+  bound/envelope relaxed. 11 tests, suite 489, Black clean. Guardian =
+  PLAN2-01..06 envelope + stock-clock gate; boot 0d46a6f1 unchanged, kernel/
+  registry clean (0 benign), 0 foreign containers, boards idle pre/post, .105
+  untouched, host config NOT modified. No default/package/release/source change;
+  not installed into any image. Evidence kernel/artifacts/peft-fp16-plan2-07
+  (BOUNDS.md + qualify-fp-r1..r3 + guardians/preflights/kernel logs + orchestrator
+  logs); host /home/nik/bc250work/peft-fp16-plan2-07 retained.
+  [Report](bc250_peft_fp16_plan2_07_results/README.md). Publication:
+  bc250-therock tools+report (no source change), umbrella curated PLAN2-07 +
+  compatibility matrix. **PLAN2 forward plan COMPLETE (01..07).** Remaining work
+  optional/backlog: distributed FSDP FP16 PEFT trainer, larger models/real data,
+  BC250_REMAINING_PLAN.md items on concrete need.
+
 **PLAN2-06 broader model admission PASSED 2026-11-14 (.104 release, r2 kernel,
   Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; sixth PLAN2 item):** admitted
   owned pure-torch UNet2D (diffusion-style) + RNN/LSTM/GRU through the D62-style

@@ -10,6 +10,36 @@ release claims must not override this cursor and current manifests.
 ## Resume cursor
 
 
+- **PLAN2-07 FP16 PEFT qualification PASSED 2026-11-14 — seventh and FINAL PLAN2
+  item complete; all seven forward-plan items (PLAN2-01..07) now done.**
+  [Report](docs/development/bc250_peft_fp16_plan2_07_results/README.md),
+  [evidence](../../kernel/artifacts/peft-fp16-plan2-07). Scope (user-confirmed):
+  owned-fixture FP16 PEFT proof mirroring the frozen-helper precision contracts;
+  frozen FSDP helpers (D28/D30/D31) UNTOUCHED (requalification rules respected);
+  NO app/source/default/package/release change (series stays 23). Gap closed:
+  base FP16 FSDP is all-trainable (no PEFT/frozen), PEFT helpers are FP32/BF16 →
+  FP16 PEFT had no qualified path. **12/12 checks** on the D28 owned identity
+  (GPT2-tiny 21280 frozen + peft LoRA rank4/alpha8 on 8 Conv1D = 3072 trainable):
+  forward vs CPU-FP64 BITWISE (rel 0.0), adapter grads global 7.3e-4 / per-param
+  9.3e-4 (bounds 0.02/0.03), frozen-base no grads, FP16-vs-FP32 loss rel 0.0,
+  root-clip rel 0.0, GradScaler inf-skip (scale 65536→32768, step skipped),
+  8-update loss 4.6025→4.5601 decreasing + base bitwise unchanged, BITWISE
+  save/resume + exact 3-step continuation. FP16-specific: GradScaler REQUIRED
+  (unlike BF16 no-scaler); FP32 master avoids pure-FP16 AdamW underflow (PLAN2-02);
+  FP16 ≥ BF16 tightness. peft 0.21.2/transformers 5.22.1 (owned env) recorded;
+  frozen FSDP helpers stay pinned to their qualified pair, untouched. Single-
+  process owned proof, NOT a distributed FSDP FP16 PEFT trainer (separate future
+  scope). Attempt: fp-r1 rel_l2 device mismatch, fp-r2 scaler inf injected after
+  unscale_ (found_inf computed during unscale_) → fixed; fp-r3 12/12; no bound
+  relaxed. 11 tests, suite 489, Black clean. Guardian = PLAN2-01..06 envelope +
+  stock-clock gate; boot 0d46a6f1 unchanged, kernel/registry clean (0 benign),
+  0 foreign containers, boards idle pre/post, .105 untouched, host config NOT
+  modified. No default/package/release/source change; not installed into any
+  image. Host $TASK/peft-fp16-plan2-07 retained. Publication: bc250-therock
+  tools+report, umbrella curated PLAN2-07 + compatibility matrix. **PLAN2 forward
+  plan COMPLETE. Remaining work is optional/backlog (BC250_REMAINING_PLAN.md,
+  PLAN2.md scope notes); await user direction. Stopped per pacing rule.**
+
 - **PLAN2-06 broader model admission PASSED 2026-11-14 — sixth PLAN2 item
   complete.** [Report](docs/development/bc250_admission_plan2_06_results/README.md),
   [evidence](../../kernel/artifacts/admission-plan2-06). Scope (user-confirmed):
