@@ -3129,6 +3129,61 @@ native Torch/ROCm and inspect package origins. Evidence kernel/artifacts/develop
   microarchitectural R&D, N4 deeper/upstream-tracking/full-prefix/
   N2/N6/N7/NF4/FP16-PEFT/soak on concrete need.
 
+**PLAN2-03 native sparse factorization PASSED 2026-11-14 (.104 release, r2
+  kernel, Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; third PLAN2 item):**
+  native general-CSR ILU(0)/IC(0) factorization (hipSPARSE csrilu02/csric02) +
+  csrsv2 triangular solves + ILU-preconditioned Richardson iterative solve + RHS
+  first gradient (adjoint), at machine precision; nonsymmetric eig RETAINS
+  host-LAPACK (documented decision, no implementation). **42/42 GPU checks.**
+  Feasibility (read-only, user-confirmed): rocSPARSE has NO general direct sparse
+  LU/Cholesky on any arch; native options ILU(0)/IC(0) preconditioners (csrilu0/
+  csric0 general CSR, wave32-aware → gfx1013-feasible unlike MFMA-blocked INT4) +
+  banded direct gtsv/gpsv; user chose ILU/IC + bounded preconditioned solve.
+  Active-release libhipsparse exports csrilu02/csric02/csrsv2 + Info/zeroPivot
+  (nm -D). Pinned Torch sparse-solve API rejects ROCm (B02.1) → private-handle
+  ctypes hipSPARSE classic API (hipsparseCreate/Destroy NOT *Handle;
+  SetMatType TRIANGULAR=3/FillMode LOWER0 UPPER1/DiagType UNIT1 NONUNIT0/
+  IndexBase0), reusing N2.13 pattern; NO native rebuild, NO Torch/library source
+  edit. Independent pure-Python CPU reference core.py (IKJ ILU0/IC0 no-fill,
+  fwd/back substitution, dense GE oracle, CSR transpose); strict no-fill, numeric
+  boost disabled, zero-pivot reported never perturbed. csrsv2 analysis is
+  TRANS-specific (adjoint uses separate TRANSPOSE-analyzed solvers; NON_TRANS
+  analysis + TRANS solve → status3 INVALID_VALUE). Solve: ILU factors split
+  L(unit-lower)/U(upper) + native csrsv2 preconditioner M⁻¹=U⁻¹L⁻¹ + outer
+  Richardson; RHS grad dL/db=A⁻ᵀdL/dx via adjoint M⁻ᵀ=L⁻ᵀU⁻ᵀ (TRANSPOSE solves).
+  Measured worst: ILU0 factor rel-L2 FP32 1.27e-07/FP64 9.7e-18; IC0 FP32
+  1.64e-08/FP64 0.0; csrsv2 lower/upper ~1e-16; preconditioned residual FP32
+  8.2e-08/FP64 1.4e-16 (bounds 1e-3/1e-6); solution rel-L2 FP64 4.2e-16; RHS grad
+  FP32 3.9e-08/FP64 2.9e-16. Dense-pattern ILU0 reconstructs A exactly; zero/
+  singular pivot matches CPU; 7 refusals. Eig disposition: production nonsymmetric
+  eig stays host-LAPACK (N2.2 hipSOLVER DnXgeev→cgeev/zgeev); native small-Schur
+  prototype N2.3–N2.12 measured SLOWER than host for small orders (N2.6 host
+  ~0.2–0.4ms vs native ~3.75–11.8ms); practical review retains host-LAPACK,
+  tiny-eig not priority; larger/ill-conditioned native eig separate deep work —
+  NO eig dispatch/default change. Attempt journey (harness/API fixes not stack
+  defects, retained): r1 staging LOCAL_TOOLS path; r2 classic hipsparseCreate/
+  Destroy naming; r3 factorization 27/27; r4 csrsv2 trans-specific analysis +
+  singular fixture accidentally identity; r5 42/42. Pre-declared BOUNDS.md fixed
+  before any run, never relaxed. Guardian = qualified PLAN2-01/02 envelope
+  (guard_nf4 reused: SH lock, nonce 600s boot-guard, 460s child, timeout430
+  backstop, kernel_noise filter, registry identity, foreign-container refusal) +
+  stock-clock gate (pp_dpm_sclk ≤2000MHz). New owned tools sparse_plan2_03/
+  (core/ops/qualify_sparse/run_sparse). 15 sparse tests, suite 428, Black clean.
+  Boot 0d46a6f1 unchanged, kernel/registry clean (0 benign added), 0 foreign
+  containers, all guards acked, boards idle pre/post, .105 untouched, host
+  governor/clock/watchdog/kernel NOT modified. No default/package/release/source
+  change; not installed into any image. Bounds: orders ≤256 FP32/FP64 well-
+  conditioned; NO general direct sparse LU claim; extreme conditioning/hard-
+  spectra convergence/larger/complex/compile/graph/perf separate; first
+  derivatives only (RHS grad), iterative solve with reported residual. Evidence
+  kernel/artifacts/sparse-plan2-03 (qualification-sparse-r5 42/42, guardian finals
+  r1–r5, kernel logs, preflight, BOUNDS.md, artifacts.json 30 files); host
+  /home/nik/bc250work/sparse-plan2-03 retained.
+  [Report](bc250_sparse_plan2_03_results/README.md). Publication: bc250-therock
+  tools+report (no source change), umbrella curated PLAN2-03. Next optional (await
+  user): PLAN2-04 attention, PLAN2-05 compile, PLAN2-06 admission, PLAN2-07 FP16
+  PEFT — see PLAN2.md.
+
 **PLAN2-02 native NF4/QLoRA quantization PASSED 2026-11-14 (.104 release, r2
   kernel, Torch 2.13.0a0+gfx1013/HIP7.17, stock ≤2000MHz; second PLAN2 item):**
   native opt-in 4-bit NormalFloat weight-only recipe with qualified fwd/bwd,
