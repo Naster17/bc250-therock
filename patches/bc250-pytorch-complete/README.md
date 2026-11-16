@@ -1,40 +1,38 @@
-# Complete BC-250 Torch source deltas (D46)
+# BC-250 PyTorch — complete reconstruction series
 
-This is a separate complete series. **Do not apply it after the historical
-`../bc250-pytorch` patches.** The old series is preserved as milestone evidence.
+Complete single-base patch series for the published `bc250-torch` fork
+(`Naster17/bc250-torch`, branch `bc250/gfx1013`). Regenerated from the
+authoritative patched source history with `git format-patch base..head`; verified
+by the umbrella fork CI (`tools/verify_patch_series.py`, component `pytorch`).
 
-Starting baseline: `c779020750d7dc99a39ea8c104ef8df1fc9d0755`.
+- **Upstream:** `ROCm/pytorch` (the ROCm fork, *not* mainline `pytorch/pytorch`)
+- **Base:** `c779020750d7dc99a39ea8c104ef8df1fc9d0755` (release/2.13)
+- **Patches:** 23, ordered `0001`–`0023`
+- **Reconstructed head:** `262accc8ac53c34cd649d4df49c0cf22999eb10d`
+- **Reconstructed tree:** `ce52766844bf301974b9b4887072660c62ecaa12`
 
-1. `0001-qualified-native-torch.patch` reconstructs the exact tracked tree of
-   `a5249802372882dedccb91d3fd4d73be9fcdf2bd`: the native daily/RCCL source revision.
-2. Optional `0002-agent-exit-lifetime.patch` reconstructs the exact tracked tree of
-   `8d8b18df558cb478727ba2179f2e01dfce20ea40`, the local source head. Current D09
-   launchers apply its source-derived Python agent fix through the pinned bridge;
-   the native installed Torch revision remains a524980. This is not an instruction
-   to replace that installed package or bypass qualification.
+Patches `0001`–`0022` reconstruct head `8d8b18df558cb478727ba2179f2e01dfce20ea40`
+(tree `33a862732a52c8825a3d1f9c0b609d06fba0df65`), exactly matching the verified
+complete-export record. Patch `0023` adds the opt-in fused gated-delta solve/scan
+(`use_fused_solve_scan`, default path unchanged).
 
-These are Git binary-capable diffs. In a **new private checkout** at the baseline,
-use `git apply --check` and `git apply` in the listed order. Commit metadata will
-differ from the original history; exact tree hashes, not new commit IDs, establish
-reconstruction. `files.json` records all35 changed paths at baseline/native/head;
-`revisions.json` records exact pins. Existing repositories and worktrees need not
-be changed to verify either complete tree:
+## Reconstruct
 
-```sh
-python3 therock/build_tools/bc250/verify_torch_d46.py --output /tmp/torch-d46.json
+```bash
+git clone https://github.com/ROCm/pytorch.git && cd pytorch
+git checkout c779020750d7dc99a39ea8c104ef8df1fc9d0755
+git am /path/to/bc250-stack/patches/bc250-pytorch-complete/*.patch
+git rev-parse HEAD^{tree}   # must equal ce52766844bf301974b9b4887072660c62ecaa12
 ```
 
-That verifier uses private shared bare clones/indexes and requires existing local
-baseline Git objects. It is not a portable bundle or a full build. Upstream files,
-submodules, dependencies, licenses, toolchain and build configuration must still
-be supplied from their pinned sources; PLAN-07 remains open for that closure.
+`git am` can create different commit hashes through committer metadata; the tree
+hash is the identity that matters. Building the reconstructed source follows the
+offline recipes in [`../../recipes/`](../../recipes/) and
+[`../../docs/BUILDING.md`](../../docs/BUILDING.md) (native gfx1013, both profiles).
 
-`generated-reference/hipify-output.diff` is **not part of this patch series**.
-It retains the five observed post-HIPify source files from both installed .104
-cohorts. Applying it in a scratch directory reproduces those observed bytes; it
-does not independently prove code generation. Do not apply it before building:
-the documented pip-only Torch build owns HIPify/code generation. Raw source and
-post-codegen source are distinct audit stages.
+## Relation to the historical series
 
-No native rebuild, deployment, GPU behavior or performance change is claimed.
-[D46 proof, source inventory and remaining limits](../../docs/development/bc250_source_d46_results/README.md).
+[`../bc250-pytorch`](../bc250-pytorch/README.md) is the retained historical
+*incremental* export (10 patches on shifting intermediate bases). It is incomplete
+by design and **must not be combined with this series**. This directory supersedes
+it for reconstruction; the old directory remains unchanged as historical evidence.
